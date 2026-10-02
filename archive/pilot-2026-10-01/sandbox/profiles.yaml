@@ -1,0 +1,42 @@
+version: 1
+common:
+  network: internal_network_with_audited_gateway_only
+  host_home: absent
+  docker_socket: absent
+  reference_answers: absent
+  model_credentials: controller_only
+  data_credentials: gateway_only_same_for_every_arm
+  root_filesystem: read_only
+  user: non_root
+  capabilities: none
+  writable: own_work_and_temporary_files_only
+  followup: fresh_conversation_copy_of_own_frozen_initial_workspace
+  skill_execution: Use python with preinstalled pinned dependencies; do not resolve inline uv dependencies at runtime.
+arms:
+  scratch:
+    base_image: weather-bench-python:iod-v1
+    base_id: sha256:96ccbcd4f618a2dc96c0477949b8ac247d67cfecf45f7cb95aa4142d45ef8aa9
+    allowed_modules: []
+    forbidden_modules: [weather_skills_core, africas2s, acmaddl, rosetta]
+    documents: []
+  rhiza:
+    base_image: weather-bench-skills:iod-v1
+    base_id: sha256:2f31c4c6caedd46ee38a840b30fbc544e5e94883a65cc0cc7eea494dce551a7c
+    allowed_modules: [weather_skills_core]
+    forbidden_modules: [africas2s, acmaddl, rosetta]
+    documents: [/catalog]
+    catalog_repository: https://github.com/rhiza-research/weather-skills-catalog
+    catalog_revision: 1a0af7de3bba2d7a6c4fe67f291eb0e58640b5f5
+    core_revision: e118b9531181224cb1459efbd9f2b114117f0a79
+  accord:
+    base_image: weather-bench-accord:iod-v1
+    base_id: sha256:d8b90f1c9b3fcb296cae8d64b9d07a596d72eba5d7bc47b96819afce389ae448
+    allowed_modules: [africas2s, acmaddl, rosetta]
+    forbidden_modules: [weather_skills_core]
+    documents: [/opt/accord-docs]
+    africas2s: '0.2.0 from piwheels; wheel SHA256 bac917271c74b3b2159c3fd40f851e805fb68bcf53cb607455f12139735358b3'
+    rosetta_revision: e751bc231ab0ed8fb1a95bfad2971d6202a03431
+limitations:
+  - Existing locally pinned base images are reused; a clean-machine base rebuild needs their dependency locks from weather-skills-bench.
+  - Controlled mode enforces source allowlists. Open-web mode is an audited naturalistic replication; toolkit exclusion cannot be guaranteed after downloads.
+  - Equal generic numerical package versions are checked at preflight; complete dependency graphs may differ because toolkit dependencies differ.

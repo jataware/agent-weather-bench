@@ -1,0 +1,189 @@
+schema: agent-weather-bench-rubric-proposal-v0
+status: draft_for_expert_review
+title: Seasonal calibration in a Kenyan study box
+scope: |
+  Proposed rubric for the completed development smoke, not the full seasonal
+  candidate and not the six-week Kenya product task. The current pilot runner
+  does not consume this schema. Training is 1993–2004; the initial prediction
+  batch is 2005–06 and the follow-up is 2007–08. These were inspected development
+  years, not untouched scientific evaluation. New evidence requirements cannot
+  be assumed to have been satisfied by historical submissions.
+sources:
+  - archive/pilot-2026-10-01/smoke/task.yaml
+  - archive/pilot-2026-10-01/revision/PLAN.txt
+  - archive/pilot-2026-10-01/pilot/checks.py
+  - pilot/runner.py
+  - rubric.yaml
+review:
+  proposed_reviewers: [Zeek, Emmett]
+  weights_approved: false
+  completion_rules_approved: false
+  evaluator_implemented: false
+evaluation:
+  leaf_states: [pass, fail, unresolved]
+  parent_score: Weighted mean of children with weights relative to siblings.
+  unresolved_policy: |
+    Preserve pending leaves and evidence coverage; do not treat absent grader
+    output as an agent failure. At final assessment, missing required submission
+    evidence fails the leaf. Publish any provisional numeric score with coverage.
+  completion: |
+    All required leaves pass and integrity passes. Missing evaluation evidence
+    leaves completion pending. Otherwise report partial progress and failed
+    requirements. Root score does not override a completion gate.
+  scientific_outcomes_gate_completion: false
+  numeric_defaults: {atol: 0.0001, rtol: 0.000001}
+  probability_sum: {atol: 0.000001, rtol: 0}
+  prediction_agreement: |
+    The task permits any documented sound calibration. Compare input processing
+    and verification arithmetic with independent references; require repeatable
+    outputs from the submitted method, not predictions matching a preferred fit.
+integrity:
+  required: true
+  criteria:
+    - Agent never accesses private verification observations or reference answers.
+    - Training and development inputs respect the task contract.
+    - Freeze records and allowed mounts establish the evaluated artifact boundary.
+    - Any later fixes are recorded as a new evaluation or submission revision.
+  evidence: [run_manifest, input_manifest, network_audit, frozen_inventory]
+tree:
+  id: seasonal_workflow
+  children:
+    - id: data_and_processing
+      weight: 25
+      children:
+        - id: source_identity
+          weight: 1
+          required: true
+          criterion: Exact sources, system, initialization, training years, members and study bounds match the contract.
+          evaluator: deterministic_plus_expert
+          evidence: [provenance.json, inputs/source-manifest.json, raw_input_inventory]
+          current_check: source_coverage
+          gap: Current source coverage does not independently validate all provenance fields.
+        - id: seasonal_totals
+          weight: 2
+          required: true
+          criterion: Forecast rates are converted using actual month lengths and summed over OND; forecast and observed arrays have the correct mm units.
+          evaluator: deterministic
+          evidence: [training.nc, independent_training_reference, solve.py]
+          current_check: training_aggregation
+        - id: observational_support
+          weight: 2
+          required: true
+          criterion: CHIRPS aggregation uses the declared native forecast cells, cosine weights, renormalization and 90 percent valid-area rule.
+          evaluator: deterministic_plus_expert
+          evidence: [training.nc, independent_training_reference, processing_code]
+          gap: Add targeted support and missingness fixtures; equality on one complete dataset is insufficient.
+    - id: method_and_validation
+      weight: 30
+      children:
+        - id: training_boundary
+          weight: 2
+          required: true
+          criterion: Calibration and final thresholds use only the declared training years.
+          evaluator: expert_plus_execution
+          evidence: [fit_code, training.nc, fit_trace]
+        - id: fold_isolation
+          weight: 2
+          required: true
+          criterion: Leave-one-year-out predictions refit all learned preprocessing, method parameters and thresholds inside each fold; any tuning excludes the held-out year.
+          evaluator: expert_plus_execution
+          evidence: [validation_code, fold_trace, development.nc]
+          gap: Current development_predictions checks schema; the judge reviews LOYO from code. Add independently exercised fold evidence.
+        - id: tercile_definition
+          weight: 1
+          required: true
+          criterion: Observed training terciles use linear quantiles at one third and two thirds; equality is assigned to the middle category.
+          evaluator: deterministic_plus_expert
+          evidence: [threshold_state, validation_code, boundary_fixtures]
+        - id: development_verification
+          weight: 1
+          required: true
+          criterion: Reported development scores and reliability diagnostics are recomputable from the declared out-of-fold predictions, observations and fold-specific thresholds.
+          evaluator: deterministic_plus_expert
+          evidence: [development.nc, fold_thresholds, answer.json, reliability_plot, verification_code]
+          gap: Independently recompute development metrics; private seasonal_scores is not a substitute for fold-specific verification.
+    - id: forecast_deliverables
+      weight: 15
+      children:
+        - id: development_coverage
+          weight: 1
+          required: true
+          criterion: Development arrays cover every declared training year and the declared spatial grid with no silently dropped cases.
+          evaluator: deterministic
+          evidence: [development.nc, training.nc]
+          current_check: development_predictions
+        - id: forecast_validity
+          weight: 2
+          required: true
+          criterion: Unseen prediction input yields finite probabilities in below/near/above order, summing to one, and finite nonnegative rainfall in mm with exact time and spatial coverage.
+          evaluator: deterministic
+          evidence: [private_prediction_output, private_forecast_coordinates]
+          current_check: prediction_validity_and_coverage
+        - id: submission_contract
+          weight: 1
+          required: true
+          criterion: All declared output files and machine readable answer fields are present, parseable and consistent with the numerical artifacts.
+          evaluator: deterministic_plus_expert
+          evidence: [answer.json, report.txt, provenance.json, handoff.txt, outlook.png, frozen_inventory]
+          gap: Existing file-presence checks need answer-schema and cross-artifact consistency checks.
+    - id: execution_and_reuse
+      weight: 20
+      children:
+        - id: independent_replay
+          weight: 2
+          required: true
+          criterion: solve.py regenerates all required scientific arrays and answer fields in a clean offline runtime from permitted retained raw data.
+          evaluator: execution
+          evidence: [replay.json, replay_outputs, retained_input_inventory]
+          current_check: independent_replay
+          note: Optional session notes are not numerical scientific replay outputs.
+        - id: frozen_prediction
+          weight: 2
+          required: true
+          criterion: predict.py accepts --forecast and --output and predicts in a clean offline runtime using the frozen submission and unseen forecast input.
+          evaluator: execution
+          evidence: [prediction_execution_log, private_prediction_output, frozen_inventory]
+          current_check: prediction_entrypoint
+          gap: Entrypoint presence alone does not establish successful execution.
+        - id: saved_state
+          weight: 1
+          required: true
+          criterion: Prediction loads final fitted state rather than refitting; follow-up retains that state under the fixed-training contract and records any repair.
+          evaluator: execution_plus_expert
+          evidence: [model_inventory, fit_disabled_prediction_probe, reuse.json, handoff.txt]
+          note: Accretion beyond saved-fit reuse is assessed by the experiment, not awarded by this leaf.
+    - id: scientific_reporting
+      weight: 10
+      children:
+        - id: method_and_limitations
+          weight: 2
+          required: true
+          criterion: The report accurately states the method, validation design, sources, 12-year sample limits and distinction between development and private verification.
+          evaluator: expert_or_validated_judge
+          evidence: [report.txt, answer.json, validation_code, task_contract]
+        - id: figure_labels
+          weight: 1
+          required: true
+          criterion: Figures correctly label region, periods, probabilities or rainfall units and uncertainty; the study box is not labelled as national Kenya.
+          evaluator: expert_or_validated_judge
+          evidence: [outlook.png, report.txt, numerical_outputs]
+          current_check: figure_readable
+          gap: Image readability does not verify content or labels.
+        - id: conclusion_supported
+          weight: 1
+          required: true
+          criterion: Scientific claims follow the supplied evidence, including negative findings; no unobserved private-test skill or calibration from two seasons is asserted.
+          evaluator: expert_or_validated_judge
+          evidence: [report.txt, answer.json, development_verification_evidence]
+reported_outcomes:
+  - Private RPS and RPSS against explicitly defined raw and climatological baselines.
+  - Private rainfall RMSE and exact verification support counts.
+  - Development reliability diagnostics with sample-size limitations.
+  - Completion, category scores, gate failures, unresolved evidence and rubric version.
+  - Agent/evaluation tokens, wall time, compute and monetary cost for every attempt.
+  - Retained artifacts, refitting, repairs and reset-control differences for chains.
+migration: |
+  Review this tree before implementing a versioned evaluator. Freeze source and
+  rubric hashes for future instances. Do not replace rubric.yaml or relabel old
+  scores in place. Historical missing evidence may require unresolved leaves;
+  distinguish evaluator regrading from new agent attempts.

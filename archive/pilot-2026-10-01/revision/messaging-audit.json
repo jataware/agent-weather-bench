@@ -1,0 +1,45 @@
+{
+  "scope": "Weather benchmark slides 10\u201320; AFRIMET slides preserved, not independently re-verified.",
+  "corrections": [
+    {
+      "slides": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "issue": "Older Kenya heat experiment had different models, skill restrictions, budgets and results.",
+      "action": "Explicit archive titles and footers; hidden from slideshow while preserving slide numbers and source content."
+    },
+    {
+      "slide": 10,
+      "issue": "Compared our skills with weather-skills even though no ACCORD skills arm was tested.",
+      "action": "Use actual capability, toolkit and follow-up hypotheses; no assumed winners."
+    },
+    {
+      "slide": 15,
+      "issue": "An unexecuted libraries + progressively disclosed guides proposal appeared alongside actual results.",
+      "action": "Replace with scratch / Rhiza weather skills / ACCORD libraries. Python in every arm. Disclose actual toolkit use and supplied-data scope."
+    },
+    {
+      "slide": 16,
+      "action": "Kenya locator links real study bounds to the historical probability grid."
+    },
+    {
+      "slide": 17,
+      "action": "All nine conditions; fixed arm colors; scores, cost and tokens are measured. No blanket accuracy claim."
+    },
+    {
+      "slide": 18,
+      "action": "Define 2007\u201308 extension, same area/training, fresh conversation, own saved work, no refit. Separate reuse cost from forecast accuracy."
+    },
+    {
+      "slide": 20,
+      "action": "Auto-science loop explicitly a future direction, not evidence of recursive scientific improvement."
+    },
+    {
+      "slide": 19,
+      "action": "Forecast quality: recorded RPS for three Fable arms, raw ECMWF and model-climatology baseline in both batches. No accuracy advantage claimed; two-year limitations and Rhiza replay failure disclosed."
+    }
+  ]
+}

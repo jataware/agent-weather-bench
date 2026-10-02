@@ -1,0 +1,133 @@
+# Open questions for ACMAD
+
+What we could **not** determine from ACMAD's three code repos and had to assume, or
+external operational assets we substituted. Each could reveal a difference between our
+objective and ACMAD's. A fuller, quantified version (with the measured differences
+that motivate these) is in [`example/FORECAST_DIFFERENCES.md`](example/FORECAST_DIFFERENCES.md).
+
+## RESOLVED (confirmed by ACMAD, and applied in `example/`)
+
+- **#1 Combination weighting → equal (⅓ each), no differential weighting.** Component-equal,
+  as assumed. ✓
+- **#3 Skill-mask stage → applied to components BEFORE combining** (a cell survives where any
+  member is skilful). The example masks per member before `combine_masked`. ✓
+- **#11 Dry mask → 50 mm.** The example default is now `DRY_MM=50`. ✓
+- **#12 Predictand → CAMS-OPI (from ACMAD's own obs/CPT code).** Sourced natively from CPC
+  FTP as `obs/cams-opi` (CAMS-OPI v0208 field "comb"), not the CMAP substitute. ✓
+- **#6 EOF/CCA mode selection → auto-selected by an eigenvalue test, NOT fixed.** ACMAD's
+  operational engine (`script_cpt_exp_run_plot_for_grid.sh`) enters modes as a range (min 1 →
+  ceiling) and runs a two-pass scheme: a dry run emits the eigenvalues, an external **Scree +
+  North's-rule** test (`compute_scree_north_test.gs`) sets a parsimonious ceiling (max 10
+  obs-SST / 7 NMME), then CPT optimizes within it by goodness index. **This is the single
+  largest driver of agreement.** The example reproduces the eigenvalue test
+  (`combination.core.north_modes`, default) instead of the old fixed 10/10/10, which over-fit —
+  halving the objective tercile MAE (10.5 → 6.2 pp) and raising the tilt-pattern correlation
+  (0.59 → 0.86). deepscale's own CV mode-selector was found unsuitable (≈27 min/member and it
+  over-selects at near-zero seasonal skill). ✓
+- **#7/#8/#9 (engine/data forms) — moot for the match:** the example now feeds ACMAD's EXACT
+  predictor inputs (CPC pre-formatted NMME CPT files, ensemble means, via
+  `rosetta.cpc_nmme_predictor`), so any preprocessing/probability/ensemble-form differences
+  reduce to the deepscale-vs-CPT.x engine only. The predictand normal-score transform
+  (`transform_predictand="Empirical"`) is applied as CPT.x's effective preprocessing. The
+  residual (~6 pp) is the intrinsic Student-t sharpness (#8): deepscale's terciles run ~5 pp
+  sharper than CPT.x's (dominant-category prob ≈ 45% vs ≈ 40%).
+
+Below is the original numbered list; items since resolved are struck through with a pointer
+to the resolution, so numbering stays stable. The genuinely open items are **#1** (the
+combination step itself), **#2** (the `nmme` product's role), **#3** (skill-mask stage/
+thresholds as *operationally rendered*), **#4**, **#10**, **#13**, and the verification
+half of **#8**.
+
+## Tier 1 — absent from the code (we invented it)
+
+1. **The objective combination.** No script in the three repos combines the
+   per-(experiment × model × domain) forecasts into the single objective. We assume
+   **component-equal**: average within an experiment over its models × domains, then
+   ⅓ each across the three experiments, in probability space, renormalized.
+   - *Equal weight, per-model, or skill-weighted (goodness index / PC / ROC)?*
+   - *A separate tool / manual / GIS step not in these repos?*
+
+2. **The `nmme` product** that sits alongside the individual models in each output
+   tree. *CPC's pre-combined multi-model mean used as a predictor experiment, or
+   ACMAD's own combination?* We exclude it to avoid double-counting.
+
+3. **At what stage the PC-skill mask enters the objective.**
+   `plot_probabilistic_forecast.gs` renders each forecast unmasked and skill-masked at
+   two PC-skill thresholds (`sklmsk1=0.3`, `sklmsk2=0.4`; the other driver uses `0.25`);
+   `maskout(prob, pcskill)` is a hard gate blanking cells where cross-validated Pearson
+   skill ≤ threshold.
+   - *Is the objective combined from raw forecasts and shown masked (display only), or
+     are components masked **before** combining (which changes the objective)?*
+   - *Which thresholds are operational?* (We see `{0, 0.3, 0.4}` / `0.25` in the code.)
+   - *Below-threshold cells — dropped, or fall back to climatology?*
+
+## Tier 2 — in the code but ambiguous
+
+4. **Which experiments/models/domains feed the operational objective** — uniform over
+   Africa, or region-specific domains stitched? All three experiments always, or a
+   best-skill selection?
+
+5. **Obs-SST predictor window (Exp-1) — RESOLVED, and it was a bug on our side.**
+   The code specifies the **single IC month (June for the July release)**:
+   `script_prepare_data4cpt_exp.sh` sets `obsmthsst=("May" "Jun")` and
+   `script_dwnld_esstv5_data.sh` downloads each with CPT `len=1` (single month). The
+   `SEAS_PRED=("JAS")` line is vestigial. Our example now uses single-month June
+   (`obs_predictor(months=[6])`) — not a season.
+
+6. ~~**EOF/CCA mode selection**~~ — **RESOLVED, see #6 above**: auto-selected by the
+   Scree + North's-rule eigenvalue test (dry-run pass), ceilings 10 obs-SST / 7 NMME;
+   the example reproduces it (`core.north_modes`). Not fixed at 10 — fixed-10 was our
+   over-fit, and the single largest source of divergence.
+
+7. ~~**CPT preprocessing**~~ — **largely RESOLVED**: the effective predictand transform is
+   the **normal-score** transform (CPT default; deepscale `transform_predictand="Empirical"`
+   is the same operation). Ablation: with it, tilt-pattern corr vs ACMAD 0.86; without, 0.23
+   (see `example/FORECAST_DIFFERENCES.md` §5). Detrending / zero bound remain unconfirmed
+   but are second-order for the match.
+
+8. **Tercile-probability method** — CPT.x uses its default error-variance calibration; we
+   use deepscale's CPT-style Student-t + leverage, which runs ~5 pp sharper (the residual
+   engine floor, `example/FORECAST_DIFFERENCES.md` §6). *Which is better-calibrated on weak
+   predictors is an open verification question (hindcast GROC/RPSS) — flagged as follow-up.*
+
+9. ~~**NMME predictor form**~~ — **RESOLVED**: ensemble means. ACMAD ingests CPC's
+   pre-formatted seasonal CPT files, which are ensemble-mean fields; the example reads the
+   identical files (byte-identical, max-abs-diff 0.0).
+
+10. **Init month & "the" objective target** — for the July release, one target season
+    or the rolling {ASO, SON, OND} set? Exact IC month per experiment?
+
+## Tier 3 — external assets we substituted (confirm, don't re-derive)
+
+11. ~~**Dry mask.**~~ — **RESOLVED, see #11 above**: 50 mm 3-month cumulative (the
+    example default; `reference/acmad_run` renders both 100 and 50 mm variants).
+
+12. ~~**Predictand product & grid.**~~ — **RESOLVED, see #12 above**: CAMS-OPI at 0.5°,
+    now sourced **natively** from CPC FTP as `obs/cams-opi` (pattern-corr 1.000 vs ACMAD's;
+    CAMS-OPI is *not* IRIDL-only). The CMAP substitution survives only in the historical
+    `reference/acmad_rosetta` bridge run.
+
+13. **Country/land clip** — is the published objective land-only?
+
+## Highest-value answers
+**(1) the combination weighting** and **(3) whether the skill mask is applied before
+combination** would most change our objective.
+
+## Rosetta data-layer edges surfaced by acmad_rosetta
+
+These are library-side issues found while running ACMAD's CPT.x on rosetta data,
+not questions for ACMAD. Recorded so they are not rediscovered.
+
+- **CCSR longitude crop (FIXED, rosetta d82b5cf).** `CCSRAdapter._process` cropped
+  with a bare `sel(X=slice(w,e))` after normalizing X to -180..180, silently
+  truncating 0..360 and seam-crossing requests (a global-tropics predictor came
+  back as the Eastern Hemisphere only). Now routed through `select_lon`.
+- **CCSR zero-fill (FIXED upstream).** Full-range DAP requests to geoss2s/cesm1
+  overflow the server and silently zero-fill; `single_year_fetch: true` +
+  `check_usable` (rejects all-zero/zero-variance predictors) guard it.
+- **geoss2s SST on the seam-crossing TROP_PAC domain (OPEN).** `assemble` fails
+  with a `Y` dimension conflict (length 31 vs 1) for this one model×variable×domain
+  combination, so `--model-set full` stages 21/22 members. Isolated: geoss2s SST on
+  GBL_TROP, geoss2s precip, and all other models' TROP_PAC SST stage cleanly.
+  Likely the `single_year_fetch` + `split_streams` per-year concat interacting with
+  the two-sided seam selection. Not yet root-caused; the objective is built from 21.

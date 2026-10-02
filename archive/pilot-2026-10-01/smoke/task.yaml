@@ -1,0 +1,125 @@
+id: seasonal
+title: 'Development smoke: seasonal rainfall calibration and saved-model reuse'
+version: smoke-1
+origin: ACCORD seasonal candidate; development feasibility verified, no agent results
+science: probabilistic_forecast_verification
+brief: 'Build a reusable calibration of ECMWF September-issued October–December rainfall
+
+  forecasts for the box south=-3, north=1, west=36, east=39 (not a Kenya national
+  mean).
+
+  Use C3S seasonal-monthly-single-levels, ECMWF system 51, monthly mean total
+
+  precipitation, September initializations, lead months 2,3,4; include all members.
+
+  Use native CHIRPS v3 final monthly observations. Train on 1993–2004 only.
+
+  Convert forecast rates to monthly rainfall using each month''s length, then sum
+  OND.
+
+  Area-average CHIRPS with cosine-latitude weights within each native 1-degree
+
+  forecast cell, renormalizing valid cells and requiring 90% valid cell area.
+
+  Use observed training terciles (linear quantiles at 1/3 and 2/3); equality belongs
+
+  to the middle category. Fit any explicitly documented method using training data
+
+  only. Produce below/near/above probabilities and a seasonal rainfall estimate.
+
+  Assess your method on development years with leave-one-year-out validation;
+
+  fit thresholds and method anew inside each fold. Save the fitted final workflow.
+
+  Private verification forecasts will be supplied to your frozen predict.py later;
+
+  their observations are never accessible to you. Do not claim private-test skill.
+
+  Report development results, including a reliability plot and the limits of 12 years.
+
+
+  SMOKE SCOPE: Identical verified normalized monthly development inputs are supplied
+
+  under /work/inputs. No live acquisition is scored. forecast-development.nc contains
+
+  ECMWF precipitation in mm/day; observations-development.nc contains native CHIRPS
+
+  monthly totals in mm/month. Inspect their coordinates and perform the required
+
+  seasonal and spatial aggregation yourself. Inputs contain training years only.
+
+  The private test batches are drawn from previously inspected development years;
+
+  this is an infrastructure/agent smoke, NOT untouched scientific validation.
+
+  Save your fitted model or fitted parameters as model.pkl, model.npz, model.nc or
+
+  model.json. predict.py must load saved state rather than fit again. Use any sound
+
+  training-only calibration method; disclose it. Retain all code, input files and
+
+  fitted state so a forecaster can use the workflow again. Cite the original raw
+
+  sources listed in inputs/source-manifest.json. Keep answer.json concise; put
+
+  numerical fields in NetCDF rather than huge JSON arrays. Do not install packages.
+
+
+  Environment note: the supplied files are NetCDF3. Read them with xarray engine="scipy".
+  Use engine="h5netcdf" for NetCDF output. These common I/O settings avoid an identified
+  native NetCDF binding shutdown defect.
+
+  '
+phases:
+  initial:
+    brief: Build the workflow from an empty workspace and fit on the declared training
+      years.
+    private_years:
+    - 2005
+    - 2006
+  followup:
+    brief: Reuse your saved workflow for a new private forecast batch. Training remains
+      1993–2004. Inspect and repair the workflow if needed; document all changes in
+      handoff.txt. Your fitted state and workflow are already present. Validate that
+      predict.py loads them and prepare the next batch without refitting. Preserve
+      original training validation; document any edits.
+    private_years:
+    - 2007
+    - 2008
+submission: 'Write answer.json with method, development_validation, limitations and
+  source_url
+
+  (a list of exact raw URLs plus request parameters in provenance.json).
+
+  Write training.nc with forecast(year,member,lat,lon) and observed(year,lat,lon),
+
+  both in mm. Write development.nc with probability(year,tercile,lat,lon), tercile
+
+  labels below,near,above, and rainfall_mm(year,lat,lon). Include all 1993–2004 years.
+
+  Supply predict.py accepting --forecast PATH --output PATH. Input forecast.nc has
+
+  forecast(year,member,lat,lon), OND totals in mm on the same grid. Output uses the
+
+  same schema as development.nc. Fit state may be stored alongside predict.py.
+
+  Also write solve.py accepting --output DIRECTORY to reproduce the development
+
+  outputs from retained raw data without network, outlook.png, report.txt and
+
+  handoff.txt. All files live under /work. Cite limitations honestly.
+
+  '
+numeric:
+  atol: 0.0001
+  rtol: 1.0e-06
+  probability_sum_atol: 1.0e-06
+readiness:
+  reference: development_smoke_only
+  unresolved: []
+overlap:
+  scratch: Generic Python can implement retrieval, aggregation, calibration and verification.
+  rhiza: Processing helpers available; seasonal retrieval and fit/apply calibration
+    need Python. Native CHIRPS monthly source must match across arms.
+  accord: Rosetta seasonal and CHIRPS retrieval; DeepScale calibration and serialized
+    model support.

@@ -1,0 +1,33 @@
+# Original Agent Weather Bench proposal
+
+Draft supplied by Zeek on 2 October 2026. The text below is preserved with paragraph spacing normalized; proposed corrections and design choices are in [the review](benchmark-design.md).
+
+Subseasonal and seasonal prediction is an active research field, not a settled procedure. Forecasters publish continuously: new teleconnections are identified and tested, predictor regions are redrawn when a signal shifts, calibration and multi-model combination methods are revised, downscaling approaches are compared against new observational products, and skill is reassessed as each season resolves. The operational forecast that a regional centre issues is the visible output of this work, but the work itself is a research loop in which data, methods, and physical hypotheses are revisited every cycle. Doing it well requires domain knowledge that is distributed across papers, institutional practice, and code that mostly does not ship with the papers.
+
+This is the setting in which we want to understand what AI agents can do, and more specifically what they need to be given in order to do it. The question is not whether a frontier model can run a regression. It is what form and function of tooling, knowledge, and prior work allows an agent to reliably carry out the kinds of tasks forecasters actually do: reproduce a published forecast, re-examine a predictor, extend an analysis to a new region or lead time, verify a claim of skill, and then take the next step that the previous one made possible. We call the thing an agent is given its substrate, and the benchmark exists to measure progress on building it.
+
+The domain has a property that makes it unusually well suited to this. Forecasts resolve. A published forecast comes with a described method, an output, and observations that arrived afterward, so any attempt to reproduce or improve it can be scored against both the reference and the ground truth. Frontier agentic benchmarks such as PaperBench, CORE-Bench, SciReplicate, and ML-Dev-Bench evaluate agents on reproducing or extending published computational work; they rarely have an external truth to check against. Forecasting does.
+
+The benchmark is built from tasks sourced directly from this field and posed to agents in the same form as the existing agentic benchmarks for ML and scientific reproduction, but with the content, data, and success criteria of operational and research forecasting. A task gives the agent a goal, access to the relevant data up to a frozen cutoff, and whatever substrate the experiment is testing, and asks it to produce a concrete artifact. Examples: reproduce a regional centre's published seasonal precipitation outlook for a given season using the method described in its bulletin; take a teleconnection reported in a recent paper, recompute its skill over an independent period, and state whether it holds; extend a calibrated model combination from one country to a neighbouring one and verify it; produce a weeks 2 to 6 temperature forecast for a region from the available subseasonal ensembles and score it against observations that have since arrived; run the verification suite a centre uses on a forecast it has already issued and report where the forecast failed. We are interested first in whether the agent can execute these at all, and then in three frontiers that the task set lets us explore systematically. The first is substrate: what combination of curated knowledge, workflow code, retrieval, and prior artifacts turns an unreliable attempt into a reliable one. The second is cost: how small a model can succeed on a given task when the substrate is right, rather than defaulting to a frontier model for everything, and what that implies for what should be built into tooling versus left to the model. The third is accretion: when an agent completes one task and is then given a related one, how much of the first carries over, and which substrates cause that carry-over to compound rather than reset. Each of these requires that we can say, consistently and across many tasks, whether an attempt succeeded, which is what the scoring design below is for.
+
+We propose three design commitments. Scoring is layered: each task carries a hierarchical rubric with deterministic artifact checks, tolerance checks against a reference pipeline, and skill against observations as a reported outcome rather than a gate. The unit of comparison is the substrate: the same task is run under different configurations of what the agent is given, from nothing beyond general tools through curated skills, workflow libraries, retrieval over literature, and combinations, across models from small to frontier, with cost to reliable completion as the primary quantity and amortization across chains of related tasks as the signal that a substrate is accumulating rather than spending. Tasks are sourced from the field rather than invented: published outlooks and their methods, replication work that centres already do internally, and the literature itself, with rubric trees drafted by an agent and reviewed by domain experts.
+
+The ambition is that an agent which can reliably do the workflow is an agent that can be asked to do the research: try the alternative method, read the paper that proposed it, and report whether the forecast got better.
+
+## Sourcing tasks and rubrics
+
+Start from the existing Kenya precipitation experiment: rewrite its pass criterion as a rubric tree before adding any tasks.
+
+Source tasks from three places: published outlooks and bulletins across lead times, internal replication work at ACMAD and similar centres, and the literature on predictors and methods, where a paper's analysis becomes a task.
+
+Define templates over region, lead time, variable, and method step, spanning weeks 2 to 6 through seasonal, precipitation and temperature first.
+
+Build chains explicitly: reproduce, then re-examine a predictor or shift lead time, then add calibration or downscaling, then verify. Log tokens, wall time, and rubric score per step.
+
+Have an agent draft rubric trees from the source material; Zeek and Emmett review and weight the leaves.
+
+Define an initial set of substrate arms as examples, not the fixed set: from scratch, a skills package, a workflow library, retrieval over documentation. Run small, mid, and frontier models on each.
+
+Define anti-cheating rules for anything scored on skill: frozen data cutoff, no access to post-cutoff observations, verification held out.
+
+Work backwards from two artifacts: the Hugging Face dataset of task specs plus frozen inputs, and the blog post built around the amortization chart.

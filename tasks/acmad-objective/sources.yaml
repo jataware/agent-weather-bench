@@ -1,0 +1,15 @@
+source_category: centre_replication
+primary_source: source-material/ACMAD_forecast_replication/README.md.txt
+clarifications: source-material/ACMAD_forecast_replication/OPEN_QUESTIONS.md.txt
+method_source: source-material/ACMAD_forecast_replication/combination/core.py.txt
+method_context: source-material/ACMAD_forecast_replication/combination/README.md.txt
+data_origin: var/private/tasks/acmad-objective/agent-inputs/ in the internal data bundle
+case: camsopi ASO 2026 skill0.3 dry50
+scope: Final objective consolidation from precomputed component MMEs; not CCA refitting or consensus-map replication.
+reference_origin: Independent NumPy combination compared with the existing local objective artifact.
+source_conflict: The clarification file retains superseded questions below its resolved section; review the dated snapshot as a whole.
+curator_choices:
+  - Missing components are omitted and equal weights renormalized among available components, matching the local reference.
+  - Nominal 2,8,8 weighting is an explicit sensitivity test, not operational method evidence.
+  - Component masks are inherited from supplied outputs rather than reconstructed.
+source_hashes: Recorded by preparation in input-manifest.json.

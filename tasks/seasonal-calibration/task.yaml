@@ -1,0 +1,57 @@
+schema_version: 1
+id: seasonal-calibration
+version: review-0.2
+title: Validate and save a seasonal rainfall calibration
+status: prepared_for_joint_review
+source_category: existing_forecasting_workflow
+track: research_workflow
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+evaluation:
+  data_mode: retrospective_development
+  training_years:
+  - 1993
+  - 2004
+  prediction_years:
+  - 2005
+  - 2006
+  independent_evaluation: false
+  inherited_method_choices: Any documented sound training-only calibration.
+  reference_agreement: Input processing and verification arithmetic; not calibration
+    predictions.
+  private_targets: Controller only throughout any task sequence.
+  scientific_skill_gate: false
+  acquisition_scored: true
+outputs:
+- training.nc
+- development.nc
+- answer.json
+- provenance.json
+- report.txt
+- outlook.png
+- handoff.txt
+- execution.json
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers:
+  - Zeek
+  - Emmett
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: ../replay-contract.md
+source_plan: source-plan.json
+input_contract:
+  mode: agent_acquisition
+  starting_files:
+  - source-plan.json
+  normalized_fixture_mount: false
+  data_access: Provider or frozen raw-response replay through experiment-controlled
+    access; agent performs acquisition and normalization.
+  readiness: Pending provider-request preflight, raw-response snapshot and acquisition/replay
+    adapter validation.

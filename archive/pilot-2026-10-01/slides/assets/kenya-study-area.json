@@ -1,0 +1,12 @@
+{
+  "boundary_source": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson",
+  "boundary_sha256": "6ba390ffda6ee7bfc263548954b0f3ce42676986cd584ae2aa0613d271241299",
+  "study_bounds": {
+    "west": 36,
+    "east": 39,
+    "south": -3,
+    "north": 1
+  },
+  "cells": 12,
+  "description": "Locator only. Both initial and follow-up tasks use this same study box; the forecast years change. Natural Earth 1:110m generalized country boundary."
+}

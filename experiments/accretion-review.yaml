@@ -1,0 +1,37 @@
+schema_version: 1
+status: design_for_joint_review
+launch_enabled: false
+question: Does a system's accumulated substrate improve work on other benchmark tasks?
+task_pool: [seasonal-calibration, acmad-objective, wvg-definition-audit]
+task_successors: null
+sequence:
+  order: Counterbalance the six permutations for this three-task development pool.
+  replication: To be agreed with models and budget; no model runs are authorized by this file.
+  continue_after_failure: true
+  conversation: Fresh conversation per task; retained artifacts carry the history.
+conditions:
+  accumulated:
+    starting_substrate: Pinned bundle to be selected during experiment review.
+    retention: Agent-owned code, permitted data, fit states, tools, retrieval indexes and notes.
+  reset:
+    starting_substrate: Identical initial bundle, task inputs and common runtime.
+    retention: None from prior attempts; common input/download caching policy matched.
+controls:
+  - Identical task brief and per-task budget across conditions.
+  - Pin acquisition transport and raw source snapshots per comparison; report provider-backed and frozen-response runs separately.
+  - Match initial external download-cache state; distinguish agent-owned reuse from provider or shared-service cache hits.
+  - Match task and order; account for position rather than comparing different tasks directly.
+  - Count substrate maintenance and summarization between tasks in total spend.
+  - Evaluator code, expected answers, private scores and grader feedback never transfer.
+  - Private seasonal targets remain embargoed for the entire sequence.
+  - Verify no supplied or retained task can expose another task's private prediction targets.
+measurements:
+  - Completion, rubric leaves, evidence coverage and forecast outcomes per task.
+  - Agent tokens, wall time, tool compute and monetary cost including failures.
+  - Provider wait, transfer bytes, source response hashes and acquisition/cache mode, separate from agent/tool work.
+  - Maintenance cost, retained-file hashes and actual use of retained artifacts.
+  - Within-task accumulated-minus-reset effects and cumulative spend with completion.
+secondary_experiment:
+  kind: explicit_related_followups
+  purpose: Isolate saved-fit and method-specific reuse on deliberately related inputs.
+interpretation: Three development tasks exercise the protocol; they do not establish broad accretion.

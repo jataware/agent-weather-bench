@@ -1,0 +1,51 @@
+id: iod
+title: Forecast and verify the Indian Ocean Dipole
+version: 2
+origin:
+  repository: https://github.com/emmettFC/weather-skills-bench
+  revision: 8762aace7ea17089d746a1d3aaccf4da5f0d32cb
+  case: iod-s2s-forecast-skill
+science: two_window_forecast_verification
+brief: |
+  Retrieve an ECMWF S2S SST ensemble and NOAA OISST v2.1 daily SST. Include the
+  control and all perturbed members with equal weight. Use SST in degree_Celsius.
+  Build the observed per-grid-cell climatology as the arithmetic mean of all
+  September 24–October 8 fields in 2013–2022 (150 fields).
+  West box: 50–70E, 10S–10N; east box: 90–110E, 10S–0. Include centres on closed
+  boundaries; use cosine-latitude weights and equal longitude weights; exclude
+  missing cells and renormalize. Take each source's box means on its native grid.
+  Version 2 clarification: first average the observed climatology in each box.
+  Subtract these same two scalar climatological box means from the forecast and
+  observed period box means. This defines anomalies without cross-grid subtraction
+  or regridding. For each member, first average SST over the seven actual valid
+  dates, then compute west anomaly minus east anomaly. Compute the observed index
+  identically. Report ensemble mean, sample spread (ddof=1), observed index and
+  forecast-minus-observed error. Use actual valid timestamps, never relabel leads.
+phases:
+  initial:
+    brief: Use initialization 2023-09-25 and windows 2023-09-25–2023-10-01 and 2023-10-02–2023-10-08, inclusive. If the source lacks a required day, report the mismatch; do not substitute dates.
+    init: '2023-09-25'
+    windows: [['2023-09-25', '2023-10-01'], ['2023-10-02', '2023-10-08']]
+  followup:
+    brief: Repeat for initialization 2023-10-02 and windows 2023-10-02–2023-10-08 and 2023-10-09–2023-10-15. Retain the original fixed climatology; reuse your code and data. Explain repairs in handoff.txt.
+    init: '2023-10-02'
+    windows: [['2023-10-02', '2023-10-08'], ['2023-10-09', '2023-10-15']]
+submission: |
+  Write answer.json with valid_from, valid_to, forecast_dmi_c, spread_dmi_c,
+  observed_dmi_c, error_dmi_c (arrays of length two), units='degree_Celsius',
+  source_url (list covering forecast, baseline and target observations), and
+  figure='/work/outlook.png'. Write a labelled outlook.png, report.txt,
+  provenance.json with exact requests, and handoff.txt. Supply solve.py accepting
+  --output DIRECTORY, which reproduces answer.json and the figure from retained
+  data without network. Keep all files under /work.
+numeric: {atol: 0.0001, rtol: 0.000001}
+readiness:
+  reference: needs_valid_time_audit
+  unresolved:
+    - Review version 2 scalar-climatology clarification.
+    - Audit raw S2S lead-to-valid-date mapping and required day coverage in both issues.
+    - Verify live ECDS S2S retrieval and licences; do not reuse a potentially shifted legacy oracle.
+overlap:
+  scratch: Python retrieval and weighted index calculation.
+  rhiza: OISST/S2S fetch, aggregation and IOD helpers; compose and check the workflow.
+  accord: Rosetta S2S retrieval; daily OISST and index workflow require additional code; little seasonal-calibration advantage.

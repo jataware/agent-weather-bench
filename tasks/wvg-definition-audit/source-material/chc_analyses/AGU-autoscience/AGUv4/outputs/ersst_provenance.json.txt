@@ -1,0 +1,35 @@
+{
+  "product": "sst/ersst-v5",
+  "belt": [
+    -40.0,
+    40.0,
+    0.0,
+    360.0
+  ],
+  "years": [
+    1981,
+    2023
+  ],
+  "file": "data/ersst_v5_monthly.nc",
+  "bytes": 15246450,
+  "sha256": "a9c91583b92e71d24362cf092a038d947c8fd7764cf1c0c2846fbb81c6042916",
+  "dims": {
+    "time": 516,
+    "lat": 41,
+    "lon": 180
+  },
+  "lat_range": [
+    -40.0,
+    40.0
+  ],
+  "lon_range": [
+    0.0,
+    358.0
+  ],
+  "n_months": 516,
+  "incomplete_years": {},
+  "finite_fraction": 0.7593,
+  "units": "C",
+  "rosetta_git_sha": "f3ef32d986a9de29d36d1d164dce78c284a180f9",
+  "rosetta_catalog_sha256": "bd683de05c7218627b366c4971b3239bc7e52548283f777695ea465c00f9132e"
+}

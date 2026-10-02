@@ -1,0 +1,11 @@
+{
+  "source": "runs/revision-v1/fable-accord-initial/evaluation/predictions.nc",
+  "source_sha256": "b06c7bdbd97ad508ff97e7fbe85558be02229b83b9ed99f25c846a0b2ebf8a41",
+  "boundary_source": "Natural Earth 1:110m; slides/assets/kenya-study-area.json",
+  "boundary_sha256": "6ba390ffda6ee7bfc263548954b0f3ce42676986cd584ae2aa0613d271241299",
+  "run": "fable-accord-initial",
+  "year": 2005,
+  "tercile": "above",
+  "training_years": "1993\u20132004",
+  "description": "Historical example from an evaluated frozen predictor. A 12-cell study box, not a national forecast. Above-normal means above the observed training upper-tercile threshold. Each grid cell shows the probability of that category; remaining probability is below or near normal. No inference about forecast quality from this image alone."
+}

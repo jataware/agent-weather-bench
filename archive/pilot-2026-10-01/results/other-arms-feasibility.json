@@ -1,0 +1,62 @@
+{
+  "purpose": "expert_written_feasibility_not_agent_benchmark",
+  "agent_attempts": 0,
+  "input_scope": "previously_verified_development_data; no live retrieval in this check",
+  "network_gateway_validated": false,
+  "arms": {
+    "scratch": {
+      "image_id": "sha256:96ccbcd4f618a2dc96c0477949b8ac247d67cfecf45f7cb95aa4142d45ef8aa9",
+      "package_availability": {
+        "africas2s": false,
+        "acmaddl": false,
+        "rosetta": false,
+        "weather_skills_core": false
+      },
+      "reference_metrics_match": true,
+      "mean_RPS": {
+        "raw": 0.3908001568899838,
+        "model_climate": 0.33503512057402274,
+        "climatology": 0.46006944440415987,
+        "calibrated": 0.33013605167814375
+      },
+      "RMSE_mm": {
+        "raw": 150.5467909913229,
+        "calibrated": 113.01973447618394
+      }
+    },
+    "rhiza": {
+      "image_id": "sha256:2f31c4c6caedd46ee38a840b30fbc544e5e94883a65cc0cc7eea494dce551a7c",
+      "package_availability": {
+        "africas2s": false,
+        "acmaddl": false,
+        "rosetta": false,
+        "weather_skills_core": true
+      },
+      "reference_metrics_match": true,
+      "mean_RPS": {
+        "raw": 0.3908001568899838,
+        "model_climate": 0.33503512057402274,
+        "climatology": 0.46006944440415987,
+        "calibrated": 0.33013605167814375
+      },
+      "RMSE_mm": {
+        "raw": 150.5467909913229,
+        "calibrated": 113.01973447618394
+      },
+      "real_skills_verified": [
+        "seasonal sum of monthly totals",
+        "ensemble mean",
+        "cosine-latitude weighted observation mean"
+      ],
+      "catalog_commit": "1a0af7de3bba2d7a6c4fe67f291eb0e58640b5f5",
+      "requires_python_glue": [
+        "seasonal CDS and monthly CHIRPS acquisition",
+        "calendar/unit normalization",
+        "per-cell spatial grouping",
+        "held-out calibration",
+        "independent verification"
+      ]
+    }
+  },
+  "status": "PASS"
+}

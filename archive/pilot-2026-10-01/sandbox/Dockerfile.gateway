@@ -1,0 +1,4 @@
+FROM python:3.12-slim
+RUN pip install --no-cache-dir mitmproxy==12.2.3 PyYAML==6.0.3
+COPY gateway.py /gateway.py
+ENTRYPOINT ["mitmdump", "-q", "-s", "/gateway.py", "--listen-port", "8080", "--set", "confdir=/state/ca", "--set", "connection_strategy=lazy", "--set", "upstream_cert=false", "--set", "rawtcp=false", "--set", "http2=false", "--set", "block_global=false"]

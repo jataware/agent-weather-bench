@@ -1,0 +1,8 @@
+{
+  "capability": "Scratch scores: Haiku 3/12, Sonnet 9/12, Fable 12/12. Sonnet\u2019s misses were unit labels; Haiku left major gaps. With Rhiza, Haiku scored 7/12 and Sonnet 12/12.",
+  "tools": "Sonnet + Rhiza matched Fable scratch\u2019s 12/12 checks with 49% fewer tokens, 67% less time and 89% lower API cost. ACCORD matched 12/12 and was 17% faster than Fable scratch.",
+  "reuse": "ACCORD\u2019s follow-up used 50% fewer tokens, cost 50% less and took 31% less time than scratch; both passed 12/12 checks. Across both attempts, ACCORD cost 12% less.",
+  "sonnet_accord": "Sonnet + ACCORD: 9/12 checks, 213,754 tokens, 2.57 min, $0.55. Replay passed; unit labels failed.",
+  "haiku_accord": "Haiku + ACCORD passed 5/12 checks, used 764,137 tokens, took 4.09 minutes and cost $0.88. The token budget stopped the attempt before required artifacts and an independently usable predictor were finished.",
+  "matrix": "Sonnet + Rhiza matched Fable scratch\u2019s 12/12 checks at 89% lower API cost. Haiku stayed incomplete in all arms."
+}

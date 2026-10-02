@@ -1,0 +1,11 @@
+numpy==2.5.3
+scipy==1.18.1
+xarray==2026.7.0
+netCDF4==1.7.4
+matplotlib==3.9.4
+rasterio==1.5.2
+rioxarray==0.23.0
+cdsapi==0.7.7
+ecmwf-datastores-client==0.4.2
+h5netcdf==1.8.1
+h5py==3.16.0

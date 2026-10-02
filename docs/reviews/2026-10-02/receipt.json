@@ -1,0 +1,17 @@
+{
+  "seasonal-calibration": {
+    "reviewed_version": "review-0.1",
+    "source_mismatches_before_revision": [],
+    "critique_sha256": "8a38aa7506f49aaa8652fe4b18ed934c2a4ef24da00f1664cb5473160ee876c2"
+  },
+  "acmad-objective": {
+    "reviewed_version": "review-0.1",
+    "source_mismatches_before_revision": [],
+    "critique_sha256": "13125ef0954ea38a5e195a068cb620715e9930894a98b516389342d74c4119c5"
+  },
+  "wvg-definition-audit": {
+    "reviewed_version": "review-0.1",
+    "source_mismatches_before_revision": [],
+    "critique_sha256": "e3cbaa90c491aa7eebc420a7e96689240ae816bff4699887f7521f9cfafc5888"
+  }
+}

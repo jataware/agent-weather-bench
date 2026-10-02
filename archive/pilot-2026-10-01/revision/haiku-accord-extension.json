@@ -1,0 +1,15 @@
+{
+  "authorization": "User requested Haiku + ACCORD to complete all nine initial model/arm combinations. One attempt and judge, unchanged settings; no retries or follow-up.",
+  "prior_recorded_usd": 59.226095,
+  "additional_max_usd": 5.85,
+  "reserved_unrecorded_usd": 6,
+  "overall_ceiling_usd": 100,
+  "config_sha256": "0aa7b39f55b1f7a42e82fef956f9b9982357fd2f36d78fe86f44702c80787dc5",
+  "task_sha256": "c82352d366f5fa7d6d244a490c2055f03bb7b74ac69ed32530df3112bd1d92a3",
+  "status": "complete",
+  "agent_usd": 0.883781,
+  "judge_usd": 0.041642,
+  "total_recorded_usd": 60.151518,
+  "checks": "5/12",
+  "no_retries": true
+}

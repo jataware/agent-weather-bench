@@ -1,0 +1,30 @@
+{
+  "task_sha256": "c82352d366f5fa7d6d244a490c2055f03bb7b74ac69ed32530df3112bd1d92a3",
+  "prior_recorded_usd": 35.089347,
+  "max_new_agent_usd": 55,
+  "max_new_judge_usd": 3.5,
+  "overall_user_ceiling_usd": 100,
+  "config_sha256": {
+    "haiku": "0aa7b39f55b1f7a42e82fef956f9b9982357fd2f36d78fe86f44702c80787dc5",
+    "sonnet": "d39ac57fefa42968979ed7f0ccc504f5a4b964222f4ccd3c6a1c74d781594679",
+    "fable": "07bda24ebd3c1411d5ad8a454ee436360d38d90b85a9c6219c2c6bd3a51fad3b"
+  },
+  "inputs_sha256": {
+    "source-manifest.json": "7df5a57d54694ee04f3da9ab67b16e599082c7a30494f0f56be34f1e39d2873f",
+    "observations-development.nc": "a69fbe38ee076a25a1c255b096038a1b915186e022e225a813673c7645284279",
+    "forecast-development.nc": "ae2061e971c19bb077cb372e77acc8d5452fda3cae7a5a0b492d0fff1283d9f8"
+  },
+  "api_check": "results/accord-api-check.json",
+  "status": "complete",
+  "actual_agent_attempts": 12,
+  "actual_judge_calls": 13,
+  "total_recorded_usd": 60.151518,
+  "new_agent_usd": 24.056141,
+  "new_judge_usd": 1.00603,
+  "truncated_responses": 0,
+  "extension": "revision/sonnet-accord-extension.json",
+  "extensions": [
+    "revision/sonnet-accord-extension.json",
+    "revision/haiku-accord-extension.json"
+  ]
+}

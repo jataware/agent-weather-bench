@@ -1,0 +1,43 @@
+{
+  "python": "3.12",
+  "interpreter_used": "../weather-skills-bench/.venv-accord/bin/python",
+  "packages": {
+    "africas2s": "0.2.0",
+    "acmadDL": "0.2.0",
+    "accord-rosetta": "0.2.0",
+    "cdsapi": "0.7.7",
+    "ecmwf-datastores-client": "0.4.2",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.6",
+    "xarray": "2026.7.0",
+    "netCDF4": "1.7.4",
+    "rasterio": "1.5.2",
+    "rioxarray": "0.23.0",
+    "matplotlib": "3.9.4",
+    "PyYAML": "6.0.3"
+  },
+  "direct_sources": {
+    "africas2s": {
+      "url": "https://archive1.piwheels.org/simple/africas2s/africas2s-0.2.0-py3-none-any.whl",
+      "archive_info": {}
+    },
+    "acmadDL": {
+      "url": "https://github.com/ACMAD-Niamey/acmadDL.git",
+      "vcs_info": {
+        "vcs": "git",
+        "commit_id": "e751bc231ab0ed8fb1a95bfad2971d6202a03431",
+        "requested_revision": "e751bc231ab0ed8fb1a95bfad2971d6202a03431"
+      }
+    },
+    "accord-rosetta": {
+      "url": "https://github.com/ACMAD-Niamey/acmadDL.git",
+      "vcs_info": {
+        "vcs": "git",
+        "commit_id": "e751bc231ab0ed8fb1a95bfad2971d6202a03431",
+        "requested_revision": "e751bc231ab0ed8fb1a95bfad2971d6202a03431"
+      },
+      "subdirectory": "packaging/accord-rosetta"
+    }
+  }
+}

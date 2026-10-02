@@ -1,0 +1,184 @@
+"""The component-equal objective combination step we add to ACMAD's pipeline.
+
+ACMAD's CPT/CCA run emits one calibrated tercile forecast per
+(experiment x model x predictor-domain x season), plus a per-member PC-skill map,
+but no step that consolidates them into the single objective outlook. This module
+is that step, parameterized by the two masks whose exact operational definition we
+are still confirming with ACMAD (see ../OPEN_QUESTIONS.md):
+
+  * dry mask     - blank cells whose 3-month climatological rainfall total is below
+                   a threshold (default 100 mm here; ACMAD's own asset uses 50 mm).
+  * skill mask   - blank each member where its cross-validated PC (Pearson) skill is
+                   at or below a threshold; ACMAD renders {0 (off), 0.3, 0.4}.
+
+Combination is component-equal (WMO-style): average within an experiment over its
+models x domains, then 1/3 each across the three experiments, in probability space,
+via `deepscale.combine_terciles`. Masking is applied per member *before* combining,
+so a cell survives where any member is skillful there.
+
+The same functions serve the ACMAD-CPT reference (loaders read `for_prop`/`pc_skill_map`
+NetCDFs) and, via `combine_masked`, any set of in-memory (probs, skill) members —
+so the pure rosetta+deepscale example reuses the identical combination logic.
+"""
+from __future__ import annotations
+
+import calendar
+import glob
+import os
+
+import numpy as np
+import xarray as xr
+from netCDF4 import Dataset
+
+import deepscale
+
+# --- ACMAD roster (the 18 members; excludes the pre-combined CPC `nmme` product) --
+EXP2_MODELS = ("cfsv2", "cmc1", "cmc2", "ncar_ccsm4")
+EXP3_MODELS = ("cfsv2", "cmc1", "nasa", "ncar_ccsm4")
+SEASONS = {"ASO": 1, "SON": 2, "OND": 3}
+SEASON_MONTHS = {"ASO": (8, 9, 10), "SON": (9, 10, 11), "OND": (10, 11, 12)}
+
+
+def members(base, season, dataset="camsopi", year=2026):
+    """(component, label, for_prop_path, pc_skill_path) for each CPT member forecast."""
+    s = SEASONS[season]
+    out = []
+
+    def entry(comp, mdl, dom, kind):
+        d = f"{base}/{kind}_vs_{dataset}/season{s}/X-{dom}/{mdl}"
+        out.append((comp, f"{mdl}/{dom}",
+                    f"{d}/for_prop_{year}.nc", f"{d}/pc_skill_map.nc"))
+
+    for dom in ("GBL_TROP", "TROP_PAC"):
+        entry("Exp1_obsSST", "Ersstv5", dom, "sst")
+    for m in EXP2_MODELS:
+        for dom in ("GBL_TROP", "TROP_PAC"):
+            entry("Exp2_NMMEsst", m, dom, "sst")
+    for m in EXP3_MODELS:
+        for dom in ("GBL_TROP", "Big_Afr"):
+            entry("Exp3_NMMEprecip", m, dom, "precip")
+    return out
+
+
+# --- loaders (CPT NetCDF outputs) ------------------------------------------------
+def load_probs(path):
+    """for_prop_*.nc (a/b/c percent, -1 fill) -> (tercile, lat, lon) fractions."""
+    d = Dataset(path)
+    abc = [np.where(np.array(d[v][0], float) < -0.5, np.nan, np.array(d[v][0], float)) / 100.0
+           for v in ("a", "b", "c")]
+    return xr.DataArray(np.stack(abc), dims=("tercile", "lat", "lon"),
+                        coords={"tercile": [0, 1, 2],
+                                "lat": np.array(d["lat"][:]), "lon": np.array(d["lon"][:])})
+
+
+def load_skill(path):
+    """pc_skill_map.nc (var `a`, PC/Pearson skill, -999 fill) -> (lat, lon)."""
+    d = Dataset(path)
+    a = np.array(d["a"][0], float)
+    return xr.DataArray(np.where(a < -990, np.nan, a), dims=("lat", "lon"),
+                        coords={"lat": np.array(d["lat"][:]), "lon": np.array(d["lon"][:])})
+
+
+# --- masks -----------------------------------------------------------------------
+def apply_skill_mask(probs, skill, threshold):
+    """Blank (NaN) tercile cells where PC skill <= threshold. threshold<=0 = no mask
+    (ACMAD's `_1` variant renders skillmask off). Now deepscale.mask_by_skill."""
+    return deepscale.mask_by_skill(probs, skill, threshold=threshold)
+
+
+def dry_mask_camsopi(camsopi_monthly_dir, season, threshold_mm=100.0,
+                     clim=(1991, 2020), like=None):
+    """3-month cumulative-total dry mask from the CAMSOPI monthly climatology.
+
+    Raw CAMSOPI `prcp` is a mean daily rate (mm/day); the seasonal total is the sum
+    over the season's months of (rate * days-in-month). Returns a bool (lat, lon)
+    DataArray, True where the 1991-2020 climatological total < threshold_mm.
+    `like` (a DataArray with lat/lon) fixes the output grid.
+    """
+    months = SEASON_MONTHS[season]
+    totals = []
+    for yr in range(clim[0], clim[1] + 1):
+        f = os.path.join(camsopi_monthly_dir, f"{yr}.nc")
+        if not os.path.exists(f):
+            continue
+        d = Dataset(f)
+        p = np.array(d["prcp"][:], float)                       # (12, lat, lon) mm/day
+        lat = np.array(d["lat"][:]); lon = np.array(d["lon"][:])
+        tot = sum(p[m - 1] * calendar.monthrange(yr, m)[1] for m in months)   # mm
+        totals.append(tot)
+    clim_total = xr.DataArray(np.nanmean(np.stack(totals), axis=0), dims=("lat", "lon"),
+                              coords={"lat": lat, "lon": lon})
+    # threshold-into-dry-mask + optional regrid-to-`like` is now deepscale.dry_mask; the CAMSOPI
+    # file read and the mm/day -> seasonal-mm accumulation above stay here (product-specific).
+    return deepscale.dry_mask(clim_total, threshold=threshold_mm, like=like)
+
+
+# --- EOF mode selection (ACMAD's Scree + North's rule) ---------------------------
+def north_modes(field, ceiling, min_frac_of_mean=1.0):
+    """Retained EOF count for a (year, lat, lon) field by ACMAD's eigenvalue test.
+
+    Reproduces `compute_scree_north_test.gs` (ACMAD's dry-run mode-selection step):
+    do an area-weighted EOF of the field, then keep the leading modes that are both
+    (a) above the *scree* line — individual explained variance exceeds the average
+    1/n — and (b) *North-separated* from the next mode, i.e. the eigenvalue gap
+    exceeds the sampling error dlambda = lambda * sqrt(2/N) (North et al. 1982).
+    Capped at `ceiling` (ACMAD uses 10 for obs-SST, 7 for NMME) and at least 1.
+
+    This is the piece deepscale lacks: its built-in `mode_selection` searches modes by
+    cross-validated skill, which at near-zero seasonal skill just grabs the ceiling and
+    over-fits. Selecting on the eigenvalue spectrum (as CPT.x does) yields the
+    parsimonious 2-4 modes that make the reproduction track ACMAD (halves the tercile
+    MAE vs a fixed 10/10/10). Returns an int; feed it to deepscale as a fixed mode count.
+    """
+    da = field.mean("member") if "member" in field.dims else field
+    da = da.transpose("year", "lat", "lon")
+    n = da.sizes["year"]
+    w = np.sqrt(np.cos(np.deg2rad(np.repeat(da.lat.values, da.sizes["lon"]))))
+    a = da.values.reshape(n, -1)
+    good = np.all(np.isfinite(a), axis=0)
+    a = (a[:, good] - a[:, good].mean(0)) * w[good]
+    lam = np.linalg.svd(a, compute_uv=False) ** 2
+    lam = lam[lam > 0]
+    frac = lam / lam.sum()
+    dl = lam * np.sqrt(2.0 / n)                     # North sampling error
+    keep = 1
+    for i in range(min(len(lam) - 1, ceiling)):
+        if frac[i] < min_frac_of_mean / len(lam):  # scree: below-average variance
+            break
+        keep = i + 1
+        if (lam[i] - lam[i + 1]) <= dl[i]:          # North: not separated from next
+            break
+    return max(1, min(keep, ceiling))
+
+
+# --- combination -----------------------------------------------------------------
+def combine_masked(member_probs_by_comp):
+    """{component: [masked (tercile,lat,lon) members]} -> (comps dict, objective).
+
+    Component-equal: MME per experiment (equal over members), objective = 1/3 each.
+    Uses deepscale.combine_terciles (grid-aware, simplex-preserving, NaN-skipping).
+    """
+    comps = {c: deepscale.combine_terciles(ms) for c, ms in member_probs_by_comp.items() if ms}
+    objective = deepscale.combine_terciles(list(comps.values()))
+    return comps, objective
+
+
+def build(base, camsopi_dir, season, skill_threshold, dry_mm=100.0,
+          dataset="camsopi", year=2026):
+    """Full reference build for one (season, skill_threshold): returns
+    (members[list of (label, comp, masked_probs)], comps, objective, dry_mask)."""
+    mem = members(base, season, dataset, year)
+    masked, by_comp = [], {"Exp1_obsSST": [], "Exp2_NMMEsst": [], "Exp3_NMMEprecip": []}
+    grid_like = None
+    for comp, label, fp, sk in mem:
+        if not (os.path.exists(fp) and os.path.exists(sk)):
+            continue
+        probs = load_probs(fp)
+        if grid_like is None:
+            grid_like = probs
+        pm = apply_skill_mask(probs, load_skill(sk), skill_threshold)
+        masked.append((label, comp, pm))
+        by_comp[comp].append(pm)
+    comps, objective = combine_masked(by_comp)
+    dmask = dry_mask_camsopi(camsopi_dir, season, dry_mm, like=grid_like)
+    return masked, comps, objective, dmask

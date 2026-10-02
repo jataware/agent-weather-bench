@@ -1,0 +1,1799 @@
+{
+  "protocol": "revision/PLAN.txt",
+  "runs": {
+    "fable-accord-followup": {
+      "arm": "accord",
+      "model": "claude-fable-5-1",
+      "phase": "followup",
+      "status": "submitted",
+      "reason": null,
+      "input_tokens": 159741,
+      "output_tokens": 5835,
+      "tokens": 165576,
+      "usd": 1.88916,
+      "seconds": 155.54802329203812,
+      "usage_incomplete": false,
+      "checks": "12/12",
+      "failed_checks": [],
+      "metrics": {
+        "RPS": {
+          "submitted": 0.41232840147849553,
+          "raw": 0.4392426352019062,
+          "model_climate": 0.3533620532434293,
+          "climatology": 0.4027862401246082
+        },
+        "skill_vs": {
+          "raw": 0.06127418325645695,
+          "model_climate": -0.1668723273872439,
+          "climatology": -0.023690385627213484
+        },
+        "RMSE_mm": {
+          "submitted": 69.91518000118269,
+          "raw": 80.59703470010813
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1285965262904144,
+                "frequency": 0.0,
+                "cell_years": 5,
+                "years": 1,
+                "weight": 0.20832064029650071
+              },
+              {
+                "bin": 1,
+                "probability": 0.29556923839258953,
+                "frequency": 0.07145188958404478,
+                "cell_years": 14,
+                "years": 2,
+                "weight": 0.5833206354623688
+              },
+              {
+                "bin": 2,
+                "probability": 0.4962856521442809,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12500000096682634
+              },
+              {
+                "bin": 3,
+                "probability": 0.7273509597738104,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.2801883393988082
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.030770816834901196,
+                "frequency": 0.0,
+                "cell_years": 13,
+                "years": 2,
+                "weight": 0.5417047496444699
+              },
+              {
+                "bin": 1,
+                "probability": 0.28667750080846033,
+                "frequency": 0.16673438005287733,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.24997461005902932
+              },
+              {
+                "bin": 2,
+                "probability": 0.4933170792315879,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 2,
+                "weight": 0.1249619170221967
+              },
+              {
+                "bin": 3,
+                "probability": 0.64,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              },
+              {
+                "bin": 4,
+                "probability": 0.7999999999999999,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              }
+            ],
+            "gap": 0.16831556114811494
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.08799317439668175,
+                "frequency": 0.10003656374304086,
+                "cell_years": 10,
+                "years": 2,
+                "weight": 0.41664127672569595
+              },
+              {
+                "bin": 1,
+                "probability": 0.26667276009780744,
+                "frequency": 0.0,
+                "cell_years": 12,
+                "years": 2,
+                "weight": 0.5
+              },
+              {
+                "bin": 2,
+                "probability": 0.5,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.18003351479942742
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.04167936163715201,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.29165397169618124
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.18146129852402693,
+            0.1660865051268069
+          ],
+          "model_climate": [
+            -0.29318434778994185,
+            -0.006215983889876986
+          ],
+          "climatology": [
+            -0.4168145093551303,
+            0.2957379352887899
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 2
+      },
+      "judge_usd": 0.17730800000000002,
+      "completion": "partial",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [
+          "africas2s"
+        ],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.nc",
+          "model.pkl"
+        ],
+        "unchanged_inherited_models": [
+          "model.nc",
+          "model.pkl"
+        ],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [
+          "cache/test_forecast.nc",
+          "cache/test_out.nc",
+          "cache/training_aggregated.nc"
+        ],
+        "cache_log_evidence": [
+          "total 376\ndrwxr-xr-x 19  501 dialout    608 Oct  1 10:24 .\ndrwxr-xr-x  1 root root      4096 Oct  1 10:31 ..\n-rw-r--r--  1  501 dialout   5897 Oct  1 10:24 answer.json\ndrwxr-xr-x  5  501 dialout    160 Oct  1 10:24 cache\n-rw-r--r--  1  501 dialout    147 Oct  1 10:24 cache_log.json\n-rw-r--r--  1  501 dialout  19840 Oct  1 10:24 development.nc\n-rw-r--r--  1  501 dialout  18120 Oct  1 10:24 development_insample.nc\n-rw-r--r--  1  501 dialout    993 Oct  1 10:24 handoff.txt\ndrwxr-xr-x  5  501 dialout    160 Oct  1 10:20 inputs\n-rw-r--r--  1  501 dialout  23007 Oct  1 10:24 model.nc\n-rw-r--r--  1  501 dialout   3594 Oct  1 10:24 model.pkl\n-rw-r--r--  1  501 dialout 209797 Oct  1 10:24 outlook.png\n-rw-r--r--  1  501 dialout  11338 Oct  1 10:22 pipeline.py\n-rw-r--r--  1  501 dialout   2913 Oct  1 10:24 predict.py\n-rw-r--r--  1  501 dialout   4960 Oct  1 10:24 provenance.json\n-rw-r--r--  1  501 dialout   1931 Oct  1 10:24 report.txt\n-rw-r--r--  1  501 dialout  12592 Oct  1 10:24 solve.py\n-rw-r--r--  1  501 dialout  30784 Oct  1 10:24 training.nc\n-rw-r--r--  1  501 dialout   1735 Oct  1 10:24 verification.json\n---inputs---\ntotal 1188\ndrwxr-xr-x  5 501 dialout     160 Oct  1 10:20 .\ndrwxr-xr-x 19 501 dialout     608 Oct  1 10:24 ..\n-rw-r--r--  1 501 dialout   46460 Oct  1 09:48 forecast-development.nc\n-rw-r--r--  1 501 dialout 1155728 Oct  1 09:48 observations-development.nc\n-rw-r--r--  1 501 dialout    4453 Oct  1 09:48 source-manifest.json\n---handoff---\nHANDOFF - OND Kenya-box (S-3 N",
+          "#!/usr/bin/env python\n\"\"\"Frozen predictor: python predict.py --forecast forecast.nc --output out.nc\n\nforecast.nc: forecast(year, member, lat, lon) OND totals in mm on the training grid\n(lat -2.5,-1.5,-0.5,0.5; lon 36.5,37.5,38.5). Output: probability(year,tercile,lat,lon)\nwith tercile labels below/near/above and rainfall_mm(year,lat,lon), as development.nc.\nLoads fitted state from model.pkl (+ model.nc for the training-observation climatology);\nno refitting is performed here.\n\"\"\"\nimport argparse, os, sys\nimport numpy as np, xarray as xr\nHERE = os.path.dirname(os.path.abspath(__file__))\nsys.path.insert(0, HERE)\nfrom africas2s.methods.ensemble_regression import EnsembleRegressionMethod\nfrom pipeline import TERCILE_LABELS\n\n\ndef open_any(path):\n    for eng in (\"h5netcdf\", \"scipy\", \"netcdf4\"):\n        try:\n            return xr.open_dataset(path, engine=eng).load()\n        except Exception:\n            continue\n    return xr.open_dataset(path).load()\n\n\ndef main(fpath, opath):\n    model = EnsembleRegressionMethod(clip_negative=True).load(os.path.join(HERE, \"model.pkl\"))\n    state = open_any(os.path.join(HERE, \"model.nc\"))\n    clim = state[\"observed_climatology\"]\n    fc = open_any(fpath)\n    var = \"forecast\" if \"forecast\" in fc else list(fc.data_vars)[0]\n    fc = fc[var]\n    if \"year\" not in fc.dims:\n        fc = fc.expand_dims(\"year\")\n    fc = fc.transpose(\"year\", \"member\", \"lat\", \"lon\").sortby(\"lat\").sortby(\"lon\")\n    if not (np.allclose(fc[\"lat\"].values, clim[\"lat\"].values) and n",
+          "4:usage: python solve.py --output /work\n6:handoff.txt, answer.json, provenance.json, cache_log.json\n19:    json.dump(log, open(os.path.join(out, \"cache_log.json\"), \"w\"), indent=1)\n132:            \"input_sha256\": man[\"files\"], \"cache\": log,\n160:                  \"outlook.png\", \"report.txt\", \"handoff.txt\", \"provenance.json\", \"verification.json\", \"cache_log.json\"]}\n164:Rebuild everything:   python solve.py --output /work     (offline; reuses cache/training_aggregated.nc when sha256 matches)\n165:Operational use:      python predict.py --forecast forecast.nc --output out.nc\n177:    ap = argparse.ArgumentParser(); ap.add_argument(\"--output\", required=True)\n178:    sys.exit(main(ap.parse_args().output))\n",
+          "development.nc max abs diff 0.0\ntraining.nc max abs diff 0.0\nmodel.nc max abs diff 0.0\ndevelopment_insample.nc max abs diff 0.0\n{\n \"cache_hit\": true,\n \"cache_path\": \"/work/cache/training_aggregated.nc\",\n \"downloads_avoided\": \"all (inputs supplied locally; no network used)\"\n}",
+          "recompute s 0.4\n{\n \"cache_hit\": true,\n \"cache_path\": \"/work/cache/training_aggregated.nc\",\n \"downloads_avoided\": \"all (inputs supplied locally; no network used)\"\n}-rw-r--r-- 1 501 dialout 30144 Oct  1 10:33 cache/training_aggregated.nc\n"
+        ]
+      }
+    },
+    "fable-accord-initial": {
+      "arm": "accord",
+      "model": "claude-fable-5-1",
+      "phase": "initial",
+      "status": "submitted",
+      "reason": null,
+      "input_tokens": 347024,
+      "output_tokens": 18331,
+      "tokens": 365355,
+      "usd": 4.3867899999999995,
+      "seconds": 246.0300459159771,
+      "usage_incomplete": false,
+      "checks": "12/12",
+      "failed_checks": [],
+      "metrics": {
+        "RPS": {
+          "submitted": 0.27945221958331434,
+          "raw": 0.36854659792488276,
+          "model_climate": 0.29594237189552974,
+          "climatology": 0.5555555555555555
+        },
+        "skill_vs": {
+          "raw": 0.24174521985338648,
+          "model_climate": 0.05572082228913322,
+          "climatology": 0.49698600475003407
+        },
+        "RMSE_mm": {
+          "submitted": 175.87029816398453,
+          "raw": 214.89843077983224
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1490476874790908,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.1667047506112963
+              },
+              {
+                "bin": 1,
+                "probability": 0.3313778663329054,
+                "frequency": 0.0,
+                "cell_years": 6,
+                "years": 1,
+                "weight": 0.24994922205171133
+              },
+              {
+                "bin": 2,
+                "probability": 0.4473863981562322,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.0833460273369923
+              },
+              {
+                "bin": 3,
+                "probability": 0.771063296533508,
+                "frequency": 1.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16662858272203698
+              },
+              {
+                "bin": 4,
+                "probability": 0.9290556293110231,
+                "frequency": 1.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.333371417277963
+              }
+            ],
+            "gap": 0.20676070027254
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.06999809547894077,
+                "frequency": 0.2500476014258896,
+                "cell_years": 8,
+                "years": 2,
+                "weight": 0.333371417277963
+              },
+              {
+                "bin": 1,
+                "probability": 0.25998679679232733,
+                "frequency": 0.16672591222596742,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.249987305996341
+              },
+              {
+                "bin": 2,
+                "probability": 0.4960121863178215,
+                "frequency": 0.7999390632132344,
+                "cell_years": 5,
+                "years": 2,
+                "weight": 0.20833333236650692
+              },
+              {
+                "bin": 3,
+                "probability": 0.7066490614956678,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12498730502951465
+              },
+              {
+                "bin": 4,
+                "probability": 0.8400182830784478,
+                "frequency": 1.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08332063932967435
+              }
+            ],
+            "gap": 0.19665041749117598
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1499984767195609,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16669205467398462
+              },
+              {
+                "bin": 1,
+                "probability": 0.2299946676482532,
+                "frequency": 0.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.3333079453260154
+              },
+              {
+                "bin": 2,
+                "probability": 0.5066666666666667,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12503808491145602
+              },
+              {
+                "bin": 3,
+                "probability": 0.6666680210375295,
+                "frequency": 1.0,
+                "cell_years": 9,
+                "years": 1,
+                "weight": 0.37496191508854393
+              }
+            ],
+            "gap": 0.2883348568071376
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.4999999999999999,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.16666666666666663
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.5838955269811144,
+            0.9428693377942229
+          ],
+          "model_climate": [
+            -0.21184766997860605,
+            0.8476512110506194
+          ],
+          "climatology": [
+            0.034962501051107875,
+            0.9590095084489604
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 2
+      },
+      "judge_usd": 0.08883,
+      "completion": "partial",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [
+          "africas2s"
+        ],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.nc",
+          "model.pkl"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": [
+          "class EnsembleRegressionMethod(MethodBase):\n    \"\"\"Per-cell OLS calibration of obs on the ensemble-mean hindcast.\n\n    Parameters\n    ----------\n    clip_negative : bool\n        If True, clamp calibrated predictions below zero to zero (sensible for\n        precipitation, the ICPAC use case). Default False to stay variable-\n        agnostic, matching CCA.\n    \"\"\"\n\n    def __init__(self, clip_negative=False, **_ignored):\n        self.clip_negative = clip_negative\n\n    def fit(self, hindcast, obs, **kwargs):\n        gcm_mean = hindcast.mean(\"member\") if \"member\" in hindcast.dims else hindcast\n        hlat, hlon = _spatial_dims(gcm_mean)\n        olat, olon = _spatial_dims(obs)\n        gcm_mean = gcm_mean.transpose(\"year\", hlat, hlon)\n        obs = obs.transpose(\"year\", olat, olon)\n\n        # eReg is a per-cell calibration, so predictor and predictand must share\n        # a grid (unlike CCA, which maps between grids). Fail clearly otherwise.\n        if (gcm_mean.sizes[hlat], gcm_mean.sizes[hlon]) != (obs.sizes[olat], obs.sizes[olon]):\n            raise ValueError(\n                \"ensemble_regression requires the hindcast and obs on the same \"\n                f\"grid; got hindcast {(gcm_mean.sizes[hlat], gcm_mean.sizes[hlon])} \"\n                f\"vs obs {(obs.sizes[olat], obs.sizes[olon])}. Regrid the GCM \"\n                \"onto the obs grid first (e.g. gcm.interp(lat=obs.lat, lon=obs.lon)).\"\n            )\n\n        n_years = gcm_mean.sizes[\"year\"]\n        X = gcm_mean.values.reshap",
+          "{'cache_hit': False, 'cache_path': '/work/cache/training_aggregated.nc', 'downloads_avoided': 'all (inputs supplied locally; no network used)'}\n<xarray.Dataset> Size: 16kB\nDimensions:   (member: 25, lat: 4, lon: 3, year: 12)\nCoordinates:\n  * member    (member) int32 100B 0 1 2 3 4 5 6 7 8 ... 17 18 19 20 21 22 23 24\n  * lat       (lat) float64 32B -2.5 -1.5 -0.5 0.5\n  * lon       (lon) float64 24B 36.5 37.5 38.5\n  * year      (year) int64 96B 1993 1994 1995 1996 1997 ... 2001 2002 2003 2004\nData variables:\n    forecast  (year, member, lat, lon) float32 14kB 205.3 365.5 ... 237.7 261.1\n    observed  (year, lat, lon) float64 1kB 95.14 269.2 338.4 ... 461.4 414.8\nAttributes:\n    forecast_sha256:  ae2061e971c19bb077cb372e77acc8d5452fda3cae7a5a0b492d0ff...\n    obs_sha256:       a69fbe38ee076a25a1c255b096038a1b915186e022e225a813673c7...\n    description:      OND totals (mm) on native 1-deg ECMWF grid, box S-3 N1 ...\n[[[  95.  269.  338.]\n  [ 115.  291.  315.]\n  [ 186.  346.  265.]\n  [  78.  274.  272.]]\n\n [[ 185.  349.  623.]\n  [ 236.  544.  613.]\n  [ 345.  695.  507.]\n  [ 169.  560.  561.]]\n\n [[ 105.  190.  251.]\n  [ 111.  237.  261.]\n  [ 306.  456.  262.]\n  [ 145.  378.  256.]]\n\n [[  85.  168.  212.]\n  [ 115.  313.  321.]\n  [ 221.  327.  266.]\n  [  84.  297.  296.]]\n\n [[ 436.  555.  667.]\n  [ 427.  702.  683.]\n  [ 641. 1034.  975.]\n  [ 369. 1016. 1204.]]\n\n [[  64.  124.  168.]\n  [  70.  183.  214.]\n  [ 194.  241.  198.]\n  [ 133.  215.  166.]]\n\n [[ 136.  262.  441.]\n  [ 223.  365.",
+          "{'cache_hit': True, 'cache_path': '/work/cache/training_aggregated.nc', 'downloads_avoided': 'all (inputs supplied locally; no network used)'}\nRPSS pooled 0.2702999363117391\n[[0.23 0.32 0.12]\n [0.32 0.02 0.18]\n [0.66 0.23 0.21]\n [0.26 0.48 0.22]]\n[[0.4  0.59 0.7 ]\n [0.58 0.78 0.8 ]\n [0.73 0.88 0.64]\n [0.6  0.78 0.72]]\n{'below': 0.13738126347218715, 'near': 0.18705827538189268, 'above': 0.40321860915129104} 0.6180555555555556\n{'loyo_rainfall_box_corr': 0.8039410019394878, 'raw_ensmean_box_corr': 0.9181262024932918, 'loyo_rainfall_box_rmse_mm': 84.23619484714636, 'raw_ensmean_box_rmse_mm': 99.89648111493332, 'obs_box_mean_mm': 325.7521608723892, 'obs_box_std_mm': 140.7079045670252}\n[[3.85919603e-02 7.36842105e-02 9.50000000e+01]\n [1.58207844e-01 2.50000000e-01 4.80000000e+01]\n [2.48572188e-01 1.84210526e-01 7.60000000e+01]\n [3.42931203e-01 3.28947368e-01 7.60000000e+01]\n [4.42179726e-01 4.40000000e-01 5.00000000e+01]\n [5.48002818e-01 6.08695652e-01 2.30000000e+01]\n [6.37993516e-01 6.66666667e-01 1.50000000e+01]\n [7.56448124e-01 7.50000000e-01 1.20000000e+01]\n [8.49809578e-01 7.69230769e-01 1.30000000e+01]\n [9.74069739e-01 8.75000000e-01 2.40000000e+01]]\n",
+          "answer.json cache_log.json development.nc development_insample.nc handoff.txt model.nc model.pkl outlook.png provenance.json report.txt training.nc verification.json {\n \"cache_hit\": true,\n \"cache_path\": \"/work/cache/training_aggregated.nc\",\n \"downloads_avoided\": \"all (inputs supplied locally; no network used)\"\n}answer identical: True\n0\n1.6M\t/work\n"
+        ]
+      }
+    },
+    "fable-rhiza-followup": {
+      "arm": "rhiza",
+      "model": "claude-fable-5-1",
+      "phase": "followup",
+      "status": "submitted",
+      "reason": null,
+      "input_tokens": 206709,
+      "output_tokens": 6430,
+      "tokens": 213139,
+      "usd": 2.38859,
+      "seconds": 151.38117587502347,
+      "usage_incomplete": false,
+      "checks": "11/12",
+      "failed_checks": [
+        "independent_replay"
+      ],
+      "metrics": {
+        "RPS": {
+          "submitted": 0.403827735998175,
+          "raw": 0.4392426352019062,
+          "model_climate": 0.3533620532434293,
+          "climatology": 0.4027862401246082
+        },
+        "skill_vs": {
+          "raw": 0.08062718954286408,
+          "model_climate": -0.14281579556019897,
+          "climatology": -0.0025857285324459856
+        },
+        "RMSE_mm": {
+          "submitted": 73.32462134106692,
+          "raw": 80.59703470010813
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1415710340165006,
+                "frequency": 0.0,
+                "cell_years": 5,
+                "years": 1,
+                "weight": 0.20832064029650071
+              },
+              {
+                "bin": 1,
+                "probability": 0.2929921460246621,
+                "frequency": 0.07145188958404478,
+                "cell_years": 14,
+                "years": 2,
+                "weight": 0.5833206354623688
+              },
+              {
+                "bin": 2,
+                "probability": 0.47613676018825724,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12500000096682634
+              },
+              {
+                "bin": 3,
+                "probability": 0.7030802226118016,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.2768461368213991
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.030770816834901196,
+                "frequency": 0.0,
+                "cell_years": 13,
+                "years": 2,
+                "weight": 0.5417047496444699
+              },
+              {
+                "bin": 1,
+                "probability": 0.28667750080846033,
+                "frequency": 0.16673438005287733,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.24997461005902932
+              },
+              {
+                "bin": 2,
+                "probability": 0.4933170792315879,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 2,
+                "weight": 0.1249619170221967
+              },
+              {
+                "bin": 3,
+                "probability": 0.64,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              },
+              {
+                "bin": 4,
+                "probability": 0.7999999999999999,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              }
+            ],
+            "gap": 0.16831556114811494
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.08799317439668175,
+                "frequency": 0.10003656374304086,
+                "cell_years": 10,
+                "years": 2,
+                "weight": 0.41664127672569595
+              },
+              {
+                "bin": 1,
+                "probability": 0.26667276009780744,
+                "frequency": 0.0,
+                "cell_years": 12,
+                "years": 2,
+                "weight": 0.5
+              },
+              {
+                "bin": 2,
+                "probability": 0.5,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.18003351479942742
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.04167936163715201,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.29165397169618124
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.18117207110071054,
+            0.19367118365003344
+          ],
+          "model_climate": [
+            -0.2504076392651824,
+            -0.0059696573646796924
+          ],
+          "climatology": [
+            -0.3699482900075861,
+            0.29591034203844
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 1
+      },
+      "judge_usd": 0.103642,
+      "completion": "partial",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.json"
+        ],
+        "unchanged_inherited_models": [
+          "model.json"
+        ],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [
+          "cache/training-ae2061e971c1-a69fbe38ee07.nc"
+        ],
+        "cache_log_evidence": [
+          "total 380\ndrwxr-xr-x 18  501 dialout    576 Oct  1 10:30 .\ndrwxr-xr-x  1 root root      4096 Oct  1 10:31 ..\n-rw-r--r--  1  501 dialout   7724 Oct  1 10:30 answer.json\ndrwxr-xr-x  3  501 dialout     96 Oct  1 10:30 cache\n-rw-r--r--  1  501 dialout   7007 Oct  1 10:30 common.py\n-rw-r--r--  1  501 dialout  15095 Oct  1 10:30 development-insample.nc\n-rw-r--r--  1  501 dialout  25600 Oct  1 10:30 development.nc\n-rw-r--r--  1  501 dialout   1772 Oct  1 10:30 handoff.txt\ndrwxr-xr-x  5  501 dialout    160 Oct  1 10:25 inputs\n-rw-r--r--  1  501 dialout   3505 Oct  1 10:30 model.json\n-rw-r--r--  1  501 dialout 117503 Oct  1 10:30 outlook.png\n-rw-r--r--  1  501 dialout   1715 Oct  1 10:29 predict.py\n-rw-r--r--  1  501 dialout   6110 Oct  1 10:30 provenance.json\n-rw-r--r--  1  501 dialout  96545 Oct  1 10:30 reliability.png\n-rw-r--r--  1  501 dialout   6476 Oct  1 10:30 report.txt\n-rw-r--r--  1  501 dialout  13338 Oct  1 10:28 solve.py\n-rw-r--r--  1  501 dialout  45184 Oct  1 10:30 training.nc\n-rw-r--r--  1  501 dialout  11301 Oct  1 10:30 write_docs.py\n----\ntotal 1188\ndrwxr-xr-x  5 501 dialout     160 Oct  1 10:25 .\ndrwxr-xr-x 18 501 dialout     576 Oct  1 10:30 ..\n-rw-r--r--  1 501 dialout   46460 Oct  1 09:48 forecast-development.nc\n-rw-r--r--  1 501 dialout 1155728 Oct  1 09:48 observations-development.nc\n-rw-r--r--  1 501 dialout    4453 Oct  1 09:48 source-manifest.json\n----\nHANDOFF - OND rainfall calibration workflow (box 3S-1N, 36-39E)\nFiles (all under /work):\n  inputs/         ",
+          "def _handoff(out):\n    txt = \"\"\"HANDOFF - OND rainfall calibration workflow (box 3S-1N, 36-39E)\nFiles (all under /work):\n  inputs/                 supplied raw development inputs (ECMWF mm/day monthly means; CHIRPS v3 mm/month) + source-manifest.json\n  common.py               aggregation (rates->monthly mm->OND sum; cos-lat CHIRPS cell means, 90% valid rule) and model fit/predict\n  solve.py --output DIR   rebuilds training.nc, model.json, development.nc (LOO), development-insample.nc, reliability.png,\n                          outlook.png, report.txt, handoff.txt, answer.json, provenance.json from retained inputs; no network\n  write_docs.py           report/answer writers used by solve.py\n  predict.py --forecast forecast.nc --output out.nc   loads model.json (no refitting); input forecast(year,member,lat,lon) OND mm\n                          on the same 1-degree grid; output probability(year,tercile,lat,lon) + rainfall_mm(year,lat,lon)\n  model.json              fitted state: per-cell a,b,s,n,xbar,sxx,dof and observed terciles t1,t2 (mm), training years, input hashes\n  cache/                  cached aggregated training data keyed by input hashes (cache hit skips re-aggregation)\nTo re-use operationally: build forecast.nc for a new September init (convert mm/day x month length, sum lead 2-4) on the same grid\nand run predict.py. To retrain with more years, extend inputs and change TRAIN_YEARS in solve.py; fit uses training years only.\nMethod: sqrt-space OLS on ensemble mean with "
+        ]
+      }
+    },
+    "fable-rhiza-initial": {
+      "arm": "rhiza",
+      "model": "claude-fable-5-1",
+      "phase": "initial",
+      "status": "stopped",
+      "reason": "Next call would exceed configured budget",
+      "input_tokens": 339516,
+      "output_tokens": 20531,
+      "tokens": 360047,
+      "usd": 4.421710000000001,
+      "seconds": 293.02591049997136,
+      "usage_incomplete": false,
+      "checks": "11/12",
+      "failed_checks": [
+        "independent_replay"
+      ],
+      "metrics": {
+        "RPS": {
+          "submitted": 0.2810179248367107,
+          "raw": 0.36854659792488276,
+          "model_climate": 0.29594237189552974,
+          "climatology": 0.5555555555555555
+        },
+        "skill_vs": {
+          "raw": 0.2374968961347248,
+          "model_climate": 0.050430247494561264,
+          "climatology": 0.49416773529392066
+        },
+        "RMSE_mm": {
+          "submitted": 178.4845946784875,
+          "raw": 214.89843077983224
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.14141982503389972,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.1667047506112963
+              },
+              {
+                "bin": 1,
+                "probability": 0.32215450442166055,
+                "frequency": 0.0,
+                "cell_years": 7,
+                "years": 1,
+                "weight": 0.29162858368886335
+              },
+              {
+                "bin": 2,
+                "probability": 0.4790551249442281,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04166666569984029
+              },
+              {
+                "bin": 3,
+                "probability": 0.7246931407306657,
+                "frequency": 1.0,
+                "cell_years": 5,
+                "years": 1,
+                "weight": 0.2082698604145593
+              },
+              {
+                "bin": 4,
+                "probability": 0.8909339052130143,
+                "frequency": 1.0,
+                "cell_years": 7,
+                "years": 1,
+                "weight": 0.2917301395854407
+              }
+            ],
+            "gap": 0.22664143646753354
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.06999809547894077,
+                "frequency": 0.2500476014258896,
+                "cell_years": 8,
+                "years": 2,
+                "weight": 0.333371417277963
+              },
+              {
+                "bin": 1,
+                "probability": 0.25998679679232733,
+                "frequency": 0.16672591222596742,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.249987305996341
+              },
+              {
+                "bin": 2,
+                "probability": 0.4960121863178215,
+                "frequency": 0.7999390632132344,
+                "cell_years": 5,
+                "years": 2,
+                "weight": 0.20833333236650692
+              },
+              {
+                "bin": 3,
+                "probability": 0.7066490614956678,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12498730502951465
+              },
+              {
+                "bin": 4,
+                "probability": 0.8400182830784478,
+                "frequency": 1.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08332063932967435
+              }
+            ],
+            "gap": 0.19665041749117598
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1499984767195609,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16669205467398462
+              },
+              {
+                "bin": 1,
+                "probability": 0.2299946676482532,
+                "frequency": 0.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.3333079453260154
+              },
+              {
+                "bin": 2,
+                "probability": 0.5066666666666667,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12503808491145602
+              },
+              {
+                "bin": 3,
+                "probability": 0.6666680210375295,
+                "frequency": 1.0,
+                "cell_years": 9,
+                "years": 1,
+                "weight": 0.37496191508854393
+              }
+            ],
+            "gap": 0.2883348568071376
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.4999999999999999,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.16666666666666663
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.5359163125702591,
+            0.8942700215359224
+          ],
+          "model_climate": [
+            -0.1751384942780978,
+            0.718052731182635
+          ],
+          "climatology": [
+            0.06419532625191815,
+            0.9241401443359233
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 1
+      },
+      "judge_usd": 0.098876,
+      "completion": "partial",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.json"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": []
+      }
+    },
+    "fable-scratch-followup": {
+      "arm": "scratch",
+      "model": "claude-fable-5-1",
+      "phase": "followup",
+      "status": "submitted",
+      "reason": null,
+      "input_tokens": 323310,
+      "output_tokens": 10743,
+      "tokens": 334053,
+      "usd": 3.77025,
+      "seconds": 225.73875904199667,
+      "usage_incomplete": false,
+      "checks": "12/12",
+      "failed_checks": [],
+      "metrics": {
+        "RPS": {
+          "submitted": 0.3961829825878329,
+          "raw": 0.4392426352019062,
+          "model_climate": 0.3533620532434293,
+          "climatology": 0.4027862401246082
+        },
+        "skill_vs": {
+          "raw": 0.09803158701631987,
+          "model_climate": -0.12118145950126835,
+          "climatology": 0.01639395013775158
+        },
+        "RMSE_mm": {
+          "submitted": 70.0957054632282,
+          "raw": 80.59703470010813
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.14007744539245826,
+                "frequency": 0.0,
+                "cell_years": 7,
+                "years": 1,
+                "weight": 0.291666667633493
+              },
+              {
+                "bin": 1,
+                "probability": 0.2868107165998051,
+                "frequency": 0.0833629567577965,
+                "cell_years": 12,
+                "years": 2,
+                "weight": 0.49997460812537653
+              },
+              {
+                "bin": 2,
+                "probability": 0.4580377989326271,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12500000096682634
+              },
+              {
+                "bin": 3,
+                "probability": 0.6859304308891296,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.2570076459925573
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.030770816834901196,
+                "frequency": 0.0,
+                "cell_years": 13,
+                "years": 2,
+                "weight": 0.5417047496444699
+              },
+              {
+                "bin": 1,
+                "probability": 0.28667750080846033,
+                "frequency": 0.16673438005287733,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.24997461005902932
+              },
+              {
+                "bin": 2,
+                "probability": 0.4933170792315879,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 2,
+                "weight": 0.1249619170221967
+              },
+              {
+                "bin": 3,
+                "probability": 0.64,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              },
+              {
+                "bin": 4,
+                "probability": 0.7999999999999999,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              }
+            ],
+            "gap": 0.16831556114811494
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.08799317439668175,
+                "frequency": 0.10003656374304086,
+                "cell_years": 10,
+                "years": 2,
+                "weight": 0.41664127672569595
+              },
+              {
+                "bin": 1,
+                "probability": 0.26667276009780744,
+                "frequency": 0.0,
+                "cell_years": 12,
+                "years": 2,
+                "weight": 0.5
+              },
+              {
+                "bin": 2,
+                "probability": 0.5,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.18003351479942742
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.04167936163715201,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.29165397169618124
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.17033716004816069,
+            0.21391226210733316
+          ],
+          "model_climate": [
+            -0.21901895686072215,
+            0.003258119032838014
+          ],
+          "climatology": [
+            -0.33555880738186294,
+            0.3023689681807976
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 2
+      },
+      "judge_usd": 0.100968,
+      "completion": "partial",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.nc"
+        ],
+        "unchanged_inherited_models": [
+          "model.nc"
+        ],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [
+          "cache/training_ae2061e971c1_a69fbe38ee07.nc"
+        ],
+        "cache_log_evidence": [
+          "2:\"\"\"Reproduce the full development workflow from retained raw inputs (no network).\n3:Usage: python solve.py --output DIRECTORY\n5:import argparse, json, os, shutil, sys, time\n12:HERE = os.path.dirname(os.path.abspath(__file__))\n13:sys.path.insert(0, HERE)\n18:TRAIN_YEARS = (1993, 2004)\n19:FC_IN = os.path.join(HERE, \"inputs\", \"forecast-development.nc\")\n20:OBS_IN = os.path.join(HERE, \"inputs\", \"observations-development.nc\")\n21:MANIFEST = os.path.join(HERE, \"inputs\", \"source-manifest.json\")\n22:CACHE = os.path.join(HERE, \"cache\")\n26:    \"\"\"Aggregate raw inputs to OND cell totals, with on-disk cache keyed on input hashes.\"\"\"\n31:        log.append(f\"cache HIT {cpath} (aggregation skipped; no download needed - inputs supplied)\")\n33:    log.append(f\"cache MISS {cpath}; aggregating supplied raw inputs (no network used)\")\n36:    fc = fc.sel(year=slice(*TRAIN_YEARS)); obs = obs.sel(year=slice(*TRAIN_YEARS))\n83:def main():\n84:    ap = argparse.ArgumentParser()\n85:    ap.add_argument(\"--output\", required=True)\n102:    model.to_netcdf(os.path.join(out, \"model.nc\"), engine=\"h5netcdf\")\n135:    shutil.copy(os.path.join(HERE, \"calib_common.py\"), out) if out != HERE else None\n147:            \"note\": \"Inputs were supplied pre-normalised under /work/inputs; nothing was downloaded by this workflow.\",\n148:            \"cache_log\": log}\n181:           \"files\": {\"training\": \"training.nc\", \"development\": \"development.nc\", \"model\": \"model.nc\",\n207:            \"       predict.py (apply frozen model.nc), m"
+        ]
+      }
+    },
+    "fable-scratch-initial": {
+      "arm": "scratch",
+      "model": "claude-fable-5-1",
+      "phase": "initial",
+      "status": "submitted",
+      "reason": null,
+      "input_tokens": 241628,
+      "output_tokens": 18887,
+      "tokens": 260515,
+      "usd": 3.3606299999999996,
+      "seconds": 294.9438041250105,
+      "usage_incomplete": false,
+      "checks": "12/12",
+      "failed_checks": [],
+      "metrics": {
+        "RPS": {
+          "submitted": 0.27902873694928754,
+          "raw": 0.36854659792488276,
+          "model_climate": 0.29594237189552974,
+          "climatology": 0.5555555555555555
+        },
+        "skill_vs": {
+          "raw": 0.24289428115638378,
+          "model_climate": 0.05715178545711208,
+          "climatology": 0.49774827349128237
+        },
+        "RMSE_mm": {
+          "submitted": 178.09358431057709,
+          "raw": 214.89843077983224
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1266138048880315,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.1667047506112963
+              },
+              {
+                "bin": 1,
+                "probability": 0.31545730894660434,
+                "frequency": 0.0,
+                "cell_years": 7,
+                "years": 1,
+                "weight": 0.29162858368886335
+              },
+              {
+                "bin": 2,
+                "probability": 0.47674494981765747,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04166666569984029
+              },
+              {
+                "bin": 3,
+                "probability": 0.7140203628385733,
+                "frequency": 1.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16662858272203698
+              },
+              {
+                "bin": 4,
+                "probability": 0.8929214786310474,
+                "frequency": 1.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.333371417277963
+              }
+            ],
+            "gap": 0.2163171634947118
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.06999809547894077,
+                "frequency": 0.2500476014258896,
+                "cell_years": 8,
+                "years": 2,
+                "weight": 0.333371417277963
+              },
+              {
+                "bin": 1,
+                "probability": 0.25998679679232733,
+                "frequency": 0.16672591222596742,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.249987305996341
+              },
+              {
+                "bin": 2,
+                "probability": 0.4960121863178215,
+                "frequency": 0.7999390632132344,
+                "cell_years": 5,
+                "years": 2,
+                "weight": 0.20833333236650692
+              },
+              {
+                "bin": 3,
+                "probability": 0.7066490614956678,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12498730502951465
+              },
+              {
+                "bin": 4,
+                "probability": 0.8400182830784478,
+                "frequency": 1.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08332063932967435
+              }
+            ],
+            "gap": 0.19665041749117598
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1499984767195609,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16669205467398462
+              },
+              {
+                "bin": 1,
+                "probability": 0.2299946676482532,
+                "frequency": 0.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.3333079453260154
+              },
+              {
+                "bin": 2,
+                "probability": 0.5066666666666667,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12503808491145602
+              },
+              {
+                "bin": 3,
+                "probability": 0.6666680210375295,
+                "frequency": 1.0,
+                "cell_years": 9,
+                "years": 1,
+                "weight": 0.37496191508854393
+              }
+            ],
+            "gap": 0.2883348568071376
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.4999999999999999,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.16666666666666663
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.5374466803071967,
+            0.9055503702567516
+          ],
+          "model_climate": [
+            -0.17630938752492264,
+            0.7481337314755259
+          ],
+          "climatology": [
+            0.0632629022200496,
+            0.9322336447625151
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 2
+      },
+      "judge_usd": 0.089832,
+      "completion": "partial",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.nc"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": [
+          "cache HIT /work/cache/training_ae2061e971c1_a69fbe38ee07.nc (aggregation skipped; no download needed - inputs supplied)\n{\n \"rps\": 0.335214753250828,\n0.27593613384136373 0.18429877661268756 [-0.040770138383153444, 0.54400826898916]\n{'1993': 0.277, '1994': 0.992, '1995': -0.205, '1996': 0.629, '1997': 0.977, '1998': 0.736, '1999': -1.323, '2000': -0.38, '2001': -0.019, '2002': 0.725, '2003': 0.147, '2004': -0.088}\nECMWF SEAS5 (sys51) Sept-issued OND rainfall calibration, box 36-39E, 3S-1N, 1x1 deg cells\nMethod: Per-1-degree-cell Gaussian regression in square-root space: sqrt(CHIRPS OND total) regressed by OLS on sqrt(SEAS5 ensemble-mean OND total) using training years 1993-2004 only. Predictive N(a+b x, s^2 (1+1/n+(x-xbar)^2/Sxx)), s = residual SD (n-2 dof). Tercile probabilities = Gaussian mass below / between / above the training observed terciles (numpy linear quantiles 1/3, 2/3 in mm, mapped to sqrt space); seasonal rainfall estimate = back-transformed predictive mean mu^2+sigma^2. Forecast rates (mm/day) x month length (31,30,31) summed over Oct-Dec; CHIRPS 0.05-deg pixels cos-lat averaged inside each native 1-deg cell (>=90% valid area, weights renormalised).\n\nLeave-one-year-out development validation (1993-2004, 12 cells x 12 years = 144 cell-years):\n  RPS = 0.335 vs climatology 0.463  -> RPSS = 0.276\n  Brier below/near/above = 0.198/0.165/0.137 (climatology 0.231)\n  Rainfall estimate: r = 0.83, RMSE = 106 mm (climatology RMSE 159 mm), MAE = 79 mm\n  Most-likely-category "
+        ]
+      }
+    },
+    "haiku-accord-initial": {
+      "arm": "accord",
+      "model": "claude-haiku-4-5-20251001",
+      "phase": "initial",
+      "status": "stopped",
+      "reason": "Next call would exceed configured budget",
+      "input_tokens": 734226,
+      "output_tokens": 29911,
+      "tokens": 764137,
+      "usd": 0.883781,
+      "seconds": 245.19566287496127,
+      "usage_incomplete": false,
+      "checks": "5/12",
+      "failed_checks": [
+        "artifact:report.txt",
+        "artifact:provenance.json",
+        "artifact:handoff.txt",
+        "figure_readable",
+        "source_coverage",
+        "prediction_validity_and_coverage",
+        "independent_replay"
+      ],
+      "metrics": {},
+      "ratings": {
+        "data_provenance": 1,
+        "scientific_processing": 1,
+        "results_uncertainty": 1,
+        "communication": 0,
+        "reproducibility_reuse": 0
+      },
+      "judge_usd": 0.041642,
+      "completion": "failed",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [
+          "africas2s"
+        ],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.pkl"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": []
+      }
+    },
+    "haiku-rhiza-initial": {
+      "arm": "rhiza",
+      "model": "claude-haiku-4-5-20251001",
+      "phase": "initial",
+      "status": "stopped",
+      "reason": "Next call would exceed configured budget",
+      "input_tokens": 720519,
+      "output_tokens": 27501,
+      "tokens": 748020,
+      "usd": 0.858024,
+      "seconds": 225.53913658298552,
+      "usage_incomplete": false,
+      "checks": "7/12",
+      "failed_checks": [
+        "artifact:provenance.json",
+        "source_coverage",
+        "training_aggregation",
+        "prediction_validity_and_coverage",
+        "independent_replay"
+      ],
+      "metrics": {},
+      "ratings": {
+        "data_provenance": 1,
+        "scientific_processing": 0,
+        "results_uncertainty": 1,
+        "communication": 1,
+        "reproducibility_reuse": 1
+      },
+      "judge_usd": 0.058396,
+      "completion": "failed",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.pkl"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": []
+      }
+    },
+    "haiku-scratch-initial": {
+      "arm": "scratch",
+      "model": "claude-haiku-4-5-20251001",
+      "phase": "initial",
+      "status": "stopped",
+      "reason": "Next call would exceed configured budget",
+      "input_tokens": 741385,
+      "output_tokens": 35293,
+      "tokens": 776678,
+      "usd": 0.91785,
+      "seconds": 272.37529424997047,
+      "usage_incomplete": false,
+      "checks": "3/12",
+      "failed_checks": [
+        "answer_json",
+        "artifact:report.txt",
+        "artifact:provenance.json",
+        "artifact:handoff.txt",
+        "source_coverage",
+        "training_aggregation",
+        "prediction_validity_and_coverage",
+        "development_predictions",
+        "independent_replay"
+      ],
+      "metrics": {},
+      "ratings": {
+        "data_provenance": 0,
+        "scientific_processing": 0,
+        "results_uncertainty": 1,
+        "communication": 1,
+        "reproducibility_reuse": 0
+      },
+      "judge_usd": 0.040034,
+      "completion": "failed",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.pkl"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": []
+      }
+    },
+    "sonnet-accord-initial": {
+      "arm": "accord",
+      "model": "claude-sonnet-5-5",
+      "phase": "initial",
+      "status": "submitted",
+      "reason": null,
+      "input_tokens": 197877,
+      "output_tokens": 15877,
+      "tokens": 213754,
+      "usd": 0.554524,
+      "seconds": 154.45647995796753,
+      "usage_incomplete": false,
+      "checks": "9/12",
+      "failed_checks": [
+        "training_aggregation",
+        "prediction_validity_and_coverage",
+        "development_predictions"
+      ],
+      "metrics": {},
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 1,
+        "results_uncertainty": 1,
+        "communication": 1,
+        "reproducibility_reuse": 2
+      },
+      "judge_usd": 0.069778,
+      "completion": "failed",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [
+          "africas2s"
+        ],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.pkl"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": []
+      }
+    },
+    "sonnet-rhiza-initial": {
+      "arm": "rhiza",
+      "model": "claude-sonnet-5-5",
+      "phase": "initial",
+      "status": "submitted",
+      "reason": null,
+      "input_tokens": 121193,
+      "output_tokens": 11753,
+      "tokens": 132946,
+      "usd": 0.359916,
+      "seconds": 98.36590416601393,
+      "usage_incomplete": false,
+      "checks": "12/12",
+      "failed_checks": [],
+      "metrics": {
+        "RPS": {
+          "submitted": 0.27909267412437033,
+          "raw": 0.36854659792488276,
+          "model_climate": 0.29594237189552974,
+          "climatology": 0.5555555555555555
+        },
+        "skill_vs": {
+          "raw": 0.24272079651307743,
+          "model_climate": 0.05693573942533481,
+          "climatology": 0.4976331865761333
+        },
+        "RMSE_mm": {
+          "submitted": 175.74045965754075,
+          "raw": 214.89843077983224
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.15322032874459854,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16666666666666666
+              },
+              {
+                "bin": 1,
+                "probability": 0.31024020282787285,
+                "frequency": 0.0,
+                "cell_years": 5,
+                "years": 1,
+                "weight": 0.20830794435918898
+              },
+              {
+                "bin": 2,
+                "probability": 0.43793967430820335,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.1250253889741443
+              },
+              {
+                "bin": 3,
+                "probability": 0.777967631816864,
+                "frequency": 1.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              },
+              {
+                "bin": 4,
+                "probability": 0.9017416549969794,
+                "frequency": 1.0,
+                "cell_years": 11,
+                "years": 1,
+                "weight": 0.458320638362848
+              }
+            ],
+            "gap": 0.19920379326859788
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.06999809547894077,
+                "frequency": 0.2500476014258896,
+                "cell_years": 8,
+                "years": 2,
+                "weight": 0.333371417277963
+              },
+              {
+                "bin": 1,
+                "probability": 0.25998679679232733,
+                "frequency": 0.16672591222596742,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.249987305996341
+              },
+              {
+                "bin": 2,
+                "probability": 0.4960121863178215,
+                "frequency": 0.7999390632132344,
+                "cell_years": 5,
+                "years": 2,
+                "weight": 0.20833333236650692
+              },
+              {
+                "bin": 3,
+                "probability": 0.7066490614956678,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12498730502951465
+              },
+              {
+                "bin": 4,
+                "probability": 0.8400182830784478,
+                "frequency": 1.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08332063932967435
+              }
+            ],
+            "gap": 0.19665041749117598
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1499984767195609,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16669205467398462
+              },
+              {
+                "bin": 1,
+                "probability": 0.2299946676482532,
+                "frequency": 0.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.3333079453260154
+              },
+              {
+                "bin": 2,
+                "probability": 0.5066666666666667,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12503808491145602
+              },
+              {
+                "bin": 3,
+                "probability": 0.6666680210375295,
+                "frequency": 1.0,
+                "cell_years": 9,
+                "years": 1,
+                "weight": 0.37496191508854393
+              }
+            ],
+            "gap": 0.2883348568071376
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.4999999999999999,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.16666666666666663
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.6060496890748976,
+            0.9634864083408212
+          ],
+          "model_climate": [
+            -0.22879794811017606,
+            0.9026301944578969
+          ],
+          "climatology": [
+            0.02146439033982739,
+            0.9738019828124391
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 2
+      },
+      "judge_usd": 0.069418,
+      "completion": "partial",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.npz"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": []
+      }
+    },
+    "sonnet-scratch-initial": {
+      "arm": "scratch",
+      "model": "claude-sonnet-5-5",
+      "phase": "initial",
+      "status": "submitted",
+      "reason": null,
+      "input_tokens": 74898,
+      "output_tokens": 11512,
+      "tokens": 86410,
+      "usd": 0.264916,
+      "seconds": 93.3322123750113,
+      "usage_incomplete": false,
+      "checks": "9/12",
+      "failed_checks": [
+        "training_aggregation",
+        "prediction_validity_and_coverage",
+        "development_predictions"
+      ],
+      "metrics": {},
+      "ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 1,
+        "results_uncertainty": 1,
+        "communication": 1,
+        "reproducibility_reuse": 1
+      },
+      "judge_usd": 0.067306,
+      "completion": "failed",
+      "audit": {
+        "status": "passed",
+        "frozen_hashes_match": true,
+        "identical_input_hashes": true,
+        "allowed_toolkit_imports": true,
+        "toolkit_imports_in_code": [],
+        "catalog_reads": 0,
+        "catalog_script_calls": 0,
+        "saved_models": [
+          "model.npz"
+        ],
+        "unchanged_inherited_models": [],
+        "input_cache": "retained supplied data; no download saving measured",
+        "network_response_bytes": 0,
+        "network_requests": 0,
+        "truncated_responses": 0,
+        "verification_boundary": "Frozen read-only code receives forecast-only inputs, no network and no verification observations.",
+        "unchanged_inherited_cache_files": [],
+        "cache_log_evidence": []
+      }
+    }
+  },
+  "prior_recorded_usd": 35.089347,
+  "new_agent_usd": 24.056141,
+  "new_judge_usd": 1.00603,
+  "total_recorded_usd": 60.151518,
+  "cost_note": "Recorded provider token usage at fixed prices. Prior interrupted/timed-out calls may add unrecorded usage; the protocol reserves a buffer below $100."
+}

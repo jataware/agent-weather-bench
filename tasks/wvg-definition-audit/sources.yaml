@@ -1,0 +1,25 @@
+source_category: literature
+paper:
+  title: Tailored Forecasts Can Predict Extreme Climate Informing Proactive Interventions in East Africa
+  doi: https://doi.org/10.1029/2023EF003524
+  full_text: https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2023EF003524
+  locators: [Figure 1 caption panels d and e, gradient discussion, Data Availability Statement]
+implementation: source-material/seasonal-hindcasting-gha/scripts/compute_teleconnections.py.txt
+dataset:
+  product: NOAA ERSSTv5 monthly
+  documentation: https://www.ncei.noaa.gov/products/extended-reconstructed-sst
+  doi: https://doi.org/10.7289/V5T72FNM
+  local_fixture: var/private/tasks/wvg-definition-audit/agent-inputs/sst.nc in the internal data bundle
+  provenance: source-material/chc_analyses/AGU-autoscience/AGUv4/outputs/ersst_provenance.json.txt
+  expected_source_sha256: a9c91583b92e71d24362cf092a038d947c8fd7764cf1c0c2846fbb81c6042916
+scope: Controlled predictor-geometry audit inspired by the paper; not exact reconstruction of its forecast analysis.
+curator_choices:
+  - Equal western-box compositing, cosine spatial weights, equal MAM month weights.
+  - Separate standardization of Niño 3.4 and composite Western V over 1981–2010 using ddof=1.
+  - Celsius metadata restored from inherited provenance; the original fixture removed variable attributes.
+author_archive:
+  doi: https://doi.org/10.25349/D9MC8Z
+  workbook: TailoredForecastsDataRepository.xlsx
+  download_status: Metadata retrieved; API download returned 401 and public file stream returned 403.
+  consequence: Do not claim reproduction of the published forecast-skill result; obtain and audit the author workbook for that larger task.
+source_hashes: Recorded by preparation in input-manifest.json.

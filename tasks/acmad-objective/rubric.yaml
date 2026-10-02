@@ -1,0 +1,74 @@
+schema_version: 2
+task: acmad-objective
+task_version: review-0.3
+status: revised_after_zeek_review_pending_joint_signoff
+aggregation: Weighted mean of scientific outcomes; weights are relative.
+completion: All required scientific outcomes and basic validity checks must pass,
+  with trusted integrity evidence. Missing expert or execution evidence leaves completion
+  pending; score cannot override a validity or integrity failure.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks:
+  - delivery
+  - answer_schema
+  - execution_schema
+  - provenance_fields
+  - source_coverage
+  integrity: Trusted run and network/retention evidence must establish the experiment-wide
+    information boundary; unresolved evidence cannot complete the task.
+tree:
+  id: task_completion
+  children:
+  - id: objective_product
+    weight: 45
+    required: true
+    evaluator: deterministic
+    criterion: The objective probabilities and component counts match the reference,
+      preserving coordinates, category mapping and missing support; cells with no
+      contributing component remain missing.
+    evidence:
+    - objective.nc
+    - controller-reference
+    checks:
+    - objective
+    - support
+  - id: combination_audit
+    weight: 25
+    required: true
+    evaluator: deterministic
+    criterion: The nominal 2,8,8 sensitivity, component disagreement and reported
+      support/difference statistics agree with the independent calculations, in the
+      declared units.
+    evidence:
+    - objective.nc
+    - answer.json
+    - controller-reference
+    checks:
+    - sensitivity
+    - disagreement
+    - summary_metrics
+  - id: scientific_report
+    weight: 20
+    required: true
+    evaluator: expert
+    criterion: The report, figure and processing provenance distinguish inherited
+      masks, equal-component combination, support limitations and hypothetical nominal
+      weighting; they trace the supplied products and claim neither exact member pooling,
+      full consensus reproduction nor observed forecast skill.
+    evidence:
+    - report.txt
+    - outlook.png
+    - provenance.json
+    - source-record
+  - id: reusable_workflow
+    weight: 10
+    required: true
+    evaluator: execution
+    criterion: The command declared in execution.json regenerates the scientific arrays
+      and answer fields offline from retained inputs in a clean runtime; the handoff
+      states how to run it and which tools and artifacts it needs.
+    evidence:
+    - execution.json
+    - handoff.txt
+    - trusted-replay-log

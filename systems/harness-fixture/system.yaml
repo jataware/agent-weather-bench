@@ -1,0 +1,19 @@
+schema_version: 1
+id: harness-fixture
+kind: harness_fixture
+description: Deterministic ACMAD workflow for exercising the harness; not agent capability evidence.
+driver:
+  kind: command
+  argv: ['{python}', '{driver}/adapter.py']
+  env: []
+runtime:
+  image: sha256:14ded77c764dccdcaeef07f91c549709b4ff3549d0c30f5dc780e4376347917a
+  memory: 4g
+  cpus: 2
+budget:
+  max_seconds: 120
+  max_tool_calls: 4
+  command_seconds: 60
+substrate:
+  paths: [adapter.py, workflow.py]
+  instructions: Harness fixture only. No model calls or benchmark claims.

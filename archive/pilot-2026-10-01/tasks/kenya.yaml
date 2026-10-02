@@ -1,0 +1,44 @@
+id: kenya
+title: Six-week Kenya rainfall outlook
+version: 1
+origin:
+  repository: https://github.com/jataware/weather-skills-bench
+  revision: 02fb956cd1a4dd4f9cbe8c49e8a57cb06c415e2c
+  case: e2e-kenya-rainfall
+science: forecast_product_analysis
+brief: |
+  Prepare a six-week rainfall outlook from the public Kenya ECMWF S2S archive.
+  No weather data is preloaded. For each fully covered seven-day period from
+  initialization, calculate each member's precipitation total, then the
+  ensemble-mean map and median and sample spread (ddof=1) of regional totals.
+  Use the rectangle south=-5, north=5, west=34, east=42, including boundary
+  grid centres; this is not a country-polygon average. Regional means use
+  cosine-latitude weights and equal longitude weights. Include the control and
+  all perturbed members with equal weight. Preserve source latitude/longitude order.
+  Inspect the raw variable's units and accumulation convention. The six intervals
+  are lead days (0,7], (7,14], (14,21], (21,28], (28,35], (35,42].
+  The archive is discoverable at https://kenya-forecasts.sheerwater.rhizaresearch.org/files/.
+phases:
+  initial:
+    brief: Use the ECMWF issue of 2026-09-27. Produce all six forecast maps and regional uncertainty statistics.
+    init: '2026-09-27'
+  followup:
+    brief: Apply the same workflow to the archived issue of 2026-09-20. This earlier issue is a new input, not a claim of forward-time verification. Reuse your own saved code; document repairs in handoff.txt.
+    init: '2026-09-20'
+submission: |
+  Write answer.json with period_end_lead_days=[7,14,21,28,35,42],
+  ensemble_mean_mm [period][latitude][longitude], regional_median_mm,
+  regional_spread_mm, latitude, longitude, units='mm', source_url (exact raw store),
+  figure='/work/outlook.png'. Produce a six-map outlook.png with dates and units,
+  report.txt, provenance.json with exact requests, and handoff.txt. Supply solve.py
+  accepting --output DIRECTORY to reproduce answer.json and the figure from
+  retained data without network. Keep all files under /work. This is an analysis
+  of forecast products, not evidence of forecast accuracy against observations.
+numeric: {atol: 0.0001, rtol: 0.000001}
+readiness:
+  reference: frozen_raw_archives_available
+  unresolved: []
+overlap:
+  scratch: Python/Zarr retrieval and ensemble processing.
+  rhiza: Native Kenya fetch, aggregation, totals, summaries and plotting helpers.
+  accord: Rosetta Kenya archive retrieval plus array processing; little need for DeepScale calibration.

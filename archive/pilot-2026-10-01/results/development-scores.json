@@ -1,0 +1,289 @@
+{
+  "status": "development_feasibility_only",
+  "agent_runs": 0,
+  "heldout_evaluation_accessed": false,
+  "development_years": [
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    1999,
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008
+  ],
+  "validation": "leave_one_year_out_on_development_years",
+  "grid_cells": 12,
+  "ensemble_members": 25,
+  "minimum_observation_coverage": 1.0,
+  "rps_definition": "sum_of_two_cumulative_category_squared_errors",
+  "mean_RPS": {
+    "raw": 0.3908001568899838,
+    "model_climate": 0.33503512057402274,
+    "climatology": 0.46006944440415987,
+    "calibrated": 0.33013605167814375
+  },
+  "calibrated_skill_vs": {
+    "raw": 0.15523050373011482,
+    "model_climate": 0.014622553263924476,
+    "climatology": 0.2824212611952399
+  },
+  "RMSE_mm": {
+    "raw": 150.5467909913229,
+    "calibrated": 113.01973447618394
+  },
+  "paired_year_resampling_95pct_intervals": {
+    "raw": [
+      -0.024035568234644505,
+      0.3498155589664492
+    ],
+    "model_climate": [
+      -0.0876289414095911,
+      0.14612806342791484
+    ],
+    "climatology": [
+      -0.032091089262421185,
+      0.5506119118674604
+    ]
+  },
+  "uncertainty_note": "Exploratory: 16 development years; folds share training data. Not a confirmatory significance test.",
+  "max_probability_difference_from_independent_OLS": 1.887379141862766e-15,
+  "reliability": {
+    "raw": {
+      "bins": [
+        {
+          "bin": 0,
+          "forecast_probability": 0.03950049098238426,
+          "observed_frequency": 0.17500704524016275,
+          "cell_year_count": 80,
+          "distinct_years": 14,
+          "weight": 0.41669522962513894
+        },
+        {
+          "bin": 1,
+          "forecast_probability": 0.27733318902796816,
+          "observed_frequency": 0.24445768618741143,
+          "cell_year_count": 45,
+          "distinct_years": 15,
+          "weight": 0.23436230490866133
+        },
+        {
+          "bin": 2,
+          "forecast_probability": 0.4875016425013255,
+          "observed_frequency": 0.312520828484846,
+          "cell_year_count": 32,
+          "distinct_years": 15,
+          "weight": 0.16665555965517165
+        },
+        {
+          "bin": 3,
+          "forecast_probability": 0.6799966770159377,
+          "observed_frequency": 0.8181465687869124,
+          "cell_year_count": 11,
+          "distinct_years": 7,
+          "weight": 0.05729801378934945
+        },
+        {
+          "bin": 4,
+          "forecast_probability": 0.891662625334699,
+          "observed_frequency": 0.9583169342461219,
+          "cell_year_count": 24,
+          "distinct_years": 6,
+          "weight": 0.12498889202167861
+        }
+      ],
+      "weighted_absolute_gap": 0.10957800147473426
+    },
+    "model_climate": {
+      "bins": [
+        {
+          "bin": 0,
+          "forecast_probability": 0.09910481703147495,
+          "observed_frequency": 0.17907753193449347,
+          "cell_year_count": 67,
+          "distinct_years": 10,
+          "weight": 0.34894881198461597
+        },
+        {
+          "bin": 1,
+          "forecast_probability": 0.2702889324404821,
+          "observed_frequency": 0.1143151867556779,
+          "cell_year_count": 70,
+          "distinct_years": 12,
+          "weight": 0.3645865070759547
+        },
+        {
+          "bin": 2,
+          "forecast_probability": 0.4725024747217089,
+          "observed_frequency": 0.5625237961817676,
+          "cell_year_count": 16,
+          "distinct_years": 5,
+          "weight": 0.08335237578906135
+        },
+        {
+          "bin": 3,
+          "forecast_probability": 0.6736863710349681,
+          "observed_frequency": 0.9473490081717094,
+          "cell_year_count": 19,
+          "distinct_years": 3,
+          "weight": 0.09895198596894395
+        },
+        {
+          "bin": 4,
+          "forecast_probability": 0.9100048750729175,
+          "observed_frequency": 1.0,
+          "cell_year_count": 20,
+          "distinct_years": 2,
+          "weight": 0.10416031918142399
+        }
+      ],
+      "weighted_absolute_gap": 0.1287291803740915
+    },
+    "climatology": {
+      "bins": [
+        {
+          "bin": 1,
+          "forecast_probability": 0.33333333333333337,
+          "observed_frequency": 0.3489567464620226,
+          "cell_year_count": 192,
+          "distinct_years": 16,
+          "weight": 1.0
+        }
+      ],
+      "weighted_absolute_gap": 0.015623413128689256
+    },
+    "calibrated": {
+      "bins": [
+        {
+          "bin": 0,
+          "forecast_probability": 0.11161970227854133,
+          "observed_frequency": 0.15683510081499102,
+          "cell_year_count": 51,
+          "distinct_years": 9,
+          "weight": 0.26563134760609597
+        },
+        {
+          "bin": 1,
+          "forecast_probability": 0.30057143988193397,
+          "observed_frequency": 0.13638587905577107,
+          "cell_year_count": 66,
+          "distinct_years": 11,
+          "weight": 0.343740478772136
+        },
+        {
+          "bin": 2,
+          "forecast_probability": 0.47888818864014815,
+          "observed_frequency": 0.1250015879791512,
+          "cell_year_count": 24,
+          "distinct_years": 7,
+          "weight": 0.12499841300783603
+        },
+        {
+          "bin": 3,
+          "forecast_probability": 0.7239817391628445,
+          "observed_frequency": 0.7142048841843911,
+          "cell_year_count": 14,
+          "distinct_years": 4,
+          "weight": 0.07291825390053723
+        },
+        {
+          "bin": 4,
+          "forecast_probability": 0.9478229712148349,
+          "observed_frequency": 1.0,
+          "cell_year_count": 37,
+          "distinct_years": 4,
+          "weight": 0.19271150671339476
+        }
+      ],
+      "weighted_absolute_gap": 0.12345113902568808
+    }
+  },
+  "per_year_RPS": {
+    "raw": {
+      "1993": 0.3157284588111775,
+      "1994": 0.2064461489918405,
+      "1995": 0.46739492555485634,
+      "1996": 0.2984052813676048,
+      "1997": 0.050544586198485356,
+      "1998": 0.1790582580070445,
+      "1999": 0.8200439953091712,
+      "2000": 0.45601820614099375,
+      "2001": 0.422979968190866,
+      "2002": 0.39779820986519376,
+      "2003": 0.5590708525067993,
+      "2004": 0.5497245934100468,
+      "2005": 0.34757034515224583,
+      "2006": 0.2967320710463226,
+      "2007": 0.6035565658196396,
+      "2008": 0.2817300438674536
+    },
+    "model_climate": {
+      "1993": 0.3464063376695891,
+      "1994": 0.048676660138151195,
+      "1995": 0.5050491163598189,
+      "1996": 0.20640264032182257,
+      "1997": 0.005998984420924232,
+      "1998": 0.15188173781386705,
+      "1999": 0.7541454369120539,
+      "2000": 0.6601268012236473,
+      "2001": 0.3612190105862873,
+      "2002": 0.24429697215589846,
+      "2003": 0.3859711989132514,
+      "2004": 0.4412309147673751,
+      "2005": 0.41561113060670474,
+      "2006": 0.13801133408202465,
+      "2007": 0.3973888633627937,
+      "2008": 0.29814478985015436
+    },
+    "climatology": {
+      "1993": 0.4166920566076372,
+      "1994": 0.5555555555555555,
+      "1995": 0.44443598048623645,
+      "1996": 0.44442751910623235,
+      "1997": 0.5555555555555555,
+      "1998": 0.5277693144641208,
+      "1999": 0.38889735155799465,
+      "2000": 0.47220529623945917,
+      "2001": 0.30557248153831834,
+      "2002": 0.5277693144641208,
+      "2003": 0.388855036923363,
+      "2004": 0.4166920566076372,
+      "2005": 0.5555555555555555,
+      "2006": 0.5555555555555555,
+      "2007": 0.361128035804772,
+      "2008": 0.4444444444444443
+    },
+    "calibrated": {
+      "1993": 0.3328093609560206,
+      "1994": 0.0009183619460805931,
+      "1995": 0.5723079372550737,
+      "1996": 0.17665643464942188,
+      "1997": 0.002552325161449346,
+      "1998": 0.11780423204572846,
+      "1999": 0.8694762556890968,
+      "2000": 0.6080770707786297,
+      "2001": 0.3111681144995052,
+      "2002": 0.11877324143107885,
+      "2003": 0.3816577909227101,
+      "2004": 0.3955516978696581,
+      "2005": 0.5543986498067833,
+      "2006": 0.021656700961409897,
+      "2007": 0.5174515779785044,
+      "2008": 0.3009170748991486
+    }
+  },
+  "fitted_model_save_reload": {
+    "identical_predictions": true,
+    "bytes": 4757,
+    "replay_year": 2008,
+    "counts_as_followup_attempt": false
+  }
+}

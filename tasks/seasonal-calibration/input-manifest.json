@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "task": "seasonal-calibration",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/seasonal-calibration",
+  "files": [
+    {
+      "file": "agent-inputs/forecast-development.nc",
+      "sha256": "ae2061e971c19bb077cb372e77acc8d5452fda3cae7a5a0b492d0fff1283d9f8",
+      "bytes": 46460,
+      "visibility": "agent",
+      "dimensions": {
+        "member": 25,
+        "init_time": 12,
+        "lead_time": 3,
+        "lat": 4,
+        "lon": 3
+      },
+      "variables": {
+        "precip": {
+          "dimensions": [
+            "member",
+            "init_time",
+            "lead_time",
+            "lat",
+            "lon"
+          ],
+          "units": "mm/day"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/observations-development.nc",
+      "sha256": "a69fbe38ee076a25a1c255b096038a1b915186e022e225a813673c7645284279",
+      "bytes": 1155728,
+      "visibility": "agent",
+      "dimensions": {
+        "time": 36,
+        "lat": 100,
+        "lon": 80
+      },
+      "variables": {
+        "precip": {
+          "dimensions": [
+            "time",
+            "lat",
+            "lon"
+          ],
+          "units": "mm/month"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "7df5a57d54694ee04f3da9ab67b16e599082c7a30494f0f56be34f1e39d2873f",
+      "bytes": 4453,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/forecast.nc",
+      "sha256": "721e148acc1bb35d2620891e691d289f716ed85eeb04c553483250843e800d38",
+      "bytes": 18971,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 2,
+        "member": 25,
+        "lat": 4,
+        "lon": 3
+      },
+      "variables": {
+        "forecast": {
+          "dimensions": [
+            "year",
+            "member",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/training.nc",
+      "sha256": "9e6d7513109ae6fc6699370446f7b0c54b3f9b1f61095df304b50ebcc1b75a8b",
+      "bytes": 40491,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 12,
+        "member": 25,
+        "lat": 4,
+        "lon": 3
+      },
+      "variables": {
+        "forecast": {
+          "dimensions": [
+            "year",
+            "member",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        },
+        "observed": {
+          "dimensions": [
+            "year",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/verification.nc",
+      "sha256": "5bed071522de1028a4f6a367024ccbd5e2aab517aed81be044cfdb6296ef9db6",
+      "bytes": 19782,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 2,
+        "member": 25,
+        "lat": 4,
+        "lon": 3
+      },
+      "variables": {
+        "forecast": {
+          "dimensions": [
+            "year",
+            "member",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        },
+        "observed": {
+          "dimensions": [
+            "year",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        }
+      }
+    }
+  ],
+  "source_records": [
+    {
+      "path": "archive/pilot-2026-10-01/smoke/task.yaml",
+      "sha256": "c82352d366f5fa7d6d244a490c2055f03bb7b74ac69ed32530df3112bd1d92a3",
+      "original_locator": "agent-weather-bench/archive/pilot-2026-10-01/smoke/task.yaml"
+    },
+    {
+      "path": "archive/pilot-2026-10-01/revision/PLAN.txt",
+      "sha256": "d0d335d57c3f8750896e8089621aed8f9664de07cb1d9e2cd4050473d6e49d30",
+      "original_locator": "agent-weather-bench/archive/pilot-2026-10-01/revision/PLAN.txt"
+    },
+    {
+      "path": "archive/pilot-2026-10-01/feasibility/score_development.py",
+      "sha256": "6b29f54cfd26d0e7a4af84704804f4f7682140b33bf0f3d645fc2a2db4c31491",
+      "original_locator": "agent-weather-bench/archive/pilot-2026-10-01/feasibility/score_development.py"
+    },
+    {
+      "path": "archive/pilot-2026-10-01/results/source-audit.json",
+      "sha256": "3ff449cd6c2d0af1bceaeba1b12c3ec4a389dc667f7d74c6079169dd78c91eeb",
+      "original_locator": "agent-weather-bench/archive/pilot-2026-10-01/results/source-audit.json"
+    }
+  ],
+  "reference_code_sha256": "21ebf6e1c31d49f6ee478d12f83aa545d179a2b95482a3f65f0b76ac0f3093f1",
+  "reference_validation": {
+    "training_reference_matches_existing_pilot": true,
+    "prediction_years_are_inspected_development": true,
+    "agent_attempts": 0
+  },
+  "expert_approval": false,
+  "public_redistribution_review": "pending",
+  "source_record_root": "repository"
+}

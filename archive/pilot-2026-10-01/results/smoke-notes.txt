@@ -1,0 +1,60 @@
+ACCORD development smoke — 1 October 2026
+
+Seven agent attempts: three initial Fable 5.1 arms, three fresh-conversation
+follow-ups with each arm's retained files, and one Haiku 4.5 scratch initial.
+Eight Sonnet 5.5 judge calls: seven final judgments plus one superseded judgment
+before a checker correction. All final judgments cite preserved evidence.
+
+Observed outcome
+Rhiza initial: 11/12 checks; usable fitted predictor. Scratch recovered on its
+follow-up: 11/12. Both missed answer.json in offline solve.py replay despite
+reproducing numerical arrays and figures. ACCORD did not complete either attempt.
+Haiku: 6/12; saved files but failed scientific/output checks. No attempt earned
+full completion. No model capability threshold or ACCORD superiority established.
+Rhiza read a skill document but did not run catalog scripts. ACCORD inspected
+library documentation/API signatures but its retained calibration code used generic
+Python. Availability and substantive library use are different measurements.
+
+Reuse
+Rhiza's model.nc hash was unchanged in the follow-up. Its original frozen predictor
+processed the second private forecast batch in 1.489 seconds including Docker
+startup/cleanup, with no LLM calls. The fresh-conversation follow-up cost $4.19835
+versus $4.28032 initially: little token-dollar saving despite less elapsed time.
+Scratch's follow-up was recovery from incomplete work, not reuse of a working fit.
+No fresh-workspace follow-up controls or repeated seeds were run.
+
+Scientific scope
+Identical supplied normalized monthly ECMWF/CHIRPS fields; no acquisition scored.
+Training 1993–2004, private-to-agent prediction batches 2005–06 and 2007–08.
+All years had previously been inspected in development. Twelve spatial cells are
+not twelve independent climates; two years cannot establish calibration. Report
+RPS/RMSE/reliability separately. Rhiza's first-batch RPS beats raw/model-climate
+baselines, but its second-batch RPS is worse than model-climate. No general skill
+improvement follows from these numbers.
+
+Infrastructure and evaluator history
+v1/v2 were stopped for native NetCDF/HDF5 crashes and a missing shared library.
+Their files, traces and costs remain under runs/smoke-v1 and smoke-v2, excluded
+from comparison. The final common environment uses NetCDF3/scipy input and
+h5netcdf output and passed all three arm I/O probes before v3 launched.
+V3 large tool calls repeatedly hit the common 8192-output-token limit; scratch
+and ACCORD consumed budgets without completing files. ACCORD's follow-up final
+API request timed out at the 600-second deadline. Partial work was frozen and
+scored without another agent request. Provider usage for that request is unknown.
+The runner now preserves timeout artifacts through its normal completion path.
+The scratch follow-up's correct training arrays initially failed because an extra
+valid_fraction_min diagnostic was present. The checker now compares the required
+fields, a regression test covers it, and all completed submissions were regraded.
+The original check/judge record is preserved under evaluation-revisions, and the
+changed submission received a new judge call. No agent artifacts were altered.
+Judge citations to nested check IDs, check:ID aliases and metrics were validated
+against evidence already present in their original packet. No ratings were edited.
+
+Before a larger experiment
+Review this smoke together. Fix oversized-command handling with common chunking
+instructions or a reviewed response budget; make the fit/save/predict path easy
+to discover; ensure solve.py recreates the entire submission contract. Freeze a
+revised protocol before repeating all arms. Kenya rainfall is the next candidate
+for retrieval/skills overlap; IOD needs authenticated ECDS and valid-date audits.
+Keep the open-web condition separate. Do not present these smoke results as a
+clean demonstration of an ACCORD advantage.

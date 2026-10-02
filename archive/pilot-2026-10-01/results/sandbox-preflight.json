@@ -1,0 +1,143 @@
+{
+  "purpose": "infrastructure_only_no_model_calls_no_benchmark_attempts",
+  "arms": {
+    "scratch": {
+      "packages": {
+        "modules": {
+          "weather_skills_core": false,
+          "africas2s": false,
+          "acmaddl": false,
+          "rosetta": false
+        },
+        "common": {
+          "numpy": "2.5.3",
+          "scipy": "1.18.1",
+          "xarray": "2026.7.0",
+          "netCDF4": "1.7.4",
+          "h5netcdf": "1.8.1",
+          "h5py": "3.16.0",
+          "matplotlib": "3.9.4",
+          "rasterio": "1.5.2",
+          "rioxarray": "0.23.0",
+          "cdsapi": "0.7.7"
+        },
+        "catalog": false,
+        "accord_docs": false,
+        "secret_paths": false,
+        "api_key_absent": true,
+        "nonroot": true,
+        "data_key_is_dummy": true
+      },
+      "network": {
+        "allowed_https": 200,
+        "disallowed_toolkit": 403,
+        "disallowed_observations": 403,
+        "direct_egress": "blocked_or_unreachable",
+        "private_destination": 403,
+        "host_destination": 403,
+        "ecds_public_endpoint": 200,
+        "write_request": 403
+      },
+      "readonly_root": true,
+      "gateway_log": "/Users/ezekielbarnett/Developer/ACCORD/accord-weather-pilot/.private/gateways/accord-pilot-eb364a32c4dd/network.jsonl",
+      "image_id": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7"
+    },
+    "rhiza": {
+      "packages": {
+        "modules": {
+          "weather_skills_core": true,
+          "africas2s": false,
+          "acmaddl": false,
+          "rosetta": false
+        },
+        "common": {
+          "numpy": "2.5.3",
+          "scipy": "1.18.1",
+          "xarray": "2026.7.0",
+          "netCDF4": "1.7.4",
+          "h5netcdf": "1.8.1",
+          "h5py": "3.16.0",
+          "matplotlib": "3.9.4",
+          "rasterio": "1.5.2",
+          "rioxarray": "0.23.0",
+          "cdsapi": "0.7.7"
+        },
+        "catalog": true,
+        "accord_docs": false,
+        "secret_paths": false,
+        "api_key_absent": true,
+        "nonroot": true,
+        "data_key_is_dummy": true
+      },
+      "network": {
+        "allowed_https": 200,
+        "disallowed_toolkit": 403,
+        "disallowed_observations": 403,
+        "direct_egress": "blocked_or_unreachable",
+        "private_destination": 403,
+        "host_destination": 403,
+        "ecds_public_endpoint": 200,
+        "write_request": 403
+      },
+      "readonly_root": true,
+      "gateway_log": "/Users/ezekielbarnett/Developer/ACCORD/accord-weather-pilot/.private/gateways/accord-pilot-944bcef9ba77/network.jsonl",
+      "image_id": "sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63"
+    },
+    "accord": {
+      "packages": {
+        "modules": {
+          "weather_skills_core": false,
+          "africas2s": true,
+          "acmaddl": true,
+          "rosetta": true
+        },
+        "common": {
+          "numpy": "2.5.3",
+          "scipy": "1.18.1",
+          "xarray": "2026.7.0",
+          "netCDF4": "1.7.4",
+          "h5netcdf": "1.8.1",
+          "h5py": "3.16.0",
+          "matplotlib": "3.9.4",
+          "rasterio": "1.5.2",
+          "rioxarray": "0.23.0",
+          "cdsapi": "0.7.7"
+        },
+        "catalog": false,
+        "accord_docs": true,
+        "secret_paths": false,
+        "api_key_absent": true,
+        "nonroot": true,
+        "data_key_is_dummy": true
+      },
+      "network": {
+        "allowed_https": 200,
+        "disallowed_toolkit": 403,
+        "disallowed_observations": 403,
+        "direct_egress": "blocked_or_unreachable",
+        "private_destination": 403,
+        "host_destination": 403,
+        "ecds_public_endpoint": 200,
+        "write_request": 403
+      },
+      "readonly_root": true,
+      "gateway_log": "/Users/ezekielbarnett/Developer/ACCORD/accord-weather-pilot/.private/gateways/accord-pilot-49256cb45176/network.jsonl",
+      "image_id": "sha256:4d2b5e1e3b055abf3a60d34819875a7ba99fc148a86bf348e3ab3b385c498b01"
+    }
+  },
+  "passed": true,
+  "gateway_image_id": "sha256:ed3be6e8b998088930dc8fcd4557f0b872f85b8463d34c92e0ed52326756f2a7",
+  "credential_policy": {
+    "passed": true,
+    "exact_request_enforced": true,
+    "only_own_jobs": true,
+    "credential_forwarding": "dummy_verified_no_live_request",
+    "audit_redacts_secrets": true
+  },
+  "followup_copy_verified": true,
+  "limitations": [
+    "No authenticated ECMWF retrieval was submitted.",
+    "Open-web browsing permits downloaded code; crossover audit is mandatory.",
+    "Private seasonal evaluation and IOD valid-date audit remain launch prerequisites."
+  ]
+}

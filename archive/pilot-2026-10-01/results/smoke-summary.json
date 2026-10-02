@@ -1,0 +1,987 @@
+{
+  "scope": "development-only smoke; supplied monthly inputs; no acquisition cost measured",
+  "runs": {
+    "fable-accord-followup": {
+      "arm": "accord",
+      "phase": "followup",
+      "model": "claude-fable-5-1",
+      "run_status": "stopped",
+      "tokens": 220436,
+      "input_tokens": 175538,
+      "output_tokens": 44898,
+      "usd": 4.00028,
+      "seconds": 600.6226244170102,
+      "usage_incomplete": true,
+      "check_count": "1/12",
+      "all_checks_pass": false,
+      "failed_checks": [
+        "answer_json",
+        "artifact:report.txt",
+        "artifact:provenance.json",
+        "artifact:handoff.txt",
+        "artifact:solve.py",
+        "figure_readable",
+        "source_coverage",
+        "training_aggregation",
+        "prediction_validity_and_coverage",
+        "development_predictions",
+        "independent_replay"
+      ],
+      "rps": null,
+      "rmse_mm": null,
+      "reliability_gap": null,
+      "metrics": {},
+      "model_files": [],
+      "model_hashes": {},
+      "saved_code_lines": 378,
+      "catalog_commands": [],
+      "truncated_responses": 5,
+      "accord_import_present": false,
+      "judge_ratings": {
+        "data_provenance": 0,
+        "scientific_processing": 1,
+        "results_uncertainty": 0,
+        "communication": 0,
+        "reproducibility_reuse": 0
+      },
+      "completion": "failed",
+      "judge_usd": 0.03782,
+      "audit": {
+        "frozen_inventory_matches": true,
+        "identical_supplied_inputs": true,
+        "excluded_toolkit_import_found": false,
+        "toolkit_imports_in_saved_code": [],
+        "catalog_read_in_trace": false,
+        "catalog_script_execution_in_trace": false,
+        "explicit_shell_network_commands": [],
+        "saved_model_files": [],
+        "inherited_models_unchanged": [],
+        "inherited_models_changed": [],
+        "followup_kind": "recovery_from_incomplete_initial",
+        "truncated_responses": 5,
+        "review_scope": "Controller manifests, frozen hashes, input identity, source/tool traces and offline inference boundary; scientific correctness is scored separately.",
+        "verification_observations_mounted": false,
+        "boundary_evidence": "pilot.runner.offline mounts frozen work, writable output, and forecast-only input; network=none. Common sandbox preflight passed before launch.",
+        "status": "passed"
+      },
+      "artifact_path": "runs/smoke-v3/fable-accord-followup/frozen"
+    },
+    "fable-accord-initial": {
+      "arm": "accord",
+      "phase": "initial",
+      "model": "claude-fable-5-1",
+      "run_status": "stopped",
+      "tokens": 341771,
+      "input_tokens": 314343,
+      "output_tokens": 27428,
+      "usd": 4.51483,
+      "seconds": 361.23954720800975,
+      "usage_incomplete": false,
+      "check_count": "0/12",
+      "all_checks_pass": false,
+      "failed_checks": [
+        "answer_json",
+        "artifact:report.txt",
+        "artifact:provenance.json",
+        "artifact:handoff.txt",
+        "artifact:solve.py",
+        "figure_readable",
+        "source_coverage",
+        "training_aggregation",
+        "prediction_validity_and_coverage",
+        "development_predictions",
+        "prediction_entrypoint",
+        "independent_replay"
+      ],
+      "rps": null,
+      "rmse_mm": null,
+      "reliability_gap": null,
+      "metrics": {},
+      "model_files": [],
+      "model_hashes": {},
+      "saved_code_lines": 260,
+      "catalog_commands": [],
+      "truncated_responses": 2,
+      "accord_import_present": false,
+      "judge_ratings": {
+        "data_provenance": 0,
+        "scientific_processing": 1,
+        "results_uncertainty": 0,
+        "communication": 0,
+        "reproducibility_reuse": 0
+      },
+      "completion": "failed",
+      "judge_usd": 0.031014,
+      "audit": {
+        "frozen_inventory_matches": true,
+        "identical_supplied_inputs": true,
+        "excluded_toolkit_import_found": false,
+        "toolkit_imports_in_saved_code": [],
+        "catalog_read_in_trace": false,
+        "catalog_script_execution_in_trace": false,
+        "explicit_shell_network_commands": [],
+        "saved_model_files": [],
+        "inherited_models_unchanged": [],
+        "inherited_models_changed": [],
+        "followup_kind": "initial_build",
+        "truncated_responses": 2,
+        "review_scope": "Controller manifests, frozen hashes, input identity, source/tool traces and offline inference boundary; scientific correctness is scored separately.",
+        "verification_observations_mounted": false,
+        "boundary_evidence": "pilot.runner.offline mounts frozen work, writable output, and forecast-only input; network=none. Common sandbox preflight passed before launch.",
+        "status": "passed"
+      },
+      "artifact_path": "runs/smoke-v3/fable-accord-initial/frozen"
+    },
+    "fable-rhiza-followup": {
+      "arm": "rhiza",
+      "phase": "followup",
+      "model": "claude-fable-5-1",
+      "run_status": "stopped",
+      "tokens": 376451,
+      "input_tokens": 365605,
+      "output_tokens": 10846,
+      "usd": 4.1983500000000005,
+      "seconds": 206.86621562496293,
+      "usage_incomplete": false,
+      "check_count": "11/12",
+      "all_checks_pass": false,
+      "failed_checks": [
+        "independent_replay"
+      ],
+      "rps": 0.3962955619099348,
+      "rmse_mm": 69.71750105010649,
+      "reliability_gap": 0.24975944195525845,
+      "metrics": {
+        "RPS": {
+          "submitted": 0.3962955619099348,
+          "raw": 0.4392426352019062,
+          "model_climate": 0.3533620532434293,
+          "climatology": 0.4027862401246082
+        },
+        "skill_vs": {
+          "raw": 0.09777528375001654,
+          "model_climate": -0.12150005432792987,
+          "climatology": 0.016114448727606367
+        },
+        "RMSE_mm": {
+          "submitted": 69.71750105010649,
+          "raw": 80.59703470010813
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.13644268140861096,
+                "frequency": 0.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.3333333333333333
+              },
+              {
+                "bin": 1,
+                "probability": 0.2952432726228349,
+                "frequency": 0.08336083996230086,
+                "cell_years": 12,
+                "years": 2,
+                "weight": 0.49998730406268826
+              },
+              {
+                "bin": 2,
+                "probability": 0.4846056080029202,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08332063932967435
+              },
+              {
+                "bin": 3,
+                "probability": 0.6953366187713927,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.24975944195525845
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.030770816834901196,
+                "frequency": 0.0,
+                "cell_years": 13,
+                "years": 2,
+                "weight": 0.5417047496444699
+              },
+              {
+                "bin": 1,
+                "probability": 0.28667750080846033,
+                "frequency": 0.16673438005287733,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.24997461005902932
+              },
+              {
+                "bin": 2,
+                "probability": 0.4933170792315879,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 2,
+                "weight": 0.1249619170221967
+              },
+              {
+                "bin": 3,
+                "probability": 0.64,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              },
+              {
+                "bin": 4,
+                "probability": 0.7999999999999999,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              }
+            ],
+            "gap": 0.16831556114811494
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.08799317439668175,
+                "frequency": 0.10003656374304086,
+                "cell_years": 10,
+                "years": 2,
+                "weight": 0.41664127672569595
+              },
+              {
+                "bin": 1,
+                "probability": 0.26667276009780744,
+                "frequency": 0.0,
+                "cell_years": 12,
+                "years": 2,
+                "weight": 0.5
+              },
+              {
+                "bin": 2,
+                "probability": 0.5,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.18003351479942742
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.04167936163715201,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.29165397169618124
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.1619154647374592,
+            0.20990882977126324
+          ],
+          "model_climate": [
+            -0.22522724592939714,
+            0.010430630264195773
+          ],
+          "climatology": [
+            -0.3423606172288518,
+            0.3073890907487504
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "model_files": [
+        "model.nc"
+      ],
+      "model_hashes": {
+        "model.nc": "b1cbe622103455838dae4bca2e247c988eecaf15523c9d383fdda452ea739d8d"
+      },
+      "saved_code_lines": 602,
+      "catalog_commands": [],
+      "truncated_responses": 0,
+      "accord_import_present": false,
+      "judge_ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 1
+      },
+      "completion": "partial",
+      "judge_usd": 0.09962,
+      "audit": {
+        "frozen_inventory_matches": true,
+        "identical_supplied_inputs": true,
+        "excluded_toolkit_import_found": false,
+        "toolkit_imports_in_saved_code": [],
+        "catalog_read_in_trace": false,
+        "catalog_script_execution_in_trace": false,
+        "explicit_shell_network_commands": [],
+        "saved_model_files": [
+          "model.nc"
+        ],
+        "inherited_models_unchanged": [
+          "model.nc"
+        ],
+        "inherited_models_changed": [],
+        "followup_kind": "saved_model_reuse",
+        "truncated_responses": 0,
+        "review_scope": "Controller manifests, frozen hashes, input identity, source/tool traces and offline inference boundary; scientific correctness is scored separately.",
+        "verification_observations_mounted": false,
+        "boundary_evidence": "pilot.runner.offline mounts frozen work, writable output, and forecast-only input; network=none. Common sandbox preflight passed before launch.",
+        "status": "passed"
+      },
+      "artifact_path": "runs/smoke-v3/fable-rhiza-followup/frozen"
+    },
+    "fable-rhiza-initial": {
+      "arm": "rhiza",
+      "phase": "initial",
+      "model": "claude-fable-5-1",
+      "run_status": "submitted",
+      "tokens": 327196,
+      "input_tokens": 301987,
+      "output_tokens": 25209,
+      "usd": 4.28032,
+      "seconds": 340.6010704159853,
+      "usage_incomplete": false,
+      "check_count": "11/12",
+      "all_checks_pass": false,
+      "failed_checks": [
+        "independent_replay"
+      ],
+      "rps": 0.2783208058234544,
+      "rmse_mm": 178.2861270527066,
+      "reliability_gap": 0.20406289930425672,
+      "metrics": {
+        "RPS": {
+          "submitted": 0.2783208058234544,
+          "raw": 0.36854659792488276,
+          "model_climate": 0.29594237189552974,
+          "climatology": 0.5555555555555555
+        },
+        "skill_vs": {
+          "raw": 0.24481515393019082,
+          "model_climate": 0.059543910387715226,
+          "climatology": 0.4990225495177819
+        },
+        "RMSE_mm": {
+          "submitted": 178.2861270527066,
+          "raw": 214.89843077983224
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.11411983580810695,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.1667047506112963
+              },
+              {
+                "bin": 1,
+                "probability": 0.30830617965674695,
+                "frequency": 0.0,
+                "cell_years": 7,
+                "years": 1,
+                "weight": 0.29162858368886335
+              },
+              {
+                "bin": 2,
+                "probability": 0.47579597385489203,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04166666569984029
+              },
+              {
+                "bin": 3,
+                "probability": 0.7294945333877506,
+                "frequency": 1.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16662858272203698
+              },
+              {
+                "bin": 4,
+                "probability": 0.9093236247937417,
+                "frequency": 1.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.333371417277963
+              }
+            ],
+            "gap": 0.20406289930425672
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.06999809547894077,
+                "frequency": 0.2500476014258896,
+                "cell_years": 8,
+                "years": 2,
+                "weight": 0.333371417277963
+              },
+              {
+                "bin": 1,
+                "probability": 0.25998679679232733,
+                "frequency": 0.16672591222596742,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.249987305996341
+              },
+              {
+                "bin": 2,
+                "probability": 0.4960121863178215,
+                "frequency": 0.7999390632132344,
+                "cell_years": 5,
+                "years": 2,
+                "weight": 0.20833333236650692
+              },
+              {
+                "bin": 3,
+                "probability": 0.7066490614956678,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12498730502951465
+              },
+              {
+                "bin": 4,
+                "probability": 0.8400182830784478,
+                "frequency": 1.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08332063932967435
+              }
+            ],
+            "gap": 0.19665041749117598
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.1499984767195609,
+                "frequency": 0.0,
+                "cell_years": 4,
+                "years": 1,
+                "weight": 0.16669205467398462
+              },
+              {
+                "bin": 1,
+                "probability": 0.2299946676482532,
+                "frequency": 0.0,
+                "cell_years": 8,
+                "years": 1,
+                "weight": 0.3333079453260154
+              },
+              {
+                "bin": 2,
+                "probability": 0.5066666666666667,
+                "frequency": 1.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12503808491145602
+              },
+              {
+                "bin": 3,
+                "probability": 0.6666680210375295,
+                "frequency": 1.0,
+                "cell_years": 9,
+                "years": 1,
+                "weight": 0.37496191508854393
+              }
+            ],
+            "gap": 0.2883348568071376
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.4999999999999999,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.16666666666666663
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.5502762362576377,
+            0.9199971283725651
+          ],
+          "model_climate": [
+            -0.18612535532112906,
+            0.7866585099081879
+          ],
+          "climatology": [
+            0.05544609714917703,
+            0.9425990018863869
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "model_files": [
+        "model.nc"
+      ],
+      "model_hashes": {
+        "model.nc": "b1cbe622103455838dae4bca2e247c988eecaf15523c9d383fdda452ea739d8d"
+      },
+      "saved_code_lines": 484,
+      "catalog_commands": [
+        "cd /work && python -c \"\nimport xarray as xr, numpy as np\nf=xr.open_dataset('inputs/forecast-development.nc',engine='scipy')\np=f.precip; print(p.attrs); print(float(p.min()),float(p.max()), int(np.isnan(p).sum()))\nprint(p.mean(['member','lat','lon']).values)\no=xr.open_dataset('inputs/observations-dev"
+      ],
+      "truncated_responses": 0,
+      "accord_import_present": false,
+      "judge_ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 1
+      },
+      "completion": "partial",
+      "judge_usd": 0.090314,
+      "audit": {
+        "frozen_inventory_matches": true,
+        "identical_supplied_inputs": true,
+        "excluded_toolkit_import_found": false,
+        "toolkit_imports_in_saved_code": [],
+        "catalog_read_in_trace": true,
+        "catalog_script_execution_in_trace": false,
+        "explicit_shell_network_commands": [],
+        "saved_model_files": [
+          "model.nc"
+        ],
+        "inherited_models_unchanged": [],
+        "inherited_models_changed": [],
+        "followup_kind": "initial_build",
+        "truncated_responses": 0,
+        "review_scope": "Controller manifests, frozen hashes, input identity, source/tool traces and offline inference boundary; scientific correctness is scored separately.",
+        "verification_observations_mounted": false,
+        "boundary_evidence": "pilot.runner.offline mounts frozen work, writable output, and forecast-only input; network=none. Common sandbox preflight passed before launch.",
+        "status": "passed"
+      },
+      "artifact_path": "runs/smoke-v3/fable-rhiza-initial/frozen"
+    },
+    "fable-scratch-followup": {
+      "arm": "scratch",
+      "phase": "followup",
+      "model": "claude-fable-5-1",
+      "run_status": "submitted",
+      "tokens": 254725,
+      "input_tokens": 227208,
+      "output_tokens": 27517,
+      "usd": 3.64793,
+      "seconds": 343.29907875001663,
+      "usage_incomplete": false,
+      "check_count": "11/12",
+      "all_checks_pass": false,
+      "failed_checks": [
+        "independent_replay"
+      ],
+      "rps": 0.3975564761464193,
+      "rmse_mm": 65.94213985864629,
+      "reliability_gap": 0.25356762846158587,
+      "metrics": {
+        "RPS": {
+          "submitted": 0.3975564761464193,
+          "raw": 0.4392426352019062,
+          "model_climate": 0.3533620532434293,
+          "climatology": 0.4027862401246082
+        },
+        "skill_vs": {
+          "raw": 0.09490462836405911,
+          "model_climate": -0.125068389481382,
+          "climatology": 0.012983968808296331
+        },
+        "RMSE_mm": {
+          "submitted": 65.94213985864629,
+          "raw": 80.59703470010813
+        },
+        "reliability": {
+          "submitted": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.12481059580631969,
+                "frequency": 0.0,
+                "cell_years": 6,
+                "years": 1,
+                "weight": 0.249987305996341
+              },
+              {
+                "bin": 1,
+                "probability": 0.2777855708347018,
+                "frequency": 0.07694831749396212,
+                "cell_years": 13,
+                "years": 2,
+                "weight": 0.5416539697625286
+              },
+              {
+                "bin": 2,
+                "probability": 0.4556798864206492,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 1,
+                "weight": 0.12500000096682634
+              },
+              {
+                "bin": 3,
+                "probability": 0.6792604281915786,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.25356762846158587
+          },
+          "raw": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.030770816834901196,
+                "frequency": 0.0,
+                "cell_years": 13,
+                "years": 2,
+                "weight": 0.5417047496444699
+              },
+              {
+                "bin": 1,
+                "probability": 0.28667750080846033,
+                "frequency": 0.16673438005287733,
+                "cell_years": 6,
+                "years": 2,
+                "weight": 0.24997461005902932
+              },
+              {
+                "bin": 2,
+                "probability": 0.4933170792315879,
+                "frequency": 0.0,
+                "cell_years": 3,
+                "years": 2,
+                "weight": 0.1249619170221967
+              },
+              {
+                "bin": 3,
+                "probability": 0.64,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              },
+              {
+                "bin": 4,
+                "probability": 0.7999999999999999,
+                "frequency": 0.0,
+                "cell_years": 1,
+                "years": 1,
+                "weight": 0.04167936163715201
+              }
+            ],
+            "gap": 0.16831556114811494
+          },
+          "model_climate": {
+            "bins": [
+              {
+                "bin": 0,
+                "probability": 0.08799317439668175,
+                "frequency": 0.10003656374304086,
+                "cell_years": 10,
+                "years": 2,
+                "weight": 0.41664127672569595
+              },
+              {
+                "bin": 1,
+                "probability": 0.26667276009780744,
+                "frequency": 0.0,
+                "cell_years": 12,
+                "years": 2,
+                "weight": 0.5
+              },
+              {
+                "bin": 2,
+                "probability": 0.5,
+                "frequency": 0.0,
+                "cell_years": 2,
+                "years": 1,
+                "weight": 0.08335872327430402
+              }
+            ],
+            "gap": 0.18003351479942742
+          },
+          "climatology": {
+            "bins": [
+              {
+                "bin": 1,
+                "probability": 0.33333333333333326,
+                "frequency": 0.04167936163715201,
+                "cell_years": 24,
+                "years": 2,
+                "weight": 1.0
+              }
+            ],
+            "gap": 0.29165397169618124
+          }
+        },
+        "paired_year_bootstrap_95pct": {
+          "raw": [
+            -0.18221006894139946,
+            0.2145617738128277
+          ],
+          "model_climate": [
+            -0.21801173203894408,
+            -0.006853689723462342
+          ],
+          "climatology": [
+            -0.33445529051350875,
+            0.29529159768908
+          ]
+        },
+        "years": 2,
+        "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+      },
+      "model_files": [
+        "model.nc"
+      ],
+      "model_hashes": {
+        "model.nc": "544c003f5c47f6041d52e6d5ca3e40c462e143741491a09afb1d6a9456915a96"
+      },
+      "saved_code_lines": 609,
+      "catalog_commands": [],
+      "truncated_responses": 1,
+      "accord_import_present": false,
+      "judge_ratings": {
+        "data_provenance": 2,
+        "scientific_processing": 2,
+        "results_uncertainty": 2,
+        "communication": 2,
+        "reproducibility_reuse": 1
+      },
+      "completion": "partial",
+      "judge_usd": 0.195626,
+      "audit": {
+        "frozen_inventory_matches": true,
+        "identical_supplied_inputs": true,
+        "excluded_toolkit_import_found": false,
+        "toolkit_imports_in_saved_code": [],
+        "catalog_read_in_trace": false,
+        "catalog_script_execution_in_trace": false,
+        "explicit_shell_network_commands": [],
+        "saved_model_files": [
+          "model.nc"
+        ],
+        "inherited_models_unchanged": [],
+        "inherited_models_changed": [],
+        "followup_kind": "recovery_from_incomplete_initial",
+        "truncated_responses": 1,
+        "review_scope": "Controller manifests, frozen hashes, input identity, source/tool traces and offline inference boundary; scientific correctness is scored separately.",
+        "verification_observations_mounted": false,
+        "boundary_evidence": "pilot.runner.offline mounts frozen work, writable output, and forecast-only input; network=none. Common sandbox preflight passed before launch.",
+        "status": "passed"
+      },
+      "artifact_path": "runs/smoke-v3/fable-scratch-followup/frozen"
+    },
+    "fable-scratch-initial": {
+      "arm": "scratch",
+      "phase": "initial",
+      "model": "claude-fable-5-1",
+      "run_status": "stopped",
+      "tokens": 236218,
+      "input_tokens": 185867,
+      "output_tokens": 50351,
+      "usd": 4.37622,
+      "seconds": 575.6281897919835,
+      "usage_incomplete": false,
+      "check_count": "0/12",
+      "all_checks_pass": false,
+      "failed_checks": [
+        "answer_json",
+        "artifact:report.txt",
+        "artifact:provenance.json",
+        "artifact:handoff.txt",
+        "artifact:solve.py",
+        "figure_readable",
+        "source_coverage",
+        "training_aggregation",
+        "prediction_validity_and_coverage",
+        "development_predictions",
+        "prediction_entrypoint",
+        "independent_replay"
+      ],
+      "rps": null,
+      "rmse_mm": null,
+      "reliability_gap": null,
+      "metrics": {},
+      "model_files": [],
+      "model_hashes": {},
+      "saved_code_lines": 228,
+      "catalog_commands": [],
+      "truncated_responses": 5,
+      "accord_import_present": false,
+      "judge_ratings": {
+        "data_provenance": 0,
+        "scientific_processing": 1,
+        "results_uncertainty": 0,
+        "communication": 0,
+        "reproducibility_reuse": 0
+      },
+      "completion": "failed",
+      "judge_usd": 0.027904,
+      "audit": {
+        "frozen_inventory_matches": true,
+        "identical_supplied_inputs": true,
+        "excluded_toolkit_import_found": false,
+        "toolkit_imports_in_saved_code": [],
+        "catalog_read_in_trace": false,
+        "catalog_script_execution_in_trace": false,
+        "explicit_shell_network_commands": [],
+        "saved_model_files": [],
+        "inherited_models_unchanged": [],
+        "inherited_models_changed": [],
+        "followup_kind": "initial_build",
+        "truncated_responses": 5,
+        "review_scope": "Controller manifests, frozen hashes, input identity, source/tool traces and offline inference boundary; scientific correctness is scored separately.",
+        "verification_observations_mounted": false,
+        "boundary_evidence": "pilot.runner.offline mounts frozen work, writable output, and forecast-only input; network=none. Common sandbox preflight passed before launch.",
+        "status": "passed"
+      },
+      "artifact_path": "runs/smoke-v3/fable-scratch-initial/frozen"
+    },
+    "haiku-scratch-initial": {
+      "arm": "scratch",
+      "phase": "initial",
+      "model": "claude-haiku-4-5-20251001",
+      "run_status": "stopped",
+      "tokens": 473419,
+      "input_tokens": 442499,
+      "output_tokens": 30920,
+      "usd": 0.597099,
+      "seconds": 256.5589023749926,
+      "usage_incomplete": false,
+      "check_count": "6/12",
+      "all_checks_pass": false,
+      "failed_checks": [
+        "artifact:provenance.json",
+        "source_coverage",
+        "training_aggregation",
+        "prediction_validity_and_coverage",
+        "development_predictions",
+        "independent_replay"
+      ],
+      "rps": null,
+      "rmse_mm": null,
+      "reliability_gap": null,
+      "metrics": {},
+      "model_files": [
+        "model.pkl"
+      ],
+      "model_hashes": {
+        "model.pkl": "a8246a7d5651b6a2699e423f91ee2d29770683fd8267b815213c621b2d6b98ba"
+      },
+      "saved_code_lines": 489,
+      "catalog_commands": [],
+      "truncated_responses": 0,
+      "accord_import_present": false,
+      "judge_ratings": {
+        "data_provenance": 1,
+        "scientific_processing": 0,
+        "results_uncertainty": 0,
+        "communication": 1,
+        "reproducibility_reuse": 0
+      },
+      "completion": "failed",
+      "judge_usd": 0.08052,
+      "audit": {
+        "frozen_inventory_matches": true,
+        "identical_supplied_inputs": true,
+        "excluded_toolkit_import_found": false,
+        "toolkit_imports_in_saved_code": [],
+        "catalog_read_in_trace": false,
+        "catalog_script_execution_in_trace": false,
+        "explicit_shell_network_commands": [],
+        "saved_model_files": [
+          "model.pkl"
+        ],
+        "inherited_models_unchanged": [],
+        "inherited_models_changed": [],
+        "followup_kind": "initial_build",
+        "truncated_responses": 0,
+        "review_scope": "Controller manifests, frozen hashes, input identity, source/tool traces and offline inference boundary; scientific correctness is scored separately.",
+        "verification_observations_mounted": false,
+        "boundary_evidence": "pilot.runner.offline mounts frozen work, writable output, and forecast-only input; network=none. Common sandbox preflight passed before launch.",
+        "status": "passed"
+      },
+      "artifact_path": "runs/smoke-v3/haiku-scratch-initial/frozen"
+    }
+  },
+  "diagnostics": [
+    {
+      "run": "runs/smoke-v1/fable-accord-initial",
+      "status": "aborted_environment_defect",
+      "recorded_usd": 1.44978
+    },
+    {
+      "run": "runs/smoke-v1/fable-rhiza-initial",
+      "status": "aborted_environment_defect",
+      "recorded_usd": 0.62557
+    },
+    {
+      "run": "runs/smoke-v1/fable-scratch-initial",
+      "status": "aborted_environment_defect",
+      "recorded_usd": 0.18598
+    },
+    {
+      "run": "runs/smoke-v2/fable-accord-initial",
+      "status": "aborted_environment_defect",
+      "recorded_usd": 2.81668
+    },
+    {
+      "run": "runs/smoke-v2/fable-rhiza-initial",
+      "status": "aborted_environment_defect",
+      "recorded_usd": 2.01063
+    },
+    {
+      "run": "runs/smoke-v2/fable-scratch-initial",
+      "status": "aborted_environment_defect",
+      "recorded_usd": 1.71682
+    },
+    {
+      "run": "runs/smoke-v2/haiku-scratch-initial",
+      "status": "aborted_environment_defect",
+      "recorded_usd": 0.10604
+    }
+  ],
+  "capability_finding": "Neither scratch model completed its initial attempt. Fable later reached 11/12 checks using saved work; this pilot does not establish a model capability threshold.",
+  "tools_finding": "Rhiza reached 11/12 checks on the first attempt. ACCORD inspected the libraries but wrote its own calibration and did not complete. No library advantage established.",
+  "reuse_finding": "Rhiza\u2019s frozen predictor ran the next batch in 1.5 s with zero LLM tokens. Conversational cost barely fell ($4.28 \u2192 $4.20); scratch recovered, ACCORD stayed incomplete.",
+  "recorded_total_usd_including_diagnostics": 35.089347,
+  "cost_note": "Provider-reported token usage times verified list prices; includes diagnostic attempts and all judge calls. Interrupted setup requests and the timed-out ACCORD follow-up request may have unrecorded cost; this is recorded spend, not a reconciled invoice."
+}

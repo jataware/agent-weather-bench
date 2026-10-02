@@ -1,0 +1,250 @@
+"""
+Compute and plot teleconnection indices: ENSO (Nino3.4), WVG (2-box and 3-box), IOD (DMI).
+Period: December 2025 to present.
+Data source: ERSSTv5 via IRI OPeNDAP.
+"""
+
+import warnings, datetime as dt
+import numpy as np
+import xarray as xr
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from pathlib import Path
+
+warnings.filterwarnings('ignore')
+
+BASE = Path(__file__).resolve().parent.parent
+OUT = BASE / 'teleconnections'
+OUT.mkdir(exist_ok=True)
+
+# =========================================================================
+# Fetch monthly SST from ERSSTv5
+# =========================================================================
+print("Fetching ERSSTv5 monthly SST from IRI...")
+
+# Wide enough to cover all regions: Nino3.4, WV boxes, and IOD
+# Nino3.4: 170W-120W (190-240E), 5S-5N
+# WEP: 120-160E, 15S-20N
+# WNP: 160E-210E, 20-35N
+# WSP: 155-210E, 30S-15S
+# IOD west: 50-70E, 10S-10N
+# IOD east: 90-110E, 10S-0N
+# So we need: X=50-240E, Y=-35 to 40N
+
+url = (
+    'https://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NCDC/.ERSST/.version5/.sst/'
+    'T/(Dec%202025)/(Apr%202026)/RANGEEDGES/'
+    'Y/-35/40/RANGEEDGES/X/50/240/RANGEEDGES/dods'
+)
+
+ds = xr.open_dataset(url, engine='netcdf4', decode_times=False)
+sst = ds['sst']
+if 'zlev' in sst.dims:
+    sst = sst.squeeze('zlev')
+print(f"  SST dims: {dict(sst.sizes)}")
+
+# Time axis — IRI ERSSTv5 uses "months since 1960-01-01"
+# Use coords['T'] not .T (which is transpose in xarray)
+t_vals = sst.coords['T'].values
+print(f"  T values: {t_vals}")
+dates = []
+for t in t_vals:
+    try:
+        total_months = int(np.floor(float(t)))
+        year = 1960 + total_months // 12
+        month = (total_months % 12) + 1
+        dates.append(dt.datetime(year, month, 15))
+    except:
+        dates.append(None)
+
+date_labels = [d.strftime('%b %Y') if d else '?' for d in dates]
+n_months = len(dates)
+print(f"  {n_months} months: {date_labels[0]} to {date_labels[-1]}")
+
+# =========================================================================
+# Region box averages
+# =========================================================================
+def box_mean(data, west, east, south, north):
+    return data.sel(X=slice(west, east), Y=slice(south, north)).mean(['X', 'Y']).values
+
+
+# Nino3.4: 170W-120W = 190-240E, 5S-5N
+nino34 = box_mean(sst, 190, 240, -5, 5)
+
+# WEP: 120-160E, 15S-20N
+wep = box_mean(sst, 120, 160, -15, 20)
+
+# WNP: 160-210E, 20-35N
+wnp = box_mean(sst, 160, 210, 20, 35)
+
+# WSP: 155-210E, 30S-15S
+wsp = box_mean(sst, 155, 210, -30, -15)
+
+# IOD west: 50-70E, 10S-10N
+iod_west = box_mean(sst, 50, 70, -10, 10)
+
+# IOD east: 90-110E, 10S-0N (equator)
+iod_east = box_mean(sst, 90, 110, -10, 0)
+
+ds.close()
+
+# =========================================================================
+# Also fetch climatological means for anomaly computation
+# =========================================================================
+print("Fetching 1991-2020 climatology...")
+climo_url = (
+    'https://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NCDC/.ERSST/.version5/.sst/'
+    'T/(Jan%201991)/(Dec%202020)/RANGEEDGES/'
+    'Y/-35/40/RANGEEDGES/X/50/240/RANGEEDGES/'
+    'T/12/STEP/dods'
+)
+# This gets all months — we need monthly climatology
+# Simpler: compute anomaly as departure from the fetched period mean
+# For a short period (5 months), use the long-term mean of same months
+
+# Actually, let's just compute the Nino3.4 index as SST anomaly
+# For the WVG and IOD, we need anomalies too
+# Fetch a longer period to compute climatology
+climo_url2 = (
+    'https://iridl.ldeo.columbia.edu/SOURCES/.NOAA/.NCDC/.ERSST/.version5/.sst/'
+    'T/(Jan%201991)/(Dec%202020)/RANGEEDGES/'
+    'Y/-35/40/RANGEEDGES/X/50/240/RANGEEDGES/dods'
+)
+ds_climo = xr.open_dataset(climo_url2, engine='netcdf4', decode_times=False)
+sst_climo = ds_climo['sst']
+if 'zlev' in sst_climo.dims:
+    sst_climo = sst_climo.squeeze('zlev')
+
+# Compute monthly climatology for each region
+climo_t = sst_climo.coords['T'].values
+climo_months = []
+for t in climo_t:
+    try:
+        total_months = int(np.floor(float(t)))
+        month = (total_months % 12) + 1
+        climo_months.append(month)
+    except:
+        climo_months.append(0)
+climo_months = np.array(climo_months)
+
+def monthly_climo(data, west, east, south, north):
+    vals = data.sel(X=slice(west, east), Y=slice(south, north)).mean(['X', 'Y']).values
+    monthly_mean = {}
+    for m in range(1, 13):
+        mask = climo_months == m
+        if mask.sum() > 0:
+            monthly_mean[m] = np.nanmean(vals[mask])
+    return monthly_mean
+
+nino34_climo = monthly_climo(sst_climo, 190, 240, -5, 5)
+wep_climo = monthly_climo(sst_climo, 120, 160, -15, 20)
+wnp_climo = monthly_climo(sst_climo, 160, 210, 20, 35)
+wsp_climo = monthly_climo(sst_climo, 155, 210, -30, -15)
+iod_west_climo = monthly_climo(sst_climo, 50, 70, -10, 10)
+iod_east_climo = monthly_climo(sst_climo, 90, 110, -10, 0)
+ds_climo.close()
+
+# Compute anomalies
+forecast_months = [d.month if d else 1 for d in dates]
+nino34_anom = np.array([nino34[i] - nino34_climo.get(forecast_months[i], 0) for i in range(n_months)])
+wep_anom = np.array([wep[i] - wep_climo.get(forecast_months[i], 0) for i in range(n_months)])
+wnp_anom = np.array([wnp[i] - wnp_climo.get(forecast_months[i], 0) for i in range(n_months)])
+wsp_anom = np.array([wsp[i] - wsp_climo.get(forecast_months[i], 0) for i in range(n_months)])
+iod_west_anom = np.array([iod_west[i] - iod_west_climo.get(forecast_months[i], 0) for i in range(n_months)])
+iod_east_anom = np.array([iod_east[i] - iod_east_climo.get(forecast_months[i], 0) for i in range(n_months)])
+
+# =========================================================================
+# Indices
+# =========================================================================
+# 1. ENSO: Nino3.4 SST anomaly
+enso_index = nino34_anom
+
+# 2a. WVG 2-box (Funk et al., 2019)
+wvg_2box = nino34_anom - (wep_anom + wnp_anom) / 2
+
+# 2b. WVG 3-box (Funk et al., 2023)
+wvg_3box = nino34_anom - (wep_anom + wnp_anom + wsp_anom) / 3
+
+# 3. IOD: Dipole Mode Index = west - east SST anomaly
+iod_dmi = iod_west_anom - iod_east_anom
+
+print(f"\n  ENSO (Nino3.4): {' | '.join([f'{d}: {v:+.2f}C' for d, v in zip(date_labels, enso_index)])}")
+print(f"  WVG 2-box:      {' | '.join([f'{d}: {v:+.2f}' for d, v in zip(date_labels, wvg_2box)])}")
+print(f"  WVG 3-box:      {' | '.join([f'{d}: {v:+.2f}' for d, v in zip(date_labels, wvg_3box)])}")
+print(f"  IOD (DMI):      {' | '.join([f'{d}: {v:+.2f}C' for d, v in zip(date_labels, iod_dmi)])}")
+
+# =========================================================================
+# Plot
+# =========================================================================
+print("\nGenerating plots...")
+
+x = np.arange(n_months)
+
+fig, axes = plt.subplots(4, 1, figsize=(12, 14), sharex=True)
+
+# 1. ENSO
+ax = axes[0]
+colors = ['#B2182B' if v > 0.5 else '#2166AC' if v < -0.5 else '#999999' for v in enso_index]
+ax.bar(x, enso_index, color=colors, edgecolor='black', linewidth=0.5)
+ax.axhline(0.5, color='red', linestyle='--', alpha=0.5, label='El Nino threshold (+0.5C)')
+ax.axhline(-0.5, color='blue', linestyle='--', alpha=0.5, label='La Nina threshold (-0.5C)')
+ax.axhline(0, color='black', linewidth=0.5)
+ax.set_ylabel('SST Anomaly (C)')
+ax.set_title('Nino 3.4 Index (ENSO)', fontsize=13, fontweight='bold')
+ax.legend(fontsize=8)
+ax.set_ylim(-2, 2)
+
+# 2. WVG 2-box and 3-box
+ax = axes[1]
+ax.bar(x - 0.15, wvg_2box, width=0.3, color='#E66101', edgecolor='black', linewidth=0.5, label='WVG 2-box (Funk 2019)')
+ax.bar(x + 0.15, wvg_3box, width=0.3, color='#5E3C99', edgecolor='black', linewidth=0.5, label='WVG 3-box (Funk 2023)')
+ax.axhline(0, color='black', linewidth=0.5)
+ax.set_ylabel('WVG Index')
+ax.set_title('Western V Gradient', fontsize=13, fontweight='bold')
+ax.legend(fontsize=8)
+
+# 3. WVG difference
+ax = axes[2]
+diff = wvg_3box - wvg_2box
+ax.bar(x, diff, color='#7570B3', edgecolor='black', linewidth=0.5)
+ax.axhline(0, color='black', linewidth=0.5)
+ax.set_ylabel('3-box minus 2-box')
+ax.set_title('WVG Formulation Difference (3-box - 2-box)', fontsize=13, fontweight='bold')
+
+# 4. IOD
+ax = axes[3]
+colors_iod = ['#D95F02' if v > 0.4 else '#1B9E77' if v < -0.4 else '#999999' for v in iod_dmi]
+ax.bar(x, iod_dmi, color=colors_iod, edgecolor='black', linewidth=0.5)
+ax.axhline(0.4, color='#D95F02', linestyle='--', alpha=0.5, label='Positive IOD threshold')
+ax.axhline(-0.4, color='#1B9E77', linestyle='--', alpha=0.5, label='Negative IOD threshold')
+ax.axhline(0, color='black', linewidth=0.5)
+ax.set_ylabel('DMI (C)')
+ax.set_title('Indian Ocean Dipole (DMI)', fontsize=13, fontweight='bold')
+ax.legend(fontsize=8)
+
+ax.set_xticks(x)
+ax.set_xticklabels(date_labels, rotation=45, ha='right')
+
+plt.suptitle('Teleconnection Indices: Dec 2025 - Present\nSource: ERSSTv5 (NOAA), 1991-2020 climatology',
+             fontsize=14, fontweight='bold')
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.savefig(OUT / 'teleconnection_indices.png', dpi=150, bbox_inches='tight', facecolor='white')
+print(f"  Saved teleconnection_indices.png")
+
+# Save data
+import json
+data = {
+    'dates': date_labels,
+    'enso_nino34': enso_index.tolist(),
+    'wvg_2box': wvg_2box.tolist(),
+    'wvg_3box': wvg_3box.tolist(),
+    'iod_dmi': iod_dmi.tolist(),
+    'source': 'ERSSTv5 via IRI OPeNDAP',
+    'climatology': '1991-2020',
+}
+with open(OUT / 'teleconnection_indices.json', 'w') as f:
+    json.dump(data, f, indent=2)
+print(f"  Saved teleconnection_indices.json")
+
+print("\n=== TELECONNECTIONS COMPLETE ===")

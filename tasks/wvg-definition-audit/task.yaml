@@ -1,0 +1,49 @@
+schema_version: 1
+id: wvg-definition-audit
+version: review-0.2
+title: Audit a literature-derived Western V Gradient definition
+status: prepared_for_joint_review
+source_category: literature
+track: method_audit
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+evaluation:
+  data_mode: retrospective_observed_index_analysis
+  analysis_years:
+  - 1981
+  - 2023
+  baseline_years:
+  - 1981
+  - 2010
+  season_months:
+  - 3
+  - 4
+  - 5
+  forecast_skill_measured: false
+  published_skill_reproduced: false
+  scientific_skill_gate: false
+outputs:
+- indices.nc
+- answer.json
+- provenance.json
+- report.txt
+- outlook.png
+- handoff.txt
+- execution.json
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers:
+  - Zeek
+  - Emmett
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: ../replay-contract.md
+input_contract:
+  mode: supplied_inputs
+  starting_files: Allowed agent-inputs inventory and approved frozen source context.

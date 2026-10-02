@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "task": "acmad-objective",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/acmad-objective",
+  "files": [
+    {
+      "file": "agent-inputs/forecast-precip.nc",
+      "sha256": "17f3dd0ca263d667d73f8ba82ac94b10f3336915571a3c736c9e4899ac159ba7",
+      "bytes": 321820,
+      "visibility": "agent",
+      "dimensions": {
+        "lat": 161,
+        "lon": 161
+      },
+      "variables": {
+        "below": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        },
+        "normal": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        },
+        "above": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/forecast-sst.nc",
+      "sha256": "3683486b689f0c6a6523c481fb15f11f0991d215e0dc5d9204e176b9485cbaf6",
+      "bytes": 321820,
+      "visibility": "agent",
+      "dimensions": {
+        "lat": 161,
+        "lon": 161
+      },
+      "variables": {
+        "below": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        },
+        "normal": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        },
+        "above": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/observed-sst.nc",
+      "sha256": "29d46edeed09b857fa34be5c0166e6fbccf8a37d766d446801aca532d33be212",
+      "bytes": 321820,
+      "visibility": "agent",
+      "dimensions": {
+        "lat": 161,
+        "lon": 161
+      },
+      "variables": {
+        "below": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        },
+        "normal": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        },
+        "above": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "3ea072da81dc2ad6ba4197e53ff2e05d6026472a508179e3400a30c8e7cdb6a7",
+      "bytes": 502,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/objective.nc",
+      "sha256": "044461ea5ca46ed267a3ee4705d9ea7bcc13834e794fe04379249db1ed730101",
+      "bytes": 1982860,
+      "visibility": "controller_only",
+      "dimensions": {
+        "tercile": 3,
+        "lat": 161,
+        "lon": 161
+      },
+      "variables": {
+        "probability": {
+          "dimensions": [
+            "tercile",
+            "lat",
+            "lon"
+          ],
+          "units": "1"
+        },
+        "nominal_weighted_probability": {
+          "dimensions": [
+            "tercile",
+            "lat",
+            "lon"
+          ],
+          "units": "1"
+        },
+        "available_components": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        },
+        "disagreement_pp": {
+          "dimensions": [
+            "tercile",
+            "lat",
+            "lon"
+          ],
+          "units": "percentage_points"
+        }
+      }
+    }
+  ],
+  "source_records": [
+    {
+      "path": "tasks/acmad-objective/source-material/ACMAD_forecast_replication/README.md.txt",
+      "sha256": "a4ae5f86922c728e2f9aa2d8b856d3b86466bfa247d6dfc4602cb8809f3f0b8a",
+      "original_locator": "ACMAD_forecast_replication/README.md"
+    },
+    {
+      "path": "tasks/acmad-objective/source-material/ACMAD_forecast_replication/OPEN_QUESTIONS.md.txt",
+      "sha256": "c70908563f8e3962353fa2fcc16fa75e08c5e52c3b6fb205e1894929ac32c851",
+      "original_locator": "ACMAD_forecast_replication/OPEN_QUESTIONS.md"
+    },
+    {
+      "path": "tasks/acmad-objective/source-material/ACMAD_forecast_replication/combination/core.py.txt",
+      "sha256": "364b6451c3b3e730614cbad082442ffeaa69a76512cbae543819913e32585540",
+      "original_locator": "ACMAD_forecast_replication/combination/core.py"
+    },
+    {
+      "path": "tasks/acmad-objective/source-material/ACMAD_forecast_replication/combination/README.md.txt",
+      "sha256": "c6c5193cf644c6f780a2184185db0d9700445d1de8509c4e41a8a34873dca11b",
+      "original_locator": "ACMAD_forecast_replication/combination/README.md"
+    }
+  ],
+  "reference_code_sha256": "21ebf6e1c31d49f6ee478d12f83aa545d179a2b95482a3f65f0b76ac0f3093f1",
+  "reference_validation": {
+    "objective_matches_existing_artifact": true,
+    "maximum_fraction_difference": 6.180841183311969e-08,
+    "agent_attempts": 0
+  },
+  "expert_approval": false,
+  "public_redistribution_review": "pending",
+  "source_record_root": "repository"
+}

@@ -10,6 +10,8 @@ For AI and machine learning researchers, the benchmark provides common tasks and
 
 For forecasters, the goal is to provide evidence for choosing agents and supporting methods for specific tasks. Results should show which work a system completes correctly, where it fails, and where expert review is needed.
 
+**Current status:** This repository is for internal development and review. Task data are shared separately. Scientific, scoring, and data redistribution reviews are pending. Seasonal acquisition is disabled, and no repository license has been selected. See [internal setup](docs/internal-setup.md).
+
 [Tasks](#existing-tasks) · [Run a model](#run-a-model) · [Add a substrate](#add-a-method-or-substrate) · [Create a task](#create-and-register-a-task) · [Design](docs/benchmark-design.md)
 
 ## Forecasting as a research benchmark
@@ -90,6 +92,8 @@ python3 -m venv .venv
 Existing workspaces can use their prepared `.venv`. A fresh clone also needs the
 frozen inputs and private references under `var/private/tasks/`. Those data are
 currently local and excluded from Git.
+
+Use `./bench tasks validate --metadata-only` to inspect packages without data. The [internal setup guide](docs/internal-setup.md) explains data bundle installation and the complete Docker build. Preparation and validation use repository-owned source snapshots and require no sibling checkouts.
 
 Create a system for the model or agent you want to test:
 

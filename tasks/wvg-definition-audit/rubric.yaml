@@ -1,0 +1,73 @@
+schema_version: 2
+task: wvg-definition-audit
+task_version: review-0.2
+status: revised_after_zeek_review_pending_joint_signoff
+aggregation: Weighted mean of scientific outcomes; weights are relative.
+completion: All required scientific outcomes and basic validity checks must pass,
+  with trusted integrity evidence. Missing expert or execution evidence leaves completion
+  pending; score cannot override a validity or integrity failure.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks:
+  - delivery
+  - answer_schema
+  - execution_schema
+  - provenance_fields
+  - source_coverage
+  integrity: Trusted run and network/retention evidence must establish the experiment-wide
+    information boundary; unresolved evidence cannot complete the task.
+tree:
+  id: task_completion
+  children:
+  - id: index_reconstruction
+    weight: 50
+    required: true
+    evaluator: deterministic
+    criterion: Both variants match the independent box/composite means, separate sample
+      standardization and signed gradient, with the specified coordinates, seasons,
+      baseline and units.
+    evidence:
+    - indices.nc
+    - controller-reference
+    checks:
+    - box_means
+    - standardization
+    - indices
+  - id: comparison
+    weight: 15
+    required: true
+    evaluator: deterministic
+    criterion: The reported correlation and mean/maximum absolute differences are
+      independently recomputable from the two index series.
+    evidence:
+    - answer.json
+    - indices.nc
+    - controller-reference
+    checks:
+    - summary_metrics
+  - id: scientific_interpretation
+    weight: 25
+    required: true
+    evaluator: expert
+    criterion: The report, figure and provenance trace the caption and implementation
+      locators, explain geometry and raw-anomaly differences, identify curator weighting/baseline/unit
+      choices, and distinguish an observed-index audit from exact published-index
+      or forecast-skill reproduction.
+    evidence:
+    - report.txt
+    - outlook.png
+    - provenance.json
+    - implementation-excerpt
+    - paper-locators
+  - id: reusable_workflow
+    weight: 10
+    required: true
+    evaluator: execution
+    criterion: The declared command regenerates the scientific arrays and comparison
+      fields offline from retained inputs in a clean runtime; the handoff states the
+      required tools and artifacts.
+    evidence:
+    - execution.json
+    - handoff.txt
+    - trusted-replay-log

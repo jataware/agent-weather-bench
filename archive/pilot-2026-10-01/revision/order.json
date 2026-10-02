@@ -1,0 +1,46 @@
+{
+  "initial": [
+    [
+      "fable",
+      "accord"
+    ],
+    [
+      "fable",
+      "scratch"
+    ],
+    [
+      "haiku",
+      "scratch"
+    ],
+    [
+      "sonnet",
+      "rhiza"
+    ],
+    [
+      "fable",
+      "rhiza"
+    ],
+    [
+      "sonnet",
+      "scratch"
+    ],
+    [
+      "haiku",
+      "rhiza"
+    ]
+  ],
+  "followup": [
+    [
+      "fable",
+      "scratch"
+    ],
+    [
+      "fable",
+      "rhiza"
+    ],
+    [
+      "fable",
+      "accord"
+    ]
+  ]
+}

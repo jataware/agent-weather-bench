@@ -1,0 +1,118 @@
+{
+  "purpose": "development_feasibility_not_agent_benchmark",
+  "product": "c3s/ecmwf-monthly",
+  "years": [
+    1993,
+    2008
+  ],
+  "parameters": {
+    "init": "1993-09",
+    "target": "OND",
+    "region": [
+      -3,
+      1,
+      36,
+      39
+    ],
+    "year_index": false
+  },
+  "elapsed_seconds": 90.1148154999828,
+  "sizes": {
+    "member": 25,
+    "init_time": 16,
+    "lead_time": 3,
+    "lat": 4,
+    "lon": 3
+  },
+  "variables": {
+    "precip": {
+      "dims": [
+        "member",
+        "init_time",
+        "lead_time",
+        "lat",
+        "lon"
+      ],
+      "attrs": {
+        "GRIB_paramId": "172228",
+        "GRIB_dataType": "fcmean",
+        "GRIB_numberOfPoints": "12",
+        "GRIB_typeOfLevel": "surface",
+        "GRIB_stepUnits": "1",
+        "GRIB_stepType": "instant",
+        "GRIB_gridType": "regular_ll",
+        "GRIB_uvRelativeToGrid": "0",
+        "GRIB_NV": "0",
+        "GRIB_Nx": "3",
+        "GRIB_Ny": "4",
+        "GRIB_cfName": "unknown",
+        "GRIB_cfVarName": "tprate",
+        "GRIB_gridDefinitionDescription": "Latitude/Longitude Grid",
+        "GRIB_iDirectionIncrementInDegrees": 1.0,
+        "GRIB_iScansNegatively": "0",
+        "GRIB_jDirectionIncrementInDegrees": 1.0,
+        "GRIB_jPointsAreConsecutive": "0",
+        "GRIB_jScansPositively": "0",
+        "GRIB_latitudeOfFirstGridPointInDegrees": 0.5,
+        "GRIB_latitudeOfLastGridPointInDegrees": -2.5,
+        "GRIB_longitudeOfFirstGridPointInDegrees": 36.5,
+        "GRIB_longitudeOfLastGridPointInDegrees": 38.5,
+        "GRIB_missingValue": 3.4028234663852886e+38,
+        "GRIB_name": "Time-mean total precipitation rate",
+        "GRIB_shortName": "tprate",
+        "GRIB_system": "51",
+        "GRIB_totalNumber": "0",
+        "GRIB_units": "m s**-1",
+        "long_name": "Time-mean total precipitation rate",
+        "units": "mm/day",
+        "standard_name": "unknown",
+        "GRIB_surface": 0.0
+      }
+    }
+  },
+  "coordinates": {
+    "member": {
+      "dims": [
+        "member"
+      ],
+      "first": "0",
+      "last": "24"
+    },
+    "init_time": {
+      "dims": [
+        "init_time"
+      ],
+      "first": "1993-09-01T00:00:00.000000000",
+      "last": "2008-09-01T00:00:00.000000000"
+    },
+    "lead_time": {
+      "dims": [
+        "lead_time"
+      ],
+      "first": "2",
+      "last": "4"
+    },
+    "lat": {
+      "dims": [
+        "lat"
+      ],
+      "first": "-2.5",
+      "last": "0.5"
+    },
+    "lon": {
+      "dims": [
+        "lon"
+      ],
+      "first": "36.5",
+      "last": "38.5"
+    }
+  },
+  "packages": {
+    "acmadDL": "0.2.0",
+    "africas2s": "0.2.0",
+    "xarray": "2026.7.0",
+    "cdsapi": "0.7.7"
+  },
+  "file_sha256": "7bc179b23687b7176dee6eb57c911fed0ab17ae11cb596086a1218755e0c7990",
+  "file_bytes": 80642
+}

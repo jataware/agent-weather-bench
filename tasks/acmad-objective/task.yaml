@@ -1,0 +1,41 @@
+schema_version: 1
+id: acmad-objective
+version: review-0.3
+title: Consolidate and audit an ACMAD objective outlook
+status: prepared_for_joint_review
+source_category: centre_replication
+track: computational_reproduction
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+evaluation:
+  data_mode: retrospective_forecast_product_processing
+  season: ASO 2026
+  inherited_skill_threshold: 0.3
+  inherited_dry_threshold_mm: 50
+  forecast_skill_measured: false
+  scientific_skill_gate: false
+outputs:
+- objective.nc
+- answer.json
+- provenance.json
+- report.txt
+- outlook.png
+- handoff.txt
+- execution.json
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers:
+  - Zeek
+  - Emmett
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: ../replay-contract.md
+input_contract:
+  mode: supplied_inputs
+  starting_files: Allowed agent-inputs inventory and approved frozen source context.

@@ -1,0 +1,22 @@
+source_category: existing_forecasting_workflow
+primary_contract: ../../archive/pilot-2026-10-01/smoke/task.yaml
+protocol: ../../archive/pilot-2026-10-01/revision/PLAN.txt
+existing_checks: ../../archive/pilot-2026-10-01/pilot/checks.py
+reference_aggregation: ../../archive/pilot-2026-10-01/feasibility/score_development.py
+data_sources:
+  - https://cds.climate.copernicus.eu/datasets/seasonal-monthly-single-levels
+  - https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/cogs/
+input_origin: Agent retrieves sources declared in source-plan.json; archived pilot .private/smoke/inputs remain controller development fixtures and are not starting agent inputs.
+acquisition_plan: source-plan.json
+provider_documentation:
+  - https://cds.climate.copernicus.eu/datasets/seasonal-monthly-single-levels
+  - https://www.chc.ucsb.edu/data/chirps3
+provider_review: Documentation checked 2026-10-02; inherited API request/format and raw-response freezing still require runtime preflight.
+reference_origin: Independently recomputed aggregation compared to the existing pilot training artifact.
+known_limitations:
+  - A 12-year development period is too short for strong reliability claims.
+  - Prediction years 2005–06 are inspected development years.
+  - Forecast method is deliberately open; reference predictions are not a gate.
+  - Acquisition is part of the revised task; provider preflight and raw-response replay validation are pending.
+  - Publication-vintage fidelity remains outside this retrospective development task.
+source_hashes: Recorded by preparation in input-manifest.json.

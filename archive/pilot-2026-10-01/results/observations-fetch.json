@@ -1,0 +1,83 @@
+{
+  "purpose": "development_feasibility_not_agent_benchmark",
+  "product": "obs/chirps-v3-monthly",
+  "years": [
+    1993,
+    2008
+  ],
+  "parameters": {
+    "months": [
+      10,
+      11,
+      12
+    ],
+    "region": [
+      -3.5,
+      1.5,
+      35.5,
+      39.5
+    ]
+  },
+  "elapsed_seconds": 148.71291466703406,
+  "sizes": {
+    "time": 48,
+    "lat": 100,
+    "lon": 80
+  },
+  "variables": {
+    "precip": {
+      "dims": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "attrs": {
+        "TIFFTAG_DOCUMENTNAME": "/home/CHIRPS/v3.0/monthly/chirps-v3.0.1993.10.tif",
+        "TIFFTAG_IMAGEDESCRIPTION": "IDL TIFF file",
+        "TIFFTAG_SOFTWARE": "IDL 8.9.0, L3Harris Geospatial Solutions, Inc.",
+        "TIFFTAG_DATETIME": "2024:11:28 18:04:59",
+        "TIFFTAG_XRESOLUTION": 100,
+        "TIFFTAG_YRESOLUTION": 100,
+        "TIFFTAG_RESOLUTIONUNIT": "2 (pixels/inch)",
+        "AREA_OR_POINT": "Area",
+        "units": "mm/month"
+      }
+    }
+  },
+  "coordinates": {
+    "time": {
+      "dims": [
+        "time"
+      ],
+      "first": "1993-10-01T00:00:00.000000000",
+      "last": "2008-12-01T00:00:00.000000000"
+    },
+    "lon": {
+      "dims": [
+        "lon"
+      ],
+      "first": "35.525003211572766",
+      "last": "39.47500327043235"
+    },
+    "lat": {
+      "dims": [
+        "lat"
+      ],
+      "first": "-3.475000945851207",
+      "last": "1.4749991279095411"
+    },
+    "spatial_ref": {
+      "dims": [],
+      "first": "0",
+      "last": "0"
+    }
+  },
+  "packages": {
+    "acmadDL": "0.2.0",
+    "africas2s": "0.2.0",
+    "xarray": "2026.7.0",
+    "cdsapi": "0.7.7"
+  },
+  "file_sha256": "63ef05e8078a10ddc67bc35eb561e47c018d8938078984fff31e3d6f0c4aa95a",
+  "file_bytes": 1553262
+}

@@ -1,0 +1,40 @@
+name: accord-weather-pilot-v1
+question: Does maintained scientific software help agents produce correct, useful forecasts at lower cost, especially on a related follow-up?
+tasks: [seasonal, iod, kenya]
+arms: [scratch, rhiza, accord]
+modes: [controlled, open_web]
+phases: [initial, followup]
+primary_mode: controlled
+fresh_followup_controls: false
+interpretation: One paired attempt per arm and task is a descriptive pilot, not a causal estimate of reuse or a model leaderboard.
+agent:
+  model: null
+  api_key_env: ANTHROPIC_API_KEY
+  input_usd_per_million: null
+  output_usd_per_million: null
+  max_usd: null
+  max_total_tokens: 200000
+  max_output_tokens: 4096
+  max_turns: 80
+  max_seconds: 3600
+judge:
+  model: null
+  api_key_env: ANTHROPIC_API_KEY
+  input_usd_per_million: null
+  output_usd_per_million: null
+  max_usd: null
+  max_total_tokens: 100000
+  max_output_tokens: 4096
+  max_seconds: 180
+scientific_thresholds:
+  improvement_cutoff: null
+  calibration_pass_cutoff: null
+  policy: Report continuous metrics; no unagreed scientific win threshold.
+runtime:
+  memory: 4g
+  cpus: 2
+  command_timeout_seconds: 180
+  images:
+    scratch: accord-pilot-scratch:v1
+    rhiza: accord-pilot-rhiza:v1
+    accord: accord-pilot-accord:v1

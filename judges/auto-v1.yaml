@@ -1,0 +1,25 @@
+schema_version: 1
+id: auto-v1
+backend: anthropic_messages
+model:
+  model: claude-sonnet-5-5
+  api_key_env: ANTHROPIC_API_KEY
+  input_usd_per_million: 2
+  output_usd_per_million: 10
+  max_usd: 0.35
+  max_total_tokens: 100000
+  max_output_tokens: 4096
+  max_seconds: 180
+packet:
+  max_text_characters: 90000
+  max_file_characters: 18000
+policy:
+  model_origin: Fixed model identifier and accounting schedule from the completed pilot; no floating latest alias.
+  pricing: Pinned benchmark accounting, not a newly verified provider invoice or price quote.
+  calls: One judgment; no automatic retry or fallback model.
+  invalid_response: Preserve raw response and mark expert evidence unresolved.
+  concerns: Informational; gates are explicit criterion, execution and validity states.
+  deterministic_failure: Cannot be overridden by a judge rating.
+  missing_evidence: Unresolved, never assumed correct.
+  observed_skill: Reported outcome, never a completion threshold.
+  task_release: Current tasks are development drafts; publication approval is reported separately.

@@ -1,0 +1,15 @@
+{
+  "status": "revision_complete",
+  "reason": "Haiku + ACCORD extension finished; no further attempts enabled.",
+  "agent_attempts": 19,
+  "judge_calls": 21,
+  "review_items": [
+    "Review sandbox preflight evidence and common data-access policy.",
+    "Select the fixed agent and judge models, prices and per-attempt budgets.",
+    "Review the IOD climatology clarification and audit actual valid dates.",
+    "Freeze seasonal evaluation data and reference provenance.",
+    "Choose the first illustrative six-attempt suite, then consider the other cases."
+  ],
+  "notes": "Twelve revised attempts and thirteen revised judge calls. Nine initial model/arm combinations and three Fable follow-ups, with all earlier smoke results retained. No further launches enabled.",
+  "allowed_scope": "smoke_only"
+}

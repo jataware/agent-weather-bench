@@ -1,0 +1,5 @@
+#!/bin/sh
+# Local entry point without activating a virtual environment.
+BENCH_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+cd "$BENCH_DIR" || exit 1
+exec "$BENCH_DIR/.venv/bin/python" -m weatherbench "$@"

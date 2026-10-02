@@ -1,0 +1,15 @@
+{
+  "authorization": "User requested Sonnet + ACCORD to complete Sonnet three-arm initial comparison. One attempt and its judge; no follow-up or retries.",
+  "prior_recorded_usd": 58.601793,
+  "additional_max_usd": 5.85,
+  "reserved_unrecorded_usd": 6,
+  "overall_ceiling_usd": 100,
+  "config_sha256": "d39ac57fefa42968979ed7f0ccc504f5a4b964222f4ccd3c6a1c74d781594679",
+  "task_sha256": "c82352d366f5fa7d6d244a490c2055f03bb7b74ac69ed32530df3112bd1d92a3",
+  "status": "complete",
+  "agent_usd": 0.554524,
+  "judge_usd": 0.069778,
+  "total_recorded_usd": 59.226095,
+  "checks": "9/12",
+  "no_retries": true
+}

@@ -1,0 +1,18 @@
+{
+  "status": "revised_development_comparison_complete",
+  "experiment": "experiment.yaml",
+  "tasks": [
+    "tasks/seasonal.yaml",
+    "tasks/iod.yaml",
+    "tasks/kenya.yaml"
+  ],
+  "shared_rubric": "rubric.yaml",
+  "sandbox": "sandbox/profiles.yaml",
+  "review_checkpoint": "launch-review.yaml",
+  "plan": "PLAN.md",
+  "supersedes": "Earlier seasonal-only draft protocol; no six-stage total or unagreed 5-percent win threshold.",
+  "original_goal": "Compare completion, accuracy, cost and retained scientific capability across a related follow-up, with equal data access.",
+  "smoke_contract": "smoke/task.yaml",
+  "results": "results/revision-summary.json",
+  "revised_protocol": "revision/PLAN.txt"
+}

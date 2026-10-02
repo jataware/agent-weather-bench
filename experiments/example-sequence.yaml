@@ -1,0 +1,6 @@
+schema_version: 1
+system: my-agent
+tasks: [acmad-objective, wvg-definition-audit]
+condition: retained
+continue_after_failure: true
+description: Mechanism example; copy with condition reset and counterbalance task order for comparisons.

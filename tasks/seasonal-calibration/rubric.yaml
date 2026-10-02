@@ -1,0 +1,100 @@
+schema_version: 2
+task: seasonal-calibration
+task_version: review-0.2
+status: revised_after_zeek_review_pending_joint_signoff
+aggregation: Weighted mean of scientific outcomes; weights are relative.
+completion: All required scientific outcomes and basic validity checks must pass,
+  with trusted integrity evidence. Missing expert or execution evidence leaves completion
+  pending; score cannot override a validity or integrity failure.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks:
+  - delivery
+  - answer_schema
+  - execution_schema
+  - provenance_fields
+  - source_coverage
+  - development_schema
+  integrity: Trusted run and network/retention evidence must establish the experiment-wide
+    information boundary; unresolved evidence cannot complete the task.
+tree:
+  id: task_completion
+  children:
+  - id: data_acquisition
+    weight: 15
+    required: true
+    evaluator: execution
+    criterion: Retrieve the declared training products through permitted data access,
+      retain the downloaded or subsetted bytes and requests, and reconcile provenance
+      with trusted transfer/cache logs. Preloaded normalized development fixtures
+      do not satisfy acquisition.
+    evidence:
+    - source-plan.json
+    - provenance.json
+    - retained-source-files
+    - trusted-acquisition-log
+  - id: data_preparation
+    weight: 20
+    required: true
+    evaluator: mixed
+    criterion: Seasonal totals, coordinates and mm units match the independent reference;
+      the recorded unit conversions, native-cell selection, missingness and area weighting
+      explain those values and the retained source files.
+    evidence:
+    - training.nc
+    - controller-reference
+    - provenance.json
+    - retained-workflow
+    checks:
+    - aggregation
+  - id: calibration
+    weight: 25
+    required: true
+    evaluator: expert
+    criterion: The final fit uses only 1993–2004; every held-out year is excluded
+      from learned preprocessing, quantiles, calibration and method selection. Fold
+      training-year lists and thresholds make that isolation inspectable.
+    evidence:
+    - saved-fit
+    - fold-training-years
+    - fold-thresholds
+    - retained-workflow
+    - provenance.json
+  - id: development_verification
+    weight: 20
+    required: true
+    evaluator: expert
+    criterion: Development scores, the explicit climatological baseline and a reliability
+      diagnostic with sample counts can be independently recomputed from out-of-fold
+      predictions using the correct fold-specific targets. Metric definitions, aggregation
+      and ties are documented.
+    evidence:
+    - development.nc
+    - fold-thresholds
+    - answer.json
+    - verification-workflow
+  - id: scientific_report
+    weight: 10
+    required: true
+    evaluator: expert
+    criterion: The report and figure explain the method and diagnostics with quantities,
+      units, periods and sample counts, identify the Kenyan study box and short development
+      record, and make no unseen-skill or national-Kenya claim.
+    evidence:
+    - report.txt
+    - outlook.png
+    - answer.json
+  - id: reusable_workflow
+    weight: 10
+    required: true
+    evaluator: execution
+    criterion: The declared commands regenerate scientific outputs offline in a clean
+      runtime; the prediction command loads retained fitted state and predicts the
+      forecast-only 2005–06 batch without refitting or observing its targets. Python
+      scripts, command-line tools and other supported runtimes are equally valid.
+    evidence:
+    - execution.json
+    - retained-fit-state
+    - trusted-replay-log
+    - frozen-prediction-log

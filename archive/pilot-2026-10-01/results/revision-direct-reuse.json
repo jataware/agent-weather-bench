@@ -1,0 +1,686 @@
+[
+  {
+    "run": "fable-accord-initial",
+    "seconds": 1.9287730420473963,
+    "tokens": 0,
+    "agent_usd": 0,
+    "status": "passed",
+    "includes": "container start, prediction and cleanup; local compute not priced",
+    "forecast_years": [
+      2007,
+      2008
+    ],
+    "metrics": {
+      "RPS": {
+        "submitted": 0.41232840147849553,
+        "raw": 0.4392426352019062,
+        "model_climate": 0.3533620532434293,
+        "climatology": 0.4027862401246082
+      },
+      "skill_vs": {
+        "raw": 0.06127418325645695,
+        "model_climate": -0.1668723273872439,
+        "climatology": -0.023690385627213484
+      },
+      "RMSE_mm": {
+        "submitted": 69.91518000118269,
+        "raw": 80.59703470010813
+      },
+      "reliability": {
+        "submitted": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.1285965262904144,
+              "frequency": 0.0,
+              "cell_years": 5,
+              "years": 1,
+              "weight": 0.20832064029650071
+            },
+            {
+              "bin": 1,
+              "probability": 0.29556923839258953,
+              "frequency": 0.07145188958404478,
+              "cell_years": 14,
+              "years": 2,
+              "weight": 0.5833206354623688
+            },
+            {
+              "bin": 2,
+              "probability": 0.4962856521442809,
+              "frequency": 0.0,
+              "cell_years": 3,
+              "years": 1,
+              "weight": 0.12500000096682634
+            },
+            {
+              "bin": 3,
+              "probability": 0.7273509597738104,
+              "frequency": 0.0,
+              "cell_years": 2,
+              "years": 1,
+              "weight": 0.08335872327430402
+            }
+          ],
+          "gap": 0.2801883393988082
+        },
+        "raw": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.030770816834901196,
+              "frequency": 0.0,
+              "cell_years": 13,
+              "years": 2,
+              "weight": 0.5417047496444699
+            },
+            {
+              "bin": 1,
+              "probability": 0.28667750080846033,
+              "frequency": 0.16673438005287733,
+              "cell_years": 6,
+              "years": 2,
+              "weight": 0.24997461005902932
+            },
+            {
+              "bin": 2,
+              "probability": 0.4933170792315879,
+              "frequency": 0.0,
+              "cell_years": 3,
+              "years": 2,
+              "weight": 0.1249619170221967
+            },
+            {
+              "bin": 3,
+              "probability": 0.64,
+              "frequency": 0.0,
+              "cell_years": 1,
+              "years": 1,
+              "weight": 0.04167936163715201
+            },
+            {
+              "bin": 4,
+              "probability": 0.7999999999999999,
+              "frequency": 0.0,
+              "cell_years": 1,
+              "years": 1,
+              "weight": 0.04167936163715201
+            }
+          ],
+          "gap": 0.16831556114811494
+        },
+        "model_climate": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.08799317439668175,
+              "frequency": 0.10003656374304086,
+              "cell_years": 10,
+              "years": 2,
+              "weight": 0.41664127672569595
+            },
+            {
+              "bin": 1,
+              "probability": 0.26667276009780744,
+              "frequency": 0.0,
+              "cell_years": 12,
+              "years": 2,
+              "weight": 0.5
+            },
+            {
+              "bin": 2,
+              "probability": 0.5,
+              "frequency": 0.0,
+              "cell_years": 2,
+              "years": 1,
+              "weight": 0.08335872327430402
+            }
+          ],
+          "gap": 0.18003351479942742
+        },
+        "climatology": {
+          "bins": [
+            {
+              "bin": 1,
+              "probability": 0.33333333333333326,
+              "frequency": 0.04167936163715201,
+              "cell_years": 24,
+              "years": 2,
+              "weight": 1.0
+            }
+          ],
+          "gap": 0.29165397169618124
+        }
+      },
+      "paired_year_bootstrap_95pct": {
+        "raw": [
+          -0.18146129852402693,
+          0.1660865051268069
+        ],
+        "model_climate": [
+          -0.29318434778994185,
+          -0.006215983889876986
+        ],
+        "climatology": [
+          -0.4168145093551303,
+          0.2957379352887899
+        ]
+      },
+      "years": 2,
+      "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+    }
+  },
+  {
+    "run": "fable-rhiza-initial",
+    "seconds": 1.080837707966566,
+    "tokens": 0,
+    "agent_usd": 0,
+    "status": "passed",
+    "includes": "container start, prediction and cleanup; local compute not priced",
+    "forecast_years": [
+      2007,
+      2008
+    ],
+    "metrics": {
+      "RPS": {
+        "submitted": 0.403827735998175,
+        "raw": 0.4392426352019062,
+        "model_climate": 0.3533620532434293,
+        "climatology": 0.4027862401246082
+      },
+      "skill_vs": {
+        "raw": 0.08062718954286408,
+        "model_climate": -0.14281579556019897,
+        "climatology": -0.0025857285324459856
+      },
+      "RMSE_mm": {
+        "submitted": 73.32462134106692,
+        "raw": 80.59703470010813
+      },
+      "reliability": {
+        "submitted": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.1415710340165006,
+              "frequency": 0.0,
+              "cell_years": 5,
+              "years": 1,
+              "weight": 0.20832064029650071
+            },
+            {
+              "bin": 1,
+              "probability": 0.2929921460246621,
+              "frequency": 0.07145188958404478,
+              "cell_years": 14,
+              "years": 2,
+              "weight": 0.5833206354623688
+            },
+            {
+              "bin": 2,
+              "probability": 0.47613676018825724,
+              "frequency": 0.0,
+              "cell_years": 3,
+              "years": 1,
+              "weight": 0.12500000096682634
+            },
+            {
+              "bin": 3,
+              "probability": 0.7030802226118016,
+              "frequency": 0.0,
+              "cell_years": 2,
+              "years": 1,
+              "weight": 0.08335872327430402
+            }
+          ],
+          "gap": 0.2768461368213991
+        },
+        "raw": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.030770816834901196,
+              "frequency": 0.0,
+              "cell_years": 13,
+              "years": 2,
+              "weight": 0.5417047496444699
+            },
+            {
+              "bin": 1,
+              "probability": 0.28667750080846033,
+              "frequency": 0.16673438005287733,
+              "cell_years": 6,
+              "years": 2,
+              "weight": 0.24997461005902932
+            },
+            {
+              "bin": 2,
+              "probability": 0.4933170792315879,
+              "frequency": 0.0,
+              "cell_years": 3,
+              "years": 2,
+              "weight": 0.1249619170221967
+            },
+            {
+              "bin": 3,
+              "probability": 0.64,
+              "frequency": 0.0,
+              "cell_years": 1,
+              "years": 1,
+              "weight": 0.04167936163715201
+            },
+            {
+              "bin": 4,
+              "probability": 0.7999999999999999,
+              "frequency": 0.0,
+              "cell_years": 1,
+              "years": 1,
+              "weight": 0.04167936163715201
+            }
+          ],
+          "gap": 0.16831556114811494
+        },
+        "model_climate": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.08799317439668175,
+              "frequency": 0.10003656374304086,
+              "cell_years": 10,
+              "years": 2,
+              "weight": 0.41664127672569595
+            },
+            {
+              "bin": 1,
+              "probability": 0.26667276009780744,
+              "frequency": 0.0,
+              "cell_years": 12,
+              "years": 2,
+              "weight": 0.5
+            },
+            {
+              "bin": 2,
+              "probability": 0.5,
+              "frequency": 0.0,
+              "cell_years": 2,
+              "years": 1,
+              "weight": 0.08335872327430402
+            }
+          ],
+          "gap": 0.18003351479942742
+        },
+        "climatology": {
+          "bins": [
+            {
+              "bin": 1,
+              "probability": 0.33333333333333326,
+              "frequency": 0.04167936163715201,
+              "cell_years": 24,
+              "years": 2,
+              "weight": 1.0
+            }
+          ],
+          "gap": 0.29165397169618124
+        }
+      },
+      "paired_year_bootstrap_95pct": {
+        "raw": [
+          -0.18117207110071054,
+          0.19367118365003344
+        ],
+        "model_climate": [
+          -0.2504076392651824,
+          -0.0059696573646796924
+        ],
+        "climatology": [
+          -0.3699482900075861,
+          0.29591034203844
+        ]
+      },
+      "years": 2,
+      "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+    }
+  },
+  {
+    "run": "fable-scratch-initial",
+    "seconds": 1.1066110839601606,
+    "tokens": 0,
+    "agent_usd": 0,
+    "status": "passed",
+    "includes": "container start, prediction and cleanup; local compute not priced",
+    "forecast_years": [
+      2007,
+      2008
+    ],
+    "metrics": {
+      "RPS": {
+        "submitted": 0.3961829825878329,
+        "raw": 0.4392426352019062,
+        "model_climate": 0.3533620532434293,
+        "climatology": 0.4027862401246082
+      },
+      "skill_vs": {
+        "raw": 0.09803158701631987,
+        "model_climate": -0.12118145950126835,
+        "climatology": 0.01639395013775158
+      },
+      "RMSE_mm": {
+        "submitted": 70.0957054632282,
+        "raw": 80.59703470010813
+      },
+      "reliability": {
+        "submitted": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.14007744539245826,
+              "frequency": 0.0,
+              "cell_years": 7,
+              "years": 1,
+              "weight": 0.291666667633493
+            },
+            {
+              "bin": 1,
+              "probability": 0.2868107165998051,
+              "frequency": 0.0833629567577965,
+              "cell_years": 12,
+              "years": 2,
+              "weight": 0.49997460812537653
+            },
+            {
+              "bin": 2,
+              "probability": 0.4580377989326271,
+              "frequency": 0.0,
+              "cell_years": 3,
+              "years": 1,
+              "weight": 0.12500000096682634
+            },
+            {
+              "bin": 3,
+              "probability": 0.6859304308891296,
+              "frequency": 0.0,
+              "cell_years": 2,
+              "years": 1,
+              "weight": 0.08335872327430402
+            }
+          ],
+          "gap": 0.2570076459925573
+        },
+        "raw": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.030770816834901196,
+              "frequency": 0.0,
+              "cell_years": 13,
+              "years": 2,
+              "weight": 0.5417047496444699
+            },
+            {
+              "bin": 1,
+              "probability": 0.28667750080846033,
+              "frequency": 0.16673438005287733,
+              "cell_years": 6,
+              "years": 2,
+              "weight": 0.24997461005902932
+            },
+            {
+              "bin": 2,
+              "probability": 0.4933170792315879,
+              "frequency": 0.0,
+              "cell_years": 3,
+              "years": 2,
+              "weight": 0.1249619170221967
+            },
+            {
+              "bin": 3,
+              "probability": 0.64,
+              "frequency": 0.0,
+              "cell_years": 1,
+              "years": 1,
+              "weight": 0.04167936163715201
+            },
+            {
+              "bin": 4,
+              "probability": 0.7999999999999999,
+              "frequency": 0.0,
+              "cell_years": 1,
+              "years": 1,
+              "weight": 0.04167936163715201
+            }
+          ],
+          "gap": 0.16831556114811494
+        },
+        "model_climate": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.08799317439668175,
+              "frequency": 0.10003656374304086,
+              "cell_years": 10,
+              "years": 2,
+              "weight": 0.41664127672569595
+            },
+            {
+              "bin": 1,
+              "probability": 0.26667276009780744,
+              "frequency": 0.0,
+              "cell_years": 12,
+              "years": 2,
+              "weight": 0.5
+            },
+            {
+              "bin": 2,
+              "probability": 0.5,
+              "frequency": 0.0,
+              "cell_years": 2,
+              "years": 1,
+              "weight": 0.08335872327430402
+            }
+          ],
+          "gap": 0.18003351479942742
+        },
+        "climatology": {
+          "bins": [
+            {
+              "bin": 1,
+              "probability": 0.33333333333333326,
+              "frequency": 0.04167936163715201,
+              "cell_years": 24,
+              "years": 2,
+              "weight": 1.0
+            }
+          ],
+          "gap": 0.29165397169618124
+        }
+      },
+      "paired_year_bootstrap_95pct": {
+        "raw": [
+          -0.17033716004816069,
+          0.21391226210733316
+        ],
+        "model_climate": [
+          -0.21901895686072215,
+          0.003258119032838014
+        ],
+        "climatology": [
+          -0.33555880738186294,
+          0.3023689681807976
+        ]
+      },
+      "years": 2,
+      "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+    }
+  },
+  {
+    "run": "sonnet-rhiza-initial",
+    "seconds": 1.0543215830111876,
+    "tokens": 0,
+    "agent_usd": 0,
+    "status": "passed",
+    "includes": "container start, prediction and cleanup; local compute not priced",
+    "forecast_years": [
+      2007,
+      2008
+    ],
+    "metrics": {
+      "RPS": {
+        "submitted": 0.41430031086810587,
+        "raw": 0.4392426352019062,
+        "model_climate": 0.3533620532434293,
+        "climatology": 0.4027862401246082
+      },
+      "skill_vs": {
+        "raw": 0.05678484358043956,
+        "model_climate": -0.17245274942608657,
+        "climatology": -0.02858605780558854
+      },
+      "RMSE_mm": {
+        "submitted": 69.70367666819918,
+        "raw": 80.59703470010813
+      },
+      "reliability": {
+        "submitted": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.14533555431671843,
+              "frequency": 0.0,
+              "cell_years": 7,
+              "years": 2,
+              "weight": 0.29162858368886335
+            },
+            {
+              "bin": 1,
+              "probability": 0.29810703900262103,
+              "frequency": 0.0909367896019904,
+              "cell_years": 11,
+              "years": 2,
+              "weight": 0.4583333304328542
+            },
+            {
+              "bin": 2,
+              "probability": 0.48783718035524537,
+              "frequency": 0.0,
+              "cell_years": 4,
+              "years": 1,
+              "weight": 0.16667936260397836
+            },
+            {
+              "bin": 3,
+              "probability": 0.7187723219394684,
+              "frequency": 0.0,
+              "cell_years": 2,
+              "years": 1,
+              "weight": 0.08335872327430402
+            }
+          ],
+          "gap": 0.2785653655973319
+        },
+        "raw": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.030770816834901196,
+              "frequency": 0.0,
+              "cell_years": 13,
+              "years": 2,
+              "weight": 0.5417047496444699
+            },
+            {
+              "bin": 1,
+              "probability": 0.28667750080846033,
+              "frequency": 0.16673438005287733,
+              "cell_years": 6,
+              "years": 2,
+              "weight": 0.24997461005902932
+            },
+            {
+              "bin": 2,
+              "probability": 0.4933170792315879,
+              "frequency": 0.0,
+              "cell_years": 3,
+              "years": 2,
+              "weight": 0.1249619170221967
+            },
+            {
+              "bin": 3,
+              "probability": 0.64,
+              "frequency": 0.0,
+              "cell_years": 1,
+              "years": 1,
+              "weight": 0.04167936163715201
+            },
+            {
+              "bin": 4,
+              "probability": 0.7999999999999999,
+              "frequency": 0.0,
+              "cell_years": 1,
+              "years": 1,
+              "weight": 0.04167936163715201
+            }
+          ],
+          "gap": 0.16831556114811494
+        },
+        "model_climate": {
+          "bins": [
+            {
+              "bin": 0,
+              "probability": 0.08799317439668175,
+              "frequency": 0.10003656374304086,
+              "cell_years": 10,
+              "years": 2,
+              "weight": 0.41664127672569595
+            },
+            {
+              "bin": 1,
+              "probability": 0.26667276009780744,
+              "frequency": 0.0,
+              "cell_years": 12,
+              "years": 2,
+              "weight": 0.5
+            },
+            {
+              "bin": 2,
+              "probability": 0.5,
+              "frequency": 0.0,
+              "cell_years": 2,
+              "years": 1,
+              "weight": 0.08335872327430402
+            }
+          ],
+          "gap": 0.18003351479942742
+        },
+        "climatology": {
+          "bins": [
+            {
+              "bin": 1,
+              "probability": 0.33333333333333326,
+              "frequency": 0.04167936163715201,
+              "cell_years": 24,
+              "years": 2,
+              "weight": 1.0
+            }
+          ],
+          "gap": 0.29165397169618124
+        }
+      },
+      "paired_year_bootstrap_95pct": {
+        "raw": [
+          -0.16946088056763564,
+          0.15447694647062782
+        ],
+        "model_climate": [
+          -0.3111877733625221,
+          0.004004420600871139
+        ],
+        "climatology": [
+          -0.43653908660733687,
+          0.3028913131759232
+        ]
+      },
+      "years": 2,
+      "uncertainty_note": "Descriptive whole-year resampling; spatial cells are not independent years."
+    }
+  }
+]

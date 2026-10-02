@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "task": "wvg-definition-audit",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/wvg-definition-audit",
+  "files": [
+    {
+      "file": "agent-inputs/ersst-provenance.json",
+      "sha256": "d959d94e3a129b7973d1b1fed0e737938edf6fa96696c063f94d16e6fd7f57cb",
+      "bytes": 663,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/implementation-excerpt.txt",
+      "sha256": "af5c49177834b373194e8fba008c80ce0ce8e8acd18a2440083645c490b4b849",
+      "bytes": 2172,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "32ea6371c570fe41a057f708982e73314e8f653ffba00acc32a6e70a3244bbba",
+      "bytes": 400,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/sst.nc",
+      "sha256": "a8736c8dafeb643ce6cc9f202b1c5c1c6c88d96376ea75fc59dd03f43e085c74",
+      "bytes": 4780968,
+      "visibility": "agent",
+      "dimensions": {
+        "time": 516,
+        "lat": 35,
+        "lon": 66
+      },
+      "variables": {
+        "sst": {
+          "dimensions": [
+            "time",
+            "lat",
+            "lon"
+          ],
+          "units": "degree_Celsius"
+        }
+      }
+    },
+    {
+      "file": "controller/indices.nc",
+      "sha256": "2464ab9275312382ec1b8ebe6ab52793d745a731fde2a922edce5a74493c1efc",
+      "bytes": 18120,
+      "visibility": "controller_only",
+      "dimensions": {
+        "variant": 2,
+        "year": 43,
+        "region": 4
+      },
+      "variables": {
+        "box_temperature_c": {
+          "dimensions": [
+            "variant",
+            "year",
+            "region"
+          ],
+          "units": "degree_Celsius"
+        },
+        "western_v_c": {
+          "dimensions": [
+            "variant",
+            "year"
+          ],
+          "units": "degree_Celsius"
+        },
+        "nino34_z": {
+          "dimensions": [
+            "year"
+          ],
+          "units": "1"
+        },
+        "western_v_z": {
+          "dimensions": [
+            "variant",
+            "year"
+          ],
+          "units": "1"
+        },
+        "wvg": {
+          "dimensions": [
+            "variant",
+            "year"
+          ],
+          "units": "1"
+        }
+      }
+    }
+  ],
+  "source_records": [
+    {
+      "path": "tasks/wvg-definition-audit/source-material/seasonal-hindcasting-gha/scripts/compute_teleconnections.py.txt",
+      "sha256": "a86c4b7149a37e6fe7920a9b64eb7a5a302bba8d9459f4b71f0334ea51c8c559",
+      "original_locator": "seasonal-hindcasting-gha/scripts/compute_teleconnections.py"
+    },
+    {
+      "path": "tasks/wvg-definition-audit/source-material/chc_analyses/AGU-autoscience/AGUv4/outputs/ersst_provenance.json.txt",
+      "sha256": "d959d94e3a129b7973d1b1fed0e737938edf6fa96696c063f94d16e6fd7f57cb",
+      "original_locator": "chc_analyses/AGU-autoscience/AGUv4/outputs/ersst_provenance.json"
+    },
+    {
+      "path": "tasks/wvg-definition-audit/source-material/chc_analyses/AGU-autoscience/AGUv4/src/fetch_ersst.py.txt",
+      "sha256": "38f38536ebfa761012a6e7b995eca3cbf46046e11359f257d808d7eaeb603e61",
+      "original_locator": "chc_analyses/AGU-autoscience/AGUv4/src/fetch_ersst.py"
+    }
+  ],
+  "reference_code_sha256": "21ebf6e1c31d49f6ee478d12f83aa545d179a2b95482a3f65f0b76ac0f3093f1",
+  "reference_validation": {
+    "numpy_and_xarray_references_agree": true,
+    "source_sst_provenance_matches": true,
+    "published_forecast_skill_reproduced": false,
+    "agent_attempts": 0
+  },
+  "expert_approval": false,
+  "public_redistribution_review": "pending",
+  "source_record_root": "repository"
+}

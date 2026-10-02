@@ -1,0 +1,23 @@
+{
+  "scratch": {
+    "exit_code": 0,
+    "stdout": "read-write-roundtrip and raster imports passed\n",
+    "stderr": "",
+    "seconds": 1.0202970420359634,
+    "truncated": false
+  },
+  "rhiza": {
+    "exit_code": 0,
+    "stdout": "read-write-roundtrip and raster imports passed\n",
+    "stderr": "",
+    "seconds": 0.9280020839651115,
+    "truncated": false
+  },
+  "accord": {
+    "exit_code": 0,
+    "stdout": "read-write-roundtrip and raster imports passed\n",
+    "stderr": "",
+    "seconds": 1.7693433749955148,
+    "truncated": false
+  }
+}
