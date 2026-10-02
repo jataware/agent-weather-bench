@@ -172,9 +172,13 @@ be parsed, such as a partial line from a killed run, are skipped and counted in
 `unreadable_log_lines` rather than failing the run list. The record also gives
 the first step that touched the substrate and the paths named.
 
-Use is not quality. A run that read and followed its substrate can still be misled by
-it, and a run that never opened it may not have needed it. Whether the substrate helped
-is answered by the matched with/without comparison, not by this count.
+This implements the [benchmark design](benchmark-design.md#comparing-substrates-and-cost)
+requirement to record whether an agent opened a skill or retrieved a document, and ports
+the historical pilot's trace audit (`archive/pilot-2026-10-01/smoke/audit.py`,
+`revision/collect.py`) from `/catalog` to any mounted substrate. Library invocation is
+not yet measured. As the design states, use is diagnostic evidence: compare assigned
+configurations as the primary analysis, not only the runs that used the substrate. A run
+can follow its substrate and still be misled by it.
 
 This is a lower bound from command text. Relative paths after `cd /substrate`, shell
 variables, and workflow code that opens substrate files itself are not attributed. A
