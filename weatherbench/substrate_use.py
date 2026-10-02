@@ -9,9 +9,12 @@ are not attributed), and is reported as such.
 import json
 import re
 
-PATH = re.compile(r"/substrate(?:/[^\s'\"`;|&<>(){}]*)?")
+STOP = r"\s'\"`;|&<>(){}"
+# The mount itself, not any path that merely contains "/substrate" (e.g. /work/state/substrate_notes.md).
+PATH = re.compile(rf"(?<![\w.~/-])/substrate(?=$|[/{STOP}])(?:/[^{STOP}]*)?")
 START = r"(?:^|[;&|(]|\bthen|\bdo)\s*"
-RUN = re.compile(START+r"(?:(?:uv\s+run|python3?|bash|sh|Rscript)\s+(?:-\S+\s+)*)*(/substrate/[^\s'\"`;|&<>(){}]+)")
+ENV = r"(?:\w+=\S*\s+)*(?:env\s+(?:-\S+\s+)*(?:\w+=\S*\s+)*)?"
+RUN = re.compile(START+ENV+rf"(?:(?:uv\s+run|python3?|bash|sh|Rscript)\s+(?:-\S+\s+)*)*(/substrate/[^{STOP}]+)")
 LIST = re.compile(START+r"(?:ls|find|tree)\b[^;&|]*?/substrate")
 CD = re.compile(START+r"(?:cd|pushd)\s+/substrate")
 DOCUMENT = (".md",".txt",".rst",".yaml",".yml",".json",".csv",".html")
@@ -23,17 +26,20 @@ def executed_commands(log):
     Only results from the sandbox carry `seconds`; the built-in driver also logs truncated or
     invalid tool calls as results ("nothing executed"), and those are not counted.
     """
-    commands, pending = [], None
-    for line in log.read_text().splitlines():
+    commands, pending, unreadable = [], None, 0
+    for line in log.read_text(errors="replace").splitlines():
         if not line.strip(): continue
-        event = json.loads(line)
+        # A run killed mid-write can leave a partial line; one bad log must not break the run list.
+        try: event = json.loads(line)
+        except ValueError: event = None
+        if not isinstance(event,dict): unreadable += 1; continue
         if event.get("type")=="adapter" and (event.get("event") or {}).get("type")=="execute":
             pending = event["event"].get("command")
         elif event.get("type")=="tool_result":
             command = event["command"] if "command" in event else pending
             pending = None
             if isinstance(command,str) and "seconds" in event: commands.append((command,event.get("exit_code")))
-    return commands
+    return commands, unreadable
 
 
 def classify(command):
@@ -52,7 +58,7 @@ def substrate_use(run):
     """Summary for one run directory, or None when it has no execution log."""
     log = run / "logs/events.jsonl"
     if not log.is_file(): return None
-    commands = executed_commands(log)
+    commands, unreadable = executed_commands(log)
     kinds = [classify(command) for command,_ in commands]
     touched = [i for i,kind in enumerate(kinds,1) if kind]
     exits = [code for (_,code),kind in zip(commands,kinds) if kind=="ran"]
@@ -61,5 +67,5 @@ def substrate_use(run):
             **{kind:kinds.count(kind) for kind in ("ran","read","listed","entered")},
             # Exit status belongs to the whole command, so a chained or piped command is attributed as one.
             "ran_ok":exits.count(0),"ran_failed":sum(code not in (0,None) for code in exits),
-            "first_step":touched[0] if touched else None,"paths":files[:50],
+            "first_step":touched[0] if touched else None,"paths":files[:50],"unreadable_log_lines":unreadable,
             "method":"command-text lower bound; use is not quality"}

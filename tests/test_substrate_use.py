@@ -29,6 +29,11 @@ def result(command=None, **extra):
     ("ls /substrate/skills; cat /substrate/skills/START.md","read"),
     ("cat /substrate/a.md | python /substrate/tool.py","ran"),
     ("cd /substrate/skills && python verify.py","entered"),
+    ("cat /work/state/substrate_notes.md",None),
+    ("python /work/substrate.py && ls /work/substrate-cache",None),
+    ("FOO=1 python /substrate/run.py","ran"),
+    ("env -i PATH=/usr/bin python3 /substrate/run.py","ran"),
+    ("PYTHONPATH=/work:/substrate python solve.py","read"),
 ])
 def test_commands_are_classified_by_their_strongest_substrate_use(command,kind):
     assert classify(command)==kind
@@ -79,3 +84,10 @@ def test_unexecuted_tool_calls_are_not_use_and_failed_runs_are_separated(tmp_pat
     use = substrate_use(tmp_path)
     assert (use["commands"],use["ran"],use["ran_ok"],use["ran_failed"],use["read"],use["first_step"])==(4,3,1,2,1,1)
     assert "/substrate/skills/verify/scripts/verify.py" not in use["paths"]
+
+
+def test_a_malformed_log_line_is_counted_and_does_not_break_the_run_list(tmp_path):
+    (tmp_path / "logs").mkdir()
+    (tmp_path / "logs/events.jsonl").write_text(json.dumps(result("ls /substrate"))+"\n[1,2]\n"+'{"type":"tool_res')
+    use = substrate_use(tmp_path)
+    assert (use["commands"],use["listed"],use["unreadable_log_lines"])==(1,1,2)

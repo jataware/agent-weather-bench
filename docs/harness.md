@@ -167,7 +167,9 @@ use of a `/substrate` path: `ran` (a script executed directly or through `python
 `sed`), `listed` (`ls`, `find`, `tree`) or `entered` (`cd`). Runs are split into
 `ran_ok` and `ran_failed` by exit status; the status belongs to the whole command, so a
 chained or piped command is attributed as one. Tool calls the built-in driver refused
-as truncated or invalid were never executed and are not counted. The record also gives
+as truncated or invalid were never executed and are not counted. Log lines that cannot
+be parsed, such as a partial line from a killed run, are skipped and counted in
+`unreadable_log_lines` rather than failing the run list. The record also gives
 the first step that touched the substrate and the paths named.
 
 Use is not quality. A run that read and followed its substrate can still be misled by
