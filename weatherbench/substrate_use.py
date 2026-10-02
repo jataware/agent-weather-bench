@@ -18,7 +18,11 @@ DOCUMENT = (".md",".txt",".rst",".yaml",".yml",".json",".csv",".html")
 
 
 def executed_commands(log):
-    """Commands that reached the runtime, in order, for both the built-in and command drivers."""
+    """(command, exit_code) for commands that reached the runtime, in order, for both drivers.
+
+    Only results from the sandbox carry `seconds`; the built-in driver also logs truncated or
+    invalid tool calls as results ("nothing executed"), and those are not counted.
+    """
     commands, pending = [], None
     for line in log.read_text().splitlines():
         if not line.strip(): continue
@@ -28,7 +32,7 @@ def executed_commands(log):
         elif event.get("type")=="tool_result":
             command = event["command"] if "command" in event else pending
             pending = None
-            if isinstance(command,str): commands.append(command)
+            if isinstance(command,str) and "seconds" in event: commands.append((command,event.get("exit_code")))
     return commands
 
 
@@ -49,10 +53,13 @@ def substrate_use(run):
     log = run / "logs/events.jsonl"
     if not log.is_file(): return None
     commands = executed_commands(log)
-    kinds = [classify(command) for command in commands]
+    kinds = [classify(command) for command,_ in commands]
     touched = [i for i,kind in enumerate(kinds,1) if kind]
-    files = sorted({m.group(0) for command in commands for m in PATH.finditer(command)} - {"/substrate","/substrate/"})
+    exits = [code for (_,code),kind in zip(commands,kinds) if kind=="ran"]
+    files = sorted({m.group(0) for command,_ in commands for m in PATH.finditer(command)} - {"/substrate","/substrate/"})
     return {"commands":len(commands),"substrate_commands":len(touched),
             **{kind:kinds.count(kind) for kind in ("ran","read","listed","entered")},
+            # Exit status belongs to the whole command, so a chained or piped command is attributed as one.
+            "ran_ok":exits.count(0),"ran_failed":sum(code not in (0,None) for code in exits),
             "first_step":touched[0] if touched else None,"paths":files[:50],
-            "method":"command-text lower bound"}
+            "method":"command-text lower bound; use is not quality"}

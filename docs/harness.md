@@ -164,8 +164,15 @@ whether the agent used it. `runs list` and `runs report` derive this from
 change to scoring. Each command that reached the runtime is classed by its strongest
 use of a `/substrate` path: `ran` (a script executed directly or through `python`,
 `bash`, `sh`, `Rscript` or `uv run`), `read` (any other reference, such as `cat` or
-`sed`), `listed` (`ls`, `find`, `tree`) or `entered` (`cd`). The record also gives the
-first step that touched the substrate and the paths named.
+`sed`), `listed` (`ls`, `find`, `tree`) or `entered` (`cd`). Runs are split into
+`ran_ok` and `ran_failed` by exit status; the status belongs to the whole command, so a
+chained or piped command is attributed as one. Tool calls the built-in driver refused
+as truncated or invalid were never executed and are not counted. The record also gives
+the first step that touched the substrate and the paths named.
+
+Use is not quality. A run that read and followed its substrate can still be misled by
+it, and a run that never opened it may not have needed it. Whether the substrate helped
+is answered by the matched with/without comparison, not by this count.
 
 This is a lower bound from command text. Relative paths after `cd /substrate`, shell
 variables, and workflow code that opens substrate files itself are not attributed. A

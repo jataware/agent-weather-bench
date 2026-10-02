@@ -11,7 +11,7 @@ def log(run, rows):
 
 
 def result(command=None, **extra):
-    return {"type":"tool_result","id":"x","exit_code":0,"stdout":"","stderr":"",**({"command":command} if command else {}),**extra}
+    return {"type":"tool_result","id":"x","exit_code":0,"stdout":"","stderr":"","seconds":.1,**({"command":command} if command else {}),**extra}
 
 
 @pytest.mark.parametrize("command,kind",[
@@ -40,7 +40,7 @@ def test_builtin_driver_log_counts_use_and_first_step(tmp_path):
     use = substrate_use(tmp_path)
     assert (use["commands"],use["substrate_commands"],use["ran"],use["read"],use["listed"],use["first_step"])==(4,3,1,1,1,2)
     assert use["paths"]==["/substrate/skills","/substrate/skills/START.md","/substrate/skills/verify/scripts/verify.py"]
-    assert use["method"]=="command-text lower bound"
+    assert use["method"].startswith("command-text lower bound")
 
 
 def test_command_driver_counts_only_commands_that_reached_the_runtime(tmp_path):
@@ -69,3 +69,13 @@ def test_run_report_shows_substrate_use(tmp_path,monkeypatch):
     assert rows["used"]["substrate_use"]["ran"]==1 and rows["unused"]["substrate_use"]["substrate_commands"]==0
     page = (tmp_path / "index.html").read_text() if report.report() else ""
     assert "Substrate use" in page and "ran 1" in page and ">none<" in page
+
+
+def test_unexecuted_tool_calls_are_not_use_and_failed_runs_are_separated(tmp_path):
+    truncated = {"type":"tool_result","id":"t","command":"python /substrate/skills/verify/scripts/verify.py",
+                 "exit_code":1,"stderr":"Incomplete or invalid tool call; nothing executed."}
+    log(tmp_path,[truncated,result("python /substrate/a.py",exit_code=2),result("python /substrate/b.py"),
+                  result("python /substrate/c.py",exit_code=124),result("cat /substrate/a.md",exit_code=1)])
+    use = substrate_use(tmp_path)
+    assert (use["commands"],use["ran"],use["ran_ok"],use["ran_failed"],use["read"],use["first_step"])==(4,3,1,2,1,1)
+    assert "/substrate/skills/verify/scripts/verify.py" not in use["paths"]
