@@ -156,6 +156,36 @@ earlier evidence or silently paying for another judgment.
 artifacts and private data are ignored by Git. Public task manifests identify
 the local references; run metadata pins task, system, substrate and runtime hashes.
 
+## Substrate use
+
+A mounted substrate measures availability; a substrate comparison also needs to know
+whether the agent used it. `runs list` and `runs report` derive this from
+`logs/events.jsonl`, for both drivers and for earlier runs, with no model call and no
+change to scoring. Each command that reached the runtime is classed by its strongest
+use of a `/substrate` path: `ran` (a script executed directly or through `python`,
+`bash`, `sh`, `Rscript` or `uv run`), `read` (any other reference, such as `cat` or
+`sed`), `listed` (`ls`, `find`, `tree`) or `entered` (`cd`). Runs are split into
+`ran_ok` and `ran_failed` by exit status; the status belongs to the whole command, so a
+chained or piped command is attributed as one. Tool calls the built-in driver refused
+as truncated or invalid were never executed and are not counted. Log lines that cannot
+be parsed, such as a partial line from a killed run, are skipped and counted in
+`unreadable_log_lines` rather than failing the run list. The record also gives
+the first step that touched the substrate and the paths named.
+
+This implements the [benchmark design](benchmark-design.md#comparing-substrates-and-cost)
+requirement to record whether an agent opened a skill or retrieved a document, and ports
+the historical pilot's trace audit (`archive/pilot-2026-10-01/smoke/audit.py`,
+`revision/collect.py`) from `/catalog` to any mounted substrate. Library invocation is
+not yet measured. As the design states, use is diagnostic evidence: compare assigned
+configurations as the primary analysis, not only the runs that used the substrate. A run
+can follow its substrate and still be misled by it.
+
+This is a lower bound from command text. Relative paths after `cd /substrate`, shell
+variables, and workflow code that opens substrate files itself are not attributed. A
+substrate installed as a library in the runtime image, rather than mounted, is not
+measured. `unknown` means the run has no execution log; `none` means it ran commands
+but none named the substrate.
+
 ## Reuse across other tasks
 
 ```sh
