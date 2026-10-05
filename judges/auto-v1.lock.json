@@ -14,10 +14,11 @@
     "weatherbench/evaluation.py": "b7c37b67e1da26107e6f536695c651f038aaffabf7f9db19224dda87ceec1e8f",
     "weatherbench/judge.py": "cf7089e52080d7246c61d177af9bb11ea38acfa5ed1a3692423014bd21038d02",
     "weatherbench/model.py": "73cbd78cc87ec9956a643ed13aebeb259279fa96c031169fafaf95a966c75fa1",
-    "weatherbench/report.py": "c252b5532b5c6f194bee39a5988be75513700ceaf0df3140321f4428931c571a",
+    "weatherbench/report.py": "e8d1b25db35c0747a5db39f2f0b9ca7d5d1d4b1364a51a7c017ef220175863e2",
     "weatherbench/runner.py": "c8957982f8659ef29ee38cc41056ee8a9359919659f3447290b30cb2d15bfa96",
     "weatherbench/runtime.py": "55bf55c31b4093ad12b8d05ae6a04d6ca7651b964ae44649a77c1d58d99e6056",
     "weatherbench/storage.py": "a46fb970ae77f620f18111c02d80b4a8eda4c9fae490cd5484300e60ca87928e",
+    "weatherbench/substrate_use.py": "04c29f51d5b3464be1d5b575dbf1c87ecad01c0d6d7995e88c20b5e27eecbd04",
     "weatherbench/systems.py": "d36b9839d98c23135941509beff8b6fcef6201864de5789dd58e7b089c8dce1f",
     "weatherbench/task_tools/__init__.py": "aa0a68ba578ba71c97a4765b948c2937226c670f1c050349cdad7205a20d7c27",
     "weatherbench/task_tools/__main__.py": "30f6618c4574d71249c5367108c91c92e05fabfb16a012ca2eb4f213e956116e",
@@ -96,5 +97,5 @@
     "xlsxwriter": "3.2.9",
     "zarr": "3.4.0"
   },
-  "fingerprint": "44bb477233709670fa72d1d6771f0227f06204a8b724a5375a5aff377d59e547"
+  "fingerprint": "7491da976dfd6ea53a11df25ce199cd9796c98430c87a98b5966f32525c8915d"
 }

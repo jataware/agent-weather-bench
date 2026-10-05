@@ -1,8 +1,8 @@
 ![Agent Weather Bench — A benchmark for AI forecast research](docs/assets/brand/hero.svg)
 
-**A benchmark for AI agents in subseasonal-to-seasonal forecast research.**
+## Which frontier models and agent frameworks can reliably complete substantive weather-forecasting workflows, with what scientific validity, cost, time, and expert intervention?
 
-Agent Weather Bench evaluates AI agents on scientific workflows for subseasonal-to-seasonal (S2S) forecasting. Tasks ask agents to reproduce an analysis, prepare forecast data, test a predictor, build a forecast workflow, or verify a result. Agents submit code, numerical results, and explanations that can be checked against the task requirements.
+Agent Weather Bench assesses complete scientific workflows for subseasonal-to-seasonal (S2S) forecasting: acquiring and interpreting data, investigating methods, writing and adapting scientific code, producing forecasts, and verifying results. We compare how models and frameworks perform, and whether supporting resources—skills, scientific libraries, literature retrieval, and prior work—make those workflows more reliable and efficient. Agents submit code, numerical results, and explanations that can be checked against the task requirements.
 
 The benchmark draws on scientific reproduction benchmarks such as [PaperBench](https://openai.com/index/paperbench/) and [SciReplicate-Bench](https://arxiv.org/abs/2504.00255). It uses forecasting research to test whether agents can implement scientific methods, run valid experiments, and support their conclusions with evidence.
 
@@ -31,16 +31,21 @@ For forecast tasks, observations provide a separate test of predictive value. Ta
 | Dimension | Comparison |
 | --- | --- |
 | Model capability | How reliably does each model complete the same scientific tasks with general tools? |
+| Agent frameworks | How do different agent frameworks perform on the same scientific tasks under matched data access and resource budgets? |
 | Substrate | How does performance change when we add skills, code, retrieval, or other support? |
 | Cost and time | What does a successful solution cost, and how long does it take? Include failed attempts. |
 | Reuse | Does agent-owned work from previous tasks improve performance on other benchmark tasks? |
 
 The **substrate** is the support supplied to an agent, such as skills, workflow code, retrieval resources, or prior work.
 
-For model comparisons, keep tasks, inputs, tools, budgets, and scoring fixed.
+For model comparisons, keep the agent loop, tasks, inputs, tools, budgets, and scoring fixed.
 Record provider and model versions, tokens, costs, and wall time. For substrate
 comparisons, also hold the model and agent loop fixed. Report the cost of creating
 the substrate separately.
+
+For framework comparisons, hold the model, tasks, data access, resource budgets,
+and scoring fixed while allowing orchestration to differ. Record each framework's
+version, configuration, and tools so the complete system being assessed is clear.
 
 Reuse experiments compare retained state with reset controls. Counterbalance task
 order to separate reuse from task difficulty. Each task is standalone; the experiment
