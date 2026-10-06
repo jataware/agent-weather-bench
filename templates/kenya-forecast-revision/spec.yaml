@@ -1,0 +1,59 @@
+schema_version: 1
+template: kenya-forecast-revision
+spec_version: 1
+title: Kenya forecast revision
+task_set_row: 4
+mode: product
+status: development; not reviewed by a domain scientist
+params: [issue_current, issue_previous, rectangle, period_start]
+
+# Every listed result takes part in variant matching. Arrays are compared by
+# coordinate label, so a submission may order its latitudes either way.
+results:
+  latitude: {kind: coordinate, tolerance: {atol: 1.0e-6, rtol: 0}}
+  longitude: {kind: coordinate, tolerance: {atol: 1.0e-6, rtol: 0}}
+  current_mean_mm: {dims: [period, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
+  previous_mean_mm: {dims: [period, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
+  change_mm: {dims: [period, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
+  regional_change_mm: {dims: [period], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
+tolerance_basis: >
+  The source stores rainfall as float32 multiples of 1/32 mm (0.03125 mm). A
+  tolerance of 0.001 mm is thirty times finer than the data's own resolution and
+  far coarser than float64 or float32 round-off on these sums. It was fixed from
+  the data format, before any agent attempt.
+
+# accepted: a defensible reading of the brief. pitfall: a known wrong method.
+conventions:
+  rainfall_semantics:
+    differenced_cumulative: accepted
+    summed_cumulative: pitfall
+  negative_increments:
+    clipped: accepted
+    unclipped: accepted
+  issue_alignment:
+    same_valid_period: accepted
+    same_lead: pitfall
+  area_weighting:
+    cos_latitude: accepted
+    unweighted: pitfall
+  boundary:
+    inclusive: accepted
+    exclusive: pitfall
+  window_labels:
+    end_labelled: accepted
+    shifted_one_day_early: pitfall
+pitfalls:
+  summed_cumulative: Added up the cumulative values as if each were one day's rainfall.
+  same_lead: Compared the same lead days of the two issues, which are different calendar weeks.
+  unweighted: Averaged the cells without area (cosine-latitude) weights.
+  exclusive: Left out the grid cells whose centres lie on the rectangle's edge.
+  shifted_one_day_early: Placed each 7-day window one day too early.
+
+# Convention names shown to the agent. Empty here: naming them would reveal the pitfalls.
+public_conventions: []
+
+invariants: [change_equals_current_minus_previous, regional_change_within_cell_range, weekly_totals_not_negative]
+probes: [replay, changed_data, changed_instance]
+claims:
+  direction: One of wetter or drier for each period, following the sign of regional_change_mm.
+interpretation: [consistency_across_artifacts, source_attribution, generalization]

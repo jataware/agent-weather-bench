@@ -1,0 +1,8 @@
+# Public development instances. Any other member of candidate_instances() may be
+# drawn privately for scoring.
+development:
+  - service-area--weeks-1-2
+  - central--weeks-2-3
+  - north-west--weeks-3-4
+  - coast--week-1
+  - full-domain--weeks-1-3

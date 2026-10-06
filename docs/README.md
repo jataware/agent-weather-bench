@@ -6,6 +6,7 @@ The implemented development tasks and scoring framework remain open to expert re
 - [Original proposal](proposal-original.md) preserves Zeek's supplied draft, with paragraph spacing normalized.
 - [Review and framework design](benchmark-design.md) addresses the argument, evaluation contract, substrate experiments, cost, and accretion.
 - [Proposed starting set of 25 tasks](task-set.md) consolidates the ten packaged tasks, the earlier weather-skills-bench cases and nine gap-filling additions into one list of task templates with two levels.
+- [Task templates](../templates/README.md) explains the `assessment/` package, the template folder layout, the commands and certification.
 - [Proposed assessment format](assessment-format.md) defines one submission envelope, three assessment modes and seven check types, including conformance to WMO seasonal forecasting standards and narrow evidence-cited interpretation checks. It is a proposal and is not implemented.
 - [Candidate task portfolio](task-portfolio.md) proposes twelve tasks spanning existing workflows, published outlooks, and literature claims, with explicit readiness requirements.
 - [Source grounded shortlist](task-candidate-shortlist.md) audits nine new paper, repository and benchmark candidates, with inspected sources, data gaps and packaging priorities.

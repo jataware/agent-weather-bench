@@ -140,7 +140,7 @@ Columns:
 | 1 | Diagnostic pack (ten one-step data operations) | old: `calendar-alignment`, `duration-weighted-rainfall`, `ensemble-flux-spread`, `forecast-observation-bias`, `grid-alignment`, `iod-anomaly`, `legacy-accumulation`, `multimodel-disagreement`, `rainfall-completeness`, `rolling-nonoverlap` | Random seed | Product | No | Fable and Sonnet 10 of 10; Gemini Flash-Lite 6; Qwen 9B 3; Llama 1B and 3B 0 |
 | 2 | Kenya rainfall outlook | old: `e2e-kenya-rainfall` | Forecast issue, rectangle | Product | No | Frontier 4 of 6 |
 | 3 | Kenya heat outlook | old: `e2e-kenya-heat`, `e2e-kenya-heat-cached-v3` | Forecast issue, rectangle | Product | No | Frontier passes; models of 9B or fewer mostly fail |
-| 4 | Kenya forecast revision | old: `e2e-kenya-revision` | Issue pair, rectangle | Product | No | Frontier 4 of 5; Gemini Flash-Lite 0 of 3 |
+| 4 | Kenya forecast revision | old: `e2e-kenya-revision`; converted: `templates/kenya-forecast-revision` | Issue pair, rectangle | Product | No | Frontier 4 of 5; Gemini Flash-Lite 0 of 3 |
 | 5 | Observed Indian Ocean Dipole index | old: `iod-dmi-observed-skill` | Dates, ocean boxes | Product | No | Never run |
 | 6 | Indian Ocean Dipole forecast check | old: `iod-s2s-forecast-skill` | Start date, ocean boxes | Product | No | Never run |
 | 7 | Scorecard debugging | new: `weatherbench-verification` | Month, variable, injected faults | Product | No | Luna reproduced the reference numbers |
@@ -201,7 +201,8 @@ observed rainfall.
 - **By level:** 13 have an optimize level now or by design, 2 can gain one
   later (rows 8 and 10), and 10 are produce-only.
 - **By readiness:** 10 are packaged in this repository, 6 have briefs and
-  answer keys in the old repository, and 9 must be built.
+  answer keys in the old repository, and 9 must be built. One of the six
+  (row 4) is converted to the new assessment format.
 - **By mode:** 12 product (rows 1–9, 16, 24, 25), 11 process (rows 10–14,
   17–22), and 2 outcome (rows 15 and 23). The assignment of rows 12, 14, 16, 20
   and 25 is tentative.

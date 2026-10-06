@@ -1,0 +1,363 @@
+{
+ "schema_version": 1,
+ "template": "kenya-forecast-revision",
+ "spec_version": 1,
+ "fingerprint": "05aad218d25608cc7923ac5f47aec542d7a8595de9797b120b6c0be432fb1cdd",
+ "certified_at": "20261006T132608",
+ "executor": "docker-offline",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 5,
+   "combinations": 64,
+   "comparisons": 320,
+   "largest_difference": 5.684341886080802e-14,
+   "problems": [],
+   "regression_checks": [
+    {
+     "name": "legacy_answer_key",
+     "passed": true,
+     "detail": "largest difference from the weather-skills-bench oracle is 8.88e-16"
+    }
+   ]
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass"
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass"
+    },
+    {
+     "control": "accepted_unclipped",
+     "kind": "accepted_alternative",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass"
+    },
+    {
+     "control": "accepted_unclipped",
+     "kind": "accepted_alternative",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass"
+    },
+    {
+     "control": "accepted_ascending_latitude",
+     "kind": "accepted_alternative",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass"
+    },
+    {
+     "control": "accepted_ascending_latitude",
+     "kind": "accepted_alternative",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass"
+    }
+   ]
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "pitfall_summed_cumulative",
+     "kind": "pitfall",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_summed_cumulative",
+     "kind": "pitfall",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_same_lead",
+     "kind": "pitfall",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_same_lead",
+     "kind": "pitfall",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_unweighted",
+     "kind": "pitfall",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_unweighted",
+     "kind": "pitfall",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_exclusive_boundary",
+     "kind": "pitfall",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_exclusive_boundary",
+     "kind": "pitfall",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_window_shift",
+     "kind": "pitfall",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "pitfall_window_shift",
+     "kind": "pitfall",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "cached_output",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "cached_output",
+     "kind": "incorrect",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "hardcoded_instance",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "hardcoded_instance",
+     "kind": "incorrect",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "overclaim",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "overclaim",
+     "kind": "incorrect",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "edited_numbers",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "edited_numbers",
+     "kind": "incorrect",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "no_answer",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    },
+    {
+     "control": "no_answer",
+     "kind": "incorrect",
+     "instance": "central--weeks-2-3",
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail"
+    }
+   ],
+   "not_applicable": {
+    "leak": "A product-mode task has no held-out targets to leak.",
+    "skipped_process_step": "A product-mode task has no process checklist.",
+    "false_method_pointer": "A product-mode task has no method statement."
+   }
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [
+    {
+     "pair": "summed_cumulative",
+     "convention": "rainfall_semantics",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 48,
+     "instances": 48,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "clipped vs unclipped",
+     "convention": "negative_increments",
+     "kind": "accepted_vs_accepted",
+     "separated_on": 18,
+     "instances": 48,
+     "status": "separated by the numbers on some instances; the changed-instance probe covers the rest",
+     "not_separated_on": [
+      "service-area--weeks-2-3",
+      "service-area--weeks-3-4",
+      "service-area--weeks-4-5",
+      "central--weeks-2-3",
+      "central--weeks-3-4",
+      "central--weeks-4-5",
+      "north-west--weeks-2-3",
+      "north-west--weeks-3-4",
+      "north-west--weeks-4-5",
+      "south-east--weeks-1-2",
+      "south-east--weeks-2-3",
+      "south-east--weeks-3-4"
+     ]
+    },
+    {
+     "pair": "same_lead",
+     "convention": "issue_alignment",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 48,
+     "instances": 48,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "unweighted",
+     "convention": "area_weighting",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 32,
+     "instances": 48,
+     "status": "separated by the numbers on some instances; the changed-instance probe covers the rest",
+     "not_separated_on": [
+      "service-area--week-1",
+      "central--weeks-1-2",
+      "central--weeks-4-5",
+      "central--week-1",
+      "north-west--weeks-4-5",
+      "coast--week-1",
+      "full-domain--week-1",
+      "rift--weeks-2-3",
+      "rift--weeks-3-4",
+      "rift--weeks-4-5",
+      "lake-basin--weeks-1-2",
+      "lake-basin--weeks-2-3"
+     ]
+    },
+    {
+     "pair": "exclusive",
+     "convention": "boundary",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 48,
+     "instances": 48,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "shifted_one_day_early",
+     "convention": "window_labels",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 48,
+     "instances": 48,
+     "status": "separated by the numbers on every instance"
+    }
+   ],
+   "known_ambiguities": []
+  },
+  "5_model_attempts": {
+   "passed": null,
+   "status": "not_run",
+   "detail": "No agent attempts have been run against this spec version."
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false
+}

@@ -1,10 +1,12 @@
 # A generic assessment format for the 25 task templates
 
 Status: proposal agreed in outline on 6 October 2026 and revised the same day
-after a five-point review (see "What the review changed" at the end). Nothing
-here is implemented. The current evaluator (`weatherbench/evaluation.py`,
-`weatherbench/judge.py`, the per-task `rubric.yaml` files) is unchanged. The
-companion list of tasks is [the proposed starting set](task-set.md).
+after a five-point review (see "What the review changed" at the end). Product
+mode at Level 1 is implemented in the `assessment/` package and proven on one
+template; see "What is implemented" below. The evaluator for the ten packaged
+tasks (`weatherbench/evaluation.py`, `weatherbench/judge.py`, the per-task
+`rubric.yaml` files) is unchanged and its lock still verifies. The companion
+list of tasks is [the proposed starting set](task-set.md).
 
 ## The question, stated twice
 
@@ -345,7 +347,8 @@ the same for every system, and the feedback tool
 
 ## An example spec for a product-mode task
 
-This is illustrative. The field names are not final.
+This is illustrative. The working spec is
+`templates/kenya-forecast-revision/spec.yaml`.
 
 ```yaml
 template: kenya-forecast-revision
@@ -533,6 +536,72 @@ run from a reset state.
 - **The reference modules are kept.** They already compute from data; they need
   a conventions argument.
 
+## What is implemented
+
+**Product mode at Level 1 works end to end on one template.** The package
+`assessment/` implements the envelope, variant matching, invariants, the three
+probes, claim checks, three-outcome results, controller-held provenance and the
+certification tests. The first template is `templates/kenya-forecast-revision`
+(row 4 of the task set). How to use both is in
+[templates/README.md](../templates/README.md).
+
+**The spec passed its four automatic certification tests.** Two independent
+reference implementations agree to 6e-14 over 64 convention combinations, and
+the first also reproduces the earlier repository's answer key to 9e-16. Three
+known-correct controls pass. Ten deliberately incorrect controls each fail on
+the check they were built to trip, in the offline Docker runtime.
+
+**A no-model fixture run exercises the whole path.** A deterministic system
+solves an instance inside the tool sandbox, the controller freezes the
+submission and writes the provenance record, and the probes rerun the code
+offline. No language model has attempted the template.
+
+**Building it settled six design points.** Each is a decision taken during the
+build and is open to revision.
+
+1. *Convention names are private by default.* Showing the agent a list such as
+   "negative increments: clipped or unclipped" would reveal the pitfalls. The
+   agent records its choices as free text. A spec may mark a convention public
+   when naming it gives nothing away.
+2. *A result carries two outcomes.* `computed_outcome` combines every check
+   decided by computation. `outcome` also includes the judge's interpretation
+   checks. With no judge run, `outcome` is unresolved while `computed_outcome`
+   is a firm pass or fail, so runs remain comparable.
+3. *A missing or unusable answer fails the envelope.* Level 1 is "produce a
+   valid output", so producing none is a demonstrated failure. Every other
+   check is then unresolved with reason `not_assessed`.
+4. *The run command must read the task parameters from its inputs.* This lets
+   one generic probe, the changed-instance probe, separate coinciding readings:
+   the controller searches the template's instances for one where the accepted
+   and pitfall readings come apart, and reruns the agent's code on it. No
+   hand-written separating probe is needed per pitfall.
+5. *Arrays are compared by coordinate label.* A submission that orders its
+   latitudes south to north is as correct as one ordered north to south.
+6. *The tolerance comes from the data's own resolution.* The Kenya source
+   stores rainfall in steps of 1/32 mm, so the tolerance is 0.001 mm, fixed
+   before any attempt.
+
+**Certification measured how often readings coincide.** On the Kenya template,
+weighted and unweighted regional means agree within tolerance on 16 of 48
+instances, because the region straddles the equator. Clipped and unclipped
+increments agree on 30 of 48. The other four pitfalls give different numbers on
+every instance. Coinciding readings are therefore common, and the probe that
+separates them is necessary, not a refinement.
+
+**Four things are not implemented.**
+
+- *No judge backend.* The verdict validator, including the exact-quote rule, is
+  written and tested. No model is wired to it, so interpretation checks return
+  unresolved with reason `judge_not_run`.
+- *No agent attempts.* The Codex adapters accept only command-line version
+  0.160.0, whose isolation was verified, and the installed version is 0.160.1.
+  No Anthropic key is configured. Neither guard was bypassed. Certification
+  test 5 is recorded as not run.
+- *No live data acquisition.* The earlier version of this task had the agent
+  download the forecasts. This version supplies the frozen raw stores, for
+  repeatability.
+- *Outcome mode, process mode and Level 2 are not built.*
+
 ## Limits of this proposal
 
 - **The reference function is still hand-written.** It is the science, and no
@@ -554,8 +623,8 @@ run from a reset state.
   need a ruling.
 - **Unresolved outcomes can pile up.** A spec that returns unresolved too often
   is a defective spec, and the unresolved rate should be tracked per template.
-- **The format has not been tried on any task.** The recommended first trial is
-  the Kenya forecast revision task (row 4), followed by one process row.
+- **The format has been tried on one product-mode task only.** No model has
+  attempted it, and the other two modes are untested.
 - **Mode assignments are tentative.** Rows 12, 14, 16, 20 and 25 were assigned
   without discussion.
 
