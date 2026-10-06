@@ -1,0 +1,98 @@
+"""fetch_gcm_index.py — build a FORECAST ocean index, so the chain can be closed.
+
+Every v4zeek result so far is perfect prognosis: the predictor is the observed pre-season
+ocean state, which no forecaster has for a future season. The operational chain is
+
+    (can a model forecast the index?)  x  (does the index predict rainfall?)
+
+and only the second factor has been measured. This supplies the first.
+
+WHAT IS BUILT. The Indian Ocean Dipole as FORECAST by a seasonal model, for the OND target,
+initialised in September — a genuine ~1-month-lead operational forecast, not a diagnosis
+after the fact:
+
+    IOD_forecast(year) = mean over ensemble members and over the OND lead months of
+                         (west-pole box SST) - (east-pole box SST)
+
+Ensemble-meaning before differencing is deliberate: the ensemble mean is the model's best
+estimate of the seasonal-mean state, which is what an operational index uses.
+
+NO ANOMALY IS TAKEN HERE. The raw index is written and the candidate standardises it on
+its own training years. Removing a model climatology computed over the whole record would
+be exactly the leak recorded in f:6 — the model's drift correction is a fitted constant and
+belongs inside the fold.
+
+Model: c3s/eccc-cansipsv3 (ECCC CanESM5.1), whose reforecast covers t0=1980-2023 — the
+longest hindcast in rosetta's C3S set, so it overlaps the whole CHIRPS record. The NMME
+route is dead (see probes/probe_nmme.py and f:2's successor notes).
+
+Run: conda run -n pycpt python src/fetch_gcm_index.py
+"""
+import warnings
+from pathlib import Path
+
+warnings.filterwarnings("ignore")
+
+import numpy as np
+import rosetta
+import xarray as xr
+
+DATA = Path(__file__).resolve().parents[1] / "data"
+DATA.mkdir(exist_ok=True)
+
+MODEL = "c3s/eccc-cansipsv3"
+INIT_MONTH = 9                 # September start -> ~1 month before the OND season
+TARGET = "OND"
+HIND = (1981, 2023)
+BOXES = {"iod_w": [-11.0, 11.0, 49.0, 71.0], "iod_e": [-11.0, 1.0, 89.0, 111.0]}
+OUT = DATA / "gcm_iod_ond.nc"
+
+
+def box_series(name, bbox):
+    print(f"[fetch] {MODEL} sst, box {name} {bbox}, init month {INIT_MONTH}, "
+          f"target {TARGET}, {HIND}", flush=True)
+    g = rosetta.fetch(product=MODEL, variable="sst", init=f"{HIND[1]}-{INIT_MONTH:02d}",
+                      target=TARGET, region=bbox, hindcast=HIND, verbose=False, progress=False)
+    da = g[list(g.data_vars)[0]] if hasattr(g, "data_vars") else g
+    print(f"  dims={dict(da.sizes)}  coords={list(da.coords)}", flush=True)
+
+    reduce_dims = [d for d in ("member", "lead_time") if d in da.dims]
+    wgt = np.cos(np.deg2rad(da.lat))
+    ser = da.weighted(wgt).mean(["lat", "lon"])          # area mean
+    if reduce_dims:
+        ser = ser.mean(reduce_dims)                       # ensemble mean, then over the season
+    return ser
+
+
+def main():
+    if OUT.exists():
+        print(f"[skip] {OUT.name} exists")
+        return
+    parts = {k: box_series(k, b) for k, b in BOXES.items()}
+    idx = parts["iod_w"] - parts["iod_e"]
+
+    # label each forecast by the YEAR OF ITS TARGET SEASON, matching the predictand
+    tdim = [d for d in idx.dims if "init" in d or "time" in d]
+    if not tdim:
+        raise SystemExit(f"cannot find an init/time dim in {idx.dims}")
+    d0 = tdim[0]
+    years = np.array([int(str(v)[:4]) for v in idx[d0].values])
+    vals = np.asarray(idx.values, dtype=float)
+    order = np.argsort(years)
+    years, vals = years[order], vals[order]
+
+    ok = np.isfinite(vals)
+    print(f"\n  {ok.sum()} finite years, {years[ok].min()}-{years[ok].max()}")
+    print(f"  raw index range {np.nanmin(vals):.3f} to {np.nanmax(vals):.3f} "
+          f"(Kelvin difference; NOT an anomaly - the candidate standardises on train)")
+    if ok.sum() < 25:
+        raise SystemExit(f"only {ok.sum()} usable years — refusing to write")
+
+    out = xr.Dataset({"gcm_iod": ("year", vals)}, coords={"year": years})
+    out.attrs = {}
+    out.to_netcdf(OUT, engine="netcdf4")
+    print(f"wrote {OUT.name} ({OUT.stat().st_size / 1e3:.0f} KB)")
+
+
+if __name__ == "__main__":
+    main()

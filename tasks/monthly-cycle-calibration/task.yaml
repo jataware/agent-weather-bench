@@ -1,0 +1,35 @@
+schema_version: 1
+id: monthly-cycle-calibration
+version: development-0.1
+title: Reconstruct cyclic monthly calibration with whole-year validation
+status: development_pending_review
+source_category: paper_inspired_method_adaptation
+track: method_reconstruction
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+evaluation:
+  data_mode: retrospective_independent_holdout
+  independent_evaluation: true
+  untouched_evaluation: false
+  scientific_skill_gate: false
+  dynamical_hindcasts_used: false
+  full_paper_reproduction: false
+  reference_agreement: Independent cyclic linear solve and FFT spectral solution with scalar and vectorized covariance.
+outputs: [hindcasts.nc, forecast.nc, answer.json, provenance.json, report.txt, outlook.png, handoff.txt, execution.json]
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers: [Zeek]
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: replay-contract.md
+input_contract:
+  mode: supplied_inputs
+  normalized_fixture_mount: true
+  data_access: Real monthly CHIRPS regional means and prior-calendar-month ERA5 SST, attributed source code and methodological notes; offline.
+  readiness: Development reference and controls; no claim of source paper replication or frontier ceiling.

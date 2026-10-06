@@ -1,0 +1,34 @@
+schema_version: 1
+id: station-verification
+version: development-0.1
+title: Verify actual gridded forecasts against East Africa station observations
+status: development_pending_review
+source_category: paper_and_public_benchmark
+track: verification_diagnosis
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+evaluation:
+  data_mode: retrospective_public_station_subset
+  independent_evaluation: true
+  untouched_evaluation: false
+  scientific_skill_gate: false
+  published_score_reproduction: false
+  reference_agreement: Independent raw NOAA CSV selection, literal bilinear weights versus SciPy interpolation, and explicit versus xarray reductions.
+outputs: [scores.nc, answer.json, provenance.json, report.txt, outlook.png, handoff.txt, execution.json]
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers: [Zeek]
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: replay-contract.md
+input_contract:
+  mode: supplied_inputs
+  normalized_fixture_mount: true
+  data_access: Actual public NOAA ISD January 2020 original observation fields, real WeatherBench2 HRES forecast temperature, pinned WeatherReal method context; offline.
+  readiness: Independently checked development references and constructed controls; human approval pending.

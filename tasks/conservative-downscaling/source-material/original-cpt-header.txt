@@ -1,0 +1,5 @@
+xmlns:cpt=http://iri.columbia.edu/CPT/v10/
+xmlns:cf=http://cf-pcmdi.llnl.gov/documents/cf-conventions/1.4/
+cpt:nfields=1
+cpt:T	1993-03/05	1994-03/05	1995-03/05	1996-03/05	1997-03/05	1998-03/05	1999-03/05	2000-03/05	2001-03/05	2002-03/05	2003-03/05	2004-03/05	2005-03/05	2006-03/05	2007-03/05	2008-03/05	2009-03/05	2010-03/05	2011-03/05	2012-03/05	2013-03/05	2014-03/05	2015-03/05	2016-03/05
+cpt:field=prec, cpt:L=2.5 months, cpt:S=1993-02-01T00:00, cpt:nrow=51, cpt:ncol=86, cpt:row=Y, cpt:col=X, cpt:units=mm/day, cf:standard_name=lwe_precipitation_rate, cpt:missing=-999, cpt:T=1993-03/05

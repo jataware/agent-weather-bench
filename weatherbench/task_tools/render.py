@@ -26,6 +26,41 @@ SUMMARIES = {
         "Compare a paper’s predictor geometry with an existing implementation, recompute both indices, and explain what the differences mean.",
         "The reference isolates geometry under explicit curator choices. Matching it does not reproduce the paper’s full index or forecast-skill result.",
     ),
+    "short-rains-workflow": (
+        "04", "Short-rains workflow", "Forecast method adaptation",
+        "Repair a real rainfall-unit convention, implement issue-time-safe nested selection, and retain calibrated forecasts with independent test targets.",
+        "Predictive skill is an observed outcome. Passing requires scientific processing, leakage checks, inference from saved state, and honest interpretation.",
+    ),
+    "weatherbench-verification": (
+        "05", "WeatherBench verification", "Benchmark verification and diagnosis",
+        "Reproduce forecast metrics on common valid-time support and diagnose three consequential comparison mistakes.",
+        "The real public forecast subset and curator-created availability faults test verification; they do not reproduce annual published rankings.",
+    ),
+    "subseasonal-optimization": (
+        "06", "Subseasonal optimization", "Forecast optimization",
+        "Improve weeks 3–4 precipitation forecasts using training data and at most five aggregate development scores, then freeze predictions for a private final period.",
+        "Regional cosine-weighted RMSE is a curator adaptation of SubseasonalClimateUSA. Scientific completion and numerical performance are reported separately.",
+    ),
+    "cca-seasonal-reproduction": (
+        "07", "Seasonal CCA reproduction", "Multivariate method adaptation",
+        "Build training-only EOF/CCA forecasts, nested mode selection and probabilistic calibration with saved-state inference.",
+        "The explicit method contract adapts source code to East African rainfall. It does not reproduce an entire CPT binary or a paper's published numerical scores.",
+    ),
+    "station-verification": (
+        "08", "Station verification", "Observation and verification audit",
+        "Parse actual East African station observations, match UTC valid times and quality flags, and compare gridded forecast interpolation on common station support.",
+        "Real NOAA observations and WeatherBench forecasts support a WeatherReal-inspired adaptation; neither sparse coverage nor constructed method availability establishes a published ranking.",
+    ),
+    "monthly-cycle-calibration": (
+        "09", "Monthly cyclic calibration", "Seasonal statistical sharing",
+        "Fit cyclic monthly regression slopes with whole-year nested validation, quantify whether smoothing helps, and retain inference from saved state.",
+        "Real lagged SST and rainfall support a statistical method adaptation; negative linear predictions and negative comparisons require honest interpretation.",
+    ),
+    "conservative-downscaling": (
+        "10", "Conservative downscaling", "Forecast calibration and spatial support",
+        "Diagnose uncertain raw forecast units, calibrate ranks to observed totals, and reconstruct nonnegative fine-scale rainfall that conserves mapped coarse-cell volume.",
+        "The raw physical scale remains unresolved. Conservation applies to calibrated millimetres; this does not reproduce the original BCSD hydrological experiment.",
+    ),
 }
 
 
@@ -216,7 +251,7 @@ def render():
         destination.write_text(page)
         outputs.append(str(destination.relative_to(ROOT)))
         cards.append(f'<a class="task-card" href="{task}/review.html"><span class="eyebrow">{number} / {esc(category)}</span><h2>{esc(short)}</h2><p>{esc(summary)}</p><div class="card-foot"><span>{len(checks)} rubric checks</span><span>Inspect & critique ↗</span></div></a>')
-    index = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Task reviews · Agent Weather Bench</title><style>{css}</style></head><body class="index-page"><main class="index-wrap"><div class="brand"><span class="brand-mark">≈</span> Agent Weather Bench <span class="brand-muted">/ task review</span></div><div class="index-hero"><span class="eyebrow">Three drafts for joint review</span><h1>What makes a good<br>weather research task?</h1><p class="lede">Inspect the scientific contract, challenge the scoring, and leave concrete changes. These three packages are a starting point for the benchmark.</p><span class="status">Scientific review pending · No agent attempts launched</span></div><div class="task-cards">{''.join(cards)}</div><section class="index-note"><h2>A shared task pool, rather than a prescribed chain</h2><p>The primary accretion experiment runs different orders of standalone tasks with retained and reset substrates. Explicit related follow-ups remain an optional complementary experiment.</p><p>Each page works offline. Notes are saved in this browser when storage is available; export Markdown or JSON to share or preserve a critique. Notes do not modify task files or approve a benchmark run.</p><div class="source-links"><a href="../docs/task-package-review.md">Review guide ↗</a><a href="../experiments/accretion-review.yaml">Accretion design ↗</a><a href="README.md">Package documentation ↗</a></div></section></main></body></html>'''
+    index = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Task reviews · Agent Weather Bench</title><style>{css}</style></head><body class="index-page"><main class="index-wrap"><div class="brand"><span class="brand-mark">≈</span> Agent Weather Bench <span class="brand-muted">/ task review</span></div><div class="index-hero"><span class="eyebrow">{len(TASKS)} drafts for joint review</span><h1>What makes a good<br>weather research task?</h1><p class="lede">Inspect the scientific contract, challenge the scoring, and leave concrete changes. These packages are development tasks for the benchmark.</p><span class="status">Scientific review pending · See the run report for development attempts</span></div><div class="task-cards">{''.join(cards)}</div><section class="index-note"><h2>A shared task pool, rather than a prescribed chain</h2><p>The primary accretion experiment runs different orders of standalone tasks with retained and reset substrates. Explicit related follow-ups remain an optional complementary experiment.</p><p>Each page works offline. Notes are saved in this browser when storage is available; export Markdown or JSON to share or preserve a critique. Notes do not modify task files or approve a benchmark run.</p><div class="source-links"><a href="../docs/task-package-review.md">Review guide ↗</a><a href="../experiments/accretion-review.yaml">Accretion design ↗</a><a href="README.md">Package documentation ↗</a></div></section></main></body></html>'''
     (PACKAGES / "index.html").write_text(index)
     outputs.append("tasks/index.html")
     return {"rendered": outputs, "model_calls": 0}

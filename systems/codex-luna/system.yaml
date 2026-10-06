@@ -1,0 +1,23 @@
+schema_version: 1
+id: codex-luna
+kind: agent
+description: Codex CLI 0.160.0 with gpt-6-luna and ChatGPT login, adapted to Docker-only
+  harness tools.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env: []
+runtime:
+  image: sha256:14ded77c764dccdcaeef07f91c549709b4ff3549d0c30f5dc780e4376347917a
+  memory: 4g
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 90
+  command_seconds: 120
+substrate:
+  paths:
+  - adapter.py
+  instructions: ''

@@ -1,0 +1,35 @@
+source_category: existing_forecasting_workflow
+starting_workflow:
+  repository: v4zeek
+  revision: e364ce0ed6cb210b0872c4e35d76ddb329b6dfa5
+  locators: [bench.py, candidates/search.py, src/fetch_fixtures.py, src/fetch_gcm_index.py]
+  frozen_material: source-material
+acquisition_evidence:
+  legacy_library: archive/legacy-libraries/rosetta
+  locators: [src/rosetta/normalize.py, src/rosetta/catalog.yaml obs/chirps-v3-monthly]
+  behavior: Native monthly totals divided by 30 then units stripped by fixture producer.
+  current_correction: acmadDL bfbff670ecbd3a6888e8cb0dd0ad88b778c7dc17 preserves monthly totals.
+data:
+  rainfall: CHIRPS v3 final monthly East Africa, historical source fixture acquired August 2026.
+  observations: ERA5 observed SST retrieval-box means, 1981–2023.
+  forecast_predictor: C3S ECCC CanSIPSv3 September initialized raw OND IOD, 1993–2023.
+  frozen_processing: Compact cosine-weighted regional/box series; no model fitting or target quantile calculation in agent inputs.
+literature:
+  - title: A dipole mode in the tropical Indian Ocean
+    doi: https://doi.org/10.1038/43854
+    primary_source: https://www.nature.com/articles/43854
+    locators: [Abstract, Figures 1–4]
+  - title: CHIRPS v3 data documentation
+    primary_source: https://chc.ucsb.edu/data/chirps3
+    locators: [Product description, Data Citation]
+  - title: The Climate Hazards Center Infrared Precipitation with Stations, Version 3
+    doi: https://doi.org/10.1038/s41597-026-07096-4
+scope: Authentic workflow/data-convention repair and predeclared forecasting-method experiment; not original leaderboard or published-paper skill reproduction.
+curator_choices:
+  - Three fixed regional boxes from source targets, with source finite-land support retained.
+  - September 30 issue and conservative August 31 observed-SST cutoff.
+  - 108 bounded source-inspired candidates, univariate OLS Student-t predictive uncertainty, identity/log1p transforms.
+  - Inner and outer expanding windows; strict training-only transforms and thresholds.
+  - Fixed 2019 training cutoff for independent 2020–2023 prediction cases.
+reference_validation: Independent covariance and matrix least-squares implementations agree; see controller/reference-validation.json.
+redistribution_status: Pending source/data-rights review; internal development package only.

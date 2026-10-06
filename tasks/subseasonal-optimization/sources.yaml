@@ -1,0 +1,36 @@
+schema_version: 1
+task: subseasonal-optimization
+sources:
+- id: subseasonalclimateusa-paper
+  kind: paper
+  title: 'SubseasonalClimateUSA: A Dataset for Subseasonal Forecasting and Benchmarking'
+  locator: https://arxiv.org/abs/2109.10399
+  role: Regional adaptation of a published real forecasting benchmark.
+- id: adaptive-bias-correction
+  kind: paper
+  locator: https://doi.org/10.1038/s41467-023-38874-y
+  role: Scientific inspiration; this task does not claim to replicate the paper's aggregate result.
+- id: subseasonal-data
+  kind: repository
+  locator: https://github.com/microsoft/subseasonal_data
+  revision: 29307bbd9f511f251ca0f0975bdd9e1b3d68c421
+  paths: [DATA.md, subseasonal_data/downloader.py]
+  role: Public source paths, processing, units and anonymous access method.
+- id: cpc-precipitation
+  kind: data
+  locator: https://subseasonalusa.blob.core.windows.net/subseasonalusa/dataframes/gt-us_precip_1.5x1.5-14d.h5
+  role: CPC observed14daytotalmm targets at native1.5degree southwestcells.
+  snapshot_policy: AzureETag and extractedSHA recorded; mutablehistoricalpublicsource, notpristineholdout.
+- id: cfsv2-reforecasts
+  kind: data
+  locator: https://subseasonalusa.blob.core.windows.net/subseasonalusa/dataframes/iri-cfsv2-precip-all-us1_5-ensembled.h5
+  role: Source ensemblemean forecast14daytotalmm, lead14.5column pairedwithtargetstart issue+14days.
+  snapshot_policy: BoundedHTTPRange extraction withIfMatchETag; noSAScredentialstored.
+- id: source-notes
+  kind: curator_source_notes
+  locator: source-material/source-notes.txt
+  role: Supplied processing/calendar/source-boundary summary; not a direct paper excerpt.
+- id: baseline-code
+  kind: curator_code
+  locator: weatherbench/task_tools/subseasonal/baseline.py
+  role: Executable trainonlyharmonicclimatology+affineCFSv2correctionstarter; notofficialABCimplementation.

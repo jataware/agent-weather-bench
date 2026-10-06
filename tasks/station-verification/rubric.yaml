@@ -1,0 +1,47 @@
+schema_version: 2
+task: station-verification
+task_version: development-0.1
+status: development_pending_review
+aggregation: Weighted scientific outcome profile; inspect all required criteria and unresolved expert judgments.
+completion: Required scientific outcomes and basic validity pass with trusted offline execution.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks: [delivery, answer_schema, execution_schema, provenance_fields, source_coverage]
+  integrity: Controller-only original/reference boundary and frozen supplied station inputs.
+tree:
+  id: task_completion
+  children:
+  - id: observational_alignment
+    weight: 25
+    required: true
+    evaluator: deterministic
+    criterion: Actual NOAA TMP parsing, strict QC, missing sentinels, deterministic duplicate selection, exact UTC times, Kelvin conversion and both station interpolations.
+    evidence: [scores.nc, controller-reference, observations.csv]
+    checks: [station_alignment]
+  - id: common_support_and_coverage
+    weight: 20
+    required: true
+    evaluator: deterministic
+    criterion: Correct all-method common support, station/case counts, and preserved zero-support Arua with undefined station scores.
+    evidence: [scores.nc, answer.json, controller-reference]
+    checks: [support_alignment]
+  - id: metrics_and_faults
+    weight: 25
+    required: true
+    evaluator: mixed
+    criterion: Correct pooled and equal-station RMSE, station curves, consequential isolated faults, and faithful distinction between constructed faults/mask and real weather/QC data.
+    evidence: [scores.nc, answer.json, report.txt, broken-comparison.py]
+    checks: [metric_values, answer_metrics, fault_contrasts]
+  - id: interpretation_and_dependence
+    weight: 15
+    required: true
+    evaluator: expert
+    criterion: Accurate source attribution and explicit adaptation; scientifically bounded coverage/representativeness conclusions, paired method uncertainty respecting reused valid times and station/time dependence, with no unsupported published ranks/global skill/physical-cause claims.
+    evidence: [report.txt, outlook.png, provenance.json]
+  - id: reusable_verifier
+    weight: 15
+    required: true
+    evaluator: execution
+    criterion: Recomputes all station scores and answer offline after original and changed forecast/mask input replay.
+    evidence: [execution.json, handoff.txt, trusted-replay-log, trusted-counterfactual-log]

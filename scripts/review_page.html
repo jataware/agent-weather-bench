@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Agent Weather Bench · Evaluation review</title>
+<style>
+:root{--paper:#f6f4ed;--surface:#fffefa;--ink:#19383d;--muted:#526c6e;--green:#28786b;--line:#d5ddd4;--focus:#b77a12;--hint:#eaf0e9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:110px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}a{color:var(--green);text-underline-offset:3px}button,input,textarea{font:inherit}button{cursor:pointer}a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:4px}header{border-bottom:1px solid var(--line);padding:16px max(22px,calc((100vw - 1080px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px;background:var(--paper)}.brand{font-weight:650;text-decoration:none;color:var(--ink)}header nav{display:flex;gap:22px;font-size:14px}.wrap{max-width:1080px;margin:auto;padding:0 24px}.intro{padding:56px 0 30px;max-width:880px}.eyebrow,.tag{font-size:11px;font-weight:650;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin:0 0 8px}h1{font:400 clamp(34px,5vw,54px)/1.15 Georgia,serif;letter-spacing:-1.4px;margin:14px 0 20px}h2{font:400 28px/1.25 Georgia,serif;letter-spacing:-.4px;margin:0}h3{font-size:21px;margin:0 0 16px}h4{font-size:15px;margin:22px 0 8px}.intro>p{font-size:18px;color:var(--muted);max-width:790px}.stats{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 18px}.stats span{padding:7px 12px;border:1px solid var(--line);border-radius:5px;background:var(--surface);font-size:13px}.note,.muted{color:var(--muted);font-size:14px}.toolbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:var(--ink);color:#fffefa;border-radius:7px;padding:14px 18px;box-shadow:0 3px 15px #19383d18}.toolbar p{margin:0;font-size:14px}.toolbar .buttons{display:flex;gap:8px;flex-wrap:wrap}.toolbar button{border:1px solid #ceddd2;background:#fffefa;color:var(--ink);border-radius:4px;padding:7px 12px;font-size:13px;font-weight:550}.toolbar .secondary{background:transparent;color:#fffefa;border-color:#8ca59e}.toolbar small{display:block;color:#d3dfd7;font-size:12px}.jump{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 26px}.jump a{padding:6px 11px;border:1px solid var(--line);border-radius:4px;text-decoration:none;font-size:13px}.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:30px;margin:0 0 24px;scroll-margin-top:125px}.card-heading{display:flex;gap:16px;align-items:flex-start;margin-bottom:22px}.number{color:var(--green);font:22px Georgia,serif;border-bottom:2px solid var(--green);padding:3px 0 5px;min-width:30px}.card>p{max-width:890px}.proposal{padding:14px 16px;background:var(--hint);border-left:3px solid var(--green);font-size:15px}details{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0;padding:12px 0}summary{cursor:pointer;color:var(--green);font-weight:600;font-size:14px}.evidence{padding:0 0 8px}.evidence>p{font-size:14px}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;background:#eef1eb;border:1px solid var(--line);border-radius:4px;padding:15px;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;color:#26454a}fieldset{border:0;padding:0;margin:22px 0 16px;min-width:0}legend{font-weight:650;margin-bottom:11px;font-size:16px}.choice{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line);border-radius:5px;padding:10px 13px;margin:8px 0;font-size:15px;cursor:pointer}.choice:has(input:checked){border-color:var(--green);background:var(--hint)}.choice input{margin:5px 0 0;accent-color:var(--green);flex-shrink:0}.notes-label{display:block;font-size:14px;font-weight:600;margin:16px 0 7px}textarea,input[type=text]{border:1px solid #bfcfc6;background:#fff;border-radius:5px;padding:10px 12px;color:var(--ink);width:100%}textarea{resize:vertical;min-height:90px}input[type=text]{max-width:380px}.reviewers{display:grid;grid-template-columns:1fr 1fr;gap:14px}.reviewer{border:1px solid var(--line);border-radius:5px;padding:16px;margin:12px 0}.reviewer p{font-size:14px;margin:10px 0 0}.reviewer strong{font-size:14px}.reviewer .muted{font-size:13px}figure{margin:22px 0}figure img{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line)}figcaption{font-size:13px;color:var(--muted);margin-top:8px}.section-label{font-size:12px;font-weight:650;letter-spacing:1px;color:var(--green);text-transform:uppercase;margin:36px 0 14px}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:12px;color:var(--muted)}.closing{margin:35px 0;padding:28px 0;border-top:1px solid var(--line)}.closing .links{display:flex;gap:22px;flex-wrap:wrap;margin:16px 0}footer{border-top:1px solid var(--line);padding:24px 0 35px;color:var(--muted);font-size:12px}.notice{padding:11px 14px;border-radius:4px;background:#fff2cc;color:var(--ink);font-size:14px;margin:16px 0}.notice:empty{display:none}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:700px){header{align-items:flex-start;flex-direction:column;gap:7px}header nav{gap:18px}.wrap{padding:0 16px}.intro{padding:30px 0 20px}.intro>p{font-size:16px}.toolbar{padding:11px 13px}.toolbar .buttons{gap:6px}.card{padding:20px 17px}.card-heading{gap:12px}h2{font-size:24px}.reviewers{grid-template-columns:1fr}.choice{font-size:14px}.stats{gap:7px}.stats span{font-size:12px}.jump a{font-size:12px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}@media print{header,.toolbar,.jump,.buttons{display:none}.wrap{max-width:none;padding:0}.card{break-inside:avoid;border-radius:0;padding:20px}body{background:white}.intro{padding:0 0 20px}details{display:block}details:not([open])>.evidence{display:none}textarea{border:1px solid #bbb}.choice{padding:5px 9px}a{color:inherit}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="#top">Agent Weather Bench</a><nav aria-label="Page sections"><a href="#decisions">Evaluation decisions</a><a href="#next">Next challenge</a><a href="#tasks">Task reviews</a></nav></header>
+<main class="wrap" id="top">
+<div class="intro"><p class="eyebrow">5 October 2026 · Human review</p><h1>What should count as<br>a successful scientific workflow?</h1><p>Six concrete decisions from actual agent attempts. Each has a short explanation, my proposed direction, and expandable original evidence. Comment on whichever ones matter to you; the others can wait.</p>
+<div class="stats"><span><strong>10</strong> validated task packages</span><span><strong>8</strong> new solver attempts</span><span><strong>261</strong> passing tests</span><span><strong>0</strong> human labels so far</span></div>
+<p class="note">The reviewer ratings below are provisional agent judgments. This page also includes later audit findings, so your feedback develops the evaluation rather than providing a blind judge-accuracy test. Choices start blank. Saving or exporting notes does not approve tasks or change scores.</p></div>
+<div class="toolbar"><div><p id="progress" aria-live="polite">0 of 6 decisions annotated</p><small id="save-state">Your notes stay in this browser. Export to share them.</small></div><div class="buttons"><button type="button" id="export-markdown">Export comments</button><button type="button" id="export-json" class="secondary">Export JSON</button><button type="button" id="import" class="secondary">Import notes</button><button type="button" id="print" class="secondary">Print</button></div></div>
+<input type="file" id="import-file" accept=".json,application/json" hidden>
+<div id="notice" class="notice" role="status"></div>
+<noscript><p class="notice">You can read all evidence without JavaScript. Saving and exporting comments require JavaScript.</p></noscript>
+<form id="review-form" autocomplete="off">
+<div class="jump" id="decisions"><a href="#replay-credit">01 Replay</a><a href="#visible-evidence">02 Evidence</a><a href="#packaging">03 Delivery</a><a href="#monthly-outcomes">04 Outcomes</a><a href="#visual-support">05 Figures</a><a href="#optimization-admissibility">06 Optimization</a></div>
+@@CARDS@@
+<p class="section-label" id="next">Optional · Project direction</p>
+<section class="card"><h2>A stronger subseasonal challenge</h2><p>Astra passed CCA reconstruction and improved the small regional subseasonal benchmark. We have not demonstrated a frontier capability limit. The next proposal expands precipitation forecasting across the native US grid, compares stronger published baselines, and enforces chronological observation availability.</p><p>A small training-only prototype passed metric and availability checks. Full-grid data, published-baseline reproduction and sequential controller execution remain unfinished. Downloads are paused following the disk-space issue.</p><p>@@CHALLENGE_LINK@@</p>
+<fieldset><legend>Does this seem like the right next scientific stretch?</legend><label class="choice"><input type="radio" name="next-challenge" value="stronger-subseasonal"><span>Yes — develop the stronger subseasonal forecasting challenge.</span></label><label class="choice"><input type="radio" name="next-challenge" value="paper-reconstruction"><span>Prioritize a harder paper/code reproduction workflow.</span></label><label class="choice"><input type="radio" name="next-challenge" value="calibration-first"><span>Finish evaluation calibration before expanding difficulty.</span></label><label class="choice"><input type="radio" name="next-challenge" value="discuss"><span>Another direction / discuss.</span></label></fieldset>
+<label class="notes-label" for="next-challenge-notes">What would make this scientifically useful or challenging?</label><textarea id="next-challenge-notes" name="next-challenge-notes" rows="3" maxlength="12000"></textarea></section>
+<p class="section-label" id="tasks">Optional · Individual task specifications</p>
+<section class="card"><h2>Review any of the ten tasks</h2><p>Each task already has its own HTML review page with the prompt, rubric, sources and comment fields. Use those for detailed task feedback. This page focuses on the shared evaluation decisions.</p><div class="table-wrap"><table><thead><tr><th scope="col">Task</th><th scope="col">Version</th><th scope="col">Readiness</th></tr></thead><tbody>@@TASK_ROWS@@</tbody></table></div></section>
+<section class="closing"><h3>Send back only what you want to discuss</h3><label class="notes-label" for="reviewer">Reviewer name (optional)</label><input type="text" name="reviewer" id="reviewer" maxlength="160"><label class="notes-label" for="overall-notes">Overall comments</label><textarea id="overall-notes" name="overall-notes" rows="4" maxlength="12000" placeholder="Anything missing, too fiddly, or worth prioritizing?"></textarea><p class="note">Use “Export comments” for a readable Markdown file, or “Export JSON” to preserve all choices and restore them later. You can also copy the exported comments into our conversation.</p><div class="links">@@REPORT_LINK@@ @@TASK_INDEX_LINK@@</div></section>
+</form>
+<footer>Local review · Bundle @@BUNDLE@@ · Original experiments and reviewer packets are preserved. This page makes no network requests and sends no comments automatically.</footer>
+</main>
+<script id="review-manifest" type="application/json">@@MANIFEST@@</script>
+<script>
+'use strict';
+const manifest = JSON.parse(document.getElementById('review-manifest').textContent);
+const storageKey = 'awb:human-review:' + manifest.review_bundle_sha256;
+const form = document.getElementById('review-form');
+const notice = document.getElementById('notice');
+const radioNames = [...new Set([...form.querySelectorAll('input[type=radio]')].map(input => input.name))];
+const textFields = [...form.querySelectorAll('textarea,input[type=text]')];
+let storageAvailable = true;
+let savedAt = null;
+function collect() {
+  const fields = Object.create(null);
+  for (const name of radioNames) fields[name] = [...form.querySelectorAll('input[type=radio]')].find(input => input.name === name && input.checked)?.value || '';
+  for (const input of textFields) fields[input.name] = input.value;
+  return {schema_version: 1, review_type: manifest.review_type, review_bundle_sha256: manifest.review_bundle_sha256,
+    source_files: manifest.sources, experiment_policy_fingerprint: manifest.experiment_policy_fingerprint,
+    saved_at: savedAt, human_feedback: true, task_approval: false, fields};
+}
+function validate(value) {
+  if (!value || value.schema_version !== 1 || value.review_bundle_sha256 !== manifest.review_bundle_sha256 || !value.fields || typeof value.fields !== 'object' || Array.isArray(value.fields)) throw new Error('This file is not a review for this evidence bundle. Your current notes were kept.');
+  const fields = Object.create(null);
+  for (const name of radioNames) {
+    const selected = value.fields[name] ?? '';
+    const allowed = [...form.querySelectorAll('input[type=radio]')].filter(input => input.name === name).map(input => input.value);
+    if (typeof selected !== 'string' || (selected !== '' && !allowed.includes(selected))) throw new Error('The imported review contains an invalid choice. Your current notes were kept.');
+    fields[name] = selected;
+  }
+  for (const input of textFields) {
+    const text = value.fields[input.name] ?? '';
+    if (typeof text !== 'string' || text.length > input.maxLength) throw new Error('The imported review contains invalid or oversized comments. Your current notes were kept.');
+    fields[input.name] = text;
+  }
+  return fields;
+}
+function restore(fields) {
+  for (const input of form.querySelectorAll('input[type=radio]')) input.checked = fields[input.name] === input.value;
+  for (const input of textFields) input.value = fields[input.name] || '';
+}
+function update() {
+  const fields = collect().fields;
+  const completed = manifest.decisions.filter(id => fields[id] || fields[id + '-notes']?.trim()).length;
+  document.getElementById('progress').textContent = completed + ' of 6 decisions annotated';
+  document.getElementById('save-state').textContent = storageAvailable ?
+    (savedAt ? 'Saved in this browser. Export a file to share your comments.' : 'Your notes stay in this browser. Export to share them.') :
+    'Browser storage unavailable. Export to preserve your notes.';
+}
+function save() {
+  savedAt = new Date().toISOString();
+  try { localStorage.setItem(storageKey, JSON.stringify(collect())); storageAvailable = true; }
+  catch { storageAvailable = false; }
+  update();
+}
+form.addEventListener('submit', event => event.preventDefault());
+form.addEventListener('input', save);
+try {
+  const stored = localStorage.getItem(storageKey);
+  if (stored) { const value = JSON.parse(stored); restore(validate(value)); savedAt = typeof value.saved_at === 'string' ? value.saved_at : null; }
+} catch (error) { storageAvailable = false; notice.textContent = 'Saved notes could not be restored. You can import an exported JSON review or enter comments below.'; }
+update();
+function download(text, type, extension) {
+  const url = URL.createObjectURL(new Blob([text], {type}));
+  const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'agent-weather-bench-review-2026-10-05.' + extension;
+  document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+document.getElementById('export-json').addEventListener('click', () => { save(); download(JSON.stringify(collect(), null, 2) + '\n', 'application/json', 'json'); notice.textContent = 'Exported review JSON. Attach it when you want me to incorporate your comments.'; });
+document.getElementById('export-markdown').addEventListener('click', () => {
+  save(); const record = collect(); const lines = ['# Agent Weather Bench — evaluation review', '', 'Evidence bundle: ' + manifest.review_bundle_sha256, 'Reviewer: ' + (record.fields.reviewer || 'Not specified'), 'Saved: ' + record.saved_at, '', 'Development feedback; no automatic task approval.', ''];
+  for (const section of form.querySelectorAll('[data-review-card]')) {
+    lines.push('## ' + section.querySelector('h2').textContent, '');
+    const choice = section.querySelector('input:checked');
+    lines.push('Decision: ' + (choice ? choice.parentElement.querySelector('span').textContent : 'Not reviewed'), '');
+    const notes = record.fields[section.id + '-notes']; if (notes.trim()) lines.push(notes, '');
+  }
+  lines.push('## Next challenge', '');
+  const next = [...form.querySelectorAll('input[name=next-challenge]')].find(input => input.checked);
+  lines.push(next ? next.parentElement.querySelector('span').textContent : 'Not reviewed', '', record.fields['next-challenge-notes'] || '', '', '## Overall comments', '', record.fields['overall-notes'] || 'No comments.', '');
+  download(lines.join('\n'), 'text/markdown;charset=utf-8', 'md'); notice.textContent = 'Exported readable comments. Attach the file or paste its contents into our conversation.';
+});
+document.getElementById('import').addEventListener('click', () => document.getElementById('import-file').click());
+document.getElementById('import-file').addEventListener('change', async event => {
+  const file = event.target.files[0]; if (!file) return;
+  try {
+    if (file.size > 500000) throw new Error('The review file is too large. Your current notes were kept.');
+    const value = JSON.parse(await file.text()); const fields = validate(value); restore(fields); save();
+    notice.textContent = 'Imported your review notes.';
+  } catch (error) { notice.textContent = error instanceof SyntaxError ? 'That file is not valid JSON. Your current notes were kept.' : error.message; }
+  event.target.value = '';
+});
+document.getElementById('print').addEventListener('click', () => window.print());
+</script>
+</body>
+</html>

@@ -47,6 +47,31 @@ def test_pending_execution_and_imported_integrity_are_not_success():
     assert aggregate(rubric,evaluation,value)['outcomes']['objective_product']['state']=='unresolved'
 
 
+@pytest.mark.parametrize('task,leaf_id,probe', [
+    ('weatherbench-verification','reusable_verifier','counterfactual'),
+    ('subseasonal-optimization','reusable_workflow','prediction'),
+    ('cca-seasonal-reproduction','reusable_workflow','counterfactual'),
+    ('short-rains-workflow','reusable_workflow','prediction'),
+    ('monthly-cycle-calibration','reusable_workflow','prediction'),
+    ('conservative-downscaling','reusable_workflow','counterfactual'),
+])
+def test_failed_execution_probe_overrides_full_judge_credit(task,leaf_id,probe):
+    rubric=read(ROOT / 'tasks' / task / 'rubric.yaml')
+    from weatherbench.task_tools.checks import leaves
+    rows=[leaf for leaf,_ in leaves(rubric['tree'])]
+    evaluation={'static':{'leaves':{leaf['id']:{'state':'unresolved'} for leaf in rows},
+                          'basic_validity':{}},
+                'integrity':{'state':'pass'},'forecast_outcomes':{},
+                'replay':{'state':'pass'},'prediction':{'state':'pass'},
+                'counterfactual':{'state':'pass'}}
+    judgment={'ratings':{leaf_id:{'score':2}}}
+    assert aggregate(rubric,evaluation,judgment)['outcomes'][leaf_id]['state']=='pass'
+    evaluation[probe]['state']='fail'
+    assert aggregate(rubric,evaluation,judgment)['outcomes'][leaf_id]['state']=='fail'
+    evaluation[probe]['state']='unresolved'
+    assert aggregate(rubric,evaluation,judgment)['outcomes'][leaf_id]['state']=='unresolved'
+
+
 @pytest.mark.parametrize('damage',['citation','missing','bool','truncated','figure'])
 def test_judge_rejects_fabricated_or_insufficient_full_credit_evidence(damage):
     _,_,payload,value=evidence_fixture()

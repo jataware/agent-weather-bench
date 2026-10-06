@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "purpose": "WVG development experiment literature substrate",
+  "source": "https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2023EF003524",
+  "doi": "10.1029/2023EF003524",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "retrieved_at": "2026-10-05",
+  "parent_extract_sha256": "7238d5ebdd88943a8f200571f89bca7859a540895e63c51e5368b3545556c5fd",
+  "file": "funk2023-literature.txt",
+  "sha256": "493865b0e1df412fe8764351310d04fbc25b0bc0cd4be5ffa462627b383b36ca",
+  "bytes": 4987,
+  "publisher_lines": [
+    531,
+    533,
+    534,
+    535,
+    536,
+    537,
+    580,
+    581,
+    582,
+    583,
+    693,
+    694,
+    695,
+    696,
+    697
+  ],
+  "coverage": [
+    "Figure 1 caption",
+    "gradient discussion",
+    "Data Availability Statement"
+  ],
+  "development_review": {
+    "reviewer": "benchmark maintainer (Codex)",
+    "checks": [
+      "Promised literature locators present",
+      "Paper boxes convert consistently between signed and 0\u2013360 longitude",
+      "Paper baseline remains 1950\u20132020; task-specific processing choices remain supplied by the task",
+      "No evaluator reference calculations or labels included"
+    ],
+    "human_review": "not yet performed"
+  },
+  "installation_status": "prepared; not mounted in a natural attempt"
+}

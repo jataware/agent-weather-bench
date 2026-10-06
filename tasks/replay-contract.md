@@ -39,6 +39,7 @@ files. List dependencies even when supplied by the assigned substrate; they
 must be pinned before a run. The same installed-tool policy applies to every
 condition. The agent need not replace a skill's CLI with custom Python to comply.
 
-The present checker validates this manifest but never executes its commands.
-Trusted replay, frozen-fit verification and tool/runtime adapters remain required
-before launch. A valid manifest alone is not replay evidence.
+The static checker validates this manifest. A trusted run assessment additionally
+executes its declared commands in fresh offline containers and compares the
+scientific outputs. A valid manifest alone is not replay evidence; successful
+replay alone does not establish scientific correctness or absence of refitting.

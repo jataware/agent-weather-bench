@@ -1,0 +1,34 @@
+schema_version: 1
+id: weatherbench-verification
+version: development-0.1
+title: Reproduce and diagnose a WeatherBench2 forecast comparison
+status: development_pending_review
+source_category: paper_and_public_benchmark
+track: verification_diagnosis
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+evaluation:
+  data_mode: retrospective_public_benchmark_subset
+  independent_evaluation: true
+  untouched_evaluation: false
+  scientific_skill_gate: false
+  published_score_reproduction: false
+  reference_agreement: Independent NumPy and xarray implementations of pinned WeatherBench2 metric conventions.
+outputs: [scores.nc, answer.json, provenance.json, report.txt, outlook.png, handoff.txt, execution.json]
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers: [Zeek]
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: replay-contract.md
+input_contract:
+  mode: supplied_inputs
+  normalized_fixture_mount: true
+  data_access: Compact actual public WeatherBench2 temperature fields and attributed pinned source excerpts; offline.
+  readiness: Development reference and constructed controls; human review pending.

@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "task": "conservative-downscaling",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/conservative-downscaling",
+  "files": [
+    {
+      "file": "agent-inputs/africas2s-bcsd.py.txt",
+      "sha256": "6eaa4e8bbdb4c509d9a68c4116c33824d8037fbc16b19aa03eea2c92693ae5d0",
+      "bytes": 2965,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/coarse-forecast.nc",
+      "sha256": "90bff5538782ff2b7edbc11da6d41867da67451e9e0751fc27cdf38919189b47",
+      "bytes": 11296,
+      "visibility": "agent",
+      "dimensions": {
+        "year": 24,
+        "coarse_cell": 4
+      },
+      "variables": {
+        "raw_predictor": {
+          "dimensions": [
+            "year",
+            "coarse_cell"
+          ],
+          "units": "unknown_raw_source_scale"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/fine-training.nc",
+      "sha256": "2ccac5d8de7d9dd72246c73857b17db00a8ea10c5e8fe10d59886dde01818397",
+      "bytes": 214684,
+      "visibility": "agent",
+      "dimensions": {
+        "year": 16,
+        "lat": 40,
+        "lon": 40
+      },
+      "variables": {
+        "seasonal_total": {
+          "dimensions": [
+            "year",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/geometry.nc",
+      "sha256": "8e7c9fc191f7b57aa7bda646f5fe1e273baab2bc4052ed2f0a23f5066383b601",
+      "bytes": 3270,
+      "visibility": "agent",
+      "dimensions": {
+        "lat": 40,
+        "lon": 40
+      },
+      "variables": {}
+    },
+    {
+      "file": "agent-inputs/old-chirps-catalog.yaml.txt",
+      "sha256": "2077e61f65e432e0c4da1f18c25086d73026d662719333c9b5bed3723f3f3d65",
+      "bytes": 825,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/old-normalize.py.txt",
+      "sha256": "f4533fd2085f28e1356a1feb9f226693b3fee0e7bd073bfeff2b94d8902b2f9c",
+      "bytes": 16286,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/original-cpt-header.txt",
+      "sha256": "a47907d2e78b81696958c135ecd4005a6726913ece1a72d7bc87c41991c84397",
+      "bytes": 591,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-audit.json",
+      "sha256": "b5afb6c5e51e063e70fd8cc24cceb0ea0d267b7db2ce3910e39de13831e6998f",
+      "bytes": 1400,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "ca93fab64b2cba09530f037ee94980f8fa4d83ad90d9a77b027341d9d85fbf06",
+      "bytes": 146,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-notes.txt",
+      "sha256": "0047339ad86af9b70715e6f0865ab45904e8d7f87b1ac33aa3079101d0894437",
+      "bytes": 2441,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/fine-verification.nc",
+      "sha256": "a762ce7b3d9764ed6a7563c65ae4dd961ab616734d396bdbeea86813c73f602b",
+      "bytes": 112284,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 8,
+        "lat": 40,
+        "lon": 40
+      },
+      "variables": {
+        "seasonal_total": {
+          "dimensions": [
+            "year",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/forecast.nc",
+      "sha256": "76d7f9c2ccd34273207ee4e5e2875e890e6722d28c20527ebeded12f56d9fd78",
+      "bytes": 139311,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 8,
+        "lat": 40,
+        "lon": 40,
+        "coarse_cell": 4
+      },
+      "variables": {
+        "rainfall_mm": {
+          "dimensions": [
+            "year",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        },
+        "mapped_coarse_mm": {
+          "dimensions": [
+            "year",
+            "coarse_cell"
+          ],
+          "units": "mm"
+        },
+        "area_m2": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": "m2"
+        },
+        "coarse_cell_id": {
+          "dimensions": [
+            "lat",
+            "lon"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "controller/hindcasts.nc",
+      "sha256": "1a6ef4edce7676a6585d852f4b25d91b6e3f4dac57b008745f55b02dc460123a",
+      "bytes": 215139,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 16,
+        "lat": 40,
+        "lon": 40,
+        "coarse_cell": 4
+      },
+      "variables": {
+        "rainfall_mm": {
+          "dimensions": [
+            "year",
+            "lat",
+            "lon"
+          ],
+          "units": "mm"
+        },
+        "mapped_coarse_mm": {
+          "dimensions": [
+            "year",
+            "coarse_cell"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/model.json",
+      "sha256": "11cd4375576fce1803c727d9c8be91b75f1fc4f6ba11bca0dfe3e878f4e29b02",
+      "bytes": 33731,
+      "visibility": "controller_only"
+    }
+  ],
+  "source_record_root": "repository",
+  "reference_code_path": "weatherbench/task_tools/conservative_downscaling/reference.py",
+  "reference_code_sha256": "c409afa77dba2eba1568546e6b59bd41c327325b9aefaa971c7481ae17b8fe41",
+  "source_records": [
+    {
+      "path": "tasks/conservative-downscaling/prompt.md",
+      "sha256": "21378f604e909fd7988f15cf277320254ce73a02f6eabf55b1c815b1a2a5a889",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/replay-contract.md",
+      "sha256": "233fdac89bf71827ec6dadc3df128ca662bfb73f4f52a4942d3ae456ab05c94c",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/review.md",
+      "sha256": "92210516271b1d4ba4f729ac68aea4b737a2926d4f9e548693ba967d86d6c284",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/rubric.yaml",
+      "sha256": "24a81312ef181612b274e5208c8aaf047c33e26fc2793ff012808d0fe3668cd6",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/source-material/africas2s-bcsd.py.txt",
+      "sha256": "6eaa4e8bbdb4c509d9a68c4116c33824d8037fbc16b19aa03eea2c92693ae5d0",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/source-material/old-chirps-catalog.yaml.txt",
+      "sha256": "2077e61f65e432e0c4da1f18c25086d73026d662719333c9b5bed3723f3f3d65",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/source-material/old-normalize.py.txt",
+      "sha256": "f4533fd2085f28e1356a1feb9f226693b3fee0e7bd073bfeff2b94d8902b2f9c",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/source-material/original-cpt-header.txt",
+      "sha256": "a47907d2e78b81696958c135ecd4005a6726913ece1a72d7bc87c41991c84397",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/source-material/source-notes.txt",
+      "sha256": "0047339ad86af9b70715e6f0865ab45904e8d7f87b1ac33aa3079101d0894437",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/sources.yaml",
+      "sha256": "fd6ca9be2622b6052cedd3aab135a5904b1537a118a1f5a16f917efcd15a0a53",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "tasks/conservative-downscaling/task.yaml",
+      "sha256": "7d2f90a0c40755b2ef05add6c7809170207ae596494f284845e2601ee5ca9c59",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "weatherbench/task_tools/conservative_downscaling/audit.py",
+      "sha256": "376d1b1d0be472d58ef52a6a272a9044bbfe8d5332df77df5be960cb273f4df6",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "weatherbench/task_tools/conservative_downscaling/baseline.py",
+      "sha256": "6d15b49152844804ae6b31b05c9e30bcd813d9b9e33868a1e85593a9ca12ea02",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "weatherbench/task_tools/conservative_downscaling/checks.py",
+      "sha256": "9c4d8c596c1d4bd91480f607e30b54b653b693b0dcf09a846f9251faaeb153d2",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "weatherbench/task_tools/conservative_downscaling/evaluation.py",
+      "sha256": "d3dafe12527f96642f15fd22d4bd628a57478a07489bd1cd4c77a10cae743d56",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "weatherbench/task_tools/conservative_downscaling/__init__.py",
+      "sha256": "2059ad57d376e79c680ddcebed60b81e13ac0163478c4096691d756c4d595aa4",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "weatherbench/task_tools/conservative_downscaling/reference.py",
+      "sha256": "c409afa77dba2eba1568546e6b59bd41c327325b9aefaa971c7481ae17b8fe41",
+      "original_locator": "source adaptation/scientific task material"
+    },
+    {
+      "path": "weatherbench/task_tools/conservative_downscaling/prepare.py",
+      "sha256": "f0b8ae2fe7c40366e80edeefe0f914ac1c68c72f413ef67de8471f62828b83c4",
+      "original_locator": "source adaptation/scientific task material"
+    }
+  ],
+  "reference_validation": {
+    "independent_spherical_aggregation": true,
+    "positive_affine_scale_invariance": true,
+    "raw_units_resolved": false,
+    "original_paper_replication": false
+  },
+  "expert_approval": false,
+  "public_redistribution_review": "pending"
+}

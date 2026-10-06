@@ -1,0 +1,189 @@
+# Copyright 2023 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+"""Definition of evaluation metric classes.
+
+Contains classes for all evaluation metrics used for WB2.
+"""
+
+
+
+# Attributed excerpt boundary
+
+def _latitude_cell_bounds(x: np.ndarray) -> np.ndarray:
+  pi_over_2 = np.array([np.pi / 2], dtype=x.dtype)
+  return np.concatenate([-pi_over_2, (x[:-1] + x[1:]) / 2, pi_over_2])
+
+
+def _cell_area_from_latitude(points: np.ndarray) -> np.ndarray:
+  """Calculate the area overlap as a function of latitude."""
+  bounds = _latitude_cell_bounds(points)
+  _assert_increasing(bounds)
+  upper = bounds[1:]
+  lower = bounds[:-1]
+  # normalized cell area: integral from lower to upper of cos(latitude)
+  return np.sin(upper) - np.sin(lower)
+
+
+def get_lat_weights(ds: xr.Dataset) -> xr.DataArray:
+  """Computes latitude/area weights from latitude coordinate of dataset."""
+  weights = _cell_area_from_latitude(np.deg2rad(ds.latitude.data))
+  weights /= np.mean(weights)
+  weights = ds.latitude.copy(data=weights)
+  return weights
+
+
+
+
+# Attributed excerpt boundary
+
+  def compute(
+      self,
+      forecast: xr.Dataset,
+      truth: xr.Dataset,
+      region: t.Optional[Region] = None,
+      skipna: bool = False,
+  ) -> xr.Dataset:
+    """Evaluate this metric on datasets with full temporal coverages."""
+    if "time" in forecast.dims:
+      avg_dim = "time"
+    elif "init_time" in forecast.dims:
+      avg_dim = "init_time"
+    else:
+      raise ValueError(
+          f"Forecast has neither valid_time or init_time dimension {forecast}"
+      )
+    return self.compute_chunk(
+        forecast, truth, region=region, skipna=skipna
+    ).mean(
+        avg_dim,
+        skipna=skipna,
+    )
+
+
+def _spatial_average(
+    dataset: xr.Dataset,
+    region: t.Optional[Region],
+    skipna: bool,
+) -> xr.Dataset:
+  """Compute spatial average after applying region mask.
+
+  Args:
+    dataset: Metric dataset as a function of latitude/longitude.
+    region: Region object (optional).
+    skipna: Skip NaNs in spatial mean.
+
+  Returns:
+    dataset: Spatially averaged metric.
+  """
+  weights = get_lat_weights(dataset)
+  if region is not None:
+    dataset, weights = region.apply(dataset, weights)
+    # ignore NaN/Inf values in regions with zero weight
+    dataset = dataset.where(weights > 0, 0)
+  return dataset.weighted(weights).mean(
+      ["latitude", "longitude"], skipna=skipna
+  )
+
+
+def _spatial_average_l2_norm(
+    dataset: xr.Dataset,
+    region: t.Optional[Region],
+    skipna: bool,
+) -> xr.Dataset:
+  """Helper function to compute sqrt(spatial_average(ds**2))."""
+  return np.sqrt(_spatial_average(dataset**2, region=region, skipna=skipna))  # pyrefly: ignore[bad-return]
+
+
+@dataclasses.dataclass
+
+
+# Attributed excerpt boundary
+
+class MSE(Metric):
+  """Mean squared error.
+
+  Attributes:
+    wind_vector_mse: Optionally provide list of WindVectorMSE instances to
+      compute.
+  """
+
+  wind_vector_mse: t.Optional[list[WindVectorMSE]] = None
+
+  def compute_chunk(
+      self,
+      forecast: xr.Dataset,
+      truth: xr.Dataset,
+      region: t.Optional[Region] = None,
+      skipna: bool = False,
+  ) -> xr.Dataset:
+    results = _spatial_average(
+        (forecast - truth) ** 2, region=region, skipna=skipna
+    )
+    if self.wind_vector_mse is not None:
+      for wv in self.wind_vector_mse:
+        results[wv.vector_name] = wv.compute_chunk(
+            forecast,
+            truth,
+            region=region,
+            skipna=skipna,
+        )
+    return results
+
+
+@dataclasses.dataclass
+
+
+# Attributed excerpt boundary
+
+class ACC(Metric):
+  """Anomaly correlation coefficient.
+
+  Attribute:
+    climatology: Climatology for computing anomalies.
+  """
+
+  climatology: xr.Dataset
+
+  def compute_chunk(
+      self,
+      forecast: xr.Dataset,
+      truth: xr.Dataset,
+      region: t.Optional[Region] = None,
+      skipna: bool = False,
+  ) -> xr.Dataset:
+    if "init_time" in forecast.dims:
+      time_dim = "valid_time"
+    else:
+      time_dim = "time"
+    climatology_chunk = _get_climatology_chunk(self.climatology, truth)
+    if hasattr(forecast, "level"):
+      climatology_chunk = climatology_chunk.sel(level=forecast.level)
+    time_selection = dict(dayofyear=forecast[time_dim].dt.dayofyear)
+    if "hour" in set(climatology_chunk.coords):
+      time_selection["hour"] = forecast[time_dim].dt.hour
+    climatology_chunk = climatology_chunk.sel(time_selection).compute()
+    forecast_anom = forecast - climatology_chunk
+    truth_anom = truth - climatology_chunk
+    return _spatial_average(
+        forecast_anom * truth_anom,
+        region=region,
+        skipna=skipna,
+    ) / np.sqrt(
+        _spatial_average(forecast_anom**2, region=region, skipna=skipna)
+        * _spatial_average(truth_anom**2, region=region, skipna=skipna)
+    )
+
+
+@dataclasses.dataclass

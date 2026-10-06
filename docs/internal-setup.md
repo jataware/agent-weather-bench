@@ -1,6 +1,6 @@
 # Internal setup
 
-This repository is for internal development and review. Scientific, scoring, and data redistribution reviews are pending. Seasonal acquisition is disabled. No repository license has been selected. These limits also apply to the included source snapshots and historical material.
+This repository is for internal development and review. Scientific, scoring, and data redistribution reviews are pending. Seasonal acquisition development uses a separately prepared native-source frozen replay bundle. No repository license has been selected. These limits also apply to the included source snapshots and historical material.
 
 ## Inspect a checkout
 

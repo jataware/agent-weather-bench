@@ -1,0 +1,93 @@
+# Pinned AfricaS2S4f8526a32232f9c9af400a01e5a6f103a865c735, methods/smoothed_regression.py lines1-92
+"""Kharin et al. (2017) deterministic postprocessing: per-gridpoint ensemble-mean
+regression coefficients smoothed across the seasonal cycle to reduce sampling error.
+Reuses EnsembleRegressionMethod for the per-cell fit; adds only the season smoothing.
+"""
+import numpy as np
+import xarray as xr
+from scipy import optimize, stats
+from scipy.ndimage import gaussian_filter1d
+
+from .ensemble_regression import EnsembleRegressionMethod
+
+_EPS = 1e-12
+
+
+def _smooth_seasonal_coefficients(a, temporal_sigma):
+    """a: xr.DataArray (season, lat, lon). Cyclic smoothing over the season axis.
+    None -> unchanged; float -> gaussian_filter1d(sigma, mode='wrap').
+
+    The time-invariant 'constant' case is NOT handled here: it is a pooled regression
+    over the underlying data (not a transform of the per-season coefficients), so it is
+    computed in seasonal_coefficients()."""
+    if temporal_sigma is None:
+        return a.copy()
+    if temporal_sigma == "constant":
+        raise ValueError(
+            "temporal_sigma='constant' is a pooled regression over the data; use "
+            "seasonal_coefficients(...), not _smooth_seasonal_coefficients(...)."
+        )
+    axis = a.get_axis_num("season")
+    vals = gaussian_filter1d(a.values, sigma=float(temporal_sigma), axis=axis, mode="wrap")
+    return a.copy(data=vals)
+
+
+def _pooled_coefficient(predictor_hindcast, obs):
+    """Single per-gridpoint slope from all seasons pooled (the paper's time-invariant C):
+    remove each season's climatology, pool the (season, year) anomalies into one sample,
+    and fit one slope per cell. Reuses EnsembleRegressionMethod on the pooled anomalies
+    (their pooled mean is 0, so its intercept-OLS slope equals the pooled Cov/Var).
+    Returns (lat, lon)."""
+    fbar = predictor_hindcast.mean("member") if "member" in predictor_hindcast.dims \
+        else predictor_hindcast
+    fa = fbar - fbar.mean("year")                      # per-season anomalies
+    oa = obs - obs.mean("year")
+    # Pool (season, year) into a single sample dim named "year" (what EnsembleRegressionMethod
+    # expects). Drop the stack MultiIndex first so its retained "year" level doesn't collide.
+    fa_p = fa.stack(_sy=("season", "year")).reset_index("_sy", drop=True).rename({"_sy": "year"})
+    oa_p = oa.stack(_sy=("season", "year")).reset_index("_sy", drop=True).rename({"_sy": "year"})
+    m = EnsembleRegressionMethod()
+    m.fit(fa_p, oa_p)
+    return xr.DataArray(m.slope_, dims=(m.lat_dim_, m.lon_dim_), coords=m.predictand_coords_)
+
+
+def seasonal_coefficients(predictor_hindcast, obs, temporal_sigma=None):
+    """Per-gridpoint ensemble-mean regression slope a = Cov(Fbar, O)/Var(Fbar), as a
+    function of the seasonal cycle. predictor_hindcast (season, year, member, lat, lon),
+    obs (season, year, lat, lon) on the same grid -> coefficient (season, lat, lon).
+
+    temporal_sigma:
+      None       -> per-season coefficients, unsmoothed.
+      float >= 0 -> per-season coefficients, cyclically Gaussian-smoothed across seasons.
+      'constant' -> a single time-invariant coefficient (pooled regression over all
+                    seasons, the paper's C), broadcast across the season axis. This pooled
+                    fit is the paper's time-invariant coefficient and differs slightly from
+                    the large-sigma limit of the Gaussian dial (which averages the
+                    per-season slopes); the paper notes the pooled fit scores slightly
+                    better."""
+    seasons = predictor_hindcast["season"]
+    if temporal_sigma == "constant":
+        pooled = _pooled_coefficient(predictor_hindcast, obs)          # (lat, lon)
+        return pooled.expand_dims(season=seasons.values).transpose("season", ...)
+    slopes = []
+    for s in seasons.values:
+        m = EnsembleRegressionMethod()
+        m.fit(predictor_hindcast.sel(season=s), obs.sel(season=s))
+        slope = xr.DataArray(m.slope_, dims=(m.lat_dim_, m.lon_dim_),
+                             coords=m.predictand_coords_).assign_coords(season=s)
+        slopes.append(slope)
+    a = xr.concat(slopes, dim="season")
+    return _smooth_seasonal_coefficients(a, temporal_sigma)
+
+
+# --- probabilistic calibration (round 2): mean-scaling a + spread-scaling b ---
+
+def fit_ab(mu_f, sigma_f, o, *, constrained=True):
+    """Mean/spread scaling for one gridpoint-season -> (a, b), b >= 0.
+    constrained: a = Cov(mu_f,o)/Var(mu_f); b sized so a^2 Var(mu_f) + b^2 mean(sigma_f^2)
+    matches Var(o). unconstrained: minimize mean Gaussian CRPS over (a,b)."""
+    mu_f = np.asarray(mu_f, float); sigma_f = np.asarray(sigma_f, float); o = np.asarray(o, float)
+    ok = np.isfinite(mu_f) & np.isfinite(sigma_f) & np.isfinite(o)
+    if ok.sum() < 3:
+        return np.nan, np.nan
+    mu_f, sigma_f, o = mu_f[ok], sigma_f[ok], o[ok]

@@ -7,9 +7,49 @@ import numpy as np
 import yaml
 
 from weatherbench.storage import inventory
-from .prepare import ROOT, PACKAGES, PRIVATE, TASKS, digest
+from weatherbench.diagnostics import array_diagnostics
+from .prepare import ROOT, PACKAGES, PRIVATE, TASKS, TASK_MODULES, digest
 from .references import load, same_array, TERCILES
 from .contracts import provenance, execution
+
+
+# Percent inputs lie in [0, 100]. With float32 unit roundoff u, converting
+# the two extrema to fractions, subtracting, and scaling back can introduce
+# at most 100 * gamma_3 percentage points of absolute error, where
+# gamma_3 = 3u / (1 - 3u). Cancellation requires an absolute bound, including
+# when the true disagreement is near zero. This policy applies only to this
+# field; relative tolerance must not grow with the reported disagreement.
+_FLOAT32_UNIT_ROUNDOFF = float(np.finfo(np.float32).eps) / 2
+DISAGREEMENT_ATOL_PP = float(100 * 3 * _FLOAT32_UNIT_ROUNDOFF /
+                             (1 - 3 * _FLOAT32_UNIT_ROUNDOFF))
+
+
+def disagreement_comparison(actual, expected):
+    """Compare pp disagreement with its bounded float32 arithmetic allowance."""
+    units_match = actual.attrs.get("units") == expected.attrs.get("units")
+    detail = (f"disagreement_pp: absolute tolerance {DISAGREEMENT_ATOL_PP:.9g} "
+              "percentage points; relative tolerance 0; float32 unit-conversion "
+              "roundoff policy. ")
+    if (actual.shape != expected.shape or actual.values.dtype.kind not in "iuf"
+            or expected.values.dtype.kind not in "iuf"):
+        return False, detail + "Incompatible shape or nonnumeric values."
+    a, b = actual.values, expected.values
+    structural_match = (actual.dims == expected.dims
+                        and all(dim in actual.coords and np.array_equal(actual[dim], expected[dim])
+                                for dim in expected.dims)
+                        and not np.isinf(a).any() and not np.isinf(b).any()
+                        and np.array_equal(np.isnan(a), np.isnan(b)))
+    finite = np.isfinite(a) & np.isfinite(b)
+    errors = np.abs(a[finite].astype(np.float64) - b[finite].astype(np.float64))
+    outside = int((errors > DISAGREEMENT_ATOL_PP).sum())
+    maximum = float(errors.max()) if errors.size else 0.
+    numeric_match = bool(np.allclose(a, b, atol=DISAGREEMENT_ATOL_PP,
+                                     rtol=0, equal_nan=True))
+    detail += (f"Maximum finite absolute error {maximum:.9g} percentage points; "
+               f"{outside}/{errors.size} finite entries outside tolerance. "
+               f"Grid/dimensions/missingness checks {'passed' if structural_match else 'failed'}; "
+               f"units {'match' if units_match else 'do not match'}.")
+    return structural_match and numeric_match and units_match, detail
 
 
 def leaves(node, mass=1.):
@@ -34,6 +74,12 @@ def validate_packages(metadata_only=False):
         assert "successor" not in spec and "phases" not in spec
         for name in ("prompt", "source_record", "rubric", "review_sheet"):
             assert (root / spec[name]).is_file()
+        try:
+            sources = yaml.safe_load((root / spec["source_record"]).read_text())
+        except yaml.YAMLError as exc:
+            raise ValueError(f"Invalid source record for {task}: {exc}") from exc
+        if not isinstance(sources, dict) or not sources:
+            raise ValueError(f"Source record for {task} must be a nonempty mapping")
         leaf_rows = list(leaves(rubric["tree"]))
         ids = [leaf["id"] for leaf, _ in leaf_rows]
         assert len(ids) == len(set(ids))
@@ -62,7 +108,10 @@ def validate_packages(metadata_only=False):
                                      ". See docs/internal-setup.md; use tasks validate --metadata-only to inspect packages without data.")
                 assert path.stat().st_size == row["bytes"] and digest(path) == row["sha256"]
             assert row["visibility"] == ("agent" if row["file"].startswith("agent-inputs/") else "controller_only")
-        assert digest(Path(__file__).with_name("references.py")) == manifest["reference_code_sha256"]
+        reference_path = ROOT / manifest['reference_code_path'] if 'reference_code_path' in manifest else Path(__file__).with_name('references.py')
+        if 'reference_code_path' in manifest and not reference_path.resolve().is_relative_to(ROOT.resolve()):
+            raise ValueError('Reference code must stay inside the repository')
+        assert digest(reference_path) == manifest["reference_code_sha256"]
         for row in manifest["source_records"]:
             source = ROOT / row["path"]
             if Path(row["path"]).is_absolute() or ".." in Path(row["path"]).parts or not source.resolve().is_relative_to(ROOT.resolve()):
@@ -108,9 +157,16 @@ def check(task, submission):
     def array(name, filename, fields):
         try:
             actual, expected = load(submission / filename), load(private / "controller" / filename)
-            ok = all(same_array(actual[v], expected[v])
-                     and actual[v].attrs.get("units") == expected[v].attrs.get("units") for v in fields)
-            record(name, ok, [filename, "controller-reference"])
+            comparisons, details = [], []
+            for v in fields:
+                if task == "acmad-objective" and v == "disagreement_pp":
+                    passed, detail = disagreement_comparison(actual[v], expected[v])
+                    comparisons.append(passed)
+                    details.append(detail)
+                else:
+                    comparisons.append(same_array(actual[v], expected[v])
+                                       and actual[v].attrs.get("units") == expected[v].attrs.get("units"))
+            record(name, all(comparisons), [filename, "controller-reference"], " ".join(details))
         except (OSError, ValueError, KeyError, TypeError) as exc:
             record(name, False, [filename], f"{type(exc).__name__}: {str(exc)[:150]}")
 
@@ -122,17 +178,28 @@ def check(task, submission):
     except (OSError, ValueError, TypeError, KeyError) as exc:
         record("execution_schema", False, ["execution.json"], str(exc)[:150])
     try:
-        source_record = provenance(submission)
+        provenance(submission)
         record("provenance_fields", True, ["provenance.json", "retained-inventory"])
     except (OSError, ValueError, TypeError, KeyError) as exc:
-        source_record = {}
         record("provenance_fields", False, ["provenance.json"], str(exc)[:150])
     if task == "seasonal-calibration":
         needed = json.loads((root / spec["source_plan"]).read_text())["sources"]
     else:
         needed = json.loads((private / "agent-inputs/source-manifest.json").read_text())["sources"]
-    declared = {s["id"] for s in source_record.get("sources", [])}
-    record("source_coverage", set(needed).issubset(declared), ["provenance.json", "source-plan-or-manifest"])
+    # Coverage records declared identifiers only. A stale retained-file hash
+    # must fail provenance without erasing otherwise present declarations.
+    # Neither this check nor a valid provenance record proves source use.
+    try:
+        declarations = json.loads((submission / "provenance.json").read_text())
+        sources = declarations.get("sources", []) if isinstance(declarations, dict) else []
+        declared = {s["id"] for s in sources if isinstance(s, dict)
+                    and isinstance(s.get("id"), str)} if isinstance(sources, list) else set()
+    except (OSError, ValueError, TypeError):
+        declared = set()
+    missing = sorted(set(needed) - declared)
+    record("source_coverage", not missing, ["provenance.json", "source-plan-or-manifest"],
+           "Required source identifiers are declared; source use and file integrity are checked separately."
+           if not missing else "Missing required source identifiers: " + ", ".join(missing))
     try:
         answer = json.loads((submission / "answer.json").read_text())
         if not isinstance(answer, dict):
@@ -170,7 +237,11 @@ def check(task, submission):
                and type(answer.get("maximum_weighting_difference_pp")) in (float, int), ["answer.json"])
         record("summary_metrics", all(type(answer.get(k)) in (float, int) and np.isfinite(answer[k])
                and np.isclose(answer[k], v, atol=1e-6, rtol=1e-6) for k, v in values.items()), ["answer.json", "controller-reference"])
-    else:
+    elif task in TASK_MODULES:
+        from importlib import import_module
+        module = import_module(f"weatherbench.task_tools.{TASK_MODULES[task]}.checks")
+        results.update(module.submission_checks(submission, private))
+    elif task == "wvg-definition-audit":
         array("box_means", "indices.nc", ["box_temperature_c", "western_v_c"])
         array("standardization", "indices.nc", ["nino34_z", "western_v_z"])
         array("indices", "indices.nc", ["wvg"])
@@ -203,4 +274,5 @@ def check(task, submission):
             "check_results": results, "basic_validity": {name: results[name] for name in sorted(basic_ids)},
             "integrity": {"state": "unresolved", "detail": "Requires trusted run, network and retained-inventory evidence"},
             "weighted_score_bounds": [100 * lower, 100 * upper], "model_calls": 0,
-            "submitted_code_executed": False}
+            "submitted_code_executed": False,
+            "array_diagnostics": array_diagnostics(submission, private, spec["outputs"])}

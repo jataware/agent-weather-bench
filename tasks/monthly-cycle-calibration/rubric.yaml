@@ -1,0 +1,47 @@
+schema_version: 2
+task: monthly-cycle-calibration
+task_version: development-0.1
+status: development_pending_review
+aggregation: Weighted scientific outcomes; positive improvement is not required.
+completion: All required outcomes and basic validity pass with trusted execution/integrity.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks: [delivery, answer_schema, execution_schema, provenance_fields, source_coverage]
+  integrity: Controller reference/private final targets not mounted in attempts.
+tree:
+  id: task_completion
+  children:
+  - id: fold_local_cyclic_fit
+    weight: 25
+    required: true
+    evaluator: deterministic
+    criterion: Recomputes fit-only per-month moments and cyclic coefficients including Dec/Jan coupling and correct constant-standardized comparator.
+    evidence: [hindcasts.nc, controller-reference]
+    checks: [fold_moments, cyclic_coefficients]
+  - id: nested_whole_year_selection
+    weight: 20
+    required: true
+    evaluator: deterministic
+    criterion: All six inner losses and selected global lambdas use complete expanding year blocks; prescribed outer/production predictions agree.
+    evidence: [hindcasts.nc, forecast.nc, controller-reference]
+    checks: [nested_selection, outer_prediction, production_prediction]
+  - id: verification
+    weight: 15
+    required: true
+    evaluator: deterministic
+    criterion: Computes common-support physical squared errors and per-month/pooled MSSS with equal region weights and exact zero climatology skill.
+    evidence: [hindcasts.nc, answer.json]
+    checks: [verification_arithmetic]
+  - id: scientific_interpretation
+    weight: 25
+    required: true
+    evaluator: expert
+    criterion: Explains actual source versus adaptation, temporal dependency, selection uncertainty, monthly/pooled outcomes, prior-month retrospective availability and negative predictions without invented skill or dynamical-hindcast claims.
+    evidence: [report.txt, outlook.png, provenance.json]
+  - id: reusable_workflow
+    weight: 15
+    required: true
+    evaluator: execution
+    criterion: Replays offline, excludes held/future target year from all twelve smoothed slopes, and uses frozen fit on changed future SST without observations/refitting/cached predictions.
+    evidence: [execution.json, handoff.txt, trusted-counterfactual-log, trusted-replay-log]

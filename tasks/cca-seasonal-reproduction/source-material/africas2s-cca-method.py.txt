@@ -1,0 +1,411 @@
+# Frozen source africas2s/src/africas2s/methods/cca.py, lines 1-410
+"""CCA downscaling — SVD-based, matching CPT Fortran 17.8.3 (cca.F95).
+
+Algorithm (CPT's full_cca + cca_predict):
+  1. Center data (remove mean), apply sqrt(cos(lat)) weighting
+  2. SVD of weighted anomalies → EOF patterns, singular values, unit-norm PC scores
+  3. SVD of cross-product matrix (Y_pcs.T @ X_pcs) → canonical correlations (mu),
+     CCA rotations (r for Y, s for X)
+  4. Predict: project new X → normalize by svx → rotate by s → scale by mu →
+     rotate by r → scale by svy → project through eofy → add mean
+"""
+import numpy as np
+import xarray as xr
+from scipy.stats import kendalltau, norm
+from .base import MethodBase
+from ..registry import register_method
+
+
+def _svd_pca(X, n_components):
+    """SVD-based PCA matching CPT's get_pcs().
+
+    Returns:
+        eof: (n_features, n_components) — spatial loadings (V from SVD)
+        ts: (n_components, n_samples) — unit-norm PC scores (U.T from SVD)
+        sv: (n_components,) — singular values
+    """
+    # X is (n_samples, n_features), already centered+weighted
+    # CPT does gesdd on (m, n) = (features, samples), i.e., X.T
+    U, s, Vt = np.linalg.svd(X.T, full_matrices=False)
+    # U: (features, min(f,s)) — EOF loadings
+    # s: singular values
+    # Vt: (min(f,s), samples) — unit-norm PC time series
+    nc = min(n_components, len(s))
+    return U[:, :nc], Vt[:nc, :], s[:nc]
+
+
+_SV_RTOL = 1e-10
+
+
+def cpt_latitude_weights(lats):
+    """CPT's integrated-cosine latitude weights (space.F95 weightByLatitude,
+    >= 3 latitude case): per band, sqrt(|(sin(r1) - sin(r2)) / (r1 - r2)|)
+    where r1/r2 are the band edges midway to the neighbouring latitudes
+    (extrapolated at the domain edges). Row order does not matter."""
+    rl = np.asarray(lats, dtype=float)
+    n = rl.size
+    if n == 1:
+        return np.ones(1)
+    if n == 2:
+        return np.sqrt(np.cos(np.deg2rad(rl)))
+    w = np.empty(n)
+    for i in range(n):
+        if i == 0:
+            r1 = (3 * rl[0] - rl[1]) * np.pi / 360.0
+            r2 = (rl[0] + rl[1]) * np.pi / 360.0
+        elif i < n - 1:
+            r1 = (rl[i] + rl[i - 1]) * np.pi / 360.0
+            r2 = (rl[i] + rl[i + 1]) * np.pi / 360.0
+        else:
+            r1 = (rl[-1] + rl[-2]) * np.pi / 360.0
+            r2 = (3 * rl[-1] - rl[-2]) * np.pi / 360.0
+        if abs(r1 - r2) > 1e-12:
+            w[i] = np.sqrt(abs((np.sin(r1) - np.sin(r2)) / (r1 - r2)))
+        else:
+            w[i] = 0.0
+    return w
+
+# Upper clamp for CCAMethod.leverage. Training-point leverage is bounded by 1,
+# but a genuinely extrapolating NEW forecast can exceed it (measured up to ~5 on
+# clean operational data, e.g. a strong-ENSO forecast vs a 30-year training
+# envelope). The clamp sits two orders above that: values beyond it only arise
+# from numerical artefacts (degenerate modes -> ~1e91) or corrupt inputs
+# (cache-poisoned fields -> overflow), both of which previously crashed or
+# collapsed whole MME runs. Clamped models degrade toward climatology (large
+# but finite predictive variance) and a RuntimeWarning names the problem.
+_LEVERAGE_CLAMP = 100.0
+
+
+def _project_by_sv(num, sv):
+    """Divide EOF projections by singular values, dropping degenerate modes.
+
+    Modes whose singular value is negligible relative to the leading one carry no real variance;
+    dividing by them amplifies rounding noise without bound. Observed in practice: a near-rank-
+    deficient predictor produced CPT leverages of ~1e91 (statistical leverage is bounded in [0, 1],
+    so these are numerical artefacts). Because ``seasonal_mme``'s pooled aggregation averages
+    leverages across models, one such model inflated the MME predictive variance to effectively
+    infinity, collapsing every tercile forecast to a constant [0.5, 0, 0.5] — i.e. GROC exactly
+    0.500 regardless of the predictor. Zeroing the degenerate modes (the same policy as
+    ``numpy.linalg.pinv``'s rcond cutoff) keeps the projection finite and well-posed.
+    """
+    sv = np.asarray(sv, dtype=float)
+    num = np.asarray(num, dtype=float)
+    out = np.zeros(num.shape, dtype=float)
+    if sv.size == 0:
+        return out
+    smax = float(np.max(np.abs(sv))) if np.isfinite(sv).any() else 0.0
+    if not np.isfinite(smax) or smax <= 0.0:
+        return out
+    keep = np.abs(sv) > smax * _SV_RTOL
+    out[keep] = num[keep] / sv[keep]
+    return out
+
+
+@register_method("cca")
+class CCAMethod(MethodBase):
+    def __init__(self, n_modes=3, x_eof_modes=None, y_eof_modes=None,
+                 cca_modes=None, standardize=False,
+                 transform_predictand=None, tailoring=None,
+                 drymask_threshold=None, synchronous_predictors=True,
+                 lat_weights="sqrt_cos", sign_convention=None,
+                 y_reconstruction="unweighted"):
+        if lat_weights not in ("sqrt_cos", "cpt"):
+            raise ValueError(
+                f"lat_weights must be 'sqrt_cos' or 'cpt'; got {lat_weights!r}.")
+        if sign_convention not in (None, "cpt"):
+            raise ValueError(
+                f"sign_convention must be None or 'cpt'; got {sign_convention!r}.")
+        if y_reconstruction not in ("unweighted", "cpt"):
+            raise ValueError(
+                "y_reconstruction must be 'unweighted' or 'cpt'; got "
+                f"{y_reconstruction!r}.")
+        self.n_modes = n_modes
+        self.x_eof_modes = x_eof_modes
+        self.y_eof_modes = y_eof_modes
+        self.cca_modes = cca_modes
+        self.standardize = standardize
+        # --- CPT parity knobs ---
+        # lat_weights="cpt": CPT's integrated-cosine band weights instead of
+        #   sqrt(cos(lat)) (see cpt_latitude_weights). Near-identical on fine
+        #   grids; needed for exact CPT.x reproduction.
+        # sign_convention="cpt": CPT's calcPCs(lpos=.true.) canonicalization —
+        #   each EOF's sign is flipped so that the largest-magnitude entry of
+        #   the latitude-rescaled loadings is positive. Deterministic-forecast
+        #   values are sign-invariant, but CPT's forecast leverage
+        #   xvp = 1/n + (sum of canonical scores)^2 is NOT, so reproducing
+        #   CPT's predictive variance requires reproducing its signs.
+        # y_reconstruction="cpt": CPT's predictCCA reconstructs the predictand
+        #   with the latitude-REWEIGHTED stored Y loadings and never divides
+        #   the weight back out (cca.F95: fcast = eofy@rwk, eofy re-weighted by
+        #   calcPCs) — its physical-space anomalies are the unweighted
+        #   reconstruction times wt(lat)^2 (~cos lat, ~6% damped at 20N). The
+        #   X side hides the same mechanism (unweighted anomaly projected onto
+        #   reweighted loadings == weighted anomaly onto raw loadings), so only
+        #   Y needs the knob. Diagnosed from a latitude-correlated residual;
+        #   with it, forecasts match CPT.x to output-file precision.
+        self.lat_weights = lat_weights
+        self.sign_convention = sign_convention
+        self.y_reconstruction = y_reconstruction
+        # --- CPT_ARGS parity (§7) ---
+        # transform_predictand: None | "Empirical" (rank -> normal-score round
+        #   trip on the predictand, inverted after predict). "Gamma" is deferred
+        #   (Gamma on demeaned / zero-inflated precip is ill-posed; see §5).
+        # tailoring: None | "Anomaly". "Anomaly" returns the forecast as an
+        #   anomaly from climatology (the long-term mean is not added back).
+        # drymask_threshold: float | None. Predictand cells whose climatological
+        #   mean is below this are excluded from the SVD (masked *before* the fit).
+        # synchronous_predictors: assumed True (predictor and predictand share a
+        #   year axis). Exposed for CPT-config parity; no behaviour change.
+        self.transform_predictand = transform_predictand
+        self.tailoring = tailoring
+        self.drymask_threshold = drymask_threshold
+        self.synchronous_predictors = synchronous_predictors
+
+    def fit(self, hindcast, obs, **kwargs):
+        x_eof_modes = kwargs.get("x_eof_modes", self.x_eof_modes)
+        y_eof_modes = kwargs.get("y_eof_modes", self.y_eof_modes)
+        cca_modes = kwargs.get("cca_modes", self.cca_modes) or kwargs.get("n_modes", self.n_modes)
+        transform_predictand = kwargs.get("transform_predictand", self.transform_predictand)
+        drymask_threshold = kwargs.get("drymask_threshold", self.drymask_threshold)
+        # Stash for predict() (CV always calls fit before predict).
+        self.transform_predictand_ = transform_predictand
+        self.tailoring_ = kwargs.get("tailoring", self.tailoring)
+        if transform_predictand == "Gamma":
+            raise NotImplementedError(
+                "transform_predictand='Gamma' is deferred (Gamma on demeaned / "
+                "zero-inflated precip is ill-posed; see §5). Use 'Empirical' or None."
+            )
+        if transform_predictand not in (None, "Empirical"):
+            raise ValueError(
+                f"transform_predictand must be None or 'Empirical' (V1); got "
+                f"{transform_predictand!r}."
+            )
+
+        gcm_mean = hindcast.mean("member")
+        n_years = len(gcm_mean.year)
+
+        X = gcm_mean.values.reshape(n_years, -1)
+        Y = obs.values.reshape(n_years, -1)
+
+        # Mask out columns that are all-NaN.
+        self.x_valid_ = ~np.isnan(X).all(axis=0)
+        self.y_valid_ = ~np.isnan(Y).all(axis=0)
+        # Drymask (§7): exclude predictand cells whose climatological mean is
+        # below the threshold *before* the fit, so they never enter the SVD.
+        if drymask_threshold is not None:
+            with np.errstate(invalid="ignore"):
+                y_clim = np.nanmean(Y, axis=0)
+            self.y_valid_ = self.y_valid_ & (y_clim >= drymask_threshold)
+        X = X[:, self.x_valid_]
+        Y = Y[:, self.y_valid_]
+        # Fill remaining (partial-year) gaps with each cell's own long-term
+        # mean — CPT's missing-value replacement method 1 — never the global
+        # mean, which perturbs the EOFs of every partially-missing cell.
+        X = np.where(np.isnan(X), np.nanmean(X, axis=0, keepdims=True), X)
+        Y = np.where(np.isnan(Y), np.nanmean(Y, axis=0, keepdims=True), Y)
+
+        # transform_predictand="Empirical": map each predictand column to normal
+        # scores (rank -> plotting position -> Gaussian quantile) before fitting;
+        # store the sorted values per column to invert after predict.
+        if transform_predictand == "Empirical":
+            self._y_sorted = np.sort(Y, axis=0)
+            self._y_plot_pos = (np.arange(1, n_years + 1) - 0.5) / n_years
+            ranks = Y.argsort(axis=0).argsort(axis=0) + 1
+            Y = norm.ppf((ranks - 0.5) / n_years)
+
+        # Center
+        self.x_mean_ = X.mean(axis=0)
+        self.y_mean_ = Y.mean(axis=0)
+        X_c = X - self.x_mean_
+        Y_c = Y - self.y_mean_
+
+        # Standardize: divide by per-column sample std (ddof=1).
+        # CPT does this before lat-weighting and SVD. Confirmed by matching
+        # EOF explained variances to 6 decimal places vs CPT Fortran output.
+        if self.standardize:
+            self.x_std_ = X_c.std(axis=0, ddof=1)
+            self.x_std_[self.x_std_ < 1e-20] = 1.0
+            self.y_std_ = Y_c.std(axis=0, ddof=1)
+            self.y_std_[self.y_std_ < 1e-20] = 1.0
+            X_c = X_c / self.x_std_
+            Y_c = Y_c / self.y_std_
+        else:
+            self.x_std_ = None
+            self.y_std_ = None
+
+        # Latitude area weighting (CPT latitude_weight before SVD)
+        if self.lat_weights == "cpt":
+            x_row_wt = cpt_latitude_weights(gcm_mean.lat.values)
+            y_row_wt = cpt_latitude_weights(obs.lat.values)
+        else:
+            x_row_wt = np.sqrt(np.cos(np.deg2rad(gcm_mean.lat.values)))
+            y_row_wt = np.sqrt(np.cos(np.deg2rad(obs.lat.values)))
+        x_lats_w = np.repeat(x_row_wt, len(gcm_mean.lon))
+        y_lats_w = np.repeat(y_row_wt, len(obs.lon))
+        self.x_wt_ = x_lats_w[self.x_valid_]
+        self.y_wt_ = y_lats_w[self.y_valid_]
+        X_c = X_c * self.x_wt_
+        Y_c = Y_c * self.y_wt_
+
+        # EOF truncation via SVD (matching CPT get_pcs)
+        if x_eof_modes is None:
+            x_eof_modes = min(n_years - 1, X.shape[1], 10)
+        if y_eof_modes is None:
+            y_eof_modes = min(n_years - 1, Y.shape[1], 10)
+
+        self.eofx_, self.tsx_, self.svx_ = _svd_pca(X_c, x_eof_modes)
+        self.eofy_, self.tsy_, self.svy_ = _svd_pca(Y_c, y_eof_modes)
+
+        # sign_convention="cpt": CPT's calcPCs lpos rule — flip each EOF so the
+        # largest-magnitude entry of the latitude-RE-scaled loadings (CPT
+        # weights the loadings by latitude again for display) is positive.
+        if self.sign_convention == "cpt":
+            for eof, ts, wt in ((self.eofx_, self.tsx_, self.x_wt_),
+                                (self.eofy_, self.tsy_, self.y_wt_)):
+                disp = eof * wt[:, None]
+                for c in range(eof.shape[1]):
+                    if abs(disp[:, c].max()) < abs(disp[:, c].min()):
+                        eof[:, c] = -eof[:, c]
+                        ts[c, :] = -ts[c, :]
+        # A rank-0 predictor (no interannual variance at all — e.g. a field that arrived
+        # zero-filled from a failed OPeNDAP transfer) makes every projection 0/0. Silently
+        # returning NaN forecasts hides a data problem as a modelling result, so fail loudly.
+        if self.svx_.size == 0 or not np.isfinite(self.svx_).any() \
+                or float(np.max(np.abs(self.svx_))) <= 0.0:
+            raise ValueError(
+                "CCA fit: the predictor has no interannual variance (all X singular values are "
+                "zero). This usually means the predictor field was fetched as all-zeros or "
+                "constant — check the source data rather than the model configuration."
+            )
+        nxe = len(self.svx_)
+        nye = len(self.svy_)
+
+        # CCA via SVD of cross-product matrix (CPT cca.F95 L111-112)
+        # tsx and tsy are unit-norm: shape (n_eof, n_years)
+        ce = self.tsy_ @ self.tsx_.T  # (nye, nxe)
+        U_ce, mu, Vt_ce = np.linalg.svd(ce, full_matrices=False)
+
+        ncc = min(cca_modes, nxe, nye, n_years - 1)
+        self.ncc_ = ncc
+        self.mu_ = mu[:ncc]             # canonical correlations
+        self.r_ = U_ce[:, :ncc]         # Y CCA weights (nye, ncc)
+        self.s_ = Vt_ce[:ncc, :]        # X CCA weights transposed (ncc, nxe)
+
+        self.n_train_ = n_years
+        self.x_eof_modes_ = nxe
+        self.y_eof_modes_ = nye
+        self.predictor_shape_ = gcm_mean.isel(year=0).shape
+        self.predictor_coords_ = {"lat": gcm_mean.lat, "lon": gcm_mean.lon}
+        self.predictand_shape_ = obs.isel(year=0).shape
+        self.predictand_coords_ = {"lat": obs.lat, "lon": obs.lon}
+
+    def leverage(self, forecast):
+        """CPT-compatible leverage (cca.F95 L602, L618-620).
+
+        xvp = 1/n + Sum(prjc(1:ncc))**2
+        where prjc = s @ (eofx.T @ x_anom / svx)
+        """
+        n = self.n_train_
+        x = forecast.mean("member").values.reshape(1, -1)
+        x = x[:, self.x_valid_]
+        x = np.where(np.isnan(x), self.x_mean_[None, :], x)   # cell's training mean
+        x_anom = x - self.x_mean_
+        if self.x_std_ is not None:
+            x_anom = x_anom / self.x_std_
+        x_anom = x_anom * self.x_wt_
+        rwk = _project_by_sv(self.eofx_.T @ x_anom.ravel(), self.svx_)
+        prjc = self.s_ @ rwk
+        # Inf-safe square + clamp. Python's float ** raises OverflowError on
+        # huge sums, so a single corrupt forecast field (observed: a cache-
+        # poisoned member with ~1e307 cells -> num ~1e306) crashed whole MME
+        # runs from deep inside the CV loop. Values beyond _LEVERAGE_CLAMP
+        # (set well above legitimate extrapolation, see its comment) are
+        # numerical artefacts of degenerate modes (see _project_by_sv) or
+        # corrupt inputs, so clamp — but WARN loudly first, because a wildly
+        # out-of-envelope forecast usually means broken input data, not weather.
+        with np.errstate(over="ignore"):
+            xvp = 1.0 / n + float(np.square(np.float64(np.sum(prjc))))
+        if not np.isfinite(xvp) or xvp > _LEVERAGE_CLAMP:
+            import warnings
+            warnings.warn(
+                f"CCA leverage {xvp:.3g} exceeds the statistical bound "
+                f"(clamped to {_LEVERAGE_CLAMP}); the forecast is far outside "
+                "the training envelope — check the predictor data for "
+                "corruption (fill values, cache poisoning) before trusting "
+                "this model's contribution.",
+                RuntimeWarning, stacklevel=2,
+            )
+            xvp = _LEVERAGE_CLAMP
+        return xvp
+
+    def predict(self, forecast, **kwargs):
+        """CPT-compatible prediction (cca.F95 L605-638).
+
+        For each member:
+          1. x_anom = (x - xm) [/ x_std] * lat_wt
+          2. rwk = eofx.T @ x_anom          (project onto X EOFs)
+          3. rwk = rwk / svx                 (normalize to unit variance)
+          4. prjc = s @ rwk                  (project onto CCA modes)
+          5. prjc = prjc * mu               (scale by canonical correlations)
+          6. rwk = r @ prjc                  (back-project to Y EOF space)
+          7. rwk = rwk * svy                 (scale by Y singular values)
+          8. fcast = eofy @ rwk              (back-project to Y grid space)
+          9. fcast = fcast / lat_wt [* y_std] + ym  (undo transforms, add mean)
+        """
+        forecast_grid = (forecast.sizes["lat"], forecast.sizes["lon"])
+        if forecast_grid != self.predictor_shape_:
+            raise ValueError(
+                f"forecast grid shape (lat={forecast_grid[0]}, lon={forecast_grid[1]}) "
+                f"does not match training predictor grid shape "
+                f"(lat={self.predictor_shape_[0]}, lon={self.predictor_shape_[1]})"
+            )
+        results = []
+        for m in range(len(forecast.member)):
+            x = forecast.isel(member=m).values.reshape(1, -1)
+            x = x[:, self.x_valid_]
+            x = np.where(np.isnan(x), self.x_mean_[None, :], x)   # cell's training mean
+
+            x_anom = x.ravel() - self.x_mean_
+            if self.x_std_ is not None:
+                x_anom = x_anom / self.x_std_
+            x_anom = x_anom * self.x_wt_
+
+            rwk = _project_by_sv(self.eofx_.T @ x_anom, self.svx_)
+            prjc = self.s_ @ rwk * self.mu_
+            rwk_y = self.r_ @ prjc * self.svy_
+            fcast = self.eofy_ @ rwk_y
+
+            if self.y_reconstruction == "cpt":
+                # CPT: reweighted loadings, no un-weighting (see __init__ note)
+                y_pred_valid = fcast * self.y_wt_
+            else:
+                y_pred_valid = fcast / self.y_wt_
+            if self.y_std_ is not None:
+                y_pred_valid = y_pred_valid * self.y_std_
+            # tailoring="Anomaly": leave the forecast as an anomaly (don't add
+            # the climatological mean back). Default adds it back (full field).
+            if getattr(self, "tailoring_", None) != "Anomaly":
+                y_pred_valid = y_pred_valid + self.y_mean_
+
+            # Invert the empirical predictand transform: normal score -> uniform
+            # (Gaussian CDF) -> data value (interpolated on the stored per-cell
+            # empirical distribution). Bounded to the observed range.
+            if getattr(self, "transform_predictand_", None) == "Empirical":
+                if getattr(self, "tailoring_", None) == "Anomaly":
+                    raise NotImplementedError(
+                        "transform_predictand='Empirical' with tailoring='Anomaly' "
+                        "is unsupported (the inverse transform needs the full field)."
+                    )
+                u = norm.cdf(y_pred_valid)
+                inv = np.empty_like(y_pred_valid)
+                for j in range(y_pred_valid.shape[0]):
+                    inv[j] = np.interp(u[j], self._y_plot_pos, self._y_sorted[:, j])
+                y_pred_valid = inv
+
+            y_full = np.full(len(self.y_valid_), np.nan)
+            y_full[self.y_valid_] = y_pred_valid
+            results.append(y_full.reshape(self.predictand_shape_))
+
+        return xr.DataArray(
+            np.stack(results),
+            dims=["member", "lat", "lon"],

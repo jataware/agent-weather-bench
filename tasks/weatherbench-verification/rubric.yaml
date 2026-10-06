@@ -1,0 +1,47 @@
+schema_version: 2
+task: weatherbench-verification
+task_version: development-0.1
+status: development_pending_review
+aggregation: Weighted scientific outcome profile; inspect criteria alongside aggregate bounds.
+completion: All required scientific outcomes and basic validity pass with trusted execution.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks: [delivery, answer_schema, execution_schema, provenance_fields, source_coverage]
+  integrity: Trusted supplied-input boundary and controller-only scoring references.
+tree:
+  id: task_completion
+  children:
+  - id: aligned_support
+    weight: 20
+    required: true
+    evaluator: deterministic
+    criterion: Correct issue/lead/valid coordinates, spherical weighting and common-support counts and regional area fractions.
+    evidence: [scores.nc, controller-reference]
+    checks: [support_alignment]
+  - id: metric_reproduction
+    weight: 30
+    required: true
+    evaluator: deterministic
+    criterion: Correct per-case MSE/ACC and time aggregation for all systems, leads and regions, with undefined climatology ACC preserved.
+    evidence: [scores.nc, answer.json, controller-reference]
+    checks: [metric_values, answer_metrics]
+  - id: fault_isolation
+    weight: 20
+    required: true
+    evaluator: mixed
+    criterion: Numerically isolates the three constructed faults and explains comparison effects without attributing them to upstream research.
+    evidence: [scores.nc, report.txt, answer.json, broken-comparison.py]
+    checks: [fault_contrasts]
+  - id: interpretation
+    weight: 15
+    required: true
+    evaluator: expert
+    criterion: Honest reanalysis/common-support/regional interpretation, paired uncertainty with temporal dependence, and source/adaptation attribution without annual-ranking claims.
+    evidence: [report.txt, outlook.png, provenance.json, answer.json]
+  - id: reusable_verifier
+    weight: 15
+    required: true
+    evaluator: execution
+    criterion: Recomputes all scientific quantities offline on original and modified forecast/mask inputs.
+    evidence: [execution.json, handoff.txt, trusted-replay-log, trusted-counterfactual-log]

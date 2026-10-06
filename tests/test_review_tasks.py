@@ -35,6 +35,16 @@ def test_source_validation_rejects_a_dependency_outside_the_checkout(tmp_path, m
         checks.validate_packages(metadata_only=True)
 
 
+def test_package_validation_catches_malformed_source_yaml_before_launch(tmp_path, monkeypatch):
+    import shutil
+    import weatherbench.task_tools.checks as checks
+    shutil.copytree(checks.PACKAGES, tmp_path / "tasks")
+    monkeypatch.setattr(checks, "PACKAGES", tmp_path / "tasks")
+    (tmp_path / "tasks/seasonal-calibration/sources.yaml").write_text("title: invalid: nested\n")
+    with pytest.raises(ValueError, match="Invalid source record"):
+        checks.validate_packages(metadata_only=True)
+
+
 def seasonal_inputs():
     f = xr.Dataset({"precip": (("init_time", "member", "lead_time", "lat", "lon"),
                                np.ones((2, 2, 3, 1, 1)))},
@@ -227,3 +237,5 @@ def test_evidence_record_failures_cannot_be_compensated_by_correct_numeric_outco
     assert result["leaves"]["combination_audit"]["state"] == "pass"
     failed = "source_coverage" if damage == "source" else "provenance_fields"
     assert result["basic_validity"][failed]["state"] == "fail"
+    if damage != "source":
+        assert result["basic_validity"]["source_coverage"]["state"] == "pass"

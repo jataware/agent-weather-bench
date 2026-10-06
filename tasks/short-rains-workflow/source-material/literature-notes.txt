@@ -1,0 +1,35 @@
+Frozen source notes, inspected 2026-10-05. These are curator paraphrases, not a
+full-text reproduction and not instructions to accept every source assertion.
+
+Saji, Goswami, Vinayachandran and Yamagata (1999), A dipole mode in the tropical
+Indian Ocean, Nature 401, 360–363. DOI https://doi.org/10.1038/43854
+Primary source: https://www.nature.com/articles/43854 , Abstract and Figures 1–4.
+The observational analysis links western Indian Ocean warming and cooling near
+Sumatra with coupled rainfall anomalies. It identifies increased rainfall in
+eastern Africa during active dipole events and motivates forecasting potential.
+This establishes a physical association, not performance of the supplied
+antecedent predictor, model forecast index or nested selection procedure.
+
+Climate Hazards Center, CHIRPS v3 data documentation:
+https://chc.ucsb.edu/data/chirps3 , product description and Data Citation.
+CHIRPS v3 is a satellite/station rainfall product over land at 0.05 degrees from
+1981. The final monthly product uses best available station inputs and becomes
+available during the following month. Historical final products in a reforecast
+study are not historical real-time release vintages. Documentation describes
+monthly and pentad totals as the underlying products.
+Data DOI https://doi.org/10.15780/G2JQ0P
+Scientific description DOI https://doi.org/10.1038/s41597-026-07096-4
+
+Frozen acquisition evidence has priority for the supplied numbers' units:
+old-chirps-catalog.yaml.txt declares native units mm/month and target mm/day;
+old-normalize.py.txt contains the conversion dividing values by a flat 30.0.
+fetch-fixtures.py.txt strips inherited attributes. starting-bench.py.txt later
+multiplies calendar month lengths. That last operation is not the inverse of
+the frozen acquisition converter.
+
+The fixture compilation preserves all source retrieval-box cells, including
+their margins, before cosine-weighted averaging. These are the provided study
+features, not exact standard-index reconstructions. ERA5 supplies observed SST;
+forecast-index acquisition code records CanSIPS September initialization and
+OND target leads. One initialization/model and a short regional record limit
+generality. No source asserts that this candidate grid must improve skill.

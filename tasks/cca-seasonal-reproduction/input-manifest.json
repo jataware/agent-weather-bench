@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "task": "cca-seasonal-reproduction",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/cca-seasonal-reproduction",
+  "files": [
+    {
+      "file": "agent-inputs/africas2s-cca-method.py.txt",
+      "sha256": "c6ab0a5b6e9d78e4a8fabaa37926fcbf2a7d25697f2247d26cc07b66aa7fac48",
+      "bytes": 20480,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/africas2s-method-record.txt",
+      "sha256": "9a996d3d170670e7c65e97192974872bad2458d9f6662ec09eee57a2b3df486d",
+      "bytes": 4784,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/algorithm.md",
+      "sha256": "9005e59ffd534e7f6efe066df43ae357de36e81c25dc2090d5515043604b1ba8",
+      "bytes": 3921,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/candidates.json",
+      "sha256": "08d85d2dc5d2094788532c86b327d8664b99fd4c44b503ac27b7faa498f1df17",
+      "bytes": 945,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/predictors.nc",
+      "sha256": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+      "bytes": 16000,
+      "visibility": "agent",
+      "dimensions": {
+        "year": 31,
+        "predictor": 27
+      },
+      "variables": {
+        "sst": {
+          "dimensions": [
+            "year",
+            "predictor"
+          ],
+          "units": "degree_Celsius"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/pycpt-probabilistic-route.py.txt",
+      "sha256": "3ca7686d2e98eca1019c6c0a7c99e0efcf74af5bd1f999f0927bf2b84f41636c",
+      "bytes": 1527,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+      "bytes": 125,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/targets.nc",
+      "sha256": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+      "bytes": 11384,
+      "visibility": "agent",
+      "dimensions": {
+        "year": 27,
+        "target": 12
+      },
+      "variables": {
+        "rainfall": {
+          "dimensions": [
+            "year",
+            "target"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/forecast.nc",
+      "sha256": "971bdb9a9cc2b4f1a764ed63377c6b9a3bbfb1ec4225f8617cd11acb39e50116",
+      "bytes": 17639,
+      "visibility": "controller_only",
+      "dimensions": {
+        "system": 3,
+        "year": 4,
+        "target": 12,
+        "category": 3,
+        "boundary": 2,
+        "candidate": 14
+      },
+      "variables": {
+        "probability": {
+          "dimensions": [
+            "system",
+            "year",
+            "target",
+            "category"
+          ],
+          "units": null
+        },
+        "prediction": {
+          "dimensions": [
+            "system",
+            "year",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "threshold": {
+          "dimensions": [
+            "boundary",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "selected_candidate": {
+          "dimensions": [],
+          "units": null
+        },
+        "inner_loss": {
+          "dimensions": [
+            "candidate"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "controller/hindcasts.nc",
+      "sha256": "e10aa3c033dd07f90197c9df5a7cb467393fc85d22ec951d5cbed160ab0894d1",
+      "bytes": 48008,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 15,
+        "system": 3,
+        "target": 12,
+        "category": 3,
+        "boundary": 2,
+        "candidate": 14
+      },
+      "variables": {
+        "prediction": {
+          "dimensions": [
+            "year",
+            "system",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "probability": {
+          "dimensions": [
+            "year",
+            "system",
+            "target",
+            "category"
+          ],
+          "units": null
+        },
+        "threshold": {
+          "dimensions": [
+            "year",
+            "boundary",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "selected_candidate": {
+          "dimensions": [
+            "year"
+          ],
+          "units": null
+        },
+        "inner_loss": {
+          "dimensions": [
+            "year",
+            "candidate"
+          ],
+          "units": null
+        },
+        "rps": {
+          "dimensions": [
+            "year",
+            "system",
+            "target"
+          ],
+          "units": null
+        },
+        "full_fit_prediction": {
+          "dimensions": [
+            "year",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "full_fit_probability": {
+          "dimensions": [
+            "year",
+            "target",
+            "category"
+          ],
+          "units": null
+        },
+        "rpss": {
+          "dimensions": [
+            "system"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "controller/model.json",
+      "sha256": "6aaf8f4722cc4d77adc719c8a16c5d735021d56ef9e90ca3af000e1c143f0de3",
+      "bytes": 76466,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/private-targets.nc",
+      "sha256": "3554768d83eb1de2e848da2002eb3453b2e93d4decd1f14aa90879be907f8db2",
+      "bytes": 8992,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 4,
+        "target": 12
+      },
+      "variables": {
+        "rainfall": {
+          "dimensions": [
+            "year",
+            "target"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/reference-audit.json",
+      "sha256": "2b62643a63cea610bc86f34a82ab5d9e209576afbb6ab369cfaf72f17980afdb",
+      "bytes": 1299,
+      "visibility": "controller_only"
+    }
+  ],
+  "reference_code_path": "weatherbench/task_tools/cca_seasonal/reference.py",
+  "reference_code_sha256": "7068924c3a5321b74b7065f958dd62ee1ff9c91a52bbab3f6ee2f8a05cca9998",
+  "reference_validation": "Independent SVD/eigendecomposition across all candidate scores/predictions/probabilities",
+  "source_records": [
+    {
+      "path": "tasks/cca-seasonal-reproduction/algorithm.md",
+      "sha256": "9005e59ffd534e7f6efe066df43ae357de36e81c25dc2090d5515043604b1ba8"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/prompt.md",
+      "sha256": "04d6d8fd7540c10cf2333d5dc3b4aa5642910910850bdae6e2c87ecffd36b74e"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/replay-contract.md",
+      "sha256": "7216b4e32fe1c091d6b2b572731ca69f5b3a5014c97933729f7ebb4bd9a454bd"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/review.md",
+      "sha256": "8b0cd9b93d961b62800518df3848f1236ab4b5014b89f603cc4f4d07e0d250c1"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/rubric.yaml",
+      "sha256": "09cfa0e54184a4c7337b754404e8e140c725b0bf8d9e826393ecdcb3495ecc35"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/source-material/africas2s-cca-method.py.txt",
+      "sha256": "c6ab0a5b6e9d78e4a8fabaa37926fcbf2a7d25697f2247d26cc07b66aa7fac48"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/source-material/africas2s-method-record.txt",
+      "sha256": "9a996d3d170670e7c65e97192974872bad2458d9f6662ec09eee57a2b3df486d"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/source-material/original-files.json",
+      "sha256": "f585e7708d0b12b30de8f625041b4986984cbb9e3c67c9518470e86aaa83aad8"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/source-material/pycpt-probabilistic-route.py.txt",
+      "sha256": "3ca7686d2e98eca1019c6c0a7c99e0efcf74af5bd1f999f0927bf2b84f41636c"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/sources.yaml",
+      "sha256": "cb90f840a119c56a0febcd78d4d4330a920a52e1b62d65233a3dd1c529345eab"
+    },
+    {
+      "path": "tasks/cca-seasonal-reproduction/task.yaml",
+      "sha256": "39036a71448ff558fb0b8956b3efcdd579b454a88b0f1f0c0d6f0a8218116afc"
+    }
+  ]
+}

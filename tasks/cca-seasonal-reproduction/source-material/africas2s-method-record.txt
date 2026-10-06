@@ -1,0 +1,99 @@
+# Frozen source africas2s/scripts/benchmark_pycpt.py, lines 1-98
+"""Side-by-side benchmark: PyCPT (CPT binary + IRI data) vs AfricaS2S (our CCA + Rosetta).
+
+Calls PyCPT step by step, inspects its outputs at every stage, and compares them
+to our implementations in africas2s.methods.cca / africas2s.tercile / africas2s.metrics.rpss.
+
+Stages compared:
+  1. Input data:  PyCPT (IRI) vs Rosetta (CDS) — grid, values, units
+  2. EOF loadings: CPT's x/y_eof_loadings vs CCAMethod(standardize=True)
+  3. CCA predictions: CPT's deterministic CV hindcasts vs our LOYO CV
+  4. Tercile probabilities: CPT's in-sample probabilistic vs our reproduction
+  5. Skill scores: CPT's RPSS vs our RPSSMetric
+
+Last verified results (2026-03-20, SEAS51c East Africa MAM):
+  EOF explained var:    exact match (6 decimal places)
+  EOF loadings:         |r| > 0.9999 all modes
+  CCA predictions:      r = 0.9996 (most years r = 1.000000)
+  Tercile probs:        r = 0.9994, MAD = 0.004
+  RPSS:                 7.72% vs 7.77% (per-gridpoint r = 0.9998)
+
+== HOW CPT/PyCPT ACTUALLY WORKS (algorithm reference) ==
+
+1. PREPROCESSING (confirmed by matching EOF explained variances to 6 dp):
+   - Center each column (subtract training mean)
+   - Standardize: divide by per-column sample std (ddof=1)
+     AfricaS2S: CCAMethod(standardize=True)
+   - Apply sqrt(cos(lat)) area weighting per gridpoint
+   - SVD of weighted+standardized anomaly matrix → EOF loadings + PC scores
+   Source: CPT get_pcs() in cca.F95; stdize in settings.F95
+
+2. CCA (canonical correlation analysis):
+   - SVD of cross-product matrix (Y_pcs.T @ X_pcs) → canonical correlations (mu),
+     CCA rotations (r for Y, s for X)
+   - Predict: project X → normalize by svx → rotate by s → scale by mu →
+     rotate by r → scale by svy → project through eofy → undo weighting → add mean
+   Source: cca.F95 L111-112 (CCA), L605-638 (predict)
+
+3. MODE AUTO-SELECTION:
+   - Outer loop: LOYO CV folds. Inner loop: all (x_eof, y_eof, cca) combos.
+   - Goodness index: average Kendall tau across gridpoints (igood=3, default).
+   - Overfitting guard: if any canonical corr >= 1-tol, skip that (x_eof, y_eof) pair.
+   - CPT selected (8, 6, 3) for SEAS51c with ranges x=(1,8), y=(1,6), cca=(1,3).
+   Source: cca.F95 L223-539 (cv_cca), scores.F95 L3675-3679 (goodness)
+
+4. LEVERAGE (per forecast case, cca.F95 L602-620):
+   xvp = 1/n + (Sum(prjc(1:ncc)))^2
+   prjc = CCA projections BEFORE scaling by mu.
+   NOTE: square of sum, NOT sum of squares.
+
+5. PyCPT's PROBABILISTIC HINDCASTS ARE IN-SAMPLE (not cross-validated):
+   pycpt/notebook.py:396-403 calls CPT a second time, fitting on ALL years and
+   passing the hindcast data as "forecast" (dates shifted +48yr to trick CPT).
+   - 'deterministic' field = genuine LOYO cross-validated predictions
+   - 'probabilistic' field = in-sample predictions (trained on all data)
+   - 'prediction_error_variance' = PEV from this in-sample context
+   The comment in PyCPT warns: "this produces unrealistically optimistic values"
+
+6. PEV (prediction error variance):
+   PEV(gridpoint, year) = s2_cv(gridpoint) * (1 + h_insample(year))
+   Where:
+   - s2_cv = sum(cv_residuals^2) / (n - x_eof - 1), per gridpoint, from CPT's
+     internal CV (which runs for mode selection even in the "forecast" call)
+   - h_insample = leverage from the in-sample (all-data) CCA fit
+   Source: distribs.F95 L253-296 (get_errvar), regression.F95 L1656
+
+7. TERCILE PROBABILITIES (regression.F95 L1753-1782):
+   t1 = (threshold_33 - forecast) / PESD
+   P(below) = StudentT_CDF(t1, dofr)        dofr = n - x_eof - 1
+   P(above) = 1 - StudentT_CDF(t2, dofr)
+   P(normal) = 1 - P(below) - P(above)
+   Boundaries: full-climatology CPT q_empirical (rndx = n*p + 0.5, distribs.F95 L1007)
+   AfricaS2S: to_tercile_cv(method="cpt", cpt_boundaries=True)
+
+8. RPSS SCORING (scores.F95 L2309-2340):
+   - Obs categorized against LOO tercile boundaries (year ± hcw excluded)
+   - Bounded formula: when rps > rps_clim, RPSS = (rps_clim - rps) / (1 - rps_clim)
+   - PyCPT's skill file stores per-gridpoint RPSS (spatial map, in percentage 0-100)
+   AfricaS2S: RPSSMetric(loo_boundaries=False, bounded=True, spatial=True)
+   Note: PyCPT's per-gridpoint RPSS uses full-sample boundaries, not LOO.
+
+== KEY AFRICAS2S FLAGS TO MATCH CPT ==
+
+  CCAMethod(standardize=True)           # center + divide by std ddof=1
+  to_tercile_cv(cpt_boundaries=True)    # CPT q_empirical boundaries
+  RPSSMetric(bounded=True)              # CPT's bounded RPSS formula
+
+Prerequisites:
+  bash scripts/install_pycpt.sh
+  source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh
+  conda activate pycpt
+
+Usage:
+  python scripts/benchmark_pycpt.py
+"""
+import datetime as dt
+import sys
+from pathlib import Path
+import numpy as np
+import xarray as xr

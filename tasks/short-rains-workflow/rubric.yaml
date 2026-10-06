@@ -1,0 +1,47 @@
+schema_version: 2
+task: short-rains-workflow
+task_version: development-0.1
+status: development_pending_review
+aggregation: Weighted mean of scientific outcomes; weights are relative.
+completion: All required scientific outcomes and basic validity must pass with trusted execution and integrity evidence.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks: [delivery, answer_schema, execution_schema, provenance_fields, source_coverage]
+  integrity: Trusted execution establishes controller-only targets and source boundaries.
+tree:
+  id: task_completion
+  children:
+  - id: processing_and_availability
+    weight: 20
+    required: true
+    evaluator: mixed
+    criterion: Recovers true monthly totals, preserves targets, implements allowed observed and forecast predictor times and explains the source-method changes.
+    evidence: [seasonal.nc, report.txt, controller-reference]
+    checks: [seasonal_totals, units_and_coordinates]
+  - id: nested_calibration
+    weight: 35
+    required: true
+    evaluator: deterministic
+    criterion: All 108 inner candidate scores, selected configurations, training-only component transforms, Student-t predictive probabilities and fold boundaries match independent calculations.
+    evidence: [hindcasts.nc, forecast.nc, controller-reference]
+    checks: [hindcast_probabilities, inner_selection, production_probabilities, thresholds]
+  - id: verification
+    weight: 15
+    required: true
+    evaluator: deterministic
+    criterion: Computes common-support outer RPS and pooled RPSS, including exact zero skill for climatology.
+    evidence: [hindcasts.nc, answer.json, controller-reference]
+    checks: [verification_arithmetic]
+  - id: scientific_interpretation
+    weight: 15
+    required: true
+    evaluator: expert
+    criterion: Explains authentic unit and availability distinctions, evaluates uncertainty on paired outer cases, distinguishes reforecast skill from historical real-time skill, and allows a supported negative result without claiming access to hidden target skill.
+    evidence: [report.txt, outlook.png, provenance.json, answer.json]
+  - id: reusable_workflow
+    weight: 15
+    required: true
+    evaluator: execution
+    criterion: Recomputes offline, respects alternate inputs, preserves historical predictions under future/held-out perturbation, and uses saved state for changed predictor inference without observations or refitting.
+    evidence: [execution.json, handoff.txt, trusted-replay-log, trusted-counterfactual-log]

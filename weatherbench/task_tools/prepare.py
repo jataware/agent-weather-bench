@@ -10,7 +10,16 @@ from .references import (load, seasonal_training, acmad_objective, wvg_audit,
                          PAPER_BOXES, EXISTING_BOXES)
 
 from weatherbench.storage import ROOT, PRIVATE, TASKS as PACKAGES, read
-TASKS = ("seasonal-calibration", "acmad-objective", "wvg-definition-audit")
+TASK_MODULES = {
+    "short-rains-workflow": "short_rains",
+    "weatherbench-verification": "weatherbench_verification",
+    "subseasonal-optimization": "subseasonal",
+    "cca-seasonal-reproduction": "cca_seasonal",
+    "station-verification": "station_verification",
+    "monthly-cycle-calibration": "monthly_cycle",
+    "conservative-downscaling": "conservative_downscaling",
+}
+TASKS = ("seasonal-calibration", "acmad-objective", "wvg-definition-audit", *TASK_MODULES)
 
 
 def digest(path):
@@ -77,5 +86,12 @@ def prepare():
     provenance = read(base / "agent-inputs/ersst-provenance.json")
     if provenance["sha256"] != read(PACKAGES / "wvg-definition-audit/sources.yaml")["dataset"]["expected_source_sha256"]:
         raise ValueError("SST provenance does not match the task source record")
+    from .short_rains.reference import build
+    base = PRIVATE / 'short-rains-workflow'
+    for name, expected in zip(('seasonal.nc','hindcasts.nc','forecast.nc'),build(base / 'agent-inputs')):
+        xr.testing.assert_allclose(expected,load(base / 'controller' / name),atol=1e-10,rtol=1e-10)
+    from importlib import import_module
+    audits = {task: import_module(f"weatherbench.task_tools.{module}.prepare").prepare(ROOT)
+              for task, module in TASK_MODULES.items() if task != "short-rains-workflow"}
     return {"packages_prepared": list(TASKS), "references_recomputed": True,
-            "model_calls": 0, "agent_attempts": 0}
+            "model_calls": 0, "agent_attempts": 0, "reference_audits": audits}

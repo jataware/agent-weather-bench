@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "task": "subseasonal-optimization",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/subseasonal-optimization",
+  "files": [
+    {
+      "file": "agent-inputs/baseline.py",
+      "sha256": "4f4a973cf6c9e002806a25bb458a0a55925a737eb8fb615e081e80bcae962175",
+      "bytes": 3124,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/development-features.nc",
+      "sha256": "be8133c20b85754377356c4916daa150eaca83fc2296ea1755c0fea269dc9f21",
+      "bytes": 16892,
+      "visibility": "agent",
+      "dimensions": {
+        "issue_time": 147,
+        "location": 9
+      },
+      "variables": {
+        "raw_cfsv2": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/final-features.nc",
+      "sha256": "dce9513eb3d8690cdf951a212f18ffeb949e743ea74cab805e4d5d22ec720a98",
+      "bytes": 19576,
+      "visibility": "agent",
+      "dimensions": {
+        "issue_time": 208,
+        "location": 9
+      },
+      "variables": {
+        "raw_cfsv2": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "78848e25317d38b472661b0b167ed7d28d92b43cf7fed4422cec5addd8e8e8ae",
+      "bytes": 204,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-notes.txt",
+      "sha256": "dbb3b10caf1ca93639cd85751010432abaf43f1a6ed08aaf0d518eef57d5387b",
+      "bytes": 3146,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/training.nc",
+      "sha256": "f51accc7617926b6f11ce391166f76db25981e0d7264417bd43c50e8d2fd083b",
+      "bytes": 84466,
+      "visibility": "agent",
+      "dimensions": {
+        "issue_time": 831,
+        "location": 9
+      },
+      "variables": {
+        "raw_cfsv2": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        },
+        "precipitation": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/acquisition-audit.json",
+      "sha256": "6fb00e29dd82c4440bd1f8d9e94bd8425a3e358f9406c6057cf1b94a3c9b8c72",
+      "bytes": 575,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/development-baselines.nc",
+      "sha256": "40b5099ba3bf1be040617e247382c6e37b3330060a716531aa551821c996c8f1",
+      "bytes": 39986,
+      "visibility": "controller_only",
+      "dimensions": {
+        "issue_time": 147,
+        "location": 9
+      },
+      "variables": {
+        "raw_cfsv2": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        },
+        "climatology": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        },
+        "bias_corrected": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/development-targets.nc",
+      "sha256": "8fb49f4a03d60efaea85c6c98b7424117135486e980bb84b010035fcc69f8dcc",
+      "bytes": 16896,
+      "visibility": "controller_only",
+      "dimensions": {
+        "issue_time": 147,
+        "location": 9
+      },
+      "variables": {
+        "precipitation": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/final-baselines.nc",
+      "sha256": "d71a863b0c041529b3506ca93005207cd63957d7e2ae79996c4c2d3491aeb378",
+      "bytes": 50966,
+      "visibility": "controller_only",
+      "dimensions": {
+        "issue_time": 208,
+        "location": 9
+      },
+      "variables": {
+        "raw_cfsv2": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        },
+        "climatology": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        },
+        "bias_corrected": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/final-targets.nc",
+      "sha256": "ac7a6b2d33526bbf332e2c15ffc11c65f078bc5289f0d26f63e5edb2efa485fd",
+      "bytes": 19580,
+      "visibility": "controller_only",
+      "dimensions": {
+        "issue_time": 208,
+        "location": 9
+      },
+      "variables": {
+        "precipitation": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/source-subset.nc",
+      "sha256": "8f5cb84e7927475d2a8c03e61cce6a065c4ff4c41aa943dd4883d1873d95429d",
+      "bytes": 116419,
+      "visibility": "controller_only",
+      "dimensions": {
+        "issue_time": 1194,
+        "location": 9
+      },
+      "variables": {
+        "raw_cfsv2": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        },
+        "precipitation": {
+          "dimensions": [
+            "issue_time",
+            "location"
+          ],
+          "units": "mm"
+        }
+      }
+    }
+  ],
+  "source_record_root": "repository",
+  "expert_approval": false,
+  "public_redistribution_review": "pending",
+  "reference_code_path": "weatherbench/task_tools/subseasonal/metrics.py",
+  "reference_code_sha256": "fa0f2e699b29f782e27b36bbcd8d92a9831a9abb17847471f2958eea5d33ef61",
+  "reference_validation": {
+    "fixed_splits_before_skill_comparison": true,
+    "reference_is_baseline_not_required_optimizer": true,
+    "historical_public_targets_not_pristine": true
+  },
+  "source_records": [
+    {
+      "path": "tasks/subseasonal-optimization/prompt.md",
+      "sha256": "bdbdd2318293a05e4442530406d975d285d7c4ca2a06c1a653a4202a12ab8f29",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "tasks/subseasonal-optimization/replay-contract.md",
+      "sha256": "77bd86ddd90b6d9d09870b255d570ead875b6f2bf2b7da1abc2696d2220b3d6b",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "tasks/subseasonal-optimization/review.md",
+      "sha256": "fed32a882e68855c97819dade2df236f2611c429c3dba20bd96dba0fccbbe331",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "tasks/subseasonal-optimization/rubric.yaml",
+      "sha256": "3732bd1c05c6564a58202a998e69c333a2fd954c844e3ea1e34bf530d70ab580",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "tasks/subseasonal-optimization/source-material/source-notes.txt",
+      "sha256": "dbb3b10caf1ca93639cd85751010432abaf43f1a6ed08aaf0d518eef57d5387b",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "tasks/subseasonal-optimization/sources.yaml",
+      "sha256": "fa162067ce8ecce2e8fb7dda273e9d74a7ee4923ec4f2e90defadf47a364536f",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "tasks/subseasonal-optimization/task.yaml",
+      "sha256": "65886120ba007d912d1c1c31d13c1fa49a809f58a5c29134914acfc824fb802d",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "weatherbench/task_tools/subseasonal/baseline.py",
+      "sha256": "4f4a973cf6c9e002806a25bb458a0a55925a737eb8fb615e081e80bcae962175",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "weatherbench/task_tools/subseasonal/metrics.py",
+      "sha256": "fa0f2e699b29f782e27b36bbcd8d92a9831a9abb17847471f2958eea5d33ef61",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "weatherbench/task_tools/subseasonal/prepare.py",
+      "sha256": "17cecd93025cda3aa13f7ac4fcbcf8c155928f8855c7bd03a22e37966a442cae",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "weatherbench/task_tools/subseasonal/checks.py",
+      "sha256": "c28087a85cf06ed3d4d4ab1409cde97ef3d978e3375984ebcf5a3f52c405f6de",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "weatherbench/task_tools/subseasonal/evaluation.py",
+      "sha256": "32d2c5a28eb0d8eb7888870a0bd530c34b2ccd2ed5301e19046097586a73eff5",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "weatherbench/task_tools/subseasonal/extract.py",
+      "sha256": "92739d4e404a1c84ce9427a05e44c1c30fe1cb431392a55d09cb06f60ac4d5c2",
+      "original_locator": "repository-owned experiment/scientific material"
+    },
+    {
+      "path": "weatherbench/task_tools/subseasonal/acquire.py",
+      "sha256": "eebf66fe7a1a121d0b9ce9f1aef6f64da584268b5b05580b0a3ff48fe0ef05d6",
+      "original_locator": "repository-owned experiment/scientific material"
+    }
+  ]
+}

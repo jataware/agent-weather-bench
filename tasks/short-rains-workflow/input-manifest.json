@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "task": "short-rains-workflow",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/short-rains-workflow",
+  "files": [
+    {
+      "file": "agent-inputs/candidates.json",
+      "sha256": "350ec6bb7ab2c30a4a495c8eb52e22aa939e6cbc85275919c570ea0a57db3598",
+      "bytes": 11017,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/fetch-fixtures.py.txt",
+      "sha256": "e5c7a13834893b9824e576345bb1162b992b20fb7fb24ba881f1d3aded6c8d2c",
+      "bytes": 8324,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/fetch-forecast-index.py.txt",
+      "sha256": "fc47e742e643985dfb4b3950b94364d9c1b8cd3f7a3372a335f31432a3eb899b",
+      "bytes": 4049,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/forecast-index.nc",
+      "sha256": "8d53bc578c9aa9962ed1aeec27122afc773894277440bcf33d9c240435590cbc",
+      "bytes": 8688,
+      "visibility": "agent",
+      "dimensions": {
+        "year": 31
+      },
+      "variables": {
+        "gcm_iod": {
+          "dimensions": [
+            "year"
+          ],
+          "units": "K"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/literature-notes.txt",
+      "sha256": "0b960b1f92a2a3e4939b1904d7ee75ff46364b5db9a1093e3868fad1d1e9e9a5",
+      "bytes": 2274,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/old-chirps-catalog.yaml.txt",
+      "sha256": "2077e61f65e432e0c4da1f18c25086d73026d662719333c9b5bed3723f3f3d65",
+      "bytes": 825,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/old-normalize.py.txt",
+      "sha256": "f4533fd2085f28e1356a1feb9f226693b3fee0e7bd073bfeff2b94d8902b2f9c",
+      "bytes": 16286,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/rainfall.nc",
+      "sha256": "75957be35fa51d40ed6883257a5cdbeee97fb1d63c90e51fa20372883f82fff8",
+      "bytes": 16852,
+      "visibility": "agent",
+      "dimensions": {
+        "time": 324,
+        "region": 3
+      },
+      "variables": {
+        "monthly_rainfall_scaled": {
+          "dimensions": [
+            "time",
+            "region"
+          ],
+          "units": "legacy_scaled_monthly_total"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "a275228905980678f2ddca13878f7eb548ec716fcba1f5f8203b87b56a1d0158",
+      "bytes": 163,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/sst.nc",
+      "sha256": "7deefac7e798ae715a8f920f303bf5103f5e006a34fff178fe1d6cdbb020bf65",
+      "bytes": 31284,
+      "visibility": "agent",
+      "dimensions": {
+        "time": 516,
+        "box": 5
+      },
+      "variables": {
+        "sst": {
+          "dimensions": [
+            "time",
+            "box"
+          ],
+          "units": "degree_Celsius"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/starting-bench.py.txt",
+      "sha256": "154c06d55e702c629128fdfeed86021c99642352aeb380556823e0fb169cb43b",
+      "bytes": 18119,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/starting-search.py.txt",
+      "sha256": "0541c4e214e832e56d0702f5a53beff14eda7b83a9f8a81dbc64744afa7aea29",
+      "bytes": 11170,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/forecast.nc",
+      "sha256": "384c58a557d18f3f61ba526177c7e38737bc28e4c8f330495e7c07c4ecac8df7",
+      "bytes": 17279,
+      "visibility": "controller_only",
+      "dimensions": {
+        "system": 4,
+        "year": 4,
+        "region": 3,
+        "tercile": 3,
+        "boundary": 2,
+        "candidate": 108
+      },
+      "variables": {
+        "probability": {
+          "dimensions": [
+            "system",
+            "year",
+            "region",
+            "tercile"
+          ],
+          "units": "1"
+        },
+        "threshold": {
+          "dimensions": [
+            "region",
+            "boundary"
+          ],
+          "units": "mm"
+        },
+        "selected_candidate": {
+          "dimensions": [
+            "region"
+          ],
+          "units": "1"
+        },
+        "inner_rps": {
+          "dimensions": [
+            "region",
+            "candidate"
+          ],
+          "units": "1"
+        }
+      }
+    },
+    {
+      "file": "controller/hindcasts.nc",
+      "sha256": "d36250c43dc290858908db93696b589bb2ae29c93316e8ff3e1ef3fdf282a6e3",
+      "bytes": 62401,
+      "visibility": "controller_only",
+      "dimensions": {
+        "system": 4,
+        "year": 15,
+        "region": 3,
+        "tercile": 3,
+        "boundary": 2,
+        "candidate": 108
+      },
+      "variables": {
+        "probability": {
+          "dimensions": [
+            "system",
+            "year",
+            "region",
+            "tercile"
+          ],
+          "units": "1"
+        },
+        "threshold": {
+          "dimensions": [
+            "year",
+            "region",
+            "boundary"
+          ],
+          "units": "mm"
+        },
+        "selected_candidate": {
+          "dimensions": [
+            "year",
+            "region"
+          ],
+          "units": "1"
+        },
+        "inner_rps": {
+          "dimensions": [
+            "year",
+            "region",
+            "candidate"
+          ],
+          "units": "1"
+        },
+        "rps": {
+          "dimensions": [
+            "system",
+            "year",
+            "region"
+          ],
+          "units": "1"
+        },
+        "rpss": {
+          "dimensions": [
+            "system",
+            "region"
+          ],
+          "units": "1"
+        }
+      }
+    },
+    {
+      "file": "controller/private-targets.nc",
+      "sha256": "ff944aabd11e924bc3aacb5e5cf7251327e7e6c91c3ff20b089409eac584ab30",
+      "bytes": 9776,
+      "visibility": "controller_only",
+      "dimensions": {
+        "time": 48,
+        "region": 3
+      },
+      "variables": {
+        "monthly_total": {
+          "dimensions": [
+            "time",
+            "region"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/reference-validation.json",
+      "sha256": "4b1725c75612214138bf9c99960ec6f523e50b620f07c67eff7da20f9bbbefb5",
+      "bytes": 1065,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/seasonal.nc",
+      "sha256": "53c1d084dc10424017b1c85791a47b89dfbbc1507ebe76155245a1919a84c649",
+      "bytes": 8386,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 27,
+        "region": 3
+      },
+      "variables": {
+        "seasonal_total": {
+          "dimensions": [
+            "year",
+            "region"
+          ],
+          "units": "mm"
+        }
+      }
+    }
+  ],
+  "source_records": [
+    {
+      "path": "tasks/short-rains-workflow/source-material/fetch-fixtures.py.txt",
+      "sha256": "e5c7a13834893b9824e576345bb1162b992b20fb7fb24ba881f1d3aded6c8d2c",
+      "original_locator": "fetch-fixtures.py.txt"
+    },
+    {
+      "path": "tasks/short-rains-workflow/source-material/fetch-forecast-index.py.txt",
+      "sha256": "fc47e742e643985dfb4b3950b94364d9c1b8cd3f7a3372a335f31432a3eb899b",
+      "original_locator": "fetch-forecast-index.py.txt"
+    },
+    {
+      "path": "tasks/short-rains-workflow/source-material/literature-notes.txt",
+      "sha256": "0b960b1f92a2a3e4939b1904d7ee75ff46364b5db9a1093e3868fad1d1e9e9a5",
+      "original_locator": "literature-notes.txt"
+    },
+    {
+      "path": "tasks/short-rains-workflow/source-material/old-chirps-catalog.yaml.txt",
+      "sha256": "2077e61f65e432e0c4da1f18c25086d73026d662719333c9b5bed3723f3f3d65",
+      "original_locator": "old-chirps-catalog.yaml.txt"
+    },
+    {
+      "path": "tasks/short-rains-workflow/source-material/old-normalize.py.txt",
+      "sha256": "f4533fd2085f28e1356a1feb9f226693b3fee0e7bd073bfeff2b94d8902b2f9c",
+      "original_locator": "old-normalize.py.txt"
+    },
+    {
+      "path": "tasks/short-rains-workflow/source-material/original-files.json",
+      "sha256": "bc17ece10169c9d3ee799dcd59976892657840c9399d1225de186593a6ae329e",
+      "original_locator": "original-files.json"
+    },
+    {
+      "path": "tasks/short-rains-workflow/source-material/starting-bench.py.txt",
+      "sha256": "154c06d55e702c629128fdfeed86021c99642352aeb380556823e0fb169cb43b",
+      "original_locator": "starting-bench.py.txt"
+    },
+    {
+      "path": "tasks/short-rains-workflow/source-material/starting-search.py.txt",
+      "sha256": "0541c4e214e832e56d0702f5a53beff14eda7b83a9f8a81dbc64744afa7aea29",
+      "original_locator": "starting-search.py.txt"
+    }
+  ],
+  "reference_code_path": "weatherbench/task_tools/short_rains/reference.py",
+  "reference_code_sha256": "a095fa734cb6a5acf00c52ed61f8214a8f6a69344651f0b2700a025c13a688aa",
+  "independent_reference_code_sha256": "2469370ad789055a4ccc3ccab705db4b44815e4decd78328220c0ee46615fe1e",
+  "reference_validation": {
+    "independent_implementation_agreement": true,
+    "max_absolute_errors": {
+      "hindcasts.nc:probability": 3.552713678800501e-15,
+      "hindcasts.nc:threshold": 2.842170943040401e-14,
+      "hindcasts.nc:selected_candidate": 0.0,
+      "hindcasts.nc:inner_rps": 1.9984014443252818e-15,
+      "hindcasts.nc:rps": 3.3584246494910985e-15,
+      "hindcasts.nc:rpss": 6.661338147750939e-16,
+      "forecast.nc:probability": 8.881784197001252e-16,
+      "forecast.nc:threshold": 2.842170943040401e-14,
+      "forecast.nc:selected_candidate": 0.0,
+      "forecast.nc:inner_rps": 1.2212453270876722e-15,
+      "seasonal.nc:seasonal_total": 1.1368683772161603e-13
+    },
+    "independent_regression": "centered-design least squares and matrix leverage",
+    "independent_quantile": "linear interpolation on (rank-0.5)/n positions",
+    "agent_attempts_used_for_reference_or_prompt": 0,
+    "independent_source_spatial_reduction": true,
+    "source_spatial_reduction_max_error": {
+      "somalia": 1.1368683772161603e-13,
+      "kenya": 3.552713678800501e-14,
+      "eastern-horn": 8.881784197001252e-14
+    }
+  },
+  "expert_approval": false,
+  "public_redistribution_review": "pending",
+  "agent_attempts": 0
+}

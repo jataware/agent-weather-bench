@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "codex_cli_version": "0.160.0",
+  "model": "gpt-6-luna",
+  "probe": "local deterministic Responses stub; no account credentials or real inference",
+  "raw_log": "/private/tmp/weatherbench-codex-boundary-probe.log",
+  "raw_log_sha256": "bf473572416e9619507124aa8631b4b0fb7f6c71fd9de3c3401c4986c6b4e062",
+  "probe_script": "/private/tmp/weatherbench-codex-boundary-probe.py",
+  "probe_script_sha256": "ac056a47ce503d64ce5ecd5973a2de98ccf977b1565570c6b7bcfbb392e993fd",
+  "nested_tool_registry": [
+    "clock__curr_time",
+    "execute"
+  ],
+  "host_tool_rejections": {
+    "apply_patch": "unsupported custom tool call",
+    "exec_command": "unsupported call",
+    "view_image": "unsupported call"
+  },
+  "v8_unavailable_globals": [
+    "process",
+    "require",
+    "fetch"
+  ],
+  "canary_written": false,
+  "skills_instructions_present": false,
+  "authenticated_startup_check": {
+    "passed": true,
+    "authentication": "chatgpt",
+    "inference_started": false,
+    "model": "gpt-6-luna",
+    "service_tier": "default",
+    "reasoning_effort": "medium",
+    "ephemeral": true,
+    "environments": [],
+    "runtime_workspace_roots": [],
+    "instruction_sources": [],
+    "enabled_skills": 0,
+    "approval_policy": "never",
+    "permission_profile": "weatherbench-no-host"
+  }
+}

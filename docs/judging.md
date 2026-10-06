@@ -4,9 +4,9 @@
 the operational assessment contract. The native model identifier and accounting
 schedule are pinned from the completed pilot; the code does not choose a floating
 latest model or fall back to another judge. Provider availability/rates should be
-checked when selecting a new experiment configuration. No live native judge call
-was made while building this framework because its key was absent from the
-controller environment; the request/response contract is covered by tests.
+checked when selecting a new experiment configuration. The request/response contract is covered by tests. The development calibration
+pilot also prepares blinded real and constructed cases; its call status and
+operational expectations are recorded separately from human judgments.
 
 ## Four evidence layers
 
@@ -19,7 +19,8 @@ controller environment; the request/response contract is covered by tests.
    scientific arrays/answer fields, not optional session notes.
 3. **Scientific judgment.** One evidence-citing model assessment of expert, mixed
    and execution outcomes. The packet includes task criteria, submission text/code,
-   a verified figure, and controller checks/execution evidence. System, model,
+   a verified figure, controller checks/execution evidence, and bounded scientific
+   tool traces with explicit omissions. System, model,
    cost and parent labels are omitted. Library names inside artifacts can still
    reveal part of a substrate; complete blinding is not claimed.
 4. **Information integrity.** Trusted sandbox configuration and artifact invariants.
@@ -40,7 +41,8 @@ cited submission artifact; figure-dependent criteria also require a verified
 cited figure. Missing or truncated required evidence cannot be assumed correct.
 
 The controller computes weighted score bounds. Unresolved outcomes contribute
-zero to the lower bound and their full weight to the upper bound. Numeric failures
+zero to the lower bound and their full weight to the upper bound. Unavailable controller infrastructure leaves execution unresolved; scientific
+command or output failures remain failures. Numeric failures
 and failed replay force the relevant outcome to fail, irrespective of model prose.
 Completion requires every required outcome at full credit, passing basic validity,
 passing execution requirements and passing trusted integrity. Known failures are

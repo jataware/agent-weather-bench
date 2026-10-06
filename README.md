@@ -70,17 +70,47 @@ retains its evidence, raw judge response, usage, and fingerprint. See the
 
 ## Existing tasks
 
-The initial collection covers forecast processing, method validation, and predictor
-analysis. These are local development packages awaiting domain review and public
-data release.
+Ten registered development tasks cover forecasting, source reconstruction,
+verification and bounded optimization. All have local data and executable checks;
+scientific review and public data release remain pending. Related tasks retain
+their shared forecasting families. See the [development audit](docs/overnight-development.md)
+for actual solver outcomes and evaluation limitations.
 
 | Task | Scientific goal | Status |
 | --- | --- | --- |
 | [Probability forecast combination](tasks/acmad-objective/prompt.md) | Combine probability products. Audit missing support, disagreement, and weighting sensitivity. | Local supplied-input runs. |
 | [Predictor definition audit](tasks/wvg-definition-audit/prompt.md) | Recompute two definitions of a climate predictor and explain their differences. | Local supplied-input runs. Full literature review pending. |
-| [Seasonal rainfall calibration](tasks/seasonal-calibration/prompt.md) | Acquire data, validate a calibration, and save a prediction workflow. | Acquisition transport pending. Prediction years are development evidence. |
+| [Seasonal rainfall calibration](tasks/seasonal-calibration/prompt.md) | Acquire data, validate a calibration, and save a prediction workflow. | Verified frozen acquisition replay. Prediction years are development evidence. |
+| [Short-rains workflow](tasks/short-rains-workflow/prompt.md) | Repair rainfall units, select predictors with nested validation and calibrate saved forecasts. | Actual inexpensive and frontier attempts. |
+| [WeatherBench verification](tasks/weatherbench-verification/prompt.md) | Reproduce valid-time, area-weighted metrics and diagnose comparison faults. | Real forecasts; executable changed-input checks. |
+| [Subseasonal optimization](tasks/subseasonal-optimization/prompt.md) | Improve weeks 3–4 precipitation forecasts with bounded development feedback. | Five-query controller tool; private final targets. |
+| [Seasonal CCA reproduction](tasks/cca-seasonal-reproduction/prompt.md) | Reconstruct multivariate mode selection and probabilistic saved-state forecasting. | Independent references; leakage and inference probes. |
+| [Station verification](tasks/station-verification/prompt.md) | Decode real station observations and compare forecast interpolation fairly. | NOAA observations; QC, support and fault checks. |
+| [Monthly cyclic calibration](tasks/monthly-cycle-calibration/prompt.md) | Assess cyclic statistical sharing under nested whole-year validation. | Independent references; year-leakage and saved-fit checks. |
+| [Conservative downscaling](tasks/conservative-downscaling/prompt.md) | Diagnose uncertain units and conserve calibrated rainfall on a fine grid. | Independent geometry; conservation and scale-invariance probes. |
 
 Use the [review pages](tasks/index.html) to inspect and critique each task.
+The optional [four anchor-calibration decisions](var/review/anchors.html) provide a short
+review of CCA reconstruction, station verification and subseasonal optimization,
+with evidence, optional notes, local saving and export. This secondary development
+profile preserves the original task versions and scores. Generate it with
+`.venv/bin/python scripts/build_anchor_review.py`.
+The [autonomous station evidence audit](var/review/station-audit.html) links the
+complete original submission, independent source/numerical audits and a judge
+check with contradictions across reports, captions, answers and code. Agent
+review and reproducible checks establish provisional development references;
+human labeling is optional. Original benchmark grades remain unchanged. The
+[earlier interpretation check](var/review/station-judge.html) is retained, along
+with its optional human annotation form.
+The [task-by-task experiment record](var/review/task-runs.html) contains actual
+supplied inputs, full evaluation criteria, each model attempt and its score
+breakdown, execution evidence, and changes during development. Regenerate it with
+`.venv/bin/python scripts/build_task_runbook.py`.
+The shorter [pilot overview](var/review/findings.html) summarizes cross-task findings.
+The optional [focused evaluation review](var/review/index.html) collects six concrete
+grading decisions, original evidence and fields for comments, with local saving
+and export. Generate it from the preserved development evidence with
+`.venv/bin/python scripts/build_review_page.py`.
 New tasks can come from papers, published forecasts, and reproducible analyses.
 The [candidate portfolio](docs/task-portfolio.md) describes possible extensions.
 
@@ -139,8 +169,9 @@ pass your image's full content ID to `systems init` with `--image sha256:...`.
 The integration guide describes runtime requirements.
 
 The default judge needs `ANTHROPIC_API_KEY`. Use `--judge none` to skip judge API
-calls; expert criteria remain pending. Agent model calls still incur their own
-cost. Missing usage is recorded as unknown.
+calls; expert criteria remain pending. API solvers incur their configured model
+cost. Codex subscription adapters retain token usage with dollar allocation
+recorded as unknown; missing usage is also unknown.
 
 ## Add a method or substrate
 

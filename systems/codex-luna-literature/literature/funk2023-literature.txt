@@ -1,0 +1,38 @@
+# Frozen literature extracts for the WVG development pilot
+
+Source: Funk et al. (2023), Tailored Forecasts Can Predict Extreme Climate Informing Proactive Interventions in East Africa.
+DOI: https://doi.org/10.1029/2023EF003524
+Publisher: https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2023EF003524
+License: CC BY 4.0 (Crossref version-of-record metadata).
+Retrieved: 2026-10-05.
+Scope: Selected, deduplicated publisher passages covering the task’s declared literature locators. Original publisher line numbers are retained. This is not the complete article.
+
+Publisher lines 531: Figure 1
+
+Publisher lines 533: Open in figure viewer PowerPoint
+
+Publisher lines 534: (a) Schematic diagram describing the links between climate attribution, prediction and improved interventions. (b) Barplot showing 2016–2023 regionally averaged Eastern Horn of Africa (EHoA) March–April–May (MAM) and October–November–December (OND) Standardized Precipitation Index values. West Pacific Gradient (WPG) and Western “V”-Gradient (WVG)-based drought forecast dates are noted for La Niña-related dry seasons, along with hit or false alarm outcomes.
+
+Publisher lines 535: MAM 2023 result is a forecast, shown with 80% confidence intervals. (c) Standardized OND sea surface temperature (SST) composites for post-1996 dry EHoA OND seasons. Screened for significance at p = 0.1. Boxes denote the western and eastern Indian Ocean Dipole (IOD) regions, the equatorial west Pacific (110°E−140°E, 15°S–15°N), and the Niño 3.4 region. (d) Same for MAM EHoA dry seasons.
+
+Publisher lines 536: Boxes denote the Western V (blue) (110°E−140°E, 15°S–15°N, 160°E−160°W, 20°N–35°N, 155°E−160°W, 15°S–30°S) and Niño 3.4 (yellow) regions. (e) SST index values for the observed MAM WVG and OND WPG. Anomalies calculated using a 1950–2020 baseline. The Pacific gradients associated with droughts (c, d) are becoming more frequent (e). Recent below-normal EHoA rainy seasons are marked with short vertical lines. The 2023 MAM WVG values are based on forecasts in Figure 2 .
+
+Publisher lines 537: The black circles denote the associated 80% confidence intervals. The associated question mark conveys our concerns for a sixth dry season, based on the 2023 WVG forecast in Figure 2 . (f) Equatorial OND western Pacific, MAM Western V, and OND western Indian Ocean Coupled Model Intercomparison Project Phase 6 SSP245 SST anomalies for 1950–1979 and 2016–2022, along with observed SST anomalies for selected drought seasons. Anomalies based on a 1950–2020 baseline.
+
+Publisher lines 580: Gradient indices provide a convenient short-hand to describe Indian and Pacific Basin SST patterns. While gradients are commonly used in the Indian Ocean (N. H. Saji et al., 1999 ), there remains a tendency to only describe the Pacific with equatorial eastern Pacific SSTs (Trenberth, 1997 ), often summarized exclusively with the Niño 3.4 region (5°N–5°S, 170°–120°W).
+
+Publisher lines 581: Such a focus can miss important interactions with climate change and lead to missed opportunities for skillful predictions (Funk et al., 2014 , 2018 ).
+
+Publisher lines 582: We define two gradients useful for such predictions. For OND, we describe the Pacific via the “West Pacific Gradient” (WPG) (Hoell & Funk, 2013a ): the difference between standardized equatorial western and eastern Pacific SSTs (Pacific boxes in Figure 1c ). For MAM, we use a similar “Western V Gradient” (WVG), based on the difference between Niño 3.4 and Western V temperatures (boxes in Figure 1d ).
+
+Publisher lines 583: During MAM, there are important extratropical interactions with the northern and southern hemisphere subtropical westerly jets over the Pacific Ocean, which link warm extra-tropical northern and southern Pacific SST to La Niña-like climate impacts (Funk et al., 2018 , 2019 ).
+
+Publisher lines 693: ## Data Availability Statement
+
+Publisher lines 694: The time series data supporting the primary results of this study are available via Dryad. Funk (2022 ), Data—Tailored forecasts can predict extreme climate informing proactive interventions in East Africa, Dryad, Dataset, https://doi.org/10.25349/D9MC8Z . Code Availability: The bulk of the analysis presented in this paper are based on simple time-series manipulations, and are presented in the excel file in the Dryad link above.
+
+Publisher lines 695: The most salient results can be recreated without coding, using the time series provided in the Dryad repository. Time-series extraction and the simple SST composite plots shown in Figures 2c and 2d were done using Interactive Data Language version 8.7, and the related code is contained with the Dryad Repository.
+
+Publisher lines 696: Zip files in that directory also contain NOAA extended reconstruction version 5 gridded SST data, NMME SST forecasts from May and September, and regionally averaged CMIP6 SSP245 SST time-series.
+
+Publisher lines 697: ##

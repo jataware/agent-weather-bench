@@ -1,0 +1,115 @@
+schema_version: 1
+id: anchor-calibration-v1
+status: development_review_profile
+scope: Read-only criterion assessment of retained development evidence; not a replacement for original benchmark scores.
+rating_rule: Binary scientific/execution requirements; missing evidence is unresolved. Partial progress is represented by distinct requirements.
+selection_rule: Five existing natural parent attempts; all previously inspected and explicitly development cases.
+readiness_rule: Human scientific labels and fresh disjoint check parents are required before claiming calibrated judging or publishing a model comparison.
+weight_rule: Preserve each original parent criterion's total weight while separating its accomplishments.
+failure_rule: Source/information integrity and scientific failures remain visible; delivery defects do not erase known scientific credit. No ranking when admissibility is unresolved.
+tasks:
+  cca-seasonal-reproduction:
+    role: Method reconstruction anchor
+    source_scope: AfricaS2S/PyCPT-inspired method adaptation; detailed algorithm supplied; not exact CPT or full-paper replication.
+    criteria:
+      - {id: fixed_cca_predictions, parent: training_only_multivariate_fit, weight: 10, dimension: science, evaluator: array, file: hindcasts.nc, fields: [prediction], select: {system: cca-fixed}, question: "Are the fixed-mode outer CCA predictions correct?"}
+      - {id: nested_cca_predictions, parent: training_only_multivariate_fit, weight: 10, dimension: science, evaluator: array, file: hindcasts.nc, fields: [prediction], select: {system: cca-nested}, question: "Are the nested-selected outer CCA predictions correct?"}
+      - {id: nested_mode_selection, parent: training_only_multivariate_fit, weight: 5, dimension: science, evaluator: static, check: nested_mode_selection, question: "Are the training-only inner losses and selected modes correct?"}
+      - {id: fold_probabilities, parent: probabilistic_calibration, weight: 12, dimension: science, evaluator: static, check: hindcast_probabilities, question: "Are outer-fold probability distributions and thresholds correct?"}
+      - {id: production_forecast, parent: probabilistic_calibration, weight: 8, dimension: science, evaluator: static, check: production_forecast, question: "Is the frozen production forecast correct?"}
+      - {id: verification_arithmetic, parent: verification_and_route_audit, weight: 8, dimension: science, evaluator: static, check: verification_arithmetic, question: "Are outer RPS and pooled RPSS computed correctly?"}
+      - {id: full_fit_diagnostic, parent: verification_and_route_audit, weight: 4, dimension: science, evaluator: static, check: full_fit_diagnostic, question: "Are the separately labeled full-fit diagnostic arrays correct?"}
+      - id: source_route_interpretation
+        parent: verification_and_route_audit
+        weight: 8
+        dimension: interpretation
+        evaluator: expert
+        question: Does the explanation faithfully identify the source probability route and explain why full-fit probabilities are not independent verification?
+        artifacts: [inputs/pycpt-probabilistic-route.py.txt, inputs/africas2s-method-record.txt, report.txt, workflow.py, answer.json]
+      - id: uncertainty_interpretation
+        parent: scientific_interpretation
+        weight: 10
+        dimension: interpretation
+        evaluator: expert
+        question: Do claims about selection benefit and uncertainty follow from paired year-level evidence and acknowledge dependent cases?
+        artifacts: [report.txt, metrics.json, validate.py, validation.json, workflow.py]
+      - id: replication_and_vintage_boundaries
+        parent: scientific_interpretation
+        weight: 10
+        dimension: interpretation
+        evaluator: expert
+        question: Does the report clearly identify its adaptation and retrospective data limits without claiming exact CPT execution or published skill replication?
+        artifacts: [inputs/algorithm.md, inputs/africas2s-method-record.txt, report.txt, answer.json]
+      - {id: original_replay, parent: reusable_workflow, weight: 5, dimension: reproducibility, evaluator: replay, question: "Did original-input execution regenerate the frozen scientific outputs?"}
+      - {id: tested_target_isolation, parent: reusable_workflow, weight: 5, dimension: reproducibility, evaluator: probe, probe: counterfactual, question: "Did the tested held/future-target perturbation leave earlier forecasts unchanged?"}
+      - {id: saved_inference, parent: reusable_workflow, weight: 5, dimension: reproducibility, evaluator: probe, probe: prediction, question: "Did changed-predictor saved-state inference run without observed targets and reproduce the expected forecast?"}
+  station-verification:
+    role: Observation and verification anchor
+    source_scope: Real NOAA stations and HRES; bounded WeatherReal-inspired adaptation; short-range supporting task rather than an S2S forecast-generation example.
+    criteria:
+      - {id: observation_truth, parent: observational_alignment, weight: 12, dimension: science, evaluator: array, file: scores.nc, fields: [observed_temperature], question: "Are observed temperatures correct after QC/duplicates/exact UTC matching and Kelvin conversion?"}
+      - {id: station_interpolation, parent: observational_alignment, weight: 13, dimension: science, evaluator: array, file: scores.nc, fields: [forecast_temperature], question: "Are bilinear and nearest forecasts correctly interpolated and aligned to stations?"}
+      - {id: common_support, parent: common_support_and_coverage, weight: 20, dimension: science, evaluator: static, check: support_alignment, question: "Is support shared correctly with counts and zero-support stations retained?"}
+      - {id: headline_metrics, parent: metrics_and_faults, weight: 10, dimension: science, evaluator: static, checks: [metric_values, answer_metrics], question: "Are pooled and equal-station metrics and reported curves correct?"}
+      - {id: fault_diagnostics, parent: metrics_and_faults, weight: 10, dimension: science, evaluator: static, check: fault_contrasts, question: "Are all controlled fault variants quantified correctly?"}
+      - id: constructed_control_attribution
+        parent: metrics_and_faults
+        weight: 5
+        dimension: interpretation
+        evaluator: expert
+        question: Does the explanation distinguish actual observations and quality flags from curator-created availability and comparison faults?
+        artifacts: [report.txt, answer.json, inputs/broken-comparison.py, workflow.py]
+      - id: coverage_and_uncertainty
+        parent: interpretation_and_dependence
+        weight: 15
+        dimension: interpretation
+        evaluator: expert
+        question: Are coverage and method comparisons bounded by the station sample and dependencies without unsupported global ranks or physical explanations?
+        artifacts: [report.txt, answer.json, workflow.py, inputs/weatherreal-README.md]
+      - {id: original_replay, parent: reusable_verifier, weight: 5, dimension: reproducibility, evaluator: replay, question: "Did the original-input command regenerate its frozen output?"}
+      - {id: changed_input_correctness, parent: reusable_verifier, weight: 10, dimension: reproducibility, evaluator: probe, probe: counterfactual, question: "Did independent recomputation after forecast/mask changes produce correct station diagnostics?"}
+  subseasonal-optimization:
+    role: Open forecasting optimization anchor
+    source_scope: Regional SubseasonalClimateUSA adaptation; open method with five-query development feedback and separately measured final RMSE.
+    criteria:
+      - {id: development_predictions, parent: forecast_artifacts, weight: 12, dimension: science, evaluator: static, check: development_prediction_schema, question: "Do development predictions retain full public support and valid 14-day mm totals?"}
+      - {id: final_predictions, parent: forecast_artifacts, weight: 13, dimension: science, evaluator: static, check: final_prediction_schema, question: "Do final predictions retain full public support and valid 14-day mm totals?"}
+      - id: temporal_fit_and_selection
+        parent: admissible_experiment
+        weight: 15
+        dimension: admissibility
+        evaluator: expert
+        question: Do fitting and temporal validation use only permitted training labels whose complete target windows have ended before validation issues?
+        artifacts: [report.txt, workflow.py, validate.py, validate_kernel.py, validate_grid.py, selection.json]
+      - {id: feedback_boundary, parent: admissible_experiment, weight: 10, dimension: admissibility, evaluator: feedback, question: "Does the trusted record establish at most five development requests with no final scores or targets exposed?"}
+      - id: source_unit_interpretation
+        parent: admissible_experiment
+        weight: 5
+        dimension: admissibility
+        evaluator: expert
+        question: Does the method use already aggregated 14-day totals correctly and disclose retrospective source-vintage limitations?
+        artifacts: [inputs/source-notes.txt, report.txt, workflow.py]
+      - {id: development_metric_reporting, parent: performance_and_interpretation, weight: 5, dimension: science, evaluator: feedback_metric, question: "Does the reported development RMSE match a trusted query for the delivered development file?"}
+      - id: validation_metric_reporting
+        parent: performance_and_interpretation
+        weight: 5
+        dimension: interpretation
+        evaluator: expert
+        question: Is the reported temporal-validation RMSE normalized by the spatial weight sum and pooled using the declared estimand?
+        artifacts: [report.txt, answer.json, workflow.py, validate.py, validation-summary.json]
+      - id: conclusions_and_selection_uncertainty
+        parent: performance_and_interpretation
+        weight: 15
+        dimension: interpretation
+        evaluator: expert
+        question: Are alternatives, adaptive development selection and dependent-case uncertainty reported honestly without unsupported final/global skill claims? A supported negative result can pass.
+        artifacts: [report.txt, selection.json, validation-summary.json, analyze_validation.py, answer.json]
+      - {id: original_replay, parent: reusable_workflow, weight: 8, dimension: reproducibility, evaluator: replay, question: "Did original-input replay regenerate frozen predictions without new feedback?"}
+      - {id: saved_inference, parent: reusable_workflow, weight: 8, dimension: reproducibility, evaluator: probe, probe: prediction, question: "Did saved inference work with altered features and without training observations?"}
+      - id: saved_method_audit
+        parent: reusable_workflow
+        weight: 4
+        dimension: reproducibility
+        evaluator: expert
+        question: Does retained code use genuine fitted state and the frozen selection record rather than cached forecasts or fresh feedback?
+        artifacts: [workflow.py, execution.json, handoff.txt, selection.json]

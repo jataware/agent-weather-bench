@@ -19,6 +19,13 @@ and inference behavior: a valid prediction schema or unchanged file hashes alone
 do not prove absence of refitting. Evaluate fold isolation, thresholds and tuning
 from actual code/fold records. Compare claimed metrics with controller outcomes
 where provided, including the stated baseline and aggregation conventions.
+Use the bounded controller tool trace when it helps establish source engagement,
+debugging, recomputation or observed failures. Respect its explicit omissions;
+absence from a truncated trace is not evidence that an action never occurred.
+An unavailable feedback ledger means the query/exposure history is unknown; it
+does not establish zero requests. Read the ledger's availability state explicitly.
+An exploratory command failure that was corrected does not itself invalidate
+the final workflow. Source listing is different from reading or running it.
 
 Evidence IDs are the keys of the evidence object. Cite only supplied IDs. Full
 credit needs at least one complete submission-file citation. If the criterion

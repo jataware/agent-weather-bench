@@ -1,0 +1,45 @@
+schema_version: 1
+id: short-rains-workflow
+version: development-0.1
+title: Repair a short-rains workflow and validate nested forecast selection
+status: development_pending_scientific_review
+source_category: existing_forecasting_workflow
+track: research_workflow
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+evaluation:
+  data_mode: retrospective_independent_holdout
+  training_years: [1993, 2019]
+  prediction_years: [2020, 2021, 2022, 2023]
+  independent_evaluation: true
+  reference_agreement: Prescribed processing, candidates, predictive distributions, nested selections and metrics.
+  private_targets: Controller only throughout every attempt.
+  scientific_skill_gate: false
+  acquisition_scored: false
+outputs:
+- seasonal.nc
+- hindcasts.nc
+- forecast.nc
+- answer.json
+- provenance.json
+- report.txt
+- outlook.png
+- handoff.txt
+- execution.json
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers: [Zeek]
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: replay-contract.md
+input_contract:
+  mode: supplied_inputs
+  normalized_fixture_mount: true
+  data_access: Frozen compact source series and code/literature excerpts; offline.
+  readiness: Reference construction and independent audit required before a development run.

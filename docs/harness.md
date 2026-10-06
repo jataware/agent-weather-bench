@@ -214,8 +214,19 @@ the implementation excerpt is an input. Current task publication approvals are
 false and assessments report `benchmark_eligible: false` until those reviews are
 completed. This does not prevent assessing development attempts.
 
-The expanded seasonal acquisition task remains blocked before execution because
-its provider/raw-response transport has not passed preflight. The CLI will not
-silently give an agent normalized controller fixtures instead. Its source plan
-and imported submissions can be inspected and assessed. This is a task-readiness
-limit, separate from the system adapter and autojudge infrastructure.
+Seasonal acquisition development runs use the reviewed controller-owned frozen
+replay transport. Agents initially receive only the source plan, then call
+`acquire` for each allowlisted native training source. Forecast requests must
+match the plan exactly; later observation years are denied. Native bytes travel
+through Docker stdin, with hashes, coverage, cache hits and denials retained in
+controller logs. The sandbox has no provider network or private targets.
+This tests scientific acquisition/processing from native training subsets,
+not live provider authentication, availability or download speed. Preparing
+the native source replay bundle is a separate step; normalized fixtures are
+never an acquisition substitute. See [internal setup](internal-setup.md).
+
+The short-rains workflow task adds nested rolling predictor selection and
+independent retrospective targets. Its controller checks alternate-path replay,
+held-out/future-input perturbations, and changed-predictor inference with rainfall
+removed. Scientific output agreement and expert interpretation remain separate.
+The run report exposes criterion outcomes alongside aggregate score bounds.

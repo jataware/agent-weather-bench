@@ -1,0 +1,30 @@
+{
+  "ea_precip_monthly.nc": {
+    "original": "v4zeek/data/ea_precip_monthly.nc",
+    "sha256": "d7acf0304ba82789cfc431f7d917df2bb3a8950c678765dfd6b6b7e4e6096fa6"
+  },
+  "gcm_iod_ond.nc": {
+    "original": "v4zeek/data/gcm_iod_ond.nc",
+    "sha256": "0aec74da1b4f7dcf5f4fe30de12416af0c61748fec947357ea3018729f07be18"
+  },
+  "sst_nino34_monthly.nc": {
+    "original": "v4zeek/data/sst_nino34_monthly.nc",
+    "sha256": "0abe4fbacf5b6f6dbe8b258b7e5ea4cb1b674d248cd748ca11594f46f2ba5ab4"
+  },
+  "sst_iod_w_monthly.nc": {
+    "original": "v4zeek/data/sst_iod_w_monthly.nc",
+    "sha256": "95eea4d4471860e79695554730ad376a1f0a2625eb5481abf67cbf00965cbfba"
+  },
+  "sst_iod_e_monthly.nc": {
+    "original": "v4zeek/data/sst_iod_e_monthly.nc",
+    "sha256": "54e7419898082cd1fc7f8cc569912323120ca16268633dd31cb947572c872219"
+  },
+  "sst_wpac_monthly.nc": {
+    "original": "v4zeek/data/sst_wpac_monthly.nc",
+    "sha256": "47e3b28e084744ba882515ffb298862057a2160d931029b177e21364226b0980"
+  },
+  "sst_wv_monthly.nc": {
+    "original": "v4zeek/data/sst_wv_monthly.nc",
+    "sha256": "feb4616658ff340a076add8c6ec9ed6be68e38e552f534fe890ec87642c0048d"
+  }
+}

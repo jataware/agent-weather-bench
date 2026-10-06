@@ -1,0 +1,267 @@
+"""search.py — the automated search, as a candidate, with a selectable SELECTION RULE.
+
+WHY THE SELECTION RULE IS THE INTERESTING VARIABLE. f:13 and f:14 found the search losing
+to the expert on 4 of 10 target-protocol cells, and doing worse the wider the space got.
+That is not evidence that searching is a bad idea. It is evidence that HARD ARGMAX is a
+bad estimator at n about 40:
+
+    the expert makes ONE choice with zero selection variance;
+    argmax makes a data-dependent choice, and with ~30 training years each configuration's
+    inner-CV score carries a standard error comparable to the true differences between
+    configurations, so argmax regularly crowns a configuration that merely got lucky.
+
+E[skill of argmax] < max true skill, and the gap grows with the number of configurations
+and with estimation noise. Best-of-search with no accounting for that is also what
+AGUv0-v3 did. So the fix is not a smaller space — it is a lower-variance selector.
+
+THE LADDER (V4Z_SELECTOR):
+    argmax    pick the single best inner-CV configuration               (the naive rule)
+    top3      average the predictions of the best three
+    softmax   average ALL configurations, weighted by exp(-score/T)
+    onese     among configurations within 1 SE of the best, take the simplest
+    ridge     do not select at all: fit every index jointly with L2 shrinkage
+
+Everything upstream of the selection rule is held fixed — same inner leave-one-year-out,
+same linear-Gaussian model, same train-only fitting of every constant — so the ladder
+isolates the selector and nothing else.
+
+The search space itself is still set by V4Z_SEARCH_SPACE (see SPACES).
+"""
+import itertools
+import os
+
+import numpy as np
+from scipy.stats import norm
+
+from deepscale.metrics.rpss import _cpt_boundaries
+
+RAW_BOXES = ("nino34", "iod_w", "iod_e", "wpac", "wv")
+ALL_FEATURES = ("nino34", "iod", "wpac", "wv", "wpg", "wvg")
+
+SPACES = {
+    "s6":   (ALL_FEATURES, (0,), (2,)),
+    "s18":  (ALL_FEATURES, (0,), (1, 2, 3)),
+    "s30":  (ALL_FEATURES, (0, 1, 2, 3, 4), (2,)),
+    "s90":  (ALL_FEATURES, (0, 1, 2, 3, 4), (1, 2, 3)),
+    "s324": (ALL_FEATURES, tuple(range(9)), (1, 2, 3, 4, 5, 6)),
+}
+SPACE = os.environ.get("V4Z_SEARCH_SPACE", "s90")
+FEATURES, GAPS, WIDTHS = SPACES[SPACE]
+SELECTOR = os.environ.get("V4Z_SELECTOR", "argmax")
+
+# How the width of the forecast distribution is estimated. "insample" uses the residual
+# spread of the fit on its own training data; "cv" uses the spread of leave-one-year-out
+# prediction residuals. In-sample residuals systematically understate real forecast error
+# because the fit has already seen those years, so the resulting distribution is too
+# narrow. A proper scoring rule penalises overconfidence directly, so this is a candidate
+# for a first-order effect rather than a detail.
+SIGMA_MODE = os.environ.get("V4Z_SIGMA", "insample")
+
+# What the inner cross-validation MINIMISES when choosing a configuration. "rps" uses the
+# same probabilistic score the benchmark reports; "mse" uses squared error of the mean
+# prediction. Choosing by the target metric looks obviously right, but RPS on a single
+# held-out year is a coarse, quantised quantity - it depends only on which tercile that
+# year landed in - so it may be a noisier selection signal than continuous squared error
+# even though it is the thing ultimately being scored.
+CRITERION = os.environ.get("V4Z_CRITERION", "rps")
+
+_CACHE = {}
+
+
+def _components(ctx, gap, width):
+    key = (int(ctx.years[0]), int(ctx.years[-1]), len(ctx.years),
+           ctx.window_start_month, gap, width)
+    if key not in _CACHE:
+        _CACHE[key] = {b: ctx.feature(b, gap=gap, width=width, years=ctx.years)
+                       for b in RAW_BOXES}
+    return _CACHE[key]
+
+
+def compose(name, comp, tr):
+    """`tr` indexes the rows the index's own fitted constants come from."""
+    def z(v):
+        m, sd = np.nanmean(v[tr]), np.nanstd(v[tr])
+        return (v - m) / sd if sd > 0 else v * 0.0
+
+    if name == "nino34":
+        return comp["nino34"]
+    if name == "iod":
+        return comp["iod_w"] - comp["iod_e"]
+    if name == "wpac":
+        return comp["wpac"]
+    if name == "wv":
+        return comp["wv"]
+    if name == "wpg":
+        return z(comp["wpac"]) - z(comp["nino34"])
+    if name == "wvg":
+        return z(comp["nino34"]) - z(comp["wv"])
+    raise ValueError(name)
+
+
+def _mu(x_fit, y_fit, x_pred):
+    """Fitted mean prediction, or None if the fit is not possible."""
+    ok = np.isfinite(x_fit) & np.isfinite(y_fit)
+    if ok.sum() < 8 or np.std(x_fit[ok]) == 0:
+        return None
+    xo, yo = x_fit[ok], y_fit[ok]
+    mx, sx = xo.mean(), xo.std()
+    xs = (xo - mx) / sx
+    b1, b0 = np.polyfit(xs, yo, 1)
+    resid_in = (yo - (b0 + b1 * xs)).std(ddof=2) if ok.sum() > 2 else yo.std()
+    return b0 + b1 * (np.atleast_1d(x_pred) - mx) / sx, float(resid_in)
+
+
+def _probs(x_fit, y_fit, x_pred, sigma=None):
+    ok = np.isfinite(x_fit) & np.isfinite(y_fit)
+    xp = np.atleast_1d(x_pred)
+    if ok.sum() < 8 or np.std(x_fit[ok]) == 0:
+        return np.full((len(xp), 3), 1.0 / 3.0)
+    xo, yo = x_fit[ok], y_fit[ok]
+    mx, sx = xo.mean(), xo.std()
+    xs = (xo - mx) / sx
+    b1, b0 = np.polyfit(xs, yo, 1)
+    if sigma is None:
+        sigma = (yo - (b0 + b1 * xs)).std(ddof=2) if ok.sum() > 2 else yo.std()
+    sigma = max(float(sigma), 1e-9)
+    t33, t67 = _cpt_boundaries(y_fit)
+    mu = b0 + b1 * (xp - mx) / sx
+    pb = norm.cdf(t33, loc=mu, scale=sigma)
+    p67 = norm.cdf(t67, loc=mu, scale=sigma)
+    p = np.stack([pb, p67 - pb, 1.0 - p67], axis=1)
+    p[~np.isfinite(xp)] = 1.0 / 3.0
+    return p / p.sum(1, keepdims=True)
+
+
+def _rps(p, y_true, t33, t67):
+    cat = 0 if t33 > y_true else (1 if t67 > y_true else 2)
+    oh = np.array([float(cat == i) for i in range(3)])
+    return float(np.sum((np.cumsum(p) - np.cumsum(oh)) ** 2) / 2.0)
+
+
+def _ridge(ctx, tr_idx, tr, te, y_tr):
+    """No selection at all: every index enters one jointly-shrunk model.
+
+    A discrete argmax over correlated candidates is replaced by continuous shrinkage,
+    which is the standard remedy for exactly this variance problem. The columns are
+    heavily collinear (the width variants are near-duplicates) and p can exceed n, both
+    of which ridge handles and argmax does not.
+
+    sigma comes from INNER-CV residuals, not in-sample ones. With p > n the in-sample
+    residuals are near zero, which would make the forecast wildly overconfident and score
+    terribly under a proper scoring rule.
+    """
+    cols = []
+    for fname, gap, width in itertools.product(FEATURES, GAPS, WIDTHS):
+        v = compose(fname, _components(ctx, gap, width), tr_idx)
+        if np.isfinite(v[tr]).all() and np.isfinite(v[te]).all() and np.std(v[tr]) > 0:
+            cols.append(v)
+    if not cols:
+        return np.full((int(te.sum()), 3), 1.0 / 3.0)
+    X = np.array(cols).T
+    mu_x, sd_x = X[tr].mean(0), X[tr].std(0)
+    sd_x[sd_x == 0] = 1.0
+    Xs = (X - mu_x) / sd_x
+    Xtr, Xte = Xs[tr], Xs[te]
+    ym = y_tr.mean()
+    yc = y_tr - ym
+    n, p = Xtr.shape
+
+    alphas = np.array([1.0, 10.0, 100.0, 1000.0, 10000.0])
+    G = Xtr.T @ Xtr
+    best_a, best_e, best_res = None, np.inf, None
+    for a in alphas:
+        W = np.linalg.solve(G + a * np.eye(p), Xtr.T @ yc)
+        H = Xtr @ np.linalg.solve(G + a * np.eye(p), Xtr.T)
+        lev = np.clip(np.diag(H), 0, 0.999)
+        resid = (yc - Xtr @ W) / (1.0 - lev)          # closed-form LOO residuals
+        e = float(np.mean(resid ** 2))
+        if e < best_e:
+            best_a, best_e, best_res = a, e, resid
+    W = np.linalg.solve(G + best_a * np.eye(p), Xtr.T @ yc)
+    sigma = max(float(np.std(best_res)), 1e-9)        # CV residual spread, not in-sample
+    t33, t67 = _cpt_boundaries(y_tr)
+    mu = ym + Xte @ W
+    pb = norm.cdf(t33, loc=mu, scale=sigma)
+    p67 = norm.cdf(t67, loc=mu, scale=sigma)
+    out = np.stack([pb, p67 - pb, 1.0 - p67], axis=1)
+    return out / out.sum(1, keepdims=True)
+
+
+def fit_predict(ctx):
+    ntr = len(ctx.train_years)
+    tr = np.isin(ctx.years, ctx.train_years)
+    te = np.isin(ctx.years, ctx.test_years)
+    tr_idx = np.flatnonzero(tr)
+    y_all = np.full(len(ctx.years), np.nan)
+    y_all[tr] = ctx.y_train
+    n_te = int(te.sum())
+
+    if SELECTOR == "ridge":
+        return _ridge(ctx, tr_idx, tr, te, ctx.y_train)
+
+    # ── score every configuration by inner leave-one-year-out, and also build the
+    #    prediction it would make, so the selector can average rather than only pick ──
+    scores, ses, preds, simple = [], [], [], []
+    for fname, gap, width in itertools.product(FEATURES, GAPS, WIDTHS):
+        comp = _components(ctx, gap, width)
+        per_year, cv_resid = [], []
+        for h in range(ntr):
+            inner = np.delete(tr_idx, h)
+            held = tr_idx[h]
+            x = compose(fname, comp, inner)
+            if not np.isfinite(x[held]):
+                continue
+            t33, t67 = _cpt_boundaries(y_all[inner])
+            m = _mu(x[inner], y_all[inner], x[held])
+            if CRITERION == "mse":
+                if m is None:
+                    continue
+                per_year.append(float((y_all[held] - m[0][0]) ** 2))
+            else:
+                per_year.append(_rps(_probs(x[inner], y_all[inner], x[held])[0],
+                                     y_all[held], t33, t67))
+            if m is not None:
+                cv_resid.append(y_all[held] - m[0][0])
+        if len(per_year) < max(10, ntr // 2):
+            continue
+        pa = np.array(per_year)
+        x_full = compose(fname, comp, tr_idx)
+        # the ONLY thing SIGMA_MODE changes: the width of the predictive distribution
+        sig = (float(np.std(cv_resid)) if SIGMA_MODE == "cv" and len(cv_resid) > 3 else None)
+        scores.append(pa.mean())
+        ses.append(pa.std(ddof=1) / np.sqrt(len(pa)))
+        preds.append(_probs(x_full[tr], ctx.y_train, x_full[te], sigma=sig))
+        simple.append((gap, width))          # smaller lead/width = simpler
+
+    if not scores:
+        return np.full((n_te, 3), 1.0 / 3.0)
+
+    scores = np.array(scores)
+    preds = np.array(preds)                  # (n_config, n_test, 3)
+    best = int(np.argmin(scores))
+
+    if SELECTOR == "argmax":
+        w = np.zeros(len(scores))
+        w[best] = 1.0
+    elif SELECTOR == "top3":
+        k = min(3, len(scores))
+        w = np.zeros(len(scores))
+        w[np.argsort(scores)[:k]] = 1.0 / k
+    elif SELECTOR == "softmax":
+        # temperature = spread of the scores, so weighting adapts to how separable the
+        # configurations actually are rather than to the arbitrary scale of RPS
+        T = max(float(scores.std()), 1e-9)
+        e = np.exp(-(scores - scores.min()) / T)
+        w = e / e.sum()
+    elif SELECTOR == "onese":
+        thresh = scores[best] + ses[best]
+        cand = np.flatnonzero(scores <= thresh)
+        pick = min(cand, key=lambda i: (simple[i][0], simple[i][1], scores[i]))
+        w = np.zeros(len(scores))
+        w[pick] = 1.0
+    else:
+        raise ValueError(f"unknown V4Z_SELECTOR={SELECTOR}")
+
+    out = np.tensordot(w, preds, axes=(0, 0))
+    out = np.clip(out, 1e-9, 1.0)
+    return out / out.sum(1, keepdims=True)

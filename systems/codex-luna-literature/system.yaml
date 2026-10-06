@@ -1,0 +1,25 @@
+schema_version: 1
+id: codex-luna-literature
+kind: agent
+description: Codex gpt-6-luna under the isolated harness with a frozen attributed
+  primary-source literature packet.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env: []
+runtime:
+  image: sha256:14ded77c764dccdcaeef07f91c549709b4ff3549d0c30f5dc780e4376347917a
+  memory: 4g
+  cpus: 2
+budget:
+  max_seconds: 600
+  max_tool_calls: 60
+  command_seconds: 120
+substrate:
+  paths:
+  - adapter.py
+  - literature
+  instructions: The attributed required paper excerpts and source manifest are at
+    /substrate/literature. They are available for scientific source consultation.

@@ -1,0 +1,683 @@
+{
+  "schema_version": 1,
+  "task": "weatherbench-verification",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/weatherbench-verification",
+  "files": [
+    {
+      "file": "agent-inputs/availability.nc",
+      "sha256": "7d217f3d819e3e343504bb1879d48b7f9d915c9dd867c187ce7161e88c468208",
+      "bytes": 502361,
+      "visibility": "agent",
+      "dimensions": {
+        "system": 3,
+        "init_time": 20,
+        "lead_time": 4,
+        "latitude": 32,
+        "longitude": 64
+      },
+      "variables": {
+        "available": {
+          "dimensions": [
+            "system",
+            "init_time",
+            "lead_time",
+            "latitude",
+            "longitude"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/broken-comparison.py",
+      "sha256": "993c36d7f5566cfdaf895bace07cb5799f74700681469ae0ebc772bc79af9e40",
+      "bytes": 1602,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/climatology-LICENSE.txt",
+      "sha256": "ffe05f9653f14ffd23322bf1ebecfd6dd519ba59726280b34593fcf69ccab60e",
+      "bytes": 8435,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/climatology.nc",
+      "sha256": "c6513b292ee62091c26d112b2b259e48c0da5e2bdc469e136725e66355866fff",
+      "bytes": 12005760,
+      "visibility": "agent",
+      "dimensions": {
+        "hour": 4,
+        "dayofyear": 366,
+        "latitude": 32,
+        "longitude": 64
+      },
+      "variables": {
+        "temperature": {
+          "dimensions": [
+            "hour",
+            "dayofyear",
+            "latitude",
+            "longitude"
+          ],
+          "units": "K"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/era5-LICENSE.txt",
+      "sha256": "ffe05f9653f14ffd23322bf1ebecfd6dd519ba59726280b34593fcf69ccab60e",
+      "bytes": 8435,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/era5.nc",
+      "sha256": "1f52d081a13b6f7df6c5545d7245bbba62be1f386dd0248dfeb87fbdfa449677",
+      "bytes": 230360,
+      "visibility": "agent",
+      "dimensions": {
+        "time": 27,
+        "latitude": 32,
+        "longitude": 64
+      },
+      "variables": {
+        "temperature": {
+          "dimensions": [
+            "time",
+            "latitude",
+            "longitude"
+          ],
+          "units": "K"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/hres-LICENSE.txt",
+      "sha256": "12f706522a9d279015c1cccfd3c326b274ac044a73373024713282dd665c8410",
+      "bytes": 5283,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/hres.nc",
+      "sha256": "688fdf617a019b1dddedffdcf5a79b5fbb28b0d21a197cf63375eea2fb74d722",
+      "bytes": 666291,
+      "visibility": "agent",
+      "dimensions": {
+        "init_time": 20,
+        "lead_time": 4,
+        "latitude": 32,
+        "longitude": 64
+      },
+      "variables": {
+        "temperature": {
+          "dimensions": [
+            "init_time",
+            "lead_time",
+            "latitude",
+            "longitude"
+          ],
+          "units": "K"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/metrics-excerpts.txt",
+      "sha256": "707b9eb0c3f42c7fcbe0905fc5209009186e1e43ba4c176527ef63348c32713e",
+      "bytes": 5378,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "537dadca3daec924039c634f2269c60e8dcead9e573e921f08a94b0ab8e248e5",
+      "bytes": 145,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-notes.txt",
+      "sha256": "069205e31f9ce3893b73894cd093b42d71d20cb337e9179161fc55dd7640ac97",
+      "bytes": 2181,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/upstream-LICENSE",
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "bytes": 11357,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/reference-audit.json",
+      "sha256": "6f58b43c190582ee28d6f7e5a12e1f6e6a0c707b2dc43ff3a23e083ea2427af6",
+      "bytes": 694,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/scores.nc",
+      "sha256": "2b08d3980e27160d10484559c8e7b78ea0fe7270b0ee0cd3a19f58e0012e0a27",
+      "bytes": 34891,
+      "visibility": "controller_only",
+      "dimensions": {
+        "system": 3,
+        "region": 3,
+        "init_time": 20,
+        "lead_time": 4,
+        "variant": 5
+      },
+      "variables": {
+        "case_mse": {
+          "dimensions": [
+            "system",
+            "region",
+            "init_time",
+            "lead_time"
+          ],
+          "units": "K2"
+        },
+        "case_acc": {
+          "dimensions": [
+            "system",
+            "region",
+            "init_time",
+            "lead_time"
+          ],
+          "units": "1"
+        },
+        "rmse": {
+          "dimensions": [
+            "system",
+            "region",
+            "lead_time"
+          ],
+          "units": "K"
+        },
+        "acc": {
+          "dimensions": [
+            "system",
+            "region",
+            "lead_time"
+          ],
+          "units": "1"
+        },
+        "support_count": {
+          "dimensions": [
+            "region",
+            "init_time",
+            "lead_time"
+          ],
+          "units": "grid_cells"
+        },
+        "support_area_fraction": {
+          "dimensions": [
+            "region",
+            "init_time",
+            "lead_time"
+          ],
+          "units": "1"
+        },
+        "diagnostic_rmse": {
+          "dimensions": [
+            "variant",
+            "system",
+            "region",
+            "lead_time"
+          ],
+          "units": "K"
+        }
+      }
+    },
+    {
+      "file": "controller/source-audit.json",
+      "sha256": "97e78e51438a4864f31ea64c58684f69b5b953fa936d3b9be51a186ea84699d1",
+      "bytes": 28363,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/climatology/.zmetadata",
+      "sha256": "f876a07f4c65d5375abad6bca5bb5af3eb115ff6aedc9c125dfeccc2e187c474",
+      "bytes": 54679,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/climatology/2m_temperature/0.0.0.0",
+      "sha256": "adb3f1010d5a3b81901f516090cbff9f23c0d77adf662cd769522ce9a64a8ea6",
+      "bytes": 6976969,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/climatology/dayofyear/0",
+      "sha256": "6124de26183676ad95738068949b35444c5d30ff9993f38d4a922d918e81b47c",
+      "bytes": 407,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/climatology/hour/0",
+      "sha256": "204a0a0a276366a2b84c44247faebcf5b2fde6e17e7976f4daacf621fcb3dfe9",
+      "bytes": 48,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/climatology/latitude/0",
+      "sha256": "886ed4a4c20c1cbd44df758c399e73e893a977ce3c30a1f9776899eae738cc43",
+      "bytes": 169,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/climatology/longitude/0",
+      "sha256": "e1924d9c72175fe942ae9aa0caea8c8f48962c8c855b056400c0f32391a54a94",
+      "bytes": 192,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/.zmetadata",
+      "sha256": "123bb279f6aa9c6375d5d2c2b95591aeddc797ec7400272a7b38f43f475b35e2",
+      "bytes": 36570,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/2m_temperature/891.0.0",
+      "sha256": "e8eb19074aea67989c78dc9fc88816a7bac3805d071524d5554c49e2a48fed98",
+      "bytes": 578024,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/2m_temperature/892.0.0",
+      "sha256": "15a728d79ffda51fa3c1a869594dd33d69c7e2903bac53e7b176b74de367c80e",
+      "bytes": 579414,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/latitude/0",
+      "sha256": "886ed4a4c20c1cbd44df758c399e73e893a977ce3c30a1f9776899eae738cc43",
+      "bytes": 169,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/longitude/0",
+      "sha256": "e1924d9c72175fe942ae9aa0caea8c8f48962c8c855b056400c0f32391a54a94",
+      "bytes": 192,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/time/0",
+      "sha256": "e08c87a33ad02e3d07525f09de1100d5bbabdb4dcd5af1015f9f661452ace01e",
+      "bytes": 3282,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/time/1",
+      "sha256": "1352da152eb6fba4d8e0819686a56153c7b9c344448a7ade21620145cde8546f",
+      "bytes": 3310,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/time/2",
+      "sha256": "c5b4a5120bdf9b44054893d8cc4ed1f3876347856bfb60a145b8eb6ca0aa6e2a",
+      "bytes": 3052,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/era5/time/3",
+      "sha256": "cc060e3c740c6d6983465fc7035ff6e238f29f31b8e68500a4c253fed6e26938",
+      "bytes": 3060,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/.zmetadata",
+      "sha256": "62811c8101885386acc33e3fe49641af74936d87eb2409ecf47dc193a777db9a",
+      "bytes": 19471,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/730.12.0.0",
+      "sha256": "6ed9ed17613575bc1750038910c1f7fbb91a4f40b5c5cac5e79c4df049a5f571",
+      "bytes": 23612,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/730.20.0.0",
+      "sha256": "ea126b5d1d5b981e2930f4d0ab86e75c301ca7438256b773ec223df0d1de0ee7",
+      "bytes": 23496,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/730.28.0.0",
+      "sha256": "58a7f75e96918ffc48d0c1cd97eb65d00df432bcc791e5464867104705778f7b",
+      "bytes": 23603,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/730.4.0.0",
+      "sha256": "c622b5217b9cfb51cb67762df0aaa4a8315a41f59efcef6b0387be52cb48968b",
+      "bytes": 23571,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/731.12.0.0",
+      "sha256": "beff324885115bd9d22972263f7a354657ac380dae52d4a72c5771bb4af68aea",
+      "bytes": 23406,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/731.20.0.0",
+      "sha256": "246962cf91e210cc0fde8e6b69813bd4b5720712158207f3a34d20486113f237",
+      "bytes": 23507,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/731.28.0.0",
+      "sha256": "fa439ff8c16be501de43a1536ef8f50037f9e95f0afb1b4bd3463cbc107f0667",
+      "bytes": 23645,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/731.4.0.0",
+      "sha256": "2f8df7a204dcaedc37e55a3969b521cb5f5b57fb5953b300bcd19ed150718691",
+      "bytes": 23539,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/732.12.0.0",
+      "sha256": "ff10ba2c7f55a57d26e1b6f67e53b888bab1eaa6545e84be989917c11dfa669a",
+      "bytes": 23506,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/732.20.0.0",
+      "sha256": "ec1fe9b8eb7fe5e0d00121b2643ea8aaab4707e9d824933445bf6f83596bfa03",
+      "bytes": 23591,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/732.28.0.0",
+      "sha256": "2ecba7014747d33f03ca75e28af2a200cd320caade520b12e8f9d8a385cf2681",
+      "bytes": 23622,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/732.4.0.0",
+      "sha256": "d29c3ae756c1c9fc46e2b97643c015e61d34d4636fc6fafe1291b6934c91ddfd",
+      "bytes": 23572,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/733.12.0.0",
+      "sha256": "49cfb67623e6fd671c1b4a65e20c903e14b6380db2cb33bc1fc88d1681bd3f5c",
+      "bytes": 23508,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/733.20.0.0",
+      "sha256": "58ac2cfe8ff2f7314272521acbd84cd4b7a8c5eaa4d28f0327c7572eabc1dd7a",
+      "bytes": 23613,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/733.28.0.0",
+      "sha256": "e154017bb03bc4ba776bfbbe3e5dae4b1ed4a9d8ac52577c0610991e519e5acc",
+      "bytes": 23596,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/733.4.0.0",
+      "sha256": "18d253042c40af85d8f8c384f7d22360e33185e2769bd464e5f702518835e475",
+      "bytes": 23495,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/734.12.0.0",
+      "sha256": "af20ae63b8cd57cba3b2013414e35edf36a7d4e53b1c490a9c2b88d8cad9037f",
+      "bytes": 23544,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/734.20.0.0",
+      "sha256": "8ec16085697d5f93a38f1b4f8b8d0cc8982c3feae5dbf011a1df142aa671f8d8",
+      "bytes": 23575,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/734.28.0.0",
+      "sha256": "501b00acd08f83cd88b5446e21b0a7bcf491eadcd5ac8135b38fe9a8e29594e9",
+      "bytes": 23526,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/734.4.0.0",
+      "sha256": "d9e634f9c45263dd3ac079618c512e5885d7d650dc36eceddbb0122cd84422cf",
+      "bytes": 23623,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/735.12.0.0",
+      "sha256": "476bfdbdc8737c2f7ec47641206880cfe2372c649f994df2dde7a06ce909c614",
+      "bytes": 23582,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/735.20.0.0",
+      "sha256": "0fb238a15b8e735447633989dd68ff9ef522ccb7968e59f81cd377458c0a5433",
+      "bytes": 23501,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/735.28.0.0",
+      "sha256": "7013d0f267a4dd9f97cd9ea02d395f6b9740e2d290194116ec0f83e656862563",
+      "bytes": 23681,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/735.4.0.0",
+      "sha256": "0cc47030b6c96cf81ca6ca7655fe6e2dfbb7e8b4e74f40ffef125803e96aec95",
+      "bytes": 23563,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/736.12.0.0",
+      "sha256": "759e68a3e2a50add3923f997201d19731c3b7f141d83b90dc661837b1d4cafca",
+      "bytes": 23500,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/736.20.0.0",
+      "sha256": "7079a84b3e3f50f2be03297f2b86d01e6e3f5e757ff79b454dbe3f8aed12187c",
+      "bytes": 23623,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/736.28.0.0",
+      "sha256": "b180933d11ad93fd952e83dc419dcd568a200854c2c070e108ac94578219ceb6",
+      "bytes": 23643,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/736.4.0.0",
+      "sha256": "67ad625b6fb63fb3afe798d5694ea5fcf2ddc25cf404e4a629a72031992cb1e1",
+      "bytes": 23600,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/737.12.0.0",
+      "sha256": "a134761094d31ca712c5cd338b020daea8f08ad7903ef17ed18abeab401b6c0a",
+      "bytes": 23639,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/737.20.0.0",
+      "sha256": "f9040d7c422d9617b6ae1c5ee6bfcc8e24c5e8acc95ff0e3e6e7c4e66828d442",
+      "bytes": 23547,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/737.28.0.0",
+      "sha256": "a1c52755e857bc4505c3ad2558f9028eb71d0911ed63697745247605f1a63f37",
+      "bytes": 23484,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/737.4.0.0",
+      "sha256": "989796776df4503cb4638fb64144980284cdc61abf7de2be9bcd540a20435e0b",
+      "bytes": 23511,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/738.12.0.0",
+      "sha256": "e887f17bb5e748cd5b526a7f24ea6a36d14c70771dc081f884cf962cc3f91edc",
+      "bytes": 23562,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/738.20.0.0",
+      "sha256": "152d4e043fe1ffc5a232fba0142773ee62cd092d590dfae356a9ce0a45c65916",
+      "bytes": 23494,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/738.28.0.0",
+      "sha256": "dea9b22ef61871625259f0c2dea3b56e500f32cedd56322f0c40166fed543b9c",
+      "bytes": 23439,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/738.4.0.0",
+      "sha256": "6c937acd74a59f9eb61133046c363c15fbb93f59689e2ad6a2c9610910737027",
+      "bytes": 23593,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/739.12.0.0",
+      "sha256": "8eecc3b17da6d9e33b77217a471ff5e4fd54d73c8ad1045fe31187faca3588ad",
+      "bytes": 23500,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/739.20.0.0",
+      "sha256": "60c1513e03ec574d443e679071de8239c1eb3c98e31811c2bfe142ff9a48fadb",
+      "bytes": 23506,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/739.28.0.0",
+      "sha256": "ca8abb9b585a10eca0344c51043247d400ae4dcc68c505c48601564c30fa73f0",
+      "bytes": 23512,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/739.4.0.0",
+      "sha256": "999839dfb80363d8936eed5a8c01ec323d050c4c6f10a7b0de697414a3c50323",
+      "bytes": 23574,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/740.12.0.0",
+      "sha256": "cb27d3f124680e8b00854dd5f8af406974e58aacee316845846732ba5d8abd94",
+      "bytes": 23559,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/740.20.0.0",
+      "sha256": "f5e077ba1e7e2eb8ded638bfadb0e3ff7453ab91fbfc777b08fc0b035e1ca971",
+      "bytes": 23587,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/740.28.0.0",
+      "sha256": "e056bbb492d9833784b8ce3c77e90baff492303572ace0c3c2ebcb010f493697",
+      "bytes": 23632,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/2m_temperature/740.4.0.0",
+      "sha256": "ec56d6b9a11977893820831e0ac330b9e1cd8352edefdb5ddf2de9c69210f798",
+      "bytes": 23543,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/latitude/0",
+      "sha256": "886ed4a4c20c1cbd44df758c399e73e893a977ce3c30a1f9776899eae738cc43",
+      "bytes": 169,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/longitude/0",
+      "sha256": "e1924d9c72175fe942ae9aa0caea8c8f48962c8c855b056400c0f32391a54a94",
+      "bytes": 192,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/prediction_timedelta/0",
+      "sha256": "ca3bb25671e23ec221b101f599e76c0973e6f77ade52071c50118d400341bf0d",
+      "bytes": 82,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-cache/hres/time/0",
+      "sha256": "e6a6f015cc21682c2bc3829bb0ffbbae496b83c2b78fe4b07a1e62725613794b",
+      "bytes": 1659,
+      "visibility": "controller_only"
+    }
+  ],
+  "reference_code_path": "weatherbench/task_tools/weatherbench_verification/reference.py",
+  "reference_code_sha256": "29e01a1165f3ee37b0a71fe35ec2e7a6acf8b739e74b1e16a1d2b73800cb26eb",
+  "reference_validation": "Independent NumPy/xarray crosscheck on every case/region/lead; real public source chunks hashed; known-correct and constructed-fault controls",
+  "source_records": [
+    {
+      "path": "tasks/weatherbench-verification/prompt.md",
+      "sha256": "4c46d11cd7a1ad69048cce13f3f7b0cf6cd0b3690b720b9f704a3957fcf7c866"
+    },
+    {
+      "path": "tasks/weatherbench-verification/replay-contract.md",
+      "sha256": "e84d0394caab1a1a50114240d9d5d36802642f5b87d2260ab9f90bc3d1a060b9"
+    },
+    {
+      "path": "tasks/weatherbench-verification/review.md",
+      "sha256": "3806085f789a7ce311ee559ae682c2f0dbc0d4ca57b0ced668aa845ae241b340"
+    },
+    {
+      "path": "tasks/weatherbench-verification/rubric.yaml",
+      "sha256": "17205e6904c3abbe005705c980deb81d5ab4587d88d04087d824e90cdf16c173"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/__pycache__/broken-comparison.cpython-313.pyc",
+      "sha256": "8da551a6930ecd3a22cb4cddf9e0e1d5904f4aef5f6fda2d6ef296f8f859a307"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/broken-comparison.py",
+      "sha256": "993c36d7f5566cfdaf895bace07cb5799f74700681469ae0ebc772bc79af9e40"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/climatology-LICENSE.txt",
+      "sha256": "ffe05f9653f14ffd23322bf1ebecfd6dd519ba59726280b34593fcf69ccab60e"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/era5-LICENSE.txt",
+      "sha256": "ffe05f9653f14ffd23322bf1ebecfd6dd519ba59726280b34593fcf69ccab60e"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/hres-LICENSE.txt",
+      "sha256": "12f706522a9d279015c1cccfd3c326b274ac044a73373024713282dd665c8410"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/metrics-excerpts.txt",
+      "sha256": "707b9eb0c3f42c7fcbe0905fc5209009186e1e43ba4c176527ef63348c32713e"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/source-notes.txt",
+      "sha256": "069205e31f9ce3893b73894cd093b42d71d20cb337e9179161fc55dd7640ac97"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/upstream-LICENSE",
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "tasks/weatherbench-verification/source-material/upstream-metrics.py",
+      "sha256": "7688d369fa62a84f77c10901334158f6460de83267aa3b53113856e60ce07b9f"
+    },
+    {
+      "path": "tasks/weatherbench-verification/sources.yaml",
+      "sha256": "80ee2480495c2a0295ee6cd162bd9070d6215e8d05506753237d7a925dbb275d"
+    },
+    {
+      "path": "tasks/weatherbench-verification/task.yaml",
+      "sha256": "88776fb92ae77d6045134111b6327f9d550e593a8df78167ad52b933cf2340f4"
+    }
+  ]
+}

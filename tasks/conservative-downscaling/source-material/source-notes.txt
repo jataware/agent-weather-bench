@@ -1,0 +1,37 @@
+This regional adaptation draws on Wood, Leung, Sridhar and Lettenmaier(2004),
+Hydrologic Implications of Dynamical and Statistical Approaches to Downscaling
+Climate Model Outputs, Climatic Change62,189–216,
+https://doi.org/10.1023/B:CLIM.0000013685.99609.9e
+Paper motivates bias correction and spatial disaggregation; task does not
+reproduce its model, hydrological simulation, spatial domains or reported results.
+
+AfricaS2S revision4f8526a32232f9c9af400a01e5a6f103a865c735,
+src/africas2s/methods/bcsd.py: supplied starting code. It samples observations via
+point interpolation, estimates rank by searchsorted/n, bilinearly interpolates
+coarse predictions to fine centers and adds climatological spatial detail.
+This differs deliberately from the prescribed conservative positive-ratio task.
+https://github.com/ACMAD-Niamey/africas2s
+
+Coarse source: local seasonal-hindcasting-gha revision
+c908783878022c0b0b00cf17bd8badcb0047fa56,
+frameworks/data/iri/prcp/CFSv2_hcst.nc, derived without numerical conversion from
+output/cca/pycpt_workspace/-10W-75E_to_-20S-30N/data/CFSv2.PRCP.tsv
+via frameworks/0_datadl.py::_iridl_nmme_tracks::load (cptio reader, coordinates
+renamed and singleton ensemble-mean member inserted). Both native CPT and cached
+NetCDF report mm/day. Both carry MAM targets and February1initialization.
+Raw values16–300 cannot establish physical daily-rate validity; task leaves that
+scale unresolved and uses only rank-linear calibration to observed mm targets.
+It does not infer source units from climatological plausibility alone.
+
+Fine source: v4zeek/data/ea_precip_monthly.nc, CHIRPSv3 final monthly records
+1981–2023 acquired through legacy rosetta. v4zeek/src/fetch_fixtures.py strips
+inherited attrs; legacy src/rosetta/normalize.py divides monthly total by30 and
+strips unit evidence. Undoing this documented conversion gives actual monthly
+CHIRPS totals; sum March+April+May, never multiply by calendar days again.
+Source SHA/coordinates are recorded in source-audit.json. Fine coordinates have
+small floating drift: task snaps to declared nominal .05grid, max3.26e-6degrees.
+Native cell values are retained; exact spherical areas refer to this nominal grid.
+
+Fit1993–2008; prediction2009–2016fine truth remains controller-only. Source records
+are historical public data already used for scientific work. They are not pristine
+holdouts and acquisition/real-time availability is not being benchmarked here.

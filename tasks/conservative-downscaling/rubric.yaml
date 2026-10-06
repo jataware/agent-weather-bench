@@ -1,0 +1,47 @@
+schema_version: 2
+task: conservative-downscaling
+task_version: development-0.1
+status: development_pending_review
+aggregation: Weighted scientific outcomes; private forecasting skill reported separately.
+completion: Valid prescribed calibration/downscaling, trusted replay, fit boundaries and honest source interpretation.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks: [delivery, answer_schema, execution_schema, provenance_fields, source_coverage]
+  integrity: Prediction-year observations and reference code remain controller-only.
+tree:
+  id: task_completion
+  children:
+  - id: coarse_calibration
+    weight: 25
+    required: true
+    evaluator: deterministic
+    criterion: Empirical rank mapping fits only supplied training years and outputs mapped coarse MAM totals in observed physical mm.
+    evidence: [forecast.nc, controller-reference]
+    checks: [mapped_prediction]
+  - id: conservative_spatial_detail
+    weight: 30
+    required: true
+    evaluator: deterministic
+    criterion: Fine-grid training climatology ratios reproduce prescribed values, preserve exact spherical area means within every coarse cell and yield finite nonnegative rainfall.
+    evidence: [forecast.nc, controller-reference]
+    checks: [geometry, spatial_detail, conservation_and_positivity]
+  - id: leave_one_year_out
+    weight: 20
+    required: true
+    evaluator: deterministic
+    criterion: Each training hindcast excludes its entire year's fine truth and coarse predictor from both empirical calibration and spatial climatology fits.
+    evidence: [hindcasts.nc, controller-reference, trusted-counterfactual-log]
+    checks: [leave_one_out]
+  - id: source_interpretation
+    weight: 15
+    required: true
+    evaluator: expert
+    criterion: Identifies unresolved raw unit metadata, explains affine scale invariance and mapped rather than raw mass conservation, distinguishes this regional prescribed adaptation from original BCSD/hydrological replication and avoids unsupported fine-scale or private-skill claims.
+    evidence: [report.txt, answer.json, provenance.json, retained-code]
+  - id: reusable_workflow
+    weight: 10
+    required: true
+    evaluator: execution
+    criterion: Recomputes offline under alternate inputs, preserves held-out-year hindcasts when that year's truth changes, and performs altered-predictor inference from saved state without observations.
+    evidence: [execution.json, handoff.txt, trusted-replay-log, trusted-inference-log]

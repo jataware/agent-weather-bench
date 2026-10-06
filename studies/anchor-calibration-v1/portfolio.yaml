@@ -1,0 +1,34 @@
+schema_version: 1
+status: development_selection
+selection_basis: Existing data, complementary scientific objectives, independent checks, and retained natural attempts; no new task expansion.
+anchors:
+  - task: cca-seasonal-reproduction
+    family: seasonal_statistical_forecasting
+    reason: Multivariate method reconstruction with nested selection, probabilistic forecasts and source-route interpretation.
+  - task: station-verification
+    family: forecast_verification
+    reason: Observation QC, interpolation, common support and fault diagnosis; supporting short-range verification work rather than S2S forecast generation.
+  - task: subseasonal-optimization
+    family: subseasonal_optimization
+    reason: Open forecasting research with bounded score feedback and separate skill measurement.
+supporting_examples:
+  seasonal-calibration: {family: seasonal_statistical_forecasting, role: native acquisition and open calibration}
+  short-rains-workflow: {family: seasonal_statistical_forecasting, role: end-to-end workflow and unit repair}
+  monthly-cycle-calibration: {family: seasonal_statistical_forecasting, role: monthly sharing and whole-year selection}
+  acmad-objective: {family: probability_consolidation, role: combination and float-precision controls}
+  wvg-definition-audit: {family: predictor_source_audit, role: geometry and paper-versus-curator attribution}
+  weatherbench-verification: {family: forecast_verification, role: gridded counterpart sharing HRES with station task}
+  conservative-downscaling: {family: spatial_downscaling, role: conservation and valid construction with negative skill}
+coverage_limits:
+  - Shared rainfall/SST sources and statistical calibration methods make several examples correlated.
+  - Source/code assistance is supplied in most tasks; autonomous literature retrieval and research design remain lightly tested.
+  - The verification anchors use short-range forecasts, not subseasonal-to-seasonal forecast horizons.
+  - Temperature/extremes/onset and sequential operational updates are not represented by a complete S2S task here.
+next_flagship:
+  status: prerequisites_first_no_launch
+  family: subseasonal_optimization
+  objective: Improve against an independently verified stronger baseline under fixed information and search limits.
+  first_work: Audit and reproduce a stronger source-backed baseline on the existing nine-cell inputs, then measure runtime and skill without expanding data.
+  caution: Nine-cell inputs do not support all published ABC issuance/lead/recent-observation features. Name any adaptation explicitly; do not claim ABC parity.
+  launch_conditions: Frozen baseline and metric, valid alternative and defect controls, reliable evidence packets, reviewed interpretation labels and a fresh disjoint parent set.
+  storage_rule: Existing arrays first; no expanded extraction or downloads in this cycle.

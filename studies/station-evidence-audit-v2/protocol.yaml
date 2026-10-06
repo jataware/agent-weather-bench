@@ -1,0 +1,18 @@
+schema_version: 1
+id: station-evidence-audit-v2
+status: autonomous_agent_review_and_evidence_based_judge_development
+task: station-verification
+user_direction: Agent review is the appropriate route; human labeling is optional and is not a prerequisite for further development.
+scope: Complete original station submission, task/source records and independently checked numerical evidence; followed by eight constructed scientific interpretation checks.
+reference_rule: Establish source facts and mathematical invariants independently; use two agents to audit full evidence and review case labels, with explicit adjudication of disagreements. Consensus alone is not scientific ground truth.
+reference_basis: Distinguish machine-verified calculations, explicit task/source facts, reasoned scientific inferences and unresolved questions in each decision.
+criteria: [constructed_control_attribution, coverage_and_uncertainty]
+scope_rule: Attribution and uncertainty judgments remain separate from numerical diagnostics, delivery, provenance and workflow completion. Contradictions relevant to the named interpretation do affect that criterion.
+split_rule: All cases share a previously inspected parent and are development cases; no held-out workflow, fresh natural attempt or domain-transfer claim.
+freeze_rule: Freeze complete case evidence, exact criterion definitions, verified reference basis, independent labels and fixed judge instructions before the candidate judge runs. Do not tune against that run.
+blinding_rule: Fresh reviewer conversations receive only specified review packets; instruction-based restrictions on a shared host are disclosed rather than described as OS-enforced isolation.
+cost_rule: Subscription agents only; no separately billed APIs, downloads, new Docker execution or copies of meteorological datasets. Unknown token/cost measurements remain unknown.
+logging_rule: Retain full audit calculations/results, packet and source hashes, reference reviews, adjudication, candidate judgments and metrics. Helper traces remain platform logs, not native benchmark controller events.
+human_rule: Human-confirmed accuracy stays unset unless the user explicitly supplies labels. Optional expert review can strengthen the evidence later; it does not block this study.
+completion_rule: Evidence-backed reference decisions, validated judge outputs, case-level disagreements, and a concise result page pointing to the complete agent report and supporting artifacts.
+publication_rule: Do not infer calibrated benchmark rankings or scientific certification from this small agent-reviewed development study.

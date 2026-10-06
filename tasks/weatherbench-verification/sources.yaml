@@ -1,0 +1,47 @@
+schema_version: 1
+task: weatherbench-verification
+paper:
+  id: wb2-paper
+  title: 'WeatherBench 2: A Benchmark for the Next Generation of Data-Driven Global Weather Models'
+  authors: Rasp et al.
+  published: 2024-06-18
+  doi: 10.1029/2023MS004019
+  url: https://doi.org/10.1029/2023MS004019
+  role: Evaluation design and interpretation; no claim to reproduce complete published figures.
+implementation:
+  id: wb2-code
+  repository: https://github.com/google-research/weatherbench2
+  revision: d2c6a1553a0c532332d4c2d3be285508c514bfc2
+  path: weatherbench2/metrics.py
+  license: Apache-2.0
+  snapshot: source-material/upstream-metrics.py
+  role: Cell-area weights, per-case MSE, anomaly correlation and temporal aggregation.
+datasets:
+  - id: wb2-hres
+    url: gs://weatherbench2/datasets/hres/2016-2022-0012-64x32_equiangular_conservative.zarr
+    variable: 2m_temperature
+    units: K
+    license_snapshot: source-material/hres-LICENSE.txt
+  - id: wb2-era5
+    url: gs://weatherbench2/datasets/era5/1959-2022-6h-64x32_equiangular_conservative.zarr
+    variable: 2m_temperature
+    units: K
+    license_snapshot: source-material/era5-LICENSE.txt
+  - id: wb2-climatology
+    url: gs://weatherbench2/datasets/era5-hourly-climatology/1990-2019_6h_64x32_equiangular_conservative.zarr
+    variable: 2m_temperature
+    units: K
+    license_snapshot: source-material/climatology-LICENSE.txt
+curator_controls:
+  id: curator-comparison-controls
+  constructed: true
+  files: [source-material/broken-comparison.py, availability.nc]
+  role: Disclosed comparison faults and availability stress test; no historical upstream defect assertion.
+documentation:
+  - url: https://weatherbench2.readthedocs.io/en/latest/data-guide.html
+  - url: https://weatherbench2.readthedocs.io/en/latest/official-evaluation.html
+limitations:
+  - Public retrospective subset; not a pristine holdout or station observations.
+  - Different grid/month from complete published evaluation; no annual-ranking claim.
+  - Dataset redistribution approval pending actual dataset license review.
+  - Availability dropout and three comparison faults are curator constructions, explicitly disclosed.

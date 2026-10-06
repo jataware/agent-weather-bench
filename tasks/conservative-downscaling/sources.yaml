@@ -1,0 +1,36 @@
+source_category: published_method_and_existing_code
+paper:
+  title: Hydrologic Implications of Dynamical and Statistical Approaches to Downscaling Climate Model Outputs
+  authors: [Wood, Leung, Sridhar, Lettenmaier]
+  year: 2004
+  doi: https://doi.org/10.1023/B:CLIM.0000013685.99609.9e
+  role: BCSD motivation; regional forecasting adaptation, not original hydrological replication.
+starting_code:
+  repository: https://github.com/ACMAD-Niamey/africas2s
+  revision: 4f8526a32232f9c9af400a01e5a6f103a865c735
+  path: src/africas2s/methods/bcsd.py
+  supplied: source-material/africas2s-bcsd.py.txt
+coarse_data:
+  repository: https://github.com/accord-research/seasonal-hindcasting-gha
+  revision: c908783878022c0b0b00cf17bd8badcb0047fa56
+  path: frameworks/data/iri/prcp/CFSv2_hcst.nc
+  native_file: output/cca/pycpt_workspace/-10W-75E_to_-20S-30N/data/CFSv2.PRCP.tsv
+  processing_code: frameworks/0_datadl.py::_iridl_nmme_tracks
+  native_unit_metadata: mm/day
+  actual_unit_status: unresolved_source_scale
+  calendar: February1 initialization; MAM target, 1993–2016.
+fine_data:
+  local_workflow: v4zeek
+  revision: e364ce0ed6cb210b0872c4e35d76ddb329b6dfa5
+  path: data/ea_precip_monthly.nc
+  product: CHIRPSv3 final monthly totals
+  recovery: Undo documented legacy divide30 conversion; sum MAM monthly totals.
+  physical_output_units: mm
+curator_choices:
+- Four fixed one-degree inland Kenya cells with exact nominal .05degree nested fine geometry.
+- Explicit small coordinate encoding snap; native precipitation values unchanged.
+- Raw predictors treated as unknown-scale monotonic values, not physically converted rates.
+- Rank-linear empirical interpolation with tied-group averaging and clamped tails.
+- Positive fine climatology ratio normalized by spherical cell area, rather than additive interpolated detail.
+- Training1993–2008, retrospective leave-one-year-out within training, private prediction-year fine targets2009–2016.
+redistribution_status: Pending source/data-rights review; internal development only.

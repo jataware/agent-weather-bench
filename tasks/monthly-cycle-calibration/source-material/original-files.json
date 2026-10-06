@@ -1,0 +1,22 @@
+{
+  "v4zeek/data/ea_precip_monthly.nc": {
+    "sha256": "d7acf0304ba82789cfc431f7d917df2bb3a8950c678765dfd6b6b7e4e6096fa6",
+    "bytes": 266686549
+  },
+  "v4zeek/data/sst_iod_w_monthly.nc": {
+    "sha256": "95eea4d4471860e79695554730ad376a1f0a2625eb5481abf67cbf00965cbfba",
+    "bytes": 16362981
+  },
+  "v4zeek/data/sst_iod_e_monthly.nc": {
+    "sha256": "54e7419898082cd1fc7f8cc569912323120ca16268633dd31cb947572c872219",
+    "bytes": 9015141
+  },
+  "agent-weather-bench/var/private/tasks/short-rains-workflow/agent-inputs/rainfall.nc": {
+    "sha256": "75957be35fa51d40ed6883257a5cdbeee97fb1d63c90e51fa20372883f82fff8",
+    "bytes": 16852
+  },
+  "agent-weather-bench/var/private/tasks/short-rains-workflow/controller/private-targets.nc": {
+    "sha256": "ff944aabd11e924bc3aacb5e5cf7251327e7e6c91c3ff20b089409eac584ab30",
+    "bytes": 9776
+  }
+}

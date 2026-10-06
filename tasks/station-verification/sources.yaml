@@ -1,0 +1,36 @@
+schema_version: 1
+task: station-verification
+sources:
+- id: weatherreal-paper
+  title: 'WeatherReal: A Benchmark Based on In-Situ Observations for Evaluating Weather Models'
+  url: https://arxiv.org/abs/2409.09371
+  role: Motivation for direct station verification and gridded forecast interpolation; method adaptation, not published rank reproduction.
+- id: weatherreal-code
+  url: https://github.com/microsoft/WeatherReal-Benchmark
+  revision: 68b2f9293d2a0a1b1cedf396cffda34c05a21a14
+  local_snapshot: source-material/weatherreal-README.md
+  additional_snapshots: [source-material/weatherreal-obs_reformat_catalog.py, source-material/weatherreal-LICENSE, source-material/weatherreal-revision.json]
+  role: Pinned method context and license; station selection, quality policy and sample aggregation are explicit task adaptations.
+- id: noaa-isd
+  url: https://registry.opendata.aws/noaa-isd/
+  primary_documentation: https://www.ncei.noaa.gov/pub/data/noaa/isd-format-document.pdf
+  local_snapshot: source-material/isd-format-document.pdf
+  csv_documentation: source-material/CSV_HELP.pdf
+  role: Actual instantaneous station air-temperature observations and actual temperature quality flags.
+  product: NOAA ISD Global Hourly CSV, 2020 public S3 annual station objects.
+  station_ids: ['63450099999', '63602099999', '63705099999', '63740099999', '63799099999', '63894099999']
+  data_urls: https://noaa-global-hourly-pds.s3.amazonaws.com/2020/{station_id}.csv
+  license_note: Public NOAA archive; source documentation, source headers and object hashes retained. Redistribution approval remains false pending review.
+- id: weatherbench2-hres
+  url: https://weatherbench2.readthedocs.io/en/latest/data-guide.html
+  role: Actual frozen 64x32 HRES 2m temperature forecast fields shared with the weatherbench-verification development task.
+  precise_source_record: agent-inputs/source-manifest.json forecast_source.upstream_manifest
+  license_note: Preserve upstream manifest/license obligations; no permission asserted by task publication status.
+adaptations:
+- Six bounded East Africa station IDs; initial five preserved and Entebbe added for reporting coverage before any forecast errors inspected.
+- January 1-20 2020 00UTC issues and 24/72/120/168h leads; exact valid UTC time only.
+- Strict TMP QC flags 1 and 5, missing +9999 rejected; deterministic report selection with FM-12 priority.
+- Compare bilinear and nearest interpolation of the same existing coarse-grid forecast; no terrain or station bias correction.
+- Equal observation-sample headline RMSE plus equal-station sensitivity estimate; station sample sizes exposed.
+- Supplied method availability mask and comparison faults explicitly curator constructed; weather and QC values real.
+- No station data replaced by ERA5, no WeatherReal-native 2023 rank reproduction, no inference that this task sets frontier capability difficulty.

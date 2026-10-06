@@ -1,0 +1,28 @@
+schema_version: 1
+id: claude-fable-long-output
+kind: agent
+description: Claude Fable 5.1 high effort with a 32k per-response output allowance;
+  separate reset capacity diagnostic.
+driver:
+  kind: anthropic
+  model: claude-fable-5-1
+  api_key_env: ANTHROPIC_API_KEY
+  max_usd: 9
+  input_usd_per_million: 10
+  output_usd_per_million: 50
+  max_total_tokens: 1000000
+  max_output_tokens: 32768
+  max_turns: 60
+  effort: high
+  response_timeout_seconds: 300
+runtime:
+  image: sha256:14ded77c764dccdcaeef07f91c549709b4ff3549d0c30f5dc780e4376347917a
+  memory: 4g
+  cpus: 2
+budget:
+  max_seconds: 1800
+  max_tool_calls: 90
+  command_seconds: 180
+substrate:
+  paths: []
+  instructions: ''

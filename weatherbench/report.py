@@ -13,6 +13,8 @@ def list_runs():
         assessment = read(folder / "assessment.json") if (folder / "assessment.json").exists() else {}
         rows.append({"id":folder.name,"task":meta["task"],"system":meta["system"],"kind":meta["kind"],"status":meta["status"],
                      "completion":assessment.get("completion","unassessed"),"score_bounds":assessment.get("score_bounds"),
+                     "capability_profile":{name:row['state'] for name,row in assessment.get('outcomes',{}).items()},
+                     "forecast_outcomes":assessment.get('forecast_outcomes',{}),
                      "agent_usage":meta.get("usage"),"usage_source":meta.get("usage_source"),"seconds":meta.get("seconds"),
                      "judge_usage":assessment.get("judge_usage"),"judge_fingerprint":assessment.get("judge_fingerprint"),
                      "judge":assessment.get("judge"),"tool_calls":meta.get("tool_calls"),
@@ -32,9 +34,20 @@ def report():
         branch = "reset" if run["parent"] is None else "retained"
         policy = run["judge_fingerprint"] or "unassessed"
         score = "–" if run["score_bounds"] is None else "–".join(f"{x:.1f}" for x in run["score_bounds"])
+        profile = '<br>'.join(f'{esc(name.replace("_"," "))}: {esc(state)}' for name,state in run['capability_profile'].items())
+        metrics = []
+        for split,result in run['forecast_outcomes'].items():
+            if not isinstance(result,dict): continue
+            value = result.get('rmse_mm',result.get('area_weighted_rmse_mm'))
+            if type(value) not in (int,float): continue
+            text = f'{esc(split.replace("_"," "))}: {value:.3f} mm RMSE'
+            for key,label in (('raw_cfsv2_rmse_mm','raw'),('climatology_rmse_mm','climatology')):
+                if type(result.get(key)) in (int,float): text += f'<br><small>{label}: {result[key]:.3f} mm</small>'
+            metrics.append(text)
+        profile += ('<br><strong>Forecast performance</strong><br>'+'<br>'.join(metrics)) if metrics else ''
         use = run["substrate_use"]
         used = "unknown" if use is None else "none" if not use["substrate_commands"] else f'ran {use["ran"]} ({use["ran_failed"]} failed) · read {use["read"]} · listed {use["listed"]}<br><small>first at step {use["first_step"]} of {use["commands"]}</small>'
-        rows.append(f'<tr><td><a href="runs/{esc(run["id"])}/run.json">{esc(run["id"])}</a><br><small>{esc(run["kind"])} · {esc(run["usage_source"])}</small><br><small title="{esc(policy)}">Judge {esc(policy[:16])}</small></td><td>{esc(run["task"])}</td><td>{esc(run["system"])}<br><small title="{esc(run["parent"])}">{branch} · {seconds}</small></td><td>{esc(run["completion"])}</td><td>{score}</td><td>{used}</td><td>{"unknown" if cost is None else f"${cost:.4f}"}<br><small>Judge {judge_label}</small></td><td><a href="runs/{esc(run["id"])}/assessment.json">Assessment</a> · <a href="runs/{esc(run["id"])}/frozen/">Artifacts</a></td></tr>')
+        rows.append(f'<tr><td><a href="runs/{esc(run["id"])}/run.json">{esc(run["id"])}</a><br><small>{esc(run["kind"])} · {esc(run["usage_source"])}</small><br><small title="{esc(policy)}">Judge {esc(policy[:16])}</small></td><td>{esc(run["task"])}</td><td>{esc(run["system"])}<br><small title="{esc(run["parent"])}">{branch} · {seconds}</small></td><td>{esc(run["completion"])}<br><small>{esc(run["status"])}</small><details><summary>Criterion results</summary>{profile or "Assessment pending"}</details></td><td>{score}</td><td>{used}</td><td>{"unknown" if cost is None else f"${cost:.4f}"}<br><small>Judge {judge_label}</small></td><td><a href="runs/{esc(run["id"])}/assessment.json">Assessment</a> · <a href="runs/{esc(run["id"])}/frozen/">Artifacts</a></td></tr>')
     page = f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Weather Bench runs</title><style>body{{max-width:1400px;margin:40px auto;padding:0 25px;font:14px/1.6 system-ui;color:#243c38;background:#f6f5ef}}h1{{font:42px Georgia}}table{{width:100%;border-collapse:collapse;background:#fffefa}}td,th{{text-align:left;padding:15px;border-bottom:1px solid #dce2d8}}small{{color:#63736b}}a{{color:#29695b}}input{{padding:12px;width:360px;max-width:100%;margin-bottom:20px}}.scroll{{overflow:auto}}</style><h1>Agent Weather Bench · runs</h1><p>Current development runs only. Historical pilot results live in the archive. Harness fixtures are excluded from capability claims; unknown usage is not zero cost. Substrate use counts commands naming <code>/substrate</code> paths, a lower bound.</p><input id="filter" aria-label="Filter runs" placeholder="Filter task, system, status…"><div class="scroll"><table><thead><tr><th>Run</th><th>Task</th><th>System</th><th>Completion</th><th>Score bounds</th><th title="Commands that ran, read or listed /substrate files; a lower bound from command text">Substrate use</th><th>Agent USD</th><th>Evidence</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div><script>document.getElementById('filter').addEventListener('input',event=>{{const query=event.target.value.toLowerCase();document.querySelectorAll('tbody tr').forEach(row=>row.hidden=!row.textContent.toLowerCase().includes(query));}});</script></html>'''
     STATE.mkdir(exist_ok=True)
     target = STATE / "index.html"

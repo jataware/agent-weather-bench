@@ -1,0 +1,52 @@
+Pinned sources for regional subseasonal precipitation optimization
+
+Dataset: SubseasonalClimateUSA, Mouatadid et al. (NeurIPS 2023),
+https://arxiv.org/abs/2109.10399
+Models: Adaptive bias correction for improved subseasonal forecasting,
+Mouatadid et al., Nature Communications 14, 3482 (2023),
+https://doi.org/10.1038/s41467-023-38874-y
+Implementation: https://github.com/microsoft/subseasonal_toolkit
+Data loader revision: microsoft/subseasonal_data
+29307bbd9f511f251ca0f0975bdd9e1b3d68c421
+https://github.com/microsoft/subseasonal_data/blob/29307bbd9f511f251ca0f0975bdd9e1b3d68c421/DATA.md
+
+This task uses two public dataframes:
+  dataframes/gt-us_precip_1.5x1.5-14d.h5
+  dataframes/iri-cfsv2-precip-all-us1_5-ensembled.h5
+Azure container: https://subseasonalusa.blob.core.windows.net/subseasonalusa
+The official public token service supplies anonymous temporary read permission;
+no private account credential was used. Tokens were neither logged nor retained.
+
+Observations are CPC gauge-based precipitation on the source 1.5-degree CONUS
+land grid. They represent 14-day precipitation TOTAL in mm from start_date,
+not daily average rainfall. Source interpolation used area_hi2lores_Wrap with
+cosine-latitude weights and required half the input support.
+
+The CFSv2 source contains daily ensemble-mean two-week forecasts downloaded
+from IRI. Its values are already 14-day total mm; do not multiply by14 again.
+The processed source averages issuance(t),lead(l) with issuance(t-1),lead(l+1).
+The column iri_cfsv2_precip-14.5d is paired in this task with the observed
+14-day total beginning issuance_date+14days. Source half-day lead labels
+reflect the source daily aggregation convention; task target_start gives the
+explicit calendar mapping. Forecasts are not independent member samples.
+
+The compact subset fixes southwest land cells latitude33,34.5,36 and
+longitude246,247.5,249 degrees_east, retaining source cell values unchanged.
+Weekly Sunday issues are selected. Incomplete issues are removed jointly,
+without examining any algorithm's skill; the acquisition audit records this.
+Training targets must end before2015-01-01. Development issues begin2015-01-01,
+with targets ending before2018-01-01. Final issues cover2018-2021.
+Thus training/development target windows do not cross into the next split.
+
+This is a RETROSPECTIVE benchmark snapshot downloaded2026-10-05.
+Original release times and real-time data vintages are not reconstructed.
+Historical reforecasts/model upgrades and later processing may differ from
+what an operational forecaster could have known. Final outcomes are already
+public historical records and are not a pristine scientific holdout; controller
+withholding still tests the agent's declared experiment boundaries.
+
+This regional task uses pooled cosine-weighted RMSE, with skill1-RMSE/RMSEbaseline.
+It is not the global WMO2021 challenge leaderboard, not its RPSS, and does not
+claim the published paper's CONUS-wide result. The official archived WMO/ECMWF
+challenge endpoints were audited first; old host DNS and migrated object-store
+HTTP403 made that route unavailable. This is the named real-data fallback.

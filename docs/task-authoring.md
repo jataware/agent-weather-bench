@@ -4,7 +4,8 @@ A task is a scientific goal, an information boundary, and a contract for evidenc
 Choose a result that an independent evaluator can verify. A plausible report
 alone is insufficient.
 
-The framework currently has three task-specific evaluators. New tasks require
+The framework has task-specific evaluators registered in `TASK_MODULES` alongside
+the original three evaluators. New tasks require
 Python integration code as well as a package. The CLI does not yet provide a
 generic task plug-in loader or a `tasks init` command.
 
@@ -49,15 +50,19 @@ tasks/YOUR_TASK_ID/
 The current runner expects the standard filenames above. Use the shared
 [provenance](../tasks/provenance-contract.md) and
 [replay](../tasks/replay-contract.md) contracts through `artifact_contracts`.
-Current judge packets prioritize `report.txt`, `answer.json`, `provenance.json`,
-`execution.json`, and `handoff.txt`, and inspect `outlook.png` as the main figure.
+Current judge packets prioritize `report.txt`, `answer.json`, `execution.json`,
+`handoff.txt`, declared scientific entrypoints and fitted state. Provenance has a
+separate cap so its inventory cannot crowd out the science. Packets record
+selection, omissions and truncation, and inspect `outlook.png` as the main figure.
 Use these names, or extend the packet builder deliberately.
 
 In `task.yaml`, set `id`, `version`, `title`, `source_category`, `track`, `evaluation`,
 `outputs`, and the shared contract paths. Set `input_contract.mode` to
 `supplied_inputs` for the existing offline runner. An `agent_acquisition` task
-requires its own validated acquisition transport. The current runner blocks
-acquisition tasks before model execution.
+requires its own validated acquisition transport. Seasonal calibration has an
+audited frozen-replay acquisition transport; other acquisition tasks remain blocked
+until they have their own preflight. Optimization feedback likewise requires the
+reviewed controller scorer, bounded requests and a retained public feedback ledger.
 
 Keep scientific, scoring, redistribution, and launch approvals false during
 development. The current package validator is designed for development tasks;
@@ -111,10 +116,10 @@ configuration-only task registration.
 
 | File | Required change |
 | --- | --- |
-| [prepare.py](../weatherbench/task_tools/prepare.py) | Add the ID to `TASKS` and recompute its references from the installed internal data bundle. Author the manifest separately; preparation verifies the frozen bytes and does not rewrite it. Keep hashed source snapshots inside the repository. |
+| [prepare.py](../weatherbench/task_tools/prepare.py) | Add the ID and module to `TASK_MODULES`; provide `prepare(repo)` to recompute and verify its references from the installed data. Author the manifest separately; default preparation must not rewrite it. Keep hashed source snapshots inside the repository. |
 | [references.py](../weatherbench/task_tools/references.py) | Add independent reference calculations. Cross-check them against another implementation or a trusted source artifact. |
-| [checks.py](../weatherbench/task_tools/checks.py) | Add a named branch in `check()` for the task's numerical and schema checks. Add task-specific package validation where needed. Do not let a new task enter the existing WVG fallback branch. |
-| [evaluation.py](../weatherbench/evaluation.py) | Register scientific files and fields in `ARRAYS`, and required answer fields in `ANSWERS`. Add prediction and observation-based verification if the task needs them. |
+| [checks.py](../weatherbench/task_tools/checks.py) | Implement the module's `submission_checks(submission, private)`. Its named checks must exactly match the rubric. WVG is an explicit branch; unknown tasks are rejected. |
+| [evaluation.py](../weatherbench/evaluation.py) | Implement the module's `evaluate(run, output)` with scientific comparison, clean offline replay, changed-input probes and saved-fit inference where relevant. The registry dispatches it. Original tasks still use `ARRAYS` and `ANSWERS`. |
 | [render.py](../weatherbench/task_tools/render.py) | Add a `SUMMARIES` entry: display order, short name, category, summary, and limitation. |
 | [judge.py](../weatherbench/judge.py) | Extend evidence collection and execution gates if the new task differs from the existing artifact and rubric conventions. |
 | `tests/` | Add tests for the scientific invariants and credible failure cases. |
@@ -123,8 +128,9 @@ configuration-only task registration.
 rendering use the registered `TASKS` tuple. Complete both package and code
 registration before treating the task as runnable.
 
-The current aggregation recognizes `reusable_workflow` as the offline replay
-outcome. New execution outcome IDs need an explicit gate in `judge.aggregate()`.
+The current aggregation recognizes `reusable_workflow` and `reusable_verifier`
+as offline replay outcomes, including counterfactual results when present. New
+execution outcome IDs need an explicit gate in `judge.aggregate()`.
 Add corresponding prediction or acquisition gates when the scientific goal needs
 them. An `evaluator: execution` label alone does not create a new controller check.
 

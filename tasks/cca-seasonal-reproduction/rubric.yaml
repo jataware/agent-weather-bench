@@ -1,0 +1,47 @@
+schema_version: 2
+task: cca-seasonal-reproduction
+task_version: development-0.1
+status: development_pending_review
+aggregation: Weighted mean of distinct scientific outcomes.
+completion: All required scientific outcomes and basic validity with trusted execution and integrity.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks: [delivery, answer_schema, execution_schema, provenance_fields, source_coverage]
+  integrity: Targets and controller reference never mounted in solver workspace.
+tree:
+  id: task_completion
+  children:
+  - id: training_only_multivariate_fit
+    weight: 25
+    required: true
+    evaluator: deterministic
+    criterion: Reconstructs preprocessing and sign-invariant canonical predictions, with training-only EOFs and nested mode selection.
+    evidence: [hindcasts.nc, controller-reference]
+    checks: [hindcast_predictions, nested_mode_selection]
+  - id: probabilistic_calibration
+    weight: 20
+    required: true
+    evaluator: deterministic
+    criterion: Computes fold-local residual variance, rotationally invariant leverage, empirical thresholds and Student-t probabilities.
+    evidence: [hindcasts.nc, forecast.nc, controller-reference]
+    checks: [hindcast_probabilities, production_forecast]
+  - id: verification_and_route_audit
+    weight: 20
+    required: true
+    evaluator: mixed
+    criterion: Correctly calculates paired outer RPS and pooled RPSS, exports full-fit diagnostics and explains the source route's independence limitation.
+    evidence: [hindcasts.nc, answer.json, report.txt, source-excerpts]
+    checks: [verification_arithmetic, full_fit_diagnostic]
+  - id: scientific_interpretation
+    weight: 20
+    required: true
+    evaluator: expert
+    criterion: Interprets selection and uncertainty without guaranteed skill, independent-cell assumptions or unsupported paper/CPT replication claims; discusses dependencies and retrospective data vintage.
+    evidence: [report.txt, outlook.png, provenance.json]
+  - id: reusable_workflow
+    weight: 15
+    required: true
+    evaluator: execution
+    criterion: Recomputes offline, isolates outer held/future targets and performs saved-state inference on changed predictors without observations or refitting.
+    evidence: [execution.json, handoff.txt, trusted-replay-log, trusted-counterfactual-log]

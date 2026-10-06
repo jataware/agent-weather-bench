@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "task": "monthly-cycle-calibration",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/monthly-cycle-calibration",
+  "files": [
+    {
+      "file": "agent-inputs/africas2s-smoothed-method.py.txt",
+      "sha256": "835b4339746f10b81a3687e9813e6268fc7599ba08f1e71b2260b5570f5ac2eb",
+      "bytes": 4912,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/algorithm.md",
+      "sha256": "8147ffbda31c026b9d3ba1a1382d31474df3f83f71a11e82966eb5d57fbe10d2",
+      "bytes": 3955,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/candidates.json",
+      "sha256": "d8a24265fdb2b58d4c50508971fe67ae7f0ef47daf2fcc794c94de36553c4fb8",
+      "bytes": 246,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/literature-notes.md",
+      "sha256": "a994b617eda3545e725978fd776019441ed4907543d4285853d8e9a5edf5c7c2",
+      "bytes": 1958,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/predictors.nc",
+      "sha256": "2ae904c759f57f71caaa34fc18b5a607f5b1eb7d9809cff22d95f2e7c9c65346",
+      "bytes": 14584,
+      "visibility": "agent",
+      "dimensions": {
+        "year": 31,
+        "month": 12
+      },
+      "variables": {
+        "iod": {
+          "dimensions": [
+            "year",
+            "month"
+          ],
+          "units": "degree_Celsius"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "c1e6d9d7c8318e56e5a9621dc9740251d5d3516453312ee7779870c1f0996082",
+      "bytes": 123,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/targets.nc",
+      "sha256": "21aec9fac551e94392efa1c4401471d7e98be5f29c65d5b1bfa826b7de0872b7",
+      "bytes": 17973,
+      "visibility": "agent",
+      "dimensions": {
+        "year": 27,
+        "month": 12,
+        "target": 3
+      },
+      "variables": {
+        "rainfall": {
+          "dimensions": [
+            "year",
+            "month",
+            "target"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/forecast.nc",
+      "sha256": "70c131842ae87d06860a48f57c50060d23c5f297e35c746911a3839ed20604de",
+      "bytes": 20275,
+      "visibility": "controller_only",
+      "dimensions": {
+        "system": 4,
+        "year": 4,
+        "month": 12,
+        "target": 3,
+        "candidate": 6
+      },
+      "variables": {
+        "prediction": {
+          "dimensions": [
+            "system",
+            "year",
+            "month",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "coefficient": {
+          "dimensions": [
+            "system",
+            "month",
+            "target"
+          ],
+          "units": "mm/degree_Celsius"
+        },
+        "standardized_coefficient": {
+          "dimensions": [
+            "system",
+            "month",
+            "target"
+          ],
+          "units": null
+        },
+        "selected_candidate": {
+          "dimensions": [],
+          "units": null
+        },
+        "inner_loss": {
+          "dimensions": [
+            "candidate"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "controller/hindcasts.nc",
+      "sha256": "3bab385dce5e9bbab65a6404ae82be258233c41acf70ea0df789731e3e146ade",
+      "bytes": 99389,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 15,
+        "system": 4,
+        "month": 12,
+        "target": 3,
+        "candidate": 6
+      },
+      "variables": {
+        "prediction": {
+          "dimensions": [
+            "year",
+            "system",
+            "month",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "coefficient": {
+          "dimensions": [
+            "year",
+            "system",
+            "month",
+            "target"
+          ],
+          "units": "mm/degree_Celsius"
+        },
+        "standardized_coefficient": {
+          "dimensions": [
+            "year",
+            "system",
+            "month",
+            "target"
+          ],
+          "units": null
+        },
+        "selected_candidate": {
+          "dimensions": [
+            "year"
+          ],
+          "units": null
+        },
+        "inner_loss": {
+          "dimensions": [
+            "year",
+            "candidate"
+          ],
+          "units": null
+        },
+        "xmean": {
+          "dimensions": [
+            "year",
+            "month"
+          ],
+          "units": "degree_Celsius"
+        },
+        "xstd": {
+          "dimensions": [
+            "year",
+            "month"
+          ],
+          "units": "degree_Celsius"
+        },
+        "ymean": {
+          "dimensions": [
+            "year",
+            "month",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "ystd": {
+          "dimensions": [
+            "year",
+            "month",
+            "target"
+          ],
+          "units": "mm"
+        },
+        "squared_error": {
+          "dimensions": [
+            "year",
+            "system",
+            "month",
+            "target"
+          ],
+          "units": "mm2"
+        },
+        "monthly_msss": {
+          "dimensions": [
+            "system",
+            "month"
+          ],
+          "units": null
+        },
+        "msss": {
+          "dimensions": [
+            "system"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "controller/model.json",
+      "sha256": "307890a36b8d9af5d4b2752e2cf04a3e2667b85240c5fc9a6d85e52a24d4306c",
+      "bytes": 19779,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/private-targets.nc",
+      "sha256": "d80a430060107925b1920a5b094ae1ba2b5c6149ec3e43eec52d8d446a633b8c",
+      "bytes": 10197,
+      "visibility": "controller_only",
+      "dimensions": {
+        "year": 4,
+        "month": 12,
+        "target": 3
+      },
+      "variables": {
+        "rainfall": {
+          "dimensions": [
+            "year",
+            "month",
+            "target"
+          ],
+          "units": "mm"
+        }
+      }
+    },
+    {
+      "file": "controller/reference-audit.json",
+      "sha256": "1ed433bcf4eb5d098e4420b59bf8b7eff90b96b9cd9165515f6b35a4856dda30",
+      "bytes": 1376,
+      "visibility": "controller_only"
+    }
+  ],
+  "reference_code_path": "weatherbench/task_tools/monthly_cycle/reference.py",
+  "reference_code_sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5",
+  "reference_validation": "Independent solve/FFT smoothing and scalar/vectorized covariance across all selections and predictions",
+  "source_records": [
+    {
+      "path": "tasks/monthly-cycle-calibration/algorithm.md",
+      "sha256": "8147ffbda31c026b9d3ba1a1382d31474df3f83f71a11e82966eb5d57fbe10d2"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/literature-notes.md",
+      "sha256": "a994b617eda3545e725978fd776019441ed4907543d4285853d8e9a5edf5c7c2"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/prompt.md",
+      "sha256": "1e5f9b9fb2d0db3d08d8053db732916f30317a7bc5b9677d152271f8b1e4ba49"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/replay-contract.md",
+      "sha256": "6cceafbb5845d783f14187c7ccc023f067b48c8f20e0c0fd6b8374e4d6ee0ea3"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/review.md",
+      "sha256": "8872b01fcd08af46dc4fce53895cd41c0b80a0c9606694f19f374fef464722cf"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/rubric.yaml",
+      "sha256": "ac33cec5368cc69b6143382b8b574d1b034be14f4a38745b53d5a9706d6b5221"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/source-material/africas2s-smoothed-method.py.txt",
+      "sha256": "835b4339746f10b81a3687e9813e6268fc7599ba08f1e71b2260b5570f5ac2eb"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/source-material/original-files.json",
+      "sha256": "abf4a4a2edb95b7862b09fc11ef7d2f85dbeb0a79a294980bf28bb5f4f2066ea"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/sources.yaml",
+      "sha256": "2c56564e02f01e07b6d305b05f4e57f4a995e558f6acc90ac4035390496d4d90"
+    },
+    {
+      "path": "tasks/monthly-cycle-calibration/task.yaml",
+      "sha256": "327548973b3c9d2ecd54bcc31afccdb27a38b8e396a036459e9f7e3c045ebb15"
+    }
+  ]
+}

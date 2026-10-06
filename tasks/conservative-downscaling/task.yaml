@@ -1,0 +1,34 @@
+schema_version: 1
+id: conservative-downscaling
+version: development-0.1
+title: Repair seasonal precipitation calibration and conserve mapped rainfall during downscaling
+status: development_pending_scientific_review
+source_category: published_method_and_existing_code
+track: research_workflow
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+evaluation:
+  data_mode: retrospective_independent_holdout
+  training_years: [1993, 2008]
+  prediction_years: [2009, 2016]
+  scientific_skill_gate: false
+  private_targets: Fine-grid prediction-year observations remain controller-only throughout every attempt.
+  reference_agreement: Prescribed rank mapping, spherical area conservation and training-only spatial detail.
+outputs: [forecast.nc, hindcasts.nc, model.json, answer.json, report.txt, provenance.json, execution.json, handoff.txt]
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers: [Zeek]
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: replay-contract.md
+input_contract:
+  mode: supplied_inputs
+  normalized_fixture_mount: true
+  data_access: Compact real CFSv2 coarse predictors and recovered CHIRPS fine MAM totals with source/code excerpts; offline.
+  readiness: Independent source/geometry/rank/conservation audit and executable controls required.

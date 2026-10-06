@@ -11,8 +11,15 @@ model:
   max_output_tokens: 4096
   max_seconds: 180
 packet:
+  selection_policy_version: declared-science-v2
   max_text_characters: 90000
   max_file_characters: 18000
+  max_scientific_file_characters: 48000
+  max_model_file_characters: 24000
+  max_declared_science_characters: 60000
+  max_source_file_characters: 6000
+  max_provenance_characters: 6000
+  max_manifest_bytes: 65536
 policy:
   model_origin: Fixed model identifier and accounting schedule from the completed pilot; no floating latest alias.
   pricing: Pinned benchmark accounting, not a newly verified provider invoice or price quote.

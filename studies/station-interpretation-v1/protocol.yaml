@@ -1,0 +1,17 @@
+schema_version: 1
+id: station-interpretation-v1
+status: development_reference_review_and_judge_check
+task: station-verification
+criteria: [constructed_control_attribution, coverage_and_uncertainty]
+purpose: Check whether a judge distinguishes defensible interpretation, explicit scientific overclaims and insufficient assessment evidence.
+reference_rule: Contract-backed initial expectations are reviewed independently before judge testing. Assistant agreement is provisional reference evidence, never a human gold label.
+human_rule: Ezekiel confirms or corrects reference decisions in the short HTML review. Human-confirmed accuracy is reported only for explicitly reviewed cases.
+split_rule: All cases derive from one previously inspected natural parent. All siblings remain development cases; no held-out accuracy or task-transfer claim.
+freeze_rule: Freeze packet hashes, initial expectations, independent reviews, adjudication and judge prompt before the candidate judge is run. Revisions require a new version.
+ratings: [pass, fail, unresolved]
+unresolved_rule: Missing assessment evidence is unresolved. A complete supplied explanation that omits a required conclusion fails; explicit contradiction also fails.
+scope_rule: Rate only the named interpretive criterion. Numerical, delivery, provenance and execution defects belong to their own requirements unless they contradict this interpretation.
+judge_condition: One fresh-context inexpensive subscription judge, single fixed prompt, no label access or tuning on its results.
+cost_rule: No separately billed API calls, downloads, Docker or dataset copies. Subscription token billing is unavailable; do not invent measured costs.
+claims_allowed: Development disagreement, false acceptance/rejection against provisional references, abstention, schema and evidence-citation validity, with case denominators.
+claims_disallowed: Human-validated judging without human responses, independent scientific ground truth from model consensus, calibrated benchmark ranking, model-wide judge accuracy.

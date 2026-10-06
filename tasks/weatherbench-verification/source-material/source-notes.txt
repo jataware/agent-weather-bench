@@ -1,0 +1,34 @@
+WeatherBench2 source context — development snapshot, 2026-10-05
+
+Rasp et al. (2024), WeatherBench 2: A Benchmark for the Next Generation of
+Data-Driven Global Weather Models, doi:10.1029/2023MS004019, provides the paper
+anchor. Its public evaluation infrastructure supports reproducible comparisons
+on common datasets and explicitly distinguishes forecast verification against
+ERA5 from verification against model analysis. This task evaluates one compact
+January temperature subset; it does not reproduce full published results.
+
+Code: google-research/weatherbench2, pinned revision
+d2c6a1553a0c532332d4c2d3be285508c514bfc2, weatherbench2/metrics.py, Apache-2.0.
+The supplied excerpts retain the source license notice. Metric.compute averages
+compute_chunk results over time/init_time; MSE computes weighted spatial squared
+error. The preferred headline RMSE takes sqrt after temporal MSE aggregation.
+ACC computes spatial anomaly covariance over the product of spatial anomaly
+norms using verification-time climatology. It does not center anomalies a second
+time or pool all times before normalization.
+
+Data guide: https://weatherbench2.readthedocs.io/en/latest/data-guide.html
+Official evaluation: https://weatherbench2.readthedocs.io/en/latest/official-evaluation.html
+The 64x32 grid is evenly spaced, without pole centers, and was already regridded
+with first-order conservative weights. Paper evaluations used another
+resolution. The source fields use Kelvin. Forecast coordinates denote
+initialization time and prediction timedelta; climatology uses dayofyear/hour.
+
+Source stores and native chunks are hashed in the controller source audit.
+ERA5/IFS/climatology bytes are real. Supplied compact arrays are decoded subsets,
+not original full global store files; their hashes identify the actual subset.
+All values are supplied locally. An agent must not claim a fresh provider
+download. Frozen input versions are not pristine held-out weather cases.
+
+The curator introduced separate availability masks and the erroneous comparison
+script solely to test diagnosis. Do not attribute those constructions to the
+paper authors, ECMWF, Google, or a reported production outage.

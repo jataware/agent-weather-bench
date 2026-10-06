@@ -1,0 +1,337 @@
+{
+  "schema_version": 1,
+  "task": "station-verification",
+  "status": "local_development_snapshot",
+  "local_storage": "var/private/tasks/station-verification",
+  "files": [
+    {
+      "file": "agent-inputs/CSV_HELP.pdf",
+      "sha256": "3d3cbf05c29cbb59dfc359f57e28d5a48707f5d6e18ed09e4dfe4ab26e1bcc31",
+      "bytes": 37770,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/availability.nc",
+      "sha256": "8a2bc6c482f2c95d53adc81316997879b624cde22efe2680fc8d5b4b856ceb66",
+      "bytes": 10009,
+      "visibility": "agent",
+      "dimensions": {
+        "method": 2,
+        "init_time": 20,
+        "lead_time": 4,
+        "station": 6
+      },
+      "variables": {
+        "available": {
+          "dimensions": [
+            "method",
+            "init_time",
+            "lead_time",
+            "station"
+          ],
+          "units": null
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/broken-comparison.py",
+      "sha256": "3cfda349114de0627a1f8416a6f85b97f9b6b063f067e3b483acc16ff6f70593",
+      "bytes": 1769,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/hres-LICENSE.txt",
+      "sha256": "12f706522a9d279015c1cccfd3c326b274ac044a73373024713282dd665c8410",
+      "bytes": 5283,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/hres.nc",
+      "sha256": "688fdf617a019b1dddedffdcf5a79b5fbb28b0d21a197cf63375eea2fb74d722",
+      "bytes": 666291,
+      "visibility": "agent",
+      "dimensions": {
+        "init_time": 20,
+        "lead_time": 4,
+        "latitude": 32,
+        "longitude": 64
+      },
+      "variables": {
+        "temperature": {
+          "dimensions": [
+            "init_time",
+            "lead_time",
+            "latitude",
+            "longitude"
+          ],
+          "units": "K"
+        }
+      }
+    },
+    {
+      "file": "agent-inputs/isd-format-document.pdf",
+      "sha256": "1be604b08b5f7c2429e6aef178ff8893019c234bc7bc51bfb7ec1e16a6682f04",
+      "bytes": 1187390,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/observations.csv",
+      "sha256": "aa9989bbc4239da3fb338e46ef7c2fe38034404fa39be4f30c1976a61c6e916f",
+      "bytes": 519795,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "c1c3e04095cd4d63f55e412221974d94491a7483609a47af5f35ad100642a87c",
+      "bytes": 16149,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/stations.json",
+      "sha256": "c5b88d5702b3a86538e5213e6c3b2cf4560521b13711d762c45664c487a8aaa9",
+      "bytes": 1639,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/upstream-LICENSE",
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "bytes": 11357,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/weatherreal-LICENSE",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/weatherreal-README.md",
+      "sha256": "0e29f65afe0142298052bab06cab3375ccf2cc1c783886ad74eb0d06705d8604",
+      "bytes": 13985,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/weatherreal-obs_reformat_catalog.py",
+      "sha256": "673515de11bd22ebc41fa3613034a110dd055c6c678c10e5e1a4fc98d51a7188",
+      "bytes": 5726,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/reference-audit.json",
+      "sha256": "35433373329348530de05cc61e09da3c5a7abee54337cbea19637d636b1d0932",
+      "bytes": 1427,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/scores.nc",
+      "sha256": "e95fede78504e47367512f26ab243c7269a69e34634081d09908e664e1332bba",
+      "bytes": 31866,
+      "visibility": "controller_only",
+      "dimensions": {
+        "method": 2,
+        "init_time": 20,
+        "lead_time": 4,
+        "station": 6,
+        "variant": 5
+      },
+      "variables": {
+        "forecast_temperature": {
+          "dimensions": [
+            "method",
+            "init_time",
+            "lead_time",
+            "station"
+          ],
+          "units": "K"
+        },
+        "observed_temperature": {
+          "dimensions": [
+            "init_time",
+            "lead_time",
+            "station"
+          ],
+          "units": "K"
+        },
+        "common_support": {
+          "dimensions": [
+            "init_time",
+            "lead_time",
+            "station"
+          ],
+          "units": "1"
+        },
+        "support_count": {
+          "dimensions": [
+            "init_time",
+            "lead_time"
+          ],
+          "units": "station_samples"
+        },
+        "station_count": {
+          "dimensions": [
+            "lead_time",
+            "station"
+          ],
+          "units": "station_samples"
+        },
+        "rmse": {
+          "dimensions": [
+            "method",
+            "lead_time"
+          ],
+          "units": "K"
+        },
+        "station_rmse": {
+          "dimensions": [
+            "method",
+            "lead_time",
+            "station"
+          ],
+          "units": "K"
+        },
+        "equal_station_rmse": {
+          "dimensions": [
+            "method",
+            "lead_time"
+          ],
+          "units": "K"
+        },
+        "diagnostic_rmse": {
+          "dimensions": [
+            "variant",
+            "method",
+            "lead_time"
+          ],
+          "units": "K"
+        }
+      }
+    },
+    {
+      "file": "controller/source-data/63450099999.csv",
+      "sha256": "5586dd0a3b2dcc937b8c27e6b56c18565bf3d690991e22904b46eb3d36f491c5",
+      "bytes": 2706383,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-data/63602099999.csv",
+      "sha256": "edaf75b40bd5b43b7641c27b0bcfa4556485f06663b79467439edc51d2fa9e27",
+      "bytes": 189397,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-data/63705099999.csv",
+      "sha256": "43621ae809c57f103eff0244182daeb37265d68502c51fe540529353d9dc1790",
+      "bytes": 5736698,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-data/63740099999.csv",
+      "sha256": "81fd5213c5f177017b7bdaa8986217aff194f2ed1ef1b55b8e32afb04e5e12c2",
+      "bytes": 6889509,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-data/63799099999.csv",
+      "sha256": "7d8f998bb7b89c6b17b739b72869f96f88097e11d1eadb1df6c889ef90db07fd",
+      "bytes": 3362821,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/source-data/63894099999.csv",
+      "sha256": "4104e732beb9a14392189a229450db941ea6bf2eba6e5406eaa6100437a3edd8",
+      "bytes": 4837266,
+      "visibility": "controller_only"
+    }
+  ],
+  "reference_code_path": "weatherbench/task_tools/station_verification/reference.py",
+  "reference_code_sha256": "b9a88c32a2d67640e6c73b9ca5924dfd366fdde948f2f481b568c36cc75a8f7e",
+  "reference_validation": "Independent NOAA parsing, grid-to-station interpolation and all case/station/lead score arrays crosschecked; consequential controls and changed-input mask/value probe",
+  "code_records": [
+    {
+      "path": "weatherbench/task_tools/station_verification/__init__.py",
+      "sha256": "d9a6314504d5f7066b741ea71f3cd9dd676ee42e7c5c0df8714eb8983195c7e5"
+    },
+    {
+      "path": "weatherbench/task_tools/station_verification/baseline.py",
+      "sha256": "63fe5b2382a54862d0cce6f03ce7229404bcd8e7dfe6f67940301afeedbe6cb4"
+    },
+    {
+      "path": "weatherbench/task_tools/station_verification/checks.py",
+      "sha256": "2f217d1f9a9101f63a1471f627b34d37c779bf13e87f20c53df5935fa93219f6"
+    },
+    {
+      "path": "weatherbench/task_tools/station_verification/evaluation.py",
+      "sha256": "8de491bc45c64fac255a7a3b41964945f5bf047c819b6f1165f9e73b94c2ed90"
+    },
+    {
+      "path": "weatherbench/task_tools/station_verification/fetch.py",
+      "sha256": "4bb9fd0b914c26febe4d0fd27c8b70a6073bf1a6292ec8373c3f225fb9a9f042"
+    },
+    {
+      "path": "weatherbench/task_tools/station_verification/prepare.py",
+      "sha256": "4a12e271ab23651cf06bc6791c28ecadb87fe88d5b1ca76f6281f64c618b8361"
+    },
+    {
+      "path": "weatherbench/task_tools/station_verification/reference.py",
+      "sha256": "b9a88c32a2d67640e6c73b9ca5924dfd366fdde948f2f481b568c36cc75a8f7e"
+    }
+  ],
+  "source_records": [
+    {
+      "path": "tasks/station-verification/prompt.md",
+      "sha256": "21a39fe4aad2041bad9fd46bb6f5224db7fd4aeb4ecfe43838d08df1e9cbd380"
+    },
+    {
+      "path": "tasks/station-verification/replay-contract.md",
+      "sha256": "ecdab90f722c6ad0fe281e56dcdb0aa0fb70725c4dbd92c1f0e7fa34ba6ef7ea"
+    },
+    {
+      "path": "tasks/station-verification/review.md",
+      "sha256": "1143756ef13045255b55be7c431def5799c5c4026279385b19471daebff7be7a"
+    },
+    {
+      "path": "tasks/station-verification/rubric.yaml",
+      "sha256": "6e4d95457cccedc645a6737eb663e3029253e35584024cb03ed32767e79924d4"
+    },
+    {
+      "path": "tasks/station-verification/source-material/CSV_HELP.pdf",
+      "sha256": "3d3cbf05c29cbb59dfc359f57e28d5a48707f5d6e18ed09e4dfe4ab26e1bcc31"
+    },
+    {
+      "path": "tasks/station-verification/source-material/__pycache__/broken-comparison.cpython-313.pyc",
+      "sha256": "96a282a4e6b2fbd2c2ebdbd18adc67518269a610c437834bd1dad990bdc9846b"
+    },
+    {
+      "path": "tasks/station-verification/source-material/broken-comparison.py",
+      "sha256": "3cfda349114de0627a1f8416a6f85b97f9b6b063f067e3b483acc16ff6f70593"
+    },
+    {
+      "path": "tasks/station-verification/source-material/isd-format-document.pdf",
+      "sha256": "1be604b08b5f7c2429e6aef178ff8893019c234bc7bc51bfb7ec1e16a6682f04"
+    },
+    {
+      "path": "tasks/station-verification/source-material/weatherreal-LICENSE",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+    },
+    {
+      "path": "tasks/station-verification/source-material/weatherreal-README.md",
+      "sha256": "0e29f65afe0142298052bab06cab3375ccf2cc1c783886ad74eb0d06705d8604"
+    },
+    {
+      "path": "tasks/station-verification/source-material/weatherreal-obs_reformat_catalog.py",
+      "sha256": "673515de11bd22ebc41fa3613034a110dd055c6c678c10e5e1a4fc98d51a7188"
+    },
+    {
+      "path": "tasks/station-verification/source-material/weatherreal-revision.json",
+      "sha256": "4d4b28eed2fc483bbf9483a77fa7bbf6afe58ed11c36977ed8ffea2d2ba0bc2d"
+    },
+    {
+      "path": "tasks/station-verification/sources.yaml",
+      "sha256": "4b891d286f8d1e33e978f14246680235ab6bd4aa61d7eb7acea91a21722294d9"
+    },
+    {
+      "path": "tasks/station-verification/task.yaml",
+      "sha256": "4c43c33b75810c40866ffbb0a36b8d59a214f202c37759203e1f40fb2f17a7b7"
+    }
+  ]
+}

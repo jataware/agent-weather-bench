@@ -1,0 +1,38 @@
+schema_version: 1
+id: subseasonal-optimization
+version: development-0.1
+title: Improve regional weeks 3–4 precipitation forecasts on SubseasonalClimateUSA
+status: development_pending_scientific_review
+source_category: published_benchmark_and_code
+track: forecast_optimization
+prompt: prompt.md
+source_record: sources.yaml
+rubric: rubric.yaml
+review_sheet: review.md
+input_manifest: input-manifest.json
+feedback:
+  kind: development_score
+  max_submissions: 5
+  max_file_bytes: 33554432
+evaluation:
+  data_mode: retrospective_private_final
+  metric: pooled_cosine_weighted_rmse_mm
+  optimization_direction: lower
+  private_targets: Development targets controller-only during feedback; final targets controller-only until frozen final evaluation.
+  scientific_skill_gate: false
+  reference_agreement: Fixed scoring arithmetic and baselines only; any admissible forecast algorithm.
+outputs: [development-predictions.nc, final-predictions.nc, model.json, answer.json, report.txt, provenance.json, execution.json, handoff.txt]
+review:
+  scientific_approval: false
+  scoring_approval: false
+  redistribution_approval: false
+  launch_enabled: false
+  reviewers: [Zeek]
+artifact_contracts:
+  provenance: ../provenance-contract.md
+  execution: replay-contract.md
+input_contract:
+  mode: supplied_inputs
+  normalized_fixture_mount: true
+  data_access: Compact real CPC observations and CFSv2 reforecasts with pinned source notes and executable starter.
+  readiness: Frozen data, independent metric tests and baseline control required before development run.

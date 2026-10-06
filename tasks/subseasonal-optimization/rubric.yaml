@@ -1,0 +1,39 @@
+schema_version: 2
+task: subseasonal-optimization
+task_version: development-0.1
+status: development_pending_review
+aggregation: Weighted outcomes, with private numerical performance reported separately.
+completion: Valid executable experiment, trustworthy selection boundaries and honest forecast interpretation.
+scientific_skill_gate: false
+basic_validity:
+  weighted: false
+  checks: [delivery, answer_schema, execution_schema, provenance_fields, source_coverage]
+  integrity: Development feedback ledger and private final targets stay outside solver mounts.
+tree:
+  id: task_completion
+  children:
+  - id: forecast_artifacts
+    weight: 25
+    required: true
+    evaluator: deterministic
+    criterion: Complete finite nonnegative mm predictions preserve exact public issue, target and grid coordinates on both splits.
+    evidence: [development-predictions.nc, final-predictions.nc]
+    checks: [development_prediction_schema, final_prediction_schema]
+  - id: admissible_experiment
+    weight: 30
+    required: true
+    evaluator: expert
+    criterion: Correctly interprets already aggregated 14-day mm source units, uses only observed training labels for fits, respects target-window gaps in temporal validation, records at most five development feedback queries and freezes selection before final evaluation.
+    evidence: [report.txt, model.json, retained-code, trusted-feedback-ledger, tool-trace]
+  - id: performance_and_interpretation
+    weight: 25
+    required: true
+    evaluator: mixed
+    criterion: Reports exact defined RMSE/skill and actual development feedback, assesses alternatives and dependent-case uncertainty, allows supported negative results, and makes no unsupported final or global leaderboard claim.
+    evidence: [answer.json, report.txt, controller-final-score, trusted-feedback-ledger]
+  - id: reusable_workflow
+    weight: 20
+    required: true
+    evaluator: execution
+    criterion: Full offline replay recreates frozen predictions; saved state predicts alternate allowed feature inputs without training targets; source and method boundaries are documented.
+    evidence: [execution.json, handoff.txt, trusted-replay-log, trusted-inference-log, provenance.json]

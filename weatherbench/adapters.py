@@ -56,13 +56,30 @@ def command_driver(config, substrate, request, box, log, stderr_path):
                     if not isinstance(usage,dict) or not all(type(v) in (int,float) and math.isfinite(v) and v>=0 for v in usage.values()):
                         raise ValueError("Usage counters must be finite nonnegative numbers")
                     continue
-                if event.get("type")!="execute" or not isinstance(event.get("command"),str) or not event["command"].strip():
-                    raise ValueError("Expected execute, usage or final event")
+                action = event.get("type")
+                if action == "execute":
+                    if not isinstance(event.get("command"),str) or not event["command"].strip():
+                        raise ValueError("Expected a nonempty execute command")
+                elif action == "acquire" and any(tool["name"] == "acquire" for tool in request.get("tools", [])):
+                    if (not all(isinstance(event.get(key),str) and event[key].strip() for key in ("url","destination"))
+                        or ("request" in event and not isinstance(event["request"],dict))):
+                        raise ValueError("Invalid acquire request")
+                elif action == 'score_development' and any(tool['name'] == 'score_development' for tool in request.get('tools', [])):
+                    if not isinstance(event.get('prediction_file'), str) or not event['prediction_file'].strip():
+                        raise ValueError('Invalid development feedback request')
+                else:
+                    raise ValueError("Expected an advertised tool, usage or final event")
                 if count>=budget["max_tool_calls"]: status="tool_limit"; break
                 requested = event.get("timeout_seconds",budget["command_seconds"])
                 if type(requested) not in (int,float) or not math.isfinite(requested) or requested<=0:
                     raise ValueError("Invalid requested tool timeout")
-                result = box.execute(event["command"],min(requested,budget["command_seconds"],max(.1,remaining)))
+                timeout = min(requested,budget["command_seconds"],max(.1,remaining))
+                if action == 'execute':
+                    result = box.execute(event['command'], timeout)
+                elif action == 'acquire':
+                    result = box.acquire(event['url'], event['destination'], event.get('request'), timeout)
+                else:
+                    result = box.score_development(event['prediction_file'], timeout)
                 count += 1
                 response = {"type":"tool_result","id":event.get("id"),**result,"remaining_seconds":max(0,budget["max_seconds"]-(time.monotonic()-started))}
                 events(log,response); send(response)
@@ -84,6 +101,9 @@ def anthropic_driver(config, request, box, log, stderr_path=None):
     model = Model(cfg)
     system = "You are carrying out a weather research task. Use execute for scientific commands in the isolated /work runtime. Read the task and contracts. Write deliverables under /work/submission and retained material under /work/state. No other host tools are available."
     tools = [{"name":"execute","description":"Run a command in the isolated scientific runtime.","input_schema":{"type":"object","properties":{"command":{"type":"string"}},"required":["command"]}}]
+    for tool in request.get("tools", []):
+        if tool["name"] in ('acquire', 'score_development'):
+            tools.append({"name":tool['name'],"description":tool["description"],"input_schema":tool["inputSchema"]})
     messages = [{"role":"user","content":json.dumps(request)}]
     status,count,started = "turn_limit",0,time.monotonic()
     try:
@@ -99,11 +119,28 @@ def anthropic_driver(config, request, box, log, stderr_path=None):
             for call in calls:
                 remaining = cfg["max_seconds"]-(time.monotonic()-started)
                 if remaining<=0 or count>=config["budget"]["max_tool_calls"]: raise BudgetExceeded("Tool/time limit")
-                command = call.get("input",{}).get("command")
-                if response["stop_reason"]=="max_tokens" or call["name"]!="execute" or not isinstance(command,str):
+                args = call.get("input", {})
+                command = args.get("command") if isinstance(args,dict) else None
+                acquire = call["name"] == "acquire" and any(tool["name"] == "acquire" for tool in tools)
+                valid_acquire = (acquire and isinstance(args,dict)
+                                 and all(isinstance(args.get(key),str) and args[key].strip() for key in ("url","destination"))
+                                 and ("request" not in args or isinstance(args["request"],dict)))
+                feedback = call['name'] == 'score_development' and any(tool['name'] == 'score_development' for tool in tools)
+                valid_feedback = (feedback and isinstance(args, dict) and set(args) == {'prediction_file'}
+                                  and isinstance(args['prediction_file'], str) and bool(args['prediction_file'].strip()))
+                if response["stop_reason"]=="max_tokens" or not ((call["name"]=="execute" and isinstance(command,str)) or valid_acquire or valid_feedback):
                     result = {"exit_code":1,"stderr":"Incomplete or invalid tool call; nothing executed."}
                 else:
-                    result = box.execute(command,min(remaining,config["budget"]["command_seconds"]))
+                    timeout = min(remaining,config["budget"]["command_seconds"])
+                    fields = ('url', 'destination', 'request') if acquire else (('prediction_file',) if feedback else ('command',))
+                    events(log, {'type': 'adapter', 'event': {'type': call['name'],
+                                **{key: args[key] for key in fields if key in args}}})
+                    if acquire:
+                        result = box.acquire(args['url'], args['destination'], args.get('request'), timeout)
+                    elif feedback:
+                        result = box.score_development(args['prediction_file'], timeout)
+                    else:
+                        result = box.execute(command, timeout)
                     count += 1
                 events(log,{"type":"tool_result","id":call["id"],"command":command,**result})
                 answers.append({"type":"tool_result","tool_use_id":call["id"],"content":json.dumps(result),"is_error":result["exit_code"]!=0})
