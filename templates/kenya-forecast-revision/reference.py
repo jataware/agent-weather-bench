@@ -67,7 +67,7 @@ def stage_inputs(private, params, destination):
     (destination / "instance.json").write_text(json.dumps(params, indent=2) + "\n")
 
 
-def perturb_inputs(inputs, seed):
+def perturb_inputs(inputs, seed, kind="data"):
     """Change the rainfall in both staged stores so that a cached answer cannot survive.
 
     Adds a smooth space- and lead-dependent amount to the cumulative field, and

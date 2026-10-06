@@ -1,0 +1,34 @@
+{
+ "schema_version": 1,
+ "origin": {
+  "note": "Copied byte for byte from the private data of the packaged task tasks/seasonal-calibration. See that task's sources.yaml and input-manifest.json for the provider record (ECMWF system 51 via C3S; CHIRPS v3 final monthly).",
+  "directory": "var/private/tasks/seasonal-calibration"
+ },
+ "files": {
+  "forecast-development.nc": {
+   "from": "agent-inputs/forecast-development.nc",
+   "sha256": "ae2061e971c19bb077cb372e77acc8d5452fda3cae7a5a0b492d0fff1283d9f8",
+   "bytes": 46460
+  },
+  "observations-development.nc": {
+   "from": "agent-inputs/observations-development.nc",
+   "sha256": "a69fbe38ee076a25a1c255b096038a1b915186e022e225a813673c7645284279",
+   "bytes": 1155728
+  },
+  "forecast.nc": {
+   "from": "controller/forecast.nc",
+   "sha256": "721e148acc1bb35d2620891e691d289f716ed85eeb04c553483250843e800d38",
+   "bytes": 18971
+  },
+  "verification.nc": {
+   "from": "controller/verification.nc",
+   "sha256": "5bed071522de1028a4f6a367024ccbd5e2aab517aed81be044cfdb6296ef9db6",
+   "bytes": 19782
+  },
+  "training.nc": {
+   "from": "controller/training.nc",
+   "sha256": "9e6d7513109ae6fc6699370446f7b0c54b3f9b1f61095df304b50ebcc1b75a8b",
+   "bytes": 40491
+  }
+ }
+}

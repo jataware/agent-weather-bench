@@ -59,6 +59,16 @@ class Template:
             raise ValueError(f"Pitfalls without a description: {sorted(named - described)}")
         if set(spec.get("public_conventions", [])) - set(spec.get("conventions", {})):
             raise ValueError("public_conventions must name declared conventions")
+        if (spec["mode"] == "process") != bool(spec.get("process")):
+            raise ValueError("A process-mode spec needs a process checklist, and only a process-mode spec may have one")
+        for step in spec.get("process", []):
+            kinds = [key for key in ("checks", "results", "method_statement", "judge") if key in step]
+            if not isinstance(step.get("id"), str) or not step.get("requirement") or not step.get("source") or len(kinds) != 1:
+                raise ValueError("Each process step needs an id, a requirement, a source and exactly one kind of evidence")
+
+    def matched(self):
+        """The results that have a reference answer. Results marked `free` are valid under any sound method."""
+        return {name: row for name, row in self.spec["results"].items() if not row.get("free")}
 
     def combinations(self):
         conventions = self.spec.get("conventions", {})

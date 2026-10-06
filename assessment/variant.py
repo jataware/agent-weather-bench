@@ -7,12 +7,19 @@ from .compare import compare
 from .outcomes import FAIL, PASS, UNRESOLVED, outcome
 
 
-def table(template, inputs, params):
+def _reference(template, inputs, params, combination, given=None):
+    """One reference. `given` carries the submission's free results, for quantities derived from them."""
+    if getattr(template.hooks, "REFERENCE_USES_SUBMISSION", False):
+        return template.hooks.reference(inputs, params, combination, given)
+    return template.hooks.reference(inputs, params, combination)
+
+
+def table(template, inputs, params, given=None):
     """Reference results under every combination, or the reason a combination has none."""
     rows = []
     for combination in template.combinations():
         try:
-            rows.append((combination, template.hooks.reference(inputs, params, combination), None))
+            rows.append((combination, _reference(template, inputs, params, combination, given), None))
         except ValueError as error:
             rows.append((combination, None, str(error)))
     return rows
@@ -25,7 +32,7 @@ def consistent(template, submitted, rows):
         if reference is None:
             partial.append({})
             continue
-        agrees, detail = compare(template.spec["results"], submitted, reference)
+        agrees, detail = compare(template.matched(), submitted, reference)
         partial.append(detail)
         if agrees:
             hits.append(index)
@@ -44,7 +51,7 @@ def classes(template, rows, indices):
     for index in indices:
         reference = rows[index][1]
         for group in groups:
-            if reference is not None and rows[group[0]][1] is not None and compare(template.spec["results"], reference, rows[group[0]][1])[0]:
+            if reference is not None and rows[group[0]][1] is not None and compare(template.matched(), reference, rows[group[0]][1])[0]:
                 group.append(index)
                 break
         else:
@@ -98,17 +105,18 @@ def discriminating_instance(template, inputs_for, params, rows, indices):
     wanted = [rows[i][0] for i in indices] or [rows[0][0]]
     best = None
     for candidate in template.hooks.candidate_instances():
-        if candidate["id"] == params.get("id") or candidate["rectangle"] == params["rectangle"] or candidate["period_start"] == params["period_start"]:
+        if candidate["id"] == params.get("id"):
             continue
+        differences = sum(candidate[key] != params.get(key) for key in candidate if key != "id")
         local = []
         for combination in wanted:
             try:
-                local.append((combination, template.hooks.reference(inputs_for(candidate), candidate, combination), None))
+                local.append((combination, _reference(template, inputs_for(candidate), candidate, combination), None))
             except ValueError as error:
                 local.append((combination, None, str(error)))
         groups = classes(template, local, list(range(len(local))))
         mixed = any({bool(template.pitfalls_in(local[i][0])) for i in group} == {True, False} for group in groups)
-        score = (not mixed, len(groups))
+        score = (not mixed, len(groups), differences)     # separate the readings first, then change as much as possible
         if best is None or score > best[0]:
             best = (score, candidate)
     if best is None:

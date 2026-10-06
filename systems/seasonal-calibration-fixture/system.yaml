@@ -1,0 +1,19 @@
+schema_version: 1
+id: seasonal-calibration-fixture
+kind: harness_fixture
+description: Deterministic control solution for the seasonal rainfall calibration template; exercises the template runner. Not agent capability evidence.
+driver:
+  kind: command
+  argv: ['{python}', '{driver}/adapter.py']
+  env: []
+runtime:
+  image: sha256:14ded77c764dccdcaeef07f91c549709b4ff3549d0c30f5dc780e4376347917a
+  memory: 4g
+  cpus: 2
+budget:
+  max_seconds: 240
+  max_tool_calls: 12
+  command_seconds: 90
+substrate:
+  paths: [adapter.py, solve.py]
+  instructions: Harness fixture only. No model calls or benchmark claims.

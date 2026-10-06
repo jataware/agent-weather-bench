@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "weeks34-rainfall",
  "spec_version": 1,
- "fingerprint": "a75378dd2bdc7dfc93ca7a195150af3e7ff6ea57aed67df3a3ab3f5a35a4a6cf",
- "certified_at": "20261006T133922",
+ "fingerprint": "52552d5455c1e009d2982af7f054a015c66b162d8c0101a402af9f96af9eb009",
+ "certified_at": "20261006T140310",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {
@@ -437,11 +437,11 @@
      "computed_outcome": "fail",
      "skill": {
       "split": "final",
-      "rmse_mm": 14.040780059680296,
+      "rmse_mm": 14.033726927005036,
       "raw_model_rmse_mm": 14.890051309463692,
       "climatology_rmse_mm": 14.281531566506088,
-      "skill_vs_raw_model": 0.05703615334378487,
-      "skill_vs_climatology": 0.0168575412031029,
+      "skill_vs_raw_model": 0.05750983422833478,
+      "skill_vs_climatology": 0.01735140508894839,
       "issues": 208,
       "cells": 9,
       "observations_are_public_history": true
@@ -458,11 +458,11 @@
      "computed_outcome": "fail",
      "skill": {
       "split": "final",
-      "rmse_mm": 11.891807379910235,
+      "rmse_mm": 11.888093322324654,
       "raw_model_rmse_mm": 14.903258441509173,
       "climatology_rmse_mm": 11.994282318739515,
-      "skill_vs_raw_model": 0.20206662008969256,
-      "skill_vs_climatology": 0.008543649057616065,
+      "skill_vs_raw_model": 0.20231583120014596,
+      "skill_vs_climatology": 0.0088533013975296,
       "issues": 151,
       "cells": 9,
       "observations_are_public_history": true

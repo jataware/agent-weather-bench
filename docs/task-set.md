@@ -147,7 +147,7 @@ Columns:
 | 8 | Station verification | new: `station-verification` | Stations, month | Product | Later | Luna partly correct |
 | 9 | Paper-versus-code audit | new: `wvg-definition-audit` | Nothing | Product | No | Luna reproduced the numbers 3 of 3 |
 | 10 | Probability forecast combination | new: `acmad-objective` | Nothing | Process | Later | Luna passed 1 of 3 |
-| 11 | Seasonal rainfall calibration | new: `seasonal-calibration` | Region, season, start month | Process | Yes | Luna failed 3 of 3 |
+| 11 | Seasonal rainfall calibration | new: `seasonal-calibration`; converted: `templates/seasonal-rainfall-calibration` | Region, season, start month | Process | Yes | Luna failed 3 of 3 |
 | 12 | Short-rains workflow | new: `short-rains-workflow` | Region, season | Process | Yes | Astra passed the numerical checks; Fable ran out of budget |
 | 13 | Seasonal CCA reproduction | new: `cca-seasonal-reproduction` | Region, season | Process | Yes | Luna failed; Astra passed |
 | 14 | Monthly cyclic calibration | new: `monthly-cycle-calibration` | Region | Process | Yes | Luna partly correct |
@@ -201,9 +201,9 @@ observed rainfall.
 - **By level:** 13 have an optimize level now or by design, 2 can gain one
   later (rows 8 and 10), and 10 are produce-only.
 - **By readiness:** 10 are packaged in this repository, 6 have briefs and
-  answer keys in the old repository, and 9 must be built. Two rows are
-  converted to the new assessment format: row 4 in product mode and row 15 in
-  outcome mode with both levels.
+  answer keys in the old repository, and 9 must be built. Three rows are
+  converted to the new assessment format: row 4 in product mode, row 15 in
+  outcome mode with both levels, and row 11 in process mode.
 - **By mode:** 12 product (rows 1–9, 16, 24, 25), 11 process (rows 10–14,
   17–22), and 2 outcome (rows 15 and 23). The assignment of rows 12, 14, 16, 20
   and 25 is tentative.

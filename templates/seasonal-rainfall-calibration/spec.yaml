@@ -1,0 +1,114 @@
+schema_version: 1
+template: seasonal-rainfall-calibration
+spec_version: 1
+title: Seasonal rainfall calibration to the WMO guidance
+task_set_row: 11
+mode: process
+standard: wmo-objective-seasonal-forecasting
+status: development; the checklist is a draft and no domain scientist has reviewed it
+params: [training_years, new_years, latitude_limit]
+
+# The two totals, the observed categories and the skill score have a reference
+# answer. The probabilities are free: any sound calibration is acceptable, so
+# they are checked only by rules and probes. The observed categories are a
+# required intermediate product: they show which years set the category
+# boundaries even when the skill score cannot (a climatological forecast scores
+# zero under every reading).
+results:
+  year: {kind: coordinate, tolerance: {atol: 0}}
+  new_year: {kind: coordinate, tolerance: {atol: 0}}
+  latitude: {kind: coordinate, tolerance: {atol: 1.0e-6}}
+  longitude: {kind: coordinate, tolerance: {atol: 1.0e-6}}
+  forecast_mean_mm: {dims: [year, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
+  observed_total_mm: {dims: [year, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
+  observed_category: {dims: [year, latitude, longitude], tolerance: {atol: 0, rtol: 0}}
+  hindcast_rpss: {dims: [], tolerance: {atol: 1.0e-6, rtol: 0}}
+  hindcast_probability: {free: true, dims: [year, category, latitude, longitude], tolerance: {atol: 1.0e-6, rtol: 0}}
+  forecast_probability: {free: true, dims: [new_year, category, latitude, longitude], tolerance: {atol: 1.0e-6, rtol: 0}}
+tolerance_basis: >
+  Seasonal totals are sums of float32 source values near 100 to 500 mm; 0.001 mm
+  plus one part in 100,000 covers float32 arithmetic and is far below any
+  difference between conventions. The skill score is recomputed in float64 from
+  the submitted probabilities, so one part in a million suffices.
+
+conventions:
+  month_lengths:
+    actual: accepted
+    thirty_days: pitfall
+    rates_not_converted: pitfall
+  observation_weighting:
+    cos_latitude: accepted
+    unweighted: accepted
+  category_thresholds:
+    leave_one_out: accepted
+    full_sample: pitfall
+  climatology_reference:
+    equal_thirds: accepted
+    training_frequencies: accepted
+pitfalls:
+  thirty_days: Treated every month as 30 days when turning daily rates into monthly totals.
+  rates_not_converted: Summed daily rates without multiplying by the days in each month.
+  full_sample: Set the category boundaries for a held-out year using that year's own observation.
+public_conventions: []
+
+invariants: [probabilities_valid]
+probes: [replay, changed_data, changed_instance, held_out_year_isolation, new_years_forecast_separately]
+claims: {}
+skill:
+  ranking: rpss of the forecast for the new years; higher is better
+  splits: [new_years]
+  caveat: Two years on a few neighbouring cells. Reported for completeness, not for ranking.
+
+# Each step cites the practice it comes from in standards/wmo-objective-seasonal-forecasting.
+process:
+  - id: reproducible
+    source: practice 1
+    requirement: The whole procedure reruns from its inputs and follows them when they change.
+    checks: [probe.replay, probe.changed_data, probe.changed_instance]
+  - id: model_forecast_prepared
+    source: practice 2
+    requirement: The forecast is built on the dynamical model's ensemble, correctly converted to seasonal totals.
+    results: [forecast_mean_mm]
+  - id: observations_prepared
+    source: practice 3
+    requirement: Verification uses the observations, correctly aggregated to the forecast grid.
+    results: [observed_total_mm]
+  - id: cross_validated
+    source: practice 5
+    requirement: No historical forecast for a year uses that year's observation.
+    checks: [probe.held_out_year_isolation]
+  - id: verification_categories
+    source: practice 5
+    requirement: Each year's observation is classified with category boundaries that exclude that year.
+    results: [observed_category]
+  - id: historical_performance
+    source: practice 6
+    requirement: The forecast comes with a standard skill score of its cross-validated historical forecasts.
+    # judged with the categories, which settle the boundaries when the score alone cannot
+    results: [observed_category, hindcast_rpss]
+  - id: probabilistic_format
+    source: practice 7
+    requirement: The forecast is given as valid probabilities of the three tercile categories.
+    checks: [invariant.probabilities_valid]
+  - id: operational_application
+    source: practice 1
+    requirement: The forecast for a new year comes from the fitted procedure and that year's model forecast alone.
+    checks: [probe.new_years_forecast_separately]
+  - id: documented_calibration
+    source: practice 1
+    requirement: The calibration is documented, with a pointer to the code that performs it.
+    method_statement: calibration
+  - id: documented_cross_validation
+    source: practice 1
+    requirement: The cross-validation is documented, with a pointer to the code that excludes the held-out year.
+    method_statement: cross_validation
+  - id: plain_language_uncertainty
+    source: practice 7
+    requirement: The report states the forecast's uncertainty in non-technical language.
+    judge: Does the report state the forecast's uncertainty in language a non-specialist could act on?
+process_not_applicable:
+  - {source: practice 2 (multi-model part), reason: The task supplies one model.}
+  - {source: practice 4, reason: Monitoring climate drivers is a continuing activity.}
+  - {source: practice 8, reason: A fixed operational schedule cannot be observed in one run.}
+  - {source: practice 9, reason: User feedback mechanisms cannot be observed in one run.}
+interpretation: [statistical_support, generalization, consistency_across_artifacts]

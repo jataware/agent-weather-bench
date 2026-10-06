@@ -252,7 +252,8 @@ def test_outcome_spec_has_no_reference_answer_and_two_levels(weeks):
     assert "score_development" in weeks.brief(params, level=2) and "score_development" not in weeks.brief(params)
 
 
-@pytest.mark.parametrize("template_name, systems", [(KENYA, ["kenya-revision-fixture"]), (WEEKS, ["weeks34-fixture", "weeks34-level2-fixture"])])
+@pytest.mark.parametrize("template_name, systems", [(KENYA, ["kenya-revision-fixture"]), (WEEKS, ["weeks34-fixture", "weeks34-level2-fixture"]),
+                                                    ("seasonal-rainfall-calibration", ["seasonal-calibration-fixture"])])
 def test_certification_and_fixtures_are_current(template_name, systems):
     template = Template(template_name)
     record = json.loads((template.folder / "certification.json").read_text())
@@ -313,3 +314,88 @@ def test_level2_claim_must_equal_the_controller_score(weeks, weeks_controls, tmp
     inflated = _assess_weeks(weeks, weeks_controls, "level2_overclaimed_score", tmp_path / "b")
     assert inflated["checks"]["claim.development_rmse_mm"]["state"] == FAIL
     assert inflated["skill"]["final"] == honest["skill"]["final"]                # a false claim does not change the measured skill
+
+
+# ---- the seasonal rainfall calibration template (process mode) ----------------------
+
+SEASONAL = "seasonal-rainfall-calibration"
+needs_seasonal = pytest.mark.skipif(not (ROOT / "var/private/templates" / SEASONAL / "forecast-development.nc").is_file(),
+                                    reason="Private template data missing; run: python -m assessment prepare seasonal-rainfall-calibration")
+
+
+@pytest.fixture(scope="module")
+def seasonal():
+    return Template(SEASONAL)
+
+
+@pytest.fixture(scope="module")
+def seasonal_controls(seasonal):
+    module = importlib.util.spec_from_file_location("seasonal_controls", seasonal.folder / "controls/build.py")
+    loaded = importlib.util.module_from_spec(module)
+    module.loader.exec_module(loaded)
+    return loaded
+
+
+def test_process_spec_follows_the_standards_checklist(seasonal):
+    import yaml
+    checklist = yaml.safe_load((ROOT / "standards" / seasonal.spec["standard"] / "checklist.yaml").read_text())
+    assert checklist["status"] == "draft_from_secondary_source"            # no domain scientist has signed it off
+    assert {step["id"] for step in seasonal.spec["process"]} == {step["id"] for step in checklist["steps"]}
+    assert set(seasonal.matched()) & {"hindcast_probability", "forecast_probability"} == set()   # any sound calibration is acceptable
+    assert len(seasonal.brief(seasonal.development_instances()[0]).split()) <= 150
+
+
+def _assess_seasonal(seasonal, seasonal_controls, name, tmp_path, instance="train-1993-2002--new-2003-2004--all-cells"):
+    params = seasonal.instance(instance)
+    seasonal.hooks.stage_inputs(seasonal.private, params, tmp_path / "inputs")
+    submission = seasonal_controls.build(name, tmp_path / "inputs", params, tmp_path / "submission")
+    return assess(seasonal, params, submission, Local(), tmp_path / "work")
+
+
+@needs_seasonal
+def test_seasonal_reference_implementations_agree(seasonal, tmp_path):
+    params = seasonal.instance("train-1993-2000--new-2001-2002--southern-rows")
+    seasonal.hooks.stage_inputs(seasonal.private, params, tmp_path / "inputs")
+    given = seasonal.hooks.example_free_results(tmp_path / "inputs", params)
+    for combination in seasonal.combinations():
+        a, b = (f(tmp_path / "inputs", params, combination, given) for f in (seasonal.hooks.reference, seasonal.hooks.independent))
+        assert set(a) == set(b) and all(np.max(np.abs(a[name] - b[name])) < 1e-9 for name in a)
+    assert all(row["passed"] for row in seasonal.hooks.regression_checks(tmp_path))
+
+
+@needs_seasonal
+def test_conformant_solution_passes_every_computed_step(seasonal, seasonal_controls, tmp_path):
+    result = _assess_seasonal(seasonal, seasonal_controls, "correct", tmp_path)
+    steps = {name[8:]: row for name, row in result["checks"].items() if name.startswith("process.")}
+    judged = {name for name, row in steps.items() if row.get("decided_by") == "judge"}
+    assert judged == {"documented_calibration", "documented_cross_validation", "plain_language_uncertainty"}
+    assert all(row["state"] == PASS for name, row in steps.items() if name not in judged)
+    assert steps["documented_calibration"]["pointer"] == {"file": "solve.py", "symbol": "def calibrate"}
+    assert result["computed_outcome"] == PASS and result["outcome"] == UNRESOLVED and result["unresolved_reasons"] == ["judge_not_run"]
+    assert steps["model_forecast_prepared"]["conventions_that_matter"] == ["month_lengths"]
+
+
+@needs_seasonal
+def test_skipped_cross_validation_fails_its_own_step_only(seasonal, seasonal_controls, tmp_path):
+    result = _assess_seasonal(seasonal, seasonal_controls, "skipped_cross_validation", tmp_path)
+    failed = sorted(name for name, row in result["checks"].items() if row["state"] == FAIL)
+    assert failed == ["probe.held_out_year_isolation", "process.cross_validated"]
+    assert result["checks"]["process.cross_validated"]["source"] == "practice 5"
+
+
+@needs_seasonal
+def test_valid_negative_result_conforms(seasonal, seasonal_controls, tmp_path):
+    """A climatological forecast scores zero under every reading; its observed categories still show the boundaries were held out."""
+    result = _assess_seasonal(seasonal, seasonal_controls, "accepted_climatological_forecast", tmp_path)
+    assert result["computed_outcome"] == PASS and abs(result["skill"]["new_years"]["rpss"]) < 1e-12
+    assert result["matched_conventions"]["category_thresholds"] == ["leave_one_out"]
+
+
+@needs_seasonal
+def test_missing_or_false_method_pointer_is_unresolved_not_failed(seasonal, seasonal_controls, tmp_path):
+    missing = _assess_seasonal(seasonal, seasonal_controls, "no_method_statement", tmp_path / "a")
+    false = _assess_seasonal(seasonal, seasonal_controls, "false_method_pointer", tmp_path / "b")
+    for result in (missing, false):
+        row = result["checks"]["process.documented_calibration"]
+        assert row["state"] == UNRESOLVED and row["reason"] == "missing_evidence" and row.get("decided_by") != "judge"
+        assert result["computed_outcome"] == UNRESOLVED and not [n for n, r in result["checks"].items() if r["state"] == FAIL]

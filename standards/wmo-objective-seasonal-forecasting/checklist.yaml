@@ -1,0 +1,64 @@
+# DRAFT. Not reviewed by a domain scientist. Not extracted from the primary document.
+#
+# Each step turns one of the nine practices in practices.md into something a
+# controller can test on a single calibration task. `practice` is the number in
+# practices.md. `evidence` is the kind of evidence the assessment format prefers,
+# most exact first: product, probe, method_statement, judge.
+schema_version: 1
+standard: wmo-objective-seasonal-forecasting
+status: draft_from_secondary_source
+steps:
+  - id: reproducible
+    practice: 1
+    requirement: The whole procedure reruns from its inputs and gives the same results, and follows its inputs when they change.
+    evidence: probe
+  - id: operational_application
+    practice: 1
+    requirement: The forecast for a new year comes from the fitted procedure and that year's model forecast alone.
+    evidence: probe
+  - id: documented_calibration
+    practice: 1
+    requirement: The calibration is documented, with a pointer to the code that performs it.
+    evidence: method_statement
+  - id: documented_cross_validation
+    practice: 1
+    requirement: The cross-validation is documented, with a pointer to the code that excludes the held-out year.
+    evidence: method_statement
+  - id: model_forecast_prepared
+    practice: 2
+    requirement: The forecast is built on the dynamical model's ensemble, correctly converted to seasonal totals.
+    evidence: product
+  - id: observations_prepared
+    practice: 3
+    requirement: Verification uses the quality-controlled observations, correctly aggregated to the forecast grid.
+    evidence: product
+  - id: cross_validated
+    practice: 5
+    requirement: Historical forecasts are cross-validated, so that no forecast for a year uses that year's observation, in the fit or in the category boundaries.
+    evidence: probe
+  - id: verification_categories
+    practice: 5
+    requirement: Each year's observation is classified with category boundaries that exclude that year.
+    evidence: product
+  - id: historical_performance
+    practice: 6
+    requirement: The forecast is delivered with a standard skill score of its cross-validated historical forecasts.
+    evidence: product
+  - id: probabilistic_format
+    practice: 7
+    requirement: The forecast is given as probabilities of the three tercile categories, which are valid probabilities.
+    evidence: product
+  - id: plain_language_uncertainty
+    practice: 7
+    requirement: The report states the forecast's uncertainty in non-technical language.
+    evidence: judge
+not_applicable_to_a_single_task:
+  - practice: 2
+    part: multi-model ensembles
+    reason: The task supplies one model. A multi-model task (task-set row 19) would test this.
+  - practice: 4
+    reason: Monitoring climate drivers is a continuing activity, not a property of one forecast.
+  - practice: 8
+    reason: A fixed operational schedule cannot be observed in one run.
+  - practice: 9
+    reason: User feedback mechanisms cannot be observed in one run.

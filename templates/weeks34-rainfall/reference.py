@@ -121,6 +121,14 @@ def before_cut(results, inputs, params):
     return {"development_mm": results["development_mm"], "final_mm": results["final_mm"][earlier]}
 
 
+INVARIANCE_PROBES = {
+    "no_future_information": {
+        "perturb": "features_after_cut", "unchanged": before_cut,
+        "passes": "Forecasts issued before the cut date do not move when later model forecasts change.",
+        "fails": "Forecasts issued before the cut date move when later model forecasts change, so they use information from after their issue time."},
+}
+
+
 # ---- validity rules any forecast must obey -----------------------------------------
 
 def _not_negative(results, params, inputs):

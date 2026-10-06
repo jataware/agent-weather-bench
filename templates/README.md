@@ -61,6 +61,15 @@ here when it is converted.
 `--local-trusted` flag runs it on the controller without isolation and is only
 for the controller's own control solutions.
 
+## Standards for process-mode templates
+
+A process-mode spec names a standard and lists the steps it requires. The
+standard's practices and checklist live in `standards/<standard>/`, so that one
+checklist serves every template that names it. A test keeps each spec's steps
+identical to the checklist's. The only standard so far,
+`standards/wmo-objective-seasonal-forecasting/`, is a draft from a secondary
+source and has not been reviewed.
+
 ## Where the data lives
 
 Private data stays under `var/private/templates/<template>/`, which Git
@@ -93,3 +102,4 @@ assessment code changes without a new certification.
 | --- | --- | --- | --- |
 | `kenya-forecast-revision` | 4 | Product | Four automatic tests pass; agent attempts not run |
 | `weeks34-rainfall` | 15 | Outcome, Levels 1 and 2 | Four automatic tests pass; agent attempts not run |
+| `seasonal-rainfall-calibration` | 11 | Process | Four automatic tests pass; agent attempts not run; checklist is a draft |

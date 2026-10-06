@@ -248,6 +248,7 @@ completion score, costs, time, and retention condition.
 | `tasks/` | Briefs, rubrics, manifests, and review pages |
 | `templates/` | Task templates in the new assessment format, with specs and certification records |
 | `assessment/` | The generic assessment package for templates |
+| `standards/` | Practices and draft checklists for process-mode templates |
 | `systems/` | Model and agent configurations, adapters, and optional substrates |
 | `judges/` | Assessment configuration, prompt, and lock |
 | `experiments/` | Comparison designs and task sequences |

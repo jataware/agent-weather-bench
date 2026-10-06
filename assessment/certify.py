@@ -16,8 +16,10 @@ from datetime import datetime, timezone
 import numpy as np
 
 from .assess import assess
+from .assess import JUDGE
 from .compare import compare
 from .spec import ROOT
+from .variant import _reference
 
 
 def _controls(template):
@@ -43,15 +45,24 @@ def scoring_agreement(template, instances, scratch):
             "largest_difference": worst, "problems": [], "regression_checks": extra}
 
 
+def _given(template, inputs, params):
+    """Stand-in free results, where a reference is derived from what the submission itself supplies."""
+    if getattr(template.hooks, "REFERENCE_USES_SUBMISSION", False):
+        return template.hooks.example_free_results(inputs, params)
+    return None
+
+
 def reference_agreement(template, inputs_for, instances):
     """Test 1: implementations A and B over every instance and every combination."""
     compared, worst, problems = 0, 0.0, []
     for params in instances:
+        given = _given(template, inputs_for(params), params)
         for combination in template.combinations():
             outcomes = []
             for function in (template.hooks.reference, template.hooks.independent):
                 try:
-                    outcomes.append(function(inputs_for(params), params, combination))
+                    outcomes.append(function(inputs_for(params), params, combination, given) if given is not None
+                                    else function(inputs_for(params), params, combination))
                 except ValueError:
                     outcomes.append(None)
             a, b = outcomes
@@ -71,7 +82,7 @@ def reference_agreement(template, inputs_for, instances):
 
 def separability(template, inputs_for, perturbed_for, instances):
     """Test 4: on how many instances does each pitfall give different numbers from the accepted readings?"""
-    conventions, results_spec = template.spec["conventions"], template.spec["results"]
+    conventions, results_spec = template.spec["conventions"], template.matched()
     accepted = [c for c in template.combinations() if not template.pitfalls_in(c)]
     pairs = []
     for dimension, values in conventions.items():
@@ -86,7 +97,8 @@ def separability(template, inputs_for, perturbed_for, instances):
 
     def differs(inputs, params, a, b):
         try:
-            return not compare(results_spec, template.hooks.reference(inputs, params, b), template.hooks.reference(inputs, params, a))[0]
+            given = _given(template, inputs, params)
+            return not compare(results_spec, _reference(template, inputs, params, b, given), _reference(template, inputs, params, a, given))[0]
         except ValueError:
             return True                                           # a reading with no answer cannot be confused with one that has
     table = []
@@ -116,7 +128,7 @@ def run_controls(template, executor, instances, scratch, inputs_for):
             feedback = None if requests is None else {"scope": "development_only", "limit_denials": 0,
                                                       "requests": [{"query": i + 1, "status": "scored"} for i in range(requests)]}
             result = assess(template, params, submission, executor, folder / "assessment", level=level, feedback=feedback)
-            computed = {check: row for check, row in result["checks"].items() if not check.startswith("interpretation.")}
+            computed = {check: row for check, row in result["checks"].items() if row.get("decided_by") != JUDGE}
             expect, problems, note = control["expect"], [], None
             stopped = next((check for check in ("envelope", "coverage") if expect.get(check) == "fail"), None)
             if stopped:
@@ -124,7 +136,7 @@ def run_controls(template, executor, instances, scratch, inputs_for):
                 if computed[stopped]["state"] != "fail" or result["computed_outcome"] != "fail" or not unassessed:
                     problems.append(f"an unusable answer was not failed at {stopped} with the remaining checks left unassessed")
             else:
-                for check, row in computed.items():
+                for check, row in {**computed, **{check: result["checks"][check] for check in expect}}.items():
                     wanted = expect.get(check, "pass")
                     if row["state"] == wanted:
                         continue
@@ -134,12 +146,15 @@ def run_controls(template, executor, instances, scratch, inputs_for):
                     problems.append(f"{check}: expected {wanted}, got {row['state']} ({row['detail'][:120]})")
                 if control["kind"] == "pitfall" and computed["variant"]["state"] == "fail" and control["pitfall"] not in computed["variant"].get("pitfalls_certain", []):
                     problems.append(f"variant failed without naming {control['pitfall']}")
+                for check, reason in control.get("reasons", {}).items():
+                    if result["checks"][check].get("reason") != reason:
+                        problems.append(f"{check}: expected reason {reason}, got {result['checks'][check].get('reason')}")
                 for dimension, values in control.get("matched", {}).items():
                     if (result.get("matched_conventions") or {}).get(dimension) != values:
                         problems.append(f"matched {dimension} = {(result.get('matched_conventions') or {}).get(dimension)}, expected {values}")
             rows.append({"control": name, "kind": control["kind"], "instance": params["id"], "as_expected": not problems, "problems": problems,
                          "note": note, "level": level, "computed_outcome": result["computed_outcome"],
-                         "skill": (result.get("skill") or {}).get("final"),
+                         "skill": next(iter((result.get("skill") or {}).values()), None),
                          "states": {check: row["state"] for check, row in computed.items()},
                          "variant_detail": computed["variant"]["detail"] if "variant" in computed else None})
             shutil.rmtree(folder / "assessment", ignore_errors=True)

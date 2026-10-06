@@ -1,0 +1,6 @@
+# Public development instances. Any other member of candidate_instances() may be
+# drawn privately for scoring.
+development:
+  - train-1993-2004--new-2005-2006--all-cells
+  - train-1993-2002--new-2003-2004--all-cells
+  - train-1993-2000--new-2001-2002--southern-rows

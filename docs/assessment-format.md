@@ -2,9 +2,10 @@
 
 Status: proposal agreed in outline on 6 October 2026 and revised the same day
 after a five-point review (see "What the review changed" at the end). Product
-mode and outcome mode, with both levels, are implemented in the `assessment/`
-package and proven on two templates; see "What is implemented" below. Process
-mode is not built. The evaluator for the ten packaged
+mode, outcome mode with both levels, and process mode are implemented in the
+`assessment/` package and proven on three templates; see "What is implemented"
+below. The process checklist is a draft from a secondary source and is not
+signed off. The evaluator for the ten packaged
 tasks (`weatherbench/evaluation.py`, `weatherbench/judge.py`, the per-task
 `rubric.yaml` files) is unchanged and its lock still verifies. The companion
 list of tasks is [the proposed starting set](task-set.md).
@@ -377,8 +378,9 @@ interpretation: [consistency_across_artifacts, source_attribution]
 
 ## An example of the extra block for a process-mode task
 
-This is illustrative. The steps are a sketch from memory of the standard and
-have not been extracted from its text.
+This is illustrative and predates the build. The working spec is
+`templates/seasonal-rainfall-calibration/spec.yaml`, and its steps come from
+`standards/wmo-objective-seasonal-forecasting/checklist.yaml`.
 
 ```yaml
 template: seasonal-rainfall-calibration
@@ -430,11 +432,19 @@ Operational Seasonal Climate Forecasts*:
 **Any written procedure from a regional centre can be added.** One checklist
 serves every row that names the same standard.
 
-**The checklists do not exist yet.** The identities of the documents were
-confirmed by a web search on 6 October 2026. Neither document is in the
-workspace, and no clause has been extracted. The first step is to freeze a copy
-of each document in the repository, extract the steps with clause numbers, and
-have a domain reviewer sign off the result.
+**A draft checklist exists; the primary documents were not obtained.** The WMO
+library did not serve WMO-No. 1246 to an automated request on 6 October 2026.
+A WMO Secretariat presentation that summarises it was retrieved, and its
+nine-point definition of an objective seasonal forecast is quoted in
+`standards/wmo-objective-seasonal-forecasting/practices.md`. The checklist in
+that folder turns six of the nine practices into eleven testable steps and
+records why the other three, and the multi-model part of a fourth, cannot be
+tested on one forecast from one model. The wording of every step is ours.
+
+**Four things remain before the checklist can support a result.** Obtain the
+primary documents and keep hashed copies. Replace each practice number with the
+clause it comes from. Add any step the primary text requires and the draft
+lacks. Have a domain scientist sign the checklist off.
 
 ## A spec is certified by five tests
 
@@ -539,18 +549,21 @@ run from a reset state.
 
 ## What is implemented
 
-**Two modes work end to end, each on one template.** The package `assessment/`
-implements the envelope, three-outcome results, controller-held provenance, the
-certification tests, and the checks for product mode and outcome mode. How to
-use it is in [templates/README.md](../templates/README.md).
+**All three modes work end to end, each on one template.** The package
+`assessment/` implements the envelope, three-outcome results, controller-held
+provenance, the certification tests, and the checks for every mode. How to use
+it is in [templates/README.md](../templates/README.md).
 
 - *Product mode:* `templates/kenya-forecast-revision` (row 4 of the task set),
   with variant matching, invariants, three probes and claim checks.
 - *Outcome mode with both levels:* `templates/weeks34-rainfall` (row 15), with
   a validity gate, skill scoring, and a development-feedback tool for Level 2.
+- *Process mode:* `templates/seasonal-rainfall-calibration` (row 11), with a
+  eleven-step checklist drawn from the WMO practices for objective seasonal
+  forecasting.
 
-**Both specs passed their four automatic certification tests in the offline
-Docker runtime.**
+**All three specs passed their four automatic certification tests in the
+offline Docker runtime.**
 
 - *Kenya forecast revision.* Two independent reference implementations agree to
   6e-14 over 64 convention combinations, and the first reproduces the earlier
@@ -561,6 +574,12 @@ Docker runtime.**
   baseline scores equal those of the packaged task exactly. Five valid controls
   pass, including a raw-model forecast and a climatology forecast. Ten invalid
   controls each fail on the check built to catch them.
+- *Seasonal rainfall calibration.* Two independent reference implementations
+  agree to 3e-12 over 24 convention combinations on six instances, and
+  reproduce the packaged task's reference arrays. Four conformant controls
+  pass, including a climatological forecast. Ten non-conformant controls each
+  produce the outcome built for them, including a skipped cross-validation, a
+  missing method statement and a false method pointer.
 
 **No-model fixture runs exercise the whole path.** A deterministic system
 solves an instance inside the tool sandbox, the controller freezes the
@@ -597,6 +616,34 @@ that fails the gate still has its score recorded, with
 development-score requests than the limit. If the agent states a development
 score, it must equal the controller's score of the submitted forecast; stating
 `null` for "not measured" passes.
+
+**Process mode evaluates each step of the standard from one kind of evidence.**
+
+- *A step that rests on checks* takes the combined outcome of the probes or
+  rules it names. Example: "no historical forecast for a year uses that year's
+  observation" rests on a probe that changes one year's observation and
+  requires that year's cross-validated forecast not to move.
+- *A step that rests on results* asks whether the named results agree with the
+  reference. It looks only at the conventions that can change those results, so
+  a wrong month length fails "model forecast prepared" and leaves "observations
+  prepared" passing.
+- *A step that rests on a method statement* first checks, by computation, that
+  the agent's pointer names a file and symbol present in the submission. A
+  missing or false pointer is unresolved with reason `missing_evidence`. A
+  pointer that resolves goes to the judge.
+- *A step only a judge can decide* is unresolved with reason `judge_not_run`
+  until a judge is wired in. Such steps do not enter `computed_outcome`.
+
+**A valid negative result conforms.** A climatological forecast, one third for
+each category, passes every computed step.
+
+**One ambiguity was found and closed with a required intermediate product.** A
+climatological forecast has a skill score of zero whether or not the category
+boundaries leak the held-out year, so the score alone cannot show which was
+done. The brief now also asks for the observed category of each year. That
+array differs between the two readings, so it settles the question for every
+forecast. This is the format's first preference in practice: require the
+intermediate product, before relying on a probe or a judge.
 
 **Building it settled eight design points.** Each is a decision taken during
 the build and is open to revision.
@@ -648,9 +695,14 @@ separates them is necessary, not a refinement.
 - *No live data acquisition.* The earlier version of the Kenya task had the
   agent download the forecasts. This version supplies the frozen raw stores,
   for repeatability.
-- *Process mode is not built.* It needs the method statement, the required
-  intermediate products and a checklist extracted from the standards.
+- *The process checklist is a draft.* See "The first standards" below.
+- *The seasonal template has no Level 2.* A separate optimized submission for a
+  process row needs a second, outcome-mode spec on the same data. The skill of
+  the conformant forecast is reported, on two years and at most twelve cells,
+  which is far too few cases to rank anything.
 - *The separate "optimization within the standard" track is not built.*
+- *A method pointer is checked by text search.* The symbol must appear in the
+  named file. Whether it is the right code is left to the judge.
 
 ## Limits of this proposal
 
@@ -673,8 +725,8 @@ separates them is necessary, not a refinement.
   need a ruling.
 - **Unresolved outcomes can pile up.** A spec that returns unresolved too often
   is a defective spec, and the unresolved rate should be tracked per template.
-- **The format has been tried on two tasks and no model has attempted either.**
-  Process mode is untested.
+- **The format has been tried on three tasks and no model has attempted any of
+  them.**
 - **The outcome gate cannot see every leak.** It catches hard-coded forecasts
   and use of later model forecasts. It cannot tell whether a model has
   memorised the public observations and encoded them in a fitted rule that

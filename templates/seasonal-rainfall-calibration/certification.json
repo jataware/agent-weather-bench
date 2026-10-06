@@ -1,0 +1,615 @@
+{
+ "schema_version": 1,
+ "template": "seasonal-rainfall-calibration",
+ "spec_version": 1,
+ "fingerprint": "30e27f6a73515b2e10ebe913705a2fa97a3f82e128344dd7c3ae09b1c22eb768",
+ "certified_at": "20261006T140044",
+ "executor": "docker-offline",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 3,
+   "combinations": 24,
+   "comparisons": 72,
+   "largest_difference": 2.8421709430404007e-12,
+   "problems": [],
+   "regression_checks": [
+    {
+     "name": "seasonal totals equal the earlier task's reference arrays",
+     "passed": true,
+     "detail": "largest differences: forecast 0 mm, observed 7.96e-13 mm"
+    }
+   ]
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797052459540135,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653055728277573,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.43296127435968607,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05535721957886697,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "accepted_plain_observation_mean",
+     "kind": "accepted_alternative",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797024593947692,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653557308941565,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "accepted_plain_observation_mean",
+     "kind": "accepted_alternative",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4329530068626309,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05537525775426011,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "accepted_training_frequencies",
+     "kind": "accepted_alternative",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797052459540135,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653055728277573,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "accepted_training_frequencies",
+     "kind": "accepted_alternative",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.43296127435968607,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05535721957886697,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "accepted_climatological_forecast",
+     "kind": "accepted_alternative",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.5555555555555557,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.0,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "accepted_climatological_forecast",
+     "kind": "accepted_alternative",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4583333333333334,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.0,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    }
+   ]
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "pitfall_thirty_day_months",
+     "kind": "pitfall",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.3063253788666079,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.448614318040106,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "pitfall_thirty_day_months",
+     "kind": "pitfall",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4602817337949638,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": -0.004251055552648042,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "pitfall_rates_not_converted",
+     "kind": "pitfall",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 1.0,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": -0.7999999999999996,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "pitfall_rates_not_converted",
+     "kind": "pitfall",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 1.2916666666666667,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": -1.818181818181818,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "pitfall_full_sample_thresholds",
+     "kind": "pitfall",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797052459540135,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653055728277573,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "pitfall_full_sample_thresholds",
+     "kind": "pitfall",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.43296127435968607,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05535721957886697,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "skipped_cross_validation",
+     "kind": "incorrect",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797052459540135,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653055728277573,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "skipped_cross_validation",
+     "kind": "incorrect",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.43296127435968607,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05535721957886697,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "pooled_new_years",
+     "kind": "incorrect",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.15940162904252456,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.7130770677234559,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "pooled_new_years",
+     "kind": "incorrect",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.5437339555100537,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": -0.18632863020375323,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "invalid_probabilities",
+     "kind": "incorrect",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797052459540135,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653055728277573,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "invalid_probabilities",
+     "kind": "incorrect",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.43296127435968607,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05535721957886697,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "cached_output",
+     "kind": "incorrect",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797052459540135,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653055728277573,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "cached_output",
+     "kind": "incorrect",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.43296127435968607,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05535721957886697,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "no_method_statement",
+     "kind": "incorrect",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "unresolved",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797052459540135,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653055728277573,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "no_method_statement",
+     "kind": "incorrect",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "unresolved",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.43296127435968607,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05535721957886697,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "false_method_pointer",
+     "kind": "incorrect",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "unresolved",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.2797052459540135,
+      "climatology_rps": 0.5555555555555557,
+      "rpss": 0.49653055728277573,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "false_method_pointer",
+     "kind": "incorrect",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "unresolved",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.43296127435968607,
+      "climatology_rps": 0.4583333333333334,
+      "rpss": 0.05535721957886697,
+      "cases": 24,
+      "years": 2,
+      "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+     }
+    },
+    {
+     "control": "no_answer",
+     "kind": "incorrect",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "no_answer",
+     "kind": "incorrect",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    }
+   ],
+   "not_applicable": {
+    "target_leak_at_level_2": "This template has no Level 2 submission yet."
+   }
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [
+    {
+     "pair": "thirty_days",
+     "convention": "month_lengths",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 6,
+     "instances": 6,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "rates_not_converted",
+     "convention": "month_lengths",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 6,
+     "instances": 6,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "cos_latitude vs unweighted",
+     "convention": "observation_weighting",
+     "kind": "accepted_vs_accepted",
+     "separated_on": 6,
+     "instances": 6,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "full_sample",
+     "convention": "category_thresholds",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 4,
+     "instances": 6,
+     "status": "separated by the numbers on some instances; the changed-instance probe covers the rest",
+     "not_separated_on": [
+      "train-1993-2000--new-2001-2002--all-cells",
+      "train-1993-2000--new-2001-2002--southern-rows"
+     ]
+    },
+    {
+     "pair": "equal_thirds vs training_frequencies",
+     "convention": "climatology_reference",
+     "kind": "accepted_vs_accepted",
+     "separated_on": 4,
+     "instances": 6,
+     "status": "separated by the numbers on some instances; the changed-instance probe covers the rest",
+     "not_separated_on": [
+      "train-1993-2002--new-2003-2004--all-cells",
+      "train-1993-2002--new-2003-2004--southern-rows"
+     ]
+    }
+   ],
+   "known_ambiguities": []
+  },
+  "5_model_attempts": {
+   "passed": null,
+   "status": "not_run",
+   "detail": "No agent attempts have been run against this spec version."
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false
+}

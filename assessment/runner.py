@@ -153,7 +153,7 @@ def run(template, params, system, parent=None, level=1):
     write(folder / "assessment.json", assessment)
     shutil.rmtree(folder / "controller/assessment-work", ignore_errors=True)
     return {"run": name, "level": level, "status": metadata["status"], "computed_outcome": assessment["computed_outcome"],
-            "outcome": assessment["outcome"], "skill": (assessment.get("skill") or {}).get("final"), "directory": str(folder.relative_to(ROOT))}
+            "outcome": assessment["outcome"], "skill": next(iter((assessment.get("skill") or {}).values()), None), "directory": str(folder.relative_to(ROOT))}
 
 
 def list_runs():
@@ -166,7 +166,7 @@ def list_runs():
         checks = assessment.get("checks", {})
         variant = checks.get("variant", {})
         rows.append({"id": meta["id"], "template": meta["template"], "instance": meta["instance"]["id"], "level": meta.get("level", 1),
-                     "system": meta["system"], "kind": meta["kind"], "skill": (assessment.get("skill") or {}).get("final"),
+                     "system": meta["system"], "kind": meta["kind"], "skill": next(iter((assessment.get("skill") or {}).values()), None),
                      "skill_valid_for_ranking": assessment.get("skill_valid_for_ranking"),
                      "status": meta.get("status"), "computed_outcome": assessment.get("computed_outcome"), "outcome": assessment.get("outcome"),
                      "failed_checks": sorted(name for name, row in checks.items() if row["state"] == "fail"),
