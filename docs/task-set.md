@@ -249,6 +249,8 @@ observed rainfall.
   being imported, which is how `acmadDL` and `AfricaS2S` are used. It needs
   extending to cover imports; it should be extended, not replaced.
 - **The evidence column is thin.** No row has repeat attempts by more than one
-  model under one protocol, so no pass rate here supports a model ranking.
+  model under one protocol, so no pass rate here supports a model ranking. The
+  three converted rows each have two or three attempts by one cheap model in
+  the new format; see [the assessment format](assessment-format.md).
 - **No human has approved any task.** Scientific, scoring and redistribution
   approvals remain false for every packaged task.

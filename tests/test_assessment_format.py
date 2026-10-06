@@ -399,3 +399,78 @@ def test_missing_or_false_method_pointer_is_unresolved_not_failed(seasonal, seas
         row = result["checks"]["process.documented_calibration"]
         assert row["state"] == UNRESOLVED and row["reason"] == "missing_evidence" and row.get("decided_by") != "judge"
         assert result["computed_outcome"] == UNRESOLVED and not [n for n, r in result["checks"].items() if r["state"] == FAIL]
+
+
+# ---- substrate use: the original path monitor plus library imports ------------------
+
+def test_library_imports_are_recorded_beside_the_original_monitor(tmp_path):
+    from assessment.substrate import substrate_record
+    from weatherbench.substrate_use import substrate_use
+    run = tmp_path / "run"
+    (run / "logs").mkdir(parents=True)
+    (run / "frozen").mkdir()
+    commands = ["ls /substrate/skills", "python -c 'import numpy; from africas2s.calibration import fit'", "cat /substrate/skills/START.md",
+                "python /work/submission/solve.py", "python - <<EOF\nimport acmaddl_extra\nEOF"]
+    lines = []
+    for number, command in enumerate(commands):
+        lines.append(json.dumps({"type": "adapter", "event": {"type": "execute", "command": command}}))
+        lines.append(json.dumps({"type": "tool_result", "exit_code": 0, "seconds": 0.1}))
+    (run / "logs/events.jsonl").write_text("\n".join(lines) + "\n")
+    (run / "frozen/solve.py").write_text("import xarray as xr\nimport acmaddl\n")
+    (run / "frozen/notes.md").write_text("we could import africas2s here\n")
+    record = substrate_record(run, {"substrate": {"paths": [], "libraries": ["africas2s", "acmaddl", "rosetta"]}})
+    assert record["mounted_files"] == substrate_use(run) and record["mounted_files"]["read"] == 1 and record["mounted_files"]["listed"] == 1
+    assert record["libraries"]["africas2s"] == {"commands_importing": 1, "first_step": 2, "submitted_files_importing": [], "used": True}
+    assert record["libraries"]["acmaddl"]["submitted_files_importing"] == ["solve.py"] and record["libraries"]["acmaddl"]["commands_importing"] == 0
+    assert record["libraries"]["rosetta"]["used"] is False
+    assert substrate_record(run, {"substrate": {"paths": []}})["libraries"] == {}
+    with pytest.raises(ValueError):
+        substrate_record(run, {"substrate": {"libraries": ["os; rm -rf"]}})
+
+
+# ---- defects found by the first agent attempts, kept as regression tests ------------
+
+@needs_data
+def test_changed_data_probe_keeps_the_store_exactly_as_exported(kenya, tmp_path):
+    """The first agent opened the stores with consolidated metadata, which an earlier perturbation dropped."""
+    import filecmp
+    import xarray as xr
+    params = kenya.instance("service-area--weeks-1-2")
+    for name in ("original", "changed"):
+        kenya.hooks.stage_inputs(kenya.private, params, tmp_path / name)
+    kenya.hooks.perturb_inputs(tmp_path / "changed", 3)
+    for store in sorted((tmp_path / "original").glob("*.zarr")):
+        twin = tmp_path / "changed" / store.name
+        files = sorted(p.relative_to(store) for p in store.rglob("*") if p.is_file())
+        assert files == sorted(p.relative_to(twin) for p in twin.rglob("*") if p.is_file())
+        assert {f.parts[0] for f in files if not filecmp.cmp(store / f, twin / f, shallow=False)} == {"tp"}
+        with xr.open_zarr(twin, consolidated=True) as ds:
+            assert ds.tp.attrs["units"] == "kg m**-2"
+
+
+@needs_data
+def test_one_unusable_result_fails_the_envelope_and_the_rest_is_still_assessed(kenya, controls, tmp_path):
+    params = kenya.instance("service-area--weeks-1-2")
+    kenya.hooks.stage_inputs(kenya.private, params, tmp_path / "inputs")
+    submission = controls.build("correct", tmp_path / "inputs", params, tmp_path / "submission")
+    answer = json.loads((submission / "answer.json").read_text())
+    answer["results"]["regional_change_mm"] = [answer["results"]["regional_change_mm"]]         # one array with the wrong shape
+    (submission / "answer.json").write_text(json.dumps(answer))
+    result = assess(kenya, params, submission, Local(), tmp_path / "work")
+    assert result["checks"]["envelope"]["state"] == FAIL and result["checks"]["envelope"]["unusable_results"] == ["regional_change_mm"]
+    assert result["checks"]["invariant.change_equals_current_minus_previous"]["state"] == PASS
+    assert result["checks"]["probe.changed_data"]["state"] == PASS                # the maps still follow the inputs
+    assert result["checks"]["variant"]["state"] == UNRESOLVED and result["computed_outcome"] == FAIL
+    assert result["matched_conventions"]["rainfall_semantics"] == ["differenced_cumulative"]
+
+
+def test_method_pointer_must_name_code_not_quote_a_phrase():
+    from assessment.assess import _pointer_resolves
+    files = {"run.py": "def calibrate(x):\n    return x\nanswer = {'where': 'calibrate loop and full-fit loop'}\n"}
+    assert _pointer_resolves({"file": "run.py", "symbol": "def calibrate"}, files)
+    assert _pointer_resolves({"file": "run.py", "symbol": "calibrate"}, files)
+    assert _pointer_resolves({"file": "run.py", "lines": [1, 2]}, files)
+    assert not _pointer_resolves({"file": "run.py", "symbol": "calibrate loop and full-fit loop"}, files)   # present only because the script writes it
+    assert not _pointer_resolves({"file": "run.py", "symbol": "fit_model"}, files)
+    assert not _pointer_resolves({"file": "run.py", "lines": [2, 9]}, files)
+    assert not _pointer_resolves({"file": "other.py", "symbol": "calibrate"}, files)

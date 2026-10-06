@@ -22,17 +22,23 @@ def table(template, inputs, params, given=None):
             rows.append((combination, _reference(template, inputs, params, combination, given), None))
         except ValueError as error:
             rows.append((combination, None, str(error)))
+        except KeyError:                                           # a derived reference needs a free result the answer lacks
+            rows.append((combination, _reference(template, inputs, params, combination, None), None))
     return rows
 
 
-def consistent(template, submitted, rows):
-    """Indices of the combinations whose reference agrees with every submitted result."""
+def consistent(template, submitted, rows, names=None):
+    """Indices of the combinations whose reference agrees with every submitted result.
+
+    `names` limits the match to some results, for an answer in which others are unusable.
+    """
+    spec = {name: row for name, row in template.matched().items() if names is None or name in names}
     hits, partial = [], []
     for index, (combination, reference, _) in enumerate(rows):
         if reference is None:
             partial.append({})
             continue
-        agrees, detail = compare(template.matched(), submitted, reference)
+        agrees, detail = compare(spec, submitted, reference)
         partial.append(detail)
         if agrees:
             hits.append(index)

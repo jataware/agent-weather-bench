@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "seasonal-rainfall-calibration",
  "spec_version": 1,
- "fingerprint": "30e27f6a73515b2e10ebe913705a2fa97a3f82e128344dd7c3ae09b1c22eb768",
- "certified_at": "20261006T140044",
+ "fingerprint": "0dcfcab8e6606e2161244c3ab4510ff42ea774fdf175bef96b23ebd1d9b78c44",
+ "certified_at": "20261006T143104",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {
@@ -605,9 +605,33 @@
    "known_ambiguities": []
   },
   "5_model_attempts": {
-   "passed": null,
-   "status": "not_run",
-   "detail": "No agent attempts have been run against this spec version."
+   "passed": true,
+   "status": "run",
+   "attempts": 2,
+   "systems": [
+    "codex-luna-pinned"
+   ],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 0,
+   "detail": "Every attempt's answer was classified.",
+   "runs": [
+    {
+     "run": "20261006T141557-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-codex-luna-pinned-dcd0d8",
+     "system": "codex-luna-pinned",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "computed_outcome": "fail",
+     "unknown_answer_checks": []
+    },
+    {
+     "run": "20261006T142402-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-pinned-8ae328",
+     "system": "codex-luna-pinned",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "computed_outcome": "fail",
+     "unknown_answer_checks": []
+    }
+   ]
   }
  },
  "automatic_tests_passed": true,

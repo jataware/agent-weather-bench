@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "kenya-forecast-revision",
  "spec_version": 1,
- "fingerprint": "1020e8d7a5770a0956a393b014078e37fdfb39365fe94c0547bd9faa1aa4dc74",
- "certified_at": "20261006T140451",
+ "fingerprint": "45afa1700fed718248b02e5222758b52bd888232c706a07af8e13bebc88d3ce5",
+ "certified_at": "20261006T142752",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {
@@ -405,9 +405,33 @@
    "known_ambiguities": []
   },
   "5_model_attempts": {
-   "passed": null,
-   "status": "not_run",
-   "detail": "No agent attempts have been run against this spec version."
+   "passed": true,
+   "status": "run",
+   "attempts": 2,
+   "systems": [
+    "codex-luna-pinned"
+   ],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 0,
+   "detail": "Every attempt's answer was classified.",
+   "runs": [
+    {
+     "run": "20261006T141131-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-pinned-53942c",
+     "system": "codex-luna-pinned",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "computed_outcome": "fail",
+     "unknown_answer_checks": []
+    },
+    {
+     "run": "20261006T142150-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-pinned-98a867",
+     "system": "codex-luna-pinned",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": []
+    }
+   ]
   }
  },
  "automatic_tests_passed": true,

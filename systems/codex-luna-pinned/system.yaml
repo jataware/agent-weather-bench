@@ -1,0 +1,23 @@
+schema_version: 1
+id: codex-luna-pinned
+kind: agent
+description: The codex-luna system (gpt-6-luna, medium effort, ChatGPT login, Docker-only tools) with the Codex binary named
+  explicitly, so the verified CLI 0.160.0 is used after the default install moves on. The adapter is byte-identical to codex-luna's.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env: [CODEX_BINARY]
+runtime:
+  image: sha256:14ded77c764dccdcaeef07f91c549709b4ff3549d0c30f5dc780e4376347917a
+  memory: 4g
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 90
+  command_seconds: 120
+substrate:
+  paths:
+  - adapter.py
+  instructions: ''

@@ -14,7 +14,6 @@ from pathlib import Path
 from weatherbench import adapters
 from weatherbench.runtime import ToolSandbox, preflight
 from weatherbench.storage import copy_bundle, digest, inventory, read, write
-from weatherbench.substrate_use import substrate_use
 from weatherbench.systems import resolve_system, snapshot, validate
 
 from .assess import assess
@@ -22,6 +21,7 @@ from .compare import EnvelopeError, align, normalise
 from .execute import Docker
 from .feedback import SCORE_TOOL, DevelopmentFeedback
 from .spec import ROOT
+from .substrate import substrate_record
 
 RUNS = ROOT / "var/template-runs"
 
@@ -143,17 +143,47 @@ def run(template, params, system, parent=None, level=1):
                    "substrate_files": bundle, "runtime_image": config["runtime"]["image"]},
         "spec": {"template": template.name, "spec_version": template.spec["spec_version"], "fingerprint": metadata["fingerprint"]},
         "trace": {"path": "logs/events.jsonl", "sha256": digest(log) if log.is_file() else None},
-        "sandbox": boundary, "substrate_use": substrate_use(folder),
+        "sandbox": boundary, "substrate_use": substrate_record(folder, config),
         "episode": {"parent": metadata["parent"], "started_from": "retained state of the parent run" if parent else "a fresh workspace"}})
     write(folder / "run.json", metadata)
 
-    executor = Docker(config["runtime"]["image"], config["runtime"]["memory"], config["runtime"]["cpus"])
-    assessment = assess(template, params, folder / "frozen", executor, folder / "controller/assessment-work", level=level, feedback=public_feedback)
-    assessment["sandbox"] = boundary["state"]
-    write(folder / "assessment.json", assessment)
-    shutil.rmtree(folder / "controller/assessment-work", ignore_errors=True)
+    assessment = _assess_run(template, folder)
     return {"run": name, "level": level, "status": metadata["status"], "computed_outcome": assessment["computed_outcome"],
             "outcome": assessment["outcome"], "skill": next(iter((assessment.get("skill") or {}).values()), None), "directory": str(folder.relative_to(ROOT))}
+
+
+def _assess_run(template, folder):
+    """Assess a run's frozen submission and keep the record under the fingerprint that produced it."""
+    meta, config = read(folder / "run.json"), read(folder / "system.json")
+    if inventory(folder / "frozen") != read(folder / "artifacts.json"):
+        raise ValueError("Frozen submission changed")
+    feedback = folder / "controller/feedback-public.json"
+    executor = Docker(config["runtime"]["image"], config["runtime"]["memory"], config["runtime"]["cpus"])
+    work = folder / "controller/assessment-work"
+    shutil.rmtree(work, ignore_errors=True)
+    assessment = assess(template, meta["instance"], folder / "frozen", executor, work, level=meta.get("level", 1),
+                        feedback=read(feedback) if feedback.is_file() else None)
+    assessment["sandbox"] = read(folder / "controller/provenance.json")["sandbox"]["state"]
+    assessment["assessed_at"] = datetime.now(timezone.utc).isoformat()
+    shutil.rmtree(work, ignore_errors=True)
+    # Earlier assessments are kept: one file per fingerprint, and a convenience copy of the latest.
+    write(folder / "controller/assessments" / f"{assessment['fingerprint'][:16]}.json", assessment)
+    write(folder / "assessment.json", assessment)
+    return assessment
+
+
+def reassess(run_id):
+    """Assess an existing run again under the current spec and code. The submission is not rerun by an agent."""
+    from .spec import Template
+    folder = resolve_run(run_id)
+    meta = read(folder / "run.json")
+    previous = read(folder / "assessment.json") if (folder / "assessment.json").is_file() else None
+    if previous and not (folder / "controller/assessments" / f"{previous['fingerprint'][:16]}.json").is_file():
+        write(folder / "controller/assessments" / f"{previous['fingerprint'][:16]}.json", previous)
+    assessment = _assess_run(Template(meta["template"]), folder)
+    return {"run": meta["id"], "computed_outcome": assessment["computed_outcome"], "outcome": assessment["outcome"],
+            "previous_computed_outcome": previous and previous["computed_outcome"],
+            "assessments_kept": sorted(p.name for p in (folder / "controller/assessments").iterdir())}
 
 
 def list_runs():
@@ -174,5 +204,6 @@ def list_runs():
                      "pitfalls": variant.get("pitfalls_certain") or variant.get("pitfalls_possible") or [],
                      "matched_conventions": assessment.get("matched_conventions"),
                      "usage": meta.get("usage"), "seconds": meta.get("seconds"), "tool_calls": meta.get("tool_calls"),
-                     "parent": meta.get("parent"), "substrate_use": substrate_use(folder), "spec_version": meta.get("spec_version")})
+                     "parent": meta.get("parent"), "substrate_use": substrate_record(folder, read(folder / "system.json")),
+                     "spec_version": meta.get("spec_version")})
     return rows

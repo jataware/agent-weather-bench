@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TEMPLATES = ROOT / "templates"
 PRIVATE = ROOT / "var/private/templates"
 MODES = ("outcome", "product", "process")
+# The modules that decide an outcome. The runner, the certifier and the command line only orchestrate them.
+DECIDING = ("assess.py", "compare.py", "execute.py", "feedback.py", "judge.py", "outcomes.py", "spec.py", "variant.py", "envelope.md")
 HOOKS = ("prepare", "stage_inputs", "perturb_inputs", "candidate_instances", "brief_fields")
 MODE_HOOKS = {"product": ("reference",), "process": ("reference",), "outcome": ("expected_coordinates", "score")}
 
@@ -96,9 +98,9 @@ class Template:
         return text
 
     def fingerprint(self):
-        """Identity of everything that decides an outcome: the template and this package."""
+        """Identity of everything that decides an outcome: the template's own files and the deciding modules."""
         files = sorted(p for p in self.folder.iterdir() if p.suffix in (".yaml", ".py", ".md", ".json", ".txt") and p.name != "certification.json")
-        files += sorted((ROOT / "assessment").glob("*.py")) + [ROOT / "assessment/envelope.md"]
+        files += [ROOT / "assessment" / name for name in DECIDING]
         digest = hashlib.sha256()
         for path in files:
             digest.update(str(path.relative_to(ROOT)).encode() + b"\0" + hashlib.sha256(path.read_bytes()).digest())

@@ -26,6 +26,8 @@ def main():
     assess = sub.add_parser("assess"); assess.add_argument("template"); assess.add_argument("instance"); assess.add_argument("submission")
     run = sub.add_parser("run"); run.add_argument("template"); run.add_argument("instance"); run.add_argument("--system", required=True); run.add_argument("--parent"); run.add_argument("--level", type=int, choices=[1, 2], default=1)
     sub.add_parser("runs")
+    sub.add_parser("reassess").add_argument("run")
+    sub.add_parser("attempts").add_argument("template")
     for command in (certify, assess):
         command.add_argument("--local-trusted", action="store_true", help="Run without Docker. Only for the controller's own control solutions.")
         command.add_argument("--image")
@@ -42,7 +44,13 @@ def dispatch(args):
     if args.command == "runs":
         from .runner import list_runs
         return list_runs()
+    if args.command == "reassess":
+        from .runner import reassess
+        return reassess(args.run)
     template = Template(args.template)
+    if args.command == "attempts":
+        from .certify import record_attempts
+        return record_attempts(template)
     if args.command == "prepare":
         return template.hooks.prepare(template.private, args.source)
     if args.command == "instances":

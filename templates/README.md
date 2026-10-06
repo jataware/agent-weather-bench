@@ -55,6 +55,20 @@ here when it is converted.
 .venv/bin/python -m assessment run kenya-forecast-revision service-area--weeks-1-2 --system kenya-revision-fixture
 .venv/bin/python -m assessment run weeks34-rainfall final-2015-2017--all-cells --system weeks34-level2-fixture --level 2
 .venv/bin/python -m assessment runs
+.venv/bin/python -m assessment reassess RUN_ID
+.venv/bin/python -m assessment attempts kenya-forecast-revision
+```
+
+`reassess` assesses an existing run again under the current spec and code and
+keeps the earlier assessment. `attempts` refreshes the fifth certification test
+from the agent runs on disk.
+
+To run the Codex systems after the default command-line install has moved past
+the verified version, name the verified binary and use the pinned system:
+
+```sh
+export CODEX_BINARY=$HOME/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex
+.venv/bin/python -m assessment run kenya-forecast-revision central--weeks-2-3 --system codex-luna-pinned
 ```
 
 `certify` and `assess` run submitted code in the offline Docker runtime. The
@@ -91,15 +105,19 @@ check with its outcome.
 `certify` runs four automatic tests: the two reference implementations agree;
 known-correct solutions pass; deliberately incorrect solutions are caught by
 the right check; and the separability of every accepted–pitfall pair is
-measured. The fifth test, agent attempts with every unknown answer ruled on,
-needs model runs and is recorded as not run. A test in
-`tests/test_assessment_format.py` fails when the spec, the reference or the
-assessment code changes without a new certification.
+measured. The fifth test reads the agent runs on disk: it needs at least two
+attempts assessed under the current fingerprint, with no answer left
+unclassified. `certified` stays false until a domain scientist approves the
+task. A test in `tests/test_assessment_format.py` fails when the spec, the
+reference or a module that decides outcomes changes without a new
+certification.
 
 ## Current templates
 
 | Template | Task-set row | Mode | Certification |
 | --- | --- | --- | --- |
-| `kenya-forecast-revision` | 4 | Product | Four automatic tests pass; agent attempts not run |
-| `weeks34-rainfall` | 15 | Outcome, Levels 1 and 2 | Four automatic tests pass; agent attempts not run |
-| `seasonal-rainfall-calibration` | 11 | Process | Four automatic tests pass; agent attempts not run; checklist is a draft |
+| `kenya-forecast-revision` | 4 | Product | All five tests pass; two attempts by one cheap model |
+| `weeks34-rainfall` | 15 | Outcome, Levels 1 and 2 | All five tests pass; three attempts by one cheap model |
+| `seasonal-rainfall-calibration` | 11 | Process | All five tests pass; two attempts by one cheap model; the checklist is a draft |
+
+No template is approved by a domain scientist.

@@ -6,10 +6,11 @@ mode has no reference answer: it checks that the submission is a valid forecast
 and scores it against withheld observations.
 """
 import json
+import re
 import shutil
 from pathlib import Path
 
-from .compare import EnvelopeError, align, compare, normalise
+from .compare import EnvelopeError, align, compare, usable
 from .execute import valid_argv
 from .judge import interpret
 from .outcomes import FAIL, PASS, UNRESOLVED, combine, outcome
@@ -20,7 +21,7 @@ JUDGE = "judge"                                                    # value of `d
 
 
 def read_envelope(template, submission):
-    """(answer, results, argv) or an EnvelopeError naming what is missing."""
+    """(answer, usable results, argv, per-result problems), or an EnvelopeError when nothing can be assessed."""
     path = Path(submission) / "answer.json"
     if not path.is_file():
         raise EnvelopeError("The submission has no answer.json")
@@ -30,11 +31,13 @@ def read_envelope(template, submission):
         raise EnvelopeError("answer.json is not valid JSON") from None
     if not isinstance(answer, dict):
         raise EnvelopeError("answer.json must be an object")
-    results = normalise(template.spec["results"], answer.get("results"))
+    results, problems = usable(template.spec["results"], answer.get("results"))
+    if not results:
+        raise EnvelopeError("answer.json has no usable results: " + "; ".join(problems.values()))
     argv = (answer.get("run") or {}).get("argv") if isinstance(answer.get("run"), dict) else None
     if not valid_argv(argv):
         raise EnvelopeError("answer.json needs run.argv containing {input_dir} and {output_dir}")
-    return answer, results, argv
+    return answer, results, argv, problems
 
 
 def _texts(submission, limit=200000):
@@ -77,7 +80,9 @@ class _Context:
             slim["stderr"] = record.get("stderr", "")[-600:]
             return None, slim, outcome(FAIL, "The run command did not produce an answer.json.", run=slim)
         try:
-            raw = normalise(self.spec["results"], record["answer"].get("results") if isinstance(record["answer"], dict) else None)
+            raw, problems = usable(self.spec["results"], record["answer"].get("results") if isinstance(record["answer"], dict) else None)
+            if not raw:
+                raise EnvelopeError("; ".join(problems.values()))
             return self.frame(raw, inputs, instance), slim, None
         except EnvelopeError as error:
             return None, slim, outcome(FAIL, "The run command's answer is unusable: " + str(error), run=slim)
@@ -111,11 +116,14 @@ def assess(template, params, submission, executor, scratch, level=1, feedback=No
         return _finish(result, checks)
 
     try:
-        answer, raw, context.argv = read_envelope(template, submission)
-        checks["envelope"] = outcome(PASS, "answer.json holds the named results and a run command.")
+        answer, raw, context.argv, problems = read_envelope(template, submission)
     except EnvelopeError as error:
         return stop("envelope", str(error))
+    # One unusable result fails the envelope, and everything that does not need it is still assessed.
+    checks["envelope"] = (outcome(FAIL, "Unusable results: " + "; ".join(problems.values()), unusable_results=sorted(problems)) if problems
+                          else outcome(PASS, "answer.json holds the named results and a run command."))
     original = context.stage("original")
+    context.usable = set(raw)
     try:
         results = context.frame(raw, original)
         if context.framed:
@@ -124,15 +132,21 @@ def assess(template, params, submission, executor, scratch, level=1, feedback=No
         return stop("coverage", "The results do not cover exactly the required cases: " + str(error))
 
     for name in spec.get("invariants", []):
-        ok, detail = template.hooks.INVARIANTS[name](results, params, original)
-        checks[f"invariant.{name}"] = outcome(PASS if ok else FAIL, detail)
+        try:
+            ok, detail = template.hooks.INVARIANTS[name](results, params, original)
+            checks[f"invariant.{name}"] = outcome(PASS if ok else FAIL, detail)
+        except KeyError as missing:
+            checks[f"invariant.{name}"] = outcome(UNRESOLVED, f"Not assessed: it needs the result {missing}, which is unusable.", "not_assessed")
     if spec["mode"] == "outcome":
         _forecast_probes(context, results, original, checks)
     else:
         _reference_checks(context, results, original, answer, checks, result)
     _invariance_probes(context, results, checks)
     if spec.get("skill") and "coverage" in checks:
-        result["skill"] = {name: template.hooks.score(results, params, template.private, name) for name in spec["skill"].get("splits", ["final"])}
+        try:
+            result["skill"] = {name: template.hooks.score(results, params, template.private, name) for name in spec["skill"].get("splits", ["final"])}
+        except KeyError:
+            result["skill_not_scored"] = "The forecast it would score is unusable."
     _claims(context, results, answer, claims, checks, result)
     if level == 2:
         _feedback_limit(spec, feedback, checks, result)
@@ -149,7 +163,7 @@ def _follows_inputs(context, name, submitted, hits, rerun, rows, slim):
     """Verdict for a changed-input probe, and the consistent set on the changed inputs."""
     template = context.template
     unchanged = compare(context.spec["results"], rerun, submitted)[0]
-    local, _ = consistent(template, rerun, rows)
+    local, _ = consistent(template, rerun, rows, context.usable)
     if not hits:
         if unchanged:
             return outcome(FAIL, "The results did not change when the inputs changed.", run=slim), local
@@ -168,7 +182,8 @@ def _reference_checks(context, results, original, answer, checks, result):
     template, spec, hooks, params = context.template, context.spec, context.hooks, context.params
     probes = spec.get("probes", [])
     rows = table(template, original, params, given=results)
-    hits, partial = consistent(template, results, rows)
+    unusable = sorted(set(template.matched()) - context.usable)
+    hits, partial = consistent(template, results, rows, context.usable)        # matched on the results that can be read
     first = decide(template, rows, hits, partial)
     narrowed, probes_passed = list(hits), True
 
@@ -223,6 +238,10 @@ def _reference_checks(context, results, original, answer, checks, result):
             final = outcome(PASS, "The product is correct on this instance. No probe separated the accepted reading from the pitfall, so the method is undetermined.",
                             "ambiguous_variant", consistent_with=final["consistent_with"], pitfalls_possible=final["pitfalls_possible"],
                             first_match=first["consistent_with"])
+    if unusable and final["state"] == PASS:
+        # Nothing wrong was found in what can be read, but a required result cannot be read at all.
+        final = outcome(UNRESOLVED, "The usable results are consistent only with accepted readings; not assessed in full because "
+                        + ", ".join(unusable) + " is unusable.", "not_assessed", consistent_with=final["consistent_with"], unusable_results=unusable)
     checks["variant"] = final
     result["matched_conventions"] = summarise(template, rows, narrowed) if narrowed else None
     result["first_match_conventions"] = summarise(template, rows, hits) if hits else None
@@ -296,14 +315,22 @@ def _invariance_probes(context, results, checks):
         folder = context.stage(f"invariance-{name}", prepare=lambda folder, probe=probe: context.hooks.perturb_inputs(folder, context.seed, probe["perturb"]))
         produced, slim, problem = context.rerun(f"invariance-{name}", folder)
         if problem is None:
-            same = compare(context.spec["results"], probe["unchanged"](produced, folder, context.params), probe["unchanged"](results, folder, context.params))[0]
-            problem = outcome(PASS if same else FAIL, probe["passes"] if same else probe["fails"], run=slim)
+            try:
+                same = compare(context.spec["results"], probe["unchanged"](produced, folder, context.params), probe["unchanged"](results, folder, context.params))[0]
+                problem = outcome(PASS if same else FAIL, probe["passes"] if same else probe["fails"], run=slim)
+            except KeyError as missing:
+                problem = outcome(UNRESOLVED, f"Not assessed: it needs the result {missing}, which is unusable.", "not_assessed", run=slim)
         checks[f"probe.{name}"] = problem
 
 
 def _claims(context, results, answer, claims, checks, result):
     stated = answer.get("claims") if isinstance(answer.get("claims"), dict) else {}
-    expected = context.hooks.expected_claims(results, context.params) if callable(getattr(context.hooks, "expected_claims", None)) else {}
+    try:
+        expected = context.hooks.expected_claims(results, context.params) if callable(getattr(context.hooks, "expected_claims", None)) else {}
+    except KeyError:
+        for name in claims:
+            checks[f"claim.{name}"] = outcome(UNRESOLVED, "Not assessed: the results it rests on are unusable.", "not_assessed")
+        return
     for name, row in claims.items():
         got = stated.get(name) if name in stated else ...
         if got is ...:
@@ -342,7 +369,9 @@ def _feedback_limit(spec, feedback, checks, result):
 def _process_steps(context, answer, checks, result):
     """One outcome per step of the standard, each from the most exact evidence the spec names."""
     template, files = context.template, None
-    method = answer.get("method") if isinstance(answer.get("method"), dict) else {}
+    # `method` is a section of answer.json; one nested under `claims` is read as the same thing
+    nested = answer["claims"].get("method") if isinstance(answer.get("claims"), dict) else None
+    method = answer["method"] if isinstance(answer.get("method"), dict) else nested if isinstance(nested, dict) else {}
     for step in context.spec.get("process", []):
         base = {"requirement": step["requirement"], "source": step["source"]}
         if "checks" in step:
@@ -360,9 +389,9 @@ def _process_steps(context, answer, checks, result):
             if not (isinstance(entry, dict) and isinstance(entry.get("what"), str) and entry["what"].strip() and isinstance(where, dict)):
                 row = outcome(UNRESOLVED, f"The answer's method section has no usable entry `{step['method_statement']}` (it needs `what` and `where`).",
                               "missing_evidence", **base)
-            elif where.get("file") not in files or not isinstance(where.get("symbol"), str) or where["symbol"] not in files[where["file"]]:
-                row = outcome(UNRESOLVED, "The method entry points to a file or symbol that is not in the submission.", "missing_evidence",
-                              pointer=where, **base)
+            elif not _pointer_resolves(where, files):
+                row = outcome(UNRESOLVED, "The method entry does not point to a place in the submission: it needs a file, and a symbol that appears in it or a line range inside it.",
+                              "missing_evidence", pointer=where, **base)
             else:
                 row = {**outcome(UNRESOLVED, "The pointer resolves. Whether that code does what the step requires is a judge question, and no judge was run.",
                                  "judge_not_run", pointer=where, stated=entry["what"][:400], **base), "decided_by": JUDGE}
@@ -371,6 +400,22 @@ def _process_steps(context, answer, checks, result):
         checks[f"process.{step['id']}"] = row
     if context.spec.get("process"):
         result["process_not_applicable"] = context.spec.get("process_not_applicable", [])
+
+
+def _pointer_resolves(where, files):
+    """A pointer is a file in the submission plus a name that appears in it, or a line range that lies inside it.
+
+    The symbol must be a name, optionally with `def` or `class` before it. A phrase does
+    not count: a script that writes its own answer contains every phrase of that answer.
+    """
+    text = files.get(where.get("file")) if isinstance(where.get("file"), str) else None
+    if text is None:
+        return False
+    symbol = where.get("symbol")
+    if isinstance(symbol, str) and re.fullmatch(r"(?:def |class |function )?[A-Za-z_][\w.]*", symbol.strip()) and re.search(r"(?<![\w.])" + re.escape(symbol.strip()) + r"(?!\w)", text):
+        return True
+    lines = where.get("lines")
+    return (isinstance(lines, list) and len(lines) == 2 and all(type(n) is int for n in lines) and 1 <= lines[0] <= lines[1] <= text.count("\n") + 1)
 
 
 def _results_step(context, names, base):
@@ -385,7 +430,10 @@ def _results_step(context, names, base):
             if reference is not None and any(rows[b][1] is not None and not compare(subset, rows[b][1], reference)[0] for b in twins):
                 relevant.append(dimension)
                 break
-    agreeing = [i for i in range(len(rows)) if partial[i] and all(partial[i][name]["agrees"] for name in names)]
+    if any(name not in context.usable for name in names):
+        return outcome(UNRESOLVED, "Not assessed: " + ", ".join(n for n in names if n not in context.usable) + " is unusable.", "not_assessed",
+                       evidence_results=names, **base)
+    agreeing = [i for i in range(len(rows)) if partial[i] and all(partial[i].get(name, {}).get("agrees") for name in names)]
     seen = {tuple(rows[i][0][d] for d in relevant) for i in agreeing}
     pitfalls = [sorted(value for d, value in zip(relevant, combo) if template.spec["conventions"][d][value] == "pitfall") for combo in seen]
     extra = {"evidence_results": names, "conventions_that_matter": relevant, **base}

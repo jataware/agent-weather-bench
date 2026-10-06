@@ -562,8 +562,9 @@ it is in [templates/README.md](../templates/README.md).
   eleven-step checklist drawn from the WMO practices for objective seasonal
   forecasting.
 
-**All three specs passed their four automatic certification tests in the
-offline Docker runtime.**
+**All three specs passed all five certification tests, the four automatic ones
+in the offline Docker runtime.** The fifth rests on two or three attempts by
+one cheap model per template. No domain scientist has approved any of them.
 
 - *Kenya forecast revision.* Two independent reference implementations agree to
   6e-14 over 64 convention combinations, and the first reproduces the earlier
@@ -585,7 +586,7 @@ offline Docker runtime.**
 solves an instance inside the tool sandbox, the controller freezes the
 submission and writes the provenance record, and the probes rerun the code
 offline. A Level 2 fixture also makes three development-score requests through
-the feedback tool. No language model has attempted either template.
+the feedback tool.
 
 **The outcome-mode validity gate has four parts.** It prescribes no method.
 
@@ -683,15 +684,73 @@ increments agree on 30 of 48. The other four pitfalls give different numbers on
 every instance. Coinciding readings are therefore common, and the probe that
 separates them is necessary, not a refinement.
 
+## The first agent attempts
+
+**Seven attempts were run with one cheap model.** The model is gpt-6-luna,
+driven through the existing Codex adapter on the subscription login, with the
+verified command-line version 0.160.0. Each attempt took about a minute and
+44,000 to 195,000 tokens. These are development attempts: one model, two
+instances per template. They support no ranking.
+
+Columns:
+
+- **Template and instance** — the task and the drawn parameters.
+- **Level** — 1 is "produce a valid output"; 2 is "optimize it".
+- **Computed outcome** — every check a computation decides. Judge checks were
+  not run.
+- **What the assessment found** — the checks that did not pass, or the skill.
+
+| Template and instance | Level | Computed outcome | What the assessment found |
+| --- | --- | --- | --- |
+| Kenya revision, service area, weeks 1–2 | 1 | Fail | Named pitfall: each 7-day window is one day early. Every other check passed. |
+| Kenya revision, central box, weeks 2–3 | 1 | Pass | — |
+| Weeks 3–4 rainfall, final 2018–2021 | 1 | Pass | RMSE 14.233 mm, 0.3% better than climatology |
+| Weeks 3–4 rainfall, final 2018–2021 | 2 | Pass | Used 5 of 5 score requests. RMSE 14.056 mm, 1.6% better than climatology. Its stated development score equals the controller's. |
+| Weeks 3–4 rainfall, final 2015–2017 | 1 | Pass | RMSE 11.782 mm, 1.8% better than climatology |
+| Seasonal calibration, 1993–2004 | 1 | Fail | One result, the forecast totals, has the wrong shape and is unusable. The cross-validation, observed totals, categories and skill score all pass. Both method pointers quote phrases, not code, and are unresolved. |
+| Seasonal calibration, 1993–2002 | 1 | Fail | Named pitfall: daily rates were summed without multiplying by the days in each month. The new-year probabilities contain non-finite values. The cross-validation, categories and skill score pass. |
+
+**The first Kenya diagnosis was confirmed by reading the code.** The submitted
+script takes the cumulative total at the period start plus six days, minus the
+cumulative total one day before the start. That is the seven days ending one
+day early, which is exactly the pitfall the assessment named.
+
+**A probe separated two readings on a real attempt.** On that Kenya instance
+the weighted and unweighted regional means agree within tolerance, so the
+numbers fitted both. The changed-instance probe reran the agent's code on an
+instance where they differ, and the code followed the weighted reading.
+
+**The attempts exposed four defects in the controller, and all four are
+fixed.** This is what the fifth certification test is for.
+
+1. *The changed-data probe altered the store's format.* It rewrote the Kenya
+   stores without their consolidated metadata, so an agent's valid reader
+   crashed on the changed inputs and the probe reported a false failure. The
+   probe now rewrites only the rainfall values, in place.
+2. *One unusable result stopped the whole assessment.* An array with the wrong
+   shape left every other check unassessed. The envelope still fails, and
+   everything that does not need the unusable result is now assessed.
+3. *The delivery contract did not say where the `method` section goes.* The
+   agent put it under `claims`. The contract now lists it, and a `method`
+   nested under `claims` is read as the same thing.
+4. *A method pointer could be satisfied by a phrase.* A script that writes its
+   own answer contains every phrase of that answer. A pointer must now be a
+   name that appears in the file, or a line range inside it.
+
+**Every run was assessed again after the fixes.** Each earlier assessment is
+kept beside the run under the fingerprint that produced it.
+
 **Four things are not implemented.**
 
 - *No judge backend.* The verdict validator, including the exact-quote rule, is
   written and tested. No model is wired to it, so interpretation checks return
   unresolved with reason `judge_not_run`.
-- *No agent attempts.* The Codex adapters accept only command-line version
-  0.160.0, whose isolation was verified, and the installed version is 0.160.1.
-  No Anthropic key is configured. Neither guard was bypassed. Certification
-  test 5 is recorded as not run for both templates.
+- *Only one model has attempted the templates.* The Codex adapters accept only
+  command-line version 0.160.0, whose isolation was verified. The default
+  install has moved to 0.160.1, so the system `codex-luna-pinned` names the
+  0.160.0 binary, which is still on disk; the version check was not changed. No
+  Anthropic key is configured, so no Claude model has run, and the frontier
+  Codex model was not run because no spending or usage limit was agreed.
 - *No live data acquisition.* The earlier version of the Kenya task had the
   agent download the forecasts. This version supplies the frozen raw stores,
   for repeatability.
@@ -725,8 +784,9 @@ separates them is necessary, not a refinement.
   need a ruling.
 - **Unresolved outcomes can pile up.** A spec that returns unresolved too often
   is a defective spec, and the unresolved rate should be tracked per template.
-- **The format has been tried on three tasks and no model has attempted any of
-  them.**
+- **The format has been tried on three tasks by one cheap model.** Seven
+  attempts cannot show how the checks behave across models, or whether the
+  tasks separate cheap models from frontier ones.
 - **The outcome gate cannot see every leak.** It catches hard-coded forecasts
   and use of later model forecasts. It cannot tell whether a model has
   memorised the public observations and encoded them in a fitted rule that

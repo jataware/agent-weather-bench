@@ -6,34 +6,46 @@ class EnvelopeError(ValueError):
     """The submission does not contain the results in a usable form."""
 
 
-def normalise(results_spec, raw):
-    """Named results as float arrays, with the number of dimensions the spec states."""
+def usable(results_spec, raw):
+    """(usable results as arrays, {name: why a result is unusable}). One bad result does not hide the others."""
     if not isinstance(raw, dict):
         raise EnvelopeError("results must be an object of named quantities")
-    missing = sorted(set(results_spec) - set(raw))
-    if missing:
-        raise EnvelopeError("results lacks: " + ", ".join(missing))
-    out = {}
+    out, problems = {}, {}
     for name, row in results_spec.items():
-        if row.get("dtype") == "string":
-            if not isinstance(raw[name], list) or not all(isinstance(item, str) for item in raw[name]):
-                raise EnvelopeError(f"{name} must be a list of strings")
-            out[name] = np.array(raw[name], dtype=str)
-            continue
-        try:
-            value = np.asarray(raw[name], dtype=float)
-        except (TypeError, ValueError):
-            raise EnvelopeError(f"{name} is not a rectangular array of numbers") from None
-        expected = 1 if row.get("kind") == "coordinate" else len(row.get("dims", []))
-        if value.ndim != expected:
-            raise EnvelopeError(f"{name} has {value.ndim} dimensions; the brief asks for {expected}")
-        if not np.isfinite(value).all():
-            raise EnvelopeError(f"{name} contains missing or infinite values")
-        out[name] = value
+        if name not in raw:
+            problems[name] = f"{name} is missing"
+        elif row.get("dtype") == "string":
+            if isinstance(raw[name], list) and all(isinstance(item, str) for item in raw[name]):
+                out[name] = np.array(raw[name], dtype=str)
+            else:
+                problems[name] = f"{name} must be a list of strings"
+        else:
+            try:
+                value = np.asarray(raw[name], dtype=float)
+            except (TypeError, ValueError):
+                problems[name] = f"{name} is not a rectangular array of numbers"
+                continue
+            expected = 1 if row.get("kind") == "coordinate" else len(row.get("dims", []))
+            if value.ndim != expected:
+                problems[name] = f"{name} has {value.ndim} dimensions; the brief asks for {expected}"
+            elif not np.isfinite(value).all():
+                problems[name] = f"{name} contains missing or infinite values"
+            else:
+                out[name] = value
     for name, row in results_spec.items():
         for axis, dim in enumerate(row.get("dims", [])):
-            if dim in out and out[name].shape[axis] != out[dim].shape[0]:
-                raise EnvelopeError(f"{name} does not match the length of {dim}")
+            if name in out and dim in out and out[name].shape[axis] != out[dim].shape[0]:
+                problems[name] = f"{name} does not match the length of {dim}"
+                del out[name]
+                break
+    return out, problems
+
+
+def normalise(results_spec, raw):
+    """Every named result as a float array, or an EnvelopeError naming the first that is unusable."""
+    out, problems = usable(results_spec, raw)
+    if problems:
+        raise EnvelopeError("; ".join(problems[name] for name in results_spec if name in problems))
     return out
 
 
@@ -53,11 +65,15 @@ def _order(submitted, reference, atol):
 
 def compare(results_spec, submitted, reference):
     """(all results agree, per-result detail). Arrays are realigned to the reference coordinates."""
-    orders = {name: _order(submitted[name], reference[name], row.get("tolerance", {}).get("atol", 0))
+    orders = {name: _order(submitted[name], reference[name], row.get("tolerance", {}).get("atol", 0)) if name in submitted else None
               for name, row in results_spec.items() if row.get("kind") == "coordinate" and name in reference}
     detail, agree = {}, True
     results_spec = {name: row for name, row in results_spec.items() if name in reference}
     for name, row in results_spec.items():
+        if name not in submitted:                                  # an unusable result agrees with nothing
+            detail[name] = {"agrees": False, "largest_difference": None}
+            agree = False
+            continue
         if row.get("kind") == "coordinate":
             ok, gap = orders[name] is not None, None
         else:
@@ -87,13 +103,15 @@ def align(results_spec, submitted, frame):
     """
     orders = {}
     for name, expected in frame.items():
+        if name not in submitted:
+            raise EnvelopeError(f"{name} is missing or unusable")
         order = _order(submitted[name], expected, results_spec[name].get("tolerance", {}).get("atol", 0))
         if order is None:
             raise EnvelopeError(f"{name} does not list exactly the {len(expected)} expected values (it has {len(submitted[name])})")
         orders[name] = order
     out = {name: frame[name] for name in frame}
     for name, row in results_spec.items():
-        if name in frame:
+        if name in frame or name not in submitted:
             continue
         value = submitted[name]
         for axis, dim in enumerate(row.get("dims", [])):

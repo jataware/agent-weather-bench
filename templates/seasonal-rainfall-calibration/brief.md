@@ -11,4 +11,4 @@ Produce a calibrated tercile-probability forecast for {new_span} that conforms t
 - `forecast_probability`: `[new_year][category][latitude][longitude]`;
 - `year`, `new_year`, `latitude`, `longitude`: the order of your arrays.
 
-In `method`, give entries `calibration` and `cross_validation`, each with `what` you did and `where` (`file` and `symbol`).
+In the `method` section, give entries `calibration` and `cross_validation`.

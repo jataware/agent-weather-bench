@@ -161,6 +161,43 @@ def run_controls(template, executor, instances, scratch, inputs_for):
     return rows, controls.NOT_APPLICABLE
 
 
+def model_attempts(template):
+    """Test 5: agent attempts assessed under the current fingerprint, and whether any answer is still unknown."""
+    from .runner import RUNS
+    current, stale = [], 0
+    for folder in sorted(RUNS.glob("*")) if RUNS.is_dir() else []:
+        if not ((folder / "run.json").is_file() and (folder / "assessment.json").is_file()):
+            continue
+        meta, assessment = json.loads((folder / "run.json").read_text()), json.loads((folder / "assessment.json").read_text())
+        if meta.get("template") != template.name or meta.get("kind") != "agent":
+            continue
+        if assessment.get("fingerprint") != template.fingerprint():
+            stale += 1
+            continue
+        current.append({"run": meta["id"], "system": meta["system"], "instance": meta["instance"]["id"], "level": meta.get("level", 1),
+                        "computed_outcome": assessment["computed_outcome"],
+                        "unknown_answer_checks": sorted(name for name, row in assessment["checks"].items() if row.get("reason") == "unknown_answer")})
+    unknown = sum(bool(row["unknown_answer_checks"]) for row in current)
+    enough = len(current) >= 2
+    return {"passed": (unknown == 0) if enough else None, "status": "run" if current else "not_run", "attempts": len(current),
+            "systems": sorted({row["system"] for row in current}), "attempts_with_an_unruled_unknown_answer": unknown,
+            "attempts_assessed_under_another_fingerprint": stale,
+            "detail": ("Needs at least two agent attempts assessed under this fingerprint." if not enough else
+                       "Every attempt's answer was classified." if unknown == 0 else "Some answers match no listed reading and await a ruling."),
+            "runs": current}
+
+
+def record_attempts(template):
+    """Refresh test 5 in the tracked certification record, without rerunning the other four tests."""
+    path = template.folder / "certification.json"
+    record = json.loads(path.read_text())
+    if record["fingerprint"] != template.fingerprint():
+        raise ValueError("The certification record is for another fingerprint; run certify first")
+    record["tests"]["5_model_attempts"] = model_attempts(template)
+    path.write_text(json.dumps(record, indent=1) + "\n")
+    return record["tests"]["5_model_attempts"]
+
+
 def certify(template, executor, full=False, control_instances=2):
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
     scratch = ROOT / "var/certification" / template.name / stamp
@@ -202,11 +239,11 @@ def certify(template, executor, full=False, control_instances=2):
             "4_separability": {"passed": True, "pairs": pairs,
                                **({"not_applicable": "Outcome mode has no reference answer, so there are no readings to separate."} if outcome_mode else {}),
                                "known_ambiguities": [row["pair"] for row in pairs if row["status"].startswith("not separable") and row["kind"] == "accepted_vs_pitfall"]},
-            "5_model_attempts": {"passed": None, "status": "not_run", "detail": "No agent attempts have been run against this spec version."},
+            "5_model_attempts": model_attempts(template),
         },
     }
     report["automatic_tests_passed"] = all(report["tests"][name]["passed"] for name in list(report["tests"])[:4])
-    report["certified"] = False                                    # test 5 and human approval are still outstanding
+    report["certified"] = False                                    # a domain scientist's approval is still outstanding
     (scratch / "certification.json").write_text(json.dumps(report, indent=2) + "\n")
     summary = json.loads(json.dumps(report))
     for test in ("2_known_correct_solutions_pass", "3_incorrect_solutions_are_caught"):

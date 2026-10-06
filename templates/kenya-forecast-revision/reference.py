@@ -72,30 +72,29 @@ def perturb_inputs(inputs, seed, kind="data"):
 
     Adds a smooth space- and lead-dependent amount to the cumulative field, and
     lowers a few cumulative values to create clear negative increments, which makes
-    the clipped and unclipped readings differ. Coordinates and metadata are untouched.
+    the clipped and unclipped readings differ. Only the values of `tp` are rewritten,
+    in place: every coordinate, attribute, chunk layout and the store's consolidated
+    metadata stay exactly as the provider exported them, so any reader that works on
+    the original works on the changed store.
     """
+    import zarr
     rng = np.random.default_rng(seed)
     for path in sorted(Path(inputs).glob("ECMWF_s2s_precip_*.zarr")):
-        with xr.open_zarr(path, chunks=None, consolidated=False) as source:
-            ds = source.load()
-        tp = ds.tp.transpose("number", "step", "latitude", "longitude")
-        values = tp.values.astype("float64")
-        lead = (ds.step.values / DAY).astype(float)
-        pattern = 1.5 + np.cos(np.deg2rad(40 * np.arange(tp.sizes["latitude"])))[:, None] * np.sin(0.9 * np.arange(tp.sizes["longitude"]) + rng.uniform(0, 3))[None, :]
+        group = zarr.open_group(path, mode="r+")
+        array = group["tp"]
+        names = list(array.metadata.dimension_names)
+        order = [names.index(name) for name in ("number", "step", "latitude", "longitude")]
+        values = np.transpose(np.asarray(array[...], dtype="float64"), order)
+        lead = np.arange(values.shape[1], dtype="float64")       # the steps are whole days from the issue, checked by load()
+        pattern = 1.5 + np.cos(np.deg2rad(40 * np.arange(values.shape[2])))[:, None] * np.sin(0.9 * np.arange(values.shape[3]) + rng.uniform(0, 3))[None, :]
         rate = rng.uniform(0.5, 1.5) * pattern                     # mm per day, differs by cell
         values += lead[None, :, None, None] * rate[None, None]
-        members = rng.choice(tp.sizes["number"], size=12, replace=False)
-        steps = rng.integers(2, tp.sizes["step"] - 2, size=12)
+        members = rng.choice(values.shape[0], size=12, replace=False)
+        steps = rng.integers(2, values.shape[1] - 2, size=12)
         for member, step in zip(members, steps):
             values[member, step] -= 4.0                            # one dip: a -4 mm then +4 mm increment
         values = np.round(values * 32) / 32                         # keep the source's 1/32 mm quantum
-        ds["tp"] = (tp.dims, values.astype("float32"), tp.attrs)
-        for name in ds.variables:
-            ds[name].encoding = {}
-        temporary = path.with_name(path.name + ".tmp")
-        ds.to_zarr(temporary, mode="w", zarr_format=3, consolidated=False)
-        shutil.rmtree(path)
-        temporary.rename(path)
+        array[...] = np.transpose(values, np.argsort(order)).astype(array.dtype)
     _load.cache_clear()
 
 
