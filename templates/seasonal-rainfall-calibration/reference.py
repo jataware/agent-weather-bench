@@ -139,6 +139,7 @@ def perturb_inputs(inputs, seed, kind="data"):
 def expected_coordinates(inputs, params):
     with xr.open_dataset(Path(inputs) / "forecast-training.nc") as training, xr.open_dataset(Path(inputs) / "forecast-new.nc") as new:
         return {"year": training.init_time.dt.year.values.astype(float), "new_year": new.year.values.astype(float),
+                "category": np.array([0.0, 1.0, 2.0]),             # below, near and above normal
                 "latitude": training.lat.values.astype(float), "longitude": training.lon.values.astype(float)}
 
 

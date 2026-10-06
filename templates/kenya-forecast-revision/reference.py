@@ -72,14 +72,17 @@ def perturb_inputs(inputs, seed, kind="data"):
 
     Adds a smooth space- and lead-dependent amount to the cumulative field, and
     lowers a few cumulative values to create clear negative increments, which makes
-    the clipped and unclipped readings differ. Only the values of `tp` are rewritten,
+    the clipped and unclipped readings differ. The earlier issue also gains rain
+    that grows with distance from the equator: near the equator the area weights
+    are almost equal, and only a change that varies with latitude makes a weighted
+    and an unweighted mean differ by more than rounding. Only the values of `tp` are rewritten,
     in place: every coordinate, attribute, chunk layout and the store's consolidated
     metadata stay exactly as the provider exported them, so any reader that works on
     the original works on the changed store.
     """
     import zarr
     rng = np.random.default_rng(seed)
-    for path in sorted(Path(inputs).glob("ECMWF_s2s_precip_*.zarr")):
+    for number, path in enumerate(sorted(Path(inputs).glob("ECMWF_s2s_precip_*.zarr"))):
         group = zarr.open_group(path, mode="r+")
         array = group["tp"]
         names = list(array.metadata.dimension_names)
@@ -89,6 +92,9 @@ def perturb_inputs(inputs, seed, kind="data"):
         pattern = 1.5 + np.cos(np.deg2rad(40 * np.arange(values.shape[2])))[:, None] * np.sin(0.9 * np.arange(values.shape[3]) + rng.uniform(0, 3))[None, :]
         rate = rng.uniform(0.5, 1.5) * pattern                     # mm per day, differs by cell
         values += lead[None, :, None, None] * rate[None, None]
+        if number == 0:
+            latitude = np.asarray(group["latitude"][...], dtype="float64")
+            values += lead[None, :, None, None] * (8.0 * (latitude / np.abs(latitude).max()) ** 2)[None, None, :, None]
         members = rng.choice(values.shape[0], size=12, replace=False)
         steps = rng.integers(2, values.shape[1] - 2, size=12)
         for member, step in zip(members, steps):
@@ -175,7 +181,8 @@ def reference(inputs, params, conventions):
         b = period_total(previous, previous_offset, conventions, accepted_window and aligned)[:, rows][:, :, cols].mean(axis=0)
         new.append(a); old.append(b); change.append(a - b)
         regional.append(regional_mean(a - b, lat, conventions["area_weighting"]))
-    return {"latitude": lat, "longitude": lon, "current_mean_mm": np.array(new), "previous_mean_mm": np.array(old),
+    return {"period": np.array(params["period_start"], dtype=str), "latitude": lat, "longitude": lon,
+            "current_mean_mm": np.array(new), "previous_mean_mm": np.array(old),
             "change_mm": np.array(change), "regional_change_mm": np.array(regional)}
 
 
@@ -220,7 +227,7 @@ def regression_checks(inputs):
     ours = reference(inputs, instance("service-area", "weeks-1-2"),
                      {"rainfall_semantics": "differenced_cumulative", "negative_increments": "clipped", "issue_alignment": "same_valid_period",
                       "area_weighting": "cos_latitude", "boundary": "inclusive", "window_labels": "end_labelled"})
-    gap = max(float(np.max(np.abs(ours[name] - np.array(legacy[name])))) for name in ours)
+    gap = max(float(np.max(np.abs(ours[name] - np.array(legacy[name])))) for name in ours if name != "period")
     return [{"name": "legacy_answer_key", "passed": gap <= 1e-9, "detail": f"largest difference from the weather-skills-bench oracle is {gap:.3g}"}]
 
 

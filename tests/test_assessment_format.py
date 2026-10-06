@@ -5,11 +5,12 @@ import json
 import numpy as np
 import pytest
 
-from assessment.assess import assess
-from assessment.compare import EnvelopeError, compare, normalise
+from assessment import judge as judging
+from assessment.assess import answer_digest, assess
+from assessment.compare import EnvelopeError, compare, normalise, read_results, tolerance
 from assessment.execute import Local, valid_argv
-from assessment.judge import interpret, validate_verdict
-from assessment.outcomes import FAIL, PASS, UNRESOLVED, combine, outcome
+from assessment.judge import validate_verdict
+from assessment.outcomes import FAIL, PASS, UNRESOLVED, blocked, combine, headline, outcome
 from assessment.spec import ROOT, Template
 from assessment.variant import decide, table
 
@@ -30,6 +31,16 @@ def test_outcomes_keep_unresolved_apart_from_failure():
         outcome(UNRESOLVED, "no reason given")
     with pytest.raises(ValueError):
         outcome(FAIL, "a failure is demonstrated, not unexplained", reason="missing_evidence")
+    with pytest.raises(ValueError):
+        outcome(UNRESOLVED, "a broken submission is a failure, not an open question", reason="not_assessed")
+
+
+def test_a_check_blocked_by_the_submissions_own_fault_fails_and_names_it():
+    row = blocked("envelope", "Fails with the envelope: regional_change_mm is unusable.")
+    assert row["state"] == FAIL and row["blocked_by"] == "envelope" and "reason" not in row
+    result = headline({"checks": {"envelope": outcome(FAIL, "one result is missing"), "variant": row, "probe.replay": outcome(PASS),
+                                  "interpretation.generalization": {**outcome(UNRESOLVED, reason="judge_not_run"), "decided_by": "judge"}}})
+    assert (result["outcome"], result["computed_outcome"], result["judged_outcome"]) == (FAIL, FAIL, UNRESOLVED)
 
 
 # ---- comparison is by coordinate label ------------------------------------------
@@ -42,6 +53,23 @@ def test_arrays_are_compared_by_coordinate_not_storage_order():
     assert not compare(RESULTS, mislabelled, reference)[0]
     other_cells = normalise(RESULTS, {"latitude": [3.0, 1.5], "field": [[1.0, 2.0]]})
     assert not compare(RESULTS, other_cells, reference)[0]
+
+
+def test_tolerance_is_an_error_bound_computed_from_what_the_spec_declares():
+    """Two correct float32 means of 101 values below 200 mm cannot differ by more than this; a pitfall must."""
+    bound = tolerance({"precision": "float32", "operations": 101, "magnitude": 200})
+    assert 2.40e-3 < bound < 2.41e-3 and tolerance({"exact": True}) == 0
+    assert tolerance({"precision": "float64", "operations": 101, "magnitude": 200}) < 1e-11
+    for bad in ({"atol": 1e-3}, {"precision": "float16", "operations": 1, "magnitude": 1}, {"precision": "float32", "operations": 0, "magnitude": 1}):
+        with pytest.raises(ValueError):
+            tolerance(bad)
+    values = np.float32(np.random.default_rng(0).uniform(0, 200, 101))
+    forward, backward = np.float32(0), np.float32(0)
+    for value in values:
+        forward += value
+    for value in values[::-1]:
+        backward += value
+    assert abs(float(forward) - float(backward)) / 101 <= bound         # two orders of summation stay inside the bound
 
 
 def test_tolerance_is_absolute_and_small():
@@ -64,21 +92,88 @@ def test_run_command_needs_both_placeholders():
     assert not valid_argv("python solve.py {input_dir} {output_dir}")
 
 
-# ---- judge verdicts are void unless their quotes are exact -----------------------
+# ---- the judge: narrow questions, exact quotations, a pinned identity ---------------
 
-def test_no_judge_leaves_obligations_unresolved_not_failed():
-    rows = interpret(["generalization"], {"report.md": "text"})
-    assert rows["generalization"]["state"] == UNRESOLVED and rows["generalization"]["reason"] == "judge_not_run"
+def _assessment_with_questions():
+    question = judging.interpretation_question("generalization")
+    absent = judging.report_question({"requirement": "The report states the uncertainty plainly.", "judge": "Does it?"})
+    return headline({"checks": {"variant": outcome(PASS), "interpretation.generalization": judging.pending("generalization", question),
+                                "process.plain": judging.pending("plain", absent, requirement="The report states the uncertainty plainly.", source="practice 7")}})
+
+
+def test_without_a_judge_the_questions_stay_unresolved_and_carry_their_text():
+    result = _assessment_with_questions()
+    assert result["computed_outcome"] == PASS and result["outcome"] == UNRESOLVED and result["unresolved_reasons"] == ["judge_not_run"]
+    assert judging.questions_for(result)["interpretation.generalization"]["silence"] == "passes"
+    old_record = {"checks": {"interpretation.generalization": {**outcome(UNRESOLVED, reason="judge_not_run"), "decided_by": "judge"}}}
+    assert judging.questions_for(old_record)["interpretation.generalization"] == judging.interpretation_question("generalization")
 
 
 def test_inexact_quote_voids_the_verdict():
-    files = {"report.md": "The newer forecast is wetter in week one."}
-    exact = {"verdict": "pass", "reason": "bounded claim", "citations": [{"source": "report.md", "quote": "wetter in week one"}]}
-    assert validate_verdict(exact, files)["state"] == PASS
+    files = {"report.md": "The newer forecast is wetter\n  in week one."}
+    exact = {"verdict": "pass", "basis": "quoted", "reason": "bounded claim", "citations": [{"source": "report.md", "quote": "wetter in week one"}]}
+    assert validate_verdict(exact, files)["state"] == PASS                       # exact up to white space
     inexact = {**exact, "citations": [{"source": "report.md", "quote": "wetter in week 1"}]}
     assert validate_verdict(inexact, files)["reason"] == "invalid_citation"
-    one_sided = {"verdict": "fail", "reason": "overclaim", "citations": [{"source": "report.md", "quote": "wetter in week one"}]}
-    assert validate_verdict(one_sided, files)["reason"] == "invalid_citation"
+    assert validate_verdict({**exact, "citations": [{"source": "other.md", "quote": "wetter"}]}, files)["reason"] == "invalid_citation"
+
+
+def test_a_verdict_without_a_quotation_counts_only_where_the_question_allows_it():
+    files = {"report.md": "The rain total rose."}
+    silent = {"verdict": "pass", "basis": "nothing_to_assess", "reason": "no such claim", "citations": []}
+    absent = {"verdict": "fail", "basis": "required_statement_absent", "reason": "never stated", "citations": []}
+    assert validate_verdict(silent, files, {"silence": "passes"})["state"] == PASS
+    assert validate_verdict(silent, files, {"silence": "fails"})["reason"] == "invalid_citation"
+    assert validate_verdict(absent, files, {"silence": "fails"})["state"] == FAIL
+    assert validate_verdict(absent, files, {"silence": "passes"})["reason"] == "invalid_citation"
+    assert validate_verdict({"verdict": "fail", "basis": "quoted", "reason": "overclaim", "citations": []}, files, {"silence": "passes"})["reason"] == "invalid_citation"
+
+
+def test_judge_decides_every_question_in_one_request_and_retries_a_discarded_verdict_once():
+    files, calls = {"report.md": "The newer forecast is wetter in week one."}, []
+
+    def backend(questions, shown):
+        calls.append(sorted(questions))
+        quote = "wetter in week one" if len(calls) > 1 else "wetter in week 1"
+        return ([{"id": name, "verdict": "pass", "basis": "quoted", "reason": "bounded", "citations": [{"source": "report.md", "quote": quote}]}
+                 if name.startswith("interpretation") else {"id": name, "verdict": "fail", "basis": "required_statement_absent", "reason": "absent", "citations": []}
+                 for name in questions], {"usage": {"output_tokens": 1}})
+    result = _assessment_with_questions()
+    judgement = judging.apply(result, files, backend)
+    assert calls == [["interpretation.generalization", "process.plain"], ["interpretation.generalization"]]
+    assert result["checks"]["interpretation.generalization"]["state"] == PASS and result["checks"]["process.plain"]["state"] == FAIL
+    assert result["checks"]["process.plain"]["source"] == "practice 7" and result["checks"]["process.plain"]["decided_by"] == "judge"
+    assert (result["outcome"], result["computed_outcome"], result["judged_outcome"]) == (FAIL, PASS, FAIL)
+    assert result["judge"]["id"] == judging.judge_id() and result["judge"]["model"] == "claude-opus-5-5" and result["judge"]["requests"] == 2
+    again = _assessment_with_questions()
+    judging.apply(again, files, lambda *_: pytest.fail("a recorded judgement of the same questions and files is reused"), recorded=judgement)
+    assert again["checks"] == result["checks"]
+
+
+def test_an_unreachable_judge_is_infrastructure_not_a_verdict():
+    def backend(questions, files):
+        raise judging.JudgeUnavailable("no network")
+    result = _assessment_with_questions()
+    judging.apply(result, {"report.md": "text"}, backend)
+    assert result["outcome"] == UNRESOLVED and result["unresolved_reasons"] == ["infrastructure"] and result["judge"]["unavailable"]
+
+
+def test_the_judge_is_shown_text_and_summaries_never_raw_arrays(tmp_path):
+    (tmp_path / "results.zarr").mkdir()
+    (tmp_path / "results.zarr/zarr.json").write_text("{}")
+    (tmp_path / "report.md").write_text("A report.")
+    (tmp_path / "answer.json").write_text(json.dumps({"results": {"field": [[float(i)] * 60 for i in range(80)]}, "claims": {"direction": ["wetter"]}}))
+    shown = judging.views(tmp_path, "The brief.", {"controller/results-summary.txt": "field: mean 3"})
+    assert set(shown) == {"task/brief.md", "report.md", "answer.json", "controller/results-summary.txt"}
+    assert "<array of shape (80, 60): min 0, mean 39.5, max 79>" in shown["answer.json"] and "wetter" in shown["answer.json"]
+
+
+def test_judge_calibration_record_is_for_the_pinned_judge():
+    from assessment.calibration import CASES, RECORD
+    record = json.loads(RECORD.read_text())
+    assert record["judge"]["id"] == judging.judge_id(), "Rerun `python -m assessment judge-calibration`"
+    assert record["cases"] == len(CASES) == record["agreeing"] and record["passed"]
+    assert {row["expected"] for row in record["rows"]} == {"pass", "fail"} and {row["kind"] for row in record["rows"]} == {"interpretation", "method_statement", "report_statement"}
 
 
 # ---- the Kenya template ---------------------------------------------------------
@@ -103,7 +198,18 @@ def test_spec_is_well_formed(kenya):
     assert kenya.spec["public_conventions"] == []          # naming conventions to the agent would reveal the pitfalls
     assert len(kenya.hooks.candidate_instances()) == 48
     for params in kenya.development_instances():
-        assert len(kenya.brief(params).split()) <= 150
+        assert len(kenya.brief(params).split()) <= 200
+    assert "changed_instance" not in kenya.spec["probes"]  # a second instance is a second episode, not a rerun
+
+
+def test_conventions_sheet_is_an_optional_condition_not_part_of_the_brief(kenya):
+    params = kenya.development_instances()[0]
+    plain, supplied = kenya.brief(params), kenya.brief(params, supplied=["conventions"])
+    assert "conventions.md" not in plain and supplied.startswith(plain) and "/task/conventions.md" in supplied
+    sheet = (kenya.folder / kenya.spec["supplements"]["conventions"]).read_text()
+    assert "cosine of its latitude" in sheet and not any(name.replace("_", " ") in sheet.lower() for name in kenya.spec["pitfalls"])
+    with pytest.raises(ValueError):
+        kenya.brief(params, supplied=["answers"])
 
 
 @needs_data
@@ -112,7 +218,8 @@ def test_two_reference_implementations_agree(kenya, tmp_path):
     kenya.hooks.stage_inputs(kenya.private, params, tmp_path / "inputs")
     for combination in kenya.combinations():
         a, b = (f(tmp_path / "inputs", params, combination) for f in (kenya.hooks.reference, kenya.hooks.independent))
-        assert all(a[name].shape == b[name].shape and np.max(np.abs(a[name] - b[name])) < 1e-9 for name in a)
+        assert list(a["period"]) == list(b["period"]) == params["period_start"]
+        assert all(a[name].shape == b[name].shape and np.max(np.abs(a[name] - b[name])) < 1e-9 for name in a if name != "period")
     assert all(row["passed"] for row in kenya.hooks.regression_checks(tmp_path / "inputs"))
 
 
@@ -144,16 +251,43 @@ def test_correct_solution_passes_and_judge_checks_stay_unresolved(kenya, control
 
 
 @needs_data
-def test_pitfall_is_named(kenya, controls, tmp_path):
-    result = _assess(kenya, controls, "pitfall_same_lead", "service-area--weeks-1-2", tmp_path)
-    assert result["checks"]["variant"]["state"] == FAIL and result["checks"]["variant"]["pitfalls_certain"] == ["same_lead"]
-    assert all(result["checks"][f"probe.{name}"]["state"] == PASS for name in ("replay", "changed_data", "changed_instance"))
+def test_arrays_are_read_by_dimension_name_and_label(kenya, controls, tmp_path):
+    """The same answer with its dimensions and labels in another order is the same answer."""
+    params = kenya.instance("service-area--weeks-1-2")
+    kenya.hooks.stage_inputs(kenya.private, params, tmp_path / "inputs")
+    plain, _ = read_results(kenya.spec["results"], controls.build("correct", tmp_path / "inputs", params, tmp_path / "a"))
+    moved, problems = read_results(kenya.spec["results"], controls.build("accepted_rearranged_arrays", tmp_path / "inputs", params, tmp_path / "b"))
+    assert not problems and list(moved["period"]) == params["period_start"][::-1] and moved["change_mm"].shape == plain["change_mm"].shape
+    assert not np.array_equal(moved["change_mm"], plain["change_mm"]) and compare(kenya.spec["results"], moved, plain)[0]
+    assert assess(kenya, params, tmp_path / "b", Local(), tmp_path / "work")["computed_outcome"] == PASS
 
 
 @needs_data
-def test_coinciding_pitfall_is_separated_by_the_changed_instance_probe(kenya, controls, tmp_path):
-    """On this instance weighted and unweighted means agree within tolerance, so the numbers alone cannot tell."""
-    params = kenya.instance("central--weeks-1-2")
+def test_an_array_on_other_dimensions_is_unusable_and_says_why(kenya, controls, tmp_path):
+    import shutil
+    import xarray as xr
+    params = kenya.instance("service-area--weeks-1-2")
+    kenya.hooks.stage_inputs(kenya.private, params, tmp_path / "inputs")
+    submission = controls.build("correct", tmp_path / "inputs", params, tmp_path / "submission")
+    arrays = xr.open_zarr(submission / "results.zarr", chunks=None, consolidated=False).load().rename(period="week")
+    shutil.rmtree(submission / "results.zarr")
+    arrays.to_zarr(submission / "results.zarr", zarr_format=3, consolidated=False)
+    results, problems = read_results(kenya.spec["results"], submission)
+    assert set(results) == {"latitude", "longitude"} and "the brief asks for (period, latitude, longitude)" in problems["change_mm"]
+    assert problems["period"] == "results.zarr has no coordinate array period"
+
+
+@needs_data
+def test_pitfall_is_named(kenya, controls, tmp_path):
+    result = _assess(kenya, controls, "pitfall_same_lead", "service-area--weeks-1-2", tmp_path)
+    assert result["checks"]["variant"]["state"] == FAIL and result["checks"]["variant"]["pitfalls_certain"] == ["same_lead"]
+    assert all(result["checks"][f"probe.{name}"]["state"] == PASS for name in ("replay", "changed_data"))
+
+
+@needs_data
+def test_coinciding_pitfall_is_separated_by_a_chosen_data_change(kenya, controls, tmp_path):
+    """Near the equator weighted and unweighted means agree within rounding, so the submitted numbers alone cannot tell."""
+    params = kenya.instance("service-area--weeks-1-2")
     kenya.hooks.stage_inputs(kenya.private, params, tmp_path / "inputs")
     rows = table(kenya, tmp_path / "inputs", params)
     pair = [i for i, (c, _, _) in enumerate(rows) if c["area_weighting"] in ("cos_latitude", "unweighted")
@@ -164,28 +298,58 @@ def test_coinciding_pitfall_is_separated_by_the_changed_instance_probe(kenya, co
         result = assess(kenya, params, submission, Local(), tmp_path / name / "work")
         assert result["first_match_conventions"]["area_weighting"] == ["cos_latitude", "unweighted"]
         assert result["checks"]["variant"]["state"] == state
-        assert result["checks"]["probe.changed_instance"]["chosen_to_separate_accepted_from_pitfall"]
+        assert result["checks"]["probe.changed_data"]["data_change_chosen_to_separate_accepted_from_pitfall"]
     assert result["matched_conventions"]["area_weighting"] == ["cos_latitude"]
 
 
 @needs_data
-def test_cached_answer_passes_replay_and_fails_changed_inputs(kenya, controls, tmp_path):
-    result = _assess(kenya, controls, "cached_output", "service-area--weeks-1-2", tmp_path)
-    states = {name: row["state"] for name, row in result["checks"].items()}
-    assert states["variant"] == PASS and states["probe.replay"] == PASS
-    assert states["probe.changed_data"] == FAIL and states["probe.changed_instance"] == FAIL
+def test_results_right_for_the_instance_pass_when_no_data_change_separates_the_readings(kenya, controls, tmp_path):
+    """On two rows next to the equator the area weights are equal within rounding. The product is right either way."""
+    result = _assess(kenya, controls, "pitfall_unweighted", "central--weeks-2-3", tmp_path)
+    variant = result["checks"]["variant"]
+    assert variant["state"] == PASS and variant["reason"] == "ambiguous_variant" and variant["pitfalls_possible"] == ["unweighted"]
+    assert result["computed_outcome"] == PASS and "ambiguous_variant" not in result["unresolved_reasons"]
 
 
 @needs_data
-def test_missing_answer_fails_the_envelope_and_nothing_else_is_guessed(kenya, controls, tmp_path):
+def test_task_parameters_may_be_written_into_the_code(kenya, controls, tmp_path):
+    result = _assess(kenya, controls, "accepted_hardcoded_parameters", "service-area--weeks-1-2", tmp_path)
+    assert result["computed_outcome"] == PASS and not [name for name in result["checks"] if "changed_instance" in name]
+
+
+@needs_data
+def test_cached_answer_passes_replay_and_fails_changed_data(kenya, controls, tmp_path):
+    result = _assess(kenya, controls, "cached_output", "service-area--weeks-1-2", tmp_path)
+    states = {name: row["state"] for name, row in result["checks"].items()}
+    assert states["probe.replay"] == PASS and states["probe.changed_data"] == FAIL and result["computed_outcome"] == FAIL
+
+
+@needs_data
+def test_missing_answer_fails_the_envelope_and_every_check_that_rests_on_it(kenya, controls, tmp_path):
     result = _assess(kenya, controls, "no_answer", "service-area--weeks-1-2", tmp_path)
+    computed = {name: row for name, row in result["checks"].items() if row.get("decided_by") != "judge"}
     assert result["checks"]["envelope"]["state"] == FAIL and result["computed_outcome"] == FAIL
-    assert result["checks"]["variant"]["reason"] == "not_assessed"
+    assert all(row["state"] == FAIL for row in computed.values())
+    assert all(row["blocked_by"] == "envelope" for name, row in computed.items() if name != "envelope")
+    assert result["unresolved_reasons"] == ["judge_not_run"]                     # the report can still be judged
+
+
+@needs_data
+def test_one_broken_part_fails_what_rests_on_it_and_the_rest_is_assessed_on_its_merits(kenya, controls, tmp_path):
+    result = _assess(kenya, controls, "missing_result", "service-area--weeks-1-2", tmp_path / "a")
+    assert result["checks"]["envelope"]["state"] == FAIL and result["checks"]["envelope"]["unusable_parts"] == ["regional_change_mm"]
+    for check in ("variant", "claim.direction", "invariant.regional_change_within_cell_range"):
+        assert result["checks"][check]["state"] == FAIL and result["checks"][check]["blocked_by"] == "envelope", check
+    assert result["checks"]["invariant.change_equals_current_minus_previous"]["state"] == PASS
+    assert result["checks"]["probe.changed_data"]["state"] == PASS                # the maps still follow the data
+    assert result["matched_conventions"]["rainfall_semantics"] == ["differenced_cumulative"]
+    no_command = _assess(kenya, controls, "no_run_command", "service-area--weeks-1-2", tmp_path / "b")
+    assert no_command["checks"]["probe.replay"]["blocked_by"] == "envelope" and no_command["checks"]["claim.direction"]["state"] == PASS
 
 
 # ---- string coordinates and coverage (outcome mode has no reference answer) ---------
 
-FORECAST = {"issue": {"kind": "coordinate", "dtype": "string"}, "cell": {"kind": "coordinate", "tolerance": {"atol": 0}},
+FORECAST = {"issue": {"kind": "coordinate", "dtype": "date"}, "cell": {"kind": "coordinate", "tolerance": {"atol": 0}},
             "rain_mm": {"dims": ["issue", "cell"], "tolerance": {"atol": 1e-4, "rtol": 0}}}
 
 
@@ -203,25 +367,31 @@ def test_forecast_is_aligned_to_the_required_cases_by_label():
 # ---- development feedback for Level 2 --------------------------------------------
 
 def test_feedback_counts_every_request_and_never_returns_private_errors(tmp_path):
+    import xarray as xr
     from assessment.feedback import DevelopmentFeedback
-    (tmp_path / "work/submission").mkdir(parents=True)
-    (tmp_path / "work/submission/good.json").write_text('{"value": 2}')
-    (tmp_path / "work/submission/bad.json").write_text("not json")
+    submission = tmp_path / "work/submission"
+    submission.mkdir(parents=True)
+    for name, value in (("good.zarr", 2.0), ("bad.zarr", 3.0)):
+        xr.Dataset({"value": ("cell", [value])}, coords={"cell": [0]}).to_zarr(submission / name, zarr_format=3, consolidated=False)
+    (submission / "linked.zarr").mkdir()
+    (submission / "linked.zarr/zarr.json").symlink_to(tmp_path / "work/submission/good.zarr/zarr.json")
 
-    def score(answer):
-        if answer.get("value") != 2:
-            raise ValueError("withheld target is 17.5 mm")
+    def score(store):
+        with xr.open_zarr(store, chunks=None, consolidated=False) as arrays:
+            if float(arrays.value[0]) != 2:
+                raise ValueError("withheld target is 17.5 mm")
         return {"rmse_mm": 1.5}
-    feedback = DevelopmentFeedback(tmp_path / "work", tmp_path / "controller", score, max_submissions=3)
-    assert json.loads(feedback.query("good.json")["stdout"]) == {"rmse_mm": 1.5}
-    for name in ("bad.json", "../escape.json"):
+    feedback = DevelopmentFeedback(tmp_path / "work", tmp_path / "controller", score, max_submissions=4)
+    assert json.loads(feedback.query("good.zarr")["stdout"]) == {"rmse_mm": 1.5}
+    for name in ("bad.zarr", "../escape.zarr", "linked.zarr"):
         reply = feedback.query(name)
         assert reply["exit_code"] == 1 and "17.5" not in reply["stderr"]
-    denied = feedback.query("good.json")
+    denied = feedback.query("good.zarr")
     assert denied["exit_code"] == 1 and denied["feedback_remaining"] == 0
     summary = feedback.public_summary()
-    assert [row["status"] for row in summary["requests"]] == ["scored", "failed", "failed"] and summary["limit_denials"] == 1
+    assert [row["status"] for row in summary["requests"]] == ["scored", "failed", "failed", "failed"] and summary["limit_denials"] == 1
     assert "private_error" not in json.dumps(summary) and not summary["final_score_exposed"]
+    assert (tmp_path / "controller/prediction-001.zarr/zarr.json").is_file()      # each scored store is frozen with the ledger
 
 
 # ---- the weeks 3-4 rainfall template (outcome mode, two levels) --------------------
@@ -248,7 +418,7 @@ def test_outcome_spec_has_no_reference_answer_and_two_levels(weeks):
     assert weeks.spec["mode"] == "outcome" and weeks.combinations() == [{}] and not hasattr(weeks.hooks, "reference")
     assert weeks.spec["level2"]["feedback"]["max_submissions"] == 5
     params = weeks.development_instances()[0]
-    assert len(weeks.brief(params).split()) <= 150
+    assert len(weeks.brief(params).split()) <= 200
     assert "score_development" in weeks.brief(params, level=2) and "score_development" not in weeks.brief(params)
 
 
@@ -303,8 +473,8 @@ def test_unit_error_and_missing_cases_are_caught_without_a_reference(weeks, week
     scaled = _assess_weeks(weeks, weeks_controls, "multiplied_by_14", tmp_path / "a")
     assert scaled["checks"]["invariant.magnitude_of_a_14_day_total"]["state"] == FAIL
     short = _assess_weeks(weeks, weeks_controls, "missing_cases", tmp_path / "b")
-    assert short["checks"]["coverage"]["state"] == FAIL and short["checks"]["probe.replay"]["reason"] == "not_assessed"
-    assert "skill" not in short
+    assert short["checks"]["coverage"]["state"] == FAIL and short["checks"]["probe.replay"]["blocked_by"] == "coverage"
+    assert short["checks"]["envelope"]["state"] == PASS and "skill" not in short
 
 
 @needs_weeks
@@ -342,7 +512,7 @@ def test_process_spec_follows_the_standards_checklist(seasonal):
     assert checklist["status"] == "draft_from_secondary_source"            # no domain scientist has signed it off
     assert {step["id"] for step in seasonal.spec["process"]} == {step["id"] for step in checklist["steps"]}
     assert set(seasonal.matched()) & {"hindcast_probability", "forecast_probability"} == set()   # any sound calibration is acceptable
-    assert len(seasonal.brief(seasonal.development_instances()[0]).split()) <= 150
+    assert len(seasonal.brief(seasonal.development_instances()[0]).split()) <= 200
 
 
 def _assess_seasonal(seasonal, seasonal_controls, name, tmp_path, instance="train-1993-2002--new-2003-2004--all-cells"):
@@ -392,13 +562,14 @@ def test_valid_negative_result_conforms(seasonal, seasonal_controls, tmp_path):
 
 
 @needs_seasonal
-def test_missing_or_false_method_pointer_is_unresolved_not_failed(seasonal, seasonal_controls, tmp_path):
+def test_a_method_entry_the_brief_asks_for_fails_when_missing_or_pointing_nowhere(seasonal, seasonal_controls, tmp_path):
     missing = _assess_seasonal(seasonal, seasonal_controls, "no_method_statement", tmp_path / "a")
     false = _assess_seasonal(seasonal, seasonal_controls, "false_method_pointer", tmp_path / "b")
     for result in (missing, false):
         row = result["checks"]["process.documented_calibration"]
-        assert row["state"] == UNRESOLVED and row["reason"] == "missing_evidence" and row.get("decided_by") != "judge"
-        assert result["computed_outcome"] == UNRESOLVED and not [n for n, r in result["checks"].items() if r["state"] == FAIL]
+        assert row["state"] == FAIL and row.get("decided_by") != "judge" and result["computed_outcome"] == FAIL
+    assert false["checks"]["process.documented_cross_validation"]["decided_by"] == "judge"     # the other entry is sound and goes to the judge
+    assert "def leave_one_out" in false["checks"]["process.documented_cross_validation"]["question"]["requirement"]
 
 
 # ---- substrate use: the original path monitor plus library imports ------------------
@@ -450,22 +621,6 @@ def test_changed_data_probe_keeps_the_store_exactly_as_exported(kenya, tmp_path)
             assert ds.tp.attrs["units"] == "kg m**-2"
 
 
-@needs_data
-def test_one_unusable_result_fails_the_envelope_and_the_rest_is_still_assessed(kenya, controls, tmp_path):
-    params = kenya.instance("service-area--weeks-1-2")
-    kenya.hooks.stage_inputs(kenya.private, params, tmp_path / "inputs")
-    submission = controls.build("correct", tmp_path / "inputs", params, tmp_path / "submission")
-    answer = json.loads((submission / "answer.json").read_text())
-    answer["results"]["regional_change_mm"] = [answer["results"]["regional_change_mm"]]         # one array with the wrong shape
-    (submission / "answer.json").write_text(json.dumps(answer))
-    result = assess(kenya, params, submission, Local(), tmp_path / "work")
-    assert result["checks"]["envelope"]["state"] == FAIL and result["checks"]["envelope"]["unusable_results"] == ["regional_change_mm"]
-    assert result["checks"]["invariant.change_equals_current_minus_previous"]["state"] == PASS
-    assert result["checks"]["probe.changed_data"]["state"] == PASS                # the maps still follow the inputs
-    assert result["checks"]["variant"]["state"] == UNRESOLVED and result["computed_outcome"] == FAIL
-    assert result["matched_conventions"]["rainfall_semantics"] == ["differenced_cumulative"]
-
-
 def test_method_pointer_must_name_code_not_quote_a_phrase():
     from assessment.assess import _pointer_resolves
     files = {"run.py": "def calibrate(x):\n    return x\nanswer = {'where': 'calibrate loop and full-fit loop'}\n"}
@@ -478,19 +633,29 @@ def test_method_pointer_must_name_code_not_quote_a_phrase():
     assert not _pointer_resolves({"file": "other.py", "symbol": "calibrate"}, files)
 
 
-def test_results_grouped_by_period_are_read_as_arrays():
-    """Two agent attempts gave {date: {name: map}} where the brief showed [period][lat][lon]. Same information."""
-    from assessment.compare import regroup
-    spec = {"latitude": {"kind": "coordinate", "tolerance": {"atol": 0}}, "change_mm": {"dims": ["period", "latitude"], "tolerance": {"atol": 0}},
-            "regional_change_mm": {"dims": ["period"], "tolerance": {"atol": 0}}}
-    labels = ["2026-10-04", "2026-10-11"]
-    flat = {"latitude": [1.0, 0.0], "change_mm": [[1.0, 2.0], [3.0, 4.0]], "regional_change_mm": [1.5, 3.5]}
-    by_date = {"latitude": [1.0, 0.0], "2026-10-11": {"change_mm": [3.0, 4.0], "regional_change_mm": 3.5},
-               "2026-10-04": {"change_mm": [1.0, 2.0], "regional_change_mm": 1.5}}
-    assert regroup(spec, by_date, "period", labels) == (flat, True)
-    assert regroup(spec, {"latitude": [1.0, 0.0], "periods": {k: v for k, v in by_date.items() if k != "latitude"}}, "period", labels) == (flat, True)
-    assert regroup(spec, flat, "period", labels) == (flat, False)
-    assert regroup(spec, {**by_date, "2026-10-11": "wetter"}, "period", labels)[1] is False          # not a full grouping: left alone
+def test_dates_are_read_from_datetimes_or_text_and_scalars_from_either_place(tmp_path):
+    """The first format let an agent write a date axis three ways. A labelled store leaves one reading."""
+    import xarray as xr
+    spec = {"issue": {"kind": "coordinate", "dtype": "date"}, "rain_mm": {"dims": ["issue"], "tolerance": {"atol": 0}}, "score": {"dims": [], "tolerance": {"atol": 0}}}
+    for name, labels in (("a", np.array(["2026-10-11", "2026-10-04"], dtype="datetime64[ns]")), ("b", ["2026-10-11T00:00:00", "2026-10-04"])):
+        (tmp_path / name).mkdir()
+        xr.Dataset({"rain_mm": ("issue", [3.0, 1.0])}, coords={"issue": labels}).to_zarr(tmp_path / name / "results.zarr", zarr_format=3, consolidated=False)
+        results, problems = read_results(spec, tmp_path / name, {"results": {"score": 0.25}})
+        assert not problems and list(results["issue"]) == ["2026-10-11", "2026-10-04"] and float(results["score"]) == 0.25
+    results, problems = read_results(spec, tmp_path / "a", {})
+    assert "score" in problems and "rain_mm" in results
+    with pytest.raises(EnvelopeError):
+        read_results(spec, tmp_path / "nothing")
+
+
+def test_an_answer_is_identified_by_its_json_and_its_store(tmp_path):
+    (tmp_path / "answer.json").write_text("{}")
+    before = answer_digest(tmp_path)
+    (tmp_path / "results.zarr").mkdir()
+    (tmp_path / "results.zarr/zarr.json").write_text("{}")
+    with_store = answer_digest(tmp_path)
+    (tmp_path / "results.zarr/zarr.json").write_text('{"a": 1}')
+    assert len({before, with_store, answer_digest(tmp_path)}) == 3
 
 
 @needs_data
@@ -501,10 +666,11 @@ def test_runtime_crash_is_not_blamed_on_the_method(kenya, controls, tmp_path):
     for name, ending, expected in (("after", "os._exit(3)", PASS), ("before", "os.kill(os.getpid(), signal.SIGSEGV)", UNRESOLVED)):
         submission = controls.build("correct", tmp_path / "inputs", params, tmp_path / name / "submission")
         source = (submission / "solve.py").read_text()
-        write = '    (Path(args.output) / "answer.json").write_text(json.dumps(solve(args.inputs, variant), allow_nan=False) + "\\n")\n'
-        assert write in source
+        write = '    arrays.to_zarr(output / "results.zarr", mode="w", zarr_format=3, consolidated=False)\n'
+        last = '    (output / "answer.json").write_text(json.dumps(answer, allow_nan=False) + "\\n")\n'
+        assert write in source and source.endswith(last)
         crash = f"    import os, signal\n    {ending}\n"
-        (submission / "solve.py").write_text(source.replace(write, write + crash if name == "after" else crash + write))
+        (submission / "solve.py").write_text(source + crash if name == "after" else source.replace(write, crash + write))
         result = assess(kenya, params, submission, Local(), tmp_path / name / "work")
         replay = result["checks"]["probe.replay"]
         assert replay["state"] == expected
@@ -517,7 +683,7 @@ def test_runtime_crash_is_not_blamed_on_the_method(kenya, controls, tmp_path):
 def test_rulings_are_keyed_by_answer_and_marked_as_proposed(seasonal):
     import yaml
     rulings = yaml.safe_load((seasonal.folder / "rulings.yaml").read_text())["rulings"]
-    assert len({row["answer_sha256"] for row in rulings}) == len(rulings) == 2
+    assert len({row["answer_sha256"] for row in rulings}) == len(rulings) == 3
     assert all(row["ruling"] == "incorrect" and row["status"] == "proposed" and row["reason"] and row["evidence"] for row in rulings)
 
 
@@ -528,7 +694,7 @@ def test_agents_are_told_only_what_the_brief_explains(weeks, seasonal, tmp_path)
     for template, instance, internal in ((weeks, "final-2012-2014--western-six", "longitude_limit"),
                                          (seasonal, "train-1993-2000--new-2001-2002--southern-rows", "latitude_limit")):
         params = template.instance(instance)
-        assert params[internal] is not None and template.spec["spec_version"] == 2
+        assert params[internal] is not None and template.spec["spec_version"] == 3
         template.hooks.stage_inputs(template.private, params, tmp_path / template.name)
         told = json.loads((tmp_path / template.name / "instance.json").read_text())
         assert internal not in told and told["id"] == instance
@@ -537,14 +703,18 @@ def test_agents_are_told_only_what_the_brief_explains(weeks, seasonal, tmp_path)
 
 
 @needs_seasonal
-def test_a_leak_hidden_by_coincidence_fails_its_own_steps_once_a_probe_exposes_it(seasonal, seasonal_controls, tmp_path):
-    """On this instance the held-out and full-sample category boundaries give the same categories. An agent attempt
-    used the full sample; only the probe instance showed it. The steps must then agree with the variant check."""
+def test_a_reading_that_cannot_change_any_result_on_this_task_is_not_failed_here(seasonal, seasonal_controls, tmp_path):
+    """With eight training years the held-out and full-sample category boundaries give the same categories for any data.
+    An earlier format failed this by rerunning the code on other years. Other years are now another episode."""
     instance = "train-1993-2000--new-2001-2002--southern-rows"
-    result = _assess_seasonal(seasonal, seasonal_controls, "pitfall_full_sample_thresholds", tmp_path, instance)
+    result = _assess_seasonal(seasonal, seasonal_controls, "pitfall_full_sample_thresholds", tmp_path / "a", instance)
     assert result["first_match_conventions"]["category_thresholds"] == ["full_sample", "leave_one_out"]     # the numbers fit both
-    assert result["checks"]["probe.changed_instance"]["chosen_to_separate_accepted_from_pitfall"]
-    assert result["matched_conventions"]["category_thresholds"] == ["full_sample"]
-    for check in ("variant", "process.verification_categories", "process.historical_performance"):
-        assert result["checks"][check]["state"] == FAIL, check
-    assert result["checks"]["process.observations_prepared"]["state"] == PASS
+    assert result["checks"]["probe.changed_data"]["data_change_chosen_to_separate_accepted_from_pitfall"] is False
+    assert result["checks"]["variant"]["state"] == PASS and result["checks"]["variant"]["reason"] == "ambiguous_variant"
+    for check in ("process.verification_categories", "process.historical_performance"):
+        assert result["checks"][check]["state"] == PASS, check
+    assert "category_thresholds" not in result["checks"]["process.verification_categories"]["conventions_that_matter"]
+    assert result["checks"]["probe.held_out_year_isolation"]["state"] == PASS     # the forecast itself does hold the year out
+    assert _assess_seasonal(seasonal, seasonal_controls, "correct", tmp_path / "b", instance)["computed_outcome"] == PASS
+    twelve = _assess_seasonal(seasonal, seasonal_controls, "pitfall_full_sample_thresholds", tmp_path / "c", "train-1993-2004--new-2005-2006--all-cells")
+    assert twelve["checks"]["process.verification_categories"]["state"] == FAIL    # where the reading changes a result, it fails

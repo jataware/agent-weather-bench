@@ -1,8 +1,8 @@
 """Build the control submissions used to certify this template's spec.
 
 Each control is a valid forecast or one deliberate defect. `expect` names the
-checks whose outcome the control exists to demonstrate; every check not named is
-expected to pass, apart from the judge-only interpretation checks.
+checks whose outcome the control exists to demonstrate. Every computed check not
+named is expected to pass, or to fail where the control says `otherwise: fail`.
 """
 import importlib.util
 import json
@@ -11,7 +11,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import numpy as np
 
 HERE = Path(__file__).resolve().parent
 
@@ -20,18 +19,19 @@ CONTROLS = {
     "valid_raw_model": {"kind": "accepted_alternative", "variant": {"method": "raw"}, "expect": {}},
     "valid_climatology": {"kind": "accepted_alternative", "variant": {"method": "climatology"}, "expect": {}},
     "cached_forecast": {"kind": "incorrect", "variant": {}, "post": "cache",
-                        "expect": {"probe.responds_to_inputs": "fail", "probe.changed_instance": "fail"}},
+                        "expect": {"probe.responds_to_inputs": "fail"}},
     "uses_later_forecasts": {"kind": "incorrect", "variant": {"uses_later_forecasts": True}, "expect": {"probe.no_future_information": "fail"}},
     "multiplied_by_14": {"kind": "incorrect", "variant": {"multiplied_by_14": True},
-                         "expect": {"invariant.magnitude_of_a_14_day_total": "fail", "probe.changed_instance": "fail"}},
+                         "expect": {"invariant.magnitude_of_a_14_day_total": "fail"}},
     "negative_totals": {"kind": "incorrect", "variant": {"negative_totals": True},
-                        "expect": {"invariant.totals_not_negative": "fail", "probe.changed_instance": "fail"}},
+                        "expect": {"invariant.totals_not_negative": "fail"}},
     # unseeded noise also moves the forecasts before the cut date, so the causality probe cannot pass either
     "not_reproducible": {"kind": "incorrect", "variant": {"not_reproducible": True},
                          "expect": {"probe.replay": "fail", "probe.no_future_information": "fail"}},
-    "missing_cases": {"kind": "incorrect", "variant": {"missing_cases": True}, "expect": {"coverage": "fail"}},
-    "mislabelled_dates": {"kind": "incorrect", "variant": {"mislabelled_dates": True}, "expect": {"coverage": "fail"}},
-    "no_answer": {"kind": "incorrect", "variant": {}, "post": "delete", "expect": {"envelope": "fail"}},
+    # a forecast that does not cover the required cases fails there, and every check that rests on it fails with it
+    "missing_cases": {"kind": "incorrect", "variant": {"missing_cases": True}, "expect": {"coverage": "fail", "envelope": "pass"}, "otherwise": "fail"},
+    "mislabelled_dates": {"kind": "incorrect", "variant": {"mislabelled_dates": True}, "expect": {"coverage": "fail", "envelope": "pass"}, "otherwise": "fail"},
+    "no_answer": {"kind": "incorrect", "variant": {}, "post": "delete", "expect": {"envelope": "fail"}, "otherwise": "fail"},
     "level2_true_score": {"kind": "known_correct", "variant": {}, "post": "claim_true", "level": 2, "feedback_requests": 2, "expect": {}},
     "level2_unmeasured": {"kind": "accepted_alternative", "variant": {"claims": {"development_rmse_mm": None}}, "level": 2,
                           "feedback_requests": 0, "expect": {}},
@@ -45,12 +45,15 @@ NOT_APPLICABLE = {"pitfall": "An outcome-mode task has no reference answer, so n
                   "false_method_pointer": "An outcome-mode task has no method statement."}
 
 
-def _development_rmse(answer, params):
+def _development_rmse(store, params):
+    import xarray as xr
     module = importlib.util.spec_from_file_location("weeks34_reference", HERE.parent / "reference.py")
     reference = importlib.util.module_from_spec(module)
     module.loader.exec_module(reference)
     private = reference.ROOT / "var/private/templates/weeks34-rainfall"
-    return reference.score({"development_mm": np.array(answer["results"]["development_mm"])}, params, private, "development")["rmse_mm"]
+    with xr.open_zarr(store, chunks=None) as arrays:
+        forecast = arrays.development_mm.transpose("development_issue", "location").values
+    return reference.score({"development_mm": forecast}, params, private, "development")["rmse_mm"]
 
 
 def build(name, inputs, params, destination):
@@ -63,18 +66,20 @@ def build(name, inputs, params, destination):
     subprocess.run([sys.executable, "solve.py", "--inputs", str(inputs), "--output", str(destination)], cwd=destination, check=True,
                    capture_output=True, text=True)
     (destination / "report.md").write_text(f"Control submission `{name}` built by the controller for certification. Not an agent attempt.\n")
-    answer_path = destination / "answer.json"
+    answer_path, store = destination / "answer.json", destination / "results.zarr"
     answer = json.loads(answer_path.read_text())
     post = control.get("post")
     if post == "delete":
         answer_path.unlink()
+        shutil.rmtree(store)
         return destination
     if post == "cache":
         shutil.copyfile(HERE / "cached.py", destination / "cached.py")
         shutil.copyfile(answer_path, destination / "cached-answer.json")
+        shutil.copytree(store, destination / "cached-results.zarr")
         answer["run"]["argv"][1] = "cached.py"
     elif post in ("claim_true", "claim_false"):
-        claim = {"development_rmse_mm": _development_rmse(answer, params) - (1.0 if post == "claim_false" else 0.0)}
+        claim = {"development_rmse_mm": _development_rmse(store, params) - (1.0 if post == "claim_false" else 0.0)}
         # the rerun must restate the claim, so it lives in the variant file the solver reads
         (destination / "variant.json").write_text(json.dumps({**control["variant"], "claims": claim}) + "\n")
         answer["claims"] = claim

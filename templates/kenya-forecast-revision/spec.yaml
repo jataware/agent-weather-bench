@@ -1,30 +1,42 @@
 schema_version: 1
 template: kenya-forecast-revision
-spec_version: 1
+spec_version: 2
+version_history:
+  - {version: 1, change: First version. Results were nested lists in answer.json.}
+  - {version: 2, change: 'Arrays are delivered in a labelled Zarr store, with a period coordinate. The run command may hard-code the task parameters. The changed-instance rerun is gone; a second instance is a second episode. Runs made under version 1 answered a different contract and are not reassessed under version 2.'}
 title: Kenya forecast revision
 task_set_row: 4
 mode: product
 status: development; not reviewed by a domain scientist
 params: [issue_current, issue_previous, rectangle, period_start]
 
-# Results and claims may be given as arrays over the periods, or grouped under
-# each period's start date. Both hold the same information.
-grouping: {dim: period, labels_from: period_start}
+# Claims made once per period are keyed by the period's start date.
+claims_by: period
 
-# Every listed result takes part in variant matching. Arrays are compared by
-# coordinate label, so a submission may order its latitudes either way.
+# Every listed result takes part in variant matching. Arrays are matched by
+# dimension name and coordinate label, so a submission may order either as it likes.
+#
+# Each tolerance is an error bound, not a judgement: 2 * n * u * magnitude, where u
+# is the float32 unit roundoff (2^-24), n the number of rounded operations in the
+# longest chain, and magnitude the largest quantity entering it.
+#   - The source stores cumulative rainfall as float32 multiples of 1/32 mm below
+#     1024 mm. Differences and sums of such values are exact in float32, so a
+#     member's 7-day total carries no rounding error.
+#   - A cell mean averages 101 members: 100 additions and one division. The error
+#     of a mean of nonnegative values is bounded by n * u times the mean itself.
+#     The largest cell mean is 80 mm on the submitted data and below 200 mm on the
+#     controller's changed data; 200 is declared.
+#   - The change subtracts two such means: 203 operations.
+#   - The regional mean weights and sums at most 56 cells: 168 more operations.
+#   - Coordinates are multiples of 1.5 degrees; one rounding of a value below 180.
 results:
-  latitude: {kind: coordinate, tolerance: {atol: 1.0e-6, rtol: 0}}
-  longitude: {kind: coordinate, tolerance: {atol: 1.0e-6, rtol: 0}}
-  current_mean_mm: {dims: [period, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
-  previous_mean_mm: {dims: [period, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
-  change_mm: {dims: [period, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
-  regional_change_mm: {dims: [period], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
-tolerance_basis: >
-  The source stores rainfall as float32 multiples of 1/32 mm (0.03125 mm). A
-  tolerance of 0.001 mm is thirty times finer than the data's own resolution and
-  far coarser than float64 or float32 round-off on these sums. It was fixed from
-  the data format, before any agent attempt.
+  period: {kind: coordinate, dtype: date}
+  latitude: {kind: coordinate, tolerance: {precision: float32, operations: 1, magnitude: 180}}
+  longitude: {kind: coordinate, tolerance: {precision: float32, operations: 1, magnitude: 180}}
+  current_mean_mm: {dims: [period, latitude, longitude], tolerance: {precision: float32, operations: 101, magnitude: 200}}
+  previous_mean_mm: {dims: [period, latitude, longitude], tolerance: {precision: float32, operations: 101, magnitude: 200}}
+  change_mm: {dims: [period, latitude, longitude], tolerance: {precision: float32, operations: 203, magnitude: 200}}
+  regional_change_mm: {dims: [period], tolerance: {precision: float32, operations: 371, magnitude: 200}}
 
 # accepted: a defensible reading of the brief. pitfall: a known wrong method.
 conventions:
@@ -56,8 +68,13 @@ pitfalls:
 # Convention names shown to the agent. Empty here: naming them would reveal the pitfalls.
 public_conventions: []
 
+# Optional material a run may hand to the agent. Supplying it is an experimental
+# condition, recorded with the run. The sheet states the accepted conventions.
+supplements:
+  conventions: conventions.md
+
 invariants: [change_equals_current_minus_previous, regional_change_within_cell_range, weekly_totals_not_negative]
-probes: [replay, changed_data, changed_instance]
+probes: [replay, changed_data]
 claims:
-  direction: One of wetter or drier for each period, following the sign of regional_change_mm.
+  direction: One of wetter or drier for each period, keyed by the period's start date, following the sign of regional_change_mm.
 interpretation: [consistency_across_artifacts, source_attribution, generalization]

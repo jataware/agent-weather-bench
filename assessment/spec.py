@@ -6,12 +6,14 @@ from pathlib import Path
 
 import yaml
 
+from .compare import tolerance
+
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATES = ROOT / "templates"
 PRIVATE = ROOT / "var/private/templates"
 MODES = ("outcome", "product", "process")
 # The modules that decide an outcome. The runner, the certifier and the command line only orchestrate them.
-DECIDING = ("assess.py", "compare.py", "execute.py", "feedback.py", "judge.py", "outcomes.py", "spec.py", "variant.py", "envelope.md")
+DECIDING = ("assess.py", "compare.py", "execute.py", "feedback.py", "judge.py", "judge-prompt.md", "outcomes.py", "spec.py", "variant.py", "envelope.md")
 HOOKS = ("prepare", "stage_inputs", "perturb_inputs", "candidate_instances", "brief_fields")
 MODE_HOOKS = {"product": ("reference",), "process": ("reference",), "outcome": ("expected_coordinates", "score")}
 
@@ -43,15 +45,22 @@ class Template:
         if not isinstance(spec.get("results"), dict) or not spec["results"]:
             raise ValueError("Spec needs named results")
         for name, row in spec["results"].items():
-            tolerance = row.get("tolerance", {})
-            if row.get("dtype") == "string":
+            if row.get("dtype") == "date":
                 if row.get("kind") != "coordinate":
-                    raise ValueError(f"Result {name}: only coordinates may be strings")
-            elif not isinstance(tolerance.get("atol"), (int, float)) or tolerance["atol"] < 0:
-                raise ValueError(f"Result {name} needs a tolerance with a nonnegative atol")
+                    raise ValueError(f"Result {name}: only coordinates may be dates")
+            else:
+                try:                                               # the declared error bound becomes the absolute tolerance
+                    row["tolerance"] = {**row["tolerance"], "atol": tolerance(row["tolerance"])}
+                except (KeyError, TypeError, ValueError) as error:
+                    raise ValueError(f"Result {name}: {error}") from None
             for dim in row.get("dims", []):
-                if dim in spec["results"] and spec["results"][dim].get("kind") != "coordinate":
-                    raise ValueError(f"Result {name} uses {dim} as a dimension, so {dim} must be a coordinate")
+                if spec["results"].get(dim, {}).get("kind") != "coordinate":
+                    raise ValueError(f"Result {name} uses the dimension {dim}, so {dim} must be a named coordinate result")
+        if spec.get("claims_by") and spec["results"].get(spec["claims_by"], {}).get("kind") != "coordinate":
+            raise ValueError("claims_by must name a coordinate result")
+        for name, filename in spec.get("supplements", {}).items():
+            if not (self.folder / filename).is_file():
+                raise ValueError(f"Supplement {name} names a missing file: {filename}")
         for dimension, values in spec.get("conventions", {}).items():
             if not values or set(values.values()) - {"accepted", "pitfall"} or "accepted" not in values.values():
                 raise ValueError(f"Convention {dimension} needs values labelled accepted or pitfall, with at least one accepted")
@@ -89,12 +98,17 @@ class Template:
         listed = yaml.safe_load((self.folder / "instances.yaml").read_text())["development"]
         return [self.instance(identifier) for identifier in listed]
 
-    def brief(self, params, level=1):
+    def brief(self, params, level=1, supplied=()):
+        """The brief for one instance. `supplied` names optional supplements handed to the agent, such as a conventions sheet."""
         text = (self.folder / "brief.md").read_text().format(**self.hooks.brief_fields(params))
         if level == 2:
             if "level2" not in self.spec:
                 raise ValueError("This template has no Level 2")
             text += (self.folder / "brief-level2.md").read_text().format(**self.spec["level2"]["feedback"])
+        for name in supplied:
+            if name not in self.spec.get("supplements", {}):
+                raise ValueError(f"This template has no supplement named {name}")
+            text += f"\n`/task/{self.spec['supplements'][name]}` is supplied with this task. Follow it.\n"
         return text
 
     def fingerprint(self):

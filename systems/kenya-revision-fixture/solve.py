@@ -5,6 +5,7 @@ With no variant file this is a known-correct solution.
 """
 import argparse
 import json
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -36,6 +37,7 @@ def weekly_means(inputs, issue, starts, box, variant):
 
 
 def solve(inputs, variant):
+    """(labelled arrays, the rest of the answer)."""
     params = variant.get("hardcode_instance") or json.loads((Path(inputs) / "instance.json").read_text())
     box, starts = params["rectangle"], [np.datetime64(s, "D") for s in params["period_start"]]
     gap = np.datetime64(params["issue_current"], "D") - np.datetime64(params["issue_previous"], "D")
@@ -46,18 +48,18 @@ def solve(inputs, variant):
         regional = change.mean(("latitude", "longitude"))
     else:
         regional = change.weighted(np.cos(np.deg2rad(change.latitude))).mean(("latitude", "longitude"))
-    if variant.get("ascending_latitude"):
-        current, previous, change = (a.sortby("latitude") for a in (current, previous, change))
-    direction = ["wetter" if value > 0 else "drier" for value in regional.values]
+    named = {"current_mean_mm": current, "previous_mean_mm": previous, "change_mm": change, "regional_change_mm": regional}
+    arrays = xr.Dataset({name: array.reset_coords(drop=True) for name, array in named.items()})     # keep only the dimension labels
+    arrays = arrays.assign_coords(period=np.array(starts, dtype="datetime64[ns]"))
+    if variant.get("rearranged"):                     # another order of dimensions and of labels holds the same information
+        arrays = arrays.sortby("latitude").isel(period=slice(None, None, -1)).transpose("longitude", "latitude", "period")
+    direction = {str(label)[:10]: "wetter" if value > 0 else "drier" for label, value in zip(arrays.period.values, arrays.regional_change_mm.values)}
     if variant.get("wrong_claims"):
-        direction = ["drier" if d == "wetter" else "wetter" for d in direction]
-    return {"results": {"latitude": change.latitude.values.tolist(), "longitude": change.longitude.values.tolist(),
-                        "current_mean_mm": current.values.tolist(), "previous_mean_mm": previous.values.tolist(),
-                        "change_mm": change.values.tolist(), "regional_change_mm": regional.values.tolist()},
-            "choices": {"negative daily increments": "kept" if variant.get("keep_negative") else "set to zero",
-                        "regional mean": "plain mean" if variant.get("unweighted") else "cosine-latitude weights"},
-            "claims": {"direction": direction},
-            "run": {"argv": ["python", "solve.py", "--inputs", "{input_dir}", "--output", "{output_dir}"]}}
+        direction = {label: "drier" if value == "wetter" else "wetter" for label, value in direction.items()}
+    return arrays, {"choices": {"negative daily increments": "kept" if variant.get("keep_negative") else "set to zero",
+                                "regional mean": "plain mean" if variant.get("unweighted") else "cosine-latitude weights"},
+                    "claims": {"direction": direction},
+                    "run": {"argv": ["python", "solve.py", "--inputs", "{input_dir}", "--output", "{output_dir}"]}}
 
 
 if __name__ == "__main__":
@@ -66,5 +68,9 @@ if __name__ == "__main__":
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     variant = json.loads((HERE / "variant.json").read_text()) if (HERE / "variant.json").is_file() else {}
-    Path(args.output).mkdir(parents=True, exist_ok=True)
-    (Path(args.output) / "answer.json").write_text(json.dumps(solve(args.inputs, variant), allow_nan=False) + "\n")
+    output = Path(args.output)
+    output.mkdir(parents=True, exist_ok=True)
+    arrays, answer = solve(args.inputs, variant)
+    shutil.rmtree(output / "results.zarr", ignore_errors=True)
+    arrays.to_zarr(output / "results.zarr", mode="w", zarr_format=3, consolidated=False)
+    (output / "answer.json").write_text(json.dumps(answer, allow_nan=False) + "\n")

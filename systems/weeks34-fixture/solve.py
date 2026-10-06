@@ -5,6 +5,7 @@ deliberate defect. With no variant file this is a known-valid forecast.
 """
 import argparse
 import json
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -42,13 +43,12 @@ def solve(inputs, variant):
     inputs = Path(inputs)
     with xr.open_dataset(inputs / "training.nc") as file:
         training = file.load()
-    results = {}
+    arrays = xr.Dataset()
     for split in ("development", "final"):
         with xr.open_dataset(inputs / f"{split}-features.nc") as file:
             features = file.load()
         values = forecast(training, features, variant)
-        dates = features.target_start if variant.get("mislabelled_dates") else features.issue_time
-        issues = [str(value)[:10] for value in dates.values]
+        dates = (features.target_start if variant.get("mislabelled_dates") else features.issue_time).values.astype("datetime64[ns]")
         if variant.get("multiplied_by_14"):
             values = values * 14
         if variant.get("negative_totals"):
@@ -56,11 +56,11 @@ def solve(inputs, variant):
         if variant.get("not_reproducible"):
             values = values + np.abs(np.random.default_rng().normal(0, 0.5, values.shape))
         if variant.get("missing_cases") and split == "final":
-            values, issues = values[:-10], issues[:-10]
-        results[f"{split}_mm"], results[f"{split}_issue"] = values.tolist(), issues
-        results["location"] = features.location.values.tolist()
-    return {"results": results, "choices": {"method": variant.get("method", "bias")}, "claims": variant.get("claims", {}),
-            "run": {"argv": ["python", "solve.py", "--inputs", "{input_dir}", "--output", "{output_dir}"]}}
+            values, dates = values[:-10], dates[:-10]
+        arrays[f"{split}_mm"] = xr.DataArray(values, dims=(f"{split}_issue", "location"),
+                                             coords={f"{split}_issue": dates, "location": features.location.values})
+    return arrays, {"choices": {"method": variant.get("method", "bias")}, "claims": variant.get("claims", {}),
+                    "run": {"argv": ["python", "solve.py", "--inputs", "{input_dir}", "--output", "{output_dir}"]}}
 
 
 if __name__ == "__main__":
@@ -69,5 +69,9 @@ if __name__ == "__main__":
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     variant = json.loads((HERE / "variant.json").read_text()) if (HERE / "variant.json").is_file() else {}
-    Path(args.output).mkdir(parents=True, exist_ok=True)
-    (Path(args.output) / "answer.json").write_text(json.dumps(solve(args.inputs, variant), allow_nan=False) + "\n")
+    output = Path(args.output)
+    output.mkdir(parents=True, exist_ok=True)
+    arrays, answer = solve(args.inputs, variant)
+    shutil.rmtree(output / "results.zarr", ignore_errors=True)
+    arrays.to_zarr(output / "results.zarr", mode="w", zarr_format=3, consolidated=False)
+    (output / "answer.json").write_text(json.dumps(answer, allow_nan=False) + "\n")

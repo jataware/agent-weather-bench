@@ -1,8 +1,8 @@
 """Build the control submissions used to certify this template's spec.
 
 Each control is a conformant solution or one deliberate defect. `expect` names
-the checks whose outcome the control exists to demonstrate; every check not named
-is expected to pass, apart from the checks only a judge can decide.
+the checks whose outcome the control exists to demonstrate. Every computed check
+not named is expected to pass, or to fail where the control says `otherwise: fail`.
 """
 import json
 import shutil
@@ -32,13 +32,12 @@ CONTROLS = {
     "invalid_probabilities": {"kind": "incorrect", "variant": {"invalid_probabilities": True},
                               "expect": {"invariant.probabilities_valid": "fail", "process.probabilistic_format": "fail"}},
     "cached_output": {"kind": "incorrect", "variant": {}, "post": "cache",
-                      "expect": {"probe.changed_data": "fail", "probe.changed_instance": "fail", "process.reproducible": "fail"}},
+                      "expect": {"probe.changed_data": "fail", "process.reproducible": "fail"}},
+    # a piece the brief asks for and the answer omits is the submission's failure, not an open question
     "no_method_statement": {"kind": "incorrect", "variant": {"no_method_statement": True},
-                            "expect": {"process.documented_calibration": "unresolved", "process.documented_cross_validation": "unresolved"},
-                            "reasons": {"process.documented_calibration": "missing_evidence", "process.documented_cross_validation": "missing_evidence"}},
-    "false_method_pointer": {"kind": "incorrect", "variant": {"false_method_pointer": True}, "expect": {"process.documented_calibration": "unresolved"},
-                             "reasons": {"process.documented_calibration": "missing_evidence"}},
-    "no_answer": {"kind": "incorrect", "variant": {}, "post": "delete", "expect": {"envelope": "fail"}},
+                            "expect": {"process.documented_calibration": "fail", "process.documented_cross_validation": "fail"}},
+    "false_method_pointer": {"kind": "incorrect", "variant": {"false_method_pointer": True}, "expect": {"process.documented_calibration": "fail"}},
+    "no_answer": {"kind": "incorrect", "variant": {}, "post": "delete", "expect": {"envelope": "fail"}, "otherwise": "fail"},
 }
 NOT_APPLICABLE = {"target_leak_at_level_2": "This template has no Level 2 submission yet."}
 
@@ -53,14 +52,16 @@ def build(name, inputs, params, destination):
     subprocess.run([sys.executable, "solve.py", "--inputs", str(inputs), "--output", str(destination)], cwd=destination, check=True,
                    capture_output=True, text=True)
     (destination / "report.md").write_text(f"Control submission `{name}` built by the controller for certification. Not an agent attempt.\n")
-    answer_path = destination / "answer.json"
+    answer_path, store = destination / "answer.json", destination / "results.zarr"
     if control.get("post") == "delete":
         answer_path.unlink()
+        shutil.rmtree(store)
         return destination
     if control.get("post") == "cache":
         answer = json.loads(answer_path.read_text())
         shutil.copyfile(HERE / "cached.py", destination / "cached.py")
         shutil.copyfile(answer_path, destination / "cached-answer.json")
+        shutil.copytree(store, destination / "cached-results.zarr")
         answer["run"]["argv"][1] = "cached.py"
         answer_path.write_text(json.dumps(answer, allow_nan=False) + "\n")
     return destination

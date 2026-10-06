@@ -1,9 +1,10 @@
 schema_version: 1
 template: seasonal-rainfall-calibration
-spec_version: 2
+spec_version: 3
 version_history:
   - {version: 1, change: First version.}
   - {version: 2, change: 'instance.json no longer carries the internal cell-selection field, which the brief never explained and three agent scripts misread. Runs made under version 1 saw different inputs and are not reassessed under version 2.'}
+  - {version: 3, change: 'Arrays are delivered in a labelled Zarr store, with a category coordinate. The run command may hard-code the task parameters. The changed-instance rerun is gone; a second instance is a second episode. Runs made under versions 1 and 2 answered a different contract and are not reassessed under version 3.'}
 title: Seasonal rainfall calibration to the WMO guidance
 task_set_row: 11
 mode: process
@@ -17,22 +18,32 @@ params: [training_years, new_years, latitude_limit]
 # required intermediate product: they show which years set the category
 # boundaries even when the skill score cannot (a climatological forecast scores
 # zero under every reading).
+#
+# Each tolerance is an error bound, not a judgement: 2 * n * u * magnitude, where u
+# is the float32 unit roundoff (2^-24), n the number of rounded operations in the
+# longest chain, and magnitude the largest quantity entering it.
+#   - Forecast total: three monthly products and two additions per member, then a
+#     mean of 25 members: 30 operations. Member totals stay below 1500 mm on the
+#     original and changed data.
+#   - Observed total: two additions per native cell, then a weighted mean of the
+#     400 native cells in one forecast cell: 1201 operations. Native seasonal
+#     totals stay below 5000 mm.
+#   - Skill score: seven operations for each of at most 144 year-and-cell cases,
+#     summed, for the forecast and for the reference: 2304 operations. The ratio
+#     of the two scores cannot exceed 9.
+#   - Categories and years are whole numbers and must match exactly.
 results:
-  year: {kind: coordinate, tolerance: {atol: 0}}
-  new_year: {kind: coordinate, tolerance: {atol: 0}}
-  latitude: {kind: coordinate, tolerance: {atol: 1.0e-6}}
-  longitude: {kind: coordinate, tolerance: {atol: 1.0e-6}}
-  forecast_mean_mm: {dims: [year, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
-  observed_total_mm: {dims: [year, latitude, longitude], tolerance: {atol: 1.0e-3, rtol: 1.0e-5}}
-  observed_category: {dims: [year, latitude, longitude], tolerance: {atol: 0, rtol: 0}}
-  hindcast_rpss: {dims: [], tolerance: {atol: 1.0e-6, rtol: 0}}
-  hindcast_probability: {free: true, dims: [year, category, latitude, longitude], tolerance: {atol: 1.0e-6, rtol: 0}}
-  forecast_probability: {free: true, dims: [new_year, category, latitude, longitude], tolerance: {atol: 1.0e-6, rtol: 0}}
-tolerance_basis: >
-  Seasonal totals are sums of float32 source values near 100 to 500 mm; 0.001 mm
-  plus one part in 100,000 covers float32 arithmetic and is far below any
-  difference between conventions. The skill score is recomputed in float64 from
-  the submitted probabilities, so one part in a million suffices.
+  year: {kind: coordinate, tolerance: {exact: true}}
+  new_year: {kind: coordinate, tolerance: {exact: true}}
+  category: {kind: coordinate, tolerance: {exact: true}}
+  latitude: {kind: coordinate, tolerance: {precision: float32, operations: 1, magnitude: 180}}
+  longitude: {kind: coordinate, tolerance: {precision: float32, operations: 1, magnitude: 180}}
+  forecast_mean_mm: {dims: [year, latitude, longitude], tolerance: {precision: float32, operations: 30, magnitude: 1500}}
+  observed_total_mm: {dims: [year, latitude, longitude], tolerance: {precision: float32, operations: 1201, magnitude: 5000}}
+  observed_category: {dims: [year, latitude, longitude], tolerance: {exact: true}}
+  hindcast_rpss: {dims: [], tolerance: {precision: float32, operations: 2304, magnitude: 9}}
+  hindcast_probability: {free: true, dims: [year, category, latitude, longitude], tolerance: {precision: float32, operations: 64, magnitude: 1}}
+  forecast_probability: {free: true, dims: [new_year, category, latitude, longitude], tolerance: {precision: float32, operations: 64, magnitude: 1}}
 
 conventions:
   month_lengths:
@@ -54,8 +65,13 @@ pitfalls:
   full_sample: Set the category boundaries for a held-out year using that year's own observation.
 public_conventions: []
 
+# Optional material a run may hand to the agent. Supplying it is an experimental
+# condition, recorded with the run. The sheet states the accepted conventions.
+supplements:
+  conventions: conventions.md
+
 invariants: [probabilities_valid]
-probes: [replay, changed_data, changed_instance, held_out_year_isolation, new_years_forecast_separately]
+probes: [replay, changed_data, held_out_year_isolation, new_years_forecast_separately]
 claims: {}
 skill:
   ranking: rpss of the forecast for the new years; higher is better
@@ -66,8 +82,8 @@ skill:
 process:
   - id: reproducible
     source: practice 1
-    requirement: The whole procedure reruns from its inputs and follows them when they change.
-    checks: [probe.replay, probe.changed_data, probe.changed_instance]
+    requirement: The whole procedure reruns from its data and follows the data when they change.
+    checks: [probe.replay, probe.changed_data]
   - id: model_forecast_prepared
     source: practice 2
     requirement: The forecast is built on the dynamical model's ensemble, correctly converted to seasonal totals.

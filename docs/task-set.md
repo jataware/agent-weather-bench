@@ -67,6 +67,14 @@ things, one at a time, with the others held fixed:
   (`ACCORD/acmadDL`), and the `AfricaS2S` seasonal forecasting library
   (`ACCORD/africas2s`).
 
+**Supplied structure is a fourth thing to switch on and off.** A task can be run
+with or without a page that states its accepted conventions, and with or
+without a description of the method. Each is an optional supplement, recorded
+with the run. Running the same task with and without one measures how much of
+the difficulty lies in knowing the conventions, and how much in carrying them
+out. The default is without: the brief states the product and the agent must
+know, or find out, how the data are to be read.
+
 **Four questions are asked of every system.**
 
 1. *Does it meet the bar?* Which tasks does the system pass, and under what
@@ -87,6 +95,13 @@ work retained, and again with it reset, and compares cost, tokens, time and
 pass rate. The harness already supports this through `--parent RUN_ID` and the
 sequence files in `experiments/`; the comparison rules are in the top-level
 README under "What we measure".
+
+**A second instance is a second episode, never a hidden rerun.** The agent's
+code is not required to work on another region or period. In the second
+episode the agent is given its earlier submission, code and results, and
+decides for itself whether to reuse it, adapt it or start again. The same holds
+across levels and across tasks: Level 2 can start from the Level 1 submission,
+and one task can start from the output of another.
 
 **Substrate use is monitored, not assumed.** A substrate that is mounted but
 never opened measures availability, not use. The substrate-use monitor
@@ -216,9 +231,11 @@ observed rainfall.
 - **Briefs are short.** The current prompts run 3,700 to 10,400 characters and
   supply the procedure. The old briefs run 260 to 1,800 characters and state
   the product. The new set follows the old length.
-- **Supplied algorithms become an optional condition.** Files such as
-  `tasks/cca-seasonal-reproduction/algorithm.md` move out of the brief and into
-  a "method supplied" comparison arm.
+- **Supplied algorithms and conventions become optional conditions.** Files
+  such as `tasks/cca-seasonal-reproduction/algorithm.md` move out of the brief
+  and into a "method supplied" comparison arm. A template's `conventions.md`
+  does the same for its accepted conventions, as a "conventions supplied" arm.
+  A run takes either with `--supply`.
 - **Tasks are templates.** Location and time window are parameters, so repeats
   are independent instances and private instances cannot have been memorised.
   Today every builder hard-codes one location and one window.
@@ -250,7 +267,8 @@ observed rainfall.
   extending to cover imports; it should be extended, not replaced.
 - **The evidence column is thin.** No row has repeat attempts by more than one
   model under one protocol, so no pass rate here supports a model ranking. The
-  three converted rows each have two or three attempts by one cheap model in
-  the new format; see [the assessment format](assessment-format.md).
+  three converted rows have 36 attempts by one cheap model in the new format:
+  25 under its first contract and 11 under the revised one. See
+  [the assessment format](assessment-format.md).
 - **No human has approved any task.** Scientific, scoring and redistribution
   approvals remain false for every packaged task.

@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
  "template": "kenya-forecast-revision",
- "spec_version": 1,
- "fingerprint": "b5feb1c7e36ccfa8ec893c81432204a730d91d1798b8ad8dab4d2091d489036e",
- "certified_at": "20261006T154505",
+ "spec_version": 2,
+ "fingerprint": "58f5cef7815e2e0ddd4e8913ef20c281f2b8ff205dd67032996016e6efc7f911",
+ "certified_at": "20261006T164703",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {
@@ -19,7 +19,69 @@
      "passed": true,
      "detail": "largest difference from the weather-skills-bench oracle is 8.88e-16"
     }
-   ]
+   ],
+   "tolerances": {
+    "latitude": {
+     "tolerance": 2.1457673398117624e-05,
+     "declared": {
+      "precision": "float32",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 6.0,
+     "within_declared_magnitude": true
+    },
+    "longitude": {
+     "tolerance": 2.1457673398117624e-05,
+     "declared": {
+      "precision": "float32",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 42.0,
+     "within_declared_magnitude": true
+    },
+    "current_mean_mm": {
+     "tolerance": 0.0024080421455059467,
+     "declared": {
+      "precision": "float32",
+      "operations": 101,
+      "magnitude": 200
+     },
+     "largest_reference_value": 79.71689356435644,
+     "within_declared_magnitude": true
+    },
+    "previous_mean_mm": {
+     "tolerance": 0.0024080421455059467,
+     "declared": {
+      "precision": "float32",
+      "operations": 101,
+      "magnitude": 200
+     },
+     "largest_reference_value": 76.33013613861387,
+     "within_declared_magnitude": true
+    },
+    "change_mm": {
+     "tolerance": 0.004839955717981502,
+     "declared": {
+      "precision": "float32",
+      "operations": 203,
+      "magnitude": 200
+     },
+     "largest_reference_value": 23.293162128712872,
+     "within_declared_magnitude": true
+    },
+    "regional_change_mm": {
+     "tolerance": 0.008845524888618807,
+     "declared": {
+      "precision": "float32",
+      "operations": 371,
+      "magnitude": 200
+     },
+     "largest_reference_value": 5.724507950631261,
+     "within_declared_magnitude": true
+    }
+   }
   },
   "2_known_correct_solutions_pass": {
    "passed": true,
@@ -69,7 +131,7 @@
      "skill": null
     },
     {
-     "control": "accepted_ascending_latitude",
+     "control": "accepted_rearranged_arrays",
      "kind": "accepted_alternative",
      "instance": "service-area--weeks-1-2",
      "level": 1,
@@ -80,7 +142,29 @@
      "skill": null
     },
     {
-     "control": "accepted_ascending_latitude",
+     "control": "accepted_rearranged_arrays",
+     "kind": "accepted_alternative",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "accepted_hardcoded_parameters",
+     "kind": "accepted_alternative",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "accepted_hardcoded_parameters",
      "kind": "accepted_alternative",
      "instance": "central--weeks-2-3",
      "level": 1,
@@ -157,8 +241,8 @@
      "level": 1,
      "as_expected": true,
      "problems": [],
-     "note": null,
-     "computed_outcome": "fail",
+     "note": "the pitfall coincides with an accepted reading on this instance, on the submitted data and on the changed data",
+     "computed_outcome": "pass",
      "skill": null
     },
     {
@@ -228,28 +312,6 @@
      "skill": null
     },
     {
-     "control": "hardcoded_instance",
-     "kind": "incorrect",
-     "instance": "service-area--weeks-1-2",
-     "level": 1,
-     "as_expected": true,
-     "problems": [],
-     "note": null,
-     "computed_outcome": "fail",
-     "skill": null
-    },
-    {
-     "control": "hardcoded_instance",
-     "kind": "incorrect",
-     "instance": "central--weeks-2-3",
-     "level": 1,
-     "as_expected": true,
-     "problems": [],
-     "note": null,
-     "computed_outcome": "fail",
-     "skill": null
-    },
-    {
      "control": "overclaim",
      "kind": "incorrect",
      "instance": "service-area--weeks-1-2",
@@ -284,6 +346,50 @@
     },
     {
      "control": "edited_numbers",
+     "kind": "incorrect",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "missing_result",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "missing_result",
+     "kind": "incorrect",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "no_run_command",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "no_run_command",
      "kind": "incorrect",
      "instance": "central--weeks-2-3",
      "level": 1,
@@ -331,29 +437,22 @@
      "kind": "accepted_vs_pitfall",
      "separated_on": 48,
      "instances": 48,
+     "smallest_separation_in_tolerances": 97329.4,
+     "largest_coincidence_in_tolerances": 0.0,
      "status": "separated by the numbers on every instance"
     },
     {
      "pair": "clipped vs unclipped",
      "convention": "negative_increments",
      "kind": "accepted_vs_accepted",
-     "separated_on": 18,
+     "separated_on": 0,
      "instances": 48,
-     "status": "separated by the numbers on some instances; the changed-instance probe covers the rest",
-     "not_separated_on": [
-      "service-area--weeks-2-3",
-      "service-area--weeks-3-4",
-      "service-area--weeks-4-5",
-      "central--weeks-2-3",
-      "central--weeks-3-4",
-      "central--weeks-4-5",
-      "north-west--weeks-2-3",
-      "north-west--weeks-3-4",
-      "north-west--weeks-4-5",
-      "south-east--weeks-1-2",
-      "south-east--weeks-2-3",
-      "south-east--weeks-3-4"
-     ]
+     "smallest_separation_in_tolerances": null,
+     "largest_coincidence_in_tolerances": 0.867,
+     "separated_on_changed_data": 48,
+     "separated_by_neither": 0,
+     "status": "separated by the numbers or by the changed-data probe on every instance",
+     "not_separated_on": []
     },
     {
      "pair": "same_lead",
@@ -361,28 +460,34 @@
      "kind": "accepted_vs_pitfall",
      "separated_on": 48,
      "instances": 48,
+     "smallest_separation_in_tolerances": 4630.8,
+     "largest_coincidence_in_tolerances": 0.0,
      "status": "separated by the numbers on every instance"
     },
     {
      "pair": "unweighted",
      "convention": "area_weighting",
      "kind": "accepted_vs_pitfall",
-     "separated_on": 32,
+     "separated_on": 0,
      "instances": 48,
-     "status": "separated by the numbers on some instances; the changed-instance probe covers the rest",
+     "smallest_separation_in_tolerances": null,
+     "largest_coincidence_in_tolerances": 0.622,
+     "separated_on_changed_data": 30,
+     "separated_by_neither": 18,
+     "status": "not separable on some instances: a known ambiguity there",
      "not_separated_on": [
-      "service-area--week-1",
       "central--weeks-1-2",
+      "central--weeks-2-3",
+      "central--weeks-3-4",
       "central--weeks-4-5",
       "central--week-1",
-      "north-west--weeks-4-5",
-      "coast--week-1",
-      "full-domain--week-1",
+      "central--weeks-1-3",
+      "rift--weeks-1-2",
       "rift--weeks-2-3",
       "rift--weeks-3-4",
       "rift--weeks-4-5",
-      "lake-basin--weeks-1-2",
-      "lake-basin--weeks-2-3"
+      "rift--week-1",
+      "rift--weeks-1-3"
      ]
     },
     {
@@ -391,6 +496,8 @@
      "kind": "accepted_vs_pitfall",
      "separated_on": 48,
      "instances": 48,
+     "smallest_separation_in_tolerances": "exact mismatch",
+     "largest_coincidence_in_tolerances": 0.0,
      "status": "separated by the numbers on every instance"
     },
     {
@@ -399,104 +506,78 @@
      "kind": "accepted_vs_pitfall",
      "separated_on": 48,
      "instances": 48,
+     "smallest_separation_in_tolerances": 1102.4,
+     "largest_coincidence_in_tolerances": 0.0,
      "status": "separated by the numbers on every instance"
     }
    ],
-   "known_ambiguities": []
+   "known_ambiguities": [
+    "unweighted"
+   ]
   },
   "5_model_attempts": {
    "passed": true,
    "status": "run",
-   "attempts": 9,
+   "attempts": 4,
    "systems": [
-    "codex-luna-accord",
-    "codex-luna-pinned",
-    "codex-luna-rhiza",
-    "codex-luna-scratch"
+    "codex-luna-pinned"
    ],
    "attempts_with_an_unruled_unknown_answer": 0,
-   "attempts_assessed_under_another_fingerprint": 0,
+   "attempts_assessed_under_another_fingerprint": 9,
    "rulings_awaiting_confirmation": 0,
    "detail": "Every attempt's answer was classified.",
    "runs": [
     {
-     "run": "20261006T141131-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-pinned-53942c",
-     "system": "codex-luna-pinned",
-     "instance": "service-area--weeks-1-2",
-     "level": 1,
-     "computed_outcome": "fail",
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T142150-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-pinned-98a867",
+     "run": "20261006T164832-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-pinned-b1515f",
      "system": "codex-luna-pinned",
      "instance": "central--weeks-2-3",
      "level": 1,
+     "outcome": "pass",
      "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [
+      "conventions"
+     ],
+     "parent": null,
      "unknown_answer_checks": [],
      "ruling": null
     },
     {
-     "run": "20261006T143755-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-scratch-bae94a",
-     "system": "codex-luna-scratch",
+     "run": "20261006T164832-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-pinned-b4c408",
+     "system": "codex-luna-pinned",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "outcome": "pass",
+     "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T164832-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-pinned-5087b4",
+     "system": "codex-luna-pinned",
      "instance": "service-area--weeks-1-2",
      "level": 1,
+     "outcome": "pass",
      "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": null,
      "unknown_answer_checks": [],
      "ruling": null
     },
     {
-     "run": "20261006T143910-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-scratch-99c9ac",
-     "system": "codex-luna-scratch",
-     "instance": "central--weeks-2-3",
+     "run": "20261006T165106-kenya-forecast-revision-north-west--weeks-3-4-L1-codex-luna-pinned-f2e0bf",
+     "system": "codex-luna-pinned",
+     "instance": "north-west--weeks-3-4",
      "level": 1,
-     "computed_outcome": "fail",
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T144006-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-rhiza-2b1bcb",
-     "system": "codex-luna-rhiza",
-     "instance": "service-area--weeks-1-2",
-     "level": 1,
+     "outcome": "pass",
      "computed_outcome": "pass",
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T144124-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-rhiza-8a47b9",
-     "system": "codex-luna-rhiza",
-     "instance": "central--weeks-2-3",
-     "level": 1,
-     "computed_outcome": "fail",
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T144245-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-accord-3fab03",
-     "system": "codex-luna-accord",
-     "instance": "service-area--weeks-1-2",
-     "level": 1,
-     "computed_outcome": "pass",
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T144345-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-accord-6ebe89",
-     "system": "codex-luna-accord",
-     "instance": "central--weeks-2-3",
-     "level": 1,
-     "computed_outcome": "pass",
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T144449-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-scratch-5f798a",
-     "system": "codex-luna-scratch",
-     "instance": "central--weeks-2-3",
-     "level": 1,
-     "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": "20261006T164832-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-pinned-5087b4",
      "unknown_answer_checks": [],
      "ruling": null
     }

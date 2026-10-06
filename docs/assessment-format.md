@@ -1,16 +1,18 @@
 # A generic assessment format for the 25 task templates
 
 Status: proposal agreed in outline on 6 October 2026 and revised the same day
-after a five-point review (see "What the review changed" at the end). Product
-mode, outcome mode with both levels, and process mode are implemented in the
-`assessment/` package and proven on three templates; see "What is implemented"
-below. The process checklist is a draft from a secondary source and is not
+after a five-point review, then revised again after a review of eight design
+points (see "Two reviews changed the format" at the end). Product mode, outcome
+mode with both levels, and process mode are implemented in the `assessment/`
+package and proven on three templates; see "All three modes are implemented"
+below. A pinned judge, Claude Opus 5.5, now decides the questions no
+computation can settle. The process checklist is a draft from a secondary source and is not
 signed off. The evaluator for the ten packaged
 tasks (`weatherbench/evaluation.py`, `weatherbench/judge.py`, the per-task
 `rubric.yaml` files) is unchanged and its lock still verifies. The companion
 list of tasks is [the proposed starting set](task-set.md).
 
-## The question, stated twice
+## The document answers one question, stated twice
 
 **In plain terms.** How do we mark an agent's forecasting work so that the mark
 is exact, catches the subtle mistakes a forecaster would catch, checks that the
@@ -26,7 +28,7 @@ whether the agent's interpretation is supported by its evidence, and (e) score
 forecast skill, without prescribing the agent's language, file layout or
 intermediate steps?
 
-## Terms used in this document
+## The document uses these terms
 
 - **Task template, instance, brief, Level 1, Level 2.** Defined in
   [the task set](task-set.md). Level 1 is "produce a valid output". Level 2 is
@@ -43,42 +45,78 @@ intermediate steps?
 - **Pitfall.** A known wrong way to do the task, such as summing cumulative
   rainfall as if it were daily rainfall. A pitfall has a name and a computable
   wrong answer.
-- **Probe.** A rerun of the agent's own code on inputs the controller has
+- **Results store.** The Zarr store (format version 3) in which a submission
+  delivers its arrays. Every array carries named dimensions, and every dimension
+  carries a coordinate array of labels.
+- **Probe.** A rerun of the agent's own code on data the controller has
   changed, to observe behaviour instead of reading code.
+- **Episode.** One run of one system on one instance. A second episode may be
+  given the first episode's submission.
+- **Conventions sheet.** An optional page that states a task's accepted
+  conventions. Handing it to the agent is an experimental condition.
 - **Decision point.** A feature deliberately present in an instance where the
   standard requires a judgement, and where the right judgement shows in the
   output.
 - **Standard.** A published document that defines correct practice. The first
-  two are named in "The first standards" below.
+  two are named in "Two WMO documents are the first standards" below.
 - **Judge.** A language model that answers one narrow question about cited
   evidence. It returns pass, fail or unresolved, and must quote the exact text
-  it relies on.
-- **Pass, fail, unresolved.** The three outcomes of every check. *Fail* means a
-  demonstrated defect. *Unresolved* means the evidence does not decide the
-  question. The two are never merged.
+  it relies on. The pinned judge is Claude Opus 5.5.
+- **Pass, fail, unresolved.** The three outcomes of every check. *Fail* means
+  the submission is at fault. *Unresolved* means a cause outside the submission
+  left the question open. The two are never merged.
+- **Blocked.** A check that cannot be made because an earlier part of the same
+  submission is broken. A blocked check fails and names the part.
+- **Error bound.** The largest difference that rounding can produce between two
+  correct implementations. Each tolerance is such a bound.
 - **Controller.** The trusted benchmark harness that launches the agent, holds
   the private references and runs the checks.
 
 ## The agent delivers a small fixed envelope and is free in everything else
 
-**The envelope has three required parts.** An `answer.json` file, one command
-that regenerates the results from the inputs, and a free-form report. Language,
-method, file layout and intermediate steps are not constrained.
+**The envelope has four parts.** A results store, an `answer.json` file, one
+command that regenerates the results from the data, and a free-form report.
+Language, method, file layout and intermediate steps are not constrained. The
+text every agent receives is [`assessment/envelope.md`](../assessment/envelope.md).
 
-**`answer.json` has four sections.**
+**Arrays are delivered in `results.zarr`, a Zarr store of format version 3.**
 
-- `results` — the named quantities the brief asks for, as numbers, arrays or
-  pointers to files.
-- `choices` — the conventions the agent used, taken from the list in the spec,
-  with free text allowed for a choice the spec does not list.
-- `claims` — the agent's conclusions as structured statements with the value
-  true, false or inconclusive, such as "the nested search beats the fixed
-  predictor".
-- `method` — required only in process mode. One entry per step of the standard:
-  what was done, and a pointer to the file and function that did it.
+- Each array is stored under the name the brief gives it, on the dimension
+  names the brief gives.
+- Each dimension has a coordinate array of the same name that holds its labels.
+- The controller matches each array to its own by dimension name and by label.
+  The order of the dimensions and the order of the labels are the agent's to
+  choose.
+- `xarray.Dataset.to_zarr(path, zarr_format=3)` writes exactly this layout.
+
+**The labelled store replaced nested lists in `answer.json` on 6 October.** One
+earlier agent attempt failed because a nested list gave no way to tell which
+axis was which. A labelled array removes that question instead of answering it
+case by case. What remains open is only what a name can settle, so each brief
+states the array names, the dimension names and the unit.
+
+**Tables will be delivered as Parquet, and as GeoParquet where they carry
+geometry.** No current template returns a table, so this is not implemented.
+
+**`answer.json` has five sections.**
+
+- `results` — any result that is a single number.
+- `choices` — the conventions the agent used, as free text.
+- `claims` — the conclusions the brief asks for. A claim made once per label of
+  a dimension is keyed by that label.
+- `method` — required only in process mode. One entry per named step: what was
+  done, and a pointer to the file and function that did it.
+- `run` — the command that regenerates the results.
 
 **The run command is what makes probes possible.** The controller substitutes
-an input directory and an output directory and runs the command offline.
+an input directory and an output directory and runs the command offline, on
+changed data for the same task.
+
+**The task's parameters may be written into the code.** The command must read
+the data from the input directory. It need not read the dates, the region or
+the years from there. Reuse on another instance is measured by a second
+episode, described under "A second instance is a second episode" below, and is
+not demanded of every submission.
 
 **The agent no longer keeps provenance paperwork.** The provenance file with
 per-file hashes, the handoff file and the retained-file manifest are removed
@@ -160,25 +198,47 @@ leaderboard.
 
 ## Every check returns pass, fail or unresolved
 
-**Fail is reserved for a demonstrated defect.** A wrong number, a leak shown by
-a probe, a claim contradicted by recomputation, or a quoted passage that
-contradicts the standard.
+**Fail means the submission is at fault.** There are three ways.
 
-**Unresolved covers everything the evidence does not decide.** Each unresolved
+1. *A demonstrated defect.* A wrong number, a leak shown by a probe, a claim
+   contradicted by recomputation, or a quoted passage that breaks a
+   requirement.
+2. *A missing piece the brief asked for.* A claim not stated, a method entry not
+   given, or a method pointer that names no place in the submission.
+3. *A blocked check.* The check cannot be made because an earlier part of the
+   same submission is broken. It fails, and its record names that part in
+   `blocked_by`. A submission with no usable answer fails the envelope, and
+   every check that rests on the answer fails with it.
+
+**A correct result is never failed for a fault elsewhere.** When one array is
+unusable, the checks that need it fail, and every other check is assessed on
+its merits. An earlier version of this rule left blocked checks unresolved
+with a reason `not_assessed`. That code is retired: a broken submission is a
+failure, not an open question.
+
+**Unresolved is reserved for causes outside the submission.** Each unresolved
 outcome carries a reason code:
 
-- `missing_evidence` — the artifact needed to decide is absent or truncated.
+- `infrastructure` — the controller could not run the check, or the runtime
+  crashed before the command wrote its results, or the judge could not be
+  reached.
 - `ambiguous_clause` — the standard or the brief can be read two ways.
-- `invalid_citation` — the judge's quote does not appear in the cited file, so
-  its verdict is discarded.
-- `ambiguous_variant` — the numbers are consistent with both an accepted
-  convention and a pitfall, and no probe separates them.
-- `unknown_answer` — the numbers match no listed combination.
-- `infrastructure` — the controller could not run the check.
+- `ambiguous_variant` — the numbers fit both an accepted convention and a
+  pitfall, and the probe that would separate them could not decide.
+- `unknown_answer` — the numbers match no listed combination, and no reviewer
+  has ruled on them yet.
+- `invalid_citation` — the judge's quotation does not appear in the cited file,
+  so its verdict is discarded.
+- `missing_evidence` — the controller's own record is absent, or the judge was
+  not shown enough to decide.
+- `judge_not_run` — the question needs the judge and no judge was run.
 
-**Level 1 is pass only when every required check passes.** It is fail when any
-check fails, and unresolved otherwise. Unresolved runs are reported in their
-own column and are never counted as failures.
+**The headline outcome counts every check.** It is pass only when every check
+passes, including the checks a judge decides. It is fail when any check fails,
+and unresolved otherwise. Two components are reported beside it:
+`computed_outcome`, which leaves out the judge's checks, and `judged_outcome`,
+which holds only those. Unresolved runs are reported in their own column and
+are never counted as failures.
 
 ## The spec draws on seven check types
 
@@ -219,12 +279,14 @@ occurs.
 - Only accepted combinations: pass.
 - Only pitfall combinations: fail, reported as "consistent with" the named
   pitfalls.
-- Accepted and pitfall combinations together: the controller runs a targeted
-  probe that separates them, such as rerunning the agent's code on an input
-  with an injected negative increment. If no probe separates them, product
-  mode passes with an `ambiguous_variant` flag, because the delivered product
-  is correct for this instance. Process mode returns unresolved, because the
-  method is what is being assessed.
+- Accepted and pitfall combinations together: the controller looks for a change
+  to the data under which the two give different numbers, and reruns the
+  agent's code on it. An injected negative increment separates clipping from
+  keeping. Rain that grows away from the equator separates a weighted regional
+  mean from an unweighted one. If the rerun passes and no data change separates
+  the two, the check passes with an `ambiguous_variant` flag: the results are
+  correct for this instance, and which reading the method follows is recorded as
+  undetermined. If the rerun could not be made, the check is unresolved.
 - No combination: unresolved, with reason `unknown_answer`.
 
 **The match is compared with the agent's declared `choices`.** A disagreement
@@ -242,16 +304,21 @@ whether to clip negative rainfall increments; both readings are defensible
 to one; fine-grid rainfall conserves the coarse total; a station with no valid
 reports has an undefined score, not a zero.
 
-**Probes observe behaviour.** Three shapes already exist in this repository and
-cover most needs:
+**Probes observe behaviour.** Every probe reruns the agent's command on the
+same task. There are three shapes.
 
 1. *Replay.* The command regenerates the submitted results from the original
-   inputs.
-2. *Perturb and recompute.* The controller changes an input; the results must
-   change to match an independent recomputation, or must stay unchanged where
-   the change lies in the future of a forecast.
-3. *Remove targets and infer.* The controller deletes the observations; the
-   saved fit must still produce forecasts.
+   data.
+2. *Changed data.* The controller changes the data. The results must change to
+   match an independent recomputation. A stored answer fails here.
+3. *Invariance.* The controller changes one part of the data that a valid
+   method must not use, and a named part of the results must not move. A
+   forecast must not move when later model forecasts change. A cross-validated
+   forecast for a year must not move when that year's own observation changes.
+
+**No probe changes the task's parameters.** An earlier version reran the code
+on another instance and failed a submission that could not follow. That demand
+is gone; see "A second instance is a second episode".
 
 ### Claim checks establish sample facts and nothing more
 
@@ -289,18 +356,47 @@ question about the agent's reasoning. The standing obligations are:
 example, requires that curator-constructed faults are not described as real
 observation outages.
 
-**Each obligation is judged on its own, with exact quotes.** The judge returns
-pass, fail or unresolved. A fail must quote both the claim and the evidence
-that contradicts it. A quote that does not appear in the cited file voids the
-verdict and yields `invalid_citation`.
+**Each obligation is one question, decided on exact quotations.** The judge
+returns pass, fail or unresolved, and says what the verdict rests on.
 
-**This is the form used in the two station studies of 6 October.** A judge and
+- A pass quotes the passage that shows the requirement is met.
+- A fail quotes the passage at fault, and the passage it contradicts where the
+  fault is a contradiction.
+- Where a requirement only restricts what a report may claim, a report that
+  says nothing on the subject passes without a quotation.
+- Where a requirement demands a statement, a report without it fails without a
+  quotation.
+- A quotation that does not appear in the cited file voids the verdict and
+  yields `invalid_citation`. White space is ignored in the comparison. The
+  judge is asked once more for a voided verdict, and only for that one.
+
+**The judge is pinned and its identity is recorded.** It is Claude Opus 5.5
+(`claude-opus-5-5`) at high effort, with a fixed prompt
+([`assessment/judge-prompt.md`](../assessment/judge-prompt.md)), no tools and a
+fixed reply schema. The model, the effort, the prompt, the obligations and the
+schema are hashed into a judge identifier that every judgement carries. One
+request covers all the questions of one run.
+
+**The judge sees text, never raw arrays.** It is shown the brief, the report,
+`answer.json`, the submitted code, and a controller-written summary of each
+array: its dimensions, shape, minimum, mean and maximum. It is not shown the
+controller's findings, so a failed numerical check cannot be counted twice.
+
+**The judge has its own control cases.** Twelve small submissions, each with one
+planted defect or none, are kept in
+[`assessment/calibration.py`](../assessment/calibration.py) with the verdict
+each must receive. They cover the five obligations, the method-statement
+question and the required-statement question. The pinned judge returned the
+expected verdict, with valid quotations, on 12 of 12. The record is
+`assessment/judge-calibration.json`, and a test fails when it was made by
+another judge identifier. Twelve cases written by the same author as the prompt
+show that the judge can apply the questions. They do not measure its agreement
+with a domain scientist.
+
+**The same form was used in the two station studies of 6 October.** A judge and
 the agent-reviewed references agreed on 28 of 28 cases, including cases where a
 caption contradicted a correct report and where a bootstrap never recomputed
 its statistic. Those studies used one parent submission and no human labels.
-They show the form is workable; they do not show the judge is accurate. In the
-second study the judge's first response failed exact-quote validation in two of
-ten cases, which is why the `invalid_citation` outcome exists.
 
 ### Process conformance checks the method against a standard
 
@@ -323,9 +419,12 @@ preference:
    clause requires, under the same quote rule and three outcomes as an
    interpretation obligation.
 
-**A missing pointer or an unclear clause is unresolved, not a failure.** A step
-fails only when the cited code demonstrably does something the clause forbids,
-or a probe shows the step was not done.
+**A missing method entry fails; an unclear clause is unresolved.** The brief
+asks for each method entry by name. An entry that is absent, or whose pointer
+names no place in the submission, is the submission's omission and fails. A
+step also fails when the cited code does something the clause forbids, or when
+a probe shows the step was not done. A clause that can be read two ways is
+unresolved.
 
 **Scientific reasoning is also tested through decision points.** An instance is
 built so that the standard demands a judgement whose result is visible in the
@@ -347,18 +446,22 @@ score is relative to a declared baseline. Any method is acceptable.
 the same for every system, and the feedback tool
 (`weatherbench/feedback.py`) already enforces a query limit.
 
-## An example spec for a product-mode task
+## A product-mode spec looks like this
 
 This is illustrative. The working spec is
 `templates/kenya-forecast-revision/spec.yaml`.
 
 ```yaml
 template: kenya-forecast-revision
-spec_version: 1
+spec_version: 2
 mode: product
-params: [issue_current, issue_previous, rectangle]
+params: [issue_current, issue_previous, rectangle, period_start]
+claims_by: period
 results:
-  regional_change_mm: {tolerance: 1e-4}
+  period: {kind: coordinate, dtype: date}
+  latitude: {kind: coordinate, tolerance: {precision: float32, operations: 1, magnitude: 180}}
+  change_mm: {dims: [period, latitude, longitude], tolerance: {precision: float32, operations: 203, magnitude: 200}}
+  regional_change_mm: {dims: [period], tolerance: {precision: float32, operations: 371, magnitude: 200}}
 conventions:
   negative_increments:
     clipped: accepted
@@ -369,14 +472,14 @@ conventions:
   issue_alignment:
     same_valid_period: accepted
     same_lead: pitfall
-separating_probes:
-  rainfall_semantics: inject_nonmonotone_cumulative
+supplements:
+  conventions: conventions.md
 invariants: [change_equals_current_minus_previous]
-probes: [replay, perturb_and_recompute]
-interpretation: [consistency_across_artifacts, source_attribution]
+probes: [replay, changed_data]
+interpretation: [consistency_across_artifacts, source_attribution, generalization]
 ```
 
-## An example of the extra block for a process-mode task
+## A process-mode spec adds a checklist
 
 This is illustrative and predates the build. The working spec is
 `templates/seasonal-rainfall-calibration/spec.yaml`, and its steps come from
@@ -411,7 +514,7 @@ process:
 interpretation: [statistical_support, generalization, consistency_across_artifacts]
 ```
 
-## The first standards
+## Two WMO documents are the first standards
 
 **The WMO guidance on objective seasonal forecasting is the first standard.**
 *Guidance on Operational Practices for Objective Seasonal Forecasting*,
@@ -448,8 +551,11 @@ lacks. Have a domain scientist sign the checklist off.
 
 ## A spec is certified by five tests
 
-1. **Two independent reference implementations agree.** This is already the
-   practice for the ten packaged tasks.
+1. **Two independent reference implementations agree, and every declared
+   magnitude covers the data.** The first part is already the practice for the
+   ten packaged tasks. The second part checks each tolerance's error bound: the
+   largest reference value under an accepted reading must not exceed the
+   magnitude the bound assumes.
 2. **A known-correct solution passes every check.**
 3. **Deliberately incorrect solutions are caught by the right check.** The set
    must include at least: a leak (caught by a probe), a cached output (caught
@@ -460,15 +566,22 @@ lacks. Have a domain scientist sign the checklist off.
    the canonical correlation task follow this pattern for leaks and cached
    inference.
 4. **The separability of every accepted–pitfall pair is measured and
-   recorded.** For each pair the certification states one of: separated by the
-   numbers on typical instances; separated only by a named probe; or not
-   separable. A pair that coincides on some instances does not reject the spec.
-   A pair that is not separable at all is listed as a known ambiguity.
+   recorded, in tolerances.** For each pair the certification states on how
+   many instances the two readings give different numbers on the submitted
+   data, on how many more they differ on the controller's changed data, and on
+   how many they differ on neither. It also states the smallest separation, as
+   a multiple of the tolerance. A pair that coincides on some instances does
+   not reject the spec. A pair that is not separable at all is listed as a known
+   ambiguity.
 5. **Several cheap-model attempts are run, and every unknown answer is ruled
    on.** The spec version is locked only after that.
 
 Human scientific approval is a separate, later gate. Certification says the
 spec is internally sound, not that the science is endorsed.
+
+**The judge is certified the same way, by cases with known answers.** See "The
+judge has its own control cases" above. Its record is kept apart from the
+templates' records, because one judge serves every template.
 
 ## Unknown answers change the spec only through versioned adjudication
 
@@ -511,24 +624,114 @@ what state was retained. Cost, tokens and time are reported per episode, so
 that a later episode on a new location can be compared with the same episode
 run from a reset state.
 
-## What a result looks like
+## A second instance is a second episode
 
-- **Level 1:** pass, fail or unresolved; the set of convention combinations the
-  answer is consistent with; each invariant, probe, claim, interpretation and
-  process outcome with its evidence and, where unresolved, its reason code;
-  cost, time and tokens; the spec version.
+**The agent's code is not required to work on another instance.** The first
+version required the run command to read the task's parameters from its inputs,
+and reran the code on another region or period. A submission that could not
+follow failed. That rule fixed how every agent had to structure its code, to
+serve a question most runs never ask.
+
+**Reuse is measured where it happens.** A run started with `--parent RUN_ID`
+receives the earlier run's submission, code and results, under `/work/prior`.
+The agent is told it may use it, adapt it or ignore it. The earlier run may be
+another instance of the same task, the Level 1 run of the same instance, or a
+run of another task. The system must be the same.
+
+**The comparison is the same instance run fresh.** Cost, tokens, time and
+outcome of the second episode are compared with a fresh run of that instance.
+The run record states the parent and counts the commands that named the
+earlier work.
+
+**One power was given up.** A reading that gives the same results as the
+accepted reading on the task's own instance, for any data, is no longer failed
+in that episode. An earlier attempt set category boundaries from all years. On
+an instance with eight training years that reading and the correct one give
+identical categories whatever the observations are, and the changed-instance
+rerun had exposed it on other years. Under the present rule the results pass
+on that instance with the flag `ambiguous_variant`, and the same reading fails
+on an instance where it changes a result.
+
+## Supplied conventions are an experimental condition
+
+**Conventions stay out of the brief.** A task whose brief lists the accepted
+conventions tests whether an agent can carry out instructions. A task whose
+brief states only the product also tests whether the agent knows, or finds out,
+how the data are to be read. The second is the harder and more useful test, so
+it is the default.
+
+**A conventions sheet can be supplied, and supplying it is recorded.** A
+template may hold a `conventions.md` that states each accepted convention as a
+fact about the data or about the brief. It names no pitfall. A run started with
+`--supply conventions` places the sheet in the task folder and adds one line to
+the brief. The run record lists what was supplied.
+
+**The sheet is one more thing to switch on and off.** It stands beside the
+model, the harness and the substrate. The same instance run with and without
+the sheet measures how much of a task's difficulty is knowing the conventions.
+A "method supplied" condition works the same way.
+
+## Each tolerance is an error bound
+
+**A tolerance answers one question: how far apart can two correct answers be?**
+Two implementations of the same calculation differ only by rounding. The
+standard bound for a chain of `n` rounded operations on quantities no larger
+than `m` is `n * u * m`, where `u` is the unit roundoff: 2⁻²⁴ in float32 and
+2⁻⁵³ in float64. Two implementations can each be off by that much, so the
+tolerance is `2 * n * u * m`.
+
+**The spec declares `n`, `m` and the precision, and states where they come
+from.** Float32 is assumed wherever the source data are float32, because common
+tools keep that precision. Whole-number results such as categories must match
+exactly.
+
+**The bound is checked against the data, in both directions.**
+
+- Certification fails when a reference value exceeds the declared magnitude.
+- Certification reports how many tolerances separate each pitfall from the
+  accepted reading. A pitfall separated by thousands of tolerances is caught by
+  the numbers. A pitfall separated by less than one cannot be told from
+  rounding, and needs a probe.
+
+**The Kenya template shows why the second check matters.** The tolerance on the
+regional mean is 0.0088 mm. Four pitfalls differ from the accepted
+reading by at least 1,102 tolerances on every instance. The fifth, an
+unweighted regional mean, differs by at most 0.62 tolerances on any
+instance: the region lies within 6° of the equator, where the area weights are
+equal to within 0.6%. The first version used a tolerance of 0.001 mm, chosen
+by eye, and so failed answers for differences that float32 rounding can
+produce. The submitted numbers cannot establish that pitfall here. The
+changed-data probe can: the controller adds rain that grows away from the
+equator, and the two readings then differ on 30 of 48 instances. On the
+other 18, which span two or three rows next to the equator, the
+readings stay within rounding of each other and are recorded as a known
+ambiguity.
+
+**The bound is a worst case.** Real float32 arithmetic is usually far closer
+than the bound allows. A tolerance set this way gives up some sharpness in
+exchange for never failing a correct answer.
+
+## A result reports these things
+
+- **Level 1:** the headline outcome, pass, fail or unresolved, with its computed
+  and judged components; the set of convention combinations the answer is
+  consistent with; each invariant, probe, claim, interpretation and process
+  outcome with its evidence, the part that blocks it where it is blocked, and
+  its reason code where it is unresolved; the judge's identifier; cost, time and
+  tokens; the spec version.
 - **Level 2:** the validity-gate outcome; skill of the optimized forecast
   against each baseline; on process rows, the skill of the conformant forecast
   where it is independently valid; the Level 1 result shown beside it, whatever
   that result is; the feedback queries used.
 - **Per run, in every case:** the model, harness and substrate; the
-  substrate-use record; the parent run and retained state, if any.
+  substrate-use record; the supplements handed to the agent; the parent run,
+  the retained state and the use made of the earlier work, if any.
 - **Across instances:** counts of pass, fail and unresolved, and mean cost,
   over the same drawn instances for every system compared.
 - **Across episodes:** cost, tokens, time and outcome for each episode in a
   sequence, for the retained condition and the reset condition.
 
-## How this changes the current implementation
+## The format changes the first evaluator in six ways
 
 - **The weighted rubric tree becomes a check list.** Today a failed check
   zeroes a rubric leaf worth 20 to 25 points. Under this format each check is
@@ -547,7 +750,7 @@ run from a reset state.
 - **The reference modules are kept.** They already compute from data; they need
   a conventions argument.
 
-## What is implemented
+## All three modes are implemented, each on one template
 
 **All three modes work end to end, each on one template.** The package
 `assessment/` implements the envelope, three-outcome results, controller-held
@@ -555,38 +758,43 @@ provenance, the certification tests, and the checks for every mode. How to use
 it is in [templates/README.md](../templates/README.md).
 
 - *Product mode:* `templates/kenya-forecast-revision` (row 4 of the task set),
-  with variant matching, invariants, three probes and claim checks.
+  with variant matching, invariants, two probes and claim checks.
 - *Outcome mode with both levels:* `templates/weeks34-rainfall` (row 15), with
   a validity gate, skill scoring, and a development-feedback tool for Level 2.
-- *Process mode:* `templates/seasonal-rainfall-calibration` (row 11), with a
+- *Process mode:* `templates/seasonal-rainfall-calibration` (row 11), with an
   eleven-step checklist drawn from the WMO practices for objective seasonal
   forecasting.
 
-**All three specs passed all five certification tests, the four automatic ones
-in the offline Docker runtime.** The fifth rests on nine, three and nine
-attempts by one cheap model. No domain scientist has approved any of them.
+**All three specs pass the four automatic certification tests in the offline
+Docker runtime, at their current versions.** The fifth test rests on 4,
+3 and 4 attempts by one cheap model under the current contract. No
+domain scientist has approved any of them.
 
-- *Kenya forecast revision.* Two independent reference implementations agree to
-  6e-14 over 64 convention combinations, and the first reproduces the earlier
-  repository's answer key to 9e-16. Three known-correct controls pass. Ten
-  deliberately incorrect controls each fail on the check built to catch them.
-- *Weeks 3–4 rainfall.* Two independent implementations of the metric and its
-  baselines agree to 1e-14 on eight instances, and the staged inputs and
-  baseline scores equal those of the packaged task exactly. Five valid controls
-  pass, including a raw-model forecast and a climatology forecast. Ten invalid
-  controls each fail on the check built to catch them.
-- *Seasonal rainfall calibration.* Two independent reference implementations
-  agree to 3e-12 over 24 convention combinations on six instances, and
-  reproduce the packaged task's reference arrays. Four conformant controls
-  pass, including a climatological forecast. Ten non-conformant controls each
-  produce the outcome built for them, including a skipped cross-validation, a
-  missing method statement and a false method pointer.
+- *Kenya forecast revision, version 2.* Two independent reference
+  implementations agree to 6e-14 over 64 convention combinations, and the
+  first reproduces the earlier repository's answer key. 4 known-correct
+  controls pass, among them one with its arrays in another order and one with
+  the task parameters written into the code. 11 deliberately incorrect
+  controls each produce the outcome built for them.
+- *Weeks 3–4 rainfall, version 3.* Two independent implementations of the
+  metric and its baselines agree to 1e-14 on eight instances, and the staged
+  inputs and baseline scores equal those of the packaged task exactly. 5
+  valid controls pass, including a raw-model forecast and a climatology
+  forecast. 10 invalid controls each fail on the check built to catch them.
+- *Seasonal rainfall calibration, version 3.* Two independent reference
+  implementations agree to 3e-12 over 24 convention combinations on six
+  instances, and reproduce the packaged task's reference arrays. 4
+  conformant controls pass, including a climatological forecast. 10
+  non-conformant controls each produce the outcome built for them, including a
+  skipped cross-validation, a missing method statement and a false method
+  pointer.
 
 **No-model fixture runs exercise the whole path.** A deterministic system
 solves an instance inside the tool sandbox, the controller freezes the
 submission and writes the provenance record, and the probes rerun the code
 offline. A Level 2 fixture also makes three development-score requests through
-the feedback tool.
+the feedback tool, each naming a Zarr store that the controller freezes before
+scoring it.
 
 **The outcome-mode validity gate has four parts.** It prescribes no method.
 
@@ -604,10 +812,6 @@ the feedback tool.
 4. *Leakage, part two: no information from the future.* The controller changes
    the model forecasts issued after a cut date. Forecasts issued before it must
    not move.
-
-The gate also reruns the code on another instance, with a different period and
-set of cells, and requires a valid forecast there. The skill on that instance
-is recorded beside the main score as evidence of how well the method transfers.
 
 **Skill is reported whenever a forecast covers the required cases.** A forecast
 that fails the gate still has its score recorded, with
@@ -630,10 +834,11 @@ score, it must equal the controller's score of the submitted forecast; stating
   prepared" passing.
 - *A step that rests on a method statement* first checks, by computation, that
   the agent's pointer names a file and symbol present in the submission. A
-  missing or false pointer is unresolved with reason `missing_evidence`. A
-  pointer that resolves goes to the judge.
-- *A step only a judge can decide* is unresolved with reason `judge_not_run`
-  until a judge is wired in. Such steps do not enter `computed_outcome`.
+  missing or false pointer fails: the brief asked for it. A pointer that
+  resolves goes to the judge, who decides whether the code there does what the
+  statement says.
+- *A step only a judge can decide* goes to the judge. It enters
+  `judged_outcome` and the headline, and not `computed_outcome`.
 
 **A valid negative result conforms.** A climatological forecast, one third for
 each category, passes every computed step.
@@ -646,45 +851,44 @@ array differs between the two readings, so it settles the question for every
 forecast. This is the format's first preference in practice: require the
 intermediate product, before relying on a probe or a judge.
 
-**Building it settled eight design points.** Each is a decision taken during
-the build and is open to revision.
+**Building it settled eight design points, and a review revised them.** The
+first decisions were taken during the build. The owner reviewed all eight on
+6 October 2026. The table gives both, and what is now built.
 
-1. *Convention names are private by default.* Showing the agent a list such as
-   "negative increments: clipped or unclipped" would reveal the pitfalls. The
-   agent records its choices as free text. A spec may mark a convention public
-   when naming it gives nothing away.
-2. *A result carries two outcomes.* `computed_outcome` combines every check
-   decided by computation. `outcome` also includes the judge's interpretation
-   checks. With no judge run, `outcome` is unresolved while `computed_outcome`
-   is a firm pass or fail, so runs remain comparable.
-3. *A missing or unusable answer fails the envelope.* Level 1 is "produce a
-   valid output", so producing none is a demonstrated failure. Every other
-   check is then unresolved with reason `not_assessed`.
-4. *The run command must read the task parameters from its inputs.* This lets
-   one generic probe, the changed-instance probe, separate coinciding readings:
-   the controller searches the template's instances for one where the accepted
-   and pitfall readings come apart, and reruns the agent's code on it. No
-   hand-written separating probe is needed per pitfall.
-5. *Arrays are compared by coordinate label.* A submission that orders its
-   latitudes south to north is as correct as one ordered north to south.
-6. *The tolerance comes from the data's own resolution.* The Kenya source
-   stores rainfall in steps of 1/32 mm, so the tolerance is 0.001 mm, fixed
-   before any attempt.
-7. *Forecasts travel in the same JSON envelope as every other result.* A
-   forecast is a named array with its issue dates and cells as coordinates. No
-   file format, variable name or units attribute can fail a submission.
-8. *The Level 2 addition to the brief is a paragraph, not a sentence.* It has
-   to explain the feedback tool, its limit and the claim, and runs to about 90
-   words.
+Columns:
 
-**Certification measured how often readings coincide.** On the Kenya template,
-weighted and unweighted regional means agree within tolerance on 16 of 48
-instances, because the region straddles the equator. Clipped and unclipped
-increments agree on 30 of 48. The other four pitfalls give different numbers on
-every instance. Coinciding readings are therefore common, and the probe that
-separates them is necessary, not a refinement.
+- **Point** — the design question.
+- **First decision** — what the build did.
+- **Decision on review** — what the owner decided.
+- **What is built** — the present behaviour.
 
-## The first agent attempts
+| Point | First decision | Decision on review | What is built |
+| --- | --- | --- | --- |
+| 1. What the agent is told about conventions | Convention names are private | Keep them private; make supplied conventions a condition that can be switched off | An optional conventions sheet per template, handed over with `--supply conventions` and recorded with the run |
+| 2. How reuse on another instance is tested | The run command must read the task parameters, and the controller reruns it on another instance | Too hard-coded; a later episode gets the old code and decides | No changed-instance rerun. A second episode starts with `--parent` and receives the earlier submission |
+| 3. How arrays travel | Nested lists in `answer.json` | Use a modern format for geospatial arrays | A Zarr store, format version 3, with named dimensions and coordinate labels |
+| 4. How long the Level 2 brief may be | About 90 added words | Length is not a constraint; one task may start from another's output | No cap on the addition. Level 2 starts from the Level 1 run with `--parent` |
+| 5. Whether a judge runs | No judge; judge checks unresolved | Run a judge, of the Opus class | Claude Opus 5.5, pinned, one request per run, exact quotations, twelve control cases |
+| 6. What a blocked check returns | Unresolved, reason `not_assessed` | A failed step fails, and what rests on it fails | A blocked check fails and names the part that blocks it. A correct result is not failed for a fault elsewhere |
+| 7. How array axes are identified | By the order the brief shows | A labelled format removes the question; state what remains | Arrays are matched by dimension name and label. Briefs state names, dimensions and units |
+| 8. Where a tolerance comes from | The data's resolution, by eye | Bound floating-point error; check with data | An error bound declared per result, checked against the data in certification |
+
+**Certification measured how often readings coincide.** On the Kenya template
+clipped and unclipped increments give the same totals on all 48 instances of
+the submitted data, and differ on all 48 once the controller injects a dip. A
+weighted and an unweighted regional mean agree within the tolerance on all 48,
+and differ on 30 of 48 on the controller's changed data. The other four
+pitfalls give different numbers on every instance. On the seasonal template the
+full-sample category boundaries change a result on 4 of 6 instances; on
+the two with eight training years they change nothing. Coinciding readings are
+common, and the changed-data probe is necessary, not a refinement.
+
+## One cheap model made the first 25 attempts
+
+**This section and the next two record the first contract.** They mention
+results in `answer.json`, the changed-instance probe and results grouped by
+period. The present format has replaced all three; see "Building it settled
+eight design points" above.
 
 **Twenty-one attempts were run with one cheap model.** The model is gpt-6-luna,
 driven through the existing Codex adapter on the subscription login, with the
@@ -725,7 +929,7 @@ the weighted and unweighted regional means agree within tolerance, so the
 numbers fitted both. The changed-instance probe reran the agent's code on an
 instance where they differ, and the code followed the weighted reading.
 
-## The first substrate comparison
+## The first substrate comparison measured availability, not use
 
 **Fourteen attempts compared three substrate conditions with everything else
 fixed.** The model, the adapter and the budgets are identical. The runtime
@@ -785,7 +989,7 @@ task the retained run passed where the reset run failed, used fewer tokens and
 took three times as long. One pair per task shows that the mechanism works; it
 does not measure an effect.
 
-## What the attempts taught about the controller
+## The first attempts exposed eight defects in the controller
 
 **The attempts exposed eight defects in the controller, and all eight are
 fixed.** This is what the fifth certification test is for. Before the
@@ -854,33 +1058,154 @@ category, two lines below a comment that says the boundaries exclude the
 held-out year. A process step judged on the original numbers alone had passed
 this attempt, so the steps now also take account of what the probes establish.
 
-**Four things are not implemented.**
+## The judge decided 106 questions on the first 25 attempts
 
-- *No judge backend.* The verdict validator, including the exact-quote rule, is
-  written and tested. No model is wired to it, so interpretation checks return
-  unresolved with reason `judge_not_run`.
+**The judge was run over the recorded assessments, without recomputing them.**
+The 25 attempts were made under the first contract, so their computed checks
+stand as recorded under the rules then in force. The judge read each frozen
+submission and decided the questions those assessments had left open: three
+interpretation questions per run, and on the seasonal task up to three process
+questions.
+
+**The judge returned a valid verdict on every question.** 106 questions
+went out in 25 requests. None came back unresolved, and none was
+voided for an inexact quotation. The requests used 165,949 input tokens and
+47,172 output tokens, which is $1.99 at list price. They ran on the
+subscription login.
+
+Columns:
+
+- **Task** — the template.
+- **Attempts** — the number of agent runs.
+- **Computed pass** — runs in which every computed check passed.
+- **Judged pass** — runs in which every judge question passed.
+- **Headline pass** — runs in which every check passed.
+
+| Task | Attempts | Computed pass | Judged pass | Headline pass |
+| --- | --- | --- | --- | --- |
+| Kenya revision | 9 | 6 | 7 | 6 |
+| Weeks 3–4 rainfall | 5 | 5 | 3 | 3 |
+| Seasonal calibration | 11 | 6 | 8 | 6 |
+
+**The judge failed 7 questions, in 7 runs.**
+
+- *Report and code disagree, four runs.* One Kenya report says the source is in
+  kg m⁻² and its answer says metres. One Kenya report describes subtracting the
+  value of "the preceding day", and its code subtracts the value one day before
+  the period starts. One weeks 3–4 report says only targets that closed before
+  the boundary are used, and its code filters on each target's start date. One
+  Level 2 submission states a development score in `answer.json` that its run
+  command rewrites as "not measured".
+- *Uncertainty not stated in plain language, two runs.* Both seasonal reports
+  explain probabilities in terms of calibrated members, residuals and terciles.
+- *Calibration code does not do what its entry says, one run.* The regression
+  is fitted on the ensemble mean, and the new years are then predicted from the
+  sum over members.
+
+**The judge changed the headline of two runs.** Both are weeks 3–4 runs whose
+computed checks all pass and whose report contradicts its code or its answer.
+The other five failures fell on runs that had already failed a computed check.
+
+**One verdict found a defect the numbers had not isolated.** The run whose new
+years use a sum over members had failed for another reason, a wrong skill
+score. The probabilities for new years have no reference answer, so only the
+judge's reading of the cited code showed the second fault.
+
+**Every failure quotes the passages it rests on.** The quotations are in each
+run's `assessment.json`, and the judge's raw replies are in
+`controller/judgements/`. The author read the seven failures with their
+quotations. Six are plain. The seventh, the "preceding day" wording, rests on
+one reading of a sentence that can be read two ways, and falls on a run that
+had already failed a computed check. That is one reader, not a validation.
+
+## Eleven attempts were made under the revised contract
+
+**The same cheap model attempted the three templates again.** These are the
+attempts the fifth certification test counts. Each delivered a Zarr store, and
+the judge ran with each. Eight are plain or sheet-supplied first episodes, and
+three started from an earlier submission.
+
+Columns:
+
+- **Task and instance** — the template and the drawn parameters.
+- **Condition** — plain; with the conventions sheet; a second episode on
+  another instance, started from the plain run's submission; or Level 2,
+  started from the Level 1 submission.
+- **Headline, Computed, Judged** — the outcome and its two components.
+- **Seconds, Tokens** — the agent's time and tokens. The judge is not included.
+- **What the assessment found** — the checks that did not pass, or the skill.
+
+| Task and instance | Condition | Headline | Computed | Judged | Seconds | Tokens | What the assessment found |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Kenya revision, central box, weeks 2–3 | Conventions sheet | Pass | Pass | Pass | 22 | 64,251 | — |
+| Kenya revision, central box, weeks 2–3 | Plain | Pass | Pass | Pass | 44 | 59,844 | — |
+| Kenya revision, service area, weeks 1–2 | Plain | Pass | Pass | Pass | 52 | 107,751 | — |
+| Weeks 3–4 rainfall, final 2018–2021 | Plain | Pass | Pass | Pass | 34 | 74,774 | RMSE 13.994 mm, 2.0% better than climatology. |
+| Weeks 3–4 rainfall, final 2015–2017 | Plain | Pass | Pass | Pass | 71 | 133,042 | RMSE 11.825 mm, 1.4% better than climatology. |
+| Seasonal calibration, 1993–2004 | Plain | Pass | Pass | Pass | 60 | 57,843 | — |
+| Seasonal calibration, 1993–2002 | Plain | Fail | Fail | Pass | 62 | 67,952 | Named pitfall: `full_sample`. |
+| Seasonal calibration, 1993–2002 | Conventions sheet | Fail | Fail | Pass | 45 | 107,936 | Matches no listed reading; ruled incorrect on review. |
+| Kenya revision, north-west box, weeks 3–4 | Second episode | Pass | Pass | Pass | 25 | 89,288 | 4 commands named the earlier work. |
+| Seasonal calibration, 1993–2000, southern rows | Second episode | Pass | Pass | Pass | 33 | 121,183 | 3 commands named the earlier work. |
+| Weeks 3–4 rainfall, final 2018–2021 | Level 2, from its Level 1 work | Fail | Fail | Fail | 42 | 155,533 | Failed: `claim.development_rmse_mm`. Judge failed: `consistency_across_artifacts`. RMSE 14.015 mm, 1.9% better than climatology. Used 5 of 5 score requests. 3 commands named the earlier work. |
+
+**Three attempts failed, each for a fault in the agent's own work.**
+
+- *Seasonal, plain.* The category boundaries for each held-out year include
+  that year. On this instance that changes the categories, so the numbers show
+  it and the assessment names the pitfall.
+- *Seasonal, with the conventions sheet.* The sheet states the boundary rule,
+  and this run follows it. Its skill score is wrong for another reason: the
+  observed step is 1 above each category where it should be 1 at or below it.
+  The answer matched no listed reading and went to review. Recomputing the
+  score from the run's own probabilities with the inverted step reproduces its
+  stated −0.807; the correct step gives 0.314. The ruling is recorded as
+  proposed.
+- *Weeks 3–4, Level 2.* The answer does not state the development score the
+  brief asks for, and it describes a ridge penalty of 10 where the code sets
+  0.01. Its forecast is valid and its skill is recorded.
+
+**Both second episodes on a new instance passed, and both used the earlier
+work.** The seasonal one ran on the eight-year instance, where its results
+carry the flag `ambiguous_variant` described under "A second instance is a
+second episode".
+
+**Every submission was readable.** No attempt delivered an array on the wrong
+dimensions, in the wrong order or with unreadable labels. Under the first
+contract three of 25 attempts had a layout problem.
+
+**These attempts support no comparison.** There is one attempt per cell. The
+sheet-supplied runs and the second episodes show that the mechanisms work.
+They do not measure what a conventions sheet or earlier work is worth.
+
+## These parts are not implemented
+
 - *Only one model has attempted the templates.* The Codex adapters accept only
   command-line version 0.160.0, whose isolation was verified. The default
   install has moved to 0.160.1, so the Codex systems added here name the
   0.160.0 binary, which is still on disk; the version check was not changed. No
-  Anthropic key is configured, so no Claude model has run, and the frontier
-  Codex model was not run because no spending or usage limit was agreed.
+  Claude model has run as a solver, and the frontier Codex model was not run
+  because no spending or usage limit was agreed.
 - *The substrate conditions reuse the pilot's images.* They were not rebuilt on
-  the current runtime, and they crash on exit after reading NetCDF files.
+  the current runtime, and they crash on exit after reading NetCDF files. They
+  have not been run under the revised contract.
 - *The `rx` harness has no system configuration.*
 - *No live data acquisition.* The earlier version of the Kenya task had the
   agent download the forecasts. This version supplies the frozen raw stores,
   for repeatability.
-- *The process checklist is a draft.* See "The first standards" below.
+- *The process checklist is a draft.* See "Two WMO documents are the first standards" above.
 - *The seasonal template has no Level 2.* A separate optimized submission for a
   process row needs a second, outcome-mode spec on the same data. The skill of
   the conformant forecast is reported, on two years and at most twelve cells,
   which is far too few cases to rank anything.
 - *The separate "optimization within the standard" track is not built.*
-- *A method pointer is checked by text search.* The symbol must appear in the
-  named file. Whether it is the right code is left to the judge.
+- *Tables have no delivery format yet.* Parquet and GeoParquet are intended.
+  The runtime image holds neither `pyarrow` nor `geopandas`.
+- *The earlier 25 attempts are not reassessed under the revised rules.* Their
+  agents answered the first contract. Their computed checks stand as recorded,
+  with the judge's verdicts added.
 
-## Limits of this proposal
+## The format has these limits
 
 - **The reference function is still hand-written.** It is the science, and no
   format removes that work.
@@ -890,8 +1215,23 @@ this attempt, so the steps now also take account of what the probes establish.
 - **A numerical match is evidence, not identification.** The format reports
   what an answer is consistent with. Only a probe or a reading of the code
   identifies what the agent actually did.
-- **The judge is still unvalidated.** Narrow questions and quote checks reduce
-  its room for error. They do not replace human labels on a fresh set of cases.
+- **The judge is not validated against a person.** It returned the expected
+  verdict on twelve control cases, and six of its seven failures on the first
+  attempts are plain on a reading of the quotations. Both checks were made by the author
+  of its prompt. Human labels on a fresh set of cases are still missing.
+- **The judge is not reproducible to the letter.** The model, the prompt and
+  the schema are pinned, and each reply is kept. A second request can still
+  word a verdict differently or, on a close case, decide it differently.
+- **The judge sends submissions to an outside service.** Each request carries
+  the brief, the report, the answer, the submitted code and a summary of the
+  arrays to Anthropic.
+- **A tolerance from a worst-case bound is looser than real arithmetic.** It
+  never fails a correct answer, and it lets through a wrong one whose error is
+  smaller than the bound. On the Kenya template that is the unweighted regional
+  mean on instances next to the equator.
+- **A reading that changes nothing on its own instance is not caught there.**
+  This follows from testing reuse by a second episode. A system that runs only
+  one episode is never tested on it.
 - **Trace and method-statement steps are less exact than probes.** Each
   checklist should push as many steps as possible into required products and
   probes.
@@ -901,13 +1241,17 @@ this attempt, so the steps now also take account of what the probes establish.
   need a ruling.
 - **Unresolved outcomes can pile up.** A spec that returns unresolved too often
   is a defective spec, and the unresolved rate should be tracked per template.
-- **The format has been tried on three tasks by one cheap model.** Twenty-one
+- **The format has been tried on three tasks by one cheap model.** Thirty-six
   attempts cannot show how the checks behave across models, or whether the
   tasks separate cheap models from frontier ones.
+- **The two sets of attempts were assessed under different rules.** The first
+  25 keep the computed checks of the first contract, in which a blocked check
+  was unresolved and a missing method entry was unresolved. The later attempts
+  use the present rules. Counts from the two sets must not be added.
 - **Every controller defect found so far was found by an agent attempt, not by
   a control.** The controls are written by the same hand as the checks. More
   defects of this kind should be expected with each new model and template.
-- **The two rulings are proposals.** They were made by the coding agent and no
+- **The rulings are proposals.** They were made by the coding agent and no
   person has confirmed them.
 - **The outcome gate cannot see every leak.** It catches hard-coded forecasts
   and use of later model forecasts. It cannot tell whether a model has
@@ -920,7 +1264,7 @@ this attempt, so the steps now also take account of what the probes establish.
 - **Mode assignments are tentative.** Rows 12, 14, 16, 20 and 25 were assigned
   without discussion.
 
-## What the review changed
+## Two reviews changed the format
 
 Five points were raised against the first draft on 6 October 2026.
 
@@ -940,3 +1284,24 @@ Five points were raised against the first draft on 6 October 2026.
    versioned adjudication.
 5. **Provenance was dropped with the paperwork.** The revision keeps
    provenance, held by the controller instead of the agent.
+
+**Eight design points were reviewed on 6 October 2026, after the build.** The
+table under "Building it settled eight design points" gives each decision. In
+short:
+
+1. **Conventions stay hidden, and a supplied sheet becomes a condition.** A
+   brief that lists the conventions makes the task too easy to compare with a
+   research-replication benchmark.
+2. **The changed-instance rerun was too hard-coded.** A later episode receives
+   the earlier code and decides what to do with it.
+3. **JSON was the wrong carrier for arrays.** The format now uses a labelled
+   Zarr store, format version 3.
+4. **The length of the Level 2 brief is not a constraint.** One task may start
+   from the output of another.
+5. **The judge must run.** A judge of the Opus class was chosen over a frontier
+   model, on cost.
+6. **A failed step fails, and so does everything that rests on it.** A blocked
+   check is no longer unresolved.
+7. **A labelled format removes the axis question.** What a name cannot settle
+   is stated in the brief.
+8. **A tolerance is a bound on floating-point error, checked against data.**

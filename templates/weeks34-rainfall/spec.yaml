@@ -1,9 +1,10 @@
 schema_version: 1
 template: weeks34-rainfall
-spec_version: 2
+spec_version: 3
 version_history:
   - {version: 1, change: First version.}
   - {version: 2, change: 'instance.json no longer carries the internal cell-selection field, which the brief never explained and three agent scripts misread. Runs made under version 1 saw different inputs and are not reassessed under version 2.'}
+  - {version: 3, change: 'Forecasts are delivered in a labelled Zarr store, and the development-score tool takes a store. The run command may hard-code the task parameters. The changed-instance rerun is gone; a second instance is a second episode. Runs made under versions 1 and 2 answered a different contract and are not reassessed under version 3.'}
 title: Weeks 3–4 rainfall
 task_set_row: 15
 mode: outcome
@@ -11,22 +12,21 @@ status: development; not reviewed by a domain scientist
 params: [training_boundary, development_boundary, final_boundary, longitude_limit]
 
 # There is no reference answer. The coordinates say which cases a forecast must
-# cover; the forecast arrays are compared only with their own reruns.
+# cover; the forecast arrays are compared only with their own reruns. The
+# tolerance decides whether a rerun reproduces a forecast or a changed input
+# moves it: one float32 rounding of a total below 1000 mm. It plays no part in
+# scoring.
 results:
-  location: {kind: coordinate, tolerance: {atol: 0}}
-  development_issue: {kind: coordinate, dtype: string}
-  final_issue: {kind: coordinate, dtype: string}
-  development_mm: {dims: [development_issue, location], tolerance: {atol: 1.0e-4, rtol: 0}}
-  final_mm: {dims: [final_issue, location], tolerance: {atol: 1.0e-4, rtol: 0}}
-tolerance_basis: >
-  Used only to decide whether a rerun reproduces a forecast or a perturbation
-  moves it. 0.0001 mm is far below any meaningful rainfall difference and above
-  round-off between identical runs. It plays no part in scoring.
+  location: {kind: coordinate, tolerance: {exact: true}}
+  development_issue: {kind: coordinate, dtype: date}
+  final_issue: {kind: coordinate, dtype: date}
+  development_mm: {dims: [development_issue, location], tolerance: {precision: float32, operations: 1, magnitude: 1000}}
+  final_mm: {dims: [final_issue, location], tolerance: {precision: float32, operations: 1, magnitude: 1000}}
 
 # The validity gate: coverage and time alignment (the coordinates), units (the
 # magnitude rule) and leakage (the probes). Nothing here prescribes a method.
 invariants: [totals_not_negative, magnitude_of_a_14_day_total]
-probes: [replay, responds_to_inputs, no_future_information, changed_instance]
+probes: [replay, responds_to_inputs, no_future_information]
 
 skill:
   ranking: rmse_mm on the final split; lower is better

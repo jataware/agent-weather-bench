@@ -24,10 +24,10 @@ def _stage(submission, inputs, stage):
 
 
 def _collect(record, output):
-    """Read the answer the command wrote. A complete answer counts even if the process then exited abnormally:
+    """Note what the command wrote. Complete results count even if the process then exited abnormally:
     some scientific libraries crash while shutting down, after the work is done and written."""
     answer = output / "answer.json"
-    record["answer"] = None
+    record["answer"], record["output"] = None, str(output)
     if answer.is_file():
         try:
             record["answer"] = json.loads(answer.read_text())
@@ -72,7 +72,7 @@ class Docker:
             record = offline(self.image, stage, output, command, seconds=seconds, memory=self.memory, cpus=self.cpus)
         except InfrastructureUnavailable as error:
             return {"exit_code": 125, "stdout": "", "stderr": str(error)[:1500], "executor": self.name,
-                    "infrastructure_unavailable": True, "answer": None}
+                    "infrastructure_unavailable": True, "answer": None, "output": str(output)}
         record = {"exit_code": record["exit_code"], "stdout": record.get("stdout", "")[-4000:], "stderr": record.get("stderr", "")[-4000:],
                   "executor": self.name, "infrastructure_unavailable": bool(record.get("infrastructure_unavailable"))}
         return _collect(record, output)

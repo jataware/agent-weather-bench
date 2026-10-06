@@ -1,5 +1,7 @@
 schema_version: 1
-note: Rulings on answers that match no listed reading. Keyed by the hash of the submitted answer.json. A ruling
+note: Rulings on answers that match no listed reading. Keyed by the hash of the submitted answer. For answers
+  from before results moved into a store that is answer.json alone, and since then it is answer.json with every file of
+  results.zarr. A ruling
   of incorrect turns the unknown answer into a failure for that answer only. Proposed rulings were made by the coding
   agent from the submitted code and await confirmation by a person.
 rulings:
@@ -23,3 +25,15 @@ rulings:
     The skill score is computed from those categories and is wrong with them.'
   evidence: 'solve.py line 46: cats = int(y>cuts[1]) + int(y>=cuts[0] and y<=cuts[1]). The submitted observed_category
     holds 43 zeros and 77 ones and no twos.'
+- answer_sha256: 026d47e8f048f0fb236fba27fa626a2f303b874a2bb8c33789fc6d3908553e8d
+  run: 20261006T164945-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-pinned-d51c85
+  ruling: incorrect
+  status: proposed
+  ruled_by: coding agent, from the submitted code
+  ruled_on: '2026-10-06'
+  reason: The skill score compares the cumulative forecast probabilities with the wrong observed step. The observed
+    cumulative indicator for category k must be 1 when the observed category is at or below k. The code uses 1 when it is
+    above k, for the forecast and for the climatological reference alike.
+  evidence: 'run.py line 72: ycum=np.stack([oc>0,oc>1],axis=1). Recomputing from the submitted probabilities and categories
+    with that indicator gives the stated -0.8071; with the correct indicator it gives 0.3139. The seasonal
+    totals and observed categories agree with the reference; only hindcast_rpss differs.'

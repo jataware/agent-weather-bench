@@ -4,6 +4,6 @@
 
 Forecast the 14-day total, in mm, for every issue and cell in both feature files. Each forecast may use only information available at its issue time.
 
-Return `development_mm` and `final_mm` as `[issue][location]`, with `development_issue` and `final_issue` (YYYY-MM-DD) and `location` giving the order of your arrays.
+Return `development_mm`, on the dimensions `development_issue` and `location`, and `final_mm`, on `final_issue` and `location`. Label the issues with their issue dates and the locations with the `location` values of the feature files.
 
 Your forecasts are scored against withheld observations by area-weighted RMSE, and compared with the raw model forecast and with climatology.

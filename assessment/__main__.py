@@ -24,9 +24,16 @@ def main():
     brief = sub.add_parser("brief"); brief.add_argument("template"); brief.add_argument("instance"); brief.add_argument("--level", type=int, choices=[1, 2], default=1)
     certify = sub.add_parser("certify"); certify.add_argument("template"); certify.add_argument("--full", action="store_true", help="Compare the reference implementations on every instance")
     assess = sub.add_parser("assess"); assess.add_argument("template"); assess.add_argument("instance"); assess.add_argument("submission")
-    run = sub.add_parser("run"); run.add_argument("template"); run.add_argument("instance"); run.add_argument("--system", required=True); run.add_argument("--parent"); run.add_argument("--level", type=int, choices=[1, 2], default=1)
+    run = sub.add_parser("run"); run.add_argument("template"); run.add_argument("instance"); run.add_argument("--system", required=True)
+    run.add_argument("--parent", help="An earlier run of the same system. Its submission is placed under /work/prior.")
+    run.add_argument("--level", type=int, choices=[1, 2], default=1)
+    run.add_argument("--supply", action="append", default=[], help="Hand the agent one of the template's supplements, such as `conventions`.")
     sub.add_parser("runs")
-    sub.add_parser("reassess").add_argument("run")
+    reassess = sub.add_parser("reassess"); reassess.add_argument("run")
+    sub.add_parser("judge", help="Judge a run's recorded assessment without recomputing it").add_argument("run")
+    sub.add_parser("judge-calibration", help="Run the pinned judge on its cases with known answers")
+    for command in (run, reassess):
+        command.add_argument("--no-judge", action="store_true", help="Leave the judge questions unresolved")
     sub.add_parser("attempts").add_argument("template")
     for command in (certify, assess):
         command.add_argument("--local-trusted", action="store_true", help="Run without Docker. Only for the controller's own control solutions.")
@@ -46,7 +53,13 @@ def dispatch(args):
         return list_runs()
     if args.command == "reassess":
         from .runner import reassess
-        return reassess(args.run)
+        return reassess(args.run, judge=not args.no_judge)
+    if args.command == "judge":
+        from .runner import judge_run
+        return judge_run(args.run)
+    if args.command == "judge-calibration":
+        from .calibration import calibrate
+        return calibrate()
     template = Template(args.template)
     if args.command == "attempts":
         from .certify import record_attempts
@@ -71,7 +84,8 @@ def dispatch(args):
             return assess(template, template.instance(args.instance), Path(args.submission), _executor(args), Path(scratch) / "work")
     if args.command == "run":
         from .runner import run
-        return run(template, template.instance(args.instance), args.system, parent=args.parent, level=args.level)
+        return run(template, template.instance(args.instance), args.system, parent=args.parent, level=args.level,
+                   supplied=args.supply, judge=not args.no_judge)
 
 
 if __name__ == "__main__":

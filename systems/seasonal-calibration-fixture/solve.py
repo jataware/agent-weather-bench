@@ -6,6 +6,7 @@ deliberate defect. With no variant file this is a known-conformant solution.
 import argparse
 import json
 import math
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -113,14 +114,17 @@ def solve(inputs, variant):
         method = {}
     if variant.get("false_method_pointer"):
         method["calibration"]["where"] = {"file": "solve.py", "symbol": "def " + "bayesian" + "_model_average"}   # no such function
-    return {"results": {"year": years.tolist(), "new_year": new.year.values.tolist(), "latitude": training.lat.values.tolist(),
-                        "longitude": training.lon.values.tolist(), "forecast_mean_mm": forecast.tolist(), "observed_total_mm": observed.tolist(),
-                        "observed_category": observed_categories(observed, variant).tolist(),
-                        "hindcast_probability": hindcast.tolist(), "hindcast_rpss": skill_score(hindcast, observed, variant),
-                        "forecast_probability": outlook.tolist()},
-            "choices": {"calibration": "linear regression with Gaussian residual", "observation mean": "plain" if variant.get("unweighted_observations") else "cosine-latitude"},
-            "claims": {}, "method": method,
-            "run": {"argv": ["python", "solve.py", "--inputs", "{input_dir}", "--output", "{output_dir}"]}}
+    arrays = xr.Dataset(
+        {"forecast_mean_mm": (("year", "latitude", "longitude"), forecast), "observed_total_mm": (("year", "latitude", "longitude"), observed),
+         "observed_category": (("year", "latitude", "longitude"), observed_categories(observed, variant).astype("int8")),
+         "hindcast_probability": (("year", "category", "latitude", "longitude"), hindcast),
+         "forecast_probability": (("new_year", "category", "latitude", "longitude"), outlook)},
+        coords={"year": years, "new_year": new.year.values, "category": [0, 1, 2], "latitude": training.lat.values, "longitude": training.lon.values})
+    return arrays, {"results": {"hindcast_rpss": skill_score(hindcast, observed, variant)},
+                    "choices": {"calibration": "linear regression with Gaussian residual",
+                                "observation mean": "plain" if variant.get("unweighted_observations") else "cosine-latitude"},
+                    "claims": {}, "method": method,
+                    "run": {"argv": ["python", "solve.py", "--inputs", "{input_dir}", "--output", "{output_dir}"]}}
 
 
 if __name__ == "__main__":
@@ -129,5 +133,9 @@ if __name__ == "__main__":
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     variant = json.loads((HERE / "variant.json").read_text()) if (HERE / "variant.json").is_file() else {}
-    Path(args.output).mkdir(parents=True, exist_ok=True)
-    (Path(args.output) / "answer.json").write_text(json.dumps(solve(args.inputs, variant), allow_nan=False) + "\n")
+    output = Path(args.output)
+    output.mkdir(parents=True, exist_ok=True)
+    arrays, answer = solve(args.inputs, variant)
+    shutil.rmtree(output / "results.zarr", ignore_errors=True)
+    arrays.to_zarr(output / "results.zarr", mode="w", zarr_format=3, consolidated=False)
+    (output / "answer.json").write_text(json.dumps(answer, allow_nan=False) + "\n")

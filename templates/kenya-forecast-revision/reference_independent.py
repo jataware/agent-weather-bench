@@ -96,6 +96,7 @@ def answer(inputs, params, conventions):
             numerator += weight * math.fsum(row) / len(row)
             denominator += weight
         current.append(new_map); previous.append(old_map); change.append(delta); regional.append(numerator / denominator)
-    return {"latitude": np.array([lats[i] for i in keep_rows]), "longitude": np.array([lons[j] for j in keep_cols]),
+    return {"period": np.array([str(text) for text in params["period_start"]]),
+            "latitude": np.array([lats[i] for i in keep_rows]), "longitude": np.array([lons[j] for j in keep_cols]),
             "current_mean_mm": np.array(current), "previous_mean_mm": np.array(previous),
             "change_mm": np.array(change), "regional_change_mm": np.array(regional)}

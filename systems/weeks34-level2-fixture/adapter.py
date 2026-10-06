@@ -26,8 +26,8 @@ execute("cp /substrate/solve.py /work/submission/solve.py")
 scores = {}
 for method in ("bias", "climatology", "raw"):
     execute(f"cd /work/submission && printf '{{\"method\": \"{method}\"}}' > variant.json && python solve.py --inputs /work/inputs --output /work/submission "
-            f"&& cp answer.json candidate-{method}.json")
-    reply = call({"type": "score_development", "prediction_file": f"candidate-{method}.json"})
+            f"&& rm -rf candidate-{method}.zarr && cp -r results.zarr candidate-{method}.zarr")
+    reply = call({"type": "score_development", "prediction_file": f"candidate-{method}.zarr"})
     if reply["exit_code"] == 0:
         scores[method] = json.loads(reply["stdout"])["rmse_mm"]
 best = min(scores, key=scores.get)

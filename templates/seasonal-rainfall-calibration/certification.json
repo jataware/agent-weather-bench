@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
  "template": "seasonal-rainfall-calibration",
- "spec_version": 2,
- "fingerprint": "9124c27039c9f2c82aef278a2fe4f0d846f975283e4f15db03d0aae06fb31aae",
- "certified_at": "20261006T154819",
+ "spec_version": 3,
+ "fingerprint": "1fc182bf71859f0f55dbe777726c3bc736ca09651e1c4f75445407d249470550",
+ "certified_at": "20261006T165427",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {
@@ -19,7 +19,91 @@
      "passed": true,
      "detail": "largest differences: forecast 0 mm, observed 7.96e-13 mm"
     }
-   ]
+   ],
+   "tolerances": {
+    "year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": null,
+     "within_declared_magnitude": true
+    },
+    "new_year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": null,
+     "within_declared_magnitude": true
+    },
+    "category": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": null,
+     "within_declared_magnitude": true
+    },
+    "latitude": {
+     "tolerance": 2.1457673398117624e-05,
+     "declared": {
+      "precision": "float32",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": null,
+     "within_declared_magnitude": true
+    },
+    "longitude": {
+     "tolerance": 2.1457673398117624e-05,
+     "declared": {
+      "precision": "float32",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": null,
+     "within_declared_magnitude": true
+    },
+    "forecast_mean_mm": {
+     "tolerance": 0.005364427622129241,
+     "declared": {
+      "precision": "float32",
+      "operations": 30,
+      "magnitude": 1500
+     },
+     "largest_reference_value": 658.6103106689453,
+     "within_declared_magnitude": true
+    },
+    "observed_total_mm": {
+     "tolerance": 0.7159030317986721,
+     "declared": {
+      "precision": "float32",
+      "operations": 1201,
+      "magnitude": 5000
+     },
+     "largest_reference_value": 1203.901805696581,
+     "within_declared_magnitude": true
+    },
+    "observed_category": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "hindcast_rpss": {
+     "tolerance": 0.002472263341828559,
+     "declared": {
+      "precision": "float32",
+      "operations": 2304,
+      "magnitude": 9
+     },
+     "largest_reference_value": 0.045063835058471335,
+     "within_declared_magnitude": true
+    }
+   }
   },
   "2_known_correct_solutions_pass": {
    "passed": true,
@@ -455,7 +539,7 @@
      "as_expected": true,
      "problems": [],
      "note": null,
-     "computed_outcome": "unresolved",
+     "computed_outcome": "fail",
      "skill": {
       "split": "new_years",
       "rps": 0.2797052459540135,
@@ -474,7 +558,7 @@
      "as_expected": true,
      "problems": [],
      "note": null,
-     "computed_outcome": "unresolved",
+     "computed_outcome": "fail",
      "skill": {
       "split": "new_years",
       "rps": 0.43296127435968607,
@@ -493,7 +577,7 @@
      "as_expected": true,
      "problems": [],
      "note": null,
-     "computed_outcome": "unresolved",
+     "computed_outcome": "fail",
      "skill": {
       "split": "new_years",
       "rps": 0.2797052459540135,
@@ -512,7 +596,7 @@
      "as_expected": true,
      "problems": [],
      "note": null,
-     "computed_outcome": "unresolved",
+     "computed_outcome": "fail",
      "skill": {
       "split": "new_years",
       "rps": 0.43296127435968607,
@@ -559,6 +643,8 @@
      "kind": "accepted_vs_pitfall",
      "separated_on": 6,
      "instances": 6,
+     "smallest_separation_in_tolerances": 1715.9,
+     "largest_coincidence_in_tolerances": 0.0,
      "status": "separated by the numbers on every instance"
     },
     {
@@ -567,15 +653,29 @@
      "kind": "accepted_vs_pitfall",
      "separated_on": 6,
      "instances": 6,
+     "smallest_separation_in_tolerances": 95262.2,
+     "largest_coincidence_in_tolerances": 0.0,
      "status": "separated by the numbers on every instance"
     },
     {
      "pair": "cos_latitude vs unweighted",
      "convention": "observation_weighting",
      "kind": "accepted_vs_accepted",
-     "separated_on": 6,
+     "separated_on": 0,
      "instances": 6,
-     "status": "separated by the numbers on every instance"
+     "smallest_separation_in_tolerances": null,
+     "largest_coincidence_in_tolerances": 0.021,
+     "separated_on_changed_data": 0,
+     "separated_by_neither": 6,
+     "status": "not separable: a known ambiguity",
+     "not_separated_on": [
+      "train-1993-2004--new-2005-2006--all-cells",
+      "train-1993-2004--new-2005-2006--southern-rows",
+      "train-1993-2002--new-2003-2004--all-cells",
+      "train-1993-2002--new-2003-2004--southern-rows",
+      "train-1993-2000--new-2001-2002--all-cells",
+      "train-1993-2000--new-2001-2002--southern-rows"
+     ]
     },
     {
      "pair": "full_sample",
@@ -583,7 +683,11 @@
      "kind": "accepted_vs_pitfall",
      "separated_on": 4,
      "instances": 6,
-     "status": "separated by the numbers on some instances; the changed-instance probe covers the rest",
+     "smallest_separation_in_tolerances": "exact mismatch",
+     "largest_coincidence_in_tolerances": 0.0,
+     "separated_on_changed_data": 0,
+     "separated_by_neither": 2,
+     "status": "not separable on some instances: a known ambiguity there",
      "not_separated_on": [
       "train-1993-2000--new-2001-2002--all-cells",
       "train-1993-2000--new-2001-2002--southern-rows"
@@ -595,42 +699,84 @@
      "kind": "accepted_vs_accepted",
      "separated_on": 4,
      "instances": 6,
-     "status": "separated by the numbers on some instances; the changed-instance probe covers the rest",
+     "smallest_separation_in_tolerances": 1.3,
+     "largest_coincidence_in_tolerances": 0.0,
+     "separated_on_changed_data": 0,
+     "separated_by_neither": 2,
+     "status": "not separable on some instances: a known ambiguity there",
      "not_separated_on": [
       "train-1993-2002--new-2003-2004--all-cells",
       "train-1993-2002--new-2003-2004--southern-rows"
      ]
     }
    ],
-   "known_ambiguities": []
+   "known_ambiguities": [
+    "full_sample"
+   ]
   },
   "5_model_attempts": {
    "passed": true,
    "status": "run",
-   "attempts": 2,
+   "attempts": 4,
    "systems": [
     "codex-luna-pinned"
    ],
    "attempts_with_an_unruled_unknown_answer": 0,
-   "attempts_assessed_under_another_fingerprint": 9,
-   "rulings_awaiting_confirmation": 0,
+   "attempts_assessed_under_another_fingerprint": 11,
+   "rulings_awaiting_confirmation": 1,
    "detail": "Every attempt's answer was classified.",
    "runs": [
     {
-     "run": "20261006T154044-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-codex-luna-pinned-7f3e0e",
+     "run": "20261006T164919-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-codex-luna-pinned-50c036",
      "system": "codex-luna-pinned",
      "instance": "train-1993-2004--new-2005-2006--all-cells",
      "level": 1,
+     "outcome": "pass",
      "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": null,
      "unknown_answer_checks": [],
      "ruling": null
     },
     {
-     "run": "20261006T154152-seasonal-rainfall-calibration-train-1993-2000--new-2001-2002--southern-rows-L1-codex-luna-pinned-00f096",
+     "run": "20261006T164930-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-pinned-1a1e7d",
+     "system": "codex-luna-pinned",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "outcome": "fail",
+     "computed_outcome": "fail",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T164945-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-pinned-d51c85",
+     "system": "codex-luna-pinned",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "outcome": "fail",
+     "computed_outcome": "fail",
+     "judged_outcome": "pass",
+     "supplied": [
+      "conventions"
+     ],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": "proposed"
+    },
+    {
+     "run": "20261006T165106-seasonal-rainfall-calibration-train-1993-2000--new-2001-2002--southern-rows-L1-codex-luna-pinned-e15bb8",
      "system": "codex-luna-pinned",
      "instance": "train-1993-2000--new-2001-2002--southern-rows",
      "level": 1,
-     "computed_outcome": "fail",
+     "outcome": "pass",
+     "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": "20261006T164919-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-codex-luna-pinned-50c036",
      "unknown_answer_checks": [],
      "ruling": null
     }

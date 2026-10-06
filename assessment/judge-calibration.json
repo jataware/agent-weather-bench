@@ -1,0 +1,310 @@
+{
+ "schema_version": 1,
+ "judge": {
+  "id": "ca1a70a82ddb4947"
+ },
+ "run_at": "2026-10-06T16:32:54.273306+00:00",
+ "cases": 12,
+ "agreeing": 12,
+ "passed": true,
+ "rows": [
+  {
+   "case": "bounded_report_does_not_generalize",
+   "kind": "interpretation",
+   "expected": "pass",
+   "got": "pass",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report keeps its results to the rectangle and the two periods it computed, and it says plainly that they are limited to those.",
+   "citations": [
+    {
+     "source": "report.md",
+     "quote": "These numbers describe two forecast issues over one rectangle and two weeks."
+    },
+    {
+     "source": "report.md",
+     "quote": "Over this rectangle the newer issue is 3.1 mm wetter in the first period and 0.4 mm drier in the second."
+    }
+   ],
+   "seconds": 4.178,
+   "usage": {
+    "input_tokens": 2620,
+    "output_tokens": 238,
+    "list_price_usd": 0.025712000000000002
+   }
+  },
+  {
+   "case": "two_issues_called_a_seasonal_trend",
+   "kind": "interpretation",
+   "expected": "fail",
+   "got": "fail",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report admits its numbers cover only two issues, one rectangle and two weeks. It then claims a wetter trend for East Africa and a wetter-than-normal coming season, which goes beyond that sample, region and period.",
+   "citations": [
+    {
+     "source": "report.md",
+     "quote": "This shows that forecasts for East Africa are trending wetter and that the coming season will be wetter than normal."
+    },
+    {
+     "source": "report.md",
+     "quote": "These numbers describe two forecast issues over one rectangle and two weeks."
+    }
+   ],
+   "seconds": 3.004,
+   "usage": {
+    "input_tokens": 2657,
+    "output_tokens": 267,
+    "list_price_usd": 0.026587999999999997
+   }
+  },
+  {
+   "case": "report_and_code_agree",
+   "kind": "interpretation",
+   "expected": "pass",
+   "got": "pass",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report, answer.json and code all say negative daily amounts were set to zero and that the regional mean uses cosine-latitude weights. The code's clip and cos(latitude) weighting match these statements, and nothing in one file contradicts another.",
+   "citations": [
+    {
+     "source": "report.md",
+     "quote": "I differenced the accumulated rainfall to get daily amounts, set negative daily amounts to zero, and summed seven days."
+    },
+    {
+     "source": "solve.py",
+     "quote": "    daily = np.clip(np.diff(tp, axis=1), 0, None)"
+    },
+    {
+     "source": "report.md",
+     "quote": "The regional mean weights each cell by the cosine of its latitude."
+    },
+    {
+     "source": "solve.py",
+     "quote": "    weights = np.cos(np.deg2rad(latitude))"
+    },
+    {
+     "source": "answer.json",
+     "quote": "\"regional mean\": \"cosine-latitude weights\""
+    }
+   ],
+   "seconds": 5.09,
+   "usage": {
+    "input_tokens": 2677,
+    "output_tokens": 497,
+    "list_price_usd": 0.031348
+   }
+  },
+  {
+   "case": "report_says_weighted_code_takes_plain_mean",
+   "kind": "interpretation",
+   "expected": "fail",
+   "got": "fail",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report says the regional mean weights each cell by the cosine of its latitude. The code accepts latitude but ignores it and takes an unweighted mean.",
+   "citations": [
+    {
+     "source": "report.md",
+     "quote": "The regional mean weights each cell by the cosine of its latitude."
+    },
+    {
+     "source": "solve.py",
+     "quote": "    return float(change.mean())"
+    }
+   ],
+   "seconds": 3.017,
+   "usage": {
+    "input_tokens": 2568,
+    "output_tokens": 266,
+    "list_price_usd": 0.025856
+   }
+  },
+  {
+   "case": "no_significance_claimed",
+   "kind": "interpretation",
+   "expected": "pass",
+   "got": "pass",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report gives only the mean changes and makes no claim of statistical significance, confidence or uncertainty, so silence passes.",
+   "citations": [],
+   "seconds": 2.861,
+   "usage": {
+    "input_tokens": 2644,
+    "output_tokens": 211,
+    "list_price_usd": 0.025363999999999998
+   }
+  },
+  {
+   "case": "neighbouring_cells_counted_as_independent",
+   "kind": "interpretation",
+   "expected": "fail",
+   "got": "fail",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report claims the change is significant using a t-test that treats the 49 grid cells as independent samples. Neighbouring cells are spatially dependent, so this ignores the dependence in the data.",
+   "citations": [
+    {
+     "source": "report.md",
+     "quote": "The increase is statistically significant (p < 0.01): a t-test over the 49 grid cells, treated as 49 independent samples, rejects no change."
+    }
+   ],
+   "seconds": 2.836,
+   "usage": {
+    "input_tokens": 2700,
+    "output_tokens": 234,
+    "list_price_usd": 0.026272
+   }
+  },
+  {
+   "case": "cause_asserted_without_evidence",
+   "kind": "interpretation",
+   "expected": "fail",
+   "got": "fail",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report says a strengthening positive Indian Ocean Dipole caused the wetter first period. Its only evidence is a rainfall differencing and area-weighting calculation, with no dipole or ocean data analysed, so that evidence cannot establish the cause.",
+   "citations": [
+    {
+     "source": "report.md",
+     "quote": "The first period is wetter because a positive Indian Ocean Dipole event strengthened during the week between the two issues."
+    },
+    {
+     "source": "report.md",
+     "quote": "These numbers describe two forecast issues over one rectangle and two weeks."
+    }
+   ],
+   "seconds": 4.781,
+   "usage": {
+    "input_tokens": 2649,
+    "output_tokens": 320,
+    "list_price_usd": 0.0163052
+   }
+  },
+  {
+   "case": "own_choice_presented_as_the_briefs_instruction",
+   "kind": "interpretation",
+   "expected": "fail",
+   "got": "fail",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report says the brief told it to clip negative daily amounts to zero and to exclude edge cells. The brief only asks for the area-weighted mean change and says nothing about either step, so both are the agent's own choices.",
+   "citations": [
+    {
+     "source": "report.md",
+     "quote": "As the brief instructs, negative daily amounts were set to zero and the regional mean excludes cells on the rectangle's edge."
+    },
+    {
+     "source": "task/brief.md",
+     "quote": "Give the area-weighted mean change."
+    }
+   ],
+   "seconds": 3.278,
+   "usage": {
+    "input_tokens": 2688,
+    "output_tokens": 334,
+    "list_price_usd": 0.0168972
+   }
+  },
+  {
+   "case": "pointer_shows_the_year_held_out",
+   "kind": "method_statement",
+   "expected": "pass",
+   "got": "pass",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "In leave_one_out, the held-out year is removed by a mask, and both the regression fit and the tercile boundaries are computed from the remaining years only. The held-out year contributes only its forecast value, never its observation.",
+   "citations": [
+    {
+     "source": "solve.py",
+     "quote": "keep = np.arange(len(forecast)) != year"
+    },
+    {
+     "source": "solve.py",
+     "quote": "slope, intercept = calibrate(forecast[keep], observed[keep])"
+    },
+    {
+     "source": "solve.py",
+     "quote": "low, high = np.quantile(observed[keep], [1 / 3, 2 / 3])"
+    },
+    {
+     "source": "solve.py",
+     "quote": "return intercept + slope * forecast[year], low, high"
+    }
+   ],
+   "seconds": 4.145,
+   "usage": {
+    "input_tokens": 2498,
+    "output_tokens": 388,
+    "list_price_usd": 0.016457199999999998
+   }
+  },
+  {
+   "case": "pointer_shows_the_year_kept_in",
+   "kind": "method_statement",
+   "expected": "fail",
+   "got": "fail",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "In leave_one_out, the mask `keep` is set to all True and the held-out year is never set to False. So the fit and the tercile boundaries both use that year's own observation, which contradicts the documented statement and breaks the requirement.",
+   "citations": [
+    {
+     "source": "solve.py",
+     "quote": "    keep = np.ones(len(forecast), dtype=bool)"
+    },
+    {
+     "source": "solve.py",
+     "quote": "    low, high = np.quantile(observed[keep], [1 / 3, 2 / 3])"
+    },
+    {
+     "source": "report.md",
+     "quote": "Each year is forecast from the other years."
+    }
+   ],
+   "seconds": 3.573,
+   "usage": {
+    "input_tokens": 2502,
+    "output_tokens": 328,
+    "list_price_usd": 0.0152892
+   }
+  },
+  {
+   "case": "uncertainty_stated_plainly",
+   "kind": "report_statement",
+   "expected": "pass",
+   "got": "pass",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report states the uncertainty in plain terms (one chance in two of a near or above normal season) and tells readers not to plan for a dry season alone.",
+   "citations": [
+    {
+     "source": "report.md",
+     "quote": "That still leaves one chance in two that the season is near or above normal, so plans should not rest on a dry season alone."
+    }
+   ],
+   "seconds": 2.504,
+   "usage": {
+    "input_tokens": 2297,
+    "output_tokens": 203,
+    "list_price_usd": 0.011149200000000001
+   }
+  },
+  {
+   "case": "uncertainty_not_stated",
+   "kind": "report_statement",
+   "expected": "fail",
+   "got": "fail",
+   "agrees": true,
+   "reason_code": null,
+   "detail": "The report gives only a technical skill score (RPSS 0.04) and points to a file of tercile probabilities. It never says in plain language how uncertain the forecast is or what a non-specialist should make of it.",
+   "citations": [],
+   "seconds": 2.527,
+   "usage": {
+    "input_tokens": 2251,
+    "output_tokens": 222,
+    "list_price_usd": 0.0111612
+   }
+  }
+ ]
+}

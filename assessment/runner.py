@@ -16,12 +16,14 @@ from weatherbench.runtime import ToolSandbox, preflight
 from weatherbench.storage import copy_bundle, digest, inventory, read, write
 from weatherbench.systems import resolve_system, snapshot, validate
 
-from .assess import assess
-from .compare import EnvelopeError, align, normalise
+from . import judge as judging
+from .assess import assess, judge_files
+from .compare import EnvelopeError, align, read_results
 from .execute import Docker
 from .feedback import SCORE_TOOL, DevelopmentFeedback
+from .outcomes import headline
 from .spec import ROOT
-from .substrate import substrate_record
+from .substrate import image_path_use, substrate_record
 
 RUNS = ROOT / "var/template-runs"
 
@@ -37,24 +39,27 @@ def resolve_run(value):
 
 def development_scorer(template, params, inputs):
     """Callback for the feedback tool: aggregate development metrics only."""
-    def score(answer):
-        raw = answer.get("results") if isinstance(answer, dict) else None
-        frame = template.hooks.expected_coordinates(inputs, params)
+    def score(store):
         spec = {name: row for name, row in template.spec["results"].items() if not name.startswith("final")}
-        if not isinstance(raw, dict):
-            raise EnvelopeError("results must be an object")
-        results = align(spec, normalise(spec, raw), {name: value for name, value in frame.items() if name in spec})
-        metrics = template.hooks.score(results, params, template.private, "development")
+        frame = {name: value for name, value in template.hooks.expected_coordinates(inputs, params).items() if name in spec}
+        results, problems = read_results(spec, None, store=store)
+        if problems:
+            raise EnvelopeError("; ".join(problems.values()))
+        metrics = template.hooks.score(align(spec, results, frame), params, template.private, "development")
         return {key: metrics[key] for key in ("split", "rmse_mm", "raw_model_rmse_mm", "climatology_rmse_mm", "skill_vs_raw_model", "skill_vs_climatology")}
     return score
 
 
-def run(template, params, system, parent=None, level=1):
+def run(template, params, system, parent=None, level=1, supplied=(), judge=True):
     config_path = resolve_system(system)
     config = validate(config_path)
     preflight(config["runtime"]["image"])
     if level not in (1, 2) or (level == 2 and "level2" not in template.spec):
         raise ValueError("This template has no such level")
+    supplied = sorted(set(supplied))
+    unknown = [name for name in supplied if name not in template.spec.get("supplements", {})]
+    if unknown:
+        raise ValueError(f"This template has no supplement named {unknown[0]}")
     if parent:
         parent = resolve_run(parent)
         if read(parent / "run.json")["system_sha256"] != digest(config_path):
@@ -67,7 +72,7 @@ def run(template, params, system, parent=None, level=1):
     metadata = {"schema_version": 1, "id": name, "template": template.name, "spec_version": template.spec["spec_version"],
                 "fingerprint": template.fingerprint(), "mode": template.spec["mode"], "level": level, "instance": params, "system": config["id"],
                 "kind": config["kind"], "system_sha256": digest(config_path), "runtime_image": config["runtime"]["image"],
-                "parent": parent.name if parent else None, "status": "created", "created_at": datetime.now(timezone.utc).isoformat()}
+                "parent": parent.name if parent else None, "supplied": supplied, "status": "created", "created_at": datetime.now(timezone.utc).isoformat()}
     write(folder / "run.json", metadata)
     config, bundle = snapshot(config_path, folder / "system")
     write(folder / "system.json", config)
@@ -76,9 +81,11 @@ def run(template, params, system, parent=None, level=1):
     task, work, inputs = folder / "task", folder / "work", folder / "inputs"
     for path in (task, work / "submission", work / "state", work / "prior", folder / "logs", folder / "controller"):
         path.mkdir(parents=True)
-    brief, envelope = template.brief(params, level), (ROOT / "assessment/envelope.md").read_text()
+    brief, envelope = template.brief(params, level, supplied), (ROOT / "assessment/envelope.md").read_text()
     (task / "brief.md").write_text(brief)
     (task / "envelope.md").write_text(envelope)
+    for supplement in supplied:                                   # an experimental condition: recorded, and part of what the agent saw
+        shutil.copyfile(template.folder / template.spec["supplements"][supplement], task / template.spec["supplements"][supplement])
     template.hooks.stage_inputs(template.private, params, inputs)
     # the agent sees one description of the instance, the one the template stages; internal parameters stay with the controller
     shutil.copyfile(inputs / "instance.json", task / "instance.json")
@@ -101,8 +108,8 @@ def run(template, params, system, parent=None, level=1):
         request["protocol"] = "execute / score_development / tool_result / usage / final as JSON lines"
         request["development_feedback"] = {"scope": "development_only", "max_submissions": feedback.limit}
     if parent:
-        request["prior_work"] = (f"Your earlier submission for a related instance of this task is under /work/prior/{parent.name}/. "
-                                 "You may reuse or adapt it.")
+        request["prior_work"] = (f"Your submission from an earlier, related task is under /work/prior/{parent.name}/, code and results. "
+                                 "Use it, adapt it or ignore it, as you judge best.")
     write(folder / "request.json", request)
 
     started, boundary = time.monotonic(), {"passed": False, "state": "unresolved"}
@@ -148,15 +155,37 @@ def run(template, params, system, parent=None, level=1):
         "spec": {"template": template.name, "spec_version": template.spec["spec_version"], "fingerprint": metadata["fingerprint"]},
         "trace": {"path": "logs/events.jsonl", "sha256": digest(log) if log.is_file() else None},
         "sandbox": boundary, "substrate_use": substrate_record(folder, config),
-        "episode": {"parent": metadata["parent"], "started_from": "retained state of the parent run" if parent else "a fresh workspace"}})
+        "supplied": supplied,
+        "episode": {"parent": metadata["parent"], "started_from": "retained state of the parent run" if parent else "a fresh workspace",
+                    "prior_work_use": image_path_use(folder, ["/work/prior"])["/work/prior"] if parent else None}})
     write(folder / "run.json", metadata)
 
-    assessment = _assess_run(template, folder)
-    return {"run": name, "level": level, "status": metadata["status"], "computed_outcome": assessment["computed_outcome"],
-            "outcome": assessment["outcome"], "skill": next(iter((assessment.get("skill") or {}).values()), None), "directory": str(folder.relative_to(ROOT))}
+    assessment = _assess_run(template, folder, judge)
+    return {"run": name, "level": level, "status": metadata["status"], "outcome": assessment["outcome"],
+            "computed_outcome": assessment["computed_outcome"], "judged_outcome": assessment["judged_outcome"], "skill": next(iter((assessment.get("skill") or {}).values()), None), "directory": str(folder.relative_to(ROOT))}
 
 
-def _assess_run(template, folder):
+def _judge(template, folder, assessment):
+    """Have the pinned judge decide an assessment's open questions. A judgement of the same questions and files is reused."""
+    meta = read(folder / "run.json")
+    kept = folder / "controller/judgements" / f"{judging.judge_id()}.json"
+    if meta["spec_version"] != template.spec["spec_version"]:      # the agent of an older run read the brief of its own version
+        files = judging.views(folder / "frozen", (folder / "task/brief.md").read_text())
+    else:
+        files = judge_files(template, meta["instance"], folder / "frozen", meta.get("level", 1), meta.get("supplied", ()))
+    judgement = judging.apply(assessment, files, judging.claude_cli, template.spec, read(kept) if kept.is_file() else None)
+    if judgement and "unavailable" not in judgement:
+        write(kept, judgement)
+    return assessment
+
+
+def _keep(folder, assessment):
+    """Earlier assessments are kept: one file per fingerprint, and a convenience copy of the latest."""
+    write(folder / "controller/assessments" / f"{assessment['fingerprint'][:16]}.json", assessment)
+    write(folder / "assessment.json", assessment)
+
+
+def _assess_run(template, folder, judge=True):
     """Assess a run's frozen submission and keep the record under the fingerprint that produced it."""
     meta, config = read(folder / "run.json"), read(folder / "system.json")
     if inventory(folder / "frozen") != read(folder / "artifacts.json"):
@@ -170,13 +199,28 @@ def _assess_run(template, folder):
     assessment["sandbox"] = read(folder / "controller/provenance.json")["sandbox"]["state"]
     assessment["assessed_at"] = datetime.now(timezone.utc).isoformat()
     shutil.rmtree(work, ignore_errors=True)
-    # Earlier assessments are kept: one file per fingerprint, and a convenience copy of the latest.
-    write(folder / "controller/assessments" / f"{assessment['fingerprint'][:16]}.json", assessment)
-    write(folder / "assessment.json", assessment)
+    if judge:
+        _judge(template, folder, assessment)
+    _keep(folder, assessment)
     return assessment
 
 
-def reassess(run_id):
+def judge_run(run_id):
+    """Judge a run's recorded assessment without recomputing it. The computed checks stand as they were recorded."""
+    from .spec import Template
+    folder = resolve_run(run_id)
+    meta, assessment = read(folder / "run.json"), read(folder / "assessment.json")
+    if inventory(folder / "frozen") != read(folder / "artifacts.json"):
+        raise ValueError("Frozen submission changed")
+    _judge(Template(meta["template"]), folder, assessment)
+    assessment["judged_at"] = datetime.now(timezone.utc).isoformat()
+    _keep(folder, headline(assessment))
+    return {"run": meta["id"], "outcome": assessment["outcome"], "computed_outcome": assessment["computed_outcome"],
+            "judged_outcome": assessment["judged_outcome"], "judge": assessment.get("judge"),
+            "judged": {name: row["state"] for name, row in assessment["checks"].items() if row.get("decided_by") == "judge"}}
+
+
+def reassess(run_id, judge=True):
     """Assess an existing run again under the current spec and code. The submission is not rerun by an agent."""
     from .spec import Template
     folder = resolve_run(run_id)
@@ -184,13 +228,13 @@ def reassess(run_id):
     current = Template(meta["template"]).spec["spec_version"]
     if meta["spec_version"] != current:
         raise ValueError(f"This run was made under spec version {meta['spec_version']} and the template is at {current}. "
-                         "Its agent saw different inputs, so it cannot be assessed against the current ones. Its recorded assessments stand.")
+                         "Its agent answered a different contract, so it cannot be assessed against the current one. Its recorded assessments stand.")
     previous = read(folder / "assessment.json") if (folder / "assessment.json").is_file() else None
     if previous and not (folder / "controller/assessments" / f"{previous['fingerprint'][:16]}.json").is_file():
         write(folder / "controller/assessments" / f"{previous['fingerprint'][:16]}.json", previous)
-    assessment = _assess_run(Template(meta["template"]), folder)
-    return {"run": meta["id"], "computed_outcome": assessment["computed_outcome"], "outcome": assessment["outcome"],
-            "previous_computed_outcome": previous and previous["computed_outcome"],
+    assessment = _assess_run(Template(meta["template"]), folder, judge)
+    return {"run": meta["id"], "outcome": assessment["outcome"], "computed_outcome": assessment["computed_outcome"],
+            "judged_outcome": assessment["judged_outcome"], "previous_computed_outcome": previous and previous["computed_outcome"],
             "assessments_kept": sorted(p.name for p in (folder / "controller/assessments").iterdir())}
 
 
@@ -206,7 +250,9 @@ def list_runs():
         rows.append({"id": meta["id"], "template": meta["template"], "instance": meta["instance"]["id"], "level": meta.get("level", 1),
                      "system": meta["system"], "kind": meta["kind"], "skill": next(iter((assessment.get("skill") or {}).values()), None),
                      "skill_valid_for_ranking": assessment.get("skill_valid_for_ranking"),
-                     "status": meta.get("status"), "computed_outcome": assessment.get("computed_outcome"), "outcome": assessment.get("outcome"),
+                     "status": meta.get("status"), "outcome": assessment.get("outcome"), "computed_outcome": assessment.get("computed_outcome"),
+                     "judged_outcome": assessment.get("judged_outcome"), "judge": (assessment.get("judge") or {}).get("id"),
+                     "supplied": meta.get("supplied", []),
                      "failed_checks": sorted(name for name, row in checks.items() if row["state"] == "fail"),
                      "unresolved_reasons": assessment.get("unresolved_reasons"),
                      "pitfalls": variant.get("pitfalls_certain") or variant.get("pitfalls_possible") or [],
