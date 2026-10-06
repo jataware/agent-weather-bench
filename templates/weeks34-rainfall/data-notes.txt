@@ -1,0 +1,31 @@
+Data notes for the weeks 3-4 rainfall task
+
+Source: SubseasonalClimateUSA (Mouatadid et al., 2023, https://arxiv.org/abs/2109.10399).
+Observations are CPC gauge-based precipitation on a 1.5-degree grid.
+Forecasts are CFSv2 ensemble-mean reforecasts distributed by IRI.
+
+Variables
+  precipitation  observed 14-day rainfall TOTAL in mm, beginning at target_start
+  raw_cfsv2      the model's forecast of that same 14-day total, in mm
+Both are already 14-day totals. Neither is a daily rate.
+
+Coordinates
+  issue_time     the Sunday on which the forecast was issued
+  target_start   issue_time + 14 days; the target window is the 14 days from target_start
+  location       grid-cell index; latitude and longitude (degrees east) give its centre
+
+Splits
+  training.nc holds every issue whose target window closed before the training boundary.
+  The two feature files hold later issues and carry no observations.
+  Target windows never cross from one split into the next.
+
+Scoring
+  RMSE = sqrt( sum over issues and cells of cos(latitude) * error^2
+               / (number of issues * sum over cells of cos(latitude)) )
+  Skill against a baseline is 1 - RMSE / RMSE_baseline. The two baselines are the
+  raw model forecast and a seasonal climatology fitted to the training observations.
+
+Limits
+  This is a retrospective snapshot downloaded on 2026-10-05. Original release times
+  are not reconstructed. The withheld observations are public historical records.
+  Consecutive weekly 14-day windows overlap, so cases are not independent.

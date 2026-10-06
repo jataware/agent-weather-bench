@@ -1,0 +1,6 @@
+# Public development instances. Any other member of candidate_instances() may be
+# drawn privately for scoring.
+development:
+  - final-2018-2021--all-cells
+  - final-2015-2017--all-cells
+  - final-2012-2014--western-six

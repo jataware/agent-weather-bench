@@ -21,10 +21,10 @@ def main():
     sub.add_parser("templates")
     prepare = sub.add_parser("prepare"); prepare.add_argument("template"); prepare.add_argument("--source", help="Directory holding the frozen source archives")
     sub.add_parser("instances").add_argument("template")
-    brief = sub.add_parser("brief"); brief.add_argument("template"); brief.add_argument("instance")
+    brief = sub.add_parser("brief"); brief.add_argument("template"); brief.add_argument("instance"); brief.add_argument("--level", type=int, choices=[1, 2], default=1)
     certify = sub.add_parser("certify"); certify.add_argument("template"); certify.add_argument("--full", action="store_true", help="Compare the reference implementations on every instance")
     assess = sub.add_parser("assess"); assess.add_argument("template"); assess.add_argument("instance"); assess.add_argument("submission")
-    run = sub.add_parser("run"); run.add_argument("template"); run.add_argument("instance"); run.add_argument("--system", required=True); run.add_argument("--parent")
+    run = sub.add_parser("run"); run.add_argument("template"); run.add_argument("instance"); run.add_argument("--system", required=True); run.add_argument("--parent"); run.add_argument("--level", type=int, choices=[1, 2], default=1)
     sub.add_parser("runs")
     for command in (certify, assess):
         command.add_argument("--local-trusted", action="store_true", help="Run without Docker. Only for the controller's own control solutions.")
@@ -49,7 +49,8 @@ def dispatch(args):
         development = {row["id"] for row in template.development_instances()}
         return [{"id": row["id"], "development": row["id"] in development} for row in template.hooks.candidate_instances()]
     if args.command == "brief":
-        return {"brief": template.brief(template.instance(args.instance)), "words": len(template.brief(template.instance(args.instance)).split())}
+        text = template.brief(template.instance(args.instance), args.level)
+        return {"brief": text, "words": len(text.split())}
     if args.command == "certify":
         from .certify import certify
         report = certify(template, _executor(args), full=args.full)
@@ -62,7 +63,7 @@ def dispatch(args):
             return assess(template, template.instance(args.instance), Path(args.submission), _executor(args), Path(scratch) / "work")
     if args.command == "run":
         from .runner import run
-        return run(template, template.instance(args.instance), args.system, parent=args.parent)
+        return run(template, template.instance(args.instance), args.system, parent=args.parent, level=args.level)
 
 
 if __name__ == "__main__":

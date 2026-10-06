@@ -2,8 +2,9 @@
 
 Status: proposal agreed in outline on 6 October 2026 and revised the same day
 after a five-point review (see "What the review changed" at the end). Product
-mode at Level 1 is implemented in the `assessment/` package and proven on one
-template; see "What is implemented" below. The evaluator for the ten packaged
+mode and outcome mode, with both levels, are implemented in the `assessment/`
+package and proven on two templates; see "What is implemented" below. Process
+mode is not built. The evaluator for the ten packaged
 tasks (`weatherbench/evaluation.py`, `weatherbench/judge.py`, the per-task
 `rubric.yaml` files) is unchanged and its lock still verifies. The companion
 list of tasks is [the proposed starting set](task-set.md).
@@ -538,26 +539,67 @@ run from a reset state.
 
 ## What is implemented
 
-**Product mode at Level 1 works end to end on one template.** The package
-`assessment/` implements the envelope, variant matching, invariants, the three
-probes, claim checks, three-outcome results, controller-held provenance and the
-certification tests. The first template is `templates/kenya-forecast-revision`
-(row 4 of the task set). How to use both is in
-[templates/README.md](../templates/README.md).
+**Two modes work end to end, each on one template.** The package `assessment/`
+implements the envelope, three-outcome results, controller-held provenance, the
+certification tests, and the checks for product mode and outcome mode. How to
+use it is in [templates/README.md](../templates/README.md).
 
-**The spec passed its four automatic certification tests.** Two independent
-reference implementations agree to 6e-14 over 64 convention combinations, and
-the first also reproduces the earlier repository's answer key to 9e-16. Three
-known-correct controls pass. Ten deliberately incorrect controls each fail on
-the check they were built to trip, in the offline Docker runtime.
+- *Product mode:* `templates/kenya-forecast-revision` (row 4 of the task set),
+  with variant matching, invariants, three probes and claim checks.
+- *Outcome mode with both levels:* `templates/weeks34-rainfall` (row 15), with
+  a validity gate, skill scoring, and a development-feedback tool for Level 2.
 
-**A no-model fixture run exercises the whole path.** A deterministic system
+**Both specs passed their four automatic certification tests in the offline
+Docker runtime.**
+
+- *Kenya forecast revision.* Two independent reference implementations agree to
+  6e-14 over 64 convention combinations, and the first reproduces the earlier
+  repository's answer key to 9e-16. Three known-correct controls pass. Ten
+  deliberately incorrect controls each fail on the check built to catch them.
+- *Weeks 3–4 rainfall.* Two independent implementations of the metric and its
+  baselines agree to 1e-14 on eight instances, and the staged inputs and
+  baseline scores equal those of the packaged task exactly. Five valid controls
+  pass, including a raw-model forecast and a climatology forecast. Ten invalid
+  controls each fail on the check built to catch them.
+
+**No-model fixture runs exercise the whole path.** A deterministic system
 solves an instance inside the tool sandbox, the controller freezes the
 submission and writes the provenance record, and the probes rerun the code
-offline. No language model has attempted the template.
+offline. A Level 2 fixture also makes three development-score requests through
+the feedback tool. No language model has attempted either template.
 
-**Building it settled six design points.** Each is a decision taken during the
-build and is open to revision.
+**The outcome-mode validity gate has four parts.** It prescribes no method.
+
+1. *Coverage and time alignment.* The forecast must list exactly the required
+   issues and cells, each labelled with its own date and cell. Missing cases or
+   mislabelled dates fail here.
+2. *Units.* A magnitude rule compares the mean forecast with the mean observed
+   total in training, and fails a forecast outside one fifth to five times it.
+   This catches a 14-day total multiplied by 14 again.
+3. *Leakage, part one: the forecast must come from the supplied data.* The
+   controller changes the training observations and then the model forecasts.
+   A forecast that moves under neither is hard-coded and fails. A climatology
+   passes because it moves with the training observations; a raw-model forecast
+   passes because it moves with the model forecasts.
+4. *Leakage, part two: no information from the future.* The controller changes
+   the model forecasts issued after a cut date. Forecasts issued before it must
+   not move.
+
+The gate also reruns the code on another instance, with a different period and
+set of cells, and requires a valid forecast there. The skill on that instance
+is recorded beside the main score as evidence of how well the method transfers.
+
+**Skill is reported whenever a forecast covers the required cases.** A forecast
+that fails the gate still has its score recorded, with
+`skill_valid_for_ranking` set to false.
+
+**Level 2 adds two checks.** The controller's ledger must show no more
+development-score requests than the limit. If the agent states a development
+score, it must equal the controller's score of the submitted forecast; stating
+`null` for "not measured" passes.
+
+**Building it settled eight design points.** Each is a decision taken during
+the build and is open to revision.
 
 1. *Convention names are private by default.* Showing the agent a list such as
    "negative increments: clipped or unclipped" would reveal the pitfalls. The
@@ -580,6 +622,12 @@ build and is open to revision.
 6. *The tolerance comes from the data's own resolution.* The Kenya source
    stores rainfall in steps of 1/32 mm, so the tolerance is 0.001 mm, fixed
    before any attempt.
+7. *Forecasts travel in the same JSON envelope as every other result.* A
+   forecast is a named array with its issue dates and cells as coordinates. No
+   file format, variable name or units attribute can fail a submission.
+8. *The Level 2 addition to the brief is a paragraph, not a sentence.* It has
+   to explain the feedback tool, its limit and the claim, and runs to about 90
+   words.
 
 **Certification measured how often readings coincide.** On the Kenya template,
 weighted and unweighted regional means agree within tolerance on 16 of 48
@@ -596,11 +644,13 @@ separates them is necessary, not a refinement.
 - *No agent attempts.* The Codex adapters accept only command-line version
   0.160.0, whose isolation was verified, and the installed version is 0.160.1.
   No Anthropic key is configured. Neither guard was bypassed. Certification
-  test 5 is recorded as not run.
-- *No live data acquisition.* The earlier version of this task had the agent
-  download the forecasts. This version supplies the frozen raw stores, for
-  repeatability.
-- *Outcome mode, process mode and Level 2 are not built.*
+  test 5 is recorded as not run for both templates.
+- *No live data acquisition.* The earlier version of the Kenya task had the
+  agent download the forecasts. This version supplies the frozen raw stores,
+  for repeatability.
+- *Process mode is not built.* It needs the method statement, the required
+  intermediate products and a checklist extracted from the standards.
+- *The separate "optimization within the standard" track is not built.*
 
 ## Limits of this proposal
 
@@ -623,8 +673,16 @@ separates them is necessary, not a refinement.
   need a ruling.
 - **Unresolved outcomes can pile up.** A spec that returns unresolved too often
   is a defective spec, and the unresolved rate should be tracked per template.
-- **The format has been tried on one product-mode task only.** No model has
-  attempted it, and the other two modes are untested.
+- **The format has been tried on two tasks and no model has attempted either.**
+  Process mode is untested.
+- **The outcome gate cannot see every leak.** It catches hard-coded forecasts
+  and use of later model forecasts. It cannot tell whether a model has
+  memorised the public observations and encoded them in a fitted rule that
+  still responds to its inputs. Only private or later observations close that
+  gap.
+- **A noisy method passes the "comes from the data" probe trivially.** Unseeded
+  randomness moves the forecast on every run. Such a method fails the replay
+  probe instead, so it does not pass the gate.
 - **Mode assignments are tentative.** Rows 12, 14, 16, 20 and 25 were assigned
   without discussion.
 

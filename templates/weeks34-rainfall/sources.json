@@ -1,0 +1,37 @@
+{
+ "schema_version": 1,
+ "origin": {
+  "file": "var/private/tasks/subseasonal-optimization/controller/source-subset.nc",
+  "note": "Nine south-western United States cells extracted on 2026-10-05 from the public SubseasonalClimateUSA dataframes by weatherbench/task_tools/subseasonal/extract.py. Source values are unchanged. See tasks/subseasonal-optimization/sources.yaml for the source record.",
+  "dataset": "SubseasonalClimateUSA, Mouatadid et al. (2023), https://arxiv.org/abs/2109.10399",
+  "acquisition_audit": {
+   "sources": [
+    {
+     "source": "iri-cfsv2-precip-all-us1_5-ensembled.h5",
+     "content_length": 477628552,
+     "etag": "\"0x8DB0FE8AC742968\"",
+     "downloaded_bytes": 47951872,
+     "requests": 4822,
+     "selected_rows": 10746
+    },
+    {
+     "source": "gt-us_precip_1.5x1.5-14d.h5",
+     "content_length": 84198696,
+     "etag": "\"0x8DC90965052BC57\"",
+     "downloaded_bytes": 49595688,
+     "requests": 48,
+     "selected_rows": 10746
+    }
+   ],
+   "total_downloaded_bytes": 97547560,
+   "complete_issues": 1194,
+   "dropped_nonfinite_issues": 0
+  }
+ },
+ "files": {
+  "source-subset.nc": {
+   "sha256": "8f5cb84e7927475d2a8c03e61cce6a065c4ff4c41aa943dd4883d1873d95429d",
+   "bytes": 116419
+  }
+ }
+}

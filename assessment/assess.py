@@ -1,9 +1,14 @@
-"""Level 1 assessment of one submission against one instance of a template."""
+"""Assessment of one submission against one instance of a template.
+
+Product mode checks the requested quantity under every accepted reading of the
+brief. Outcome mode has no reference answer: it checks that the submission is a
+valid forecast and scores it against withheld observations.
+"""
 import json
 import shutil
 from pathlib import Path
 
-from .compare import EnvelopeError, compare, normalise
+from .compare import EnvelopeError, align, compare, normalise
 from .execute import valid_argv
 from .judge import interpret
 from .outcomes import FAIL, PASS, UNRESOLVED, combine, outcome
@@ -73,23 +78,44 @@ def _texts(submission, limit=200000):
     return files
 
 
-def assess(template, params, submission, executor, scratch, judge_backend=None, seed=20261006):
-    spec, hooks, submission, scratch = template.spec, template.hooks, Path(submission), Path(scratch)
+def assess(template, params, submission, executor, scratch, level=1, feedback=None, judge_backend=None, seed=20261006):
+    """`feedback` is the controller's public summary of development-score requests, for Level 2."""
+    spec, submission, scratch = template.spec, Path(submission), Path(scratch)
     scratch.mkdir(parents=True, exist_ok=False)
+    if level == 2 and "level2" not in spec:
+        raise ValueError("This template has no Level 2")
     result = {"schema_version": 1, "template": template.name, "spec_version": spec["spec_version"], "fingerprint": template.fingerprint(),
-              "mode": spec["mode"], "level": 1, "instance": params, "executor": executor.name, "seed": seed}
+              "mode": spec["mode"], "level": level, "instance": params, "executor": executor.name, "seed": seed}
+    claims = {**spec.get("claims", {}), **(spec["level2"].get("claims", {}) if level == 2 else {})}
+    planned = ((["variant"] if spec["mode"] != "outcome" else ["coverage"]) + [f"invariant.{n}" for n in spec.get("invariants", [])]
+               + [f"probe.{n}" for n in spec.get("probes", [])] + [f"claim.{n}" for n in claims] + (["feedback.limit"] if level == 2 else []))
     checks = {}
-    planned = (["variant"] + [f"invariant.{n}" for n in spec.get("invariants", [])] + [f"probe.{n}" for n in spec.get("probes", [])]
-               + [f"claim.{n}" for n in spec.get("claims", {})])
+
+    def stop(check, message):
+        """A submission with no usable answer: fail here, and guess at nothing else."""
+        checks[check] = outcome(FAIL, message)
+        for name in planned:
+            checks.setdefault(name, outcome(UNRESOLVED, "Not assessed: the submission has no usable answer.", "not_assessed"))
+        checks.update({f"interpretation.{k}": v for k, v in interpret(spec.get("interpretation", []), _texts(submission), judge_backend).items()})
+        return _finish(result, checks)
+
     try:
         answer, results, argv = read_envelope(template, submission)
         checks["envelope"] = outcome(PASS, "answer.json holds the named results and a run command.")
     except EnvelopeError as error:
-        checks["envelope"] = outcome(FAIL, str(error))
-        for name in planned:
-            checks[name] = outcome(UNRESOLVED, "Not assessed: the submission has no usable answer.", "not_assessed")
-        checks.update({f"interpretation.{k}": v for k, v in interpret(spec.get("interpretation", []), _texts(submission), judge_backend).items()})
-        return _finish(result, checks)
+        return stop("envelope", str(error))
+    work = (_outcome_mode if spec["mode"] == "outcome" else _product_mode)
+    finished = work(template, params, submission, executor, scratch, seed, result, checks, answer, results, argv, claims, level, feedback, stop)
+    if finished is not None:
+        return finished
+    checks.update({f"interpretation.{k}": v for k, v in interpret(spec.get("interpretation", []), _texts(submission), judge_backend).items()})
+    for folder in scratch.glob("probe-*/stage"):
+        shutil.rmtree(folder, ignore_errors=True)
+    return _finish(result, checks)
+
+
+def _product_mode(template, params, submission, executor, scratch, seed, result, checks, answer, results, argv, claims, level, feedback, stop):
+    spec, hooks = template.spec, template.hooks
 
     original = scratch / "inputs-original"
     hooks.stage_inputs(template.private, params, original)
@@ -98,7 +124,7 @@ def assess(template, params, submission, executor, scratch, judge_backend=None, 
     first = decide(template, rows, hits, partial)
 
     for name in spec.get("invariants", []):
-        ok, detail = hooks.INVARIANTS[name](results, params)
+        ok, detail = hooks.INVARIANTS[name](results, params, original)
         checks[f"invariant.{name}"] = outcome(PASS if ok else FAIL, detail)
 
     expected = hooks.expected_claims(results, params) if spec.get("claims") else {}
@@ -177,10 +203,116 @@ def assess(template, params, submission, executor, scratch, judge_backend=None, 
     result["declared_choices"] = {"declared": declared, "public_conventions": public,
                                   "disagreements": [name for name in public if narrowed and name in declared and declared[name] not in result["matched_conventions"][name]],
                                   "note": "A disagreement is evidence for the interpretation check, not proof."}
-    checks.update({f"interpretation.{k}": v for k, v in interpret(spec.get("interpretation", []), _texts(submission), judge_backend).items()})
-    for folder in scratch.glob("probe-*/stage"):
-        shutil.rmtree(folder, ignore_errors=True)
-    return _finish(result, checks)
+    return None
+
+
+def _valid_forecast(template, raw_results, inputs, params):
+    """(aligned results, list of problems) for a forecast with no reference answer."""
+    try:
+        aligned = align(template.spec["results"], raw_results, template.hooks.expected_coordinates(inputs, params))
+    except EnvelopeError as error:
+        return None, ["coverage: " + str(error)]
+    problems = []
+    for name in template.spec.get("invariants", []):
+        ok, detail = template.hooks.INVARIANTS[name](aligned, params, inputs)
+        if not ok:
+            problems.append(f"{name}: {detail}")
+    return aligned, problems
+
+
+def _outcome_mode(template, params, submission, executor, scratch, seed, result, checks, answer, results, argv, claims, level, feedback, stop):
+    """Validity gate and skill. Any method is acceptable; only invalid or leaking forecasts fail."""
+    spec, hooks = template.spec, template.hooks
+    original = scratch / "inputs-original"
+    hooks.stage_inputs(template.private, params, original)
+    try:
+        forecast = align(spec["results"], results, hooks.expected_coordinates(original, params))
+        checks["coverage"] = outcome(PASS, "The forecast covers exactly the required cases, each labelled with its own issue and cell.")
+    except EnvelopeError as error:
+        return stop("coverage", "The forecast does not cover exactly the required cases: " + str(error))
+    for name in spec.get("invariants", []):
+        ok, detail = hooks.INVARIANTS[name](forecast, params, original)
+        checks[f"invariant.{name}"] = outcome(PASS if ok else FAIL, detail)
+
+    def rerun_on(label, prepare=None, instance=params):
+        folder = scratch / f"inputs-{label}"
+        hooks.stage_inputs(template.private, instance, folder)
+        if prepare:
+            prepare(folder)
+        produced, slim, problem = _rerun(template, executor, submission, folder, argv, scratch / f"probe-{label}")
+        return folder, produced, slim, problem
+
+    probes = spec.get("probes", [])
+    if "replay" in probes:
+        _, produced, slim, problem = rerun_on("replay")
+        if problem is None:
+            same = compare(spec["results"], produced, forecast)[0]
+            problem = outcome(PASS if same else FAIL, "The run command regenerates the submitted forecast." if same else
+                              "The run command produces a forecast that differs from the submitted one.", run=slim)
+        checks["probe.replay"] = problem
+    if "responds_to_inputs" in probes:
+        moved, records, broken = [], {}, None
+        for kind in hooks.RESPONSE_PERTURBATIONS:
+            _, produced, slim, problem = rerun_on(f"changed-{kind}", lambda folder, kind=kind: hooks.perturb_inputs(folder, seed, kind))
+            records[kind] = slim
+            if problem is not None:
+                broken = problem
+                break
+            if not compare(spec["results"], produced, forecast)[0]:
+                moved.append(kind)
+        checks["probe.responds_to_inputs"] = broken or outcome(
+            PASS if moved else FAIL, ("The forecast changes when these inputs change: " + ", ".join(moved) + ".") if moved else
+            "The forecast does not change when the training observations or the model forecasts change, so it does not come from the supplied data.",
+            responds_to=moved, runs=records)
+    if "no_future_information" in probes:
+        folder, produced, slim, problem = rerun_on("changed-later-features", lambda folder: hooks.perturb_inputs(folder, seed, "features_after_cut"))
+        if problem is None:
+            aligned, problems = _valid_forecast(template, produced, folder, params)
+            if aligned is None:
+                problem = outcome(FAIL, "With later features changed, the forecast no longer covers the required cases.", run=slim)
+            else:
+                same = compare(spec["results"], hooks.before_cut(aligned, folder, params), hooks.before_cut(forecast, folder, params))[0]
+                problem = outcome(PASS if same else FAIL, "Forecasts issued before the cut date do not move when later model forecasts change." if same else
+                                  "Forecasts issued before the cut date move when later model forecasts change, so they use information from after their issue time.",
+                                  run=slim, cut_date=str(hooks.cut_date(folder))[:10])
+        checks["probe.no_future_information"] = problem
+    if "changed_instance" in probes:
+        others = [c for c in hooks.candidate_instances() if c["id"] != params["id"]]
+        other = max(others, key=lambda c: sum(c[k] != params[k] for k in params if k != "id"))
+        folder, produced, slim, problem = rerun_on("changed-instance", instance=other)
+        if problem is None:
+            aligned, problems = _valid_forecast(template, produced, folder, other)
+            problem = outcome(FAIL if problems else PASS, ("On another instance the code does not produce a valid forecast: " + "; ".join(problems)) if problems
+                              else "On another instance the code produces a valid forecast.", run=slim)
+            if aligned is not None and not problems:
+                problem["skill_on_probe_instance"] = hooks.score(aligned, other, template.private)
+        problem["probe_instance"] = other["id"]
+        checks["probe.changed_instance"] = problem
+
+    score_spec = spec.get("skill", {})
+    result["skill"] = {split: hooks.score(forecast, params, template.private, split) for split in score_spec.get("splits", ["final"])}
+    stated = answer.get("claims") if isinstance(answer.get("claims"), dict) else {}
+    for name, row in claims.items():
+        if name not in stated:
+            checks[f"claim.{name}"] = outcome(UNRESOLVED, "The answer does not state this claim.", "missing_evidence")
+        elif stated[name] is None:
+            checks[f"claim.{name}"] = outcome(PASS, "Stated as not measured.", stated=None)
+        else:
+            actual = result["skill"][row["split"]][row["metric"]] if row["split"] in result["skill"] else hooks.score(forecast, params, template.private, row["split"])[row["metric"]]
+            ok = isinstance(stated[name], (int, float)) and not isinstance(stated[name], bool) and abs(stated[name] - actual) <= row["atol"]
+            checks[f"claim.{name}"] = outcome(PASS if ok else FAIL, "The stated value equals the controller's score of the submitted forecast." if ok else
+                                              "The stated value differs from the controller's score of the submitted forecast.",
+                                              stated=stated[name], **({} if ok else {"controller_value": actual}))
+    if level == 2:
+        limit = spec["level2"]["feedback"]["max_submissions"]
+        if not isinstance(feedback, dict) or not isinstance(feedback.get("requests"), list):
+            checks["feedback.limit"] = outcome(UNRESOLVED, "No trusted record of development-score requests is available.", "missing_evidence")
+        else:
+            used = len(feedback["requests"])
+            checks["feedback.limit"] = outcome(PASS if used <= limit else FAIL, f"{used} of {limit} development-score requests were used.",
+                                               requests=used, limit=limit, denied=feedback.get("limit_denials", 0))
+            result["feedback"] = feedback
+    return None
 
 
 def _finish(result, checks):
@@ -189,4 +321,6 @@ def _finish(result, checks):
     result["computed_outcome"] = combine(computed)
     result["outcome"] = combine(list(checks.values()))
     result["unresolved_reasons"] = sorted({row["reason"] for row in checks.values() if row["state"] == UNRESOLVED})
+    if "skill" in result:
+        result["skill_valid_for_ranking"] = result["computed_outcome"] == PASS
     return result

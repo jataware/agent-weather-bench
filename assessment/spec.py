@@ -10,7 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TEMPLATES = ROOT / "templates"
 PRIVATE = ROOT / "var/private/templates"
 MODES = ("outcome", "product", "process")
-HOOKS = ("prepare", "stage_inputs", "perturb_inputs", "reference", "candidate_instances", "brief_fields")
+HOOKS = ("prepare", "stage_inputs", "perturb_inputs", "candidate_instances", "brief_fields")
+MODE_HOOKS = {"product": ("reference",), "process": ("reference",), "outcome": ("expected_coordinates", "score")}
 
 
 class Template:
@@ -24,7 +25,7 @@ class Template:
         module = importlib.util.spec_from_file_location(f"template_{name.replace('-', '_')}", self.folder / "reference.py")
         self.hooks = importlib.util.module_from_spec(module)
         module.loader.exec_module(self.hooks)
-        missing = [hook for hook in HOOKS if not callable(getattr(self.hooks, hook, None))]
+        missing = [hook for hook in HOOKS + MODE_HOOKS[self.spec["mode"]] if not callable(getattr(self.hooks, hook, None))]
         if missing:
             raise ValueError(f"reference.py lacks hooks: {missing}")
         unknown = set(self.spec.get("invariants", [])) - set(getattr(self.hooks, "INVARIANTS", {}))
@@ -41,7 +42,10 @@ class Template:
             raise ValueError("Spec needs named results")
         for name, row in spec["results"].items():
             tolerance = row.get("tolerance", {})
-            if not isinstance(tolerance.get("atol"), (int, float)) or tolerance["atol"] < 0:
+            if row.get("dtype") == "string":
+                if row.get("kind") != "coordinate":
+                    raise ValueError(f"Result {name}: only coordinates may be strings")
+            elif not isinstance(tolerance.get("atol"), (int, float)) or tolerance["atol"] < 0:
                 raise ValueError(f"Result {name} needs a tolerance with a nonnegative atol")
             for dim in row.get("dims", []):
                 if dim in spec["results"] and spec["results"][dim].get("kind") != "coordinate":
@@ -73,12 +77,17 @@ class Template:
         listed = yaml.safe_load((self.folder / "instances.yaml").read_text())["development"]
         return [self.instance(identifier) for identifier in listed]
 
-    def brief(self, params):
-        return (self.folder / "brief.md").read_text().format(**self.hooks.brief_fields(params))
+    def brief(self, params, level=1):
+        text = (self.folder / "brief.md").read_text().format(**self.hooks.brief_fields(params))
+        if level == 2:
+            if "level2" not in self.spec:
+                raise ValueError("This template has no Level 2")
+            text += (self.folder / "brief-level2.md").read_text().format(**self.spec["level2"]["feedback"])
+        return text
 
     def fingerprint(self):
         """Identity of everything that decides an outcome: the template and this package."""
-        files = sorted(p for p in self.folder.iterdir() if p.suffix in (".yaml", ".py", ".md", ".json") and p.name != "certification.json")
+        files = sorted(p for p in self.folder.iterdir() if p.suffix in (".yaml", ".py", ".md", ".json", ".txt") and p.name != "certification.json")
         files += sorted((ROOT / "assessment").glob("*.py")) + [ROOT / "assessment/envelope.md"]
         digest = hashlib.sha256()
         for path in files:

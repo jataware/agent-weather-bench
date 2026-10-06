@@ -239,18 +239,18 @@ def brief_fields(params):
 
 # ---- invariants and claims: rules any valid answer obeys ---------------------------
 
-def _change_is_difference(results, params):
+def _change_is_difference(results, params, inputs=None):
     gap = float(np.max(np.abs(results["change_mm"] - (results["current_mean_mm"] - results["previous_mean_mm"]))))
     return gap <= 2e-3, f"largest |change - (current - previous)| is {gap:.3g} mm"
 
 
-def _regional_within_cells(results, params):
+def _regional_within_cells(results, params, inputs=None):
     low, high = results["change_mm"].min(axis=(1, 2)), results["change_mm"].max(axis=(1, 2))
     ok = bool(np.all((results["regional_change_mm"] >= low - 2e-3) & (results["regional_change_mm"] <= high + 2e-3)))
     return ok, "each regional mean change lies within the range of its cell changes" if ok else "a regional mean change lies outside the range of its cell changes"
 
 
-def _totals_plausible(results, params):
+def _totals_plausible(results, params, inputs=None):
     low = float(min(results["current_mean_mm"].min(), results["previous_mean_mm"].min()))
     return low >= -0.5, f"smallest ensemble-mean weekly total is {low:.3g} mm"
 

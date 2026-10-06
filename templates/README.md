@@ -32,8 +32,11 @@ here when it is converted.
   may see, including `instance.json`.
 - `perturb_inputs(inputs, seed)` — change the staged data in place, for the
   changed-data probe.
-- `reference(inputs, params, conventions)` — the results for one instance under
-  one combination of conventions.
+- `reference(inputs, params, conventions)` — product mode only: the results for
+  one instance under one combination of conventions.
+- `expected_coordinates(inputs, params)` and `score(results, params, private,
+  split)` — outcome mode only: the cases a forecast must cover, and its skill
+  against the withheld observations.
 - `candidate_instances()` — every instance the frozen data supports.
 - `brief_fields(params)` — the values that fill the brief.
 - `INVARIANTS`, `expected_claims`, `independent`, `regression_checks` — the
@@ -50,6 +53,7 @@ here when it is converted.
 .venv/bin/python -m assessment certify kenya-forecast-revision
 .venv/bin/python -m assessment assess kenya-forecast-revision service-area--weeks-1-2 PATH/TO/SUBMISSION
 .venv/bin/python -m assessment run kenya-forecast-revision service-area--weeks-1-2 --system kenya-revision-fixture
+.venv/bin/python -m assessment run weeks34-rainfall final-2015-2017--all-cells --system weeks34-level2-fixture --level 2
 .venv/bin/python -m assessment runs
 ```
 
@@ -88,3 +92,4 @@ assessment code changes without a new certification.
 | Template | Task-set row | Mode | Certification |
 | --- | --- | --- | --- |
 | `kenya-forecast-revision` | 4 | Product | Four automatic tests pass; agent attempts not run |
+| `weeks34-rainfall` | 15 | Outcome, Levels 1 and 2 | Four automatic tests pass; agent attempts not run |

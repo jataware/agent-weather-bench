@@ -27,6 +27,22 @@ def _controls(template):
     return loaded
 
 
+def scoring_agreement(template, instances, scratch):
+    """Test 1 for outcome mode: two implementations of the metric and its baselines, on every instance and split."""
+    compared, worst, hooks = 0, 0.0, template.hooks
+    for params in instances:
+        for which in template.spec["skill"]["baselines"]:
+            forecast = hooks.baseline_results(template.private, params, which)
+            for split in template.spec["skill"]["splits"]:
+                a, b = hooks.score(forecast, params, template.private, split), hooks.independent_score(forecast, params, template.private, split)
+                worst = max(worst, max(abs(a[key] - b[key]) for key in a if isinstance(a[key], float)))
+                compared += 1
+    scratch.mkdir(parents=True, exist_ok=True)
+    extra = hooks.regression_checks(scratch) if hasattr(hooks, "regression_checks") else []
+    return {"passed": worst <= 1e-9 and all(row["passed"] for row in extra), "instances": len(instances), "comparisons": compared,
+            "largest_difference": worst, "problems": [], "regression_checks": extra}
+
+
 def reference_agreement(template, inputs_for, instances):
     """Test 1: implementations A and B over every instance and every combination."""
     compared, worst, problems = 0, 0.0, []
@@ -96,12 +112,17 @@ def run_controls(template, executor, instances, scratch, inputs_for):
         for params in instances:
             folder = scratch / "controls" / name / params["id"]
             submission = controls.build(name, inputs_for(params), params, folder / "submission")
-            result = assess(template, params, submission, executor, folder / "assessment")
+            level, requests = control.get("level", 1), control.get("feedback_requests")
+            feedback = None if requests is None else {"scope": "development_only", "limit_denials": 0,
+                                                      "requests": [{"query": i + 1, "status": "scored"} for i in range(requests)]}
+            result = assess(template, params, submission, executor, folder / "assessment", level=level, feedback=feedback)
             computed = {check: row for check, row in result["checks"].items() if not check.startswith("interpretation.")}
             expect, problems, note = control["expect"], [], None
-            if expect.get("envelope") == "fail":
-                if computed["envelope"]["state"] != "fail" or result["computed_outcome"] != "fail":
-                    problems.append("a missing answer was not failed at the envelope")
+            stopped = next((check for check in ("envelope", "coverage") if expect.get(check) == "fail"), None)
+            if stopped:
+                unassessed = [check for check, row in computed.items() if row.get("reason") == "not_assessed"]
+                if computed[stopped]["state"] != "fail" or result["computed_outcome"] != "fail" or not unassessed:
+                    problems.append(f"an unusable answer was not failed at {stopped} with the remaining checks left unassessed")
             else:
                 for check, row in computed.items():
                     wanted = expect.get(check, "pass")
@@ -117,7 +138,8 @@ def run_controls(template, executor, instances, scratch, inputs_for):
                     if (result.get("matched_conventions") or {}).get(dimension) != values:
                         problems.append(f"matched {dimension} = {(result.get('matched_conventions') or {}).get(dimension)}, expected {values}")
             rows.append({"control": name, "kind": control["kind"], "instance": params["id"], "as_expected": not problems, "problems": problems,
-                         "note": note, "computed_outcome": result["computed_outcome"],
+                         "note": note, "level": level, "computed_outcome": result["computed_outcome"],
+                         "skill": (result.get("skill") or {}).get("final"),
                          "states": {check: row["state"] for check, row in computed.items()},
                          "variant_detail": computed["variant"]["detail"] if "variant" in computed else None})
             shutil.rmtree(folder / "assessment", ignore_errors=True)
@@ -144,10 +166,14 @@ def certify(template, executor, full=False, control_instances=2):
             staged[key] = folder
         return staged[key]
 
-    agreement = reference_agreement(template, inputs_for, everything if full else development)
+    outcome_mode = template.spec["mode"] == "outcome"
+    if outcome_mode:
+        agreement = scoring_agreement(template, everything, scratch / "regression")
+    else:
+        agreement = reference_agreement(template, inputs_for, everything if full else development)
     controls, not_applicable = run_controls(template, executor, development[:control_instances], scratch,
                                             lambda params: inputs_for(params, exact=True))
-    pairs = separability(template, inputs_for, lambda params: inputs_for(params, perturbed=True), everything)
+    pairs = [] if outcome_mode else separability(template, inputs_for, lambda params: inputs_for(params, perturbed=True), everything)
     correct = [row for row in controls if row["kind"] in ("known_correct", "accepted_alternative")]
     incorrect = [row for row in controls if row["kind"] in ("pitfall", "incorrect")]
     report = {
@@ -159,6 +185,7 @@ def certify(template, executor, full=False, control_instances=2):
             "3_incorrect_solutions_are_caught": {"passed": all(row["as_expected"] for row in incorrect), "controls": incorrect,
                                                  "not_applicable": not_applicable},
             "4_separability": {"passed": True, "pairs": pairs,
+                               **({"not_applicable": "Outcome mode has no reference answer, so there are no readings to separate."} if outcome_mode else {}),
                                "known_ambiguities": [row["pair"] for row in pairs if row["status"].startswith("not separable") and row["kind"] == "accepted_vs_pitfall"]},
             "5_model_attempts": {"passed": None, "status": "not_run", "detail": "No agent attempts have been run against this spec version."},
         },
@@ -168,9 +195,9 @@ def certify(template, executor, full=False, control_instances=2):
     (scratch / "certification.json").write_text(json.dumps(report, indent=2) + "\n")
     summary = json.loads(json.dumps(report))
     for test in ("2_known_correct_solutions_pass", "3_incorrect_solutions_are_caught"):
-        summary["tests"][test]["controls"] = [{key: row[key] for key in ("control", "kind", "instance", "as_expected", "problems", "note", "computed_outcome")}
+        summary["tests"][test]["controls"] = [{key: row[key] for key in ("control", "kind", "instance", "level", "as_expected", "problems", "note", "computed_outcome", "skill")}
                                               for row in summary["tests"][test]["controls"]]
     (template.folder / "certification.json").write_text(json.dumps(summary, indent=1) + "\n")
-    shutil.rmtree(scratch / "inputs", ignore_errors=True)
-    shutil.rmtree(scratch / "controls", ignore_errors=True)
+    for name in ("inputs", "controls", "regression"):
+        shutil.rmtree(scratch / name, ignore_errors=True)
     return report

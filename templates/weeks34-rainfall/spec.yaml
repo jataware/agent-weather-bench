@@ -1,0 +1,40 @@
+schema_version: 1
+template: weeks34-rainfall
+spec_version: 1
+title: Weeks 3–4 rainfall
+task_set_row: 15
+mode: outcome
+status: development; not reviewed by a domain scientist
+params: [training_boundary, development_boundary, final_boundary, longitude_limit]
+
+# There is no reference answer. The coordinates say which cases a forecast must
+# cover; the forecast arrays are compared only with their own reruns.
+results:
+  location: {kind: coordinate, tolerance: {atol: 0}}
+  development_issue: {kind: coordinate, dtype: string}
+  final_issue: {kind: coordinate, dtype: string}
+  development_mm: {dims: [development_issue, location], tolerance: {atol: 1.0e-4, rtol: 0}}
+  final_mm: {dims: [final_issue, location], tolerance: {atol: 1.0e-4, rtol: 0}}
+tolerance_basis: >
+  Used only to decide whether a rerun reproduces a forecast or a perturbation
+  moves it. 0.0001 mm is far below any meaningful rainfall difference and above
+  round-off between identical runs. It plays no part in scoring.
+
+# The validity gate: coverage and time alignment (the coordinates), units (the
+# magnitude rule) and leakage (the probes). Nothing here prescribes a method.
+invariants: [totals_not_negative, magnitude_of_a_14_day_total]
+probes: [replay, responds_to_inputs, no_future_information, changed_instance]
+
+skill:
+  ranking: rmse_mm on the final split; lower is better
+  splits: [final, development]
+  baselines: [raw_model, climatology]
+  caveat: The withheld observations are public historical records, not an untouched holdout.
+
+claims: {}
+level2:
+  feedback:
+    max_submissions: 5
+  claims:
+    development_rmse_mm: {split: development, metric: rmse_mm, atol: 1.0e-4}
+interpretation: [statistical_support, generalization, consistency_across_artifacts]

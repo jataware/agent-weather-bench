@@ -151,7 +151,7 @@ Columns:
 | 12 | Short-rains workflow | new: `short-rains-workflow` | Region, season | Process | Yes | Astra passed the numerical checks; Fable ran out of budget |
 | 13 | Seasonal CCA reproduction | new: `cca-seasonal-reproduction` | Region, season | Process | Yes | Luna failed; Astra passed |
 | 14 | Monthly cyclic calibration | new: `monthly-cycle-calibration` | Region | Process | Yes | Luna partly correct |
-| 15 | Weeks 3–4 rainfall | new: `subseasonal-optimization` | Region | Outcome | Yes | Astra beat the raw model by 6.7% |
+| 15 | Weeks 3–4 rainfall | new: `subseasonal-optimization`; converted: `templates/weeks34-rainfall` | Region | Outcome | Yes | Astra beat the raw model by 6.7% |
 | 16 | Rainfall downscaling | new: `conservative-downscaling` | Region | Product | Yes | Luna valid, but worse than climatology |
 
 Notes on rows 1–16:
@@ -201,8 +201,9 @@ observed rainfall.
 - **By level:** 13 have an optimize level now or by design, 2 can gain one
   later (rows 8 and 10), and 10 are produce-only.
 - **By readiness:** 10 are packaged in this repository, 6 have briefs and
-  answer keys in the old repository, and 9 must be built. One of the six
-  (row 4) is converted to the new assessment format.
+  answer keys in the old repository, and 9 must be built. Two rows are
+  converted to the new assessment format: row 4 in product mode and row 15 in
+  outcome mode with both levels.
 - **By mode:** 12 product (rows 1–9, 16, 24, 25), 11 process (rows 10–14,
   17–22), and 2 outcome (rows 15 and 23). The assignment of rows 12, 14, 16, 20
   and 25 is tentative.

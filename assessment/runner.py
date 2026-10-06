@@ -18,7 +18,9 @@ from weatherbench.substrate_use import substrate_use
 from weatherbench.systems import resolve_system, snapshot, validate
 
 from .assess import assess
+from .compare import EnvelopeError, align, normalise
 from .execute import Docker
+from .feedback import SCORE_TOOL, DevelopmentFeedback
 from .spec import ROOT
 
 RUNS = ROOT / "var/template-runs"
@@ -33,21 +35,37 @@ def resolve_run(value):
     return path.resolve()
 
 
-def run(template, params, system, parent=None):
+def development_scorer(template, params, inputs):
+    """Callback for the feedback tool: aggregate development metrics only."""
+    def score(answer):
+        raw = answer.get("results") if isinstance(answer, dict) else None
+        frame = template.hooks.expected_coordinates(inputs, params)
+        spec = {name: row for name, row in template.spec["results"].items() if not name.startswith("final")}
+        if not isinstance(raw, dict):
+            raise EnvelopeError("results must be an object")
+        results = align(spec, normalise(spec, raw), {name: value for name, value in frame.items() if name in spec})
+        metrics = template.hooks.score(results, params, template.private, "development")
+        return {key: metrics[key] for key in ("split", "rmse_mm", "raw_model_rmse_mm", "climatology_rmse_mm", "skill_vs_raw_model", "skill_vs_climatology")}
+    return score
+
+
+def run(template, params, system, parent=None, level=1):
     config_path = resolve_system(system)
     config = validate(config_path)
     preflight(config["runtime"]["image"])
+    if level not in (1, 2) or (level == 2 and "level2" not in template.spec):
+        raise ValueError("This template has no such level")
     if parent:
         parent = resolve_run(parent)
         if read(parent / "run.json")["system_sha256"] != digest(config_path):
             raise ValueError("Retained and reset comparisons require the same system definition")
         if inventory(parent / "retained") != read(parent / "retained-manifest.json"):
             raise ValueError("Parent retained artifacts changed")
-    name = f"{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')}-{template.name}-{params['id']}-{config['id']}-{uuid.uuid4().hex[:6]}"
+    name = f"{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')}-{template.name}-{params['id']}-L{level}-{config['id']}-{uuid.uuid4().hex[:6]}"
     folder = RUNS / name
     folder.mkdir(parents=True)
     metadata = {"schema_version": 1, "id": name, "template": template.name, "spec_version": template.spec["spec_version"],
-                "fingerprint": template.fingerprint(), "mode": template.spec["mode"], "instance": params, "system": config["id"],
+                "fingerprint": template.fingerprint(), "mode": template.spec["mode"], "level": level, "instance": params, "system": config["id"],
                 "kind": config["kind"], "system_sha256": digest(config_path), "runtime_image": config["runtime"]["image"],
                 "parent": parent.name if parent else None, "status": "created", "created_at": datetime.now(timezone.utc).isoformat()}
     write(folder / "run.json", metadata)
@@ -58,7 +76,7 @@ def run(template, params, system, parent=None):
     task, work, inputs = folder / "task", folder / "work", folder / "inputs"
     for path in (task, work / "submission", work / "state", work / "prior", folder / "logs", folder / "controller"):
         path.mkdir(parents=True)
-    brief, envelope = template.brief(params), (ROOT / "assessment/envelope.md").read_text()
+    brief, envelope = template.brief(params, level), (ROOT / "assessment/envelope.md").read_text()
     (task / "brief.md").write_text(brief)
     (task / "envelope.md").write_text(envelope)
     (task / "instance.json").write_text(json.dumps(params, indent=2) + "\n")
@@ -73,6 +91,14 @@ def run(template, params, system, parent=None):
                          "prior": "/work/prior", "substrate": "/substrate", "task": "/task"},
                "substrate_instructions": config.get("substrate", {}).get("instructions", ""), "budget": config["budget"],
                "retained_files": inventory(work / "prior"), "protocol": "execute / tool_result / usage / final as JSON lines"}
+    feedback = None
+    if level == 2:
+        limits = template.spec["level2"]["feedback"]
+        feedback = DevelopmentFeedback(work, folder / "controller/development-feedback", development_scorer(template, params, inputs),
+                                       max_submissions=limits["max_submissions"])
+        request["tools"] = [SCORE_TOOL]
+        request["protocol"] = "execute / score_development / tool_result / usage / final as JSON lines"
+        request["development_feedback"] = {"scope": "development_only", "max_submissions": feedback.limit}
     write(folder / "request.json", request)
 
     started, boundary = time.monotonic(), {"passed": False, "state": "unresolved"}
@@ -80,7 +106,7 @@ def run(template, params, system, parent=None):
     write(folder / "run.json", metadata)
     try:
         with ToolSandbox(config["runtime"]["image"], work, task, folder / "system", inputs,
-                         memory=config["runtime"]["memory"], cpus=config["runtime"]["cpus"]) as box:
+                         memory=config["runtime"]["memory"], cpus=config["runtime"]["cpus"], feedback=feedback) as box:
             if config["driver"]["kind"] == "command":
                 result = adapters.command_driver(config, folder / "system", request, box, folder / "logs/events.jsonl", folder / "logs/driver.stderr")
             else:
@@ -89,6 +115,11 @@ def run(template, params, system, parent=None):
     except Exception as error:                                    # the run record must survive any harness failure
         result = {"status": "execution_error", "reason": f"{type(error).__name__}: {str(error)[:1500]}", "usage": None,
                   "usage_source": "unknown", "seconds": time.monotonic() - started, "tool_calls": None}
+    public_feedback = None
+    if feedback is not None:
+        feedback.finish()
+        public_feedback = feedback.public_summary()
+        write(folder / "controller/feedback-public.json", public_feedback)
     metadata.update(result)
     artifacts = copy_bundle(work / "submission", folder / "frozen")
     write(folder / "artifacts.json", artifacts)
@@ -117,12 +148,12 @@ def run(template, params, system, parent=None):
     write(folder / "run.json", metadata)
 
     executor = Docker(config["runtime"]["image"], config["runtime"]["memory"], config["runtime"]["cpus"])
-    assessment = assess(template, params, folder / "frozen", executor, folder / "controller/assessment-work")
+    assessment = assess(template, params, folder / "frozen", executor, folder / "controller/assessment-work", level=level, feedback=public_feedback)
     assessment["sandbox"] = boundary["state"]
     write(folder / "assessment.json", assessment)
     shutil.rmtree(folder / "controller/assessment-work", ignore_errors=True)
-    return {"run": name, "status": metadata["status"], "computed_outcome": assessment["computed_outcome"], "outcome": assessment["outcome"],
-            "directory": str(folder.relative_to(ROOT))}
+    return {"run": name, "level": level, "status": metadata["status"], "computed_outcome": assessment["computed_outcome"],
+            "outcome": assessment["outcome"], "skill": (assessment.get("skill") or {}).get("final"), "directory": str(folder.relative_to(ROOT))}
 
 
 def list_runs():
@@ -134,7 +165,9 @@ def list_runs():
         assessment = read(folder / "assessment.json") if (folder / "assessment.json").is_file() else {}
         checks = assessment.get("checks", {})
         variant = checks.get("variant", {})
-        rows.append({"id": meta["id"], "template": meta["template"], "instance": meta["instance"]["id"], "system": meta["system"], "kind": meta["kind"],
+        rows.append({"id": meta["id"], "template": meta["template"], "instance": meta["instance"]["id"], "level": meta.get("level", 1),
+                     "system": meta["system"], "kind": meta["kind"], "skill": (assessment.get("skill") or {}).get("final"),
+                     "skill_valid_for_ranking": assessment.get("skill_valid_for_ranking"),
                      "status": meta.get("status"), "computed_outcome": assessment.get("computed_outcome"), "outcome": assessment.get("outcome"),
                      "failed_checks": sorted(name for name, row in checks.items() if row["state"] == "fail"),
                      "unresolved_reasons": assessment.get("unresolved_reasons"),
