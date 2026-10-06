@@ -1,0 +1,33 @@
+schema_version: 1
+id: codex-luna-accord
+kind: agent
+description: gpt-6-luna through the Codex adapter, byte-identical to codex-luna's, with the verified CLI
+  0.160.0 named by CODEX_BINARY. Substrate is the ACCORD libraries africas2s, acmaddl and rosetta, installed
+  in the image with their notes at /opt/accord-docs. The images and the substrate wording are those of
+  the 1 October pilot, so the three arms differ only in the substrate.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:4d2b5e1e3b055abf3a60d34819875a7ba99fc148a86bf348e3ab3b385c498b01
+  memory: 4g
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 90
+  command_seconds: 120
+substrate:
+  paths:
+  - adapter.py
+  instructions: africas2s, acmaddl and rosetta are installed; start at /opt/accord-docs. Generic Python
+    is also allowed.
+  libraries:
+  - africas2s
+  - acmaddl
+  - rosetta
+  image_paths:
+  - /opt/accord-docs

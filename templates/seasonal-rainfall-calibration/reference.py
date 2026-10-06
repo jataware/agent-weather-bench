@@ -16,6 +16,10 @@ import xarray as xr
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 REFERENCE_USES_SUBMISSION = True          # the skill score is recomputed from the submitted probabilities
+# instance.json carries this field, but the brief does not explain it: the staged files already hold only the chosen
+# cells. Two agents guessed at its meaning and broke on an instance that set it. Until it is removed from
+# instance.json (a new spec version), the changed-instance probe keeps it fixed.
+UNDOCUMENTED_PARAMS = ("latitude_limit",)
 FILES = ("forecast-development.nc", "observations-development.nc", "forecast.nc", "verification.nc", "training.nc")
 DAYS = {"actual": (31, 30, 31), "thirty_days": (30, 30, 30), "rates_not_converted": (1, 1, 1)}
 

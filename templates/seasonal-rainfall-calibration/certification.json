@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "seasonal-rainfall-calibration",
  "spec_version": 1,
- "fingerprint": "0dcfcab8e6606e2161244c3ab4510ff42ea774fdf175bef96b23ebd1d9b78c44",
- "certified_at": "20261006T143104",
+ "fingerprint": "6947d75870c8305b1c8658dcd1174f167576040615e86d7a00e0102576c1812e",
+ "certified_at": "20261006T152431",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {
@@ -607,12 +607,16 @@
   "5_model_attempts": {
    "passed": true,
    "status": "run",
-   "attempts": 2,
+   "attempts": 9,
    "systems": [
-    "codex-luna-pinned"
+    "codex-luna-accord",
+    "codex-luna-pinned",
+    "codex-luna-rhiza",
+    "codex-luna-scratch"
    ],
    "attempts_with_an_unruled_unknown_answer": 0,
    "attempts_assessed_under_another_fingerprint": 0,
+   "rulings_awaiting_confirmation": 2,
    "detail": "Every attempt's answer was classified.",
    "runs": [
     {
@@ -621,7 +625,8 @@
      "instance": "train-1993-2004--new-2005-2006--all-cells",
      "level": 1,
      "computed_outcome": "fail",
-     "unknown_answer_checks": []
+     "unknown_answer_checks": [],
+     "ruling": null
     },
     {
      "run": "20261006T142402-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-pinned-8ae328",
@@ -629,7 +634,71 @@
      "instance": "train-1993-2002--new-2003-2004--all-cells",
      "level": 1,
      "computed_outcome": "fail",
-     "unknown_answer_checks": []
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T144731-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-codex-luna-scratch-c54e16",
+     "system": "codex-luna-scratch",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T145303-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-scratch-e47d3d",
+     "system": "codex-luna-scratch",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T145425-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-codex-luna-rhiza-8e6b76",
+     "system": "codex-luna-rhiza",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "computed_outcome": "fail",
+     "unknown_answer_checks": [],
+     "ruling": "proposed"
+    },
+    {
+     "run": "20261006T145515-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-rhiza-24af89",
+     "system": "codex-luna-rhiza",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "computed_outcome": "fail",
+     "unknown_answer_checks": [],
+     "ruling": "proposed"
+    },
+    {
+     "run": "20261006T145605-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-codex-luna-accord-ae4272",
+     "system": "codex-luna-accord",
+     "instance": "train-1993-2004--new-2005-2006--all-cells",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T150022-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-accord-86a6fd",
+     "system": "codex-luna-accord",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T150149-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-scratch-3bcf68",
+     "system": "codex-luna-scratch",
+     "instance": "train-1993-2002--new-2003-2004--all-cells",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
     }
    ]
   }

@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "kenya-forecast-revision",
  "spec_version": 1,
- "fingerprint": "45afa1700fed718248b02e5222758b52bd888232c706a07af8e13bebc88d3ce5",
- "certified_at": "20261006T142752",
+ "fingerprint": "e3e92622db92d9221b44e093cff6b4bb8e0d581d6e3ef31631e903a53f7594b0",
+ "certified_at": "20261006T152014",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {
@@ -407,12 +407,16 @@
   "5_model_attempts": {
    "passed": true,
    "status": "run",
-   "attempts": 2,
+   "attempts": 9,
    "systems": [
-    "codex-luna-pinned"
+    "codex-luna-accord",
+    "codex-luna-pinned",
+    "codex-luna-rhiza",
+    "codex-luna-scratch"
    ],
    "attempts_with_an_unruled_unknown_answer": 0,
    "attempts_assessed_under_another_fingerprint": 0,
+   "rulings_awaiting_confirmation": 0,
    "detail": "Every attempt's answer was classified.",
    "runs": [
     {
@@ -421,7 +425,8 @@
      "instance": "service-area--weeks-1-2",
      "level": 1,
      "computed_outcome": "fail",
-     "unknown_answer_checks": []
+     "unknown_answer_checks": [],
+     "ruling": null
     },
     {
      "run": "20261006T142150-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-pinned-98a867",
@@ -429,7 +434,71 @@
      "instance": "central--weeks-2-3",
      "level": 1,
      "computed_outcome": "pass",
-     "unknown_answer_checks": []
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T143755-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-scratch-bae94a",
+     "system": "codex-luna-scratch",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T143910-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-scratch-99c9ac",
+     "system": "codex-luna-scratch",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "computed_outcome": "fail",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T144006-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-rhiza-2b1bcb",
+     "system": "codex-luna-rhiza",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T144124-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-rhiza-8a47b9",
+     "system": "codex-luna-rhiza",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "computed_outcome": "fail",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T144245-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-accord-3fab03",
+     "system": "codex-luna-accord",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T144345-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-accord-6ebe89",
+     "system": "codex-luna-accord",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261006T144449-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-scratch-5f798a",
+     "system": "codex-luna-scratch",
+     "instance": "central--weeks-2-3",
+     "level": 1,
+     "computed_outcome": "pass",
+     "unknown_answer_checks": [],
+     "ruling": null
     }
    ]
   }

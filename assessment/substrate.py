@@ -36,12 +36,31 @@ def library_use(run, libraries):
     return record
 
 
+def image_path_use(run, paths):
+    """Per declared path inside the runtime image, such as a skills catalog: the commands that name it. A lower bound."""
+    log = Path(run) / "logs/events.jsonl"
+    commands = executed_commands(log)[0] if log.is_file() else []
+    record = {}
+    for path in paths:
+        pattern = re.compile(r"(?<![\w.~-])" + re.escape(path.rstrip("/")) + r"(?=$|[/\s'\"`;|&<>(){}])")
+        steps = [index for index, (command, _) in enumerate(commands, 1) if pattern.search(command)]
+        failed = sum(1 for index in steps if commands[index - 1][1] not in (0, None))
+        record[path] = {"commands_naming": len(steps), "of_which_failed": failed, "first_step": steps[0] if steps else None, "used": bool(steps)}
+    return record
+
+
 def substrate_record(run, config):
-    """The full record for one run: the original path-based monitor, plus library imports where a system declares libraries."""
-    libraries = (config.get("substrate") or {}).get("libraries") or []
+    """The full record for one run: the original path-based monitor, plus what a system declares it installs in its image."""
+    substrate = config.get("substrate") or {}
+    libraries, paths = substrate.get("libraries") or [], substrate.get("image_paths") or []
     if not isinstance(libraries, list) or not all(isinstance(name, str) and re.fullmatch(r"[A-Za-z_][\w.]*", name) for name in libraries):
         raise ValueError("substrate.libraries must be a list of importable module names")
+    if not isinstance(paths, list) or not all(isinstance(path, str) and re.fullmatch(r"/[\w./-]+", path) for path in paths):
+        raise ValueError("substrate.image_paths must be a list of absolute paths")
+    log = Path(run) / "logs/events.jsonl"
     return {"mounted_files": substrate_use(run),
             "libraries": library_use(run, libraries) if libraries else {},
-            "method": "Mounted files: command text naming /substrate paths (weatherbench.substrate_use). "
-                      "Libraries: import statements in executed command text and in submitted code. Both are lower bounds; use is not quality."}
+            "image_paths": image_path_use(run, paths) if paths else {},
+            "commands": len(executed_commands(log)[0]) if log.is_file() else None,
+            "method": "Mounted files: command text naming /substrate paths (weatherbench.substrate_use). Libraries: import statements in "
+                      "executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."}

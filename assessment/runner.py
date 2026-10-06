@@ -99,6 +99,9 @@ def run(template, params, system, parent=None, level=1):
         request["tools"] = [SCORE_TOOL]
         request["protocol"] = "execute / score_development / tool_result / usage / final as JSON lines"
         request["development_feedback"] = {"scope": "development_only", "max_submissions": feedback.limit}
+    if parent:
+        request["prior_work"] = (f"Your earlier submission for a related instance of this task is under /work/prior/{parent.name}/. "
+                                 "You may reuse or adapt it.")
     write(folder / "request.json", request)
 
     started, boundary = time.monotonic(), {"passed": False, "state": "unresolved"}

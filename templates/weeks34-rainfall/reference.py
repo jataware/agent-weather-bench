@@ -18,6 +18,9 @@ ROOT = HERE.parents[1]
 DAY = np.timedelta64(1, "D")
 LEGACY = ROOT / "var/private/tasks/subseasonal-optimization"
 RESPONSE_PERTURBATIONS = ("training_targets", "features")     # a forecast must depend on at least one of these
+# instance.json carries this field, but the brief does not explain it: the staged files already hold only the chosen
+# cells. Until it is removed from instance.json (a new spec version), the changed-instance probe keeps it fixed.
+UNDOCUMENTED_PARAMS = ("longitude_limit",)
 
 # training targets close before the first date; development issues run to the second; final issues to the third
 SPLITS = {"final-2018-2021": ("2015-01-01", "2018-01-01", "2022-01-01"),

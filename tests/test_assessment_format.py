@@ -424,6 +424,8 @@ def test_library_imports_are_recorded_beside_the_original_monitor(tmp_path):
     assert record["libraries"]["acmaddl"]["submitted_files_importing"] == ["solve.py"] and record["libraries"]["acmaddl"]["commands_importing"] == 0
     assert record["libraries"]["rosetta"]["used"] is False
     assert substrate_record(run, {"substrate": {"paths": []}})["libraries"] == {}
+    catalog = substrate_record(run, {"substrate": {"image_paths": ["/substrate/skills", "/catalog"]}})["image_paths"]
+    assert catalog["/substrate/skills"] == {"commands_naming": 2, "of_which_failed": 0, "first_step": 1, "used": True} and not catalog["/catalog"]["used"]
     with pytest.raises(ValueError):
         substrate_record(run, {"substrate": {"libraries": ["os; rm -rf"]}})
 
@@ -474,3 +476,46 @@ def test_method_pointer_must_name_code_not_quote_a_phrase():
     assert not _pointer_resolves({"file": "run.py", "symbol": "fit_model"}, files)
     assert not _pointer_resolves({"file": "run.py", "lines": [2, 9]}, files)
     assert not _pointer_resolves({"file": "other.py", "symbol": "calibrate"}, files)
+
+
+def test_results_grouped_by_period_are_read_as_arrays():
+    """Two agent attempts gave {date: {name: map}} where the brief showed [period][lat][lon]. Same information."""
+    from assessment.compare import regroup
+    spec = {"latitude": {"kind": "coordinate", "tolerance": {"atol": 0}}, "change_mm": {"dims": ["period", "latitude"], "tolerance": {"atol": 0}},
+            "regional_change_mm": {"dims": ["period"], "tolerance": {"atol": 0}}}
+    labels = ["2026-10-04", "2026-10-11"]
+    flat = {"latitude": [1.0, 0.0], "change_mm": [[1.0, 2.0], [3.0, 4.0]], "regional_change_mm": [1.5, 3.5]}
+    by_date = {"latitude": [1.0, 0.0], "2026-10-11": {"change_mm": [3.0, 4.0], "regional_change_mm": 3.5},
+               "2026-10-04": {"change_mm": [1.0, 2.0], "regional_change_mm": 1.5}}
+    assert regroup(spec, by_date, "period", labels) == (flat, True)
+    assert regroup(spec, {"latitude": [1.0, 0.0], "periods": {k: v for k, v in by_date.items() if k != "latitude"}}, "period", labels) == (flat, True)
+    assert regroup(spec, flat, "period", labels) == (flat, False)
+    assert regroup(spec, {**by_date, "2026-10-11": "wetter"}, "period", labels)[1] is False          # not a full grouping: left alone
+
+
+@needs_data
+def test_runtime_crash_is_not_blamed_on_the_method(kenya, controls, tmp_path):
+    """Images from the pilot crashed inside a native library on exit. Three runs were first marked as failing every probe."""
+    params = kenya.instance("service-area--weeks-1-2")
+    kenya.hooks.stage_inputs(kenya.private, params, tmp_path / "inputs")
+    for name, ending, expected in (("after", "os._exit(3)", PASS), ("before", "os.kill(os.getpid(), signal.SIGSEGV)", UNRESOLVED)):
+        submission = controls.build("correct", tmp_path / "inputs", params, tmp_path / name / "submission")
+        source = (submission / "solve.py").read_text()
+        write = '    (Path(args.output) / "answer.json").write_text(json.dumps(solve(args.inputs, variant), allow_nan=False) + "\\n")\n'
+        assert write in source
+        crash = f"    import os, signal\n    {ending}\n"
+        (submission / "solve.py").write_text(source.replace(write, write + crash if name == "after" else crash + write))
+        result = assess(kenya, params, submission, Local(), tmp_path / name / "work")
+        replay = result["checks"]["probe.replay"]
+        assert replay["state"] == expected
+        if name == "after":
+            assert "exited abnormally" in replay["run"]["note"] and result["computed_outcome"] == PASS
+        else:
+            assert replay["reason"] == "infrastructure" and not [n for n, r in result["checks"].items() if r["state"] == FAIL]
+
+
+def test_rulings_are_keyed_by_answer_and_marked_as_proposed(seasonal):
+    import yaml
+    rulings = yaml.safe_load((seasonal.folder / "rulings.yaml").read_text())["rulings"]
+    assert len({row["answer_sha256"] for row in rulings}) == len(rulings) == 2
+    assert all(row["ruling"] == "incorrect" and row["status"] == "proposed" and row["reason"] and row["evidence"] for row in rulings)

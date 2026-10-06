@@ -176,12 +176,14 @@ def model_attempts(template):
             continue
         current.append({"run": meta["id"], "system": meta["system"], "instance": meta["instance"]["id"], "level": meta.get("level", 1),
                         "computed_outcome": assessment["computed_outcome"],
-                        "unknown_answer_checks": sorted(name for name, row in assessment["checks"].items() if row.get("reason") == "unknown_answer")})
+                        "unknown_answer_checks": ["variant"] if assessment["checks"].get("variant", {}).get("reason") == "unknown_answer" else [],
+                        "ruling": (assessment["checks"].get("variant", {}).get("ruling") or {}).get("status")})
     unknown = sum(bool(row["unknown_answer_checks"]) for row in current)
     enough = len(current) >= 2
     return {"passed": (unknown == 0) if enough else None, "status": "run" if current else "not_run", "attempts": len(current),
             "systems": sorted({row["system"] for row in current}), "attempts_with_an_unruled_unknown_answer": unknown,
             "attempts_assessed_under_another_fingerprint": stale,
+            "rulings_awaiting_confirmation": sum(row["ruling"] == "proposed" for row in current),
             "detail": ("Needs at least two agent attempts assessed under this fingerprint." if not enough else
                        "Every attempt's answer was classified." if unknown == 0 else "Some answers match no listed reading and await a ruling."),
             "runs": current}

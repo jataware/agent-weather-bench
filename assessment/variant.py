@@ -111,8 +111,8 @@ def discriminating_instance(template, inputs_for, params, rows, indices):
     wanted = [rows[i][0] for i in indices] or [rows[0][0]]
     best = None
     for candidate in template.hooks.candidate_instances():
-        if candidate["id"] == params.get("id"):
-            continue
+        if candidate["id"] == params.get("id") or any(candidate[key] != params.get(key) for key in getattr(template.hooks, "UNDOCUMENTED_PARAMS", ())):
+            continue                                               # never vary a parameter the brief does not explain
         differences = sum(candidate[key] != params.get(key) for key in candidate if key != "id")
         local = []
         for combination in wanted:

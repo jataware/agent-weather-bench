@@ -10,7 +10,7 @@ import re
 import shutil
 from pathlib import Path
 
-from .compare import EnvelopeError, align, compare, usable
+from .compare import EnvelopeError, align, compare, regroup, usable
 from .execute import valid_argv
 from .judge import interpret
 from .outcomes import FAIL, PASS, UNRESOLVED, combine, outcome
@@ -20,7 +20,13 @@ TEXT_SUFFIXES = (".md", ".txt", ".json", ".py", ".sh", ".R", ".jl", ".yaml", ".y
 JUDGE = "judge"                                                    # value of `decided_by` for checks no computation can settle
 
 
-def read_envelope(template, submission):
+def _labels(template, params):
+    """(dimension, labels) when the spec lets results be grouped by the labels of a leading dimension."""
+    grouping = template.spec.get("grouping")
+    return (grouping["dim"], [str(label) for label in params[grouping["labels_from"]]]) if grouping else (None, [])
+
+
+def read_envelope(template, submission, params):
     """(answer, usable results, argv, per-result problems), or an EnvelopeError when nothing can be assessed."""
     path = Path(submission) / "answer.json"
     if not path.is_file():
@@ -31,7 +37,9 @@ def read_envelope(template, submission):
         raise EnvelopeError("answer.json is not valid JSON") from None
     if not isinstance(answer, dict):
         raise EnvelopeError("answer.json must be an object")
-    results, problems = usable(template.spec["results"], answer.get("results"))
+    raw, regrouped = regroup(template.spec["results"], answer.get("results"), *_labels(template, params))
+    results, problems = usable(template.spec["results"], raw)
+    answer["_results_were_grouped_by_label"] = regrouped
     if not results:
         raise EnvelopeError("answer.json has no usable results: " + "; ".join(problems.values()))
     argv = (answer.get("run") or {}).get("argv") if isinstance(answer.get("run"), dict) else None
@@ -76,11 +84,18 @@ class _Context:
         slim = {key: record[key] for key in ("exit_code", "executor") if key in record}
         if record.get("infrastructure_unavailable"):
             return None, slim, outcome(UNRESOLVED, "The controller could not run the command: " + record.get("stderr", "")[:300], "infrastructure", run=slim)
-        if record["exit_code"] != 0 or record.get("answer") is None:
+        if record.get("answer") is None:
             slim["stderr"] = record.get("stderr", "")[-600:]
+            if record.get("crashed_by_signal"):
+                # A native crash is the runtime's doing as far as anyone can tell; it does not show a defect in the method.
+                return None, slim, outcome(UNRESOLVED, "The runtime crashed before the command wrote an answer.", "infrastructure", run=slim)
             return None, slim, outcome(FAIL, "The run command did not produce an answer.json.", run=slim)
+        if record["exit_code"] != 0:
+            slim["note"] = "The command wrote a complete answer and then exited abnormally; the answer is used."
         try:
-            raw, problems = usable(self.spec["results"], record["answer"].get("results") if isinstance(record["answer"], dict) else None)
+            given = record["answer"].get("results") if isinstance(record["answer"], dict) else None
+            given, _ = regroup(self.spec["results"], given, *_labels(self.template, instance or self.params))
+            raw, problems = usable(self.spec["results"], given)
             if not raw:
                 raise EnvelopeError("; ".join(problems.values()))
             return self.frame(raw, inputs, instance), slim, None
@@ -116,7 +131,8 @@ def assess(template, params, submission, executor, scratch, level=1, feedback=No
         return _finish(result, checks)
 
     try:
-        answer, raw, context.argv, problems = read_envelope(template, submission)
+        answer, raw, context.argv, problems = read_envelope(template, submission, params)
+        result["results_layout"] = "grouped by label; read as arrays" if answer.pop("_results_were_grouped_by_label") else "arrays"
     except EnvelopeError as error:
         return stop("envelope", str(error))
     # One unusable result fails the envelope, and everything that does not need it is still assessed.
@@ -238,6 +254,10 @@ def _reference_checks(context, results, original, answer, checks, result):
             final = outcome(PASS, "The product is correct on this instance. No probe separated the accepted reading from the pitfall, so the method is undetermined.",
                             "ambiguous_variant", consistent_with=final["consistent_with"], pitfalls_possible=final["pitfalls_possible"],
                             first_match=first["consistent_with"])
+    ruling = _ruling(template, context.submission) if final.get("reason") == "unknown_answer" else None
+    if ruling:
+        final = outcome(FAIL, "The results match no listed reading, and review ruled them incorrect: " + ruling["reason"],
+                        ruling={key: ruling[key] for key in ("status", "ruled_by", "ruled_on", "evidence") if key in ruling}, nearest=final.get("nearest"))
     if unusable and final["state"] == PASS:
         # Nothing wrong was found in what can be read, but a required result cannot be read at all.
         final = outcome(UNRESOLVED, "The usable results are consistent only with accepted readings; not assessed in full because "
@@ -251,6 +271,18 @@ def _reference_checks(context, results, original, answer, checks, result):
                                   "disagreements": [name for name in public if narrowed and name in declared and declared[name] not in result["matched_conventions"][name]],
                                   "note": "A disagreement is evidence for the interpretation check, not proof."}
     context.reference_rows, context.partial = rows, partial
+
+
+def _ruling(template, submission):
+    """A reviewer's ruling on this exact answer, if one is recorded. Rulings are keyed by the hash of answer.json."""
+    import hashlib
+
+    import yaml
+    path = template.folder / "rulings.yaml"
+    if not path.is_file():
+        return None
+    digest = hashlib.sha256((Path(submission) / "answer.json").read_bytes()).hexdigest()
+    return next((row for row in yaml.safe_load(path.read_text())["rulings"] if row["answer_sha256"] == digest), None)
 
 
 # ---- outcome mode: no reference answer --------------------------------------------
@@ -282,7 +314,8 @@ def _forecast_probes(context, forecast, original, checks):
             "The forecast does not change when any supplied input changes, so it does not come from the supplied data.",
             responds_to=moved, runs=records)
     if "changed_instance" in probes:
-        others = [c for c in hooks.candidate_instances() if c["id"] != params["id"]]
+        hidden = getattr(hooks, "UNDOCUMENTED_PARAMS", ())            # never vary a parameter the brief does not explain
+        others = [c for c in hooks.candidate_instances() if c["id"] != params["id"] and all(c[k] == params[k] for k in hidden)]
         other = max(others, key=lambda c: sum(c[k] != params[k] for k in params if k != "id"))
         folder = context.stage("changed-instance", instance=other)
         produced, slim, problem = context.rerun("changed-instance", folder, instance=other)
@@ -325,6 +358,7 @@ def _invariance_probes(context, results, checks):
 
 def _claims(context, results, answer, claims, checks, result):
     stated = answer.get("claims") if isinstance(answer.get("claims"), dict) else {}
+    _, labels = _labels(context.template, context.params)
     try:
         expected = context.hooks.expected_claims(results, context.params) if callable(getattr(context.hooks, "expected_claims", None)) else {}
     except KeyError:
@@ -333,6 +367,11 @@ def _claims(context, results, answer, claims, checks, result):
         return
     for name, row in claims.items():
         got = stated.get(name) if name in stated else ...
+        # a claim given per label, as {label: value} or {label: {claim: value}}, is read as the list in label order
+        if isinstance(got, dict) and labels and all(label in got for label in labels):
+            got = [got[label].get(name) if isinstance(got[label], dict) else got[label] for label in labels]
+        elif got is ... and labels and all(isinstance(stated.get(label), dict) and name in stated[label] for label in labels):
+            got = [stated[label][name] for label in labels]
         if got is ...:
             checks[f"claim.{name}"] = outcome(UNRESOLVED, "The answer does not state this claim.", "missing_evidence")
         elif isinstance(row, dict) and "metric" in row:              # a stated score, checked against the controller's own

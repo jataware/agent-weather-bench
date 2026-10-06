@@ -1,0 +1,30 @@
+schema_version: 1
+id: codex-luna-rhiza
+kind: agent
+description: gpt-6-luna through the Codex adapter, byte-identical to codex-luna's, with the verified CLI
+  0.160.0 named by CODEX_BINARY. Substrate is the Rhiza Research weather-skills catalog and its core library,
+  installed in the image at /catalog. The images and the substrate wording are those of the 1 October
+  pilot, so the three arms differ only in the substrate.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63
+  memory: 4g
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 90
+  command_seconds: 120
+substrate:
+  paths:
+  - adapter.py
+  instructions: Rhiza skills and scripts are under /catalog; generic Python is also allowed.
+  libraries:
+  - weather_skills_core
+  image_paths:
+  - /catalog

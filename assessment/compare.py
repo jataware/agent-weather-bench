@@ -6,6 +6,25 @@ class EnvelopeError(ValueError):
     """The submission does not contain the results in a usable form."""
 
 
+def regroup(results_spec, raw, dim, labels):
+    """Accept results grouped by the labels of their leading dimension, and return them as arrays.
+
+    A brief may ask for `change_mm[period][latitude][longitude]`. An answer that gives
+    `{"2026-10-04": {"change_mm": [[...]]}, ...}`, at the top level or under `periods`,
+    holds the same information and is read as the same thing. Anything else is left alone.
+    """
+    if dim is None or not isinstance(raw, dict):
+        return raw, False
+    grouped = raw.get(dim + "s") if isinstance(raw.get(dim + "s"), dict) else raw
+    if not labels or not all(isinstance(grouped.get(label), dict) for label in labels):
+        return raw, False
+    out = {key: value for key, value in raw.items() if key not in labels and key != dim + "s"}
+    for name, row in results_spec.items():
+        if name not in out and (row.get("dims") or [None])[0] == dim and all(name in grouped[label] for label in labels):
+            out[name] = [grouped[label][name] for label in labels]
+    return out, True
+
+
 def usable(results_spec, raw):
     """(usable results as arrays, {name: why a result is unusable}). One bad result does not hide the others."""
     if not isinstance(raw, dict):

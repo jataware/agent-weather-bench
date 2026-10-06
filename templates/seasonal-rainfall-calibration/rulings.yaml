@@ -1,0 +1,25 @@
+schema_version: 1
+note: Rulings on answers that match no listed reading. Keyed by the hash of the submitted answer.json. A ruling
+  of incorrect turns the unknown answer into a failure for that answer only. Proposed rulings were made by the coding
+  agent from the submitted code and await confirmation by a person.
+rulings:
+- answer_sha256: 20c6587f65ac85e8fed648b8a2057d4d95609191722100becaed6c64e83119f8
+  run: 20261006T145425-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-codex-luna-rhiza-8e6b76
+  ruling: incorrect
+  status: proposed
+  ruled_by: coding agent, from the submitted code
+  ruled_on: '2026-10-06'
+  reason: The skill score divides by a fixed climatological score of 1/9 after halving each case's score. The true
+    climatological score, halved the same way, averages 2/9, so the reported skill is far too low.
+  evidence: 'run.py line 44: rps.append(np.sum((cum-obsvec)**2)/2); clim.append(1/9). The seasonal totals and observed
+    categories agree with the reference; only hindcast_rpss differs, by 0.80.'
+- answer_sha256: be6e2c5f87bd6742799d91b77595cff90ac50f61acb2c4929573758e77edb838
+  run: 20261006T145515-seasonal-rainfall-calibration-train-1993-2002--new-2003-2004--all-cells-L1-codex-luna-rhiza-24af89
+  ruling: incorrect
+  status: proposed
+  ruled_by: coding agent, from the submitted code
+  ruled_on: '2026-10-06'
+  reason: 'The observed categories take only the values 0 and 1: near-normal and above-normal are both coded 1.
+    The skill score is computed from those categories and is wrong with them.'
+  evidence: 'solve.py line 46: cats = int(y>cuts[1]) + int(y>=cuts[0] and y<=cuts[1]). The submitted observed_category
+    holds 43 zeros and 77 ones and no twos.'

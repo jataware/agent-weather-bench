@@ -23,6 +23,8 @@ here when it is converted.
 - `controls/` — a known-correct solution and deliberately incorrect ones, used
   to certify the spec.
 - `certification.json` — the record of the last certification run.
+- `rulings.yaml` — optional. A reviewer's rulings on answers that matched no
+  listed reading, keyed by the hash of the answer.
 
 ## The hooks `reference.py` must provide
 
@@ -116,8 +118,8 @@ certification.
 
 | Template | Task-set row | Mode | Certification |
 | --- | --- | --- | --- |
-| `kenya-forecast-revision` | 4 | Product | All five tests pass; two attempts by one cheap model |
+| `kenya-forecast-revision` | 4 | Product | All five tests pass; nine attempts by one cheap model |
 | `weeks34-rainfall` | 15 | Outcome, Levels 1 and 2 | All five tests pass; three attempts by one cheap model |
-| `seasonal-rainfall-calibration` | 11 | Process | All five tests pass; two attempts by one cheap model; the checklist is a draft |
+| `seasonal-rainfall-calibration` | 11 | Process | All five tests pass; nine attempts by one cheap model; two proposed rulings; the checklist is a draft |
 
 No template is approved by a domain scientist.

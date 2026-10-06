@@ -24,13 +24,16 @@ def _stage(submission, inputs, stage):
 
 
 def _collect(record, output):
+    """Read the answer the command wrote. A complete answer counts even if the process then exited abnormally:
+    some scientific libraries crash while shutting down, after the work is done and written."""
     answer = output / "answer.json"
     record["answer"] = None
-    if record["exit_code"] == 0 and answer.is_file():
+    if answer.is_file():
         try:
             record["answer"] = json.loads(answer.read_text())
         except ValueError:
             record["stderr"] = (record.get("stderr") or "") + "\nanswer.json written by the run command is not valid JSON"
+    record["crashed_by_signal"] = record["exit_code"] >= 128 or record["exit_code"] < 0
     return record
 
 

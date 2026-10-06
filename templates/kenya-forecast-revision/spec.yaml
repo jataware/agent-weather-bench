@@ -7,6 +7,10 @@ mode: product
 status: development; not reviewed by a domain scientist
 params: [issue_current, issue_previous, rectangle, period_start]
 
+# Results and claims may be given as arrays over the periods, or grouped under
+# each period's start date. Both hold the same information.
+grouping: {dim: period, labels_from: period_start}
+
 # Every listed result takes part in variant matching. Arrays are compared by
 # coordinate label, so a submission may order its latitudes either way.
 results:

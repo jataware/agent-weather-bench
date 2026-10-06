@@ -563,8 +563,8 @@ it is in [templates/README.md](../templates/README.md).
   forecasting.
 
 **All three specs passed all five certification tests, the four automatic ones
-in the offline Docker runtime.** The fifth rests on two or three attempts by
-one cheap model per template. No domain scientist has approved any of them.
+in the offline Docker runtime.** The fifth rests on nine, three and nine
+attempts by one cheap model. No domain scientist has approved any of them.
 
 - *Kenya forecast revision.* Two independent reference implementations agree to
   6e-14 over 64 convention combinations, and the first reproduces the earlier
@@ -686,11 +686,14 @@ separates them is necessary, not a refinement.
 
 ## The first agent attempts
 
-**Seven attempts were run with one cheap model.** The model is gpt-6-luna,
+**Twenty-one attempts were run with one cheap model.** The model is gpt-6-luna,
 driven through the existing Codex adapter on the subscription login, with the
-verified command-line version 0.160.0. Each attempt took about a minute and
-44,000 to 195,000 tokens. These are development attempts: one model, two
-instances per template. They support no ranking.
+verified command-line version 0.160.0. A typical attempt took one to two
+minutes and 45,000 to 195,000 tokens. Together they used about three
+percentage points of the subscription's weekly allowance. These are development
+attempts: one model, one attempt per cell. They support no ranking.
+
+**Seven attempts covered the three templates on the default runtime image.**
 
 Columns:
 
@@ -713,15 +716,81 @@ Columns:
 **The first Kenya diagnosis was confirmed by reading the code.** The submitted
 script takes the cumulative total at the period start plus six days, minus the
 cumulative total one day before the start. That is the seven days ending one
-day early, which is exactly the pitfall the assessment named.
+day early, which is exactly the pitfall the assessment named. The same pitfall
+appeared in three of the nine Kenya attempts.
 
 **A probe separated two readings on a real attempt.** On that Kenya instance
 the weighted and unweighted regional means agree within tolerance, so the
 numbers fitted both. The changed-instance probe reran the agent's code on an
 instance where they differ, and the code followed the weighted reading.
 
-**The attempts exposed four defects in the controller, and all four are
-fixed.** This is what the fifth certification test is for.
+## The first substrate comparison
+
+**Fourteen attempts compared three substrate conditions with everything else
+fixed.** The model, the adapter and the budgets are identical. The runtime
+images are the three matched images of the 1 October pilot: one with no added
+substrate, one with the Rhiza Research weather-skills catalog, and one with
+the ACCORD libraries (`africas2s`, `acmaddl`, `rosetta`). The wording that
+tells the agent about its substrate is the pilot's. Each condition ran two
+instances of the Kenya revision and two of the seasonal calibration. One extra
+run per template started from the baseline condition's earlier submission, to
+compare retained work with a reset.
+
+Columns:
+
+- **Task** — the template.
+- **Condition** — the substrate, or "retained" for the run that started from
+  earlier work.
+- **Passed** — computed outcome over the two instances.
+- **Median seconds and tokens** — over the two attempts.
+- **Substrate use** — what the monitor recorded.
+
+| Task | Condition | Passed | Median seconds | Median tokens | Substrate use |
+| --- | --- | --- | --- | --- | --- |
+| Kenya revision | Baseline | 1 of 2 | 61 | 102,726 | — |
+| Kenya revision | Rhiza skills | 1 of 2 | 73 | 157,282 | Catalog never named; core library never imported |
+| Kenya revision | ACCORD libraries | 2 of 2 | 56 | 154,534 | Notes folder read in both runs; no library imported |
+| Kenya revision | Retained (second instance) | 1 of 1 | 159 | 81,904 | — |
+| Seasonal calibration | Baseline | 2 of 2 | 199 | 124,988 | — |
+| Seasonal calibration | Rhiza skills | 0 of 2 | 42 | 86,144 | Catalog never named; core library never imported |
+| Seasonal calibration | ACCORD libraries | 2 of 2 | 161 | 97,440 | Notes folder read in one run; no library imported |
+| Seasonal calibration | Retained (second instance) | 1 of 1 | 38 | 85,418 | — |
+
+**No condition used its substrate's code.** Across eight substrate runs the
+monitor recorded no import of any substrate library and no command naming the
+skills catalog. The ACCORD condition read its notes folder in three of four
+runs. This comparison therefore measured the availability of a substrate, not
+its use, and the differences between conditions are not evidence about the
+substrates. The 1 October pilot recorded the same thing for the skills
+catalog.
+
+**The two Kenya failures are the same pitfall again.** Both placed the window
+one day early, and both scripts then crashed on the probe instance whose first
+period starts on the issue date.
+
+**The two failures in the Rhiza condition are agent errors, ruled on by
+review.** One divides by a fixed climatological score that is half its true
+value. The other codes near-normal and above-normal as the same category. Each
+answer matched no listed reading, so each went to review, and the rulings are
+recorded with their evidence in
+`templates/seasonal-rainfall-calibration/rulings.yaml`. The rulings were made
+by the coding agent from the submitted code and are marked as proposed until a
+person confirms them.
+
+**The retained runs were cheaper on one task and slower on the other.** On the
+seasonal task the retained run took 38 seconds and 85,418 tokens, against 73
+seconds and 100,717 tokens for the reset run on the same instance. On the Kenya
+task the retained run passed where the reset run failed, used fewer tokens and
+took three times as long. One pair per task shows that the mechanism works; it
+does not measure an effect.
+
+## What the attempts taught about the controller
+
+**The attempts exposed eight defects in the controller.** Seven are fixed and
+one is contained. This is what the fifth certification test is for. Before the
+fixes, eight of the fourteen comparison runs carried a failure that the
+controller had caused; after them, every remaining failure has an agent error
+behind it.
 
 1. *The changed-data probe altered the store's format.* It rewrote the Kenya
    stores without their consolidated metadata, so an agent's valid reader
@@ -736,6 +805,24 @@ fixed.** This is what the fifth certification test is for.
 4. *A method pointer could be satisfied by a phrase.* A script that writes its
    own answer contains every phrase of that answer. A pointer must now be a
    name that appears in the file, or a line range inside it.
+5. *Results grouped by period were rejected.* Two attempts gave each period its
+   own block where the brief showed arrays over periods. The information is the
+   same, so a spec can now declare such a grouping and the controller reads it
+   as arrays. Claims given per period are read the same way.
+6. *A crash in the runtime was blamed on the method.* The pilot's images crash
+   inside a native library when a process that read NetCDF files exits. Four
+   runs were first marked as failing every probe. A complete answer written
+   before an abnormal exit is now used, and a crash by signal with no answer is
+   unresolved with reason `infrastructure`.
+7. *An unknown answer had nowhere to go.* A spec can now carry rulings keyed by
+   the hash of the answer. A ruling of incorrect turns that answer's unknown
+   outcome into a failure, with the reviewer's reason attached.
+8. *`instance.json` exposes a parameter the brief does not explain.* The
+   seasonal and weeks 3–4 instance files carry an internal cell-selection
+   field. Three scripts guessed at its meaning and broke on a probe instance
+   that set it. The changed-instance probe now keeps such fields fixed. The
+   field is still in the file; removing it changes what agents see, so it
+   needs a new spec version and fresh attempts.
 
 **Every run was assessed again after the fixes.** Each earlier assessment is
 kept beside the run under the fingerprint that produced it.
@@ -747,10 +834,13 @@ kept beside the run under the fingerprint that produced it.
   unresolved with reason `judge_not_run`.
 - *Only one model has attempted the templates.* The Codex adapters accept only
   command-line version 0.160.0, whose isolation was verified. The default
-  install has moved to 0.160.1, so the system `codex-luna-pinned` names the
+  install has moved to 0.160.1, so the Codex systems added here name the
   0.160.0 binary, which is still on disk; the version check was not changed. No
   Anthropic key is configured, so no Claude model has run, and the frontier
   Codex model was not run because no spending or usage limit was agreed.
+- *The substrate conditions reuse the pilot's images.* They were not rebuilt on
+  the current runtime, and they crash on exit after reading NetCDF files.
+- *The `rx` harness has no system configuration.*
 - *No live data acquisition.* The earlier version of the Kenya task had the
   agent download the forecasts. This version supplies the frozen raw stores,
   for repeatability.
@@ -784,9 +874,14 @@ kept beside the run under the fingerprint that produced it.
   need a ruling.
 - **Unresolved outcomes can pile up.** A spec that returns unresolved too often
   is a defective spec, and the unresolved rate should be tracked per template.
-- **The format has been tried on three tasks by one cheap model.** Seven
+- **The format has been tried on three tasks by one cheap model.** Twenty-one
   attempts cannot show how the checks behave across models, or whether the
   tasks separate cheap models from frontier ones.
+- **Every controller defect found so far was found by an agent attempt, not by
+  a control.** The controls are written by the same hand as the checks. More
+  defects of this kind should be expected with each new model and template.
+- **The two rulings are proposals.** They were made by the coding agent and no
+  person has confirmed them.
 - **The outcome gate cannot see every leak.** It catches hard-coded forecasts
   and use of later model forecasts. It cannot tell whether a model has
   memorised the public observations and encoded them in a fitted rule that
