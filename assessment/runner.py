@@ -79,8 +79,9 @@ def run(template, params, system, parent=None, level=1):
     brief, envelope = template.brief(params, level), (ROOT / "assessment/envelope.md").read_text()
     (task / "brief.md").write_text(brief)
     (task / "envelope.md").write_text(envelope)
-    (task / "instance.json").write_text(json.dumps(params, indent=2) + "\n")
     template.hooks.stage_inputs(template.private, params, inputs)
+    # the agent sees one description of the instance, the one the template stages; internal parameters stay with the controller
+    shutil.copyfile(inputs / "instance.json", task / "instance.json")
     write(folder / "input-manifest.json", inventory(inputs))
     if parent:
         shutil.copytree(parent / "retained/state", work / "state", dirs_exist_ok=True)
@@ -180,6 +181,10 @@ def reassess(run_id):
     from .spec import Template
     folder = resolve_run(run_id)
     meta = read(folder / "run.json")
+    current = Template(meta["template"]).spec["spec_version"]
+    if meta["spec_version"] != current:
+        raise ValueError(f"This run was made under spec version {meta['spec_version']} and the template is at {current}. "
+                         "Its agent saw different inputs, so it cannot be assessed against the current ones. Its recorded assessments stand.")
     previous = read(folder / "assessment.json") if (folder / "assessment.json").is_file() else None
     if previous and not (folder / "controller/assessments" / f"{previous['fingerprint'][:16]}.json").is_file():
         write(folder / "controller/assessments" / f"{previous['fingerprint'][:16]}.json", previous)

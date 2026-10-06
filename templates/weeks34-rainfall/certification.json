@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
  "template": "weeks34-rainfall",
- "spec_version": 1,
- "fingerprint": "e82b3c389700ce371a5e57a9de020a9774bf83c779f45890651d32515791ef94",
- "certified_at": "20261006T152241",
+ "spec_version": 2,
+ "fingerprint": "6245f5874efad74f64a004cc5474f91b13f32a5e609e54acf3fe1783bfb187d7",
+ "certified_at": "20261006T154637",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {
@@ -437,11 +437,11 @@
      "computed_outcome": "fail",
      "skill": {
       "split": "final",
-      "rmse_mm": 14.041859373137335,
+      "rmse_mm": 14.034096949822526,
       "raw_model_rmse_mm": 14.890051309463692,
       "climatology_rmse_mm": 14.281531566506088,
-      "skill_vs_raw_model": 0.056963667800611906,
-      "skill_vs_climatology": 0.01678196713375235,
+      "skill_vs_raw_model": 0.057484983889689145,
+      "skill_vs_climatology": 0.017325495905765487,
       "issues": 208,
       "cells": 9,
       "observations_are_public_history": true
@@ -458,11 +458,11 @@
      "computed_outcome": "fail",
      "skill": {
       "split": "final",
-      "rmse_mm": 11.869468004684194,
+      "rmse_mm": 11.893541286009166,
       "raw_model_rmse_mm": 14.903258441509173,
       "climatology_rmse_mm": 11.994282318739515,
-      "skill_vs_raw_model": 0.2035655792142167,
-      "skill_vs_climatology": 0.010406151092534732,
+      "skill_vs_raw_model": 0.20195027599583315,
+      "skill_vs_climatology": 0.008399088003202548,
       "issues": 151,
       "cells": 9,
       "observations_are_public_history": true
@@ -634,17 +634,17 @@
   "5_model_attempts": {
    "passed": true,
    "status": "run",
-   "attempts": 3,
+   "attempts": 2,
    "systems": [
     "codex-luna-pinned"
    ],
    "attempts_with_an_unruled_unknown_answer": 0,
-   "attempts_assessed_under_another_fingerprint": 0,
+   "attempts_assessed_under_another_fingerprint": 3,
    "rulings_awaiting_confirmation": 0,
    "detail": "Every attempt's answer was classified.",
    "runs": [
     {
-     "run": "20261006T141347-weeks34-rainfall-final-2018-2021--all-cells-L1-codex-luna-pinned-98ffc7",
+     "run": "20261006T153854-weeks34-rainfall-final-2018-2021--all-cells-L1-codex-luna-pinned-bf0c22",
      "system": "codex-luna-pinned",
      "instance": "final-2018-2021--all-cells",
      "level": 1,
@@ -653,18 +653,9 @@
      "ruling": null
     },
     {
-     "run": "20261006T141449-weeks34-rainfall-final-2018-2021--all-cells-L2-codex-luna-pinned-6d627b",
+     "run": "20261006T153957-weeks34-rainfall-final-2012-2014--western-six-L1-codex-luna-pinned-5f8c73",
      "system": "codex-luna-pinned",
-     "instance": "final-2018-2021--all-cells",
-     "level": 2,
-     "computed_outcome": "pass",
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T142301-weeks34-rainfall-final-2015-2017--all-cells-L1-codex-luna-pinned-90d877",
-     "system": "codex-luna-pinned",
-     "instance": "final-2015-2017--all-cells",
+     "instance": "final-2012-2014--western-six",
      "level": 1,
      "computed_outcome": "pass",
      "unknown_answer_checks": [],

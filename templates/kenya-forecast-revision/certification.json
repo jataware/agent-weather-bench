@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "kenya-forecast-revision",
  "spec_version": 1,
- "fingerprint": "e3e92622db92d9221b44e093cff6b4bb8e0d581d6e3ef31631e903a53f7594b0",
- "certified_at": "20261006T152014",
+ "fingerprint": "b5feb1c7e36ccfa8ec893c81432204a730d91d1798b8ad8dab4d2091d489036e",
+ "certified_at": "20261006T154505",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {

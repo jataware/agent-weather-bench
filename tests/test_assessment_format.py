@@ -519,3 +519,32 @@ def test_rulings_are_keyed_by_answer_and_marked_as_proposed(seasonal):
     rulings = yaml.safe_load((seasonal.folder / "rulings.yaml").read_text())["rulings"]
     assert len({row["answer_sha256"] for row in rulings}) == len(rulings) == 2
     assert all(row["ruling"] == "incorrect" and row["status"] == "proposed" and row["reason"] and row["evidence"] for row in rulings)
+
+
+@needs_weeks
+@needs_seasonal
+def test_agents_are_told_only_what_the_brief_explains(weeks, seasonal, tmp_path):
+    """Version 1 put an internal cell-selection field in instance.json; three agent scripts guessed its meaning and broke."""
+    for template, instance, internal in ((weeks, "final-2012-2014--western-six", "longitude_limit"),
+                                         (seasonal, "train-1993-2000--new-2001-2002--southern-rows", "latitude_limit")):
+        params = template.instance(instance)
+        assert params[internal] is not None and template.spec["spec_version"] == 2
+        template.hooks.stage_inputs(template.private, params, tmp_path / template.name)
+        told = json.loads((tmp_path / template.name / "instance.json").read_text())
+        assert internal not in told and told["id"] == instance
+        assert not hasattr(template.hooks, "UNDOCUMENTED_PARAMS")
+    assert told["training_years"] == list(range(1993, 2001)) and told["new_years"] == [2001, 2002]
+
+
+@needs_seasonal
+def test_a_leak_hidden_by_coincidence_fails_its_own_steps_once_a_probe_exposes_it(seasonal, seasonal_controls, tmp_path):
+    """On this instance the held-out and full-sample category boundaries give the same categories. An agent attempt
+    used the full sample; only the probe instance showed it. The steps must then agree with the variant check."""
+    instance = "train-1993-2000--new-2001-2002--southern-rows"
+    result = _assess_seasonal(seasonal, seasonal_controls, "pitfall_full_sample_thresholds", tmp_path, instance)
+    assert result["first_match_conventions"]["category_thresholds"] == ["full_sample", "leave_one_out"]     # the numbers fit both
+    assert result["checks"]["probe.changed_instance"]["chosen_to_separate_accepted_from_pitfall"]
+    assert result["matched_conventions"]["category_thresholds"] == ["full_sample"]
+    for check in ("variant", "process.verification_categories", "process.historical_performance"):
+        assert result["checks"][check]["state"] == FAIL, check
+    assert result["checks"]["process.observations_prepared"]["state"] == PASS

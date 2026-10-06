@@ -689,8 +689,9 @@ separates them is necessary, not a refinement.
 **Twenty-one attempts were run with one cheap model.** The model is gpt-6-luna,
 driven through the existing Codex adapter on the subscription login, with the
 verified command-line version 0.160.0. A typical attempt took one to two
-minutes and 45,000 to 195,000 tokens. Together they used about three
-percentage points of the subscription's weekly allowance. These are development
+minutes and 45,000 to 195,000 tokens. With four later attempts under spec
+version 2, they used about three percentage points of the subscription's
+weekly allowance. These are development
 attempts: one model, one attempt per cell. They support no ranking.
 
 **Seven attempts covered the three templates on the default runtime image.**
@@ -786,8 +787,8 @@ does not measure an effect.
 
 ## What the attempts taught about the controller
 
-**The attempts exposed eight defects in the controller.** Seven are fixed and
-one is contained. This is what the fifth certification test is for. Before the
+**The attempts exposed eight defects in the controller, and all eight are
+fixed.** This is what the fifth certification test is for. Before the
 fixes, eight of the fourteen comparison runs carried a failure that the
 controller had caused; after them, every remaining failure has an agent error
 behind it.
@@ -817,15 +818,41 @@ behind it.
 7. *An unknown answer had nowhere to go.* A spec can now carry rulings keyed by
    the hash of the answer. A ruling of incorrect turns that answer's unknown
    outcome into a failure, with the reviewer's reason attached.
-8. *`instance.json` exposes a parameter the brief does not explain.* The
-   seasonal and weeks 3–4 instance files carry an internal cell-selection
+8. *`instance.json` exposed a parameter the brief does not explain.* The
+   seasonal and weeks 3–4 instance files carried an internal cell-selection
    field. Three scripts guessed at its meaning and broke on a probe instance
-   that set it. The changed-instance probe now keeps such fields fixed. The
-   field is still in the file; removing it changes what agents see, so it
-   needs a new spec version and fresh attempts.
+   that set it. The field is gone in spec version 2 of both templates, and the
+   seasonal file now lists its years in full. This changes what agents see, so
+   attempts made under version 1 keep their version 1 assessments and are not
+   assessed against the new inputs.
 
-**Every run was assessed again after the fixes.** Each earlier assessment is
-kept beside the run under the fingerprint that produced it.
+**Every run was assessed again after each fix that left its inputs
+unchanged.** Each earlier assessment is kept beside the run under the
+fingerprint that produced it. The tables above give the outcomes under the
+final version 1 assessments.
+
+**Four further attempts were run under spec version 2.** They are the attempts
+the fifth certification test counts for the seasonal and weeks 3–4 templates;
+`templates/*/certification.json` lists them.
+
+- *Weeks 3–4 rainfall, final 2018–2021:* pass. RMSE 13.998 mm, 2.0% better
+  than climatology.
+- *Weeks 3–4 rainfall, final 2012–2014 on six cells:* pass. RMSE 10.890 mm,
+  2.3% better than climatology. This is an instance that sets the field
+  version 1 exposed.
+- *Seasonal calibration, 1993–2004:* pass on every computed step.
+- *Seasonal calibration, 1993–2000 on the southern rows:* fail, with a named
+  pitfall. The category boundaries for each held-out year include that year.
+
+**The last of these is the clearest catch so far.** On that instance the
+leaking and the correct boundaries happen to give the same categories and the
+same skill score, so the submitted numbers fit both readings. The
+changed-instance probe chose an instance where the two differ and reran the
+agent's code there; the code followed the leaking reading. The submitted
+script confirms it: it computes boundaries from all years for the observed
+category, two lines below a comment that says the boundaries exclude the
+held-out year. A process step judged on the original numbers alone had passed
+this attempt, so the steps now also take account of what the probes establish.
 
 **Four things are not implemented.**
 

@@ -18,9 +18,6 @@ ROOT = HERE.parents[1]
 DAY = np.timedelta64(1, "D")
 LEGACY = ROOT / "var/private/tasks/subseasonal-optimization"
 RESPONSE_PERTURBATIONS = ("training_targets", "features")     # a forecast must depend on at least one of these
-# instance.json carries this field, but the brief does not explain it: the staged files already hold only the chosen
-# cells. Until it is removed from instance.json (a new spec version), the changed-instance probe keeps it fixed.
-UNDOCUMENTED_PARAMS = ("longitude_limit",)
 
 # training targets close before the first date; development issues run to the second; final issues to the third
 SPLITS = {"final-2018-2021": ("2015-01-01", "2018-01-01", "2022-01-01"),
@@ -69,7 +66,10 @@ def stage_inputs(private, params, destination):
     development.drop_vars("precipitation").to_netcdf(destination / "development-features.nc")
     final.drop_vars("precipitation").to_netcdf(destination / "final-features.nc")
     shutil.copyfile(HERE / "data-notes.txt", destination / "data-notes.txt")
-    (destination / "instance.json").write_text(json.dumps(params, indent=2) + "\n")
+    # The agent is told the three dates the brief explains. The cell selection is internal: the staged files
+    # already hold only the chosen cells, and an unexplained field invites a wrong guess.
+    public = {key: params[key] for key in ("id", "training_boundary", "development_boundary", "final_boundary")}
+    (destination / "instance.json").write_text(json.dumps(public, indent=2) + "\n")
 
 
 def _rewrite(path, change):

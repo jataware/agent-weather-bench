@@ -16,10 +16,6 @@ import xarray as xr
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 REFERENCE_USES_SUBMISSION = True          # the skill score is recomputed from the submitted probabilities
-# instance.json carries this field, but the brief does not explain it: the staged files already hold only the chosen
-# cells. Two agents guessed at its meaning and broke on an instance that set it. Until it is removed from
-# instance.json (a new spec version), the changed-instance probe keeps it fixed.
-UNDOCUMENTED_PARAMS = ("latitude_limit",)
 FILES = ("forecast-development.nc", "observations-development.nc", "forecast.nc", "verification.nc", "training.nc")
 DAYS = {"actual": (31, 30, 31), "thirty_days": (30, 30, 30), "rates_not_converted": (1, 1, 1)}
 
@@ -86,7 +82,13 @@ def stage_inputs(private, params, destination):
     observed.sel(time=(observed.time.dt.year >= first) & (observed.time.dt.year < stop)).to_netcdf(destination / "observations-training.nc")
     _new_forecast(private, params).to_netcdf(destination / "forecast-new.nc")
     shutil.copyfile(HERE / "guidance.md", destination / "guidance.md")
-    (destination / "instance.json").write_text(json.dumps(params, indent=2) + "\n")
+    (destination / "instance.json").write_text(json.dumps(public_instance(params), indent=2) + "\n")
+
+
+def public_instance(params):
+    """What the agent is told about the instance: the years, written out. The cell selection is internal;
+    the staged files already hold only the chosen cells, and an unexplained field invites a wrong guess."""
+    return {"id": params["id"], "training_years": list(range(*params["training_years"])), "new_years": list(range(*params["new_years"]))}
 
 
 def _rewrite(path, change):

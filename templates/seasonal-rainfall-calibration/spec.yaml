@@ -1,6 +1,9 @@
 schema_version: 1
 template: seasonal-rainfall-calibration
-spec_version: 1
+spec_version: 2
+version_history:
+  - {version: 1, change: First version.}
+  - {version: 2, change: 'instance.json no longer carries the internal cell-selection field, which the brief never explained and three agent scripts misread. Runs made under version 1 saw different inputs and are not reassessed under version 2.'}
 title: Seasonal rainfall calibration to the WMO guidance
 task_set_row: 11
 mode: process

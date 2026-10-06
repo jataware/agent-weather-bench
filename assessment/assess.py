@@ -238,8 +238,8 @@ def _reference_checks(context, results, original, answer, checks, result):
         staged = context.stage("changed-instance", instance=other)
         rerun, slim, problem = context.rerun("changed-instance", staged, instance=other)
         if problem is None:
-            problem, shared = _follows_inputs(context, f"instance {other['id']}", results, narrowed or hits, rerun,
-                                              table(template, staged, other, given=rerun), slim)
+            context.probe_rows = table(template, staged, other, given=rerun)
+            problem, shared = _follows_inputs(context, f"instance {other['id']}", results, narrowed or hits, rerun, context.probe_rows, slim)
             if problem["state"] == PASS:
                 narrowed = [i for i in narrowed if i in shared]
         problem["probe_instance"], problem["chosen_to_separate_accepted_from_pitfall"] = other["id"], bool(separates)
@@ -270,7 +270,7 @@ def _reference_checks(context, results, original, answer, checks, result):
     result["declared_choices"] = {"declared": declared, "public_conventions": public,
                                   "disagreements": [name for name in public if narrowed and name in declared and declared[name] not in result["matched_conventions"][name]],
                                   "note": "A disagreement is evidence for the interpretation check, not proof."}
-    context.reference_rows, context.partial = rows, partial
+    context.reference_rows, context.partial, context.narrowed = rows, partial, narrowed
 
 
 def _ruling(template, submission):
@@ -463,16 +463,22 @@ def _results_step(context, names, base):
     subset = {name: template.matched()[name] for name in names}
     relevant = []
     for dimension, values in template.spec.get("conventions", {}).items():
-        # a convention matters to these results if switching it alone ever changes their reference
-        for a, (first, reference, _) in enumerate(rows):
-            twins = [b for b, (other, _, _) in enumerate(rows) if b > a and all(other[d] == first[d] for d in first if d != dimension)]
-            if reference is not None and any(rows[b][1] is not None and not compare(subset, rows[b][1], reference)[0] for b in twins):
-                relevant.append(dimension)
+        # A convention matters to these results if switching it alone ever changes their reference, on this
+        # instance or on the probe instance. Two readings can coincide here and still differ there.
+        for table_rows in (rows, getattr(context, "probe_rows", None) or []):
+            for a, (first, reference, _) in enumerate(table_rows):
+                twins = [b for b, (other, _, _) in enumerate(table_rows) if b > a and all(other[d] == first[d] for d in first if d != dimension)]
+                if reference is not None and any(table_rows[b][1] is not None and not compare(subset, table_rows[b][1], reference)[0] for b in twins):
+                    relevant.append(dimension)
+                    break
+            if dimension in relevant:
                 break
     if any(name not in context.usable for name in names):
         return outcome(UNRESOLVED, "Not assessed: " + ", ".join(n for n in names if n not in context.usable) + " is unusable.", "not_assessed",
                        evidence_results=names, **base)
     agreeing = [i for i in range(len(rows)) if partial[i] and all(partial[i].get(name, {}).get("agrees") for name in names)]
+    # What the probes established about the code narrows the readings: a reading the reruns ruled out is not one it follows.
+    agreeing = [i for i in agreeing if i in context.narrowed] or agreeing
     seen = {tuple(rows[i][0][d] for d in relevant) for i in agreeing}
     pitfalls = [sorted(value for d, value in zip(relevant, combo) if template.spec["conventions"][d][value] == "pitfall") for combo in seen]
     extra = {"evidence_results": names, "conventions_that_matter": relevant, **base}
