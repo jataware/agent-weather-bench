@@ -1,172 +1,183 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="700" viewBox="0 0 1440 700" font-family="Helvetica, Arial, sans-serif">
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/></marker></defs>
-<rect width="1440" height="700" fill="#fff"/>
-<text x="720.0" y="34" font-size="21" fill="#111" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">A forecasting task goes into a sandbox; what comes out is checked by computation and by a narrow judge</text>
-<rect x="30" y="70" width="230" height="300" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
-<rect x="30" y="70" width="230" height="36" rx="10" fill="#2563eb"/><rect x="30" y="94" width="230" height="12" fill="#2563eb"/><text x="145.0" y="94" font-size="17" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The task</text>
-<text x="44" y="132" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">A forecaster's job, stated as a product:</text>
-<text x="44" y="150" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">an outlook, a calibration, a verification.</text>
-<rect x="44.0" y="166.0" width="24.0" height="24.0" fill="#bdc9e3" stroke="#fff"/>
-<rect x="68.0" y="166.0" width="24.0" height="24.0" fill="#7d90bf" stroke="#fff"/>
-<rect x="92.0" y="166.0" width="24.0" height="24.0" fill="#a2b0d4" stroke="#fff"/>
-<rect x="116.0" y="166.0" width="24.0" height="24.0" fill="#7184b8" stroke="#fff"/>
-<rect x="44.0" y="190.0" width="24.0" height="24.0" fill="#6c80b6" stroke="#fff"/>
-<rect x="68.0" y="190.0" width="24.0" height="24.0" fill="#e1eaf7" stroke="#fff"/>
-<rect x="92.0" y="190.0" width="24.0" height="24.0" fill="#ecf4fd" stroke="#fff"/>
-<rect x="116.0" y="190.0" width="24.0" height="24.0" fill="#40599d" stroke="#fff"/>
-<rect x="44.0" y="214.0" width="24.0" height="24.0" fill="#b9c5e1" stroke="#fff"/>
-<rect x="68.0" y="214.0" width="24.0" height="24.0" fill="#becae4" stroke="#fff"/>
-<rect x="92.0" y="214.0" width="24.0" height="24.0" fill="#1f3b8b" stroke="#fff"/>
-<rect x="116.0" y="214.0" width="24.0" height="24.0" fill="#8d9ec8" stroke="#fff"/>
-<text x="152" y="188" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">frozen data</text>
-<text x="152" y="206" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a short brief</text>
-<text x="152" y="224" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a budget</text>
-<text x="44" y="266" font-size="12" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The method is not stated.</text>
-<text x="44" y="284" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Region and time window are</text>
-<text x="44" y="302" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">parameters: one task, many instances.</text>
-<rect x="300" y="70" width="400" height="300" rx="10" fill="#f0fdf4" stroke="#15803d" stroke-width="2" stroke-dasharray="8 5"/>
-<rect x="300" y="70" width="400" height="36" rx="10" fill="#15803d"/><rect x="300" y="94" width="400" height="12" fill="#15803d"/><text x="500.0" y="94" font-size="17" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The sandbox: no network, fixed budget</text>
-<rect x="316" y="126" width="170" height="110" rx="10" fill="#fff" stroke="#15803d" stroke-width="2"/>
-<text x="401" y="150" font-size="14" fill="#15803d" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The agent</text>
-<text x="328" y="174" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a model</text>
-<text x="328" y="192" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">driven by a harness</text>
-<text x="328" y="210" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reads, writes code, runs it</text>
-<rect x="514" y="126" width="170" height="110" rx="10" fill="#fff" stroke="#15803d" stroke-width="2" stroke-dasharray="5 4"/>
-<text x="599" y="150" font-size="14" fill="#15803d" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Tooling: in or out</text>
-<text x="526" y="174" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">skills catalog, libraries,</text>
-<text x="526" y="192" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a conventions sheet,</text>
-<text x="526" y="210" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">its own earlier work</text>
-<path d="M 514 181 L 486 181" stroke="#15803d" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-<text x="316" y="266" font-size="12" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Delivers a fixed envelope, any method:</text>
-<rect x="316.0" y="276.0" width="15.0" height="15.0" fill="#abb9d9" stroke="#fff"/>
-<rect x="331.0" y="276.0" width="15.0" height="15.0" fill="#cfdaed" stroke="#fff"/>
-<rect x="346.0" y="276.0" width="15.0" height="15.0" fill="#677cb3" stroke="#fff"/>
-<rect x="361.0" y="276.0" width="15.0" height="15.0" fill="#e0e8f7" stroke="#fff"/>
-<rect x="316.0" y="291.0" width="15.0" height="15.0" fill="#7f91c0" stroke="#fff"/>
-<rect x="331.0" y="291.0" width="15.0" height="15.0" fill="#a3b1d4" stroke="#fff"/>
-<rect x="346.0" y="291.0" width="15.0" height="15.0" fill="#e3ebf8" stroke="#fff"/>
-<rect x="361.0" y="291.0" width="15.0" height="15.0" fill="#8597c4" stroke="#fff"/>
-<rect x="316.0" y="306.0" width="15.0" height="15.0" fill="#e7effb" stroke="#fff"/>
-<rect x="331.0" y="306.0" width="15.0" height="15.0" fill="#94a4cc" stroke="#fff"/>
-<rect x="346.0" y="306.0" width="15.0" height="15.0" fill="#e0e9f7" stroke="#fff"/>
-<rect x="361.0" y="306.0" width="15.0" height="15.0" fill="#dce5f4" stroke="#fff"/>
-<text x="384" y="292" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, monospace">results.zarr   labelled arrays</text>
-<text x="384" y="310" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, monospace">answer.json    numbers, claims, run cmd</text>
-<text x="384" y="328" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, monospace">code           regenerates the results</text>
-<text x="384" y="346" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, monospace">report.md      what, why, limits</text>
-<rect x="740" y="70" width="430" height="300" rx="10" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
-<rect x="740" y="70" width="430" height="36" rx="10" fill="#c2410c"/><rect x="740" y="94" width="430" height="12" fill="#c2410c"/><text x="955.0" y="94" font-size="17" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The controller checks the delivery</text>
-<rect x="752" y="118" width="68" height="22" rx="4" fill="#c2410c"/>
-<text x="786" y="134" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Compute</text>
-<text x="830" y="132" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a private reference under every defensible reading of the brief,</text>
-<text x="830" y="149" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">so a known wrong reading is named as a pitfall;</text>
-<text x="830" y="166" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">rules every valid answer obeys; skill against withheld observations</text>
-<rect x="752" y="194" width="68" height="22" rx="4" fill="#c2410c"/>
-<text x="786" y="210" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Rerun</text>
-<text x="830" y="208" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the agent's own code on changed data: the results must follow</text>
-<text x="830" y="225" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the data, and must not use what a valid method may not use,</text>
-<text x="830" y="242" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">such as a held-out year or a forecast from the future</text>
-<rect x="752" y="270" width="68" height="22" rx="4" fill="#c2410c"/>
-<text x="786" y="286" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Judge</text>
-<text x="830" y="284" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Claude Opus 5.5, one narrow question at a time, on exact</text>
-<text x="830" y="301" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">quotations only: does the report say what the code and the</text>
-<text x="830" y="318" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">numbers say, and state its uncertainty in plain language?</text>
-<text x="752" y="360" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">No human per run. A scientist certifies each task's reference and pitfalls once.</text>
-<rect x="1210" y="70" width="200" height="300" rx="10" fill="#f3f4f6" stroke="#1f2937" stroke-width="2"/>
-<rect x="1210" y="70" width="200" height="36" rx="10" fill="#1f2937"/><rect x="1210" y="94" width="200" height="12" fill="#1f2937"/><text x="1310.0" y="94" font-size="17" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The result</text>
-<rect x="1230" y="129" width="60" height="20" rx="10" fill="#15803d"/><text x="1260.0" y="143" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
-<text x="1300" y="146" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">right, every check</text>
-<rect x="1230" y="161" width="60" height="20" rx="10" fill="#b91c1c"/><text x="1260.0" y="175" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">fail</text>
-<text x="1300" y="170" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">at fault; the pitfall</text>
-<text x="1300" y="186" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">or defect named</text>
-<rect x="1230" y="201" width="90" height="20" rx="10" fill="#6b7280"/><text x="1275.0" y="215" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">unresolved</text>
-<text x="1328" y="218" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">outside cause</text>
-<text x="1230" y="260" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+ skill score</text>
-<text x="1230" y="278" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+ cost, tokens, time</text>
-<text x="1230" y="296" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+ which tooling was used</text>
-<text x="1230" y="314" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+ every quote and trace</text>
-<text x="1230" y="350" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Same checks for every system.</text>
-<path d="M 260 220 L 300 220" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-<path d="M 700 220 L 740 220" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-<path d="M 1170 220 L 1210 220" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-<text x="30" y="420" font-size="18" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">How it scales</text>
-<text x="30" y="450" font-size="13" fill="#2563eb" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Tasks × instances</text>
-<rect x="30" y="462" width="26" height="20" rx="3" fill="#dbeafe"/>
-<rect x="60" y="462" width="26" height="20" rx="3" fill="#d3e3fc"/>
-<rect x="90" y="462" width="26" height="20" rx="3" fill="#cadcfb"/>
-<rect x="120" y="462" width="26" height="20" rx="3" fill="#c2d6f9"/>
-<rect x="150" y="462" width="26" height="20" rx="3" fill="#bacff7"/>
-<rect x="180" y="462" width="26" height="20" rx="3" fill="#b2c8f6"/>
-<rect x="30" y="486" width="26" height="20" rx="3" fill="#a9c1f4"/>
-<rect x="60" y="486" width="26" height="20" rx="3" fill="#a1bbf2"/>
-<rect x="90" y="486" width="26" height="20" rx="3" fill="#99b4f1"/>
-<rect x="120" y="486" width="26" height="20" rx="3" fill="#91adef"/>
-<rect x="150" y="486" width="26" height="20" rx="3" fill="#88a6ed"/>
-<rect x="180" y="486" width="26" height="20" rx="3" fill="#809fec"/>
-<rect x="30" y="510" width="26" height="20" rx="3" fill="#7899ea"/>
-<rect x="60" y="510" width="26" height="20" rx="3" fill="#7092e9"/>
-<rect x="90" y="510" width="26" height="20" rx="3" fill="#678be7"/>
-<rect x="120" y="510" width="26" height="20" rx="3" fill="#5f84e5"/>
-<rect x="150" y="510" width="26" height="20" rx="3" fill="#577de4"/>
-<rect x="180" y="510" width="26" height="20" rx="3" fill="#4f77e2"/>
-<rect x="30" y="534" width="26" height="20" rx="3" fill="#4670e0"/>
-<rect x="60" y="534" width="26" height="20" rx="3" fill="#3e69df"/>
-<rect x="90" y="534" width="26" height="20" rx="3" fill="#3662dd"/>
-<rect x="120" y="534" width="26" height="20" rx="3" fill="#2e5cdb"/>
-<rect x="150" y="534" width="26" height="20" rx="3" fill="#2555da"/>
-<rect x="180" y="534" width="26" height="20" rx="3" fill="#1d4ed8"/>
-<text x="30" y="576" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">25 templates ↓  ×  regions and windows →</text>
-<text x="320" y="450" font-size="13" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Systems × tooling</text>
-<text x="430" y="468" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">none</text>
-<text x="488" y="468" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">skills</text>
-<text x="546" y="468" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">libraries</text>
-<text x="604" y="468" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">sheet</text>
-<text x="320" y="488" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">cheap model</text>
-<rect x="402" y="474" width="54" height="20" rx="3" fill="#dcfce7"/>
-<rect x="460" y="474" width="54" height="20" rx="3" fill="#51a570"/>
-<rect x="518" y="474" width="54" height="20" rx="3" fill="#a0d7b4"/>
-<rect x="576" y="474" width="54" height="20" rx="3" fill="#15803d"/>
-<text x="320" y="512" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">frontier model</text>
-<rect x="402" y="498" width="54" height="20" rx="3" fill="#65b281"/>
-<rect x="460" y="498" width="54" height="20" rx="3" fill="#b4e3c5"/>
-<rect x="518" y="498" width="54" height="20" rx="3" fill="#298c4e"/>
-<rect x="576" y="498" width="54" height="20" rx="3" fill="#78be92"/>
-<text x="320" y="536" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">harness A</text>
-<rect x="402" y="522" width="54" height="20" rx="3" fill="#c8f0d6"/>
-<rect x="460" y="522" width="54" height="20" rx="3" fill="#3d995f"/>
-<rect x="518" y="522" width="54" height="20" rx="3" fill="#8ccaa3"/>
-<rect x="576" y="522" width="54" height="20" rx="3" fill="#dcfce7"/>
-<text x="320" y="560" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">harness B</text>
-<rect x="402" y="546" width="54" height="20" rx="3" fill="#51a570"/>
-<rect x="460" y="546" width="54" height="20" rx="3" fill="#a0d7b4"/>
-<rect x="518" y="546" width="54" height="20" rx="3" fill="#15803d"/>
-<rect x="576" y="546" width="54" height="20" rx="3" fill="#65b281"/>
-<text x="320" y="576" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Each cell: pass rate, cost, time. Change one thing at a time.</text>
-<text x="680" y="450" font-size="13" fill="#c2410c" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Episodes</text>
-<rect x="680" y="462" width="96" height="44" rx="6" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
-<text x="728" y="480" font-size="12" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Ethiopia</text>
-<text x="728" y="497" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">episode 1</text>
-<path d="M 776 484 L 800 484" stroke="#c2410c" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-<rect x="800" y="462" width="96" height="44" rx="6" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
-<text x="848" y="480" font-size="12" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Kenya</text>
-<text x="848" y="497" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">episode 2</text>
-<path d="M 896 484 L 920 484" stroke="#c2410c" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-<rect x="920" y="462" width="96" height="44" rx="6" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
-<text x="968" y="480" font-size="12" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Nigeria</text>
-<text x="968" y="497" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">episode 3</text>
-<text x="680" y="530" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The agent keeps its earlier work.</text>
-<text x="680" y="548" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Compare with a fresh run: does work</text>
-<text x="680" y="566" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">accumulate, and what does it save?</text>
-<text x="1060" y="450" font-size="13" fill="#1f2937" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Leaderboard</text>
-<text x="1060" y="478" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">system C</text>
-<rect x="1140" y="466" width="180" height="16" rx="3" fill="#1f2937"/>
-<text x="1060" y="500" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">system A</text>
-<rect x="1140" y="488" width="140" height="16" rx="3" fill="#1f2937"/>
-<text x="1060" y="522" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">system B</text>
-<rect x="1140" y="510" width="110" height="16" rx="3" fill="#1f2937"/>
-<text x="1060" y="544" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">climatology</text>
-<rect x="1140" y="532" width="80" height="16" rx="3" fill="#6b7280"/>
-<text x="1060" y="576" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Forecast tasks also take an optimised</text>
-<text x="1060" y="594" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">submission, scored on withheld observations.</text>
-<text x="30" y="656" font-size="12" fill="#444" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Under what conditions can a forecaster's task be handed to an agent system and come back right? Per task, per system and per tooling, with the same checks each time.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/></marker><marker id="oarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#c2410c"/></marker></defs>
+<rect width="1440" height="720" fill="#fff"/>
+<text x="720.0" y="32" font-size="21" fill="#111" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">A task and its tooling go into a sandbox with an agent; the controller inspects what comes out</text>
+<rect x="30" y="62" width="250" height="160" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<rect x="30" y="62" width="250" height="34" rx="10" fill="#2563eb"/><rect x="30" y="84" width="250" height="12" fill="#2563eb"/><text x="155.0" y="85" font-size="16" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The task</text>
+<text x="42" y="116" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">A forecaster's job, stated as a product.</text>
+<text x="42" y="130" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The method is not stated.</text>
+<text x="42" y="154" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">brief</text><rect x="83.0" y="142" width="180" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="90.0" y="154" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">seasonal outlook, Kenya</text>
+<text x="42" y="178" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">data</text><rect x="76.4" y="166" width="172" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="83.4" y="178" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">ECMWF members + CHIRPS</text>
+<text x="42" y="202" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">budget</text><rect x="89.6" y="190" width="122" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="96.6" y="202" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">20 min, offline</text>
+<rect x="30" y="238" width="250" height="164" rx="10" fill="#f5f3ff" stroke="#6d28d9" stroke-width="2"/>
+<rect x="30" y="238" width="250" height="34" rx="10" fill="#6d28d9"/><rect x="30" y="260" width="250" height="12" fill="#6d28d9"/><text x="155.0" y="261" font-size="16" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The tooling: in or out</text>
+<text x="42" y="292" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">skills</text><rect x="89.6" y="280" width="158" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="96.6" y="292" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">Rhiza weather-skills</text>
+<text x="42" y="316" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">libraries</text><rect x="109.4" y="304" width="144" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="116.4" y="316" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">AfricaS2S, acmadDL</text>
+<text x="42" y="340" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">sheet</text><rect x="83.0" y="328" width="115" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="90.0" y="340" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">conventions.md</text>
+<text x="42" y="364" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">earlier work</text><rect x="129.2" y="352" width="144" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="136.2" y="364" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">episode 1 solution</text>
+<text x="42" y="392" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Each can be present or absent in a run.</text>
+<rect x="320" y="62" width="290" height="340" rx="10" fill="#f0fdf4" stroke="#15803d" stroke-width="2" stroke-dasharray="8 5"/>
+<rect x="320" y="62" width="290" height="34" rx="10" fill="#15803d"/><rect x="320" y="84" width="290" height="12" fill="#15803d"/><text x="465.0" y="85" font-size="16" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The sandbox</text>
+<text x="332" y="118" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">No network. The task and the tooling are mounted.</text>
+<rect x="334" y="132" width="262" height="120" rx="10" fill="#fff" stroke="#15803d" stroke-width="2"/>
+<text x="465.0" y="154" font-size="14" fill="#15803d" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The agent</text>
+<text x="346" y="180" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">model</text><rect x="387.0" y="168" width="86" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="394.0" y="180" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">gpt-6-luna</text>
+<text x="346" y="204" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">harness</text><rect x="400.2" y="192" width="108" height="17" rx="8" fill="#f3f4f6" stroke="#9ca3af" stroke-width="0.8"/><text x="407.2" y="204" font-size="10.5" fill="#374151" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">Codex adapter</text>
+<text x="346" y="232" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reads, writes code, runs it, writes up</text>
+<path d="M 465.0 252 L 465.0 278" stroke="#15803d" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="465.0" y="298" font-size="12" fill="#15803d" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">produces, by any method</text>
+<text x="332" y="324" font-size="13" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a solution and a trace</text>
+<text x="332" y="344" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The solution is a fixed envelope: arrays,</text>
+<text x="332" y="362" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">numbers, code and a report. The trace is</text>
+<text x="332" y="380" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">every command and tool call, kept by the controller.</text>
+<rect x="640" y="62" width="200" height="340" rx="10" fill="#fafafa" stroke="#1f2937" stroke-width="1.5"/>
+<rect x="640" y="62" width="200" height="34" rx="10" fill="#1f2937"/><rect x="640" y="84" width="200" height="12" fill="#1f2937"/><text x="740.0" y="85" font-size="16" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">What comes out</text>
+<rect x="650" y="116" width="180" height="44" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1"/>
+<text x="658" y="134" font-size="12" fill="#111" font-weight="bold" text-anchor="start" font-family="Menlo, Consolas, monospace">results.zarr</text>
+<text x="658" y="150" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">labelled arrays</text>
+<rect x="650" y="172" width="180" height="44" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1"/>
+<text x="658" y="190" font-size="12" fill="#111" font-weight="bold" text-anchor="start" font-family="Menlo, Consolas, monospace">answer.json</text>
+<text x="658" y="206" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">numbers, claims, run command</text>
+<rect x="650" y="228" width="180" height="44" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1"/>
+<text x="658" y="246" font-size="12" fill="#111" font-weight="bold" text-anchor="start" font-family="Menlo, Consolas, monospace">code</text>
+<text x="658" y="262" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">regenerates the results</text>
+<rect x="650" y="284" width="180" height="44" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1"/>
+<text x="658" y="302" font-size="12" fill="#111" font-weight="bold" text-anchor="start" font-family="Menlo, Consolas, monospace">report.md</text>
+<text x="658" y="318" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">what, why, limits</text>
+<rect x="650" y="340" width="180" height="44" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1"/>
+<text x="658" y="358" font-size="12" fill="#111" font-weight="bold" text-anchor="start" font-family="Menlo, Consolas, monospace">trace</text>
+<text x="658" y="374" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">commands, tool calls, cost, time</text>
+<rect x="792.0" y="122.0" width="11.3" height="11.3" fill="#abb9d9" stroke="#fff"/>
+<rect x="803.3" y="122.0" width="11.3" height="11.3" fill="#cfdaed" stroke="#fff"/>
+<rect x="814.7" y="122.0" width="11.3" height="11.3" fill="#677cb3" stroke="#fff"/>
+<rect x="792.0" y="133.3" width="11.3" height="11.3" fill="#e0e8f7" stroke="#fff"/>
+<rect x="803.3" y="133.3" width="11.3" height="11.3" fill="#7f91c0" stroke="#fff"/>
+<rect x="814.7" y="133.3" width="11.3" height="11.3" fill="#a3b1d4" stroke="#fff"/>
+<rect x="792.0" y="144.7" width="11.3" height="11.3" fill="#e3ebf8" stroke="#fff"/>
+<rect x="803.3" y="144.7" width="11.3" height="11.3" fill="#8597c4" stroke="#fff"/>
+<rect x="814.7" y="144.7" width="11.3" height="11.3" fill="#e7effb" stroke="#fff"/>
+<rect x="870" y="62" width="340" height="340" rx="10" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+<rect x="870" y="62" width="340" height="34" rx="10" fill="#c2410c"/><rect x="870" y="84" width="340" height="12" fill="#c2410c"/><text x="1040.0" y="85" font-size="16" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The controller inspects it</text>
+<rect x="882" y="111" width="64" height="20" rx="10" fill="#c2410c"/><text x="914.0" y="125" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Compute</text>
+<text x="956" y="122" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a private reference under every defensible</text>
+<text x="956" y="137" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reading of the brief; a known wrong reading</text>
+<text x="956" y="152" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">is named as a pitfall; skill against withheld</text>
+<text x="956" y="167" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">observations</text>
+<path d="M 870 120 C 856 120, 856 138, 840 138" stroke="#c2410c" stroke-width="1.4" fill="none" marker-end="url(#oarrow)"/>
+<path d="M 870 120 C 856 120, 856 194, 840 194" stroke="#c2410c" stroke-width="1.4" fill="none" marker-end="url(#oarrow)"/>
+<rect x="882" y="195" width="64" height="20" rx="10" fill="#c2410c"/><text x="914.0" y="209" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Rerun</text>
+<text x="956" y="206" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the agent's own code on changed data: the</text>
+<text x="956" y="221" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">results must follow the data and must not use</text>
+<text x="956" y="236" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a held-out year or a forecast from the future</text>
+<path d="M 870 204 C 856 204, 856 250, 840 250" stroke="#c2410c" stroke-width="1.4" fill="none" marker-end="url(#oarrow)"/>
+<rect x="882" y="264" width="64" height="20" rx="10" fill="#c2410c"/><text x="914.0" y="278" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Judge</text>
+<text x="956" y="275" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Claude Opus 5.5, one narrow question at a time,</text>
+<text x="956" y="290" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">on exact quotations: does the report say what</text>
+<text x="956" y="305" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the code and numbers say, in plain language?</text>
+<path d="M 870 273 C 856 273, 856 306, 840 306" stroke="#c2410c" stroke-width="1.4" fill="none" marker-end="url(#oarrow)"/>
+<path d="M 870 273 C 856 273, 856 194, 840 194" stroke="#c2410c" stroke-width="1.4" fill="none" marker-end="url(#oarrow)"/>
+<rect x="882" y="333" width="64" height="20" rx="10" fill="#c2410c"/><text x="914.0" y="347" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Record</text>
+<text x="956" y="344" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">which tooling was used, cost, tokens, time</text>
+<path d="M 870 342 C 856 342, 856 362, 840 362" stroke="#c2410c" stroke-width="1.4" fill="none" marker-end="url(#oarrow)"/>
+<text x="882" y="374" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">No human per run. A scientist certifies each task's</text>
+<text x="882" y="388" font-size="10.5" fill="#6b7280" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reference and pitfalls once.</text>
+<rect x="1240" y="62" width="175" height="340" rx="10" fill="#f3f4f6" stroke="#1f2937" stroke-width="2"/>
+<rect x="1240" y="62" width="175" height="34" rx="10" fill="#1f2937"/><rect x="1240" y="84" width="175" height="12" fill="#1f2937"/><text x="1327.5" y="85" font-size="16" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">The result</text>
+<rect x="1254" y="119" width="56" height="20" rx="10" fill="#15803d"/><text x="1282.0" y="133" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
+<text x="1318" y="136" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">right, every check</text>
+<rect x="1254" y="151" width="56" height="20" rx="10" fill="#b91c1c"/><text x="1282.0" y="165" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">fail</text>
+<text x="1318" y="160" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">at fault; the</text>
+<text x="1318" y="176" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">pitfall named</text>
+<rect x="1254" y="191" width="86" height="20" rx="10" fill="#6b7280"/><text x="1297.0" y="205" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">unresolved</text>
+<text x="1254" y="228" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">an outside cause; never a fail</text>
+<text x="1254" y="262" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+ skill score</text>
+<text x="1254" y="280" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+ cost, tokens, time</text>
+<text x="1254" y="298" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+ tooling used</text>
+<text x="1254" y="316" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+ every quote and rerun</text>
+<text x="1254" y="352" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Same checks for every</text>
+<text x="1254" y="368" font-size="11.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">system and tooling.</text>
+<path d="M 280 162 L 320 162" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<path d="M 280 320 L 320 320" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<path d="M 610 232 L 640 232" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<path d="M 1210 232 L 1240 232" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
+<text x="30" y="450" font-size="18" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">How it scales</text>
+<text x="30" y="480" font-size="13" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Tasks × instances</text>
+<rect x="30" y="492" width="26" height="20" rx="3" fill="#e5e7eb"/>
+<rect x="60" y="492" width="26" height="20" rx="3" fill="#dde0e4"/>
+<rect x="90" y="492" width="26" height="20" rx="3" fill="#d6d9de"/>
+<rect x="120" y="492" width="26" height="20" rx="3" fill="#ced1d7"/>
+<rect x="150" y="492" width="26" height="20" rx="3" fill="#c7cad0"/>
+<rect x="180" y="492" width="26" height="20" rx="3" fill="#bfc3ca"/>
+<rect x="30" y="516" width="26" height="20" rx="3" fill="#b8bcc3"/>
+<rect x="60" y="516" width="26" height="20" rx="3" fill="#b0b4bc"/>
+<rect x="90" y="516" width="26" height="20" rx="3" fill="#a8adb5"/>
+<rect x="120" y="516" width="26" height="20" rx="3" fill="#a1a6af"/>
+<rect x="150" y="516" width="26" height="20" rx="3" fill="#999fa8"/>
+<rect x="180" y="516" width="26" height="20" rx="3" fill="#9298a1"/>
+<rect x="30" y="540" width="26" height="20" rx="3" fill="#8a909b"/>
+<rect x="60" y="540" width="26" height="20" rx="3" fill="#838994"/>
+<rect x="90" y="540" width="26" height="20" rx="3" fill="#7b828d"/>
+<rect x="120" y="540" width="26" height="20" rx="3" fill="#747b87"/>
+<rect x="150" y="540" width="26" height="20" rx="3" fill="#6c7480"/>
+<rect x="180" y="540" width="26" height="20" rx="3" fill="#646c79"/>
+<rect x="30" y="564" width="26" height="20" rx="3" fill="#5d6572"/>
+<rect x="60" y="564" width="26" height="20" rx="3" fill="#555e6c"/>
+<rect x="90" y="564" width="26" height="20" rx="3" fill="#4e5765"/>
+<rect x="120" y="564" width="26" height="20" rx="3" fill="#464f5e"/>
+<rect x="150" y="564" width="26" height="20" rx="3" fill="#3f4858"/>
+<rect x="180" y="564" width="26" height="20" rx="3" fill="#374151"/>
+<text x="30" y="606" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">25 templates ↓  ×  regions and windows →</text>
+<text x="320" y="480" font-size="13" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Systems × tooling</text>
+<text x="430" y="498" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">none</text>
+<text x="488" y="498" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">skills</text>
+<text x="546" y="498" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">libraries</text>
+<text x="604" y="498" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">sheet</text>
+<text x="320" y="518" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">cheap model</text>
+<rect x="402" y="504" width="54" height="20" rx="3" fill="#e5e7eb"/>
+<rect x="460" y="504" width="54" height="20" rx="3" fill="#6b737f"/>
+<rect x="518" y="504" width="54" height="20" rx="3" fill="#b1b5bd"/>
+<rect x="576" y="504" width="54" height="20" rx="3" fill="#374151"/>
+<text x="320" y="542" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">frontier model</text>
+<rect x="402" y="528" width="54" height="20" rx="3" fill="#7d838f"/>
+<rect x="460" y="528" width="54" height="20" rx="3" fill="#c2c6cc"/>
+<rect x="518" y="528" width="54" height="20" rx="3" fill="#485260"/>
+<rect x="576" y="528" width="54" height="20" rx="3" fill="#8e949e"/>
+<text x="320" y="566" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">harness A</text>
+<rect x="402" y="552" width="54" height="20" rx="3" fill="#d4d6dc"/>
+<rect x="460" y="552" width="54" height="20" rx="3" fill="#5a6270"/>
+<rect x="518" y="552" width="54" height="20" rx="3" fill="#9fa5ad"/>
+<rect x="576" y="552" width="54" height="20" rx="3" fill="#e5e7eb"/>
+<text x="320" y="590" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">harness B</text>
+<rect x="402" y="576" width="54" height="20" rx="3" fill="#6b737f"/>
+<rect x="460" y="576" width="54" height="20" rx="3" fill="#b1b5bd"/>
+<rect x="518" y="576" width="54" height="20" rx="3" fill="#374151"/>
+<rect x="576" y="576" width="54" height="20" rx="3" fill="#7d838f"/>
+<text x="320" y="606" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Each cell: pass rate, cost, time. Change one thing at a time.</text>
+<text x="680" y="480" font-size="13" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Episodes</text>
+<rect x="680" y="492" width="96" height="44" rx="6" fill="#f9fafb" stroke="#374151" stroke-width="1.5"/>
+<text x="728" y="510" font-size="12" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Ethiopia</text>
+<text x="728" y="527" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">episode 1</text>
+<path d="M 776 514 L 800 514" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="800" y="492" width="96" height="44" rx="6" fill="#f9fafb" stroke="#374151" stroke-width="1.5"/>
+<text x="848" y="510" font-size="12" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Kenya</text>
+<text x="848" y="527" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">episode 2</text>
+<path d="M 896 514 L 920 514" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="920" y="492" width="96" height="44" rx="6" fill="#f9fafb" stroke="#374151" stroke-width="1.5"/>
+<text x="968" y="510" font-size="12" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">Nigeria</text>
+<text x="968" y="527" font-size="10" fill="#6b7280" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">episode 3</text>
+<text x="680" y="560" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The agent keeps its earlier work.</text>
+<text x="680" y="578" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Compare with a fresh run: does work</text>
+<text x="680" y="596" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">accumulate, and what does it save?</text>
+<text x="1060" y="480" font-size="13" fill="#111" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Leaderboard</text>
+<text x="1060" y="508" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">system C</text>
+<rect x="1140" y="496" width="180" height="16" rx="3" fill="#374151"/>
+<text x="1060" y="530" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">system A</text>
+<rect x="1140" y="518" width="140" height="16" rx="3" fill="#374151"/>
+<text x="1060" y="552" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">system B</text>
+<rect x="1140" y="540" width="110" height="16" rx="3" fill="#374151"/>
+<text x="1060" y="574" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">climatology</text>
+<rect x="1140" y="562" width="80" height="16" rx="3" fill="#9ca3af"/>
+<text x="1060" y="606" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Forecast tasks also take an optimised</text>
+<text x="1060" y="624" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">submission, scored on withheld observations.</text>
+<text x="30" y="686" font-size="12" fill="#444" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Under what conditions can a forecaster's task be handed to an agent system and come back right? Per task, per system and per tooling, with the same checks each time.</text>
 </svg>
