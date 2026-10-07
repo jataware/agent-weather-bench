@@ -1,8 +1,8 @@
 """The five certification tests for a template's spec (docs/assessment-format.md).
 
 1. Two independent reference implementations agree.
-2. A known-correct solution passes every check.
-3. Deliberately incorrect solutions are caught by the right check.
+2. A known-correct submission passes every check.
+3. Deliberately incorrect submissions are caught by the right check.
 4. The separability of every accepted-pitfall pair is measured and recorded.
 5. Model attempts are run and every unknown answer is ruled on.
 

@@ -36,7 +36,7 @@ def main():
         command.add_argument("--no-judge", action="store_true", help="Leave the judge questions unresolved")
     sub.add_parser("attempts").add_argument("template")
     for command in (certify, assess):
-        command.add_argument("--local-trusted", action="store_true", help="Run without Docker. Only for the controller's own control solutions.")
+        command.add_argument("--local-trusted", action="store_true", help="Run without Docker. Only for the controller's own control submissions.")
         command.add_argument("--image")
     args = parser.parse_args()
     try:

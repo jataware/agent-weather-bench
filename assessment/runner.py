@@ -1,7 +1,7 @@
 """Launch one system on one instance of a template, then assess its submission.
 
 Reuses the existing harness pieces unchanged: system definitions, the Docker tool
-sandbox, the adapter protocol and the substrate-use monitor. The controller, not
+sandbox, the adapter protocol and the tooling-use record (substrate_use.py). The controller, not
 the agent, keeps the provenance record.
 """
 import json

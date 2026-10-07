@@ -1,4 +1,4 @@
-"""Cases with known answers for the judge, as the control solutions are for the computed checks.
+"""Cases with known answers for the judge, as the control submissions are for the computed checks.
 
 Each case is a small submission with one planted defect, or none, and one
 question. The pinned judge must return the expected verdict with quotations that

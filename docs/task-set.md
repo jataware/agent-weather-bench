@@ -215,7 +215,7 @@ observed rainfall.
   (templates 5, 7, 8, 9, 18), plus the diagnostic pack.
 - **By level:** 13 have an optimize level now or by design, 2 can gain one
   later (templates 8 and 10), and 10 are produce-only.
-- **By readiness:** 10 were packaged for the first evaluator (now archived), 6 have briefs and
+- **By readiness:** 10 were built for the first evaluator (now archived), 6 have briefs and
   answer keys in the old repository, and 9 must be built. Three templates are
   converted to the new assessment format: template 4 in product mode, template 15 in
   outcome mode with both levels, and template 11 in process mode.
