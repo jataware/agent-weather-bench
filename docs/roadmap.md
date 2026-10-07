@@ -42,8 +42,17 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 
 - A template is a task with parameters. The region and the time window are parameters, so one template makes many instances.
 - Repeats are independent, and private instances cannot be memorised.
-- The set has 25 templates: 16 come from two earlier repositories and 9 are new. [The task set](task-set.md) lists them.
 - A second instance is a second episode. The agent gets its earlier submission and decides what to reuse. This is how we measure whether work accumulates.
+
+## The set has 25 templates in six families
+
+- **Outlook products, 6 templates.** Read raw provider forecasts and deliver a rainfall outlook, a heat outlook, the revision between two issues, a forecast of an extreme-event probability at weeks 2–3, and two checks of climate-driver forecasts: the Indian Ocean Dipole and the Madden–Julian Oscillation.
+- **Observed indices and verification, 5 templates.** Compute an observed ocean index, verify forecasts against station observations, verify probabilistic forecasts with the standard scores, debug a scorecard with injected faults, and audit a paper against its code.
+- **Seasonal forecast production, 6 templates.** Calibrate a seasonal rainfall forecast to the WMO guidance, run the short-rains workflow, reproduce a canonical-correlation forecast, calibrate a monthly cycle, combine probability forecasts, and combine several models with their hindcasts. All follow a standard.
+- **Subseasonal forecast production, 4 templates.** Forecast weeks 3–4 rainfall, issue probabilistic weeks 3–4 and 5–6 outlooks, forecast rainy-season onset and dry spells, and forecast week by week as observations arrive.
+- **Research claims and consensus, 2 templates.** Test a published predictor claim on held-out years, and beat the regional consensus forecast on backcast skill. These two and the week-by-week forecast are the ones a frontier agent should not simply pass.
+- **Downscaling and the diagnostic pack, 2 templates.** Downscale rainfall to a fine grid with conservation, and a pack of ten one-step data operations that counts as one entry.
+- Nine templates use process mode, fourteen use product mode and two use outcome mode. Thirteen have a Level 2. [The task set](task-set.md) gives each template its parameters, its mode, its levels and its evidence so far.
 
 ## The assessment is exact where it can be, and narrow where it must judge
 
