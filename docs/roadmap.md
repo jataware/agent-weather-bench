@@ -26,17 +26,13 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 - The controller then checks the delivery. The controller is the trusted program that runs the agent, holds the private reference answers and runs the checks.
 - Each task has a reference answer or a set of withheld observations, so the checks are exact. Each task also has known wrong methods, called pitfalls, so a wrong answer gets a name.
 
-## Tasks come in three modes
+## A task is checked in one of three ways, and the way follows from the task
 
-- **Outcome mode.** The agent makes a forecast. The controller scores it against withheld observations. Any method is acceptable. The only gate is validity: correct cases, correct units, no information from the future.
-- **Product mode.** The agent must deliver a named quantity. The controller accepts any defensible reading of the brief and names a known pitfall when it finds one.
-- **Process mode.** The agent must deliver the product and follow a published standard, step by step. The first standard is the WMO guidance on objective seasonal forecasting.
-
-## Tasks have two levels
-
-- **Level 1** asks for a valid output. The result is pass, fail or unresolved.
-- **Level 2** asks the agent to make the output as good as it can. The result is a skill score on a leaderboard. Level 2 is a separate submission with its own validity gate.
-- A Level 2 run can start from the Level 1 submission.
+- **Product check.** The agent must deliver a named quantity. The controller compares it with a reference answer under every defensible reading of the brief, and names a known pitfall when it finds one. Used for outlooks, indices, verifications and audits.
+- **Process check.** The agent must deliver the product and follow a published standard, step by step. The first standard is the WMO guidance on objective seasonal forecasting. Used for forecast production.
+- **Outcome check.** The agent makes a forecast, and the controller scores it against withheld observations. Any method is acceptable. The only gate is validity: the right cases, the right units, no information from the future. Used where skill is the point.
+- Every template has one of these as its Level 1, and the result is pass, fail or unresolved.
+- **A leaderboard run is the same template under the outcome check.** We call it Level 2. The agent makes the forecast as good as it can, inside a fixed budget and a fixed number of score requests, and the result is a skill score. It is a separate submission that may start from the Level 1 one. Thirteen templates have a Level 2, because thirteen make a forecast that observations can score.
 
 ## Tasks are templates
 
@@ -46,18 +42,20 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 
 ## The set has 25 templates in six families
 
-- **Outlook products, 6 templates.** Read raw provider forecasts and deliver a rainfall outlook, a heat outlook, the revision between two issues, a forecast of an extreme-event probability at weeks 2–3, and two checks of climate-driver forecasts: the Indian Ocean Dipole and the Madden–Julian Oscillation.
-- **Observed indices and verification, 5 templates.** Compute an observed ocean index, verify forecasts against station observations, verify probabilistic forecasts with the standard scores, debug a scorecard with injected faults, and audit a paper against its code.
-- **Seasonal forecast production, 6 templates.** Calibrate a seasonal rainfall forecast to the WMO guidance, run the short-rains workflow, reproduce a canonical-correlation forecast, calibrate a monthly cycle, combine probability forecasts, and combine several models with their hindcasts. All follow a standard.
-- **Subseasonal forecast production, 4 templates.** Forecast weeks 3–4 rainfall, issue probabilistic weeks 3–4 and 5–6 outlooks, forecast rainy-season onset and dry spells, and forecast week by week as observations arrive.
-- **Research claims and consensus, 2 templates.** Test a published predictor claim on held-out years, and beat the regional consensus forecast on backcast skill. These two and the week-by-week forecast are the ones a frontier agent should not simply pass.
-- **Downscaling and the diagnostic pack, 2 templates.** Downscale rainfall to a fine grid with conservation, and a pack of ten one-step data operations that counts as one entry.
-- Twelve templates use product mode, eleven use process mode and two use outcome mode. Thirteen have a Level 2. [The task set](task-set.md) gives each template its parameters, its mode, its levels and its evidence so far.
+The family says what the work is. The check follows from it.
 
-## The assessment is exact where it can be, and narrow where it must judge
+- **Outlook products, 6, product check.** Read raw provider forecasts and deliver a rainfall outlook, a heat outlook, the revision between two issues, a forecast of an extreme-event probability at weeks 2–3, and two checks of climate-driver forecasts: the Indian Ocean Dipole and the Madden–Julian Oscillation.
+- **Observed indices and verification, 5, product check.** Compute an observed ocean index, verify forecasts against station observations, verify probabilistic forecasts with the standard scores, debug a scorecard with injected faults, and audit a paper against its code.
+- **Seasonal forecast production, 6, process check.** Calibrate a seasonal rainfall forecast to the WMO guidance, run the short-rains workflow, reproduce a canonical-correlation forecast, calibrate a monthly cycle, combine probability forecasts, and combine several models with their hindcasts.
+- **Subseasonal forecast production, 4, process or outcome check.** Forecast weeks 3–4 rainfall, issue probabilistic weeks 3–4 and 5–6 outlooks, forecast rainy-season onset and dry spells, and forecast week by week as observations arrive.
+- **Research claims and consensus, 2, process check.** Test a published predictor claim on held-out years, and beat the regional consensus forecast on backcast skill. These two and the week-by-week forecast are the ones a frontier agent should not simply pass.
+- **Downscaling and the diagnostic pack, 2, product check.** Downscale rainfall to a fine grid with conservation, and a pack of ten one-step data operations that counts as one entry.
+- [The task set](task-set.md) gives each template its parameters, its check, its leaderboard and its evidence so far.
+
+## The controller checks a delivery in seven ways
 
 - **The delivery is small and fixed.** Arrays go in a labelled Zarr store. Single numbers, choices, claims and method notes go in `answer.json`. One command makes the results again from the data. A short report explains them.
-- **Seven check types cover the work.** Variant matching (which readings of the brief fit the numbers), invariants (rules every valid answer obeys), probes (reruns of the agent's code on changed data), claim checks, process conformance, skill scoring, and interpretation.
+- **Seven kinds of check cover the work.** Variant matching (which readings of the brief fit the numbers), invariants (rules every valid answer obeys), probes (reruns of the agent's code on changed data), claim checks, process conformance, skill scoring, and interpretation.
 - **Every check gives pass, fail or unresolved.** Fail means the submission is at fault. Unresolved names a cause outside the submission. The two are never mixed.
 - **A judge decides the questions that no computation can settle.** The judge is Claude Opus 5.5. It answers one narrow question at a time and must quote the exact text it relies on. It has twelve control cases with known answers.
 - **Each task spec is certified by five tests** before it counts: two independent reference implementations agree; a correct solution passes; wrong solutions fail on the right check; the separability of each pitfall is measured; cheap-model attempts leave no answer unclassified.
@@ -65,7 +63,7 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 
 ## This is built today
 
-- Three templates run end to end, one per mode: the Kenya forecast revision (product), weeks 3–4 rainfall with both levels (outcome), and seasonal rainfall calibration to the WMO guidance (process).
+- Three templates run end to end, one per check: the Kenya forecast revision (product), weeks 3–4 rainfall with its leaderboard (outcome), and seasonal rainfall calibration to the WMO guidance (process).
 - All three pass the four automatic certification tests in the offline Docker runtime, and the fifth test on 36 attempts by one cheap model.
 - The judge has run on all 36 attempts and on its control cases.
 - Second episodes, the conventions-sheet condition and the Level 2 feedback tool work in the runner.
@@ -77,7 +75,7 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 1. **The other 22 templates.** Convert the 13 remaining existing tasks and build the 9 new ones. Do the subseasonal and seasonal rows first. Each template needs a reference function, a second implementation, controls and certification.
 2. **The standards.** Get the WMO documents as primary sources. Replace each practice number with its clause. Add a regional-centre procedure. Get each checklist signed off.
 3. **The systems.** An `rx` harness configuration. Claude and frontier Codex solvers, once a spending limit is agreed. Open-weight models. The three substrate images rebuilt on the current runtime. A "method supplied" condition.
-4. **The missing parts of the format.** Level 2 for process rows. A separate "optimization within the standard" track. Parquet delivery for tables. Live data acquisition where a task needs it. A reporting layer that turns run records into tables and leaderboards.
+4. **The missing parts of the format.** Leaderboards for the process-checked forecast templates. A separate "optimization within the standard" track. Parquet delivery for tables. Live data acquisition where a task needs it. A reporting layer that turns run records into tables and leaderboards.
 5. **Validation of the judge.** About fifty questions from real attempts, labelled by a person. Agreement measured per question type. A second judge model for disagreement checks.
 6. **Approval and retirement.** Domain-scientist review of each template and checklist. A procedure to confirm rulings. Migration of the ten packaged tasks off the first evaluator.
 
@@ -87,12 +85,12 @@ Columns: what we change, what we keep the same, and what we measure.
 
 | Experiment | What we change | What we keep the same | What we measure |
 | --- | --- | --- | --- |
-| 1. Model ladder | Cheap to frontier models | Harness, no substrate, Level 1 | Pass rate per template, cost, tokens, time |
+| 1. Model ladder | Cheap to frontier models | Harness, no substrate, no leaderboard | Pass rate per template, cost, tokens, time |
 | 2. Harness | Built-in driver, Codex adapter, `rx` | Model | The same, plus tool calls per task |
 | 3. Substrate value | None, Rhiza skills, `acmadDL`, `AfricaS2S` | Model and harness | Pass rate and cost, and the recorded use of the substrate |
 | 4. Supplied structure | Nothing, conventions sheet, method supplied | Model, harness, substrate | Where the difficulty is: to know the conventions, or to apply them |
 | 5. Accretion | Episode sequences, retained against reset | System | Cost, tokens, time and pass rate of the second and third episode |
-| 6. Level 2 leaderboard | Any method, inside the budget and feedback limit | Private holdouts | Skill against the raw model and climatology |
+| 6. Leaderboard | Any method, inside the budget and feedback limit | Private holdouts | Skill against the raw model and climatology |
 | 7. Judge validation | Judge model | Labelled cases | Agreement with human labels per question type |
 | 8. Spec robustness | New models and templates | The checks | Unknown answers, unresolved outcomes and controller defects per template |
 
@@ -106,7 +104,7 @@ Columns: what we change, what we keep the same, and what we measure.
 - **Exposure.** The repository is public, and the branch holds the reference functions and the control solutions. Private instances protect against memorisation. The reference code does not.
 - **Data.** Scientific, scoring and redistribution approvals are false for every packaged task. Most Level 2 holdouts are public history, not untouched observations.
 - **Standards.** Which regional-centre procedures to add, and who signs the checklists off.
-- **Modes.** Five rows of the task set got a mode without discussion.
+- **Checks.** Five templates got their kind of check without discussion.
 
 ## The near-term order is this
 
