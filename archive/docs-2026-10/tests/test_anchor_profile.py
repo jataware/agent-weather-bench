@@ -6,8 +6,9 @@ from pathlib import Path
 import pytest
 import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("anchor_profile", ROOT / "scripts/anchor_profile.py")
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
+HERE = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location("anchor_profile", HERE / "scripts/anchor_profile.py")
 study = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(study)
 

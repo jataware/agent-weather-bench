@@ -4,7 +4,7 @@ import json
 
 import station_interpretation as study
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
 TASK = 'station-verification'
 
 

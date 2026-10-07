@@ -5,7 +5,8 @@ import html
 import json
 import sys
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
+HERE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import station_interpretation as study
 import station_reference_context as human_context
@@ -133,7 +134,7 @@ def main():
     result.write_text(page('Station interpretation judge check', summary))
     manifest = {'schema_version': 1, 'reference_bundle_sha256': bundle, 'reference_review_cases': selected,
                 'review_presentation_version': 2, 'review_context_sha256': study.digest(context_path),
-                'source_hashes': {str(p.relative_to(ROOT)): study.digest(p) for p in [Path(__file__), ROOT / 'scripts/station_reference_context.py', context_path, study.STUDY / 'comparison.json', study.STUDY / 'private/reference.json', study.STUDY / 'reviews/judge-luna.json', study.STUDY / 'execution-metadata.json']},
+                'source_hashes': {str(p.relative_to(ROOT)): study.digest(p) for p in [Path(__file__), HERE / 'scripts/station_reference_context.py', context_path, study.STUDY / 'comparison.json', study.STUDY / 'private/reference.json', study.STUDY / 'reviews/judge-luna.json', study.STUDY / 'execution-metadata.json']},
                 'html_hashes': {p.name: study.digest(p) for p in (review, result)}}
     study.write(ROOT / 'var/review/station-judge.sources.json', manifest)
     print(json.dumps({'result_page': str(result), 'human_review_page': str(review), 'initial_human_decisions': len(selected), 'total_available': len(packets)}))

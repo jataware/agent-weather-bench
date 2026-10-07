@@ -7,7 +7,8 @@ import sys
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
+HERE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 import anchor_profile as study  # noqa: E402
 
@@ -59,7 +60,7 @@ def evidence(run, filename, start=None, stop=None):
 def main():
     study.main()
     index = study.read(DATA / 'index.json')
-    portfolio = yaml.safe_load((ROOT / 'studies/anchor-calibration-v1/portfolio.yaml').read_text())
+    portfolio = yaml.safe_load((HERE / 'studies/anchor-calibration-v1/portfolio.yaml').read_text())
     # Retain existing operational controls without copying scientific arrays or
     # relabeling them as fresh agent attempts / unseen judge checks.
     controls = []
@@ -116,7 +117,7 @@ def main():
         },
     ]
 
-    sources = [study.PROFILE, ROOT / 'studies/anchor-calibration-v1/portfolio.yaml', Path(__file__), ROOT / 'scripts/anchor_profile.py', DATA / 'index.json', DATA / 'controls.json']
+    sources = [study.PROFILE, HERE / 'studies/anchor-calibration-v1/portfolio.yaml', Path(__file__), HERE / 'scripts/anchor_profile.py', DATA / 'index.json', DATA / 'controls.json']
     sources += [DATA / (case + '.json') for case in index['lineage']]
     sources += [ROOT / p['path'] for p in index['expert_packets']]
     sources += [ROOT / 'var/runs' / rid / 'assessment.json' for rid in [*ids, down_run]]
@@ -167,8 +168,8 @@ document.getElementById('import').onclick=()=>document.getElementById('import-fi
 document.getElementById('import-file').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;restore(JSON.parse(await file.text()));save();notice.textContent='Imported your notes.';}catch(error){notice.textContent=error.message;}finally{e.target.value='';}};
 document.getElementById('print').onclick=()=>window.print();
 </script></body></html>'''
-    links = link(study.PROFILE, 'Versioned profile') + ' · ' + link(ROOT / 'studies/anchor-calibration-v1/portfolio.yaml', 'Portfolio map') + ' · <a href="task-runs.html">Full experiment archive</a> · <a href="anchors.sources.json">Source hashes</a>'
-    page = page.replace('@@CARDS@@', body).replace('@@PROFILES@@', ''.join(profiles)).replace('@@PACKETS@@', table(['Case', 'Criterion', 'Coverage', 'Evidence'], packet_rows)).replace('@@CONTROLS@@', table(['Control', 'Scientific checks', 'Recorded probes'], controls_rows)).replace('@@PORTFOLIO@@', link(ROOT / 'studies/anchor-calibration-v1/portfolio.yaml', 'Portfolio and flagship readiness rules')).replace('@@LINKS@@', links).replace('@@BUNDLE@@', json.dumps(bundle))
+    links = link(study.PROFILE, 'Versioned profile') + ' · ' + link(HERE / 'studies/anchor-calibration-v1/portfolio.yaml', 'Portfolio map') + ' · <a href="task-runs.html">Full experiment archive</a> · <a href="anchors.sources.json">Source hashes</a>'
+    page = page.replace('@@CARDS@@', body).replace('@@PROFILES@@', ''.join(profiles)).replace('@@PACKETS@@', table(['Case', 'Criterion', 'Coverage', 'Evidence'], packet_rows)).replace('@@CONTROLS@@', table(['Control', 'Scientific checks', 'Recorded probes'], controls_rows)).replace('@@PORTFOLIO@@', link(HERE / 'studies/anchor-calibration-v1/portfolio.yaml', 'Portfolio and flagship readiness rules')).replace('@@LINKS@@', links).replace('@@BUNDLE@@', json.dumps(bundle))
     DEST.write_text(page)
     manifest = {'schema_version': 1, 'bundle_sha256': bundle, 'html_sha256': study.sha(DEST), 'sources_sha256': source_hashes, 'decisions': [c['id'] for c in cards], 'natural_parents': 5, 'expert_packets': len(index['expert_packets']), 'stored_controls': len(controls), 'new_model_calls': 0, 'new_docker_probes': 0, 'human_labels': None, 'fresh_check_parents': 0}
     DEST.with_suffix('.sources.json').write_text(json.dumps(manifest, indent=2) + '\n')

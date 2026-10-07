@@ -11,7 +11,8 @@ import numpy as np
 import xarray as xr
 from station_interpretation import digest, read, write, packets, validate, metrics
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
+HERE = Path(__file__).resolve().parents[1]
 STUDY = ROOT / "var/calibration/station-evidence-audit-v2"
 RUN = ROOT / "var/runs/20261005T181603-station-verification-codex-luna-ff16df"
 CONTRACT = ROOT / "tasks/station-verification/prompt.md"
@@ -89,7 +90,7 @@ def prepare():
   lineage[opaque]={"key":case["key"],"kind":kind,"construction_note":case["construction_note"]}
  write(STUDY/"reviewer/manifest.json",{"study":"station-evidence-audit-v2","packets":manifest,"instructions_sha256":digest(instructions)})
  write(STUDY/"private/initial-expectations.json",initial);write(STUDY/"private/lineage.json",lineage)
- inputs=[CONTRACT,ROOT/"studies/station-evidence-audit-v2/protocol.yaml",Path(__file__),STUDY/"private/case-drafts.json",STUDY/"private/initial-expectations.json",STUDY/"private/lineage.json",STUDY/"verified-facts.json",STUDY/"reviewer/manifest.json",instructions]
+ inputs=[CONTRACT,HERE/"studies/station-evidence-audit-v2/protocol.yaml",Path(__file__),STUDY/"private/case-drafts.json",STUDY/"private/initial-expectations.json",STUDY/"private/lineage.json",STUDY/"verified-facts.json",STUDY/"reviewer/manifest.json",instructions]
  inputs+=list((RUN/"frozen").glob("*"))+list((RUN/"inputs").glob("*"))+list((STUDY/"reviews").glob("audit-*"))
  inputs += [ROOT/"var/private/tasks/station-verification/controller/scores.nc"]
  write(STUDY/"private/input-hashes.json",{str(p.relative_to(ROOT)):digest(p) for p in inputs if p.is_file()})

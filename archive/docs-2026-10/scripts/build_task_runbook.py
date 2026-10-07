@@ -2,7 +2,7 @@
 
 Reads frozen solver material and stored assessments. It never runs submitted
 code, starts a model, changes an assessment, or reads authentication material.
-Run from the repository with .venv/bin/python scripts/build_task_runbook.py.
+Run from the repository with .venv/bin/python archive/docs-2026-10/scripts/build_task_runbook.py.
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from urllib.parse import quote
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
 sys.path.insert(0, str(ROOT))
 from weatherbench.task_tools.render import markdown  # noqa: E402
 

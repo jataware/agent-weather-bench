@@ -1,4 +1,6 @@
-# Historical pilot archive
+# Historical archive
+
+`docs-2026-10/` holds the documents, studies and scripts of the first development cycle, 2 to 6 October 2026, superseded by the task set, the assessment format and the roadmap; [its index](docs-2026-10/README.md) says what each was.
 
 `pilot-2026-10-01/` is the completed ACCORD pilot: its code, configurations,
 reports, slides, local data, private controller state and original runs. Historical

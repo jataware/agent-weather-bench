@@ -5,7 +5,8 @@ import hashlib
 import json
 import math
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
+HERE = Path(__file__).resolve().parents[1]
 STUDY = ROOT / 'var/calibration/station-interpretation-v1'
 VERDICTS = ('pass', 'fail', 'unresolved')
 
@@ -105,8 +106,8 @@ def freeze_reference(study=STUDY):
                          'basis': basis, 'human_label': None, 'initial_verdict': expected['verdict'], 'review_verdicts': ratings}
     paths = [study / 'reviewer/manifest.json', study / 'reviewer/instructions.txt',
              study / 'private/initial-expectations.json', study / 'private/lineage.json',
-             ROOT / 'studies/station-interpretation-v1/protocol.yaml', Path(__file__),
-             ROOT / 'scripts/prepare_station_interpretation.py',
+             HERE / 'studies/station-interpretation-v1/protocol.yaml', Path(__file__),
+             HERE / 'scripts/prepare_station_interpretation.py',
              study / 'reviews/reference-a.json', study / 'reviews/reference-b.json']
     if decisions_path.exists():
         paths.append(decisions_path)

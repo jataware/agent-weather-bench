@@ -6,7 +6,7 @@ import json
 import os
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
 OUTPUT = ROOT / "var/review/index.html"
 SOURCES = {}
 
@@ -187,8 +187,8 @@ def build():
         import yaml
         spec = yaml.safe_load(path.read_text())
         task_rows.append(f'<tr><td>{link(str(path.parent.relative_to(ROOT) / "review.html"), spec["title"])}</td><td>{esc(spec["version"])}</td><td>Development · scientific review pending</td></tr>')
-    read("scripts/build_review_page.py")
-    template = read("scripts/review_page.html")
+    read("archive/docs-2026-10/scripts/build_review_page.py")
+    template = read("archive/docs-2026-10/scripts/review_page.html")
     manifest = {"schema_version": 1, "review_type": "development_evaluation_design", "sources": SOURCES,
                 "experiment_policy_fingerprint": audit["policy_fingerprint"], "decisions": ["replay-credit", "visible-evidence", "packaging", "monthly-outcomes", "visual-support", "optimization-admissibility"]}
     identity = hashlib.sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()

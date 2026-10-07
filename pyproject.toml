@@ -22,4 +22,4 @@ include = ["weatherbench*"]
 "weatherbench.task_tools" = ["review_ui/*.html", "review_ui/*.css", "review_ui/*.js"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "archive/pilot-2026-10-01/tests"]
+testpaths = ["tests", "archive/pilot-2026-10-01/tests", "archive/docs-2026-10/tests"]

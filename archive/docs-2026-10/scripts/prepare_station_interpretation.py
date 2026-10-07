@@ -4,7 +4,7 @@ import hashlib
 import json
 import random
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
 OUT = ROOT / 'var/calibration/station-interpretation-v1'
 PARENT = '20261005T181603-station-verification-codex-luna-ff16df'
 

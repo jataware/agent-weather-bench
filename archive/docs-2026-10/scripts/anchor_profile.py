@@ -9,8 +9,9 @@ from pathlib import Path
 
 import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
-PROFILE = ROOT / "studies/anchor-calibration-v1/profile.yaml"
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
+HERE = Path(__file__).resolve().parents[1]
+PROFILE = HERE / "studies/anchor-calibration-v1/profile.yaml"
 RUNS = (
     "20261005T181549-cca-seasonal-reproduction-codex-luna-938881",
     "20261005T181858-cca-seasonal-reproduction-codex-astra-ac6241",

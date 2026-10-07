@@ -5,11 +5,12 @@ from pathlib import Path
 
 import pytest
 
-ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('station_interpretation', ROOT / 'scripts/station_interpretation.py')
+ROOT = Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
+HERE = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location('station_interpretation', HERE / 'scripts/station_interpretation.py')
 study = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(study)
-human_spec = importlib.util.spec_from_file_location('record_station_reference', ROOT / 'scripts/record_station_reference.py')
+human_spec = importlib.util.spec_from_file_location('record_station_reference', HERE / 'scripts/record_station_reference.py')
 human = importlib.util.module_from_spec(human_spec)
 # The record script imports the frozen study module under its ordinary name.
 import sys

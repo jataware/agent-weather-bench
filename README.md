@@ -1,5 +1,3 @@
-![Agent Weather Bench — A benchmark for AI forecast research](docs/assets/brand/hero.svg)
-
 ## Which frontier models and agent frameworks can reliably complete substantive weather-forecasting workflows, with what scientific validity, cost, time, and expert intervention?
 
 Agent Weather Bench assesses complete scientific workflows for subseasonal-to-seasonal (S2S) forecasting: acquiring and interpreting data, investigating methods, writing and adapting scientific code, producing forecasts, and verifying results. We compare how models and frameworks perform, and whether supporting resources—skills, scientific libraries, literature retrieval, and prior work—make those workflows more reliable and efficient. Agents submit code, numerical results, and explanations that can be checked against the task requirements.
@@ -12,7 +10,9 @@ For forecasters, the goal is to provide evidence for choosing agents and support
 
 **Current status:** This repository is for internal development and review. Task data are shared separately. Scientific, scoring, and data redistribution reviews are pending. Seasonal acquisition is disabled, and no repository license has been selected. See [internal setup](docs/internal-setup.md).
 
-[Tasks](#existing-tasks) · [Run a model](#run-a-model) · [Add a substrate](#add-a-method-or-substrate) · [Create a task](#create-and-register-a-task) · [Design](docs/benchmark-design.md)
+**Where the work is going:** [the roadmap](docs/roadmap.md) summarises the system and the plan in three pages. [The task set](docs/task-set.md) lists the 25 task templates that replace the ten packaged tasks below, and [the assessment format](docs/assessment-format.md) defines how templates are assessed. Three templates are built and certified under `templates/`; the ten packaged tasks under `tasks/` are still assessed by the first evaluator.
+
+[Tasks](#existing-tasks) · [Run a model](#run-a-model) · [Add a substrate](#add-a-method-or-substrate) · [Create a task](#create-and-register-a-task) · [Roadmap](docs/roadmap.md)
 
 ## Forecasting as a research benchmark
 
@@ -24,9 +24,7 @@ For forecast tasks, observations provide a separate test of predictive value. Ta
 
 ## What we measure
 
-![Benchmark design: compare AI models on the same research task with common tools and fixed scoring. Check their artifacts against private references and, for forecast tasks, later observations. Measure completion, cost, and time. Additional experiments test substrate and reuse across tasks.](docs/assets/brand/benchmark-design.svg)
-
-[Open the diagram at full size](docs/assets/brand/benchmark-design.svg).
+The benchmark compares AI models on the same research task with common tools and fixed scoring, checks their artifacts against private references and, for forecast tasks, later observations, and measures completion, cost and time. Further experiments test the substrate and reuse across tasks.
 
 | Dimension | Comparison |
 | --- | --- |
@@ -64,17 +62,15 @@ separately from task completion.
 
 The judge, evaluator, task files, and dependencies are locked. Each assessment
 retains its evidence, raw judge response, usage, and fingerprint. See the
-[judge contract](docs/judging.md).
-
-[Illustrated example: one agent, with and without task tools](docs/assets/brand/agent-task-comparison.svg).
+[locked autojudge](docs/harness.md#the-locked-autojudge).
 
 ## Existing tasks
 
 Ten registered development tasks cover forecasting, source reconstruction,
 verification and bounded optimization. All have local data and executable checks;
 scientific review and public data release remain pending. Related tasks retain
-their shared forecasting families. See the [development audit](docs/overnight-development.md)
-for actual solver outcomes and evaluation limitations.
+their shared forecasting families. The [development audit of 5 October](archive/docs-2026-10/overnight-development.md)
+records the solver outcomes and evaluation limitations of this first evaluator.
 
 | Task | Scientific goal | Status |
 | --- | --- | --- |
@@ -90,29 +86,9 @@ for actual solver outcomes and evaluation limitations.
 | [Conservative downscaling](tasks/conservative-downscaling/prompt.md) | Diagnose uncertain units and conserve calibrated rainfall on a fine grid. | Independent geometry; conservation and scale-invariance probes. |
 
 Use the [review pages](tasks/index.html) to inspect and critique each task.
-The optional [four anchor-calibration decisions](var/review/anchors.html) provide a short
-review of CCA reconstruction, station verification and subseasonal optimization,
-with evidence, optional notes, local saving and export. This secondary development
-profile preserves the original task versions and scores. Generate it with
-`.venv/bin/python scripts/build_anchor_review.py`.
-The [autonomous station evidence audit](var/review/station-audit.html) links the
-complete original submission, independent source/numerical audits and a judge
-check with contradictions across reports, captions, answers and code. Agent
-review and reproducible checks establish provisional development references;
-human labeling is optional. Original benchmark grades remain unchanged. The
-[earlier interpretation check](var/review/station-judge.html) is retained, along
-with its optional human annotation form.
-The [task-by-task experiment record](var/review/task-runs.html) contains actual
-supplied inputs, full evaluation criteria, each model attempt and its score
-breakdown, execution evidence, and changes during development. Regenerate it with
-`.venv/bin/python scripts/build_task_runbook.py`.
-The shorter [pilot overview](var/review/findings.html) summarizes cross-task findings.
-The optional [focused evaluation review](var/review/index.html) collects six concrete
-grading decisions, original evidence and fields for comments, with local saving
-and export. Generate it from the preserved development evidence with
-`.venv/bin/python scripts/build_review_page.py`.
-New tasks can come from papers, published forecasts, and reproducible analyses.
-The [candidate portfolio](docs/task-portfolio.md) describes possible extensions.
+The calibration studies of this evaluator, their review pages and the scripts
+that build them are under [`archive/docs-2026-10/`](archive/docs-2026-10/README.md).
+New tasks are now written as templates; see [the task set](docs/task-set.md).
 
 ## Run a model
 
@@ -253,10 +229,9 @@ completion score, costs, time, and retention condition.
 | `judges/` | Assessment configuration, prompt, and lock |
 | `experiments/` | Comparison designs and task sequences |
 | `weatherbench/` | Execution, preparation, and scoring code |
-| `docs/` | Guides, research design, reviews, and brand assets |
+| `docs/` | The roadmap, the task set, the assessment format, and the guides to the first evaluator |
 | `var/` | Ignored local inputs, references, runs, and reports |
 | `archive/` | Preserved pilot code and evidence |
 
-The [README and brand preview](docs/assets/brand/index.html) includes the diagram,
-logo, and share images. The [historical pilot](archive/README.md) remains separate
-from current benchmark runs.
+The [historical pilot](archive/README.md) and the superseded documents of the
+first development cycle remain separate from current benchmark runs.

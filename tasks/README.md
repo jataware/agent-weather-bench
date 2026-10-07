@@ -40,7 +40,7 @@ The preparation tooling has no model client and never runs submitted code.
 | [Conservative downscaling](conservative-downscaling/prompt.md) | Diagnose unresolved source units, calibrate ranks and preserve calibrated coarse volume on a fine grid | Does physical conservation hold for the correct mapped quantity, with training-only spatial detail and saved inference? |
 
 Each directory contains a prompt, task specification, source record, rubric tree,
-and focused review sheet. [The review guide](../docs/task-package-review.md) explains
+and focused review sheet. [The review guide](../archive/docs-2026-10/task-package-review.md) explains
 the proposed review order and current limitations. Expert approval is deliberately
 unset; preparing a package does not constitute scientific sign-off.
 

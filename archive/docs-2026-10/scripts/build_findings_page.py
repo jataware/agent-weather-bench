@@ -1,6 +1,6 @@
 from pathlib import Path
 import html,json,hashlib
-root=Path(__file__).resolve().parents[1]
+root=Path(__file__).resolve().parents[3]            # the repository root; this folder is an archive
 initial=json.loads((root/'var/calibration/task-audit-summary.json').read_text())
 new=json.loads((root/'var/calibration/overnight-audit-summary.json').read_text())
 assert initial['natural_attempts']==12 and len(new['run_results'])==8
