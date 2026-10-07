@@ -4,16 +4,18 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 
 ## The benchmark asks one question
 
-- Which AI agent systems can do real weather and climate forecasting work, at what cost, and with what help?
-- "Forecasting work" means subseasonal-to-seasonal forecasting: forecasts for the next two weeks to the next season. It includes the data work, the calibration, the verification and the written report.
-- "Help" means the tools, the knowledge and the earlier work that we give to the agent. The benchmark measures how much each one changes the result.
+- Under what conditions can we hand a forecaster's task to an AI agent system and get back the right result?
+- "A forecaster's task" is one of the canonical workflows of subseasonal-to-seasonal forecasting: literature and method research, data acquisition and preparation, calibration and model combination, downscaling, verification, and the issue of a seasonal or subseasonal outlook with its uncertainty.
+- "The right result" is a product that an independent check confirms, made by a method the task permits, with conclusions the evidence supports.
+- "Conditions" are the model, the harness, the substrate and the supplied structure, defined next, together with the budget of time and tokens.
+- The benchmark measures, for each condition, the pass rate, the cost, the time, and the point at which an expert must step in.
 
 ## A system under evaluation has four parts
 
 - **The model.** The language model, from small open-weight models to frontier models.
 - **The harness.** The agent loop that drives the model. Examples: the built-in driver, the Codex adapter, the `rx` research harness.
 - **The substrate.** The tools and knowledge in the agent's workspace. Examples: the Rhiza weather-skills catalog, the `acmadDL` data library, the `AfricaS2S` library.
-- **The supplied structure.** Extra material that we give for one run: a sheet of conventions, a description of the method, or the agent's own earlier submission.
+- **The supplied structure.** Material added to one run: a sheet of conventions, a description of the method, or the agent's own earlier submission.
 - We change one part at a time and keep the other three the same. That is how we measure the value of each part.
 
 ## A task is a forecasting job with a checkable result
