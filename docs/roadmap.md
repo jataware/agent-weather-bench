@@ -1,6 +1,6 @@
 # Roadmap for the agent weather benchmark
 
-Status: draft of 7 October 2026, for discussion. This page tells a new reader what the benchmark is, what is built, what is not built, and what experiments come next. It is short on purpose. [The results so far](results.md) show what the machinery catches, with a worked example of one run as a figure. [The task set](task-set.md) and [the assessment format](assessment-format.md) give the detail.
+Status: draft of 7 October 2026, for discussion. This page tells a new reader what the benchmark is, what is built, what is not built, and what experiments come next. It is short on purpose. [The results so far](results.md) show what the machinery catches, with a one-page figure of how it works and how it scales. [The task set](task-set.md) and [the assessment format](assessment-format.md) give the detail.
 
 ## The benchmark asks one question
 

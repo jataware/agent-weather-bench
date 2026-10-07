@@ -2,9 +2,9 @@
 
 Status: 7 October 2026. Everything below comes from one cheap model, gpt-6-luna, through one harness, on three task templates. There is one attempt per cell. These results show that the machinery works and what it catches. They do not rank anything.
 
-![An agent drives a seasonal-forecast workflow, and the benchmark checks every step](figures/worked-example.png)
+![A forecasting task goes into a sandbox; what comes out is checked by computation and by a narrow judge](figures/overview.png)
 
-The figure follows one real passing attempt on the seasonal calibration template through the six steps of the workflow, the check on each step, the delivery, the WMO checklist and the result. Every number and map in it comes from that run's record; `figures/draw_worked_example.py` redraws it. [SVG](figures/worked-example.svg).
+The figure shows the general scheme and how it scales. `figures/draw_overview.py` redraws it. [SVG](figures/overview.svg).
 
 ## 36 attempts were assessed, 23 passed every check
 
