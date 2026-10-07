@@ -5,8 +5,7 @@ such as region and time window. One template yields many instances. Templates
 are assessed by the `assessment/` package, which implements
 [the assessment format](../docs/assessment-format.md). The controller is the
 trusted evaluator in `assessment/`; it launches the agent in a Docker sandbox,
-holds the private references and runs the checks. The ten tasks of the first
-evaluator are archived under `archive/evaluator-v1-2026-10/`.
+holds the private references and runs the checks.
 
 ## A template folder holds these files
 
@@ -190,3 +189,118 @@ under the first contract; their recorded assessments stand, with the judge's
 verdicts added.
 
 No template is approved by a domain scientist.
+
+## The sandbox boundary keeps model-generated commands off the controller host
+
+The harness's adapter (`systems/<id>/adapter.py`) is trusted integration code.
+It calls the model or agent library and translates its tool requests to the
+protocol below. Model-generated commands go through the protocol and run in the
+offline Docker runtime, never on the controller host. An agent command line
+that executes its own tools needs an integration that routes them into the
+runtime container; pointing a host-executing command line at this repository
+does not establish the benchmark's information boundary.
+
+Adapters run in their snapshotted directory. `{python}` expands to the
+controller interpreter; `{driver}` expands to that directory. `driver.env` lists
+environment variable names to pass to the controller; do not store secret
+values in the system definition. Model credentials stay on the controller and
+are never mounted into the runtime container.
+
+## The adapter protocol is JSON lines over standard input and output
+
+The controller writes one JSON `start` request to the adapter's stdin. It
+contains the brief, the envelope, the budgets, the runtime paths, the tooling
+notes and an inventory of the retained earlier submission. The adapter writes
+JSON lines to stdout; stdout is reserved for the protocol, and diagnostics go to
+stderr.
+
+```json
+{"type":"execute","id":"step-1","command":"python workflow.py","timeout_seconds":60}
+```
+
+The controller executes the command in `/work` in the isolated container and
+replies:
+
+```json
+{"type":"tool_result","id":"step-1","exit_code":0,"stdout":"...","stderr":"...","remaining_seconds":300}
+```
+
+Request and result pairs continue, then the adapter emits cumulative usage when
+it is available and a final event:
+
+```json
+{"type":"usage","usage":{"input_tokens":1234,"output_tokens":567,"usd":0.02,"calls":3}}
+{"type":"final","message":"Submission written to /work/submission"}
+```
+
+Missing usage is `unknown`, not zero. A custom adapter's usage is labelled
+self-reported; the built-in provider driver records controller-observed usage.
+The controller enforces the wall-clock and tool limits; a custom adapter must
+enforce its own provider spending limit.
+
+## The tooling-use record says whether the agent touched the tooling
+
+A mounted tooling image measures availability; a tooling comparison also needs
+to know whether the agent used it. The controller derives this from the run's
+command log (`assessment/substrate_use.py`, kept under its original name; its
+output is the tooling-use record) with no model call and no change to any
+check. Each command that reached the runtime is classed by its strongest use of
+a path under the tooling mount: `ran` (a script executed directly or through
+`python`, `bash`, `sh`, `Rscript` or `uv run`), `read` (any other reference,
+such as `cat` or `sed`), `listed` (`ls`, `find`, `tree`) or `entered` (`cd`).
+Runs are split into `ran_ok` and `ran_failed` by exit status; the status
+belongs to the whole command, so a chained or piped command is attributed as
+one. Tool calls the built-in driver refused as truncated or invalid were never
+executed and are not counted. Log lines that cannot be parsed are skipped and
+counted in `unreadable_log_lines`. The record also gives the first step that
+touched the tooling and the paths named.
+
+This is a lower bound from command text. Relative paths after a `cd` into the
+mount, shell variables, and workflow code that opens tooling files itself are
+not attributed. Tooling installed as a library in the runtime image, rather
+than mounted, is not measured. `unknown` means the run has no execution log;
+`none` means it ran commands but none named the tooling. Use is diagnostic
+evidence: compare assigned tooling images as the primary analysis, not only the
+runs that used the tooling.
+
+## A second episode retains the earlier submission and nothing else
+
+A run with `--parent RUN_ID` carries the agent's earlier submission under
+`/work/prior`, never the assessment, the private references, the verification
+observations or the judge's verdicts. A plain run receives nothing. To separate
+reuse from difficulty, counterbalance instance order and compare the same
+instance at the same position.
+
+## Source data is frozen once and never replaced in place
+
+Start from a published outlook, a centre's replication procedure or a paper's
+analysis. Record the source version and the exact method or result to
+reproduce, and state the region, period, lead time, variable and resolution.
+Distinguish the source's requirements from the template author's choices, and
+state each open convention in the brief with its accepted reading in the spec.
+For a forecast template, freeze the data cutoff before the observations
+resolve, and keep later observations and the private reference outside the
+agent's workspace.
+
+`prepare` must fail if an existing frozen input differs from the source. Create
+a new reviewed spec version rather than silently replacing evidence, and keep
+the earlier references when a reference function is corrected; assessments keep
+the fingerprint they were made under.
+
+Useful controls include changed coordinates, wrong units, shifted periods, wrong
+category labels, changed missing masks, leaked verification data and a run
+command that cannot regenerate the result. Choose the controls that matter for
+the method, rather than repeating the implementation as checks. Numerical
+agreement alone can reward a copied output; a probe that reruns the submitted
+code on changed data catches it.
+
+## The runtime image is built with Docker
+
+```sh
+docker build -f runtime/Dockerfile -t agent-weather-bench-runtime:local .
+docker image inspect agent-weather-bench-runtime:local --format '{{.Id}}'
+```
+
+The base defaults to `python:3.13-slim`. For a fixed base image, add
+`--build-arg BASE=python@sha256:YOUR_BASE_DIGEST`. The system definition names
+the image a system runs in; `certify` and `assess` use the offline runtime.

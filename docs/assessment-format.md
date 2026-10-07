@@ -68,8 +68,8 @@ intermediate steps?
 - **Decision point.** A feature deliberately present in an instance where the
   standard requires a judgement, and where the right judgement shows in the
   output.
-- **Standard.** A published document that defines correct practice. The first
-  two are named in "Two WMO documents are the first standards" below.
+- **Standard.** A published document that defines correct practice. The one
+  that exists is named in "One WMO document is the first standard" below.
 - **Judge.** A language model that answers one narrow question about cited
   evidence. It returns pass, fail or unresolved, and must quote the exact text
   it relies on. The pinned judge is Claude Opus 5.5.
@@ -435,7 +435,8 @@ with a domain scientist.
 ### Process conformance checks the method against a standard
 
 **The spec holds a checklist extracted from the standard.** Each step cites the
-clause it comes from.
+practice number it comes from. It will cite the clause once the primary
+document is obtained.
 
 **Each step is verified by the most exact evidence available.** In order of
 preference:
@@ -450,14 +451,14 @@ preference:
    choosing the model before any verification score was seen.
 4. *Method statement.* The agent's `method` entry points to the file and
    function for the step. The judge decides whether that function does what the
-   clause requires, under the same quote rule and three outcomes as an
+   step requires, under the same quote rule and three outcomes as an
    interpretation check.
 
-**A missing method entry fails; an unclear clause is unresolved.** The brief
+**A missing method entry fails; an unclear step is unresolved.** The brief
 asks for each method entry by name. An entry that is absent, or whose pointer
 names no place in the submission, is the submission's omission and fails. A
-step also fails when the cited code does something the clause forbids, or when
-a probe shows the step was not done. A clause that can be read two ways is
+step also fails when the cited code does something the step forbids, or when
+a probe shows the step was not done. A step that can be read two ways is
 unresolved.
 
 **Scientific reasoning is also tested through decision points.** An instance is
@@ -551,7 +552,7 @@ This is illustrative and predates the build. The working spec is
 template: seasonal-rainfall-calibration
 spec_version: 1
 mode: process
-standard: wmo-1246
+standard: wmo-objective-seasonal-forecasting
 process:
   - step: forecast is objective and reproducible
     evidence: probe
@@ -576,7 +577,7 @@ process:
 interpretation: [statistical_support, generalization, consistency_across_artifacts]
 ```
 
-## Two WMO documents are the first standards
+## One WMO document is the first standard, and a second is planned
 
 **The WMO guidance on objective seasonal forecasting is the first standard.**
 *Guidance on Operational Practices for Objective Seasonal Forecasting*,
@@ -587,7 +588,8 @@ models and multi-model ensembles as the primary basis; and adequate
 observational records for verification and calibration. Record:
 <https://library.wmo.int/records/item/57090-guidance-on-operational-practices-for-objective-seasonal-forecasting>.
 
-**The WMO long-range verification standard is the second.** The Standardized
+**The WMO long-range verification standard is planned as the second; no
+checklist exists for it yet.** The Standardized
 Verification System for Long-Range Forecasts is defined in the *Manual on the
 Global Data-processing and Forecasting System*, WMO-No. 485. A companion
 document for regional and national centres is *Guidance on Verification of
@@ -604,7 +606,9 @@ nine-point definition of an objective seasonal forecast is quoted in
 `standards/wmo-objective-seasonal-forecasting/practices.md`. The checklist in
 that folder turns six of the nine practices into eleven testable steps and
 records why the other three, and the multi-model part of a fourth, cannot be
-tested on one forecast from one model. The wording of every step is ours.
+tested on one forecast from one model. The wording of every step is ours, and
+the steps cite practice numbers, not clauses, until the primary document is
+obtained.
 
 **Four things remain before the checklist can support a result.** Obtain the
 primary documents and keep hashed copies. Replace each practice number with the
@@ -618,14 +622,18 @@ lacks. Have a domain scientist sign the checklist off.
    largest reference value under an accepted reading must not exceed the
    magnitude the bound assumes.
 2. **A known-correct submission passes every check.**
-3. **Deliberately incorrect submissions are caught by the right check.** The set
-   must include at least: a leak (caught by a probe), a cached output (caught
-   by a probe), an overclaim on correct numbers (caught by the claim or
-   interpretation check), a skipped process step, and a false method pointer
-   (both caught by process conformance). Each must fail on its own check and
-   pass the checks it does not violate. The existing constructed controls for
-   the canonical correlation task follow this pattern for leaks and cached
-   inference.
+3. **Deliberately incorrect submissions are caught by the right check.** Each
+   control under `controls/` of kind pitfall or incorrect declares the outcome
+   it expects from each check. `certify.py` assesses every such control on the
+   development instances and requires each check to return the declared
+   outcome: the control fails on its own check and passes the checks it does
+   not violate, a check that fails only because an earlier part is unusable
+   names that part, and a declared pitfall is matched by name. A pitfall that
+   coincides with an accepted reading on an instance is noted, not failed.
+   The code does not require a particular set of controls; which faults a
+   template's controls cover (a leak, a cached output, an overclaim, a skipped
+   process step, a false method pointer) is the template author's choice and
+   is listed in `certification.json`.
 4. **The separability of every accepted–pitfall pair is measured and
    recorded, in tolerances.** For each pair the certification states on how
    many instances the two readings give different numbers on the submitted
@@ -808,7 +816,7 @@ exchange for never failing a correct answer.
 - *No live data acquisition.* The earlier version of the Kenya task had the
   agent download the forecasts. This version supplies the frozen raw stores,
   for repeatability.
-- *The process checklist is a draft.* See "Two WMO documents are the first standards" above.
+- *The process checklist is a draft.* See "One WMO document is the first standard, and a second is planned" above.
 - *The seasonal template has no Level 2.* A separate optimized submission for a
   process template needs a second, outcome-mode spec on the same data. The skill of
   the conformant forecast is reported, on two years and at most twelve cells,

@@ -8,15 +8,17 @@ The figure shows the general scheme and how it scales. `figures/draw_overview.py
 
 ## 36 attempts were assessed, 23 passed every check
 
-Columns: attempts; attempts in which every computed check passed; attempts in which every check passed, the judge's included.
+Columns: the submission contract (the first 25 attempts ran under the first contract, the last 11 under the revised one, which is each template's current spec version); attempts; attempts in which every computed check passed; attempts in which every check passed, the judge's included. The computed checks of the two contracts follow different rules, so the rows are not added across contracts; the 36 and 23 in the heading are counts of attempts and of passes, not a rate.
 
-| Template | Attempts | Computed pass | Headline pass |
-| --- | --- | --- | --- |
-| Kenya forecast revision | 13 | 10 | 10 |
-| Weeks 3–4 rainfall | 8 | 7 | 5 |
-| Seasonal calibration | 15 | 8 | 8 |
+| Template | Contract | Attempts | Computed pass | Headline pass |
+| --- | --- | --- | --- | --- |
+| Kenya forecast revision | first | 9 | 6 | 6 |
+| Kenya forecast revision | current | 4 | 4 | 4 |
+| Weeks 3–4 rainfall | first | 5 | 5 | 3 |
+| Weeks 3–4 rainfall | current | 3 | 2 | 2 |
+| Seasonal calibration | first | 11 | 6 | 6 |
+| Seasonal calibration | current | 4 | 2 | 2 |
 
-- The first 25 attempts ran under the first submission contract, the last 11 under the revised one. Their computed checks follow different rules, so the two sets are not added in the changelog; they are added here only as a count of attempts.
 - Every failure has a named cause: a known pitfall (the 7-day window one day early, three times; category boundaries that include the held-out year, twice; daily rates not converted to totals, once), a wrong array shape, a wrong skill score or category coding (three times, each ruled on review), an unstated claim, or a report that contradicts its code.
 - Under the revised contract no attempt had a layout problem. Under the first contract three did.
 
@@ -28,9 +30,9 @@ Columns: attempts; attempts in which every computed check passed; attempts in wh
 - The failures: 5 reports that contradict their own code or answer; 2 seasonal reports that do not state uncertainty in plain language; 1 calibration whose code does not do what its method entry says. The last one is a coding defect that the numerical checks had not isolated.
 - The judge changed the headline of two attempts whose numbers were all right.
 
-## Plain runs, sheet-supplied runs and second episodes were each exercised
+## Two plain runs, two runs with the conventions sheet, two second episodes and one Level 2 run were exercised
 
-Columns: the run and its supplements (plain, with the conventions sheet, or a second episode); the outcome; the agent's seconds and tokens; the checks that failed.
+Columns: the run (plain, with the conventions sheet as a supplement, a second episode, or Level 2); the outcome; the agent's seconds and tokens; the checks that failed.
 
 | Run | Outcome | Seconds | Tokens | Failed checks |
 | --- | --- | --- | --- | --- |

@@ -47,10 +47,10 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 The family says what the work is. The check follows from it.
 
 - **Outlook products, 6, product mode.** Read raw provider forecasts and produce a rainfall outlook, a heat outlook, the revision between two issues, a forecast of an extreme-event probability at weeks 2–3, and two checks of climate-driver forecasts: the Indian Ocean Dipole and the Madden–Julian Oscillation.
-- **Observed indices and verification, 5, product mode.** Compute an observed ocean index, verify forecasts against station observations, verify probabilistic forecasts with the standard scores, debug a scorecard with injected faults, and audit a paper against its code.
+- **Observed indices and verification, 5, product mode except one.** Compute an observed ocean index, verify forecasts against station observations, verify probabilistic forecasts with the standard scores (template 18, the one process-mode entry of this family), debug a scorecard with injected faults, and audit a paper against its code.
 - **Seasonal forecast production, 6, process mode.** Calibrate a seasonal rainfall forecast to the WMO guidance, run the short-rains workflow, reproduce a canonical-correlation forecast, calibrate a monthly cycle, combine probability forecasts, and combine several models with their hindcasts.
 - **Subseasonal forecast production, 4, process or outcome mode.** Forecast weeks 3–4 rainfall, issue probabilistic weeks 3–4 and 5–6 outlooks, forecast rainy-season onset and dry spells, and forecast week by week as observations arrive.
-- **Research claims and consensus, 2, process mode.** Test a published predictor claim on held-out years, and beat the regional consensus forecast on backcast skill. These two and the week-by-week forecast are the ones a frontier agent should not simply pass.
+- **Research claims and consensus, 2, process mode.** Test a published predictor claim on held-out years, and beat the regional consensus forecast on backcast skill. The consensus forecast (template 21) and the week-by-week forecast (template 23) are the two frontier-hard templates, the ones a frontier agent should not simply pass.
 - **Downscaling and the diagnostic pack, 2, product mode.** Downscale rainfall to a fine grid with conservation, and a pack of ten one-step data operations that counts as one entry.
 - [The task set](task-set.md) gives each template its parameters, its check, its leaderboard and its evidence so far.
 
@@ -66,7 +66,7 @@ The family says what the work is. The check follows from it.
 ## This is built today
 
 - Three templates run end to end, one per check: the Kenya forecast revision (product), weeks 3–4 rainfall with its leaderboard (outcome), and seasonal rainfall calibration to the WMO guidance (process).
-- All three pass the four automatic certification tests in the offline Docker runtime, and the fifth test on 36 attempts by one cheap model.
+- All three pass the four automatic certification tests in the offline Docker runtime, and the fifth test on the attempts assessed under the current fingerprint by one cheap model: 4 on the Kenya forecast revision, 3 on weeks 3–4 rainfall and 4 on seasonal calibration. The 25 earlier attempts were assessed under the first submission contract.
 - The judge has run on all 36 attempts and on its control cases.
 - Second episodes, the conventions-sheet supplement and the Level 2 feedback tool work in the runner.
 - The first evaluator (generation 1, ten task packages) is archived under `archive/evaluator-v1-2026-10/` and no longer verified.
@@ -110,7 +110,7 @@ Systems
 - Add a Claude solver system, once a spending limit is agreed.
 - Add the frontier Codex solver, once a spending limit is agreed.
 - Add one or two open-weight model systems.
-- Rebuild the three tooling images (none, Rhiza skills, ACCORD libraries) on the current runtime, so they stop crashing on exit.
+- Rebuild the three tooling images that exist (no tooling, the Rhiza skills catalog, the ACCORD libraries) on the current runtime, so they stop crashing on exit. The conventions sheet is not an image: it is a supplement handed in with `--supply conventions`.
 - Write the "method supplied" supplement for the templates that have a canonical method.
 - Write a conventions sheet for each template that has conventions.
 

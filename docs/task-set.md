@@ -194,13 +194,13 @@ any existing written material.
 
 | # | Task | Why it is needed | Mode | Level 2 | Starting point |
 | --- | --- | --- | --- | --- | --- |
-| 17 | Rainy-season onset and dry spells | No existing task forecasts an event date or a spell, only totals and means | Process | Yes | Candidate 5 in `docs/task-candidate-shortlist.md` |
+| 17 | Rainy-season onset and dry spells | No existing task forecasts an event date or a spell, only totals and means | Process | Yes | Candidate 5 in `archive/docs-2026-10/task-candidate-shortlist.md` |
 | 18 | Probabilistic forecast verification | Templates 6–8 score single-value forecasts; none tests the reliability of probabilities | Process | No | None |
 | 19 | Multi-model combination with hindcasts | Template 10 averages one case by a fixed rule; none learns weights across models | Process | Yes | None |
-| 20 | Test a published predictor claim | Template 9 checks a definition; none checks whether a paper's claimed skill holds on held-out years | Process | Yes | Family C in `docs/task-portfolio.md` |
+| 20 | Test a published predictor claim | Template 9 checks a definition; none checks whether a paper's claimed skill holds on held-out years | Process | Yes | Family C in `archive/docs-2026-10/task-portfolio.md` |
 | 21 | Beat the regional consensus forecast | No existing task has a bar set by a real forecasting centre | Process | Yes; frontier-hard | Consensus reconstruction in `ACCORD/from_icpac/`; hindcast coverage unchecked |
 | 22 | Probabilistic weeks 3–4 and 5–6 outlook | Template 15 is single-value error; this is tercile probabilities for rainfall and temperature | Process | Yes | Candidate 1 in the shortlist; its data endpoints failed an earlier audit |
-| 23 | Weekly forecasting with observation updates | The agent's frozen program runs week by week and may learn from each released observation | Outcome | Yes; frontier-hard | `docs/frontier-challenge-next.md`; needs a controller that releases observations in date order |
+| 23 | Weekly forecasting with observation updates | The agent's frozen program runs week by week and may learn from each released observation | Outcome | Yes; frontier-hard | `archive/docs-2026-10/frontier-challenge-next.md`; needs a controller that releases observations in date order |
 | 24 | Madden–Julian Oscillation forecast check | Mirrors templates 5–6 at the subseasonal timescale | Product | No | None; data access unchecked |
 | 25 | Extreme-event probability at weeks 2–3 | Template 3 reports a peak with no skill score; this scores exceedance probabilities | Product | Yes | None |
 
