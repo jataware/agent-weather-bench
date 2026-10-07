@@ -52,7 +52,7 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 - **Subseasonal forecast production, 4 templates.** Forecast weeks 3–4 rainfall, issue probabilistic weeks 3–4 and 5–6 outlooks, forecast rainy-season onset and dry spells, and forecast week by week as observations arrive.
 - **Research claims and consensus, 2 templates.** Test a published predictor claim on held-out years, and beat the regional consensus forecast on backcast skill. These two and the week-by-week forecast are the ones a frontier agent should not simply pass.
 - **Downscaling and the diagnostic pack, 2 templates.** Downscale rainfall to a fine grid with conservation, and a pack of ten one-step data operations that counts as one entry.
-- Nine templates use process mode, fourteen use product mode and two use outcome mode. Thirteen have a Level 2. [The task set](task-set.md) gives each template its parameters, its mode, its levels and its evidence so far.
+- Twelve templates use product mode, eleven use process mode and two use outcome mode. Thirteen have a Level 2. [The task set](task-set.md) gives each template its parameters, its mode, its levels and its evidence so far.
 
 ## The assessment is exact where it can be, and narrow where it must judge
 
