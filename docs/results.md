@@ -2,9 +2,9 @@
 
 Status: 7 October 2026. Everything below comes from one cheap model, gpt-6-luna, through one harness, on three task templates. There is one attempt per cell. These results show that the machinery works and what it catches. They do not rank anything.
 
-![How one run works](figures/how-it-works.png)
+![One task, one agent, one assessment](figures/worked-example.png)
 
-[The diagram as SVG](figures/how-it-works.svg).
+The figure follows one real attempt through the task, the agent's delivery, the controller's checks and the result. [SVG](figures/worked-example.svg). The pipeline in general, without the example, is [how-it-works.svg](figures/how-it-works.svg).
 
 ## 36 attempts were assessed, 23 passed every check
 

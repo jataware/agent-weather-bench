@@ -10,7 +10,7 @@ For forecasters, the goal is to provide evidence for choosing agents and support
 
 **Current status:** This repository is for internal development and review. Task data are shared separately. Scientific, scoring, and data redistribution reviews are pending. Seasonal acquisition is disabled, and no repository license has been selected. See [internal setup](docs/internal-setup.md).
 
-**Where the work is going:** [the roadmap](docs/roadmap.md) summarises the system and the plan, and [the results so far](docs/results.md) show what the new assessment catches, with [a diagram of one run](docs/figures/how-it-works.svg). [The task set](docs/task-set.md) lists the 25 task templates that replace the ten packaged tasks below, and [the assessment format](docs/assessment-format.md) defines how templates are assessed. Three templates are built and certified under `templates/`; the ten packaged tasks under `tasks/` are still assessed by the first evaluator.
+**Where the work is going:** [the roadmap](docs/roadmap.md) summarises the system and the plan, and [the results so far](docs/results.md) show what the new assessment catches, with [a worked example of one run](docs/figures/worked-example.svg). [The task set](docs/task-set.md) lists the 25 task templates that replace the ten packaged tasks below, and [the assessment format](docs/assessment-format.md) defines how templates are assessed. Three templates are built and certified under `templates/`; the ten packaged tasks under `tasks/` are still assessed by the first evaluator.
 
 [Tasks](#existing-tasks) · [Run a model](#run-a-model) · [Add a substrate](#add-a-method-or-substrate) · [Create a task](#create-and-register-a-task) · [Roadmap](docs/roadmap.md)
 
