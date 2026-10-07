@@ -44,15 +44,19 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 
 ## The template set
 
-The family says what the work is. The check follows from it.
+- The set holds 25 templates in six families. The family says what the work is, and the mode follows from it.
+- Three templates are certified (4, 11 and 15), thirteen have a brief and a reference answer that await conversion to a spec (1–3, 5–10, 12–14 and 16), and nine are to be built (17–25).
+- Templates 21 and 23 are frontier-hard: a frontier agent should not simply pass them.
+- [The task set](task-set.md) gives every template its task statement, parameters, mode, level, status and evidence.
 
-- **Outlook products, 6, product mode.** Read raw provider forecasts and produce a rainfall outlook, a heat outlook, the revision between two issues, a forecast of an extreme-event probability at weeks 2–3, and two checks of climate-driver forecasts: the Indian Ocean Dipole and the Madden–Julian Oscillation.
-- **Observed indices and verification, 5, product mode except one.** Compute an observed ocean index, verify forecasts against station observations, verify probabilistic forecasts with the standard scores (template 18, the one process-mode entry of this family), debug a scorecard with injected faults, and audit a paper against its code.
-- **Seasonal forecast production, 6, process mode.** Calibrate a seasonal rainfall forecast to the WMO guidance, run the short-rains workflow, reproduce a canonical-correlation forecast, calibrate a monthly cycle, combine probability forecasts, and combine several models with their hindcasts.
-- **Subseasonal forecast production, 4, process or outcome mode.** Forecast weeks 3–4 rainfall, issue probabilistic weeks 3–4 and 5–6 outlooks, forecast rainy-season onset and dry spells, and forecast week by week as observations arrive.
-- **Research claims and consensus, 2, process mode.** Test a published predictor claim on held-out years, and beat the regional consensus forecast on backcast skill. The consensus forecast (template 21) and the week-by-week forecast (template 23) are the two frontier-hard templates, the ones a frontier agent should not simply pass.
-- **Downscaling and the diagnostic pack, 2, product mode.** Downscale rainfall to a fine grid with conservation, and a pack of ten one-step data operations that counts as one entry.
-- [The task set](task-set.md) gives each template its parameters, its check, its leaderboard and its evidence so far.
+| Family | Templates | Mode | The agent must |
+| --- | --- | --- | --- |
+| Outlook products | 2, 3, 4, 6, 24, 25 | product | Read raw provider forecasts and produce a rainfall outlook, a heat outlook, the revision between two issues, an extreme-event probability at weeks 2–3, and checks of the Indian Ocean Dipole and Madden–Julian Oscillation forecasts. |
+| Observed indices and verification | 5, 7, 8, 9, 18 | product; 18 process | Compute an observed ocean index, verify forecasts against station observations, verify probabilistic forecasts with the standard scores, debug a scorecard with injected faults, and audit a paper against its code. |
+| Seasonal forecast production | 10, 11, 12, 13, 14, 19 | process | Calibrate a seasonal rainfall forecast to the WMO guidance, run the short-rains workflow, reproduce a canonical-correlation forecast, calibrate a monthly cycle, combine probability forecasts, and combine several models with their hindcasts. |
+| Subseasonal forecast production | 15, 17, 22, 23 | outcome or process | Forecast weeks 3–4 rainfall, issue probabilistic weeks 3–4 and 5–6 outlooks, forecast rainy-season onset and dry spells, and forecast week by week as observations arrive. |
+| Research claims and consensus | 20, 21 | process | Test a published predictor claim on held-out years, and beat the regional consensus forecast on backcast skill. |
+| Downscaling and diagnostics | 1, 16 | product | Downscale rainfall to a fine grid with conservation, and perform the diagnostic pack of ten one-step data operations, which counts as one entry. |
 
 ## The checks
 

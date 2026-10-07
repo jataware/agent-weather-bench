@@ -119,7 +119,35 @@ A template folder holds `spec.yaml`, `brief.md`, `reference.py`, `reference_inde
 
 ## The template set
 
-The 25 templates fall into six families: outlook products, observed indices and verification, seasonal forecast production, subseasonal forecast production, research claims and consensus, and downscaling with the diagnostic pack. Three are certified; the rest are specified with their parameters, mode and level, and two are marked frontier-hard. [The task set](docs/task-set.md) is the full list.
+The set holds 25 templates in six families. Status *certified* means the spec passes the five certification tests; *reference written* means a brief and an answer key exist and await conversion to a spec; *to build* means nothing exists yet. Level 2 is the leaderboard run against withheld observations. [The task set](docs/task-set.md) gives each template its task statement, parameters and evidence.
+
+| # | Template | Family | Mode | Level 2 | Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Diagnostic pack | downscaling and diagnostics | product | no | reference written |
+| 2 | Kenya rainfall outlook | outlook products | product | no | reference written |
+| 3 | Kenya heat outlook | outlook products | product | no | reference written |
+| 4 | Kenya forecast revision | outlook products | product | no | certified |
+| 5 | Observed Indian Ocean Dipole index | observed indices and verification | product | no | reference written |
+| 6 | Indian Ocean Dipole forecast check | outlook products | product | no | reference written |
+| 7 | Scorecard debugging | observed indices and verification | product | no | reference written |
+| 8 | Station verification | observed indices and verification | product | later | reference written |
+| 9 | Paper-versus-code audit | observed indices and verification | product | no | reference written |
+| 10 | Probability forecast combination | seasonal forecast production | process | later | reference written |
+| 11 | Seasonal rainfall calibration | seasonal forecast production | process | yes | certified |
+| 12 | Short-rains workflow | seasonal forecast production | process | yes | reference written |
+| 13 | Seasonal CCA reproduction | seasonal forecast production | process | yes | reference written |
+| 14 | Monthly cyclic calibration | seasonal forecast production | process | yes | reference written |
+| 15 | Weeks 3–4 rainfall | subseasonal forecast production | outcome | yes | certified |
+| 16 | Rainfall downscaling | downscaling and diagnostics | product | yes | reference written |
+| 17 | Rainy-season onset and dry spells | subseasonal forecast production | process | yes | to build |
+| 18 | Probabilistic forecast verification | observed indices and verification | process | no | to build |
+| 19 | Multi-model combination with hindcasts | seasonal forecast production | process | yes | to build |
+| 20 | Test a published predictor claim | research claims and consensus | process | yes | to build |
+| 21 | Beat the regional consensus forecast | research claims and consensus | process | yes; frontier-hard | to build |
+| 22 | Probabilistic weeks 3–4 and 5–6 outlook | subseasonal forecast production | process | yes | to build |
+| 23 | Weekly forecasting with observation updates | subseasonal forecast production | outcome | yes; frontier-hard | to build |
+| 24 | Madden–Julian Oscillation forecast check | outlook products | product | no | to build |
+| 25 | Extreme-event probability at weeks 2–3 | outlook products | product | yes | to build |
 
 ## Roadmap
 
