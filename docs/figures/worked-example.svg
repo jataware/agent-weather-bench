@@ -1,263 +1,289 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="820" viewBox="0 0 1440 820" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="780" viewBox="0 0 1440 780" font-family="Helvetica, Arial, sans-serif">
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/></marker></defs>
-<rect width="1440" height="820" fill="#fff"/>
-<text x="720.0" y="34" font-size="22" fill="#111" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">One task, one agent, one assessment: the Kenya forecast revision</text>
-<text x="720.0" y="58" font-size="14" fill="#555" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">A real attempt by gpt-6-luna on 6 October 2026, instance service-area, weeks 1–2</text>
-<rect x="24" y="80" width="330" height="600" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/><rect x="24" y="80" width="330" height="40" rx="10" fill="#2563eb"/><rect x="24" y="108" width="330" height="12" fill="#2563eb"/><text x="38" y="107" fill="#fff" font-size="19" font-weight="bold">1</text><text x="64" y="107" fill="#fff" font-size="19" font-weight="bold">The task</text>
-<text x="38" y="148" font-size="13" fill="#2563eb" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Brief (131 words)</text>
-<text x="38" y="170" font-size="13" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Two ECMWF forecasts, issued 20 and 27 Sep.</text>
-<text x="38" y="188" font-size="13" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Over 5°S–5°N, 34–42°E, for the 7 days from 27 Sep</text>
-<text x="38" y="206" font-size="13" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">and from 4 Oct: how did the forecast change?</text>
-<text x="38" y="224" font-size="13" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Give the mean totals, the change, the area-weighted</text>
-<text x="38" y="242" font-size="13" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">regional change, and say wetter or drier.</text>
-<text x="38" y="280" font-size="13" fill="#2563eb" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Data: raw provider exports, 101 members, 47 days</text>
-<rect x="44.0" y="310.0" width="22.0" height="22.0" fill="#a6b4df" stroke="#fff" stroke-width="0.8"/>
-<rect x="66.0" y="310.0" width="22.0" height="22.0" fill="#afbce2" stroke="#fff" stroke-width="0.8"/>
-<rect x="88.0" y="310.0" width="22.0" height="22.0" fill="#8a9cd5" stroke="#fff" stroke-width="0.8"/>
-<rect x="110.0" y="310.0" width="22.0" height="22.0" fill="#516bc1" stroke="#fff" stroke-width="0.8"/>
-<rect x="132.0" y="310.0" width="22.0" height="22.0" fill="#425fbc" stroke="#fff" stroke-width="0.8"/>
-<rect x="154.0" y="310.0" width="22.0" height="22.0" fill="#6980c9" stroke="#fff" stroke-width="0.8"/>
-<rect x="44.0" y="332.0" width="22.0" height="22.0" fill="#a8b6e0" stroke="#fff" stroke-width="0.8"/>
-<rect x="66.0" y="332.0" width="22.0" height="22.0" fill="#e5eaf5" stroke="#fff" stroke-width="0.8"/>
-<rect x="88.0" y="332.0" width="22.0" height="22.0" fill="#dfe4f3" stroke="#fff" stroke-width="0.8"/>
-<rect x="110.0" y="332.0" width="22.0" height="22.0" fill="#6980ca" stroke="#fff" stroke-width="0.8"/>
-<rect x="132.0" y="332.0" width="22.0" height="22.0" fill="#7b8fd0" stroke="#fff" stroke-width="0.8"/>
-<rect x="154.0" y="332.0" width="22.0" height="22.0" fill="#7d91d1" stroke="#fff" stroke-width="0.8"/>
-<rect x="44.0" y="354.0" width="22.0" height="22.0" fill="#1e40af" stroke="#fff" stroke-width="0.8"/>
-<rect x="66.0" y="354.0" width="22.0" height="22.0" fill="#abb8e1" stroke="#fff" stroke-width="0.8"/>
-<rect x="88.0" y="354.0" width="22.0" height="22.0" fill="#c2cce9" stroke="#fff" stroke-width="0.8"/>
-<rect x="110.0" y="354.0" width="22.0" height="22.0" fill="#bfcae8" stroke="#fff" stroke-width="0.8"/>
-<rect x="132.0" y="354.0" width="22.0" height="22.0" fill="#a1b0dd" stroke="#fff" stroke-width="0.8"/>
-<rect x="154.0" y="354.0" width="22.0" height="22.0" fill="#7c91d0" stroke="#fff" stroke-width="0.8"/>
-<rect x="44.0" y="376.0" width="22.0" height="22.0" fill="#6d84cb" stroke="#fff" stroke-width="0.8"/>
-<rect x="66.0" y="376.0" width="22.0" height="22.0" fill="#8094d2" stroke="#fff" stroke-width="0.8"/>
-<rect x="88.0" y="376.0" width="22.0" height="22.0" fill="#6e85cb" stroke="#fff" stroke-width="0.8"/>
-<rect x="110.0" y="376.0" width="22.0" height="22.0" fill="#c1cbe9" stroke="#fff" stroke-width="0.8"/>
-<rect x="132.0" y="376.0" width="22.0" height="22.0" fill="#94a4d9" stroke="#fff" stroke-width="0.8"/>
-<rect x="154.0" y="376.0" width="22.0" height="22.0" fill="#4f69c0" stroke="#fff" stroke-width="0.8"/>
-<rect x="44.0" y="398.0" width="22.0" height="22.0" fill="#98a8da" stroke="#fff" stroke-width="0.8"/>
-<rect x="66.0" y="398.0" width="22.0" height="22.0" fill="#d1d9ee" stroke="#fff" stroke-width="0.8"/>
-<rect x="88.0" y="398.0" width="22.0" height="22.0" fill="#8497d3" stroke="#fff" stroke-width="0.8"/>
-<rect x="110.0" y="398.0" width="22.0" height="22.0" fill="#a8b6e0" stroke="#fff" stroke-width="0.8"/>
-<rect x="132.0" y="398.0" width="22.0" height="22.0" fill="#7086cc" stroke="#fff" stroke-width="0.8"/>
-<rect x="154.0" y="398.0" width="22.0" height="22.0" fill="#3957b8" stroke="#fff" stroke-width="0.8"/>
-<rect x="44.0" y="420.0" width="22.0" height="22.0" fill="#bdc8e7" stroke="#fff" stroke-width="0.8"/>
-<rect x="66.0" y="420.0" width="22.0" height="22.0" fill="#c6cfea" stroke="#fff" stroke-width="0.8"/>
-<rect x="88.0" y="420.0" width="22.0" height="22.0" fill="#b0bde3" stroke="#fff" stroke-width="0.8"/>
-<rect x="110.0" y="420.0" width="22.0" height="22.0" fill="#aebbe2" stroke="#fff" stroke-width="0.8"/>
-<rect x="132.0" y="420.0" width="22.0" height="22.0" fill="#4f6ac0" stroke="#fff" stroke-width="0.8"/>
-<rect x="154.0" y="420.0" width="22.0" height="22.0" fill="#637bc7" stroke="#fff" stroke-width="0.8"/>
-<rect x="44.0" y="442.0" width="22.0" height="22.0" fill="#e4e9f5" stroke="#fff" stroke-width="0.8"/>
-<rect x="66.0" y="442.0" width="22.0" height="22.0" fill="#d1d9ee" stroke="#fff" stroke-width="0.8"/>
-<rect x="88.0" y="442.0" width="22.0" height="22.0" fill="#b5c1e4" stroke="#fff" stroke-width="0.8"/>
-<rect x="110.0" y="442.0" width="22.0" height="22.0" fill="#7086cc" stroke="#fff" stroke-width="0.8"/>
-<rect x="132.0" y="442.0" width="22.0" height="22.0" fill="#879ad4" stroke="#fff" stroke-width="0.8"/>
-<rect x="154.0" y="442.0" width="22.0" height="22.0" fill="#90a2d7" stroke="#fff" stroke-width="0.8"/>
-<polygon points="47.7,319.5 75.5,313.7 150.3,329.8 150.3,411.9 123.9,455.9 100.5,431.0 49.1,401.7 46.2,372.3" fill="none" stroke="#111" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="110.0" y="482.0" font-size="12" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">issued 20 Sep</text>
-<text x="110.0" y="498.0" font-size="11" fill="#555" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">7-day mean total, mm</text>
-<rect x="204.0" y="310.0" width="22.0" height="22.0" fill="#d7def0" stroke="#fff" stroke-width="0.8"/>
-<rect x="226.0" y="310.0" width="22.0" height="22.0" fill="#d6ddf0" stroke="#fff" stroke-width="0.8"/>
-<rect x="248.0" y="310.0" width="22.0" height="22.0" fill="#b2bee3" stroke="#fff" stroke-width="0.8"/>
-<rect x="270.0" y="310.0" width="22.0" height="22.0" fill="#7c90d0" stroke="#fff" stroke-width="0.8"/>
-<rect x="292.0" y="310.0" width="22.0" height="22.0" fill="#687fc9" stroke="#fff" stroke-width="0.8"/>
-<rect x="314.0" y="310.0" width="22.0" height="22.0" fill="#a4b2de" stroke="#fff" stroke-width="0.8"/>
-<rect x="204.0" y="332.0" width="22.0" height="22.0" fill="#dce2f2" stroke="#fff" stroke-width="0.8"/>
-<rect x="226.0" y="332.0" width="22.0" height="22.0" fill="#f2f5fa" stroke="#fff" stroke-width="0.8"/>
-<rect x="248.0" y="332.0" width="22.0" height="22.0" fill="#ecf0f8" stroke="#fff" stroke-width="0.8"/>
-<rect x="270.0" y="332.0" width="22.0" height="22.0" fill="#9dacdc" stroke="#fff" stroke-width="0.8"/>
-<rect x="292.0" y="332.0" width="22.0" height="22.0" fill="#a0afdd" stroke="#fff" stroke-width="0.8"/>
-<rect x="314.0" y="332.0" width="22.0" height="22.0" fill="#94a5d9" stroke="#fff" stroke-width="0.8"/>
-<rect x="204.0" y="354.0" width="22.0" height="22.0" fill="#8d9ed6" stroke="#fff" stroke-width="0.8"/>
-<rect x="226.0" y="354.0" width="22.0" height="22.0" fill="#e6ebf6" stroke="#fff" stroke-width="0.8"/>
-<rect x="248.0" y="354.0" width="22.0" height="22.0" fill="#d7def0" stroke="#fff" stroke-width="0.8"/>
-<rect x="270.0" y="354.0" width="22.0" height="22.0" fill="#ced6ed" stroke="#fff" stroke-width="0.8"/>
-<rect x="292.0" y="354.0" width="22.0" height="22.0" fill="#a9b6e0" stroke="#fff" stroke-width="0.8"/>
-<rect x="314.0" y="354.0" width="22.0" height="22.0" fill="#8296d2" stroke="#fff" stroke-width="0.8"/>
-<rect x="204.0" y="376.0" width="22.0" height="22.0" fill="#a0afdd" stroke="#fff" stroke-width="0.8"/>
-<rect x="226.0" y="376.0" width="22.0" height="22.0" fill="#dee4f3" stroke="#fff" stroke-width="0.8"/>
-<rect x="248.0" y="376.0" width="22.0" height="22.0" fill="#a2b1de" stroke="#fff" stroke-width="0.8"/>
-<rect x="270.0" y="376.0" width="22.0" height="22.0" fill="#c7d0eb" stroke="#fff" stroke-width="0.8"/>
-<rect x="292.0" y="376.0" width="22.0" height="22.0" fill="#93a4d8" stroke="#fff" stroke-width="0.8"/>
-<rect x="314.0" y="376.0" width="22.0" height="22.0" fill="#687fc9" stroke="#fff" stroke-width="0.8"/>
-<rect x="204.0" y="398.0" width="22.0" height="22.0" fill="#dce2f2" stroke="#fff" stroke-width="0.8"/>
-<rect x="226.0" y="398.0" width="22.0" height="22.0" fill="#e0e5f3" stroke="#fff" stroke-width="0.8"/>
-<rect x="248.0" y="398.0" width="22.0" height="22.0" fill="#a3b1de" stroke="#fff" stroke-width="0.8"/>
-<rect x="270.0" y="398.0" width="22.0" height="22.0" fill="#adbae1" stroke="#fff" stroke-width="0.8"/>
-<rect x="292.0" y="398.0" width="22.0" height="22.0" fill="#7b90d0" stroke="#fff" stroke-width="0.8"/>
-<rect x="314.0" y="398.0" width="22.0" height="22.0" fill="#3c5aba" stroke="#fff" stroke-width="0.8"/>
-<rect x="204.0" y="420.0" width="22.0" height="22.0" fill="#dee4f3" stroke="#fff" stroke-width="0.8"/>
-<rect x="226.0" y="420.0" width="22.0" height="22.0" fill="#d9e0f1" stroke="#fff" stroke-width="0.8"/>
-<rect x="248.0" y="420.0" width="22.0" height="22.0" fill="#c4ceea" stroke="#fff" stroke-width="0.8"/>
-<rect x="270.0" y="420.0" width="22.0" height="22.0" fill="#b8c3e5" stroke="#fff" stroke-width="0.8"/>
-<rect x="292.0" y="420.0" width="22.0" height="22.0" fill="#3856b8" stroke="#fff" stroke-width="0.8"/>
-<rect x="314.0" y="420.0" width="22.0" height="22.0" fill="#536dc2" stroke="#fff" stroke-width="0.8"/>
-<rect x="204.0" y="442.0" width="22.0" height="22.0" fill="#eef2f9" stroke="#fff" stroke-width="0.8"/>
-<rect x="226.0" y="442.0" width="22.0" height="22.0" fill="#e0e6f4" stroke="#fff" stroke-width="0.8"/>
-<rect x="248.0" y="442.0" width="22.0" height="22.0" fill="#d0d8ee" stroke="#fff" stroke-width="0.8"/>
-<rect x="270.0" y="442.0" width="22.0" height="22.0" fill="#8598d3" stroke="#fff" stroke-width="0.8"/>
-<rect x="292.0" y="442.0" width="22.0" height="22.0" fill="#788dcf" stroke="#fff" stroke-width="0.8"/>
-<rect x="314.0" y="442.0" width="22.0" height="22.0" fill="#889ad4" stroke="#fff" stroke-width="0.8"/>
-<polygon points="207.7,319.5 235.5,313.7 310.3,329.8 310.3,411.9 283.9,455.9 260.5,431.0 209.1,401.7 206.2,372.3" fill="none" stroke="#111" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="270.0" y="482.0" font-size="12" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">issued 27 Sep</text>
-<text x="270.0" y="498.0" font-size="11" fill="#555" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">7-day mean total, mm</text>
-<text x="38" y="520" font-size="13" fill="#2563eb" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">What the brief does not say</text>
-<text x="38" y="542" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">• that tp is accumulated since the start</text>
-<text x="38" y="560" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">• whether to clip negative daily increments</text>
-<text x="38" y="578" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">• that the two issues must be compared on the same dates</text>
-<text x="38" y="596" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">• how to weight the regional mean</text>
-<text x="38" y="614" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">These are the conventions. The spec lists each</text>
-<text x="38" y="632" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reading as accepted or as a named pitfall.</text>
-<text x="38" y="665" font-size="12" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Budget: 20 min, offline sandbox, no network</text>
-<rect x="378" y="80" width="330" height="600" rx="10" fill="#dcfce7" stroke="#15803d" stroke-width="2"/><rect x="378" y="80" width="330" height="40" rx="10" fill="#15803d"/><rect x="378" y="108" width="330" height="12" fill="#15803d"/><text x="392" y="107" fill="#fff" font-size="19" font-weight="bold">2</text><text x="418" y="107" fill="#fff" font-size="19" font-weight="bold">The agent works</text>
-<text x="392" y="148" font-size="13" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">52 s, 107,751 tokens, 1 of 1 attempt</text>
-<text x="392" y="170" font-size="13" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Opens the stores, finds tp is cumulative,</text>
-<text x="392" y="188" font-size="13" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">differences it, keeps negative increments,</text>
-<text x="392" y="206" font-size="13" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">averages members, weights cells by cos(lat).</text>
-<text x="392" y="240" font-size="13" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Delivers</text>
-<rect x="398.0" y="256.0" width="26.7" height="26.7" fill="#c3967a" stroke="#fff" stroke-width="0.8"/>
-<rect x="424.7" y="256.0" width="26.7" height="26.7" fill="#d1ae99" stroke="#fff" stroke-width="0.8"/>
-<rect x="451.3" y="256.0" width="26.7" height="26.7" fill="#c4987d" stroke="#fff" stroke-width="0.8"/>
-<rect x="478.0" y="256.0" width="26.7" height="26.7" fill="#b07550" stroke="#fff" stroke-width="0.8"/>
-<rect x="504.7" y="256.0" width="26.7" height="26.7" fill="#b67e5d" stroke="#fff" stroke-width="0.8"/>
-<rect x="531.3" y="256.0" width="26.7" height="26.7" fill="#9e5528" stroke="#fff" stroke-width="0.8"/>
-<rect x="398.0" y="282.7" width="26.7" height="26.7" fill="#c19376" stroke="#fff" stroke-width="0.8"/>
-<rect x="424.7" y="282.7" width="26.7" height="26.7" fill="#f7f1ed" stroke="#fff" stroke-width="0.8"/>
-<rect x="451.3" y="282.7" width="26.7" height="26.7" fill="#f5ede9" stroke="#fff" stroke-width="0.8"/>
-<rect x="478.0" y="282.7" width="26.7" height="26.7" fill="#a96941" stroke="#fff" stroke-width="0.8"/>
-<rect x="504.7" y="282.7" width="26.7" height="26.7" fill="#c4987d" stroke="#fff" stroke-width="0.8"/>
-<rect x="531.3" y="282.7" width="26.7" height="26.7" fill="#d9bdab" stroke="#fff" stroke-width="0.8"/>
-<rect x="398.0" y="309.3" width="26.7" height="26.7" fill="#92400e" stroke="#fff" stroke-width="0.8"/>
-<rect x="424.7" y="309.3" width="26.7" height="26.7" fill="#bd8b6d" stroke="#fff" stroke-width="0.8"/>
-<rect x="451.3" y="309.3" width="26.7" height="26.7" fill="#e9d8ce" stroke="#fff" stroke-width="0.8"/>
-<rect x="478.0" y="309.3" width="26.7" height="26.7" fill="#eee1d9" stroke="#fff" stroke-width="0.8"/>
-<rect x="504.7" y="309.3" width="26.7" height="26.7" fill="#f4ece7" stroke="#fff" stroke-width="0.8"/>
-<rect x="531.3" y="309.3" width="26.7" height="26.7" fill="#f5eee9" stroke="#fff" stroke-width="0.8"/>
-<rect x="398.0" y="336.0" width="26.7" height="26.7" fill="#ac6d47" stroke="#fff" stroke-width="0.8"/>
-<rect x="424.7" y="336.0" width="26.7" height="26.7" fill="#92400e" stroke="#fff" stroke-width="0.8"/>
-<rect x="451.3" y="336.0" width="26.7" height="26.7" fill="#ab6b45" stroke="#fff" stroke-width="0.8"/>
-<rect x="478.0" y="336.0" width="26.7" height="26.7" fill="#f8f2ef" stroke="#fff" stroke-width="0.8"/>
-<rect x="504.7" y="336.0" width="26.7" height="26.7" fill="#feffff" stroke="#fff" stroke-width="0.8"/>
-<rect x="531.3" y="336.0" width="26.7" height="26.7" fill="#cfab95" stroke="#fff" stroke-width="0.8"/>
-<rect x="398.0" y="362.7" width="26.7" height="26.7" fill="#aa6a43" stroke="#fff" stroke-width="0.8"/>
-<rect x="424.7" y="362.7" width="26.7" height="26.7" fill="#f1e7e0" stroke="#fff" stroke-width="0.8"/>
-<rect x="451.3" y="362.7" width="26.7" height="26.7" fill="#cfab95" stroke="#fff" stroke-width="0.8"/>
-<rect x="478.0" y="362.7" width="26.7" height="26.7" fill="#f8f3f0" stroke="#fff" stroke-width="0.8"/>
-<rect x="504.7" y="362.7" width="26.7" height="26.7" fill="#ecddd4" stroke="#fff" stroke-width="0.8"/>
-<rect x="531.3" y="362.7" width="26.7" height="26.7" fill="#f8f3ef" stroke="#fff" stroke-width="0.8"/>
-<rect x="398.0" y="389.3" width="26.7" height="26.7" fill="#dcc1b1" stroke="#fff" stroke-width="0.8"/>
-<rect x="424.7" y="389.3" width="26.7" height="26.7" fill="#ebdbd2" stroke="#fff" stroke-width="0.8"/>
-<rect x="451.3" y="389.3" width="26.7" height="26.7" fill="#e6d3c8" stroke="#fff" stroke-width="0.8"/>
-<rect x="478.0" y="389.3" width="26.7" height="26.7" fill="#f2e8e2" stroke="#fff" stroke-width="0.8"/>
-<rect x="504.7" y="389.3" width="26.7" height="26.7" fill="#9fb4ee" stroke="#fff" stroke-width="0.8"/>
-<rect x="531.3" y="389.3" width="26.7" height="26.7" fill="#bfcdf4" stroke="#fff" stroke-width="0.8"/>
-<rect x="398.0" y="416.0" width="26.7" height="26.7" fill="#f8f2ef" stroke="#fff" stroke-width="0.8"/>
-<rect x="424.7" y="416.0" width="26.7" height="26.7" fill="#f1e6df" stroke="#fff" stroke-width="0.8"/>
-<rect x="451.3" y="416.0" width="26.7" height="26.7" fill="#e0c8ba" stroke="#fff" stroke-width="0.8"/>
-<rect x="478.0" y="416.0" width="26.7" height="26.7" fill="#dbc0b0" stroke="#fff" stroke-width="0.8"/>
-<rect x="504.7" y="416.0" width="26.7" height="26.7" fill="#cad6f6" stroke="#fff" stroke-width="0.8"/>
-<rect x="531.3" y="416.0" width="26.7" height="26.7" fill="#e2e8fa" stroke="#fff" stroke-width="0.8"/>
-<polygon points="402.4,267.6 436.2,260.4 526.9,280.0 526.9,379.6 494.9,432.9 466.4,402.7 404.2,367.1 400.7,331.6" fill="none" stroke="#111" stroke-width="1.6" stroke-dasharray="4 3"/>
-<text x="398" y="460.6666666666667" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">results.zarr: change_mm[period, lat, lon]</text>
-<rect x="578" y="270" width="22" height="14" fill="#92400e" stroke="#999" stroke-width="0.5"/>
-<rect x="600" y="270" width="22" height="14" fill="#c8a086" stroke="#999" stroke-width="0.5"/>
-<rect x="622" y="270" width="22" height="14" fill="#ffffff" stroke="#999" stroke-width="0.5"/>
-<rect x="644" y="270" width="22" height="14" fill="#8ea6ec" stroke="#999" stroke-width="0.5"/>
-<rect x="666" y="270" width="22" height="14" fill="#1d4ed8" stroke="#999" stroke-width="0.5"/>
-<text x="578" y="300" font-size="10" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">−12</text>
-<text x="678" y="300" font-size="10" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">+12 mm</text>
-<text x="578" y="320" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">drier ← → wetter</text>
-<text x="578" y="348" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">week of 27 Sep</text>
-<rect x="392" y="482.6666666666667" width="302" height="118" rx="6" fill="#fff" stroke="#15803d"/>
-<text x="400" y="500.6666666666667" font-size="11" fill="#15803d" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">answer.json</text>
-<text x="400" y="518.6666666666667" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">regional_change_mm: [-4.2, 3.0]</text>
-<text x="400" y="536.6666666666667" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">claims.direction: {27 Sep: drier,</text>
-<text x="400" y="552.6666666666667" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">                   4 Oct: wetter}</text>
-<text x="400" y="570.6666666666667" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">choices: "negative increments kept"</text>
-<text x="400" y="588.6666666666667" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">run: python solve.py {input_dir} …</text>
-<text x="400" y="622.6666666666667" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">solve.py        the code that made it</text>
-<text x="400" y="640.6666666666667" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">report.md       what it did and what it means</text>
-<text x="392" y="665" font-size="12" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Any language, method and file layout</text>
-<rect x="732" y="80" width="400" height="600" rx="10" fill="#ffedd5" stroke="#c2410c" stroke-width="2"/><rect x="732" y="80" width="400" height="40" rx="10" fill="#c2410c"/><rect x="732" y="108" width="400" height="12" fill="#c2410c"/><text x="746" y="107" fill="#fff" font-size="19" font-weight="bold">3</text><text x="772" y="107" fill="#fff" font-size="19" font-weight="bold">The controller checks</text>
-<text x="746" y="148" font-size="13" fill="#c2410c" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a. Compare with the reference under every reading</text>
-<circle cx="754" cy="168" r="5" fill="#15803d"/>
-<text x="764" y="172" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">accumulation differenced</text>
-<circle cx="944" cy="168" r="5" fill="#b91c1c"/>
-<text x="954" y="172" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">summed as daily</text>
-<circle cx="754" cy="188" r="5" fill="#15803d"/>
-<text x="764" y="192" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">negative increments kept</text>
-<circle cx="944" cy="188" r="5" fill="#15803d"/>
-<text x="954" y="192" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">clipped to zero</text>
-<circle cx="754" cy="208" r="5" fill="#15803d"/>
-<text x="764" y="212" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">same calendar dates</text>
-<circle cx="944" cy="208" r="5" fill="#b91c1c"/>
-<text x="954" y="212" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">same lead days</text>
-<circle cx="754" cy="228" r="5" fill="#15803d"/>
-<text x="764" y="232" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">cos(lat) weights</text>
-<circle cx="944" cy="228" r="5" fill="#b91c1c"/>
-<text x="954" y="232" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">plain mean</text>
-<circle cx="754" cy="248" r="5" fill="#15803d"/>
-<text x="764" y="252" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">window ends on day 7</text>
-<circle cx="944" cy="248" r="5" fill="#b91c1c"/>
-<text x="954" y="252" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">one day early</text>
-<text x="746" y="280" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">64 combinations computed. The numbers match only</text>
-<text x="746" y="296" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">accepted readings, with increments kept.</text>
-<rect x="1042" y="278" width="70" height="20" rx="10" fill="#15803d"/><text x="1077.0" y="292" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
-<text x="746" y="330" font-size="13" fill="#c2410c" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">b. Rerun the agent's own code</text>
-<text x="746" y="350" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">on the same data → same answer</text>
-<rect x="1042" y="332" width="70" height="20" rx="10" fill="#15803d"/><text x="1077.0" y="346" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
-<text x="746" y="370" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">on changed data (rain added, dips injected)</text>
-<text x="746" y="386" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">→ moves with the data, still an accepted reading</text>
-<rect x="1042" y="368" width="70" height="20" rx="10" fill="#15803d"/><text x="1077.0" y="382" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
-<text x="746" y="420" font-size="13" fill="#c2410c" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">c. Rules and claims</text>
-<text x="746" y="440" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">change = current − previous; regional mean inside</text>
-<text x="746" y="456" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the cell range; "drier" follows from −4.2 mm</text>
-<rect x="1042" y="438" width="70" height="20" rx="10" fill="#15803d"/><text x="1077.0" y="452" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
-<text x="746" y="490" font-size="13" fill="#c2410c" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">d. Judge: Claude Opus 5.5, exact quotations</text>
-<rect x="746" y="502" width="372" height="96" rx="6" fill="#fff" stroke="#c2410c"/>
-<text x="754" y="522" font-size="11" fill="#333" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Does the report say the same as the code and answer?</text>
-<text x="754" y="539" font-size="11" fill="#333" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">report.md: “negative increments were kept”</text>
-<text x="754" y="556" font-size="11" fill="#333" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">solve.py: no clip → consistent</text>
-<text x="754" y="573" font-size="11" fill="#333" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Does it overgeneralise? No: two issues, one box.</text>
-<text x="754" y="590" font-size="11" fill="#333" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Does it credit the data, the brief, its own choices? Yes.</text>
-<rect x="1042" y="606" width="70" height="20" rx="10" fill="#15803d"/><text x="1077.0" y="620" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
-<text x="746" y="665" font-size="12" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Same checks for every system; spec certified by 5 tests</text>
-<rect x="1156" y="80" width="260" height="600" rx="10" fill="#e5e7eb" stroke="#1f2937" stroke-width="2"/><rect x="1156" y="80" width="260" height="40" rx="10" fill="#1f2937"/><rect x="1156" y="108" width="260" height="12" fill="#1f2937"/><text x="1170" y="107" fill="#fff" font-size="19" font-weight="bold">4</text><text x="1196" y="107" fill="#fff" font-size="19" font-weight="bold">The result</text>
-<rect x="1186" y="150" width="200" height="56" rx="28" fill="#15803d"/>
-<text x="1286.0" y="186" font-size="28" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">PASS</text>
-<text x="1170" y="240" font-size="13" fill="#1f2937" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">11 of 11 checks</text>
-<circle cx="1180" cy="260" r="5" fill="#15803d"/>
-<text x="1192" y="264" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">envelope</text>
-<circle cx="1180" cy="280" r="5" fill="#15803d"/>
-<text x="1192" y="284" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">variant match</text>
-<circle cx="1180" cy="300" r="5" fill="#15803d"/>
-<text x="1192" y="304" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">3 invariants</text>
-<circle cx="1180" cy="320" r="5" fill="#15803d"/>
-<text x="1192" y="324" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">2 probes</text>
-<circle cx="1180" cy="340" r="5" fill="#15803d"/>
-<text x="1192" y="344" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">1 claim</text>
-<circle cx="1180" cy="360" r="5" fill="#15803d"/>
-<text x="1192" y="364" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">3 judge questions</text>
-<text x="1170" y="402" font-size="13" fill="#1f2937" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Matched conventions</text>
-<text x="1180" y="422" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">increments: kept</text>
-<text x="1180" y="440" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">weights: cos(lat)</text>
-<text x="1180" y="458" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">dates: same period</text>
-<text x="1170" y="492" font-size="13" fill="#1f2937" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Recorded with it</text>
-<text x="1180" y="512" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">52 s, 107,751 tokens</text>
-<text x="1180" y="530" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">model, harness, substrate</text>
-<text x="1180" y="548" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">input and artifact hashes</text>
-<text x="1180" y="566" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the full tool trace</text>
-<text x="1180" y="584" font-size="12" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">judge id and its quotes</text>
-<text x="1170" y="620" font-size="13" fill="#1f2937" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The other outcomes</text>
-<rect x="1180" y="632" width="50" height="20" rx="10" fill="#b91c1c"/><text x="1205.0" y="646" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">fail</text>
-<text x="1238" y="650" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a named pitfall or defect</text>
-<rect x="1180" y="656" width="84" height="20" rx="10" fill="#6b7280"/><text x="1222.0" y="670" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">unresolved</text>
-<text x="1272" y="674" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">an outside cause</text>
-<path d="M 354 380 L 378 380" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-<path d="M 708 380 L 732 380" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-<path d="M 1132 380 L 1156 380" stroke="#333" stroke-width="2.5" fill="none" marker-end="url(#arrow)"/>
-<text x="24" y="710" font-size="12" fill="#444" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Three of nine earlier attempts on this template placed the 7-day window one day early. The reference under that reading matched their numbers exactly,</text>
-<text x="24" y="728" font-size="12" fill="#444" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">so each failed with the pitfall named. On the seasonal task the judge, reading the code an agent cited for its calibration, found a defect that the numbers</text>
-<text x="24" y="746" font-size="12" fill="#444" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">had not isolated. Every outcome keeps its evidence. A second episode on another box can start from this submission.</text>
-<text x="24" y="782" font-size="11" fill="#666" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Terms: a pitfall is a known wrong method with a computable wrong answer; a probe reruns the agent's code on changed data; the controller is the trusted program that runs the agent, holds the references and runs the checks.</text>
+<rect width="1440" height="780" fill="#fff"/>
+<text x="720.0" y="32" font-size="22" fill="#111" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">An agent drives a seasonal-forecast workflow, and the benchmark checks every step</text>
+<text x="720.0" y="56" font-size="13" fill="#555" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">A real run: gpt-6-luna, seasonal rainfall calibration to the WMO guidance, a box in Kenya, trained on 1993–2004, outlook for 2005–2006. 60 s, 57,843 tokens.</text>
+<rect x="24" y="78" width="26" height="250" rx="6" fill="#15803d"/>
+<text transform="translate(42 203) rotate(-90)" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">THE AGENT</text>
+<rect x="24" y="340" width="26" height="150" rx="6" fill="#c2410c"/>
+<text transform="translate(42 415) rotate(-90)" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">THE CHECKS</text>
+<rect x="64" y="78" width="212" height="250" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="1.8"/>
+<text x="74" y="100" font-size="14" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">1 Get the data</text>
+<path d="M 276 200 L 290 200" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="290" y="78" width="212" height="250" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="1.8"/>
+<text x="300" y="100" font-size="14" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">2 Prepare</text>
+<path d="M 502 200 L 516 200" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="516" y="78" width="212" height="250" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="1.8"/>
+<text x="526" y="100" font-size="14" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">3 Calibrate</text>
+<path d="M 728 200 L 742 200" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="742" y="78" width="212" height="250" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="1.8"/>
+<text x="752" y="100" font-size="14" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">4 Cross-validate</text>
+<path d="M 954 200 L 968 200" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="968" y="78" width="212" height="250" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="1.8"/>
+<text x="978" y="100" font-size="14" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">5 Verify</text>
+<path d="M 1180 200 L 1194 200" stroke="#333" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="1194" y="78" width="212" height="250" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="1.8"/>
+<text x="1204" y="100" font-size="14" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">6 Issue the outlook</text>
+<rect x="82" y="118" width="90" height="56" rx="4" fill="#acc0ea" stroke="#fff"/>
+<rect x="88" y="124" width="90" height="56" rx="4" fill="#869eda" stroke="#fff"/>
+<rect x="94" y="130" width="90" height="56" rx="4" fill="#607ccb" stroke="#fff"/>
+<text x="82" y="196" font-size="10" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">ECMWF, 25 members</text>
+<text x="82" y="209" font-size="10" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">monthly rates</text>
+<rect x="192.0" y="118.0" width="11.0" height="11.0" fill="#8496c3" stroke="#fff"/>
+<rect x="203.0" y="118.0" width="11.0" height="11.0" fill="#284390" stroke="#fff"/>
+<rect x="214.0" y="118.0" width="11.0" height="11.0" fill="#d1dbee" stroke="#fff"/>
+<rect x="225.0" y="118.0" width="11.0" height="11.0" fill="#294490" stroke="#fff"/>
+<rect x="236.0" y="118.0" width="11.0" height="11.0" fill="#aebbdb" stroke="#fff"/>
+<rect x="247.0" y="118.0" width="11.0" height="11.0" fill="#97a6cd" stroke="#fff"/>
+<rect x="192.0" y="129.0" width="11.0" height="11.0" fill="#425a9e" stroke="#fff"/>
+<rect x="203.0" y="129.0" width="11.0" height="11.0" fill="#99a9cf" stroke="#fff"/>
+<rect x="214.0" y="129.0" width="11.0" height="11.0" fill="#7c8fbf" stroke="#fff"/>
+<rect x="225.0" y="129.0" width="11.0" height="11.0" fill="#e9f1fc" stroke="#fff"/>
+<rect x="236.0" y="129.0" width="11.0" height="11.0" fill="#5268a7" stroke="#fff"/>
+<rect x="247.0" y="129.0" width="11.0" height="11.0" fill="#7f91c0" stroke="#fff"/>
+<rect x="192.0" y="140.0" width="11.0" height="11.0" fill="#aab8d8" stroke="#fff"/>
+<rect x="203.0" y="140.0" width="11.0" height="11.0" fill="#4a62a3" stroke="#fff"/>
+<rect x="214.0" y="140.0" width="11.0" height="11.0" fill="#b0bddc" stroke="#fff"/>
+<rect x="225.0" y="140.0" width="11.0" height="11.0" fill="#90a1ca" stroke="#fff"/>
+<rect x="236.0" y="140.0" width="11.0" height="11.0" fill="#d3ddef" stroke="#fff"/>
+<rect x="247.0" y="140.0" width="11.0" height="11.0" fill="#9baad0" stroke="#fff"/>
+<rect x="192.0" y="151.0" width="11.0" height="11.0" fill="#c4d0e7" stroke="#fff"/>
+<rect x="203.0" y="151.0" width="11.0" height="11.0" fill="#b8c5e0" stroke="#fff"/>
+<rect x="214.0" y="151.0" width="11.0" height="11.0" fill="#5269a7" stroke="#fff"/>
+<rect x="225.0" y="151.0" width="11.0" height="11.0" fill="#b4c1de" stroke="#fff"/>
+<rect x="236.0" y="151.0" width="11.0" height="11.0" fill="#8a9bc6" stroke="#fff"/>
+<rect x="247.0" y="151.0" width="11.0" height="11.0" fill="#223e8c" stroke="#fff"/>
+<rect x="192.0" y="162.0" width="11.0" height="11.0" fill="#26418e" stroke="#fff"/>
+<rect x="203.0" y="162.0" width="11.0" height="11.0" fill="#586eaa" stroke="#fff"/>
+<rect x="214.0" y="162.0" width="11.0" height="11.0" fill="#7e90c0" stroke="#fff"/>
+<rect x="225.0" y="162.0" width="11.0" height="11.0" fill="#b5c2df" stroke="#fff"/>
+<rect x="236.0" y="162.0" width="11.0" height="11.0" fill="#cdd8ec" stroke="#fff"/>
+<rect x="247.0" y="162.0" width="11.0" height="11.0" fill="#24408e" stroke="#fff"/>
+<rect x="192.0" y="173.0" width="11.0" height="11.0" fill="#8395c3" stroke="#fff"/>
+<rect x="203.0" y="173.0" width="11.0" height="11.0" fill="#d7e0f1" stroke="#fff"/>
+<rect x="214.0" y="173.0" width="11.0" height="11.0" fill="#6d81b6" stroke="#fff"/>
+<rect x="225.0" y="173.0" width="11.0" height="11.0" fill="#4d64a4" stroke="#fff"/>
+<rect x="236.0" y="173.0" width="11.0" height="11.0" fill="#6f83b7" stroke="#fff"/>
+<rect x="247.0" y="173.0" width="11.0" height="11.0" fill="#2f4a94" stroke="#fff"/>
+<text x="192" y="196" font-size="10" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">CHIRPS obs</text>
+<text x="192" y="209" font-size="10" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">0.05°, monthly</text>
+<text x="74" y="240" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Menlo, monospace">forecast-training.nc</text>
+<text x="74" y="256" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Menlo, monospace">observations-training.nc</text>
+<text x="74" y="272" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Menlo, monospace">forecast-new.nc</text>
+<text x="74" y="300" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Frozen, offline, hashed</text>
+<rect x="310.0" y="116.0" width="28.0" height="28.0" fill="#e3ebf8" stroke="#fff"/>
+<rect x="338.0" y="116.0" width="28.0" height="28.0" fill="#a7b5d7" stroke="#fff"/>
+<rect x="366.0" y="116.0" width="28.0" height="28.0" fill="#6a7fb5" stroke="#fff"/>
+<rect x="310.0" y="144.0" width="28.0" height="28.0" fill="#d4ddf0" stroke="#fff"/>
+<rect x="338.0" y="144.0" width="28.0" height="28.0" fill="#6d81b6" stroke="#fff"/>
+<rect x="366.0" y="144.0" width="28.0" height="28.0" fill="#6176af" stroke="#fff"/>
+<rect x="310.0" y="172.0" width="28.0" height="28.0" fill="#8f9fc9" stroke="#fff"/>
+<rect x="338.0" y="172.0" width="28.0" height="28.0" fill="#1e3a8a" stroke="#fff"/>
+<rect x="366.0" y="172.0" width="28.0" height="28.0" fill="#5b71ac" stroke="#fff"/>
+<rect x="310.0" y="200.0" width="28.0" height="28.0" fill="#eff6ff" stroke="#fff"/>
+<rect x="338.0" y="200.0" width="28.0" height="28.0" fill="#3a5399" stroke="#fff"/>
+<rect x="366.0" y="200.0" width="28.0" height="28.0" fill="#3d569c" stroke="#fff"/>
+<text x="352.0" y="244.0" font-size="11" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">observed OND total, 1° grid</text>
+<text x="410" y="134" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">rate × days</text>
+<text x="410" y="148" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">in each month</text>
+<text x="410" y="170" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">obs cells averaged</text>
+<text x="410" y="184" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">into each 1° cell</text>
+<text x="300" y="272" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">12 seasons × 12 cells</text>
+<text x="300" y="300" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Totals in mm, on the forecast grid</text>
+<line x1="540" y1="226" x2="636" y2="226" stroke="#333"/><line x1="540" y1="116" x2="540" y2="226" stroke="#333"/>
+<circle cx="556.5" cy="211.3" r="3.5" fill="#15803d"/>
+<circle cx="605.9" cy="163.0" r="3.5" fill="#15803d"/>
+<circle cx="568.3" cy="196.2" r="3.5" fill="#15803d"/>
+<circle cx="545.5" cy="214.0" r="3.5" fill="#15803d"/>
+<circle cx="636.0" cy="116.0" r="3.5" fill="#15803d"/>
+<circle cx="540.0" cy="226.0" r="3.5" fill="#15803d"/>
+<circle cx="542.3" cy="192.0" r="3.5" fill="#15803d"/>
+<circle cx="547.5" cy="204.0" r="3.5" fill="#15803d"/>
+<circle cx="558.6" cy="202.3" r="3.5" fill="#15803d"/>
+<circle cx="575.0" cy="190.5" r="3.5" fill="#15803d"/>
+<circle cx="564.5" cy="197.1" r="3.5" fill="#15803d"/>
+<circle cx="557.0" cy="206.6" r="3.5" fill="#15803d"/>
+<line x1="540" y1="218.6" x2="636" y2="126.5" stroke="#c2410c" stroke-width="2"/>
+<text x="588.0" y="242" font-size="10" fill="#555" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">model total →</text>
+<text transform="translate(532 171.0) rotate(-90)" text-anchor="middle" font-size="10" fill="#555">observed →</text>
+<text x="648" y="140" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">per cell:</text>
+<text x="648" y="154" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">obs = a + b·model</text>
+<text x="648" y="176" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Gaussian residual</text>
+<text x="648" y="190" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">→ tercile</text>
+<text x="648" y="204" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">probabilities</text>
+<text x="526" y="272" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">one cell shown, 12 years</text>
+<text x="526" y="300" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Any sound calibration is acceptable</text>
+<rect x="758" y="120" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="771" y="138" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">93</text>
+<rect x="788" y="120" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="801" y="138" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">94</text>
+<rect x="818" y="120" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="831" y="138" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">95</text>
+<rect x="848" y="120" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="861" y="138" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">96</text>
+<rect x="878" y="120" width="26" height="26" rx="4" fill="#b91c1c" stroke="#fff"/>
+<text x="891" y="138" font-size="10" fill="#fff" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">97</text>
+<rect x="908" y="120" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="921" y="138" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">98</text>
+<rect x="758" y="150" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="771" y="168" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">99</text>
+<rect x="788" y="150" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="801" y="168" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">00</text>
+<rect x="818" y="150" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="831" y="168" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">01</text>
+<rect x="848" y="150" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="861" y="168" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">02</text>
+<rect x="878" y="150" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="891" y="168" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">03</text>
+<rect x="908" y="150" width="26" height="26" rx="4" fill="#bbf7d0" stroke="#fff"/>
+<text x="921" y="168" font-size="10" fill="#14532d" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">04</text>
+<text x="752" y="200" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Each year held out of the fit</text>
+<text x="752" y="214" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">and of the tercile boundaries,</text>
+<text x="752" y="228" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">then forecast</text>
+<text x="752" y="272" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">12 hindcasts, one per year</text>
+<text x="752" y="300" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The WMO practice the task requires</text>
+<rect x="984" y="150" width="180" height="18" rx="4" fill="#e5e7eb"/>
+<rect x="1074.0" y="150" width="48.5" height="18" rx="4" fill="#15803d"/>
+<line x1="1074.0" y1="144" x2="1074.0" y2="174" stroke="#333"/>
+<text x="1074.0" y="140" font-size="10" fill="#555" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">climatology = 0</text>
+<text x="1164" y="188" font-size="10" fill="#555" font-weight="normal" text-anchor="end" font-family="Helvetica, Arial, sans-serif">+0.5</text>
+<text x="984" y="188" font-size="10" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">−0.5</text>
+<text x="1126.5043802849118" y="163" font-size="12" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">RPSS 0.27</text>
+<text x="978" y="214" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">ranked probability skill of the 12</text>
+<text x="978" y="228" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">hindcasts, pooled over cells, against</text>
+<text x="978" y="242" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a one-third-each forecast</text>
+<text x="978" y="300" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Reported with the outlook</text>
+<rect x="1210.0" y="116.0" width="28.0" height="28.0" fill="#a0b0e4" stroke="#fff"/>
+<rect x="1238.0" y="116.0" width="28.0" height="28.0" fill="#e7e5eb" stroke="#fff"/>
+<rect x="1266.0" y="116.0" width="28.0" height="28.0" fill="#cfd3e9" stroke="#fff"/>
+<rect x="1210.0" y="144.0" width="28.0" height="28.0" fill="#fff7ed" stroke="#fff"/>
+<rect x="1238.0" y="144.0" width="28.0" height="28.0" fill="#96a8e3" stroke="#fff"/>
+<rect x="1266.0" y="144.0" width="28.0" height="28.0" fill="#597bde" stroke="#fff"/>
+<rect x="1210.0" y="172.0" width="28.0" height="28.0" fill="#fff7ed" stroke="#fff"/>
+<rect x="1238.0" y="172.0" width="28.0" height="28.0" fill="#fff7ed" stroke="#fff"/>
+<rect x="1266.0" y="172.0" width="28.0" height="28.0" fill="#90a4e3" stroke="#fff"/>
+<rect x="1210.0" y="200.0" width="28.0" height="28.0" fill="#fff7ed" stroke="#fff"/>
+<rect x="1238.0" y="200.0" width="28.0" height="28.0" fill="#cfd3e9" stroke="#fff"/>
+<rect x="1266.0" y="200.0" width="28.0" height="28.0" fill="#99abe4" stroke="#fff"/>
+<text x="1224" y="134" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">37%</text>
+<text x="1252" y="134" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">24%</text>
+<text x="1280" y="134" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">29%</text>
+<text x="1224" y="162" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">15%</text>
+<text x="1252" y="162" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">39%</text>
+<text x="1280" y="162" font-size="9" fill="#fff" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">49%</text>
+<text x="1224" y="190" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">14%</text>
+<text x="1252" y="190" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">12%</text>
+<text x="1280" y="190" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">40%</text>
+<text x="1224" y="218" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">13%</text>
+<text x="1252" y="218" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">28%</text>
+<text x="1280" y="218" font-size="9" fill="#111" font-weight="normal" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">38%</text>
+<text x="1210" y="244.0" font-size="10" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">P(above normal), OND 2005</text>
+<text x="1306" y="134" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">three tercile</text>
+<text x="1306" y="148" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">probabilities</text>
+<text x="1306" y="162" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">per cell, per year</text>
+<text x="1204" y="272" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">“a 40% probability still means the</text>
+<text x="1204" y="286" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">other outcomes remain likely” — report</text>
+<text x="1204" y="304" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Uncertainty stated in plain language</text>
+<rect x="64" y="340" width="212" height="150" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="1.8"/>
+<text x="74" y="362" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Inputs hashed; the whole</text>
+<text x="74" y="378" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">tool trace is recorded.</text>
+<text x="74" y="394" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Rerun on changed data:</text>
+<text x="74" y="410" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the results follow the data.</text>
+<rect x="214" y="467" width="52" height="18" rx="9" fill="#15803d"/><text x="240.0" y="480" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
+<line x1="170.0" y1="328" x2="170.0" y2="340" stroke="#c2410c" stroke-width="2" stroke-dasharray="3 2"/>
+<rect x="290" y="340" width="212" height="150" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="1.8"/>
+<text x="300" y="362" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Totals match the reference</text>
+<text x="300" y="378" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">under the actual month</text>
+<text x="300" y="394" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">lengths, not 30-day months</text>
+<text x="300" y="410" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">or raw rates. Two readings of</text>
+<text x="300" y="426" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the obs weighting both accepted.</text>
+<rect x="440" y="467" width="52" height="18" rx="9" fill="#15803d"/><text x="466.0" y="480" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
+<line x1="396.0" y1="328" x2="396.0" y2="340" stroke="#c2410c" stroke-width="2" stroke-dasharray="3 2"/>
+<rect x="516" y="340" width="212" height="150" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="1.8"/>
+<text x="526" y="362" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Judge reads the cited code:</text>
+<text x="526" y="378" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">“lstsq(X, ytrain)” with a</text>
+<text x="526" y="394" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">residual spread — does what</text>
+<text x="526" y="410" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the method entry says.</text>
+<rect x="666" y="467" width="52" height="18" rx="9" fill="#15803d"/><text x="692.0" y="480" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
+<line x1="622.0" y1="328" x2="622.0" y2="340" stroke="#c2410c" stroke-width="2" stroke-dasharray="3 2"/>
+<rect x="742" y="340" width="212" height="150" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="1.8"/>
+<text x="752" y="362" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Probe: change one year's</text>
+<text x="752" y="378" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">observation → that year's</text>
+<text x="752" y="394" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">hindcast does not move.</text>
+<text x="752" y="410" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Categories match the</text>
+<text x="752" y="426" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">leave-one-out boundaries.</text>
+<rect x="892" y="467" width="52" height="18" rx="9" fill="#15803d"/><text x="918.0" y="480" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
+<line x1="848.0" y1="328" x2="848.0" y2="340" stroke="#c2410c" stroke-width="2" stroke-dasharray="3 2"/>
+<rect x="968" y="340" width="212" height="150" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="1.8"/>
+<text x="978" y="362" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">RPSS recomputed from the</text>
+<text x="978" y="378" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">submitted probabilities and</text>
+<text x="978" y="394" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">categories: 0.269 ✓, within</text>
+<text x="978" y="410" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a float32 error bound.</text>
+<rect x="1118" y="467" width="52" height="18" rx="9" fill="#15803d"/><text x="1144.0" y="480" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
+<line x1="1074.0" y1="328" x2="1074.0" y2="340" stroke="#c2410c" stroke-width="2" stroke-dasharray="3 2"/>
+<rect x="1194" y="340" width="212" height="150" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="1.8"/>
+<text x="1204" y="362" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Probabilities valid and sum</text>
+<text x="1204" y="378" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">to 1. Probe: change one new</text>
+<text x="1204" y="394" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">year's forecast → the other</text>
+<text x="1204" y="410" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">year's outlook is unchanged.</text>
+<text x="1204" y="426" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Judge: plain language ✓.</text>
+<rect x="1344" y="467" width="52" height="18" rx="9" fill="#15803d"/><text x="1370.0" y="480" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">pass</text>
+<line x1="1300.0" y1="328" x2="1300.0" y2="340" stroke="#c2410c" stroke-width="2" stroke-dasharray="3 2"/>
+<rect x="64" y="508" width="300" height="150" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="1.8"/>
+<text x="74" y="530" font-size="13" fill="#15803d" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The agent delivered</text>
+<text x="74" y="554" font-size="10.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">results.zarr  6 labelled arrays: totals,</text>
+<text x="74" y="572" font-size="10.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">              categories, probabilities</text>
+<text x="74" y="590" font-size="10.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">answer.json   RPSS, method pointers, run cmd</text>
+<text x="74" y="608" font-size="10.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">run.py        regenerates everything</text>
+<text x="74" y="626" font-size="10.5" fill="#111" font-weight="normal" text-anchor="start" font-family="Menlo, Consolas, monospace">report.md     what, why, limits</text>
+<rect x="380" y="508" width="560" height="150" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="1.8"/>
+<text x="390" y="530" font-size="13" fill="#c2410c" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The WMO checklist, 11 steps, each from the most exact evidence</text>
+<circle cx="398" cy="550" r="5" fill="#15803d"/>
+<text x="408" y="554" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reproducible</text>
+<text x="592" y="554" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">probes</text>
+<circle cx="673" cy="550" r="5" fill="#15803d"/>
+<text x="683" y="554" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">model forecast prepared</text>
+<text x="867" y="554" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reference</text>
+<circle cx="398" cy="567" r="5" fill="#15803d"/>
+<text x="408" y="571" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">observations prepared</text>
+<text x="592" y="571" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reference</text>
+<circle cx="673" cy="567" r="5" fill="#15803d"/>
+<text x="683" y="571" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">cross-validated</text>
+<text x="867" y="571" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">probe</text>
+<circle cx="398" cy="584" r="5" fill="#15803d"/>
+<text x="408" y="588" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">verification categories</text>
+<text x="592" y="588" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reference</text>
+<circle cx="673" cy="584" r="5" fill="#15803d"/>
+<text x="683" y="588" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">historical performance</text>
+<text x="867" y="588" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">reference</text>
+<circle cx="398" cy="601" r="5" fill="#15803d"/>
+<text x="408" y="605" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">probabilistic format</text>
+<text x="592" y="605" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">rule</text>
+<circle cx="673" cy="601" r="5" fill="#15803d"/>
+<text x="683" y="605" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">operational application</text>
+<text x="867" y="605" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">probe</text>
+<circle cx="398" cy="618" r="5" fill="#15803d"/>
+<text x="408" y="622" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">documented calibration</text>
+<text x="592" y="622" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">judge</text>
+<circle cx="673" cy="618" r="5" fill="#15803d"/>
+<text x="683" y="622" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">documented cross-validation</text>
+<text x="867" y="622" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">judge</text>
+<circle cx="398" cy="635" r="5" fill="#15803d"/>
+<text x="408" y="639" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">plain-language uncertainty</text>
+<text x="592" y="639" font-size="10" fill="#777" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">judge</text>
+<rect x="956" y="508" width="460" height="150" rx="8" fill="#f3f4f6" stroke="#1f2937" stroke-width="1.8"/>
+<rect x="970" y="524" width="130" height="44" rx="22" fill="#15803d"/>
+<text x="1035" y="554" font-size="24" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">PASS</text>
+<text x="1112" y="540" font-size="13" fill="#1f2937" font-weight="bold" text-anchor="start" font-family="Helvetica, Arial, sans-serif">22 of 22 checks</text>
+<text x="1112" y="558" font-size="11" fill="#555" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">the judge's 6 included</text>
+<text x="970" y="586" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Recorded: 60 s, 57,843 tokens, model, harness, substrate,</text>
+<text x="970" y="601" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">input and artifact hashes, the tool trace, the judge id.</text>
+<rect x="970" y="607" width="44" height="18" rx="9" fill="#b91c1c"/><text x="992.0" y="620" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">fail</text>
+<text x="1020" y="620" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">a named pitfall or defect</text>
+<rect x="1180" y="607" width="78" height="18" rx="9" fill="#6b7280"/><text x="1219.0" y="620" font-size="11" fill="#fff" font-weight="bold" text-anchor="middle" font-family="Helvetica, Arial, sans-serif">unresolved</text>
+<text x="1264" y="620" font-size="11" fill="#111" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">an outside cause</text>
+<text x="970" y="646" font-size="11" fill="#444" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">The other attempt on this box that day failed: its boundaries included the held-out year.</text>
+<text x="64" y="700" font-size="12" fill="#444" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Same task, same data, same checks for every system. Change the model, the harness, the substrate or the supplied material, and compare pass rate, cost and time.</text>
+<text x="64" y="720" font-size="12" fill="#444" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">A second episode hands this submission to the same system for another box, another season or the next task.</text>
+<text x="64" y="752" font-size="10.5" fill="#666" font-weight="normal" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Terms: a probe reruns the agent's code on changed data; a pitfall is a known wrong method with a computable wrong answer; the reference is controller code that computes the answer under every defensible reading of the brief.</text>
 </svg>
