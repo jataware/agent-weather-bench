@@ -10,9 +10,9 @@ For AI and machine learning researchers, the benchmark provides common templates
 
 For forecasters, the goal is to provide evidence for choosing agents and supporting methods for specific tasks. Results should show which work a system completes correctly, where it fails, and where expert review is needed.
 
-[How one attempt works](#how-one-attempt-works) · [Templates](#a-template-is-a-parameterised-task) · [Checks](#how-an-attempt-is-checked) · [What we compare](#what-we-compare) · [Run a template](#run-a-template) · [Results](docs/results.md) · [Roadmap](docs/roadmap.md)
+[The attempt](#the-attempt) · [Templates](#templates) · [The checks](#the-checks) · [Systems and supplements](#systems-and-supplements) · [Run a template](#run-a-template) · [Results](docs/results.md) · [Roadmap](docs/roadmap.md)
 
-## How one attempt works
+## The attempt
 
 ![A template and its tooling go into a sandbox with an agent; the controller inspects what comes out](docs/figures/overview.png)
 
@@ -20,7 +20,7 @@ The question is: under what conditions can a forecaster's task be handed to an a
 
 One run of one system on one instance is an attempt. A system is a model, the harness that drives it, and the tooling in its workspace. The set has 25 templates in six families, checked in product, process or outcome mode; three are built and certified so far. [The roadmap](docs/roadmap.md) states the system, the open work and the eight planned experiments in three pages. [The results so far](docs/results.md) give the first 36 attempts and what the checks caught. [The task set](docs/task-set.md) and [the assessment format](docs/assessment-format.md) hold the detail.
 
-## A template is a parameterised task
+## Templates
 
 A template is a task whose brief, inputs and answer key take parameters such as region and time window, so one template yields many instances. Each template declares a mode. In product mode the controller compares the agent's numbers with a private reference. In process mode it also checks the method against a published standard, step by step. In outcome mode it scores a forecast against withheld observations. Level 1 is the plain submission. Level 2 is a separate, optimized submission for the same instance, which the agent may tune with a limited number of development scores; its skill ranks a leaderboard once its validity checks pass.
 
@@ -34,7 +34,7 @@ The three templates below are certified: each passes the five certification test
 
 [The task set](docs/task-set.md) lists all 25 templates with their parameters, modes and levels.
 
-## How an attempt is checked
+## The checks
 
 Each template has a spec: the named results with their error bounds, the conventions the brief leaves open with each reading marked accepted or a named pitfall, the invariants any valid answer obeys, the probes to run, the claims to check, the process steps to verify and the questions a judge decides. The controller holds a private reference function that computes the answer under every defensible reading.
 
@@ -58,7 +58,7 @@ Every check returns pass, fail or unresolved. Fail means the submission is at fa
 
 The controller keeps the provenance. It records the hashes of the inputs and of every submitted file, the source versions, the full tool trace, the tooling used, the cost and the time. The agent writes none of it, so an administrative slip cannot fail a check. The format is defined in [the assessment format](docs/assessment-format.md) and used through the [`assessment/`](templates/README.md) package.
 
-## What we compare
+## Systems and supplements
 
 ![Benchmark design: compare models, harnesses and tooling on the same template instances. A template states a product with frozen data and a budget; an agent in a sandbox hands back a submission and a trace; the controller checks it against a private reference, by rerunning the code on changed data, and by a judge on exact quotations. Every check returns pass, fail or unresolved. Episodes keep the earlier submission for the next instance.](docs/assets/brand/benchmark-design.svg)
 
@@ -113,15 +113,15 @@ python3 -m venv .venv
 
 A template folder holds `spec.yaml`, `brief.md`, `reference.py`, `reference_independent.py`, `instances.yaml`, `sources.json`, `controls/` and, after certification, `certification.json`; a process-mode template also names its standard under `standards/`. Freeze the source data and record its hashes, write the reference function and a second implementation that shares no code with it, declare each tolerance as an error bound, label every convention accepted or pitfall, build the controls, and run `certify`. The spec version is locked only after the fifth test, cheap-model attempts with every unknown answer ruled on. [The templates guide](templates/README.md) gives the file-by-file instructions and the hooks `reference.py` must provide.
 
-## Results so far
+## Results
 
 36 attempts by one cheap model, gpt-6-luna, through one harness have been assessed on the three templates: 23 passed every check, the judge's included. The judge decided 151 questions, failed 8 and matched the expected verdict on all 12 of its control cases. Every failure has a named cause. [The results](docs/results.md) give the tables, the tooling comparison and the eight controller defects the attempts found.
 
-## The set will have 25 templates
+## The template set
 
 The 25 templates fall into six families: outlook products, observed indices and verification, seasonal forecast production, subseasonal forecast production, research claims and consensus, and downscaling with the diagnostic pack. Three are certified; the rest are specified with their parameters, mode and level, and two are marked frontier-hard. [The task set](docs/task-set.md) is the full list.
 
-## Where the work is going
+## Roadmap
 
 [The roadmap](docs/roadmap.md) states what is built, what remains (the tooling images, the conventions sheets, the remaining templates, the spending limits) and the eight planned experiments: the model ladder, harnesses, tooling value, supplements, second episodes, Level 2, process conformance and the frontier-hard templates.
 

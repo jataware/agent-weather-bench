@@ -1,10 +1,10 @@
-# The roadmap states the question, what is built and what comes next
+# Roadmap
 
 Status: draft of 7 October 2026, for discussion. This page tells a new reader what the benchmark is, what is built, what is not built, and what experiments come next. It is short on purpose. [The results so far](results.md) show what the machinery catches, with a one-page figure of how it works and how it scales. [The task set](task-set.md) and [the assessment format](assessment-format.md) give the detail.
 
 ![A task and its tooling go into a sandbox with an agent; the controller inspects what comes out](figures/overview.png)
 
-## The benchmark asks one question
+## The question
 
 - With which model, harness, tooling and supplements can we hand a forecaster's task to an AI agent system and get back the right result?
 - "A forecaster's task" is one of the canonical workflows of subseasonal-to-seasonal forecasting: literature and method research, data acquisition and preparation, calibration and model combination, downscaling, verification, and the issue of a seasonal or subseasonal outlook with its uncertainty.
@@ -12,7 +12,7 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 - The system is the model, the harness and the tooling, defined next; the supplements and the budget of time and tokens are set per run. A system is a model plus a harness plus tooling, together with the budget of time and tokens.
 - The benchmark measures, for each system and each set of supplements, the pass rate, the cost, the time, and the point at which an expert must step in.
 
-## A system under evaluation has three parts, and a run adds supplements
+## The system under evaluation
 
 - **The model.** The language model, from small open-weight models to frontier models.
 - **The harness.** The agent loop that drives the model. Examples: the built-in driver, Codex, the `rx` research harness. The controller (the trusted evaluator, defined below) is not a harness.
@@ -20,7 +20,7 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 - **The supplements.** Material added to one run with `--supply` or `--parent`: a sheet of conventions, a description of the method, or the agent's own earlier submission.
 - We change one part at a time and keep the other three the same. That is how we measure the value of each part.
 
-## A task is a forecasting job with a checkable result
+## Tasks
 
 - A task gives the agent a short brief, a folder of data, and a fixed budget of time and tokens.
 - The brief states the product: the arrays, the numbers and the conclusions the agent must submit. It does not state the method.
@@ -28,7 +28,7 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 - The controller then checks the submission. The controller is the trusted program that runs the agent, holds the private reference answers and runs the checks.
 - Each task has a reference answer or a set of withheld observations, so the checks are exact. Each task also has known wrong methods, called pitfalls, so a wrong answer gets a name.
 
-## A template declares one of three modes, and the mode follows from the task
+## Modes and levels
 
 - **Product mode.** The agent must submit a named quantity. The controller compares it with a reference answer under every defensible reading of the brief, and names a known pitfall when it finds one. Used for outlooks, indices, verifications and audits.
 - **Process mode.** The agent must submit the product and follow a published standard, step by step. The first standard is the WMO guidance on objective seasonal forecasting. Used for forecast production.
@@ -36,13 +36,13 @@ Status: draft of 7 October 2026, for discussion. This page tells a new reader wh
 - Every template has one of these modes as its Level 1, and the result is pass, fail or unresolved.
 - **A Level 2 run is the same template in outcome mode, ranked on a leaderboard.** We call it Level 2. The agent makes the forecast as good as it can, inside a fixed budget and a fixed number of score requests, and the result is a skill score. It is a separate submission that may start from the Level 1 one. Thirteen templates have a Level 2, because thirteen make a forecast that observations can score.
 
-## Tasks are templates
+## Templates, instances and episodes
 
 - A template is a task with parameters. The region and the time window are parameters, so one template makes many instances.
 - Repeats are independent, and private instances cannot be memorised.
 - A second instance is a second episode. The agent gets its earlier submission and decides what to reuse. This is how we measure whether work accumulates.
 
-## The set has 25 templates in six families
+## The template set
 
 The family says what the work is. The check follows from it.
 
@@ -54,7 +54,7 @@ The family says what the work is. The check follows from it.
 - **Downscaling and the diagnostic pack, 2, product mode.** Downscale rainfall to a fine grid with conservation, and a pack of ten one-step data operations that counts as one entry.
 - [The task set](task-set.md) gives each template its parameters, its check, its leaderboard and its evidence so far.
 
-## The controller checks a submission in these ways
+## The checks
 
 - **The submission is small and fixed.** Arrays go in a labelled Zarr store. Single numbers, choices, claims and method notes go in `answer.json`. One command makes the results again from the data. A short report explains them.
 - **Ten check types cover the work.** Envelope and coverage (the submission is readable and complete), variant matching (which readings of the brief fit the numbers), invariants (rules every valid answer obeys), probes (reruns of the agent's code on changed data), claim checks, process conformance, the Level 2 feedback limit, skill scoring, and interpretation.
@@ -63,7 +63,7 @@ The family says what the work is. The check follows from it.
 - **Each task spec is certified by five tests** before it counts: two independent reference implementations agree; a correct submission passes; wrong submissions fail on the right check; the separability of each pitfall is measured; cheap-model attempts leave no answer unclassified.
 - **The controller keeps the provenance.** It records input hashes, source versions, artifact hashes, the tool trace, tooling use, supplements and the parent episode. The agent writes none of it.
 
-## This is built today
+## Built components
 
 - Three templates run end to end, one per check: the Kenya forecast revision (product), weeks 3–4 rainfall with its leaderboard (outcome), and seasonal rainfall calibration to the WMO guidance (process).
 - All three pass the four automatic certification tests in the offline Docker runtime, and the fifth test on the attempts assessed under the current fingerprint by one cheap model: 4 on the Kenya forecast revision, 3 on weeks 3–4 rainfall and 4 on seasonal calibration. The 25 earlier attempts were assessed under the first submission contract.
@@ -72,7 +72,7 @@ The family says what the work is. The check follows from it.
 - The first evaluator (generation 1, ten task packages) is archived under `archive/evaluator-v1-2026-10/` and no longer verified.
 - No task has scientific approval. Three rulings on unknown answers wait for confirmation. The WMO checklist is a draft from a secondary source.
 
-## These things are not built yet
+## Work remaining
 
 Templates
 
@@ -139,7 +139,7 @@ Approval and retirement
 - Decide what to do about the reference code in a public repository.
 - Port the still-useful archived task packages to templates.
 
-## Eight experiments are planned
+## Planned experiments
 
 Columns: what we change, what we keep the same, and what we measure.
 
@@ -158,7 +158,7 @@ Columns: what we change, what we keep the same, and what we measure.
 - Experiment 5 needs a sequence of instances per template, for example Ethiopia, then Kenya, then Nigeria, with the retained and the reset arm run side by side.
 - Experiment 8 is continuous. Each new model attempt also tests the controller. The first 25 attempts found eight controller defects.
 
-## Five decisions are open
+## Open decisions
 
 - **Spending.** No usage limit is agreed for frontier or Claude solvers. The judge runs on the subscription login at about eight cents of list price per run.
 - **Exposure.** The repository is public, and the branch holds the reference functions and the control submissions. Private instances protect against memorisation. The reference code does not.
@@ -166,7 +166,7 @@ Columns: what we change, what we keep the same, and what we measure.
 - **Standards.** Which regional-centre procedures to add, and who signs the checklists off.
 - **Checks.** Five templates got their kind of check without discussion.
 
-## The near-term order is this
+## Order of work
 
 1. Agree the spending limit. Run experiments 1 and 3 on the three certified templates.
 2. Convert the next six subseasonal and seasonal templates and certify them.
