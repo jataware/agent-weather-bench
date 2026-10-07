@@ -20,7 +20,6 @@ These files record the proposal, development and calibration work of 2 to 6 Octo
 | `judge-calibration-next.md` | The plan for calibrating the first judge |
 | `seasonal-rubric-proposal.yaml` | A rubric tree for the pilot's seasonal experiment |
 | `source-material/` | A replication README gathered for a candidate task |
-| `assets/brand/` | Hero images, diagrams and a brand preview page |
 | `studies/` | Three calibration studies of the first evaluator: anchor calibration, station evidence audit, station interpretation |
 | `scripts/` | The page builders and study code those studies used |
 | `tests/` | The two tests of that study code; they still run |

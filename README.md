@@ -1,3 +1,5 @@
+![Agent Weather Bench — A benchmark for AI forecast research](docs/assets/brand/hero.svg)
+
 ## Which frontier models and agent frameworks can reliably complete substantive weather-forecasting workflows, with what scientific validity, cost, time, and expert intervention?
 
 Agent Weather Bench assesses complete scientific workflows for subseasonal-to-seasonal (S2S) forecasting: acquiring and interpreting data, investigating methods, writing and adapting scientific code, producing forecasts, and verifying results. We compare how models and frameworks perform, and whether supporting resources—skills, scientific libraries, literature retrieval, and prior work—make those workflows more reliable and efficient. Agents submit code, numerical results, and explanations that can be checked against the task requirements.
@@ -10,11 +12,15 @@ For forecasters, the goal is to provide evidence for choosing agents and support
 
 **Current status:** This repository is for internal development and review. Task data are shared separately. Scientific, scoring, and data redistribution reviews are pending. Seasonal acquisition is disabled, and no repository license has been selected. See [internal setup](docs/internal-setup.md).
 
+[Tasks](#existing-tasks) · [Run a model](#run-a-model) · [Add a substrate](#add-a-method-or-substrate) · [Create a task](#create-and-register-a-task) · [Roadmap](docs/roadmap.md) · [Results](docs/results.md)
+
+## How it works, and where it is going
+
 ![A task and its tooling go into a sandbox with an agent; the controller inspects what comes out](docs/figures/overview.png)
 
-**Where the work is going:** [the roadmap](docs/roadmap.md) summarises the system and the plan, and [the results so far](docs/results.md) show what the new assessment catches, with [a one-page figure of how it works and scales](docs/figures/overview.svg). [The task set](docs/task-set.md) lists the 25 task templates that replace the ten packaged tasks below, and [the assessment format](docs/assessment-format.md) defines how templates are assessed. Three templates are built and certified under `templates/`; the ten packaged tasks under `tasks/` are still assessed by the first evaluator.
+The question is: under what conditions can a forecaster's task be handed to an agent system and come back right? A task is a canonical forecasting job stated as a product, with frozen data and a budget. It goes into an offline sandbox with an agent and whatever tooling the run supplies: skills, libraries, a conventions sheet, earlier work. What comes out is a fixed envelope, labelled arrays, an answer file, the code that regenerates the results and a report, plus the trace. The controller checks it by computation against a private reference under every defensible reading of the brief, by rerunning the agent's own code on changed data, and by a narrow judge that answers one question at a time on exact quotations. Every check returns pass, fail or unresolved.
 
-[Tasks](#existing-tasks) · [Run a model](#run-a-model) · [Add a substrate](#add-a-method-or-substrate) · [Create a task](#create-and-register-a-task) · [Roadmap](docs/roadmap.md)
+Tasks are templates with region and time window as parameters, so one task gives many instances. The set has 25 templates in six families, checked as product, process or outcome; three are built and certified so far. [The roadmap](docs/roadmap.md) states the system, the open work and the eight planned experiments in three pages. [The results so far](docs/results.md) give the first 36 attempts and what the checks caught. [The task set](docs/task-set.md) and [the assessment format](docs/assessment-format.md) hold the detail.
 
 ## Forecasting as a research benchmark
 
@@ -26,7 +32,9 @@ For forecast tasks, observations provide a separate test of predictive value. Ta
 
 ## What we measure
 
-The benchmark compares AI models on the same research task with common tools and fixed scoring, checks their artifacts against private references and, for forecast tasks, later observations, and measures completion, cost and time. Further experiments test the substrate and reuse across tasks.
+![Benchmark design: compare AI models on the same research task with common tools and fixed scoring. Check their artifacts against private references and, for forecast tasks, later observations. Measure completion, cost, and time. Additional experiments test substrate and reuse across tasks.](docs/assets/brand/benchmark-design.svg)
+
+[Open the diagram at full size](docs/assets/brand/benchmark-design.svg).
 
 | Dimension | Comparison |
 | --- | --- |
@@ -65,6 +73,8 @@ separately from task completion.
 The judge, evaluator, task files, and dependencies are locked. Each assessment
 retains its evidence, raw judge response, usage, and fingerprint. See the
 [locked autojudge](docs/harness.md#the-locked-autojudge).
+
+[Illustrated example: one agent, with and without task tools](docs/assets/brand/agent-task-comparison.svg).
 
 ## Existing tasks
 
@@ -231,9 +241,10 @@ completion score, costs, time, and retention condition.
 | `judges/` | Assessment configuration, prompt, and lock |
 | `experiments/` | Comparison designs and task sequences |
 | `weatherbench/` | Execution, preparation, and scoring code |
-| `docs/` | The roadmap, the task set, the assessment format, and the guides to the first evaluator |
+| `docs/` | The roadmap, the results, the task set, the assessment format, the guides to the first evaluator, and brand assets |
 | `var/` | Ignored local inputs, references, runs, and reports |
 | `archive/` | Preserved pilot code and evidence |
 
-The [historical pilot](archive/README.md) and the superseded documents of the
-first development cycle remain separate from current benchmark runs.
+The [README and brand preview](docs/assets/brand/index.html) includes the diagram,
+logo, and share images. The [historical pilot](archive/README.md) remains separate
+from current benchmark runs.

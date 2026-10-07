@@ -11,5 +11,6 @@ Start with [the roadmap](roadmap.md). It summarises the system, what remains to 
 - [Task authoring for the first evaluator](task-authoring.md) gives the package layout and registration points for those tasks.
 - [Internal setup](internal-setup.md) explains checkout checks, the separately shared task data, Docker builds, and pending review and licence work.
 - [Task critiques of 2 October 2026](reviews/2026-10-02/response.md) are kept here because the packaged tasks link to them.
+- [The README and brand preview](assets/brand/index.html) holds the logo, the diagrams and the share images.
 
 Superseded documents, the calibration studies of the first evaluator and their scripts are under [`archive/docs-2026-10/`](../archive/docs-2026-10/README.md). The completed pilot is under [`archive/pilot-2026-10-01/`](../archive/README.md).
