@@ -2,6 +2,8 @@
 
 Status: draft of 7 October 2026, for discussion. This page tells a new reader what the benchmark is, what is built, what is not built, and what experiments come next. It is short on purpose. [The results so far](results.md) show what the machinery catches, with a one-page figure of how it works and how it scales. [The task set](task-set.md) and [the assessment format](assessment-format.md) give the detail.
 
+![A task and its tooling go into a sandbox with an agent; the controller inspects what comes out](figures/overview.png)
+
 ## The benchmark asks one question
 
 - Under what conditions can we hand a forecaster's task to an AI agent system and get back the right result?
