@@ -44,7 +44,7 @@ For forecast tasks, observations provide a separate test of predictive value. Ta
 | Cost and time | What does a successful solution cost, and how long does it take? Include failed attempts. |
 | Reuse | Does agent-owned work from previous tasks improve performance on other benchmark tasks? |
 
-The **substrate** is the support supplied to an agent, such as skills, workflow code, retrieval resources, or prior work.
+The **substrate** is the support supplied to an agent, such as skills, workflow code, retrieval resources, or prior work. A run can also supply a conventions sheet or a method description; each is recorded as a condition of the run.
 
 For model comparisons, keep the agent loop, tasks, inputs, tools, budgets, and scoring fixed.
 Record provider and model versions, tokens, costs, and wall time. For substrate
@@ -61,25 +61,61 @@ defines the sequence.
 
 ## How scoring works
 
-Each task has a hierarchical rubric of weighted scientific outcomes. Assessment
-combines artifact checks, numerical tolerances, offline replay, and scientific
-judgment. References and held-out targets stay outside the model's workspace.
+Each task template has a spec: the named results with their error bounds, the
+conventions the brief leaves open with each reading marked accepted or a named
+pitfall, the rules any valid answer obeys, the probes to run, the claims to
+check, and the questions a judge decides. The controller holds a private
+reference function that computes the answer under every defensible reading.
 
-Completion requires all required outcomes and validity checks to pass. Failed
-numerical checks or replay cannot be overridden by the model judge. Missing
-evidence leaves the relevant outcome unresolved. Forecast skill is reported
-separately from task completion.
+The agent delivers a fixed envelope and is free in everything else: labelled
+arrays in a Zarr store, an answer file with numbers, choices, claims and the run
+command, the code that regenerates the results, and a short report. The method
+is not prescribed.
 
-The judge, evaluator, task files, and dependencies are locked. Each assessment
-retains its evidence, raw judge response, usage, and fingerprint. See the
-[locked autojudge](docs/harness.md#the-locked-autojudge).
+The controller checks the delivery three ways. It computes: the results are
+compared with the reference under every reading, so a known wrong reading is
+named as a pitfall, and forecasts are scored against withheld observations. It
+reruns the agent's own code on changed data: the results must follow the data
+and must not use what a valid method may not use, such as a held-out year or a
+forecast from the future. It judges: Claude Opus 5.5, with no tools and a fixed
+prompt, answers one narrow question at a time, such as whether the report says
+what the code and the numbers say. Every passage the judge relies on must appear
+in the cited file, or the verdict is discarded.
 
-[Illustrated example: one agent, with and without task tools](docs/assets/brand/agent-task-comparison.svg).
+Every check returns pass, fail or unresolved. Fail means the submission is at
+fault, with the pitfall or defect named. Unresolved means a cause outside the
+submission, with a reason code, and is never counted as a fail. A run passes
+only when every check passes, the judge's included; the computed part is also
+reported on its own. There are no weights.
+
+The controller keeps the provenance. It records the hashes of the inputs and of
+every delivered file, the source versions, the full tool trace, the tooling
+used, the cost and the time. The agent writes none of it, so an administrative
+slip cannot fail a check.
+
+Each spec is certified before it counts: two independent reference
+implementations agree, a correct solution passes, deliberately wrong solutions
+fail on the right check, the separability of every pitfall is measured, and
+cheap-model attempts leave no answer unclassified. The judge has its own twelve
+control cases. Scientific approval by a domain expert is a separate gate, and no
+template has it yet. The format is defined in
+[the assessment format](docs/assessment-format.md) and used through the
+[`assessment/`](templates/README.md) package.
+
+The ten packaged tasks under `tasks/` still use the first evaluator: a weighted
+rubric tree, offline replay, and a [locked autojudge](docs/harness.md#the-locked-autojudge)
+that rates rubric leaves. The diagram above describes that evaluator. The tasks
+move to the template format as they are converted.
 
 ## Existing tasks
 
-Ten registered development tasks cover forecasting, source reconstruction,
-verification and bounded optimization. All have local data and executable checks;
+Three task templates are built and certified in the new format: the Kenya
+forecast revision, weeks 3–4 rainfall with its leaderboard, and seasonal
+rainfall calibration to the WMO guidance. They live under `templates/`, and
+[the task set](docs/task-set.md) lists the 25 the benchmark will have.
+
+Ten registered development tasks from the first evaluator cover forecasting,
+source reconstruction, verification and bounded optimization. All have local data and executable checks;
 scientific review and public data release remain pending. Related tasks retain
 their shared forecasting families. The [development audit of 5 October](archive/docs-2026-10/overnight-development.md)
 records the solver outcomes and evaluation limitations of this first evaluator.
