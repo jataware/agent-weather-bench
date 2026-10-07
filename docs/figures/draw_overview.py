@@ -1,4 +1,4 @@
-"""Draw docs/figures/overview.svg: task and tooling go into a sandbox with the agent; the controller inspects the submission and trace.
+"""Draw docs/figures/overview.svg: task, tooling and supplements go into a sandbox with the agent; the controller inspects the submission and trace.
 
 Run from the repository root: .venv/bin/python docs/figures/draw_overview.py
 """
@@ -50,17 +50,17 @@ s.append(text(x + 12, TOP + 54, "A forecaster's job, stated as a product.", 10.5
 s.append(item(x + 12, TOP + 92, "brief", "seasonal outlook, Kenya"))
 s.append(item(x + 12, TOP + 116, "data", "ECMWF members + CHIRPS"))
 s.append(item(x + 12, TOP + 140, "budget", "20 min, offline"))
-s.append(box(x, TOP + 176, w, 164, PURPLE, "#f5f3ff")); s.append(head(x, TOP + 176, w, PURPLE, "The tooling: in or out"))
+s.append(box(x, TOP + 176, w, 164, PURPLE, "#f5f3ff")); s.append(head(x, TOP + 176, w, PURPLE, "Tooling and supplements"))
 s.append(item(x + 12, TOP + 230, "skills", "Rhiza weather-skills"))
 s.append(item(x + 12, TOP + 254, "libraries", "AfricaS2S, acmadDL"))
-s.append(item(x + 12, TOP + 278, "sheet", "conventions.md"))
-s.append(item(x + 12, TOP + 302, "earlier work", "episode 1 submission"))
+s.append(item(x + 12, TOP + 278, "earlier work", "episode 1 output"))
+s.append(item(x + 12, TOP + 302, "supplement", "conventions.md"))
 s.append(text(x + 12, TOP + 330, "Each can be present or absent in a run.", 10.5, GREY))
 
 # ---- sandbox --------------------------------------------------------------------------------------------
 x, w = 320, 290
 s.append(box(x, TOP, w, 340, GREEN, "#f0fdf4", dash="8 5")); s.append(head(x, TOP, w, GREEN, "The sandbox"))
-s.append(text(x + 12, TOP + 56, "No network. The task and the tooling are mounted.", 10.5, GREY))
+s.append(text(x + 12, TOP + 56, "No network. Task, tooling and supplements are mounted.", 10.5, GREY))
 s.append(box(x + 14, TOP + 70, w - 28, 120, GREEN)); s.append(text(x + w / 2, TOP + 92, "The agent", 14, GREEN, "bold", "middle"))
 s.append(item(x + 26, TOP + 118, "model", "gpt-6-luna"))
 s.append(item(x + 26, TOP + 142, "harness", "Codex"))
@@ -121,8 +121,8 @@ for i in range(4):
         s.append(f'<rect x="{x + j * 30}" y="{y + 62 + i * 24}" width="26" height="20" rx="3" fill="{hexmix("#e5e7eb", "#374151", (i * 6 + j) / 23)}"/>')
 s.append(text(x, y + 176, "25 templates ↓  ×  regions and windows →", 11))
 x = 320
-s.append(text(x, y + 50, "Systems × tooling", 13, INK, "bold"))
-for j, c in enumerate(["none", "skills", "libraries", "sheet"]): s.append(text(x + 110 + j * 58, y + 68, c, 10, GREY, anchor="middle"))
+s.append(text(x, y + 50, "Systems × tooling and supplements", 13, INK, "bold"))
+for j, c in enumerate(["none", "skills", "libraries", "supplement"]): s.append(text(x + 110 + j * 58, y + 68, c, 10, GREY, anchor="middle"))
 for i, r in enumerate(["cheap model", "frontier model", "harness A", "harness B"]):
     s.append(text(x, y + 88 + i * 24, r, 11))
     for j in range(4):
