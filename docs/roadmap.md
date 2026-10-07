@@ -70,14 +70,72 @@ The family says what the work is. The check follows from it.
 - The ten earlier packaged tasks still use the first evaluator, which is locked and unchanged.
 - No task has scientific approval. Three rulings on unknown answers wait for confirmation. The WMO checklist is a draft from a secondary source.
 
-## Six things are not built yet
+## These things are not built yet
 
-1. **The other 22 templates.** Convert the 13 remaining existing tasks and build the 9 new ones. Do the subseasonal and seasonal rows first. Each template needs a reference function, a second implementation, controls and certification.
-2. **The standards.** Get the WMO documents as primary sources. Replace each practice number with its clause. Add a regional-centre procedure. Get each checklist signed off.
-3. **The systems.** An `rx` harness configuration. Claude and frontier Codex solvers, once a spending limit is agreed. Open-weight models. The three substrate images rebuilt on the current runtime. A "method supplied" condition.
-4. **The missing parts of the format.** Leaderboards for the process-checked forecast templates. A separate "optimization within the standard" track. Parquet delivery for tables. Live data acquisition where a task needs it. A reporting layer that turns run records into tables and leaderboards.
-5. **Validation of the judge.** About fifty questions from real attempts, labelled by a person. Agreement measured per question type. A second judge model for disagreement checks.
-6. **Approval and retirement.** Domain-scientist review of each template and checklist. A procedure to confirm rulings. Migration of the ten packaged tasks off the first evaluator.
+Templates
+
+- Convert the Kenya rainfall outlook and the Kenya heat outlook to templates.
+- Convert the Indian Ocean Dipole index and the Indian Ocean Dipole forecast check.
+- Convert scorecard debugging, station verification and the paper-versus-code audit.
+- Convert probability forecast combination, the short-rains workflow, the seasonal CCA reproduction and the monthly cyclic calibration.
+- Convert rainfall downscaling and the diagnostic pack.
+- Build rainy-season onset and dry spells.
+- Build probabilistic forecast verification.
+- Build multi-model combination with hindcasts.
+- Build the test of a published predictor claim.
+- Build "beat the regional consensus forecast".
+- Build the probabilistic weeks 3–4 and 5–6 outlook.
+- Build weekly forecasting with observation updates.
+- Build the Madden–Julian Oscillation forecast check.
+- Build the extreme-event probability at weeks 2–3.
+- Write a second, independent reference implementation for each new template.
+- Write the control solutions, correct and deliberately wrong, for each new template.
+- Certify each template and record it.
+- Add leaderboards to the process-checked forecast templates that can have one.
+
+Standards
+
+- Obtain WMO-No. 1246, the guidance on objective seasonal forecasting, as a primary document, and keep a hashed copy.
+- Obtain the WMO long-range verification standard the same way.
+- Replace each practice number in the seasonal checklist with the clause it comes from.
+- Add any step the primary text requires that the draft lacks.
+- Add one regional-centre forecasting procedure as a second standard.
+- Get a domain scientist to sign off each checklist.
+
+Systems
+
+- Write the `rx` harness configuration and adapter.
+- Add a Claude solver system, once a spending limit is agreed.
+- Add the frontier Codex solver, once a spending limit is agreed.
+- Add one or two open-weight model systems.
+- Rebuild the three substrate images (none, Rhiza skills, ACCORD libraries) on the current runtime, so they stop crashing on exit.
+- Write the "method supplied" supplement for the templates that have a canonical method.
+- Write a conventions sheet for each template that has conventions.
+
+Assessment format
+
+- Build the separate "optimization within the standard" track.
+- Add Parquet and GeoParquet delivery for tabular results, with `pyarrow` in the runtime image.
+- Add live data acquisition for the templates that need it, through the controller's logged acquisition tool.
+- Build the reporting layer: run records into comparison tables, episode-sequence tables and leaderboards.
+- Rename `mode` and `level` in the code and specs to match the words in this roadmap, if we decide to.
+
+Judge
+
+- Draw about fifty judge questions from real attempts and have a person label them.
+- Measure agreement with the labels per question type.
+- Add a second judge model and record where the two disagree.
+- Write control cases for each new interpretation obligation a template adds.
+
+Approval and retirement
+
+- Confirm or reject the three proposed rulings on unknown answers.
+- Write the procedure for confirming a ruling and issuing a spec version.
+- Get a domain scientist's review of each certified template.
+- Record scientific, scoring and redistribution approval for each data source.
+- Choose a repository licence.
+- Decide what to do about the reference code in a public repository.
+- Migrate the ten packaged tasks and their studies off the first evaluator, then retire it and its lock.
 
 ## Eight experiments are planned
 
