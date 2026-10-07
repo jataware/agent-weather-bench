@@ -32,7 +32,7 @@ For forecast tasks, observations provide a separate test of predictive value. Ta
 
 ## What we measure
 
-![Benchmark design: compare AI models on the same research task with common tools and fixed scoring. Check their artifacts against private references and, for forecast tasks, later observations. Measure completion, cost, and time. Additional experiments test substrate and reuse across tasks.](docs/assets/brand/benchmark-design.svg)
+![Benchmark design: compare models, harnesses and tooling on the same task instances. A task states a product with frozen data and a budget; an agent in a sandbox delivers a solution and a trace; the controller checks it against a private reference, by rerunning the code on changed data, and by a judge on exact quotations. Every check returns pass, fail or unresolved. Episodes keep the earlier solution for the next instance.](docs/assets/brand/benchmark-design.svg)
 
 [Open the diagram at full size](docs/assets/brand/benchmark-design.svg).
 
@@ -104,8 +104,7 @@ template has it yet. The format is defined in
 
 The ten packaged tasks under `tasks/` still use the first evaluator: a weighted
 rubric tree, offline replay, and a [locked autojudge](docs/harness.md#the-locked-autojudge)
-that rates rubric leaves. The diagram above describes that evaluator. The tasks
-move to the template format as they are converted.
+that rates rubric leaves. They move to the template format as they are converted.
 
 ## Existing tasks
 
