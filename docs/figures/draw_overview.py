@@ -43,8 +43,7 @@ s.append(text(x + 14, y + 80, "an outlook, a calibration, a verification.", 12))
 s.append(minimap(x + 14, y + 96, 96, 3))
 s.append(text(x + 122, y + 118, "frozen data", 12)); s.append(text(x + 122, y + 136, "a short brief", 12)); s.append(text(x + 122, y + 154, "a budget", 12))
 s.append(text(x + 14, y + 196, "The method is not stated.", 12, "#111", "bold"))
-s.append(text(x + 14, y + 214, "The task is a template: region and", 12)); s.append(text(x + 14, y + 232, "time window are parameters, so one", 12)); s.append(text(x + 14, y + 250, "task gives many instances.", 12))
-s.append(text(x + 14, y + 284, "e.g. seasonal rainfall calibration, Kenya,", 11, GREY)); s.append(text(x + 14, y + 300, "1993–2004, outlook for 2005–2006", 11, GREY))
+s.append(text(x + 14, y + 214, "Region and time window are", 12)); s.append(text(x + 14, y + 232, "parameters: one task, many instances.", 12))
 
 # ---- 2. sandbox -------------------------------------------------------------------------------
 x, y, w, h = 300, 70, 400, 300
@@ -59,19 +58,18 @@ s.append(minimap(x + 16, y + 206, 60, 7)); s.append(text(x + 84, y + 222, "resul
 s.append(text(x + 84, y + 240, "answer.json    numbers, claims, run cmd", 12, family="Menlo, monospace"))
 s.append(text(x + 84, y + 258, "code           regenerates the results", 12, family="Menlo, monospace"))
 s.append(text(x + 84, y + 276, "report.md      what, why, limits", 12, family="Menlo, monospace"))
-s.append(text(x + 16, y + 294, "The controller keeps the trace, the hashes, the cost and the time.", 11, GREY))
 
 # ---- 3. controller -----------------------------------------------------------------------------
 x, y, w, h = 740, 70, 430, 300
 s.append(box(x, y, w, h, ORANGE, "#fff7ed")); s.append(head(x, y, w, ORANGE, "The controller checks the delivery"))
-rows = [("Compute", "a private reference under every defensible reading of the brief;", "rules every valid answer obeys; skill against withheld observations", "e.g. totals recomputed; a known wrong reading named as a pitfall"),
-        ("Rerun", "the agent's own code on changed data: it must follow the data,", "and must not use what a valid method may not use", "e.g. change one year's observation; that year's hindcast must not move"),
-        ("Judge", "one narrow question at a time, on exact quotations only:", "does the report say what the code and the numbers say?", "e.g. is the uncertainty stated in plain language? — Claude Opus 5.5")]
+rows = [("Compute", "a private reference under every defensible reading of the brief,", "so a known wrong reading is named as a pitfall;", "rules every valid answer obeys; skill against withheld observations"),
+        ("Rerun", "the agent's own code on changed data: the results must follow", "the data, and must not use what a valid method may not use,", "such as a held-out year or a forecast from the future"),
+        ("Judge", "Claude Opus 5.5, one narrow question at a time, on exact", "quotations only: does the report say what the code and the", "numbers say, and state its uncertainty in plain language?")]
 for k, (name, a, b, c) in enumerate(rows):
-    yy = y + 62 + k * 78
+    yy = y + 62 + k * 76
     s.append(f'<rect x="{x + 12}" y="{yy - 14}" width="68" height="22" rx="4" fill="{ORANGE}"/>'); s.append(text(x + 46, yy + 2, name, 13, "#fff", "bold", "middle"))
-    s.append(text(x + 90, yy, a, 12)); s.append(text(x + 90, yy + 17, b, 12)); s.append(text(x + 90, yy + 34, c, 11, GREY))
-s.append(text(x + 12, y + 278, "No human in the loop per run. One human per task: a scientist", 11, GREY)); s.append(text(x + 12, y + 294, "certifies the reference and the pitfalls once.", 11, GREY))
+    s.append(text(x + 90, yy, a, 12)); s.append(text(x + 90, yy + 17, b, 12)); s.append(text(x + 90, yy + 34, c, 12))
+s.append(text(x + 12, y + 290, "No human per run. A scientist certifies each task's reference and pitfalls once.", 12))
 
 # ---- 4. result ---------------------------------------------------------------------------------
 x, y, w, h = 1210, 70, 200, 300
@@ -80,7 +78,7 @@ s.append(pill(x + 20, y + 72, 60, "pass", GREEN)); s.append(text(x + 90, y + 76,
 s.append(pill(x + 20, y + 104, 60, "fail", RED)); s.append(text(x + 90, y + 100, "at fault; the pitfall", 12)); s.append(text(x + 90, y + 116, "or defect named", 12))
 s.append(pill(x + 20, y + 144, 90, "unresolved", GREY)); s.append(text(x + 118, y + 148, "outside cause", 12))
 s.append(text(x + 20, y + 190, "+ skill score", 12)); s.append(text(x + 20, y + 208, "+ cost, tokens, time", 12)); s.append(text(x + 20, y + 226, "+ which tooling was used", 12)); s.append(text(x + 20, y + 244, "+ every quote and trace", 12))
-s.append(text(x + 20, y + 276, "Same checks for every", 11, GREY)); s.append(text(x + 20, y + 292, "system, whatever its tooling.", 11, GREY))
+s.append(text(x + 20, y + 280, "Same checks for every system.", 12))
 
 # arrows between panels
 s.append(arrow(260, 220, 300, 220)); s.append(arrow(700, 220, 740, 220)); s.append(arrow(1170, 220, 1210, 220))
@@ -94,7 +92,7 @@ s.append(text(x, y + 50, "Tasks × instances", 13, BLUE, "bold"))
 for i in range(4):
     for j in range(6):
         s.append(f'<rect x="{x + j * 30}" y="{y + 62 + i * 24}" width="26" height="20" rx="3" fill="{hexmix("#dbeafe", "#1d4ed8", (i * 6 + j) / 23)}"/>')
-s.append(text(x, y + 176, "25 templates ↓  ×  regions and windows →", 11)); s.append(text(x, y + 194, "Private instances cannot be memorised.", 11, GREY))
+s.append(text(x, y + 176, "25 templates ↓  ×  regions and windows →", 11))
 # b. systems × tooling
 x = 320
 s.append(text(x, y + 50, "Systems × tooling", 13, GREEN, "bold"))
@@ -104,7 +102,7 @@ for i, r in enumerate(["cheap model", "frontier model", "harness A", "harness B"
     s.append(text(x, y + 88 + i * 24, r, 11))
     for j in range(4):
         s.append(f'<rect x="{x + 82 + j * 58}" y="{y + 74 + i * 24}" width="54" height="20" rx="3" fill="{hexmix("#dcfce7", "#15803d", ((i * 4 + j) * 7 % 11) / 10)}"/>')
-s.append(text(x, y + 176, "Each cell: pass rate, cost, time, tooling used.", 11)); s.append(text(x, y + 194, "Change one thing at a time.", 11, GREY))
+s.append(text(x, y + 176, "Each cell: pass rate, cost, time. Change one thing at a time.", 11))
 # c. episodes
 x = 680
 s.append(text(x, y + 50, "Episodes", 13, ORANGE, "bold"))
@@ -120,8 +118,7 @@ for i, (name, v) in enumerate([("system C", 0.9), ("system A", 0.7), ("system B"
     s.append(text(x, y + 78 + i * 22, name, 11)); s.append(f'<rect x="{x + 80}" y="{y + 66 + i * 22}" width="{v * 200:.0f}" height="16" rx="3" fill="{SLATE if name != "climatology" else GREY}"/>')
 s.append(text(x, y + 176, "Forecast tasks also take an optimised", 11)); s.append(text(x, y + 194, "submission, scored on withheld observations.", 11))
 
-s.append(text(30, 650, "The question: under what conditions can a forecaster's task be handed to an agent system and come back right? The benchmark answers it per task, per system and per tooling, with the same checks each time.", 12, "#444"))
-s.append(text(30, 672, "Controller: the trusted program that runs the agent, holds the references and runs the checks.  Pitfall: a known wrong method with a computable wrong answer.  Tooling: whatever is put in the sandbox beside the model.", 11, GREY))
+s.append(text(30, 656, "Under what conditions can a forecaster's task be handed to an agent system and come back right? Per task, per system and per tooling, with the same checks each time.", 12, "#444"))
 s.append("</svg>")
 Path(__file__).with_name("overview.svg").write_text("\n".join(s))
 print("ok")
