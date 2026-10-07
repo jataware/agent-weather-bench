@@ -576,7 +576,7 @@ def test_a_method_entry_the_brief_asks_for_fails_when_missing_or_pointing_nowher
 
 def test_library_imports_are_recorded_beside_the_original_monitor(tmp_path):
     from assessment.substrate import substrate_record
-    from weatherbench.substrate_use import substrate_use
+    from assessment.substrate_use import substrate_use
     run = tmp_path / "run"
     (run / "logs").mkdir(parents=True)
     (run / "frozen").mkdir()

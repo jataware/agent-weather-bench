@@ -218,7 +218,12 @@ def regression_checks(inputs):
     with xr.open_dataset(LEGACY / "controller/final-baselines.nc") as file:
         gap = float(np.max(np.abs(file.climatology.values - climatology(training, final.issue_time.values))))
     rows.append({"name": "climatology baseline equals the earlier controller's", "passed": gap <= 1e-9, "detail": f"largest difference {gap:.3g} mm"})
-    from weatherbench.task_tools.subseasonal.metrics import score_file
+    import importlib.util
+    archived = ROOT / "archive/evaluator-v1-2026-10/weatherbench/task_tools/subseasonal/metrics.py"
+    loader = importlib.util.spec_from_file_location("archived_subseasonal_metrics", archived)
+    metrics = importlib.util.module_from_spec(loader)
+    loader.loader.exec_module(metrics)
+    score_file = metrics.score_file
     with xr.open_dataset(LEGACY / "controller/final-baselines.nc") as file:
         candidate = xr.Dataset({"precipitation": file.bias_corrected.assign_attrs(units="mm")})
         scratch = Path(inputs) / "_legacy-check.nc"

@@ -38,8 +38,7 @@ Gold is an accent; avoid gold body text on paper. Meaning must remain clear
 without colour.
 
 The vector assets use Arial with Helvetica and sans-serif fallbacks. They need
-no downloaded fonts. The preview uses system sans-serif for body text and Georgia
-for editorial headings. PNG exports fix the appearance for sharing.
+no downloaded fonts. PNG exports fix the appearance for sharing.
 
 ## Writing
 
@@ -59,14 +58,6 @@ results as measured findings.
 
 ## Diagrams and sharing
 
-`agent-task-comparison.svg` is a paper-style illustration of the same robot agent
-attempting one three-step task with general tools and with task-specific tools.
-Both attempts receive the same grading. The contrasting outcomes are illustrative;
-they are not benchmark results or a guarantee that tooling improves performance.
-The robot is a self-contained vector in the style of an emoji, so it prints without
-depending on a platform's emoji font. The figure is 1560 × 770, with a 3120 × 1540
-PNG and a vector PDF export.
-
 `benchmark-design.svg` explains common tasks, different models, captured artifacts,
 and fixed assessment. Capability, cost, and time lead the comparison. Substrate
 and reuse are additional experiments. Private references enter assessment directly.
@@ -76,17 +67,15 @@ are optional; the primary reuse experiment spans other benchmark tasks.
 `social-card.svg` is a 1200 × 630 sharing image. The PNG export has the same size.
 The hero is 1440 × 360. The vector diagram is 1440 × 820; its PNG export is
 2880 × 1640. The icon PNG is 512 × 512.
-The preview needs no network access and can open directly from the filesystem.
 
-Regenerate vectors and the README preview from the repository root:
+Regenerate the vectors from the repository root:
 
 ```sh
 .venv/bin/python docs/assets/brand/build.py
 ```
 
 The generated SVGs are also editable directly. After changing the source or
-typography, regenerate PNGs and inspect both desktop and mobile sizes. The build
-script generates the preview from the current root README.
+typography, regenerate PNGs and inspect both desktop and mobile sizes.
 
 For PNG exports, use Node with an installed Playwright module and Chromium:
 
@@ -96,4 +85,4 @@ node docs/assets/brand/export.cjs
 
 If Playwright or Chrome is installed elsewhere, set `AWB_PLAYWRIGHT_MODULE` to
 the module path and `AWB_CHROME_EXECUTABLE` to the browser path. These tools are
-needed only for PNG export. Viewing the preview and SVGs needs a browser alone.
+needed only for PNG export. Viewing the SVGs needs a browser alone.

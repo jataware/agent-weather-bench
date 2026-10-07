@@ -1,3 +1,4 @@
+"""Files, digests and inventories for the controller (moved from the first evaluator's weatherbench/storage.py)."""
 import hashlib
 import json
 import re
@@ -6,10 +7,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-TASKS = ROOT / "tasks"
 STATE = ROOT / "var"
-PRIVATE = STATE / "private/tasks"
-ARCHIVE = ROOT / "archive/pilot-2026-10-01"
 
 
 def identifier(value):
@@ -61,9 +59,3 @@ def copy_bundle(source, destination):
         raise ValueError("Artifact copy mismatch")
     return before
 
-
-def task_path(name):
-    path = TASKS / identifier(name)
-    if not (path / "task.yaml").is_file():
-        raise ValueError(f"Unknown task: {name}")
-    return path

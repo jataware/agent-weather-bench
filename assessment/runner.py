@@ -11,10 +11,10 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-from weatherbench import adapters
-from weatherbench.runtime import ToolSandbox, preflight
-from weatherbench.storage import copy_bundle, digest, inventory, read, write
-from weatherbench.systems import resolve_system, snapshot, validate
+from . import adapters
+from .runtime import ToolSandbox, preflight
+from .storage import copy_bundle, digest, inventory, read, write
+from .systems import resolve_system, snapshot, validate
 
 from . import judge as judging
 from .assess import assess, judge_files

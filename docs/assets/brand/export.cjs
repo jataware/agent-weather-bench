@@ -11,7 +11,6 @@ async function exportAssets() {
     ['hero',1440,360,1],
     ['social-card',1200,630,1],
     ['benchmark-design',1440,820,2],
-    ['agent-task-comparison',1560,770,2],
     ['icon',512,512,1],
     ['symbol',512,512,1],
     ['wordmark',920,160,2],

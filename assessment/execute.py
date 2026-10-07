@@ -65,7 +65,7 @@ class Docker:
         self.image, self.memory, self.cpus = image, memory, cpus
 
     def run(self, submission, inputs, argv, scratch, seconds=120):
-        from weatherbench.runtime import InfrastructureUnavailable, offline
+        from .runtime import InfrastructureUnavailable, offline
         stage, output = _stage(Path(submission), Path(inputs), Path(scratch) / "stage"), Path(scratch) / "output"
         command = [arg.replace("{input_dir}", "/work/_controller_inputs").replace("{output_dir}", "/output") for arg in argv]
         try:

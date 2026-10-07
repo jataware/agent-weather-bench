@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "seasonal-rainfall-calibration",
  "spec_version": 3,
- "fingerprint": "1fc182bf71859f0f55dbe777726c3bc736ca09651e1c4f75445407d249470550",
- "certified_at": "20261006T165427",
+ "fingerprint": "16cbf637894d1e80adeac7f2494332c6b7fd36d28ce96d93d8f7fc829569312d",
+ "certified_at": "20261007T095949",
  "executor": "docker-offline",
  "tests": {
   "1_reference_implementations_agree": {

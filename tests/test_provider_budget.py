@@ -2,7 +2,7 @@
 import httpx
 import pytest
 
-from weatherbench.model import Model, BudgetExceeded
+from assessment.model import Model, BudgetExceeded
 
 
 def client(monkeypatch, timeout=False):

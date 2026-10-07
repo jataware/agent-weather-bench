@@ -11,7 +11,7 @@ def _executor(args):
     from .execute import Docker, Local
     if getattr(args, "local_trusted", False):
         return Local()
-    from weatherbench.systems import DEFAULT_IMAGE
+    from .systems import DEFAULT_IMAGE
     return Docker(args.image or DEFAULT_IMAGE)
 
 

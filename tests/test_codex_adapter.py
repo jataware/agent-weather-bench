@@ -7,10 +7,10 @@ import tomllib
 
 import pytest
 
-from weatherbench.adapters import command_driver
-from weatherbench.storage import ROOT
-from weatherbench.substrate_use import substrate_use
-from weatherbench.systems import validate
+from assessment.adapters import command_driver
+from assessment.storage import ROOT
+from assessment.substrate_use import substrate_use
+from assessment.systems import validate
 
 ADAPTER = ROOT / 'systems/codex-luna/adapter.py'
 spec = importlib.util.spec_from_file_location('weatherbench_codex_test_adapter', ADAPTER)
@@ -107,7 +107,7 @@ def test_cumulative_usage_does_not_sum_updates_or_reasoning():
 
 
 def test_feedback_requires_explicit_declaration_and_uses_controller_only(tmp_path, capsys):
-    from weatherbench.feedback import SCORE_TOOL
+    from assessment.feedback import SCORE_TOOL
     tools = adapter.thread_parameters(tmp_path, {'tools': [SCORE_TOOL]})['dynamicTools']
     assert [row['name'] for row in tools] == ['execute', 'score_development']
     params = {'tool': 'score_development', 'callId': 'score', 'arguments': {'prediction_file': 'development.nc'}}
@@ -170,7 +170,7 @@ assert all(x['result']['success'] for x in responses[1:])
 
 
 def test_command_driver_feedback_is_logged_and_never_becomes_a_shell_command(tmp_path):
-    from weatherbench.feedback import SCORE_TOOL
+    from assessment.feedback import SCORE_TOOL
     script = tmp_path / 'feedback_adapter.py'
     script.write_text('''import json,sys
 request=json.loads(sys.stdin.readline())

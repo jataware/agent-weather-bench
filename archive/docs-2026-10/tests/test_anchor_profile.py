@@ -64,7 +64,7 @@ def test_infrastructure_failure_does_not_become_scientific_failure():
 
 def test_profile_preserves_each_original_parent_weight():
     profile = yaml.safe_load(study.PROFILE.read_text())
-    originals = {task: yaml.safe_load((ROOT / "tasks" / task / "rubric.yaml").read_text()) for task in profile["tasks"]}
+    originals = {task: yaml.safe_load((ROOT / "archive/evaluator-v1-2026-10/tasks" / task / "rubric.yaml").read_text()) for task in profile["tasks"]}
     study.validate_profile(profile, originals)
     wrong = copy.deepcopy(profile)
     wrong["tasks"]["cca-seasonal-reproduction"]["criteria"][0]["weight"] += 1

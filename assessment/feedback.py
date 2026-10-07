@@ -1,6 +1,6 @@
 """Bounded development-score requests for Level 2. Final-period scores never pass through here.
 
-Same contract as weatherbench.feedback, for forecasts in a results store: every
+Same contract as the first evaluator's development feedback, for forecasts in a results store: every
 request is counted before it is read, each queried store is frozen and hashed, and
 only aggregate metrics return to the agent.
 """

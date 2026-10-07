@@ -241,7 +241,7 @@ def main():
     import sys
     sys.path.insert(0, str(ROOT))
     profile = yaml.safe_load(PROFILE.read_text())
-    rubrics = {task: yaml.safe_load((ROOT / "tasks" / task / "rubric.yaml").read_text()) for task in profile["tasks"]}
+    rubrics = {task: yaml.safe_load((ROOT / "archive/evaluator-v1-2026-10/tasks" / task / "rubric.yaml").read_text()) for task in profile["tasks"]}
     validate_profile(profile, rubrics)
     output = ROOT / "var/calibration/anchor-calibration-v1"
     output.mkdir(parents=True, exist_ok=True)

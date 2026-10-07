@@ -1,6 +1,6 @@
 """Substrate use for template runs: mounted files and installed libraries.
 
-Builds on `weatherbench.substrate_use` (pull request #1), which reports whether a
+Builds on `assessment.substrate_use` (pull request #1), which reports whether a
 run listed, read or ran the files mounted at /substrate. A substrate can also be
 a library installed in the runtime image, such as AfricaS2S or acmadDL, and that
 monitor cannot see an import. This module adds the import record beside the
@@ -9,7 +9,7 @@ original one and changes neither its code nor its numbers.
 import re
 from pathlib import Path
 
-from weatherbench.substrate_use import executed_commands, substrate_use
+from .substrate_use import executed_commands, substrate_use
 
 CODE_SUFFIXES = (".py", ".ipynb", ".sh", ".R", ".jl")
 
@@ -62,5 +62,5 @@ def substrate_record(run, config):
             "libraries": library_use(run, libraries) if libraries else {},
             "image_paths": image_path_use(run, paths) if paths else {},
             "commands": len(executed_commands(log)[0]) if log.is_file() else None,
-            "method": "Mounted files: command text naming /substrate paths (weatherbench.substrate_use). Libraries: import statements in "
+            "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in "
                       "executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."}

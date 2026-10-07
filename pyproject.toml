@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-weather-bench"
-version = "0.2.0"
-description = "Verifiable weather research tasks for comparing agent substrates, cost, and reuse"
+version = "1.0.0"
+description = "A benchmark of parameterised weather-research templates, assessed in Docker, for comparing agent systems"
 requires-python = ">=3.12"
 dependencies = ["numpy>=2", "xarray", "netCDF4", "scipy", "h5netcdf", "h5py", "zarr", "PyYAML", "httpx", "Pillow", "matplotlib"]
 
@@ -13,13 +13,13 @@ dependencies = ["numpy>=2", "xarray", "netCDF4", "scipy", "h5netcdf", "h5py", "z
 dev = ["pytest", "python-pptx"]
 
 [project.scripts]
-weather-bench = "weatherbench.cli:main"
+weather-bench = "assessment.__main__:main"
 
 [tool.setuptools.packages.find]
-include = ["weatherbench*"]
+include = ["assessment*"]
 
 [tool.setuptools.package-data]
-"weatherbench.task_tools" = ["review_ui/*.html", "review_ui/*.css", "review_ui/*.js"]
+"assessment" = ["*.md", "*.json"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "archive/pilot-2026-10-01/tests", "archive/docs-2026-10/tests"]
+testpaths = ["tests"]
