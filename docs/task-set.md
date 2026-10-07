@@ -1,24 +1,24 @@
-# The proposed starting set of 25 tasks
+# The proposed starting set holds 25 templates
 
 Status: proposal agreed in discussion on 6 October 2026. Nothing in this document
 is implemented beyond what the "Where it lives" column says. No task contract,
-rubric, evaluator or approval field was changed by writing it.
+check, reference or approval field was changed by writing it.
 
-## The question, stated twice
+## The set answers one question, stated twice
 
 **In plain terms.** Which forecasting jobs should this benchmark ask AI agents to
-do first, so that the results tell us which models and agent harnesses are
+do first, so that the results tell us which models and harnesses are
 accurate, cheap and fast, and so that a few jobs remain hard even for the best
 agents?
 
 **In technical terms.** Which task templates form the initial collection, drawn
-from the ten packaged tasks in this repository and the sixteen cases in the
+from the ten tasks of the archived first evaluator in this repository and the sixteen tasks in the
 earlier `weather-skills-bench` repository, such that (a) every template can be
 instantiated at many locations and time windows, (b) the collection covers the
 main kinds of subseasonal and seasonal forecasting work, and (c) a subset
 carries a continuous skill score with no ceiling?
 
-## Terms used in this document
+## The document uses these terms
 
 - **Task template.** A task whose brief, data request and answer key take
   parameters such as region, dates or forecast issue. One template yields many
@@ -31,8 +31,8 @@ carries a continuous skill score with no ceiling?
   or fail, reported with cost, time and tokens.
 - **Level 2 (the leaderboard).** The agent improves its output. The result is
   forecast skill against a baseline on a private period. Level 2 is a separate
-  submission with its own format and leakage gate, and the Level 1 result is
-  shown beside the Level 2 score and does not gate it (see
+  submission with its own format and leakage checks, and the Level 1 result is
+  shown beside the Level 2 score and does not hide it (see
   [the assessment format](assessment-format.md)). Level 2 uses the same brief
   and data as Level 1 plus one sentence and a fixed budget of feedback queries.
 - **Subseasonal.** Forecasts about two to six weeks ahead.
@@ -40,8 +40,8 @@ carries a continuous skill score with no ceiling?
   ahead.
 - **Old repository.** `ACCORD/weather-skills-bench`, built 29–30 September 2026.
   Its cases are in `weather-skills-bench/cases/<id>.json`.
-- **This repository.** `ACCORD/agent-weather-bench`. Its packaged tasks are in
-  `tasks/<id>/`.
+- **This repository.** `ACCORD/agent-weather-bench`. The ten tasks of its first evaluator are archived in
+  `archive/evaluator-v1-2026-10/tasks/<id>/`.
 - **Frontier model.** Claude Fable 5.1 or GPT-6 Astra in the runs cited here.
 - **Cheap model.** GPT-6 Luna, Gemini 3.1 Flash-Lite, or an open-weight model of
   9 billion parameters or fewer in the runs cited here.
@@ -60,14 +60,14 @@ things, one at a time, with the others held fixed:
 - *The model.* More and less powerful language models, from small open-weight
   models to frontier models.
 - *The harness.* The agent loop that drives the model, such as the built-in
-  driver, the Codex adapter, or the experimental `rx` research harness.
-- *The substrate.* The tools and knowledge supplied to the agent. The three of
+  driver, Codex, or the experimental `rx` research harness. The controller (the trusted evaluator) is not a harness.
+- *The tooling.* The skills, libraries and knowledge supplied to the agent in its runtime image. The three of
   first interest are the Rhiza Research weather-skills catalog
   (`ACCORD/weather-skills-catalog`), the ACMAD data library `acmadDL`
   (`ACCORD/acmadDL`), and the `AfricaS2S` seasonal forecasting library
   (`ACCORD/africas2s`).
 
-**Supplied structure is a fourth thing to switch on and off.** A task can be run
+**Supplements are a fourth thing to switch on and off.** A task can be run
 with or without a page that states its accepted conventions, and with or
 without a description of the method. Each is an optional supplement, recorded
 with the run. Running the same task with and without one measures how much of
@@ -78,10 +78,10 @@ know, or find out, how the data are to be read.
 **Four questions are asked of every system.**
 
 1. *Does it meet the bar?* Which tasks does the system pass, and under what
-   conditions of model, harness, substrate and budget?
-2. *What does it cost?* Dollars, tokens and time to a solution, with failed
+   model, harness, tooling and budget?
+2. *What does it cost?* Dollars, tokens and time to a submission, with failed
    attempts included.
-3. *What is a substrate worth?* How much does a given skill set or library
+3. *What is tooling worth?* How much does a given skill set or library
    change the pass rate and the cost, compared with the same model and harness
    without it?
 4. *Does work accumulate?* When a system has already done one task, how much
@@ -92,8 +92,8 @@ that has built the workflow for a seasonal forecast for Ethiopia should find
 the same forecast for Kenya or Nigeria close to a change of parameters. The
 measurement runs the same template at a new location with the system's earlier
 work retained, and again with it reset, and compares cost, tokens, time and
-pass rate. The harness already supports this through `--parent RUN_ID` and the
-sequence files in `experiments/`; the comparison rules are in the top-level
+pass rate. The controller already supports this through `--parent RUN_ID` and the
+archived sequence files in `archive/evaluator-v1-2026-10/experiments/`; the comparison rules are in the top-level
 README under "What we measure".
 
 **A second instance is a second episode, never a hidden rerun.** The agent's
@@ -103,32 +103,32 @@ decides for itself whether to reuse it, adapt it or start again. The same holds
 across levels and across tasks: Level 2 can start from the Level 1 submission,
 and one task can start from the output of another.
 
-**Substrate use is monitored, not assumed.** A substrate that is mounted but
-never opened measures availability, not use. The substrate-use monitor
-contributed in pull request #1 (`weatherbench/substrate_use.py`, credited in
+**Tooling use is monitored, not assumed.** Tooling that is mounted but
+never opened measures availability, not use. The tooling-use monitor
+contributed in pull request #1 (`assessment/substrate_use.py`, credited in
 these documents to Neil Hausmann) records for every run whether the agent
-listed, read or ran its substrate, and at which step it first did so. That
+listed, read or ran its tooling, and at which step it first did so. That
 monitor is a standing part of every run record and of the proposed assessment
 format.
 
 **The earlier work already ran these comparisons in a small way.** The
-1 October pilot ran three models under three substrate conditions (none, the
+1 October pilot ran three models with three tooling images (none, the
 Rhiza catalog, and the ACCORD libraries) on one seasonal task, with a follow-up
 episode. The old repository ran thirteen models with and without the skills
-catalog. Neither set of substrate conditions has been ported to the current
-harness: `systems/` holds model and adapter configurations only.
+catalog. Neither set of tooling images has been ported to the current
+controller: `systems/` holds model and harness configurations only.
 
-## The set has three tiers, ordered by how long one run takes
+## One run takes seconds, minutes or tens of minutes, depending on the template
 
 - **The diagnostic pack takes seconds per item.** It holds ten one-step data
   operations and counts as one entry, so that ten easy items do not outweigh
   the real tasks.
 - **Workflow tasks take minutes.** Each chains several steps: fetch, interpret,
-  compute, deliver. These separate cheap models from frontier models.
+  compute, submit. These separate cheap models from frontier models.
 - **Research tasks take tens of minutes.** Each has both levels. These separate
   frontier models from one another by skill.
 
-## Rows 1–16 already exist in one of the two repositories
+## Templates 1–16 already exist in one of the two repositories
 
 Columns:
 
@@ -169,24 +169,24 @@ Columns:
 | 15 | Weeks 3–4 rainfall | new: `subseasonal-optimization`; converted: `templates/weeks34-rainfall` | Region | Outcome | Yes | Astra beat the raw model by 6.7% |
 | 16 | Rainfall downscaling | new: `conservative-downscaling` | Region | Product | Yes | Luna valid, but worse than climatology |
 
-Notes on rows 1–16:
+Notes on templates 1–16:
 
-- The old repository's sixteen cases reduce to rows 1–6. The two heat variants
-  are one task. The real dipole index task (row 5) supersedes its synthetic
+- The old repository's sixteen tasks reduce to templates 1–6. The two heat versions
+  are one task. The real dipole index task (template 5) supersedes its synthetic
   twin, which stays inside the pack.
-- Rows 2, 4 and 6 also have follow-up phases written in
+- Templates 2, 4 and 6 also have follow-up phases written in
   `archive/pilot-2026-10-01/tasks/`, which ask the agent to reuse its saved code
   on a new forecast issue. Those phases measure reuse.
-- Three frontier failures on rows 2 and 4 were caused by an unstated
+- Three frontier failures on templates 2 and 4 were caused by an unstated
   convention (whether to clip negative daily rainfall increments), not by an
   agent error. See `weather-skills-bench/results/rainfall-semantics-audit.json`.
-- Rows 12–14 need the most rewriting, because their current prompts are the
+- Templates 12–14 need the most rewriting, because their current prompts are the
   supplied algorithm. Their one-sentence briefs would be: "repair this
   workflow's units, then test whether predictor search beats a fixed
   predictor" (12); "reproduce this centre's CCA forecast from its source code"
   (13); "test whether sharing regression slopes across months helps" (14).
 
-## Rows 17–25 fill gaps that variation in place and time does not cover
+## Templates 17–25 fill gaps that variation in place and time does not cover
 
 Columns are the same, except **Why it is needed** replaces the location and
 evidence columns, there is no "Varies by" column, and **Starting point** names
@@ -195,14 +195,14 @@ any existing written material.
 | # | Task | Why it is needed | Mode | Level 2 | Starting point |
 | --- | --- | --- | --- | --- | --- |
 | 17 | Rainy-season onset and dry spells | No existing task forecasts an event date or a spell, only totals and means | Process | Yes | Candidate 5 in `docs/task-candidate-shortlist.md` |
-| 18 | Probabilistic forecast verification | Rows 6–8 score single-value forecasts; none tests the reliability of probabilities | Process | No | None |
-| 19 | Multi-model combination with hindcasts | Row 10 averages one case by a fixed rule; none learns weights across models | Process | Yes | None |
-| 20 | Test a published predictor claim | Row 9 checks a definition; none checks whether a paper's claimed skill holds on held-out years | Process | Yes | Family C in `docs/task-portfolio.md` |
+| 18 | Probabilistic forecast verification | Templates 6–8 score single-value forecasts; none tests the reliability of probabilities | Process | No | None |
+| 19 | Multi-model combination with hindcasts | Template 10 averages one case by a fixed rule; none learns weights across models | Process | Yes | None |
+| 20 | Test a published predictor claim | Template 9 checks a definition; none checks whether a paper's claimed skill holds on held-out years | Process | Yes | Family C in `docs/task-portfolio.md` |
 | 21 | Beat the regional consensus forecast | No existing task has a bar set by a real forecasting centre | Process | Yes; frontier-hard | Consensus reconstruction in `ACCORD/from_icpac/`; hindcast coverage unchecked |
-| 22 | Probabilistic weeks 3–4 and 5–6 outlook | Row 15 is single-value error; this is tercile probabilities for rainfall and temperature | Process | Yes | Candidate 1 in the shortlist; its data endpoints failed an earlier audit |
+| 22 | Probabilistic weeks 3–4 and 5–6 outlook | Template 15 is single-value error; this is tercile probabilities for rainfall and temperature | Process | Yes | Candidate 1 in the shortlist; its data endpoints failed an earlier audit |
 | 23 | Weekly forecasting with observation updates | The agent's frozen program runs week by week and may learn from each released observation | Outcome | Yes; frontier-hard | `docs/frontier-challenge-next.md`; needs a controller that releases observations in date order |
-| 24 | Madden–Julian Oscillation forecast check | Mirrors rows 5–6 at the subseasonal timescale | Product | No | None; data access unchecked |
-| 25 | Extreme-event probability at weeks 2–3 | Row 3 reports a peak with no skill score; this scores exceedance probabilities | Product | Yes | None |
+| 24 | Madden–Julian Oscillation forecast check | Mirrors templates 5–6 at the subseasonal timescale | Product | No | None; data access unchecked |
+| 25 | Extreme-event probability at weeks 2–3 | Template 3 reports a peak with no skill score; this scores exceedance probabilities | Product | Yes | None |
 
 Two spare candidates exist: a rainfall distribution with dry-day mass
 (candidate 8 in the shortlist), and calibrating the Kenya weekly outlook against
@@ -210,30 +210,30 @@ observed rainfall.
 
 ## The set of 25 breaks down as follows
 
-- **By timescale:** 9 subseasonal (rows 2, 3, 4, 6, 15, 22, 23, 24, 25),
-  10 seasonal (rows 10–14, 16, 17, 19, 20, 21), 5 short-range or general
-  (rows 5, 7, 8, 9, 18), plus the diagnostic pack.
+- **By timescale:** 9 subseasonal (templates 2, 3, 4, 6, 15, 22, 23, 24, 25),
+  10 seasonal (templates 10–14, 16, 17, 19, 20, 21), 5 short-range or general
+  (templates 5, 7, 8, 9, 18), plus the diagnostic pack.
 - **By level:** 13 have an optimize level now or by design, 2 can gain one
-  later (rows 8 and 10), and 10 are produce-only.
-- **By readiness:** 10 are packaged in this repository, 6 have briefs and
-  answer keys in the old repository, and 9 must be built. Three rows are
-  converted to the new assessment format: row 4 in product mode, row 15 in
-  outcome mode with both levels, and row 11 in process mode.
-- **By mode:** 12 product (rows 1–9, 16, 24, 25), 11 process (rows 10–14,
-  17–22), and 2 outcome (rows 15 and 23). The assignment of rows 12, 14, 16, 20
+  later (templates 8 and 10), and 10 are produce-only.
+- **By readiness:** 10 were packaged for the first evaluator (now archived), 6 have briefs and
+  answer keys in the old repository, and 9 must be built. Three templates are
+  converted to the new assessment format: template 4 in product mode, template 15 in
+  outcome mode with both levels, and template 11 in process mode.
+- **By mode:** 12 product (templates 1–9, 16, 24, 25), 11 process (templates 10–14,
+  17–22), and 2 outcome (templates 15 and 23). The assignment of templates 12, 14, 16, 20
   and 25 is tentative.
-- **By intended difficulty:** rows 1–10 separate cheap models from frontier
-  models; rows 11–20, 22, 24 and 25 separate frontier models by skill; rows 21
+- **By intended difficulty:** templates 1–10 separate cheap models from frontier
+  models; templates 11–20, 22, 24 and 25 separate frontier models by skill; templates 21
   and 23 are the ones frontier agents should not simply pass.
 
-## Four design choices apply to every row
+## Four design choices apply to every template
 
 - **Briefs are short.** The current prompts run 3,700 to 10,400 characters and
   supply the procedure. The old briefs run 260 to 1,800 characters and state
   the product. The new set follows the old length.
-- **Supplied algorithms and conventions become optional conditions.** Files
-  such as `tasks/cca-seasonal-reproduction/algorithm.md` move out of the brief
-  and into a "method supplied" comparison arm. A template's `conventions.md`
+- **Supplied algorithms and conventions become optional supplements.** Files
+  such as the archived `algorithm.md` of the CCA seasonal reproduction task move out of the brief
+  and into a method-description supplement. A template's `conventions.md`
   does the same for its accepted conventions, as a "conventions supplied" arm.
   A run takes either with `--supply`.
 - **Tasks are templates.** Location and time window are parameters, so repeats
@@ -244,24 +244,24 @@ observed rainfall.
   rows also require conformance to a named standard. The mechanism is in
   [the assessment format](assessment-format.md).
 
-## Limits of this proposal
+## The proposal has these limits
 
 - **The instance counts are untested.** No one has enumerated the valid regions
   and windows for any template.
-- **Four seasonal rows share data.** Rows 11–14 forecast East African rainfall
+- **Four seasonal rows share data.** Templates 11–14 forecast East African rainfall
   from the same sources, so four results there are fewer than four independent
   measurements.
-- **Most Level 2 holdouts are small.** Only row 15 has a large private period
-  (208 forecast issues across nine cells). Rows 12–14 hold out the same four
+- **Most Level 2 holdouts are small.** Only template 15 has a large private period
+  (208 forecast issues across nine cells). Templates 12–14 hold out the same four
   years.
 - **Historical observations are public.** A model may know them from training.
   Private instances reduce this risk; only forecasts scored after they are
   frozen remove it.
-- **The substrate and reuse comparisons are designed but not set up.** No
-  system configuration in the current harness carries the Rhiza catalog, the
+- **The tooling and reuse comparisons are designed but not set up.** No
+  system definition in the current controller carries the Rhiza catalog, the
   ACCORD libraries or the `rx` harness, and no retained-versus-reset sequence
   has been run on these tasks.
-- **The substrate-use monitor sees only part of the picture.** It matches
+- **The tooling-use monitor sees only part of the picture.** It matches
   `/substrate` paths in command text. It does not see an installed library
   being imported, which is how `acmadDL` and `AfricaS2S` are used. It needs
   extending to cover imports; it should be extended, not replaced.
@@ -271,4 +271,4 @@ observed rainfall.
   25 under its first contract and 11 under the revised one. See
   [the assessment format](assessment-format.md).
 - **No human has approved any task.** Scientific, scoring and redistribution
-  approvals remain false for every packaged task.
+  approvals remain false for every template.

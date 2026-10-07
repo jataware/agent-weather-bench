@@ -1,4 +1,4 @@
-# Agent Weather Bench identity
+# The Agent Weather Bench identity has a symbol, a palette and a voice
 
 The selected working name is **Agent Weather Bench**. It names the subject and
 the kind of project. The repository slug remains `agent-weather-bench`.
@@ -9,10 +9,10 @@ Introduce the full name before using AWB. Keep all three words in a public title
 
 Lead with model comparisons on common scientific tasks. Treat added skills, code,
 retrieval, and prior work as a separate experiment dimension. Report cost and
-time to solution alongside scientific performance. Keep the public introduction
+time to submission alongside scientific performance. Keep the public introduction
 general; individual institutions and local task sources do not define the benchmark.
 
-## Symbol
+## The symbol is a grid with a forecast mark
 
 The symbol uses three weather contours to suggest forecast research. One gold
 point refers to a checked result.
@@ -23,7 +23,7 @@ Use `symbol-mono.svg` when colour is unavailable. `icon.svg` adds a dark square
 for avatars and favicons. Keep clear space of at least one quarter of the symbol's
 width. At very small sizes, use the icon rather than the full wordmark.
 
-## Colour and type
+## The palette and the type are fixed
 
 | Role | Colour | Use |
 | --- | --- | --- |
@@ -40,7 +40,7 @@ without colour.
 The vector assets use Arial with Helvetica and sans-serif fallbacks. They need
 no downloaded fonts. PNG exports fix the appearance for sharing.
 
-## Writing
+## The writing follows these rules
 
 Use simplified technical English as a guide. Prefer short sentences and active
 verbs. Put one action in each instruction. Keep a term's meaning stable. Define
@@ -49,17 +49,17 @@ when an ambiguous pronoun could hide responsibility.
 
 The README aims for the user's approximate STE style. It does not claim formal
 [ASD-STE100](https://www.asd-ste100.org/) compliance or a measured compliance percentage.
-Research terms such as calibration, substrate, and teleconnection remain useful.
+Research terms such as calibration, tooling (the skills, libraries and earlier work supplied to the agent), and teleconnection remain useful.
 Define them where needed rather than removing the scientific meaning.
 
 Start with the research goal. Follow with the experiment and the route to a first
 run. State development readiness beside the relevant task. Do not present intended
 results as measured findings.
 
-## Diagrams and sharing
+## The diagrams and share images are built from one script
 
 `benchmark-design.svg` explains common tasks, different models, captured artifacts,
-and fixed assessment. Capability, cost, and time lead the comparison. Substrate
+and fixed assessment. Capability, cost, and time lead the comparison. Tooling
 and reuse are additional experiments. Private references enter assessment directly.
 Only agent-owned state and prior artifacts enter the next task. Related follow-ups
 are optional; the primary reuse experiment spans other benchmark tasks.

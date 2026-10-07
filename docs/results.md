@@ -1,6 +1,6 @@
-# Results so far
+# The results so far come from one cheap model and show what the checks catch
 
-Status: 7 October 2026. Everything below comes from one cheap model, gpt-6-luna, through one harness, on three task templates. There is one attempt per cell. These results show that the machinery works and what it catches. They do not rank anything.
+Status: 7 October 2026. Everything below comes from one cheap model, gpt-6-luna, through one harness, on three templates (parameterised tasks). There is one attempt per cell. These results show that the machinery works and what it catches. They do not rank anything.
 
 ![A forecasting task goes into a sandbox; what comes out is checked by computation and by a narrow judge](figures/overview.png)
 
@@ -16,7 +16,7 @@ Columns: attempts; attempts in which every computed check passed; attempts in wh
 | Weeks 3–4 rainfall | 8 | 7 | 5 |
 | Seasonal calibration | 15 | 8 | 8 |
 
-- The first 25 attempts ran under the first delivery contract, the last 11 under the revised one. Their computed checks follow different rules, so the two sets are not added in the format document; they are added here only as a count of attempts.
+- The first 25 attempts ran under the first submission contract, the last 11 under the revised one. Their computed checks follow different rules, so the two sets are not added in the changelog; they are added here only as a count of attempts.
 - Every failure has a named cause: a known pitfall (the 7-day window one day early, three times; category boundaries that include the held-out year, twice; daily rates not converted to totals, once), a wrong array shape, a wrong skill score or category coding (three times, each ruled on review), an unstated claim, or a report that contradicts its code.
 - Under the revised contract no attempt had a layout problem. Under the first contract three did.
 
@@ -28,9 +28,9 @@ Columns: attempts; attempts in which every computed check passed; attempts in wh
 - The failures: 5 reports that contradict their own code or answer; 2 seasonal reports that do not state uncertainty in plain language; 1 calibration whose code does not do what its method entry says. The last one is a coding defect that the numerical checks had not isolated.
 - The judge changed the headline of two attempts whose numbers were all right.
 
-## Three run conditions were exercised once each
+## Plain runs, sheet-supplied runs and second episodes were each exercised
 
-Columns: the condition; the outcome; the agent's seconds and tokens; the checks that failed.
+Columns: the run and its supplements (plain, with the conventions sheet, or a second episode); the outcome; the agent's seconds and tokens; the checks that failed.
 
 | Run | Outcome | Seconds | Tokens | Failed checks |
 | --- | --- | --- | --- | --- |
@@ -65,10 +65,10 @@ Columns: the pitfall; instances on which its numbers differ from the accepted re
 - The tolerance is a floating-point error bound, computed from what the spec declares. The unweighted regional mean lies inside that bound on every Kenya instance, because the region is within 6° of the equator. The first version of the spec used a tolerance chosen by eye and failed answers for differences that rounding can produce.
 - With eight training years the held-out and full-sample category boundaries give the same categories for any data, so that pitfall cannot be seen on those two seasonal instances.
 
-## The earlier substrate comparison measured availability, not use
+## The earlier tooling comparison measured availability, not use
 
-- Fourteen attempts on the pilot's three runtime images (no substrate, the Rhiza weather-skills catalog, the ACCORD libraries) showed no import of a substrate library and no command that named the skills catalog. The ACCORD condition read its notes folder in three of four runs.
-- The differences between the conditions are therefore not evidence about the substrates. The images are to be rebuilt before the comparison is run again.
+- Fourteen attempts on the pilot's three runtime images (no tooling, the Rhiza weather-skills catalog, the ACCORD libraries) showed no import of a tooling library and no command that named the skills catalog. The ACCORD-libraries runs read its notes folder in three of four runs.
+- The differences between the three tooling images are therefore not evidence about the tooling. The images are to be rebuilt before the comparison is run again.
 
 ## The attempts found eight controller defects, all fixed
 

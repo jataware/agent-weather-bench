@@ -1,36 +1,37 @@
-# Task templates
+# Templates are parameterised tasks assessed by the controller
 
-A task template is a task whose brief, inputs and answer key take parameters
+A template is a task whose brief, inputs and answer key take parameters
 such as region and time window. One template yields many instances. Templates
 are assessed by the `assessment/` package, which implements
-[the assessment format](../docs/assessment-format.md). The ten packaged tasks in
-`tasks/` are still assessed by the older `weatherbench` evaluator; each moves
-here when it is converted.
+[the assessment format](../docs/assessment-format.md). The controller is the
+trusted evaluator in `assessment/`; it launches the agent in a Docker sandbox,
+holds the private references and runs the checks. The ten tasks of the first
+evaluator are archived under `archive/evaluator-v1-2026-10/`.
 
-## What a template folder holds
+## A template folder holds these files
 
 - `spec.yaml` — the assessment specification: mode, named results with their
   dimensions and error bounds, conventions labelled accepted or pitfall,
-  invariants, probes, claims and interpretation obligations. It has a
+  invariants, probes, claims and interpretation checks. It has a
   `spec_version`.
 - `brief.md` — the text given to the agent, with fill-in fields. It names every
   array, its dimensions and its unit. Briefs run to about 150 words.
 - `conventions.md` — optional. A page that states the accepted conventions. It
   is handed to the agent only when a run asks for it with `--supply
-  conventions`, which makes it an experimental condition.
+  conventions`, which makes it a supplement that can be switched on and off.
 - `reference.py` — the reference function and the controller hooks. This is the
   only science code a template needs.
 - `reference_independent.py` — a second implementation that shares no code with
   the first.
 - `instances.yaml` — the public development instances.
 - `sources.json` — the identity and hashes of the frozen source data.
-- `controls/` — a known-correct solution and deliberately incorrect ones, used
+- `controls/` — a known-correct submission and deliberately incorrect ones, used
   to certify the spec.
 - `certification.json` — the record of the last certification run.
 - `rulings.yaml` — optional. A reviewer's rulings on answers that matched no
   listed reading, keyed by the hash of the answer.
 
-## What a submission holds
+## A submission holds these parts
 
 The text every agent receives is [`assessment/envelope.md`](../assessment/envelope.md).
 
@@ -58,7 +59,7 @@ A result's `tolerance` is an error bound, not a judgement.
   an accepted reading must not exceed it. Certification also reports, for each
   pitfall, how many tolerances separate it from the accepted reading.
 
-## The hooks `reference.py` must provide
+## `reference.py` must provide these hooks
 
 - `prepare(private, source_dir)` — restore the private data from hash-checked
   source archives.
@@ -81,7 +82,7 @@ A result's `tolerance` is an error bound, not a judgement.
   results, the second implementation, and any agreement checks against outside
   answers.
 
-## Commands
+## These commands run, assess and certify a template
 
 ```sh
 .venv/bin/python -m assessment templates
@@ -133,9 +134,9 @@ export CODEX_BINARY=$HOME/.codex/packages/standalone/releases/0.160.0-aarch64-ap
 
 `certify` and `assess` run submitted code in the offline Docker runtime. The
 `--local-trusted` flag runs it on the controller without isolation and is only
-for the controller's own control solutions.
+for the controller's own control submissions.
 
-## Standards for process-mode templates
+## Process-mode templates cite a standard
 
 A process-mode spec names a standard and lists the steps it requires. The
 standard's practices and checklist live in `standards/<standard>/`, so that one
@@ -144,30 +145,30 @@ identical to the checklist's. The only standard so far,
 `standards/wmo-objective-seasonal-forecasting/`, is a draft from a secondary
 source and has not been reviewed.
 
-## Where the data lives
+## The data lives outside the repository
 
 Private data stays under `var/private/templates/<template>/`, which Git
 ignores. The tracked `sources.json` records the hash of every source object, so
 `prepare` either reproduces the private data exactly or fails. A fresh checkout
 needs the source archives named in `sources.json`.
 
-## What a run records
+## A run records its provenance
 
 Each run lives in `var/template-runs/<run-id>/`. The controller writes
 `controller/provenance.json`: input hashes, source identity, artifact hashes at
-freeze, the system and its substrate files, the spec version and fingerprint,
-the tool trace hash, the sandbox boundary, the substrate-use record, and the
+freeze, the system and its tooling files, the spec version and fingerprint,
+the tool trace hash, the sandbox boundary, the tooling-use record (`substrate_record`), and the
 parent run if any, the supplements handed to the agent, and, for a second
 episode, how many commands named the earlier work. The agent writes none of it.
 `assessment.json` holds every check with its outcome, the headline `outcome`,
 and its two components `computed_outcome` and `judged_outcome`.
 `controller/judgements/` holds the judge's raw replies under its identifier.
 
-## Certification
+## Certification runs five tests
 
 `certify` runs four automatic tests: the two reference implementations agree,
-and every declared magnitude covers the data; known-correct solutions pass;
-deliberately incorrect solutions are caught by the right check; and the
+and every declared magnitude covers the data; known-correct submissions pass;
+deliberately incorrect submissions are caught by the right check; and the
 separability of every accepted–pitfall pair is measured, in tolerances, on the
 submitted data and on the controller's changed data. The fifth test reads the agent runs on disk: it needs at least two
 attempts assessed under the current fingerprint, with no answer left
@@ -176,9 +177,9 @@ task. A test in `tests/test_assessment_format.py` fails when the spec, the
 reference or a module that decides outcomes changes without a new
 certification.
 
-## Current templates
+## Three templates are certified today
 
-| Template | Spec version | Task-set row | Mode | Certification |
+| Template | Spec version | Task-set entry | Mode | Certification |
 | --- | --- | --- | --- | --- |
 | `kenya-forecast-revision` | 2 | 4 | Product | All five tests pass; 4 attempts by one cheap model under this version |
 | `weeks34-rainfall` | 3 | 15 | Outcome, Levels 1 and 2 | All five tests pass; 3 attempts by one cheap model under this version |

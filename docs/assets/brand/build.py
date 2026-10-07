@@ -78,7 +78,7 @@ def vectors():
     social += text(78,462,'Scientific tasks. Checked results.',29,'#c5d8d1')
     social += '<path d="M78 525 H1122" stroke="#476364"/>'
     social += text(78,567,'MODEL CAPABILITY',15,MINT,500,2)+text(470,567,'COST + TIME',15,MINT,500,2)+text(840,567,'TOOLING',15,MINT,500,2)
-    svg('social-card.svg',1200,630,'Benchmark AI models on forecast research','Agent Weather Bench. Measure model capability, cost, and time. Test substrates as an additional comparison.',social)
+    svg('social-card.svg',1200,630,'Benchmark AI models on forecast research','Agent Weather Bench. Measure model capability, cost, and time. Test tooling as an additional comparison.',social)
 
 
 def diagram():
@@ -97,7 +97,7 @@ def diagram():
     s += text(420,259,'Agent in a sandbox',25,weight=600,spacing=-.6)
     for y,label in zip([301,332,363],['A model, driven by a harness','No network · fixed budget','Any method, any code']): s += text(420,y,label,18,MUTED)
     s += '<path d="M420 387 H652" stroke="#cbd7d0"/>'+text(420,421,'Skills · libraries · earlier work',17,GREEN)
-    s += text(760,259,'Solution + trace',25,weight=600,spacing=-.5)
+    s += text(760,259,'Submission + trace',25,weight=600,spacing=-.5)
     for y,label in zip([301,332,363],['Labelled arrays + answer','Code that regenerates them','Report · every command']): s += text(760,y,label,20,MUTED)
     s += '<path d="M760 387 H992" stroke="#cbd7d0"/>'+text(760,421,'Hashes, cost and time kept by the controller',15,GREEN)
     s += text(1100,259,'Controller checks',25,weight=600,spacing=-.5)
@@ -116,16 +116,16 @@ def diagram():
     s += text(56,693,'ADDITIONAL EXPERIMENTS',14,GREEN,600,1.5)
     s += text(56,731,'Episodes: keep the earlier work.',23,weight=500)
     s += text(56,764,'Leaderboard: optimise the forecast within a budget.',19,MUTED)
-    # Reuse begins at the agent/solution lane. Assessments have no path into it.
+    # Reuse begins at the agent/submission lane. Assessments have no path into it.
     s += '<path d="M536 450 V710 H1038 M876 450 V481 H698 V710" fill="none" stroke="#28786b" stroke-width="2.5"/>'
     s += box(734,683,275,51,fill=PAPER,stroke=PAPER,r=0)
-    s += text(750,704,'The earlier solution',19,GREEN,500)+text(750,730,'+ the agent\'s state',19,GREEN,500)
+    s += text(750,704,'The earlier submission',19,GREEN,500)+text(750,730,'+ the agent\'s state',19,GREEN,500)
     s += arrow('M1007 710 H1066')
     s += box(1076,677,300,91,fill='#e8efe7',r=10)
     s += text(1100,711,'Next instance or task',23,weight=600,spacing=-.4)
     s += text(1100,744,'Same system · compared with a fresh run',16,MUTED)
     svg('benchmark-design.svg',1440,820,'Agent Weather Bench experimental design',
-        'Compare models, harnesses and tooling on the same task instances. A task states a product and supplies frozen data and a budget; an agent in a sandbox delivers a solution and a trace; the controller checks it by computation against a private reference, by rerunning the code on changed data, and by a judge that quotes exact text. Every check returns pass, fail or unresolved. Further experiments keep the earlier solution for the next instance, and optimise forecasts for a leaderboard.',s)
+        'Compare models, harnesses and tooling on the same task instances. A task states a product and supplies frozen data and a budget; an agent in a sandbox hands back a submission and a trace; the controller checks it by computation against a private reference, by rerunning the code on changed data, and by a judge that quotes exact text. Every check returns pass, fail or unresolved. Further experiments keep the earlier submission for the next instance, and optimise forecasts for a leaderboard.',s)
 
 
 if __name__ == '__main__':

@@ -40,16 +40,16 @@ For forecast tasks, observations provide a separate test of predictive value. Ta
 | --- | --- |
 | Model capability | How reliably does each model complete the same scientific tasks with general tools? |
 | Agent frameworks | How do different agent frameworks perform on the same scientific tasks under matched data access and resource budgets? |
-| Substrate | How does performance change when we add skills, code, retrieval, or other support? |
-| Cost and time | What does a successful solution cost, and how long does it take? Include failed attempts. |
+| Tooling | How does performance change when we add skills, libraries, retrieval, or earlier work? |
+| Cost and time | What does a successful submission cost, and how long does it take? Include failed attempts. |
 | Reuse | Does agent-owned work from previous tasks improve performance on other benchmark tasks? |
 
-The **substrate** is the support supplied to an agent, such as skills, workflow code, retrieval resources, or prior work. A run can also supply a conventions sheet or a method description; each is recorded as a condition of the run.
+The **tooling** is the skills, libraries, retrieval resources, or earlier work supplied to an agent. A run can also supply a conventions sheet or a method description; each is recorded as a supplement of the run.
 
 For model comparisons, keep the agent loop, tasks, inputs, tools, budgets, and scoring fixed.
-Record provider and model versions, tokens, costs, and wall time. For substrate
+Record provider and model versions, tokens, costs, and wall time. For tooling
 comparisons, also hold the model and agent loop fixed. Report the cost of creating
-the substrate separately.
+the tooling separately.
 
 For framework comparisons, hold the model, tasks, data access, resource budgets,
 and scoring fixed while allowing orchestration to differ. Record each framework's
@@ -67,12 +67,12 @@ pitfall, the rules any valid answer obeys, the probes to run, the claims to
 check, and the questions a judge decides. The controller holds a private
 reference function that computes the answer under every defensible reading.
 
-The agent delivers a fixed envelope and is free in everything else: labelled
+The agent submits a fixed envelope and is free in everything else: labelled
 arrays in a Zarr store, an answer file with numbers, choices, claims and the run
 command, the code that regenerates the results, and a short report. The method
 is not prescribed.
 
-The controller checks the delivery three ways. It computes: the results are
+The controller checks the submission three ways. It computes: the results are
 compared with the reference under every reading, so a known wrong reading is
 named as a pitfall, and forecasts are scored against withheld observations. It
 reruns the agent's own code on changed data: the results must follow the data
@@ -89,12 +89,12 @@ only when every check passes, the judge's included; the computed part is also
 reported on its own. There are no weights.
 
 The controller keeps the provenance. It records the hashes of the inputs and of
-every delivered file, the source versions, the full tool trace, the tooling
+every submitted file, the source versions, the full tool trace, the tooling
 used, the cost and the time. The agent writes none of it, so an administrative
 slip cannot fail a check.
 
 Each spec is certified before it counts: two independent reference
-implementations agree, a correct solution passes, deliberately wrong solutions
+implementations agree, a correct submission passes, deliberately wrong submissions
 fail on the right check, the separability of every pitfall is measured, and
 cheap-model attempts leave no answer unclassified. The judge has its own twelve
 control cases. Scientific approval by a domain expert is a separate gate, and no

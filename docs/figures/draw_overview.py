@@ -1,4 +1,4 @@
-"""Draw docs/figures/overview.svg: task and tooling go into a sandbox with the agent; the controller inspects the solution and trace.
+"""Draw docs/figures/overview.svg: task and tooling go into a sandbox with the agent; the controller inspects the submission and trace.
 
 Run from the repository root: .venv/bin/python docs/figures/draw_overview.py
 """
@@ -54,7 +54,7 @@ s.append(box(x, TOP + 176, w, 164, PURPLE, "#f5f3ff")); s.append(head(x, TOP + 1
 s.append(item(x + 12, TOP + 230, "skills", "Rhiza weather-skills"))
 s.append(item(x + 12, TOP + 254, "libraries", "AfricaS2S, acmadDL"))
 s.append(item(x + 12, TOP + 278, "sheet", "conventions.md"))
-s.append(item(x + 12, TOP + 302, "earlier work", "episode 1 solution"))
+s.append(item(x + 12, TOP + 302, "earlier work", "episode 1 submission"))
 s.append(text(x + 12, TOP + 330, "Each can be present or absent in a run.", 10.5, GREY))
 
 # ---- sandbox --------------------------------------------------------------------------------------------
@@ -63,12 +63,12 @@ s.append(box(x, TOP, w, 340, GREEN, "#f0fdf4", dash="8 5")); s.append(head(x, TO
 s.append(text(x + 12, TOP + 56, "No network. The task and the tooling are mounted.", 10.5, GREY))
 s.append(box(x + 14, TOP + 70, w - 28, 120, GREEN)); s.append(text(x + w / 2, TOP + 92, "The agent", 14, GREEN, "bold", "middle"))
 s.append(item(x + 26, TOP + 118, "model", "gpt-6-luna"))
-s.append(item(x + 26, TOP + 142, "harness", "Codex adapter"))
+s.append(item(x + 26, TOP + 142, "harness", "Codex"))
 s.append(text(x + 26, TOP + 170, "reads, writes code, runs it, writes up", 12))
 s.append(arrow(x + w / 2, TOP + 190, x + w / 2, TOP + 216, GREEN, 2))
 s.append(text(x + w / 2, TOP + 236, "produces, by any method", 12, GREEN, "bold", "middle"))
-s.append(text(x + 12, TOP + 262, "a solution and a trace", 13, INK, "bold"))
-s.append(text(x + 12, TOP + 282, "The solution is a fixed envelope: arrays,", 12)); s.append(text(x + 12, TOP + 300, "numbers, code and a report. The trace is", 12)); s.append(text(x + 12, TOP + 318, "every command and tool call, kept by the controller.", 12))
+s.append(text(x + 12, TOP + 262, "a submission and a trace", 13, INK, "bold"))
+s.append(text(x + 12, TOP + 282, "The submission is a fixed envelope: arrays,", 12)); s.append(text(x + 12, TOP + 300, "numbers, code and a report. The trace is", 12)); s.append(text(x + 12, TOP + 318, "every command and tool call, kept by the controller.", 12))
 
 # ---- what comes out ---------------------------------------------------------------------------------------
 x, w = 640, 200
@@ -140,7 +140,7 @@ s.append(text(x, y + 50, "Leaderboard", 13, INK, "bold"))
 for i, (name, v) in enumerate([("system C", 0.9), ("system A", 0.7), ("system B", 0.55), ("climatology", 0.4)]):
     s.append(text(x, y + 78 + i * 22, name, 11)); s.append(f'<rect x="{x + 80}" y="{y + 66 + i * 22}" width="{v * 200:.0f}" height="16" rx="3" fill="{"#374151" if name != "climatology" else "#9ca3af"}"/>')
 s.append(text(x, y + 176, "Forecast tasks also take an optimised", 11)); s.append(text(x, y + 194, "submission, scored on withheld observations.", 11))
-s.append(text(30, 686, "Under what conditions can a forecaster's task be handed to an agent system and come back right? Per task, per system and per tooling, with the same checks each time.", 12, "#444"))
+s.append(text(30, 686, "With which model, harness and tooling can a forecaster's task be handed to an agent system and come back right? Per task, per system and per tooling, with the same checks each time.", 12, "#444"))
 s.append("</svg>")
 Path(__file__).with_name("overview.svg").write_text("\n".join(s))
 print("ok")
