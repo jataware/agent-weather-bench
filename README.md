@@ -1,170 +1,191 @@
 ![Agent Weather Bench — A benchmark for AI forecast research](docs/assets/brand/hero.svg)
 
+# Agent Weather Bench
+
 ## Which frontier models and agent frameworks can reliably complete substantive weather-forecasting workflows, with what scientific validity, cost, time, and expert intervention?
 
-Agent Weather Bench assesses complete scientific workflows for subseasonal-to-seasonal (S2S) forecasting: acquiring and interpreting data, investigating methods, writing and adapting scientific code, producing forecasts, and verifying results. We compare how models and harnesses perform, and whether tooling—skills, scientific libraries, literature retrieval, and earlier work—makes those workflows more reliable and efficient. Agents submit code, numerical results, and explanations that are checked against the template's requirements.
+Agent Weather Bench assesses complete scientific workflows for subseasonal-to-seasonal (S2S) weather and climate forecasting: acquiring and interpreting data, investigating teleconnections and methods, writing and adapting scientific code, downscaling and calibrating, producing operational forecasts, auditing research claims, and verifying results. 
 
-The benchmark draws on scientific reproduction benchmarks such as [PaperBench](https://openai.com/index/paperbench/) and [SciReplicate-Bench](https://arxiv.org/abs/2504.00255). It uses forecasting research to test whether agents can implement scientific methods, run valid experiments, and support their conclusions with evidence.
+The benchmark draws on scientific reproduction and research benchmarks such as [PaperBench](https://openai.com/index/paperbench/), [SciReplicate-Bench](https://arxiv.org/abs/2504.00255), and [RE-Bench / AIRS](docs/hard-benchmark-inspiration-2026-10-08.md). It uses forecasting research to test whether autonomous agents can implement scientific methods, run valid experiments, and support their conclusions with empirical evidence.
 
-For AI and machine learning researchers, the benchmark provides common templates and checks to compare agents, the models that power them, and the tools and methods they use. It measures whether the work was done right, its scientific correctness, cost, and time. Further experiments test whether skills, workflow code, access to literature, or earlier work improve performance.
+For AI and machine learning researchers, the benchmark provides standardized templates and rigorous checks to compare models, agent harnesses, and tooling environments (plain scientific Python vs. domain packages like `AfricaS2S`, `acmadDL`, and Rhiza). It measures whether the work was done right, its scientific correctness, cost, wall-clock time, and tool efficiency.
 
-For forecasters, the goal is to provide evidence for choosing agents and supporting methods for specific tasks. Results should show which work a system completes correctly, where it fails, and where expert review is needed.
+For operational forecasters, the goal is to provide evidence for when and how AI agents can be trusted with substantive forecasting work: what workflows agents complete reliably, where they break down, and where human expert review is required.
 
-[The attempt](#the-attempt) · [Templates](#templates) · [The checks](#the-checks) · [Systems and supplements](#systems-and-supplements) · [Run a template](#run-a-template) · [Results](docs/results.md) · [Roadmap](docs/roadmap.md)
+[The Six Primitives](#the-six-primitives-of-the-benchmark) · [The 25-Task Portfolio](#the-full-iceberg-the-25-task-portfolio) · [Current Frontier: Finding the Difficulty Boundary](#the-current-frontier-finding-the-difficulty-boundary) · [Run a Template](#run-a-template) · [Results](docs/results.md) · [Roadmap](docs/roadmap.md)
 
-## The attempt
+---
+
+## The Six Primitives of the Benchmark
+
+The benchmark is built on six explicit, modular primitives:
 
 ![A template and its tooling go into a sandbox with an agent; the controller inspects what comes out](docs/figures/overview.png)
 
-The question is: under what conditions can a forecaster's task be handed to an agent system and come back right? A template is a canonical forecasting job stated as a product, with frozen data and a budget. An instance of it goes into an offline sandbox with an agent and whatever tooling the run supplies: skills, libraries, earlier work, and any supplement such as a conventions sheet. What comes out is a submission in a fixed envelope: labelled arrays, an answer file, the code that regenerates the results and a report, plus the trace. The controller, the trusted evaluator, checks the submission by computation against a private reference under every defensible reading of the brief, by rerunning the agent's own code on changed data, and by a narrow judge that answers one question at a time on exact quotations. Every check returns pass, fail or unresolved.
+1. **Template & Instance**
+   * A **Template** is a parameterized forecasting task defining the problem brief, frozen source data catalogues, and the verification specification (`spec.yaml`).
+   * An **Instance** fixes the parameters for a concrete scenario (e.g. Greater Horn of Africa, March–May season, initialized in February).
+   * An **Attempt** is a single run of one agent system on one instance.
 
-One run of one system on one instance is an attempt. A system is a model, the harness that drives it, and the tooling in its workspace. The set has 25 templates in six families, checked in product, process or outcome mode; three are built and certified so far. [The roadmap](docs/roadmap.md) states the system, the open work and the eight planned experiments in three pages. [The results so far](docs/results.md) give the first 36 attempts and what the checks caught. [The task set](docs/task-set.md) and [the assessment format](docs/assessment-format.md) hold the detail.
+2. **System**
+   * A **System** (`systems/<name>/system.yaml`) bundles four elements:
+     * **Model Backbone:** The foundation LLM (e.g. Claude 3.7 / Sonnet, GPT-4o, Codex).
+     * **Agent Harness:** The CLI execution engine (Codex CLI, Claude Code, custom scaffold).
+     * **Tooling Condition:** The environment exposed to the agent (standard scientific Python, Rhiza weather skills, or domain libraries like `AfricaS2S`, `acmadDL`, and `rosetta`).
+     * **Resource Budget:** Hard bounds on wall-clock time, tool calls, and inference tokens.
 
-## Templates
+3. **Sandbox & Controller**
+   * The **Controller** (`assessment/`) is the trusted outside evaluator.
+   * The agent runs in an isolated, offline Docker **Sandbox** with only allowed input directories or frozen source services mounted.
+   * Private reference implementations, withheld verification observations, and ground truth arrays remain strictly outside the sandbox. The controller logs every tool call, shell command, and file modification as an immutable trace.
 
-A template is a task whose brief, inputs and answer key take parameters such as region and time window, so one template yields many instances. Each template declares a mode. In product mode the controller compares the agent's numbers with a private reference. In process mode it also checks the method against a published standard, step by step. In outcome mode it scores a forecast against withheld observations. Level 1 is the plain submission. Level 2 is a separate, optimized submission for the same instance, which the agent may tune with a limited number of development scores; its skill ranks a leaderboard once its validity checks pass.
+4. **Submission Envelope**
+   * When an attempt finishes, the agent must leave behind a standard submission envelope under `/work/submission/`:
+     * `results.zarr`: Labelled multi-dimensional arrays (NetCDF/Zarr) storing predicted fields, diagnostics, and probabilities.
+     * `answer.json`: Structured claims, coordinate definitions, metadata, and the exact reproduction command.
+     * `code/`: Self-contained executable scripts that regenerate all results from scratch.
+     * `report.md`: A structured meteorological bulletin, scientific account, or diagnostic audit.
 
-The three templates below are certified: each passes the five certification tests in the offline Docker runtime (two independent reference implementations agree; a known-correct submission passes; deliberately incorrect submissions fail on the right check; the separability of every pitfall is measured; cheap-model attempts leave no answer unclassified). Scientific approval by a domain expert is a separate gate, and no template has it yet. The attempts column counts the attempts assessed under each template's current spec version and fingerprint; earlier attempts are in [the results](docs/results.md).
+5. **Instruments & Rubric**
+   * Submissions are graded by a declared set of method-blind **Instruments**:
+     * **Reference Match:** Compares numerical arrays against a private reference function within explicit floating-point error bounds, identifying which accepted reading or named pitfall the agent followed.
+     * **Invariants:** Physical and mathematical sanity checks that any valid forecast must satisfy (e.g. probabilities sum to 1.0, non-negative rainfall, conservation of spatial mass).
+     * **Probes:** The controller reruns the agent's code on perturbed data, replayed inputs, or with held-out years removed to detect data leakage, lookahead bias, or hardcoded numbers.
+     * **Claims Verification:** Automatically verifies that numeric assertions in `answer.json` match the underlying arrays.
+     * **Prose Judge:** Narrow, single-question evaluation of specific quoted text from `report.md` via a pinned Claude Opus reviewer.
+   * Every check returns **pass**, **fail**, or **unresolved**, with concrete evidence.
 
-| Template | Mode | Levels | Spec version | Instances | Attempts under the current contract | Certification |
+6. **Certification**
+   * Before any model attempt is counted, every task template must pass a strict five-step automated certification:
+     1. Independent reference implementations agree.
+     2. Known-correct controls pass all checks.
+     3. Deliberately perturbed/faulty controls fail on the exact intended check and nowhere else.
+     4. Named pitfalls are cleanly separable.
+     5. Grader numerical tolerances and error bounds are mathematically derived and proven.
+
+---
+
+## The Full Iceberg: The 25-Task Portfolio
+
+The benchmark spans 25 canonical tasks across six distinct forecasting families:
+
+| # | Template | Family | Mode | Level 2 | Distinct Challenge | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| `kenya-forecast-revision` | product | 1 | 2 | 5 | 4 | five tests passed; expert approval pending |
-| `seasonal-rainfall-calibration` | process | 1 | 3 | 3 | 4 | five tests passed; expert approval pending |
-| `weeks34-rainfall` | outcome | 1 and 2 | 3 | 8 | 3 | five tests passed; expert approval pending |
+| 1 | Diagnostic pack | Downscaling and diagnostics | product | no | Spatial patterns, verification metrics | reference written |
+| 2 | Kenya rainfall outlook | Outlook products | product | no | Regional aggregations, threshold masks | reference written |
+| 3 | Kenya heat outlook | Outlook products | product | no | Temperature extremes, heat index | reference written |
+| 4 | `kenya-forecast-revision` | Outlook products | product | no | Accumulations, valid periods, regional means and claims | **certified** |
+| 5 | Observed Indian Ocean Dipole index | Observed indices and verification | product | no | DMI SST dipole calculation, detrending | reference written |
+| 6 | Indian Ocean Dipole forecast check | Outlook products | product | no | Teleconnection lag, ensemble plume checks | reference written |
+| 7 | Scorecard debugging | Observed indices and verification | product | no | Verification metrics, ROC / Brier scores | reference written |
+| 8 | Station verification | Observed indices and verification | product | later | Station-to-grid matching, missing data | reference written |
+| 9 | Paper-versus-code audit | Observed indices and verification | product | no | Discrepancy detection between paper & code | reference written |
+| 10 | Probability forecast combination | Seasonal forecast production | process | later | Multi-model weighting, probability consensus | reference written |
+| 11 | `seasonal-rainfall-calibration` | Seasonal forecast production | process | yes | Cross-validation and required scientific practice | **certified** |
+| 12 | Short-rains workflow | Seasonal forecast production | process | yes | East Africa OND season, SST teleconnections | reference written |
+| 13 | Seasonal CCA reproduction | Seasonal forecast production | process | yes | Nested selection, probabilistic forecasts | reference written |
+| 14 | Monthly cyclic calibration | Seasonal forecast production | process | yes | Harmonic regression, cycle decomposition | reference written |
+| 15 | `weeks34-rainfall` | Subseasonal forecast production | outcome | yes | Leakage, reproducibility, withheld-observation skill | **certified** |
+| 16 | Rainfall downscaling | Downscaling and diagnostics | product | yes | Spatial conservation, held-out years | reference written |
+| 17 | Rainy-season onset and dry spells | Subseasonal forecast production | process | yes | Daily rainfall thresholds, false onset checks | to build |
+| 18 | Probabilistic forecast verification | Observed indices and verification | process | no | Reliability diagrams, RPSS, spread-error | to build |
+| 19 | Multi-model combination with hindcasts | Seasonal forecast production | process | yes | Hindcast calibration, unequal model weights | to build |
+| 20 | Test a published predictor claim | Research claims and consensus | process | yes | Re-evaluating published teleconnections | to build |
+| 21 | Beat the regional consensus forecast | Research claims and consensus | process | yes; hard | Competitive skill against regional GHACOF | to build |
+| 22 | Probabilistic weeks 3–4 and 5–6 outlook | Subseasonal forecast production | process | yes | S2S multi-week lagged ensemble outlook | to build |
+| 23 | Weekly forecasting with observation updates | Subseasonal forecast production | outcome | yes; hard | Sequential real-time assimilation updates | to build |
+| 24 | Madden–Julian Oscillation forecast check | Outlook products | product | no | RMM index calculation, phase propagation | to build |
+| 25 | Extreme-event probability at weeks 2–3 | Outlook products | product | yes | Tail probability, rare-event calibration | to build |
 
-[The task set](docs/task-set.md) lists all 25 templates with their parameters, modes and levels.
+See [docs/task-set.md](docs/task-set.md) for detailed task definitions, parameter sweeps, and grading criteria.
 
-## The checks
+---
 
-Each template has a spec: the named results with their error bounds, the conventions the brief leaves open with each reading marked accepted or a named pitfall, the invariants any valid answer obeys, the probes to run, the claims to check, the process steps to verify and the questions a judge decides. The controller holds a private reference function that computes the answer under every defensible reading.
+## The Current Frontier: Finding the Difficulty Boundary
 
-The agent submits a fixed envelope and is free in everything else: labelled arrays in a Zarr store, an answer file with numbers, choices, claims and the run command, the code that regenerates the results, and a short report. The method is not prescribed.
+We are currently probing the **tip of the iceberg**: establishing where modern agent systems actually encounter difficulty.
 
-The controller decides each check one of three ways. **Computation** compares the results with the reference under every reading, so a known wrong reading is named as a pitfall, and scores forecasts against withheld observations. **A rerun** executes the agent's own code on changed data: the results must follow the data and must not use what a valid method may not use, such as a held-out year or a forecast from the future. **The judge**, Claude Opus 5.5 with no tools and a fixed prompt, answers one narrow question at a time, such as whether the report says what the code and the numbers say. Every passage the judge relies on must appear in the cited file, or the verdict is discarded.
+### What the Initial Pilot Found
+In our first round of trials on single-stage templates (like `seasonal-cca-reproduction`, `rainfall-downscaling`, and `monthly-cycle-calibration`):
+* **Single-stage tasks saturated immediately:** Frontier models (Claude 3.7 / Astra, GPT-4o / Luna) completed them in **2 to 5 minutes** with 100% mathematical precision.
+* **Prescribed methods became transcription jobs:** Because single-stage reference matching required explicit equations in the brief, the tasks tested code transcription rather than scientific reasoning or workflow autonomy.
+* **Unconstrained methods hit science ceilings:** When tasks left method selection open (e.g. `mam-forecast-synthesis`), simple uniform climatology beat or tied all models on blind verification. With zero skill headroom, the tasks could not grade forecaster competence.
+* **Tooling showed no measured benefit:** Providing specialized libraries (`AfricaS2S`, `acmadDL`) yielded no advantage over raw NumPy/SciPy written by the model from scratch.
 
-Every check returns pass, fail or unresolved. Fail means the submission is at fault, with the pitfall or defect named. Unresolved means a cause outside the submission, with a reason code, and is never counted as a fail. An attempt passes only when every check passes, the judge's included; the computed part is also reported on its own. There are no weights.
+### The Next Step: Long-Horizon Composition
 
-| Check | Who decides | What unresolved means |
-| --- | --- | --- |
-| `envelope` | computation | The run command could not be executed, so nothing could be regenerated. |
-| `coverage` | computation | The required cases could not be enumerated because the envelope is unusable. |
-| `variant` | computation | The results that can be read match only accepted readings, but a result they rest on is unusable. |
-| `invariant.<name>` | computation | The result the rule inspects is unusable. |
-| `probe.<name>` | a rerun of the agent's code | The rerun could not be carried out, or the result it compares is unusable. |
-| `claim.<name>` | computation | The results the claim rests on are unusable. |
-| `feedback.limit` | computation, Level 2 only | No trusted record of development-score requests exists. |
-| `process.<id>` | a rerun, computation or the judge, by the evidence the step names | A check the step rests on is unresolved, or the standard's step can be read two ways. |
-| `interpretation.<name>` | the judge | The judge was not run, its reply was voided for an inexact quotation, or it could not decide. |
+To measure real agent autonomy, planning, and error recovery, we are building a **long-horizon composition task**: chaining the canonical stages of a regional operational center into one continuous multi-hour job.
 
-The controller keeps the provenance. It records the hashes of the inputs and of every submitted file, the source versions, the full tool trace, the tooling used, the cost and the time. The agent writes none of it, so an administrative slip cannot fail a check. The format is defined in [the assessment format](docs/assessment-format.md) and used through the [`assessment/`](templates/README.md) package.
-
-## Systems and supplements
-
-![Benchmark design: compare models, harnesses and tooling on the same template instances. A template states a product with frozen data and a budget; an agent in a sandbox hands back a submission and a trace; the controller checks it against a private reference, by rerunning the code on changed data, and by a judge on exact quotations. Every check returns pass, fail or unresolved. Episodes keep the earlier submission for the next instance.](docs/assets/brand/benchmark-design.svg)
-
-[Open the diagram at full size](docs/assets/brand/benchmark-design.svg).
-
-| Dimension | Comparison |
-| --- | --- |
-| Model capability | How reliably does each model complete the same instances with general tools? |
-| Harnesses | How do different agent loops perform on the same instances under matched data access and resource budgets? |
-| Tooling | How does performance change when we add skills, libraries, retrieval, or earlier work? |
-| Cost and time | What does a passing submission cost, and how long does it take? Include failed attempts. |
-| Reuse | Does agent-owned work from an earlier instance improve performance on the next one? |
-
-The tooling is the skills, libraries, retrieval resources, or earlier work in the agent's workspace. A run can also supply a conventions sheet or a method description with `--supply`; each is recorded as a supplement of the run, so a comparison can separate knowing the conventions from applying them.
-
-For model comparisons, keep the harness, templates, inputs, tooling, budgets, and checks fixed. Record provider and model versions, tokens, costs, and wall time. For tooling comparisons, also hold the model and harness fixed, and report the cost of creating the tooling separately. For harness comparisons, hold the model, templates, data access, resource budgets, and checks fixed while allowing orchestration to differ, and record each harness's version, configuration, and tools so the complete system being assessed is clear. Reuse experiments compare second episodes with plain attempts, and counterbalance instance order to separate reuse from difficulty.
-
-## Run a template
-
-Use Python 3.12 or later and Docker. Agent code runs only in the offline Docker runtime, never on the controller host. From the repository root:
-
-```sh
-python3 -m venv .venv
-.venv/bin/python -m pip install -e .
-.venv/bin/python -m assessment templates
-.venv/bin/python -m assessment prepare kenya-forecast-revision --source ../weather-skills-bench/fixtures
-.venv/bin/python -m assessment instances kenya-forecast-revision
-.venv/bin/python -m assessment brief kenya-forecast-revision service-area--weeks-1-2
-.venv/bin/python -m assessment certify kenya-forecast-revision
-.venv/bin/python -m assessment assess kenya-forecast-revision service-area--weeks-1-2 PATH/TO/SUBMISSION
-.venv/bin/python -m assessment run kenya-forecast-revision service-area--weeks-1-2 --system kenya-revision-fixture
-.venv/bin/python -m assessment run kenya-forecast-revision central--weeks-2-3 --system kenya-revision-fixture --supply conventions
-.venv/bin/python -m assessment run kenya-forecast-revision north-west--weeks-3-4 --system kenya-revision-fixture --parent RUN_ID
-.venv/bin/python -m assessment run weeks34-rainfall final-2015-2017--all-cells --system weeks34-level2-fixture --level 2
-.venv/bin/python -m assessment runs
-.venv/bin/python -m assessment reassess RUN_ID
-.venv/bin/python -m assessment judge RUN_ID
-.venv/bin/python -m assessment judge-calibration
-.venv/bin/python -m assessment attempts kenya-forecast-revision
+Anchored in the operational workflow of **ICPAC** (IGAD Climate Prediction and Applications Centre) for the GHACOF seasonal outlook (`from_icpac/ghacof/frameworks/`):
+```text
+Raw Provider Sources (NMME / C3S / CHIRPS / SST)
+  │
+  ├─► Stage 1: Acquire (Raw provider response ingestion via frozen catalogues)
+  ├─► Stage 2: Prepare (Seasonal totals, coordinate alignment, tercile climatology)
+  │
+  ├── Multi-Stream Modeling:
+  │     ├─► Stage 3: WVG Logit Stream (SST index logistic regression)
+  │     ├─► Stage 4: eReg Stream (Per-cell cross-validated ensemble regression)
+  │     └─► Stage 5: CCA Stream (PyCPT-style Canonical Correlation Analysis)
+  │
+  ├─► Stage 6: Combine (Equal-weight multi-stream probability consolidation)
+  ├─► Stage 7: Verify (Hindcast skill verification against historical observations)
+  └─► Stage 8: Issue & Write (Forecast-season outlook arrays and the official bulletin)
 ```
 
-- `run` launches a system on an instance, assesses its submission and has the judge decide the questions no computation can settle. `--no-judge` leaves those unresolved.
-- `--supply conventions` hands the agent the template's conventions sheet as a supplement.
-- `--parent RUN_ID` starts a second episode: the earlier run's submission is placed under `/work/prior`, and the agent may use it or not.
-- `--level 2` requests the optimized submission and enforces the development-score limit.
-- `reassess` assesses an existing run again under the current spec and code; `judge` has the judge decide a run's open questions; `attempts` refreshes the fifth certification test from the runs on disk.
-- A system is defined in `systems/<id>/system.yaml`. To run the Codex systems after the command-line install has moved past the verified version, name the verified binary and use the pinned system: `export CODEX_BINARY=$HOME/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex`, then `--system codex-luna-pinned`.
+### The Rubric Innovation: Dual Verdicts (Absolute vs. Local)
 
-[The templates guide](templates/README.md) explains each command, the sandbox boundary, the adapter protocol, the tooling-use record and the data layout.
+In a traditional single-gate benchmark, an early minor calculation error in Stage 2 cascades into Stages 3–8, failing the entire attempt and obscuring whether the agent was capable of complex downstream modeling.
 
-## Write and certify a template
+The composition task introduces **per-stage rubrics with dual verdicts**:
+* **Absolute Verdict:** Compares the stage's output against the reference solution generated from ground-truth upstream inputs.
+* **Local Verdict:** Recomputes the reference using the *agent's own upstream outputs* as inputs.
 
-A template folder holds `spec.yaml`, `brief.md`, `reference.py`, `reference_independent.py`, `instances.yaml`, `sources.json`, `controls/` and, after certification, `certification.json`; a process-mode template also names its standard under `standards/`. Freeze the source data and record its hashes, write the reference function and a second implementation that shares no code with it, declare each tolerance as an error bound, label every convention accepted or pitfall, build the controls, and run `certify`. The spec version is locked only after the fifth test, cheap-model attempts with every unknown answer ruled on. [The templates guide](templates/README.md) gives the file-by-file instructions and the hooks `reference.py` must provide.
+This separates initial slips from downstream procedural competence, revealing exactly at which stage a system went wrong and how well it executed the subsequent workflow.
 
-## Results
+---
 
-36 attempts by one cheap model, gpt-6-luna, through one harness have been assessed on the three templates: 23 passed every check, the judge's included. The judge decided 151 questions, failed 8 and matched the expected verdict on all 12 of its control cases. Every failure has a named cause. [The results](docs/results.md) give the tables, the tooling comparison and the eight controller defects the attempts found.
+## Run a Template
 
-## The template set
+Use Python 3.12 or later and Docker. Agent commands execute exclusively inside the isolated Docker sandbox, keeping references and test secrets protected on the host.
 
-The set holds 25 templates in six families. Status *certified* means the spec passes the five certification tests; *reference written* means a brief and an answer key exist and await conversion to a spec; *to build* means nothing exists yet. Level 2 is the leaderboard run against withheld observations. [The task set](docs/task-set.md) gives each template its task statement, parameters and evidence.
+```sh
+# Setup environment
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev]'
 
-| # | Template | Family | Mode | Level 2 | Status |
-| --- | --- | --- | --- | --- | --- |
-| 1 | Diagnostic pack | downscaling and diagnostics | product | no | reference written |
-| 2 | Kenya rainfall outlook | outlook products | product | no | reference written |
-| 3 | Kenya heat outlook | outlook products | product | no | reference written |
-| 4 | Kenya forecast revision | outlook products | product | no | certified |
-| 5 | Observed Indian Ocean Dipole index | observed indices and verification | product | no | reference written |
-| 6 | Indian Ocean Dipole forecast check | outlook products | product | no | reference written |
-| 7 | Scorecard debugging | observed indices and verification | product | no | reference written |
-| 8 | Station verification | observed indices and verification | product | later | reference written |
-| 9 | Paper-versus-code audit | observed indices and verification | product | no | reference written |
-| 10 | Probability forecast combination | seasonal forecast production | process | later | reference written |
-| 11 | Seasonal rainfall calibration | seasonal forecast production | process | yes | certified |
-| 12 | Short-rains workflow | seasonal forecast production | process | yes | reference written |
-| 13 | Seasonal CCA reproduction | seasonal forecast production | process | yes | reference written |
-| 14 | Monthly cyclic calibration | seasonal forecast production | process | yes | reference written |
-| 15 | Weeks 3–4 rainfall | subseasonal forecast production | outcome | yes | certified |
-| 16 | Rainfall downscaling | downscaling and diagnostics | product | yes | reference written |
-| 17 | Rainy-season onset and dry spells | subseasonal forecast production | process | yes | to build |
-| 18 | Probabilistic forecast verification | observed indices and verification | process | no | to build |
-| 19 | Multi-model combination with hindcasts | seasonal forecast production | process | yes | to build |
-| 20 | Test a published predictor claim | research claims and consensus | process | yes | to build |
-| 21 | Beat the regional consensus forecast | research claims and consensus | process | yes; frontier-hard | to build |
-| 22 | Probabilistic weeks 3–4 and 5–6 outlook | subseasonal forecast production | process | yes | to build |
-| 23 | Weekly forecasting with observation updates | subseasonal forecast production | outcome | yes; frontier-hard | to build |
-| 24 | Madden–Julian Oscillation forecast check | outlook products | product | no | to build |
-| 25 | Extreme-event probability at weeks 2–3 | outlook products | product | yes | to build |
+# Inspect a task's full contract and rubric
+python -m assessment rubric kenya-forecast-revision
 
-## Roadmap
+# Verify that the known-correct reference control passes all checks
+python -m assessment assess kenya-forecast-revision service-area--weeks-1-2 --control correct
 
-[The roadmap](docs/roadmap.md) states what is built, what remains (the tooling images, the conventions sheets, the remaining templates, the spending limits) and the eight planned experiments: the model ladder, harnesses, tooling value, supplements, second episodes, Level 2, process conformance and the frontier-hard templates.
+# Run an agent system on a task instance
+python -m assessment run kenya-forecast-revision service-area--weeks-1-2 --system codex-astra
+```
 
-## Repository layout
+Common evaluation workflows:
+- `rubric <template>`: Prints the full contract table: questions, instruments, evidence sources, and gating rules.
+- `assess <template> <instance> <path>`: Evaluates a completed submission directory against the rubric.
+- `run <template> <instance> --system <sys>`: Executes a full attempt in the Docker sandbox and triggers the controller evaluation.
+- `certify <template>`: Runs the 5-step automated certification suite on a template.
 
-- `assessment/` — the controller: the specs' loader, the sandbox, the checks, the judge, certification and the command line.
-- `templates/` — the three certified templates and [the guide](templates/README.md) to writing one.
-- `standards/` — the published standards that process-mode templates cite, as checklists.
-- `systems/` — the system definitions: model, harness and tooling image for each system id.
-- `runtime/` — the offline Docker runtime images.
-- `docs/` — [the roadmap](docs/roadmap.md), [the results](docs/results.md), [the task set](docs/task-set.md), [the assessment format](docs/assessment-format.md), [the changelog](docs/CHANGELOG.md), the figures and the brand assets.
-- `tests/` — the controller's tests, including the check that every certification is current.
-- `var/` — runs, staged data and private instances; not committed.
-- `archive/` — the first evaluator, the pilot and superseded documents, kept intact and not current.
+---
 
-## Licence and status
+## Repository Layout
 
-The repository is a first release of the template format and its controller. Template data are shared separately. No licence has been selected yet.
+- `assessment/` — The trusted controller: sandbox management, adapters, instrument checks, LLM judging, and rubric compilation.
+- `templates/` — The implemented forecasting templates, each containing `spec.yaml`, `brief.md`, `reference.py`, test controls, and `certification.json`.
+- `standards/` — Published institutional standards cited by process-mode templates.
+- `systems/` — System definitions: model backbone, harness CLI, tooling image, and resource budget.
+- `runtime/` — Docker configurations for the isolated execution sandboxes and tooling environments.
+- `from_icpac/` — Canonical operational GHACOF reference pipelines and multi-framework comparison scripts.
+- `docs/` — Architectural contracts, historical trial results, and roadmap:
+  - [`docs/roadmap.md`](docs/roadmap.md): The phased execution sequence for the composition task.
+  - [`docs/assessment-format.md`](docs/assessment-format.md): Specification of the submission envelope and grading rubric.
+  - [`docs/task-set.md`](docs/task-set.md): The full portfolio of 25 candidate forecasting tasks.
+  - [`docs/results.md`](docs/results.md): Summary of assessed attempts and diagnostic findings.
+- `tests/` — Grader test suite and certification invariants.
+- `var/` — Local runs, staged datasets, and private instances (git-ignored).
+- `archive/` — Early evaluators and superseded prototypes, preserved intact.

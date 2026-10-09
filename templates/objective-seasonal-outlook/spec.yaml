@@ -1,0 +1,92 @@
+schema_version: 1
+template: objective-seasonal-outlook
+spec_version: 1
+title: Issue the objective seasonal rainfall outlook
+mode: product
+question: compute_quantity
+reference_match: true
+status: development; design record in designs/objective-seasonal-outlook.md; no scientific approval
+params: [init_month, forecast_year, training_years]
+
+# Stage arrays carry their stage prefix. prepare_*, wvg_* and ereg_* are reference-matched
+# under the declared conventions. cca_*, combine_*, verify_* and issue_* are free: they are
+# checked by invariants that recompute them from the submission's own upstream arrays, and
+# CCA by agreement with the controller's own CCA (see reference.py). Error bounds are the
+# float64 formula with generous operation counts; the WVG and CCA bounds are set from the
+# control run's measured solver and engine spread, recorded in certification.json.
+results:
+  year: {kind: coordinate, tolerance: {exact: true}}
+  model: {kind: coordinate, tolerance: {exact: true}}
+  category: {kind: coordinate, tolerance: {exact: true}}
+  stream: {kind: coordinate, tolerance: {exact: true}}
+  lat: {kind: coordinate, tolerance: {precision: float64, operations: 1, magnitude: 180}}
+  lon: {kind: coordinate, tolerance: {precision: float64, operations: 1, magnitude: 180}}
+  plat: {kind: coordinate, tolerance: {precision: float64, operations: 1, magnitude: 180}}
+  plon: {kind: coordinate, tolerance: {precision: float64, operations: 1, magnitude: 180}}
+  prepare_observed_mm: {dims: [year, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  prepare_support: {dims: [lat, lon], tolerance: {exact: true}}
+  prepare_model_hindcast_mean_mm: {dims: [model, year, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  prepare_model_forecast_mean_mm: {dims: [model, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  prepare_model_predictor_mm: {dims: [model, year, plat, plon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  prepare_model_predictor_forecast_mm: {dims: [model, plat, plon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  prepare_tercile_lower_mm: {dims: [lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  prepare_tercile_upper_mm: {dims: [lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  prepare_observed_category: {dims: [year, lat, lon], tolerance: {exact: true}}
+  prepare_sst_index: {dims: [year], tolerance: {precision: float64, operations: 1000000, magnitude: 10}}
+  prepare_sst_index_forecast: {dims: [], tolerance: {precision: float64, operations: 1000000, magnitude: 10}}
+  # WVG bound 2.2e-5: the control run measured a maximum 5.0e-6 gap between the Newton fit and scipy's L-BFGS-B
+  # on 599 supported cells (var/validation/objective-seasonal-outlook/wvg-solver-spread-mam.json).
+  wvg_hindcast_probability: {dims: [year, category, lat, lon], tolerance: {precision: float64, operations: 100000000000, magnitude: 1}}
+  wvg_forecast_probability: {dims: [category, lat, lon], tolerance: {precision: float64, operations: 100000000000, magnitude: 1}}
+  ereg_model_hindcast_probability: {dims: [model, year, category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  ereg_model_forecast_probability: {dims: [model, category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  ereg_hindcast_probability: {dims: [year, category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  ereg_forecast_probability: {dims: [category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  ereg_fitted_mean_mm: {dims: [year, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  cca_hindcast_probability: {free: true, dims: [year, category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  cca_forecast_probability: {free: true, dims: [category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  cca_hindcast_mean_mm: {free: true, dims: [year, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  cca_modes_selected: {free: true, dims: [model], tolerance: {exact: true}}
+  combine_hindcast_probability: {free: true, dims: [year, category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  combine_forecast_probability: {free: true, dims: [category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  combine_available_streams: {free: true, dims: [lat, lon], tolerance: {exact: true}}
+  verify_stream_rps: {free: true, dims: [stream, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 2}}
+  verify_stream_rpss: {free: true, dims: [stream], tolerance: {precision: float64, operations: 1000000, magnitude: 10}}
+  verify_objective_rps: {free: true, dims: [lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 2}}
+  verify_climatology_rps: {free: true, dims: [lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 2}}
+  verify_objective_rpss: {free: true, dims: [], tolerance: {precision: float64, operations: 1000000, magnitude: 10}}
+  issue_forecast_probability: {free: true, dims: [category, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  issue_dominant_category: {free: true, dims: [lat, lon], tolerance: {exact: true}}
+
+conventions:
+  obs_regridding: {conservative: accepted, bilinear: accepted, nearest: pitfall}
+  month_lengths: {actual: accepted, thirty_days: pitfall, no_day_factor: pitfall}
+  ereg_variance: {prediction_error: accepted, residual: accepted}
+  thresholds: {fold_only: accepted, full_record: pitfall}
+pitfalls:
+  nearest: Samples one 0.05-degree CHIRPS cell per target cell instead of aggregating the cells inside it.
+  thirty_days: Multiplies the seasonal-mean rate by ninety days instead of the calendar length of the season.
+  no_day_factor: Reports the seasonal-mean rate in mm/day as if it were the seasonal total.
+  full_record: Includes the year being forecast in the tercile boundaries and labels of its own hindcast.
+public_conventions: [obs_regridding, ereg_variance]
+
+invariants: [probabilities_valid, support_consistent, equal_stream_combination, score_identity, issue_identity, cca_agreement]
+probes: [replay, changed_data, held_out_year_isolation]
+claims:
+  hindcast_skill: four entries, the sign of the cross-validated RPSS of CCA, eReg, WVG and the objective.
+interpretation: [bulletin_support, bulletin_uncertainty]
+judge_questions:
+  bulletin_support:
+    requirement: Every number the bulletin states appears in the submitted arrays or follows from them, the bulletin names the three streams and how they were combined, and it does not claim coverage, data vintage or skill beyond the training period, the window and the hindcast evidence. Report, structured answer and code agree.
+    silence: fails
+  bulletin_uncertainty:
+    requirement: The bulletin states the outlook's uncertainty in language a non-specialist could act on.
+    silence: fails
+assessment_policy:
+  completion: [envelope, coverage, variant, invariant.*, probe.*, claim.*]
+  ranking: [envelope, coverage, variant, invariant.*, probe.*, claim.*]
+skill:
+  ranking_enabled: false
+  ranking: withheld-season RPSS of the issued outlook, higher is better
+  splits: [forecast_year]
+  caveat: One retrospective season per instance; descriptive only.

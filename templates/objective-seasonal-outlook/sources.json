@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/templates/objective-seasonal-outlook",
+  "source_weather_is_synthetic": false,
+  "scientific_approval": "pending",
+  "redistribution_approval": "pending",
+  "withheld_year": 2015,
+  "files": [
+    {
+      "file": "private-source-records/convert-log.json",
+      "sha256": "448458e1a7f1c71b1c7d5d326b3284df37aca341f1027a764225fdca140fd480",
+      "bytes": 951,
+      "visibility": "controller"
+    },
+    {
+      "file": "private-source-records/fetch-log.json",
+      "sha256": "a05f524bc2156ac60b347a2e0f11986cf54ca603b149ef13b6d5bc391f65e70e",
+      "bytes": 10742,
+      "visibility": "controller"
+    },
+    {
+      "file": "private-targets/chirps-v2p0-monthly-0p05-2015.nc",
+      "sha256": "f57a72b909bb58e6ad59b35c758413cdfd3243cf4b17d18ab9fc1df5fa2c3752",
+      "bytes": 10127538,
+      "visibility": "controller"
+    },
+    {
+      "file": "private-targets/ersst-v5-monthly-2015.nc",
+      "sha256": "72dab45c97774aa306aa4f7000f1232b067bc8e2a6dcd95e92ded7a0fae82fcf",
+      "bytes": 115079,
+      "visibility": "controller"
+    },
+    {
+      "file": "provider/catalog.json",
+      "sha256": "962634888646c31c354c491faac9e5c24f792ca26a55d0c5a4e7913174a751fa",
+      "bytes": 2429,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/cansipsic4/precip_init02.nc",
+      "sha256": "35617ed3109a26b6e193e2e289f927ff4ea38d185f3744dde481ec101e968715",
+      "bytes": 3569896,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/cansipsic4/precip_init08.nc",
+      "sha256": "1aad4dfa131aaad59eb90895bcc7377f3f946928d269c212dfbf78eb843aaccd",
+      "bytes": 3585968,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/ccsm4/precip_init02.nc",
+      "sha256": "f30d4ce90ea746ae2040a789c3a4ddf276d0396637dfa631d8536f8d1e167545",
+      "bytes": 906150,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/ccsm4/precip_init08.nc",
+      "sha256": "f7db054802ee577988bedbd898b98a930313c547a30e6cf4140d59f8cae0d55b",
+      "bytes": 906721,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/cfsv2/precip_init02.nc",
+      "sha256": "896ef9572ad2c6984bfcfa4e9bb2d01c64a51861032d891d55bce0eaad5f104f",
+      "bytes": 2656900,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/cfsv2/precip_init08.nc",
+      "sha256": "ab6138273a64dcd24d3ad7f0a15669889e085de312278fbf605ac8e07986480a",
+      "bytes": 2575600,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/geoss2s/precip_init02.nc",
+      "sha256": "eee9e4617168c63be549d59ceb820e9a81e70e805aea7a68e0ea8c695c76da76",
+      "bytes": 381795,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/geoss2s/precip_init08.nc",
+      "sha256": "0daea1677186cf18ce960d58f733b5a6a0a360893d8f0721fde7a53dc152d4a3",
+      "bytes": 384226,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/observations/chirps-v2p0-monthly-0p05.nc",
+      "sha256": "493dd09ccd43542f022dd9e4b1b61d5acf14a5923311a13299811e56de8c381a",
+      "bytes": 231847568,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/observations/ersst-v5-monthly.nc",
+      "sha256": "16fe0d60c8eeb468330632adf42265cfb7d66aed0ec3aa0c4e0ee64c8b57adfd",
+      "bytes": 2190424,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/provenance.json",
+      "sha256": "8723ff9c5523cda2052a34e7adbbf7d5d7f8d9106dedc0a74f94b11ee09b8b97",
+      "bytes": 17806,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/sst/cfsv2/sst_init02.nc",
+      "sha256": "54c858bae5c792b8200cf66cd843b6158a9e5f9dbb06d79ad04cdb4510110f07",
+      "bytes": 15455408,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/sst/cfsv2/sst_init08.nc",
+      "sha256": "d3a0448572003e419271e1fadaa3451a2802fc37333d720f4aeca737f914a90b",
+      "bytes": 15509484,
+      "visibility": "provider"
+    }
+  ],
+  "limitations": [
+    "Retrospective final-vintage archives; no claim these files were available as such at the historical issuance dates",
+    "CFSv2 is delivered as season totals in mm while the other centres are mean rates in mm/day; reading each file's units is part of the job"
+  ]
+}

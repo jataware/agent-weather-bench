@@ -1,0 +1,897 @@
+{
+ "schema_version": 1,
+ "template": "objective-seasonal-outlook",
+ "spec_version": 1,
+ "fingerprint": "85d0c36c57311d415806ba2cbafeb9b82324bb7db3186d4e5435639008d61d01",
+ "certified_at": "20261009T113412",
+ "executor": "local-trusted-snapshot",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 2,
+   "combinations": 36,
+   "comparisons": 72,
+   "largest_difference": 1.3642420526593924e-12,
+   "problems": [],
+   "regression_checks": [],
+   "tolerances": {
+    "year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2016.0,
+     "within_declared_magnitude": true
+    },
+    "model": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 3.0,
+     "within_declared_magnitude": true
+    },
+    "category": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "stream": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "lat": {
+     "tolerance": 3.996802888650564e-14,
+     "declared": {
+      "precision": "float64",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 15.75,
+     "within_declared_magnitude": true
+    },
+    "lon": {
+     "tolerance": 3.996802888650564e-14,
+     "declared": {
+      "precision": "float64",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 51.75,
+     "within_declared_magnitude": true
+    },
+    "plat": {
+     "tolerance": 3.996802888650564e-14,
+     "declared": {
+      "precision": "float64",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 23.0,
+     "within_declared_magnitude": true
+    },
+    "plon": {
+     "tolerance": 3.996802888650564e-14,
+     "declared": {
+      "precision": "float64",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 52.0,
+     "within_declared_magnitude": true
+    },
+    "prepare_observed_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 1404.5964340669614,
+     "within_declared_magnitude": true
+    },
+    "prepare_support": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 1.0,
+     "within_declared_magnitude": true
+    },
+    "prepare_model_hindcast_mean_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 2062.8283833265305,
+     "within_declared_magnitude": true
+    },
+    "prepare_model_forecast_mean_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 1979.639093220234,
+     "within_declared_magnitude": true
+    },
+    "prepare_model_predictor_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 2367.3111305236816,
+     "within_declared_magnitude": true
+    },
+    "prepare_model_predictor_forecast_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 2245.6810302734375,
+     "within_declared_magnitude": true
+    },
+    "prepare_tercile_lower_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 864.5194280283196,
+     "within_declared_magnitude": true
+    },
+    "prepare_tercile_upper_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 965.1562133244516,
+     "within_declared_magnitude": true
+    },
+    "prepare_observed_category": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "prepare_sst_index": {
+     "tolerance": 2.220446049496832e-09,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10
+     },
+     "largest_reference_value": 3.5464357628785845,
+     "within_declared_magnitude": true
+    },
+    "prepare_sst_index_forecast": {
+     "tolerance": 2.220446049496832e-09,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10
+     },
+     "largest_reference_value": 2.6784025642865306,
+     "within_declared_magnitude": true
+    },
+    "wvg_hindcast_probability": {
+     "tolerance": 2.2204707014272953e-05,
+     "declared": {
+      "precision": "float64",
+      "operations": 100000000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 1.0,
+     "within_declared_magnitude": true
+    },
+    "wvg_forecast_probability": {
+     "tolerance": 2.2204707014272953e-05,
+     "declared": {
+      "precision": "float64",
+      "operations": 100000000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.7834063193048916,
+     "within_declared_magnitude": true
+    },
+    "ereg_model_hindcast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.9999999983161257,
+     "within_declared_magnitude": true
+    },
+    "ereg_model_forecast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.9999999999996305,
+     "within_declared_magnitude": true
+    },
+    "ereg_hindcast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.9232910583356184,
+     "within_declared_magnitude": true
+    },
+    "ereg_forecast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.8620693487796425,
+     "within_declared_magnitude": true
+    },
+    "ereg_fitted_mean_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 1119.143964067087,
+     "within_declared_magnitude": true
+    }
+   }
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "independent",
+     "kind": "known_correct",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "independent",
+     "kind": "known_correct",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "reordered",
+     "kind": "accepted_alternative",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "reordered",
+     "kind": "accepted_alternative",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "bilinear_residual",
+     "kind": "accepted_alternative",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.410684049770734,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.043086332045978004,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "bilinear_residual",
+     "kind": "accepted_alternative",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.381507545448386,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16210098494786895,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    }
+   ]
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "wrong_initialization",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.44465992768581536,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": -0.03607910419589322,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "wrong_initialization",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4202463814320881,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.07701948943809944,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "thirty_days",
+     "kind": "pitfall",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "thirty_days",
+     "kind": "pitfall",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "wvg_leak",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "wvg_leak",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "ereg_no_cross_validation",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "ereg_no_cross_validation",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "cca_future_training",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "cca_future_training",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "unequal_weights",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.40666478922238947,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.05245140321425534,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "unequal_weights",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.37207409848212053,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.18281951598580803,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "wrong_climatology_score",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "wrong_climatology_score",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "issue_mismatch",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.46954490352828443,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": -0.09406229960768941,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "issue_mismatch",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.614335696230413,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": -0.3492558166256994,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "full_record",
+     "kind": "pitfall",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "full_record",
+     "kind": "pitfall",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    }
+   ],
+   "not_applicable": {}
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [
+    {
+     "pair": "nearest",
+     "convention": "obs_regridding",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 2,
+     "instances": 2,
+     "smallest_separation_in_tolerances": "exact mismatch",
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "conservative vs bilinear",
+     "convention": "obs_regridding",
+     "kind": "accepted_vs_accepted",
+     "separated_on": 2,
+     "instances": 2,
+     "smallest_separation_in_tolerances": "exact mismatch",
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "thirty_days",
+     "convention": "month_lengths",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 2,
+     "instances": 2,
+     "smallest_separation_in_tolerances": 22637970.7,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "no_day_factor",
+     "convention": "month_lengths",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 2,
+     "instances": 2,
+     "smallest_separation_in_tolerances": 1030027668.9,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "prediction_error vs residual",
+     "convention": "ereg_variance",
+     "kind": "accepted_vs_accepted",
+     "separated_on": 2,
+     "instances": 2,
+     "smallest_separation_in_tolerances": 1135620033.4,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "full_record",
+     "convention": "thresholds",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 2,
+     "instances": 2,
+     "smallest_separation_in_tolerances": 1136009509.7,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    }
+   ],
+   "known_ambiguities": []
+  },
+  "5_model_attempts": {
+   "passed": null,
+   "status": "not_run",
+   "attempts": 0,
+   "systems": [],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 0,
+   "excluded_before_model_launch": [],
+   "rulings_awaiting_confirmation": 0,
+   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+   "runs": []
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "pending",
+  "scientific_approval": "pending"
+ }
+}
