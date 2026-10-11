@@ -1,0 +1,35 @@
+schema_version: 1
+purpose: Test native tooling usefulness and scientific audit difficulty after reproduction tasks saturated.
+prior_evidence: experiments/focused-results-2026-10-08.json
+workstreams:
+  grader_stress:
+    model_calls: 0
+    question: Do equivalent scientific submissions pass while nearby scientific errors fail?
+    scope: Existing five templates; preserve original contracts and assessments.
+  ingestion:
+    template: native-rainfall-reconciliation
+    instance: service-area--weeks-1-2
+    question: Does the available weather tooling improve physical and temporal reconciliation?
+    systems: [investigation-astra-python, investigation-astra-rhiza, investigation-astra-accord]
+    lineage: Provider-native ECMWF plus explicitly documented curator-derived delivery representation; exclude physically ambiguous CFS scaling.
+  forecast_audit:
+    template: seasonal-forecast-audit
+    instance: case-c
+    question: Can agents diagnose validation faults, repair evaluation and support their deployment claims?
+    systems: [investigation-astra-python, investigation-astra-accord]
+    requirements: Clean and faulty candidates; valid alternative repairs; attainable controls; deterministic information-boundary checks.
+    selection: Full-record predictor screening tests a scientific selection error while regression fits themselves use earlier years; clean and other faults remain validated controls.
+model_attempts_initial_maximum: 5
+model_attempt_concurrency: 2
+scientific_control_gate: Every selected template must pass automatic controls and a Docker known-correct assessment before inference.
+judge: Required scientific reviews after inspecting computed checks; supplementary prose remains separate.
+agent_retries: 0
+stop_expansion_on: [infrastructure_failure, evaluator_defect, unclassified_answer]
+review_between_batches: true
+general_dependencies: Same package versions in all arms, including scikit-learn and statsmodels; weather packages and documentation are the declared treatment.
+paid_api_cap_usd: 100
+billing: Existing subscription adapters; no direct paid API calls planned.
+interpretation:
+  tooling_benefit: A paired difference needs relevant observed tool use and replication on another instance before a causal claim.
+  capability_boundary: A repeated, independently diagnosed scientific failure under a functioning grader; budget/runtime failures excluded.
+  clean_audit: A valid candidate must be accepted, rather than rewarding blanket distrust.

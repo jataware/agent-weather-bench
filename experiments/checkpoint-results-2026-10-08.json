@@ -1,0 +1,566 @@
+{
+  "schema_version": 1,
+  "plan": "experiments/grading-checkpoint.yaml",
+  "completed_attempts": 6,
+  "interrupted_attempts_excluded": [
+    "20261008T090233-kenya-forecast-revision-service-area--weeks-1-2-L1-checkpoint-astra-python-514cd8",
+    "20261008T090235-kenya-forecast-revision-service-area--weeks-1-2-L1-checkpoint-astra-rhiza-311692"
+  ],
+  "direct_api_key_calls": 0,
+  "billing": "Agents use ChatGPT subscription; judges use Claude Max subscription. Dollar usage fields are provider list-price estimates, not API invoices.",
+  "agent_token_totals": {
+    "input_tokens": 522023,
+    "cached_input_tokens": 352256,
+    "output_tokens": 36825,
+    "reasoning_output_tokens": 6410,
+    "total_tokens": 558848
+  },
+  "judge_list_price_usd": 0.504142,
+  "rows": [
+    {
+      "template": "kenya-forecast-revision",
+      "instance": "service-area--weeks-1-2",
+      "system": "checkpoint-astra-python",
+      "run": "20261008T090729-kenya-forecast-revision-service-area--weeks-1-2-L1-checkpoint-astra-python-ab5694",
+      "directory": "var/template-runs/20261008T090729-kenya-forecast-revision-service-area--weeks-1-2-L1-checkpoint-astra-python-ab5694",
+      "spec_version": 3,
+      "fingerprint": "51b8673acc949e4322eb83ab01d194e08b2b3a55204f8d6aef9bc7d304bdc9ad",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "system_sha256": "90aac51e00d9720d4423b6fe0df3f2528f6d24163797f26c998dd1c033d15b2b",
+      "runtime_image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+      "status": "submitted",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill_valid_for_ranking": null,
+      "skill": null,
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 11,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "agent_seconds": 125.27000970800873,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 71211,
+        "cached_input_tokens": 52352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3496,
+        "reasoning_output_tokens": 147,
+        "total_tokens": 74707
+      },
+      "catalog_commands": [],
+      "library_use": {},
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 7564,
+            "output_tokens": 1536,
+            "list_price_usd": 0.0799452
+          }
+        ]
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      }
+    },
+    {
+      "template": "kenya-forecast-revision",
+      "instance": "service-area--weeks-1-2",
+      "system": "checkpoint-astra-rhiza",
+      "run": "20261008T090704-kenya-forecast-revision-service-area--weeks-1-2-L1-checkpoint-astra-rhiza-820c27",
+      "directory": "var/template-runs/20261008T090704-kenya-forecast-revision-service-area--weeks-1-2-L1-checkpoint-astra-rhiza-820c27",
+      "spec_version": 3,
+      "fingerprint": "51b8673acc949e4322eb83ab01d194e08b2b3a55204f8d6aef9bc7d304bdc9ad",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "system_sha256": "3b15e99ad72591c0b47e527b376e20fc85f0a9c8b372d490091780b1e68e1b35",
+      "runtime_image": "sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63",
+      "status": "submitted",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill_valid_for_ranking": null,
+      "skill": null,
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 11,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "agent_seconds": 140.2126023330493,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 71604,
+        "cached_input_tokens": 47104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3692,
+        "reasoning_output_tokens": 247,
+        "total_tokens": 75296
+      },
+      "catalog_commands": [
+        "cat /task/brief.md /task/envelope.md /work/inputs/instance.json; find /catalog -maxdepth 2 -type f | head -40; python - <<'PY'\nimport xarray as xr\nfrom pathlib import Path\nfor p in Path('/work/inputs').glob('*.zarr'):\n ds=xr.open_zarr(p)\n print('\\n',p,ds,ds.attrs)\n for k,v in ds.variables.items():\n  print(k,v.dims,v.shape,v.dtype,v.attrs)\n  if v.ndim<=1: print(v.values)\nPY",
+        "ls -la /catalog /work/submission /work/state; find / -name AGENTS.md 2>/dev/null | head -25; python - <<'PY'\nimport xarray as xr, numpy as np\nfrom pathlib import Path\nfor p in Path('/work/inputs').glob('*.zarr'):\n d=xr.open_zarr(p).load(); a=d.tp.values\n print(p.name, 'range',np.nanmin(a),np.nanmax(a),'nan',np.isnan(a).sum(), 'negative increments', (np.diff(a,axis=1)<-1e-5).sum())\n print('one member point',d.tp.isel(number=0,latitude=4,longitude=3).values)\n print('mean by step',d.tp.mean(['number','latitude','longitude']).values)\nPY"
+      ],
+      "library_use": {
+        "weather_skills_core": {
+          "commands_importing": 0,
+          "first_step": null,
+          "submitted_files_importing": [],
+          "used": false
+        }
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 7816,
+            "output_tokens": 1375,
+            "list_price_usd": 0.0787412
+          }
+        ]
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      }
+    },
+    {
+      "template": "seasonal-rainfall-calibration",
+      "instance": "train-1993-2004--new-2005-2006--all-cells",
+      "system": "checkpoint-astra-python",
+      "run": "20261008T091434-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-checkpoint-astra-python-24e0ea",
+      "directory": "var/template-runs/20261008T091434-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-checkpoint-astra-python-24e0ea",
+      "spec_version": 4,
+      "fingerprint": "5e788998b0eebb967e2bfaf416628e618376b369438fd83bb6ac45cceeb4ac6f",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "system_sha256": "90aac51e00d9720d4423b6fe0df3f2528f6d24163797f26c998dd1c033d15b2b",
+      "runtime_image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+      "status": "submitted",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill_valid_for_ranking": false,
+      "skill": {
+        "new_years": {
+          "split": "new_years",
+          "rps": 0.27918358677274585,
+          "climatology_rps": 0.5555555555555557,
+          "rpss": 0.4974695438090576,
+          "cases": 24,
+          "years": 2,
+          "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+        }
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 22,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "agent_seconds": 247.64128387498204,
+      "tool_calls": 6,
+      "usage": {
+        "input_tokens": 78066,
+        "cached_input_tokens": 50048,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6537,
+        "reasoning_output_tokens": 808,
+        "total_tokens": 84603
+      },
+      "catalog_commands": [],
+      "library_use": {},
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 12383,
+            "output_tokens": 1926,
+            "list_price_usd": 0.1262972
+          }
+        ]
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      }
+    },
+    {
+      "template": "seasonal-rainfall-calibration",
+      "instance": "train-1993-2004--new-2005-2006--all-cells",
+      "system": "checkpoint-astra-rhiza",
+      "run": "20261008T091433-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-checkpoint-astra-rhiza-7a1e57",
+      "directory": "var/template-runs/20261008T091433-seasonal-rainfall-calibration-train-1993-2004--new-2005-2006--all-cells-L1-checkpoint-astra-rhiza-7a1e57",
+      "spec_version": 4,
+      "fingerprint": "5e788998b0eebb967e2bfaf416628e618376b369438fd83bb6ac45cceeb4ac6f",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "system_sha256": "3b15e99ad72591c0b47e527b376e20fc85f0a9c8b372d490091780b1e68e1b35",
+      "runtime_image": "sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63",
+      "status": "submitted",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill_valid_for_ranking": false,
+      "skill": {
+        "new_years": {
+          "split": "new_years",
+          "rps": 0.27918358677274596,
+          "climatology_rps": 0.5555555555555557,
+          "rpss": 0.4974695438090574,
+          "cases": 24,
+          "years": 2,
+          "caveat": "Two years on a handful of neighbouring cells: far too few cases to rank methods."
+        }
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 22,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "agent_seconds": 228.66446895792615,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 64792,
+        "cached_input_tokens": 36096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6255,
+        "reasoning_output_tokens": 958,
+        "total_tokens": 71047
+      },
+      "catalog_commands": [
+        "ls -la /work/inputs; ls -la /task; find /work /catalog -name AGENTS.md -o -name guidance.md 2>/dev/null | head -30"
+      ],
+      "library_use": {
+        "weather_skills_core": {
+          "commands_importing": 0,
+          "first_step": null,
+          "submitted_files_importing": [],
+          "used": false
+        }
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 11402,
+            "output_tokens": 1943,
+            "list_price_usd": 0.1187892
+          }
+        ]
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      }
+    },
+    {
+      "template": "weeks34-rainfall",
+      "instance": "final-2018-2021--all-cells",
+      "system": "checkpoint-astra-python",
+      "run": "20261008T091951-weeks34-rainfall-final-2018-2021--all-cells-L1-checkpoint-astra-python-236594",
+      "directory": "var/template-runs/20261008T091951-weeks34-rainfall-final-2018-2021--all-cells-L1-checkpoint-astra-python-236594",
+      "spec_version": 4,
+      "fingerprint": "a1d9574e2497cf06e5aa7f8ea5e3830b0125186fb341b859014eca583403bd22",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "system_sha256": "90aac51e00d9720d4423b6fe0df3f2528f6d24163797f26c998dd1c033d15b2b",
+      "runtime_image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+      "status": "token_limit",
+      "completion": "fail",
+      "computed": "fail",
+      "supplementary": "unresolved",
+      "ranking_gate": "fail",
+      "skill_valid_for_ranking": null,
+      "skill": null,
+      "failed_checks": [
+        "coverage",
+        "envelope",
+        "invariant.magnitude_of_a_14_day_total",
+        "invariant.totals_not_negative",
+        "probe.no_future_information",
+        "probe.replay",
+        "probe.responds_to_inputs"
+      ],
+      "unresolved_checks": [
+        "interpretation.consistency_across_artifacts",
+        "interpretation.generalization",
+        "interpretation.statistical_support"
+      ],
+      "check_counts": {
+        "pass": 0,
+        "fail": 7,
+        "unresolved": 3
+      },
+      "agent_seconds": 284.55839191609994,
+      "tool_calls": 7,
+      "usage": {
+        "input_tokens": 122835,
+        "cached_input_tokens": 91264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6295,
+        "reasoning_output_tokens": 1885,
+        "total_tokens": 129130
+      },
+      "catalog_commands": [],
+      "library_use": {},
+      "judge": {
+        "usage": [],
+        "not_run": true
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      }
+    },
+    {
+      "template": "weeks34-rainfall",
+      "instance": "final-2018-2021--all-cells",
+      "system": "checkpoint-astra-rhiza",
+      "run": "20261008T091951-weeks34-rainfall-final-2018-2021--all-cells-L1-checkpoint-astra-rhiza-d6653d",
+      "directory": "var/template-runs/20261008T091951-weeks34-rainfall-final-2018-2021--all-cells-L1-checkpoint-astra-rhiza-d6653d",
+      "spec_version": 4,
+      "fingerprint": "a1d9574e2497cf06e5aa7f8ea5e3830b0125186fb341b859014eca583403bd22",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "system_sha256": "3b15e99ad72591c0b47e527b376e20fc85f0a9c8b372d490091780b1e68e1b35",
+      "runtime_image": "sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63",
+      "status": "token_limit",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill_valid_for_ranking": true,
+      "skill": {
+        "final": {
+          "split": "final",
+          "rmse_mm": 14.168602906228921,
+          "raw_model_rmse_mm": 14.890051309463692,
+          "climatology_rmse_mm": 14.281531566506088,
+          "skill_vs_raw_model": 0.04845170699823165,
+          "skill_vs_climatology": 0.007907321406760981,
+          "issues": 208,
+          "cells": 9,
+          "observations_are_public_history": true
+        },
+        "development": {
+          "split": "development",
+          "rmse_mm": 11.99589410035544,
+          "raw_model_rmse_mm": 14.889753146548957,
+          "climatology_rmse_mm": 12.051599332178203,
+          "skill_vs_raw_model": 0.19435238567835056,
+          "skill_vs_climatology": 0.004622227331606332,
+          "issues": 147,
+          "cells": 9,
+          "observations_are_public_history": true
+        }
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 10,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "agent_seconds": 379.77548675006256,
+      "tool_calls": 8,
+      "usage": {
+        "input_tokens": 113515,
+        "cached_input_tokens": 75392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10550,
+        "reasoning_output_tokens": 2365,
+        "total_tokens": 124065
+      },
+      "catalog_commands": [],
+      "library_use": {
+        "weather_skills_core": {
+          "commands_importing": 0,
+          "first_step": null,
+          "submitted_files_importing": [],
+          "used": false
+        }
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 10217,
+            "output_tokens": 1496,
+            "list_price_usd": 0.1003692
+          }
+        ]
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      }
+    }
+  ]
+}

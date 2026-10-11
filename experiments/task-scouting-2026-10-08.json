@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "status": "scouting; no new task registered or model attempts launched",
+  "user_steering": "Keep canonical forecast products; include data acquisition and preparation in end-to-end tasks; investigate tool benefit in time, cost and smaller-model completion as well as frontier difficulty.",
+  "design": {
+    "agent_job": [
+      "discover appropriate forecast and observation products",
+      "retrieve and subset data",
+      "verify units, initialization/valid times, members and coverage",
+      "prepare hindcasts and observations",
+      "calibrate and produce the forecast",
+      "deliver reproducible artifacts and verification"
+    ],
+    "curator_job": [
+      "verify source accessibility and attainable reference independently",
+      "freeze provider responses or versioned raw source objects for reproducible access",
+      "keep reference computations and verifying observations private"
+    ],
+    "agent_assistance": "Expose provider catalogues and retrieval interfaces; do not supply already aligned, calibrated analysis-ready arrays in the end-to-end condition.",
+    "access_conditions": "Python and toolkit arms receive equivalent source access. Record snapshot acquisition separately from live-provider acquisition. Match generic dependencies, scientific requirements and compute ceilings."
+  },
+  "candidates": [
+    {
+      "id": "seasonal-multimodel-outlook",
+      "product": "Calibrated seasonal rainfall tercile outlook from several forecast centres, including hindcast verification and explicit model contributions.",
+      "tool_operations": [
+        "acmaddl discovery/retrieval/assembly",
+        "africas2s per-model ensemble regression or seasonal_mme",
+        "tercile combination"
+      ],
+      "local_source_lead": "Read-only cache metadata suggests ECMWF, CMCC, UKMO and MeteoFrance raw C3S February-initialized MAM 1993-2016 data in the nuthatch cache, with genuine members and native precipitation-rate units.",
+      "readiness": "Candidate source lead requires isolated decoding, dates/units/lineage/coverage verification and frozen retrieval packaging before any agent run. These single-init data do not support full-calendar cyclic smoothing.",
+      "purpose": [
+        "tooling cost/time",
+        "smaller-model lift",
+        "full canonical workflow difficulty"
+      ]
+    },
+    {
+      "id": "calibrated-onset-outlook",
+      "product": "Retrieve daily forecasts, hindcasts and observed rainfall; bias-correct and deliver member-wise onset-date probabilities with false-start protection and verification.",
+      "tool_operations": [
+        "data retrieval and normalization",
+        "africas2s onset and spell detection"
+      ],
+      "readiness": "Pinned toolkit contains event helpers. Full daily historical input acquisition remains unverified; published and library event definitions differ and require an explicit source-pinned contract. Current 46-day forecasts support only a bounded onset window with complete guard coverage.",
+      "sources": [
+        "https://link.springer.com/article/10.1007/s00382-023-07085-y",
+        "https://rmets.onlinelibrary.wiley.com/doi/10.1002/joc.70460"
+      ],
+      "purpose": [
+        "canonical event forecasting",
+        "potential frontier challenge after calibration and verification are attainable"
+      ]
+    },
+    {
+      "id": "rolling-weeks34-outlook",
+      "product": "Retrieve each issue and newly available observations; freeze a program that updates and issues weeks3-4 forecasts chronologically.",
+      "readiness": "Needs controller-owned chronological data availability and an independently verified competitive baseline. Later observation/feature rows must not be delivered in one batch.",
+      "purpose": [
+        "canonical adaptive forecasting",
+        "potential frontier performance challenge"
+      ]
+    }
+  ],
+  "tooling_pilot_proposal": {
+    "initial_attempts_max": 3,
+    "conditions": [
+      "smaller model with Python",
+      "same smaller model with required supported toolkit operations",
+      "frontier model with Python"
+    ],
+    "concurrency_max": 2,
+    "repeat": "Repeat on a second scientific instance only after an informative correctness or efficiency difference; proposed total maximum six.",
+    "compliance": "Record actual relevant operation use separately from scientific completion, using controller execution evidence and forecast intermediates. Keep noncompliant attempts in the assigned arm.",
+    "measurement": [
+      "valid scientific completion",
+      "tool-condition compliance",
+      "agent submission latency",
+      "retrieval/model/tool/controller time separately",
+      "uncached input, cached input and output tokens",
+      "actual API charges when available; explicitly labelled list-price equivalents otherwise",
+      "cost and failures per valid completed forecast"
+    ],
+    "stop_conditions": [
+      "grader defect",
+      "infrastructure failure",
+      "unclassified answer",
+      "all arms pass without an informative efficiency difference"
+    ]
+  },
+  "rejected_shortcuts": [
+    "reuse the old standardized quadratic-penalty monthly task as though native Gaussian seasonal smoothing were the same method",
+    "partition one ensemble and label it independent forecast centres",
+    "use physically ambiguous legacy rainfall rates",
+    "equate import or documentation reading with executable tool assistance",
+    "call an uncalibrated short-window onset example a demonstrated frontier boundary"
+  ]
+}

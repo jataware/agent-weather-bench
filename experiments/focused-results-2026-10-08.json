@@ -1,0 +1,721 @@
+{
+  "schema_version": 1,
+  "plan": "experiments/focused-study.yaml",
+  "completed_attempts": 6,
+  "pending_attempts": [],
+  "direct_api_key_calls": 0,
+  "billing": "Subscription-authenticated inference; list-price estimates are not invoices.",
+  "agent_token_totals": {
+    "input_tokens": 870722,
+    "cached_input_tokens": 656896,
+    "output_tokens": 57839,
+    "total_tokens": 928561
+  },
+  "judge_list_price_usd": 0.6261312,
+  "rows": [
+    {
+      "run": "20261008T094250-seasonal-cca-reproduction-outer-2005-2019--all-cells-L1-focused-astra-accord-6d6142",
+      "directory": "var/template-runs/20261008T094250-seasonal-cca-reproduction-outer-2005-2019--all-cells-L1-focused-astra-accord-6d6142",
+      "template": "seasonal-cca-reproduction",
+      "instance": "outer-2005-2019--all-cells",
+      "system": "focused-astra-accord",
+      "submission_spec_version": 1,
+      "submission_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "assessment_spec_version": 1,
+      "assessment_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "reassessment": null,
+      "original_completion": "pass",
+      "original_computed": "pass",
+      "system_sha256": "5a585e7d95676899031d7531ae1182ad80db5938e5b80a69f162a207c42d235d",
+      "runtime_image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+      "status": "token_limit",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill": null,
+      "skill_valid_for_ranking": null,
+      "seconds": 420.3966227080673,
+      "tool_calls": 7,
+      "usage": {
+        "input_tokens": 192451,
+        "cached_input_tokens": 147968,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13199,
+        "reasoning_output_tokens": 918,
+        "total_tokens": 205650
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 12,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 7,
+          "substrate_commands": 0,
+          "ran": 0,
+          "read": 0,
+          "listed": 0,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": null,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {
+          "africas2s": {
+            "commands_importing": 1,
+            "first_step": 7,
+            "submitted_files_importing": [],
+            "used": true
+          },
+          "acmaddl": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          }
+        },
+        "image_paths": {
+          "/opt/accord-current/docs": {
+            "commands_naming": 2,
+            "of_which_failed": 0,
+            "first_step": 1,
+            "used": true
+          }
+        },
+        "commands": 7,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 16490,
+            "output_tokens": 328,
+            "list_price_usd": 0.1271932
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T094250-seasonal-cca-reproduction-outer-2005-2019--all-cells-L1-focused-astra-python-ee81dd",
+      "directory": "var/template-runs/20261008T094250-seasonal-cca-reproduction-outer-2005-2019--all-cells-L1-focused-astra-python-ee81dd",
+      "template": "seasonal-cca-reproduction",
+      "instance": "outer-2005-2019--all-cells",
+      "system": "focused-astra-python",
+      "submission_spec_version": 1,
+      "submission_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "assessment_spec_version": 1,
+      "assessment_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "reassessment": null,
+      "original_completion": "pass",
+      "original_computed": "pass",
+      "system_sha256": "474746a0adf34fba30fc90b722dabe8e3f2ba655dac8a1edcf6a4515505a7430",
+      "runtime_image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+      "status": "submitted",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill": null,
+      "skill_valid_for_ranking": null,
+      "seconds": 318.1599649590207,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 87702,
+        "cached_input_tokens": 59136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9634,
+        "reasoning_output_tokens": 1028,
+        "total_tokens": 97336
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 12,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 5,
+          "substrate_commands": 0,
+          "ran": 0,
+          "read": 0,
+          "listed": 0,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": null,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {},
+        "image_paths": {},
+        "commands": 5,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 14305,
+            "output_tokens": 314,
+            "list_price_usd": 0.10943320000000001
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T095132-rainfall-downscaling-train-to-2008--forecast-2009-2012-L1-focused-astra-accord-7c3bee",
+      "directory": "var/template-runs/20261008T095132-rainfall-downscaling-train-to-2008--forecast-2009-2012-L1-focused-astra-accord-7c3bee",
+      "template": "rainfall-downscaling",
+      "instance": "train-to-2008--forecast-2009-2012",
+      "system": "focused-astra-accord",
+      "submission_spec_version": 1,
+      "submission_fingerprint": "f3e2f2571fe273c398e4353f29bd970d856b2e489af5226ad75e57a3be968d5f",
+      "assessment_spec_version": 2,
+      "assessment_fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "reassessment": {
+        "run": "20261008T095132-rainfall-downscaling-train-to-2008--forecast-2009-2012-L1-focused-astra-accord-7c3bee",
+        "submission_spec_version": 1,
+        "original_fingerprint": "f3e2f2571fe273c398e4353f29bd970d856b2e489af5226ad75e57a3be968d5f",
+        "original_completion": "unresolved",
+        "original_computed": "unresolved",
+        "assessment_spec_version": 2,
+        "assessment_fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+        "assessment_file": "var/review/downscaling-v2-accord/assessment.json",
+        "assessment_sha256": "0e6611f36beaf5e43aa27b33281966f3f20f537433f9b6d33988babbd3f24341",
+        "completion": "pass",
+        "computed": "pass",
+        "brief_identical": true,
+        "inputs_byte_identical": true,
+        "envelope_identical": true,
+        "frozen_artifacts_unchanged": true
+      },
+      "original_completion": "unresolved",
+      "original_computed": "unresolved",
+      "system_sha256": "5a585e7d95676899031d7531ae1182ad80db5938e5b80a69f162a207c42d235d",
+      "runtime_image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+      "status": "token_limit",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill": null,
+      "skill_valid_for_ranking": null,
+      "seconds": 310.06519979203586,
+      "tool_calls": 8,
+      "usage": {
+        "input_tokens": 190552,
+        "cached_input_tokens": 148992,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8957,
+        "reasoning_output_tokens": 1001,
+        "total_tokens": 199509
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 12,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 8,
+          "substrate_commands": 0,
+          "ran": 0,
+          "read": 0,
+          "listed": 0,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": null,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {
+          "africas2s": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          },
+          "acmaddl": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          }
+        },
+        "image_paths": {
+          "/opt/accord-current/docs": {
+            "commands_naming": 4,
+            "of_which_failed": 1,
+            "first_step": 1,
+            "used": true
+          }
+        },
+        "commands": 8,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 14503,
+            "output_tokens": 638,
+            "list_price_usd": 0.11749720000000001
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T095132-rainfall-downscaling-train-to-2008--forecast-2009-2012-L1-focused-astra-python-db3f9f",
+      "directory": "var/template-runs/20261008T095132-rainfall-downscaling-train-to-2008--forecast-2009-2012-L1-focused-astra-python-db3f9f",
+      "template": "rainfall-downscaling",
+      "instance": "train-to-2008--forecast-2009-2012",
+      "system": "focused-astra-python",
+      "submission_spec_version": 1,
+      "submission_fingerprint": "f3e2f2571fe273c398e4353f29bd970d856b2e489af5226ad75e57a3be968d5f",
+      "assessment_spec_version": 2,
+      "assessment_fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "reassessment": {
+        "run": "20261008T095132-rainfall-downscaling-train-to-2008--forecast-2009-2012-L1-focused-astra-python-db3f9f",
+        "submission_spec_version": 1,
+        "original_fingerprint": "f3e2f2571fe273c398e4353f29bd970d856b2e489af5226ad75e57a3be968d5f",
+        "original_completion": "unresolved",
+        "original_computed": "unresolved",
+        "assessment_spec_version": 2,
+        "assessment_fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+        "assessment_file": "var/review/downscaling-v2-python/assessment.json",
+        "assessment_sha256": "b344471887cb2cd9d62b80fb23fe70f178e99f8d43c192cd3eadb3a703cd25e1",
+        "completion": "pass",
+        "computed": "pass",
+        "brief_identical": true,
+        "inputs_byte_identical": true,
+        "envelope_identical": true,
+        "frozen_artifacts_unchanged": true
+      },
+      "original_completion": "unresolved",
+      "original_computed": "unresolved",
+      "system_sha256": "474746a0adf34fba30fc90b722dabe8e3f2ba655dac8a1edcf6a4515505a7430",
+      "runtime_image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+      "status": "submitted",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill": null,
+      "skill_valid_for_ranking": null,
+      "seconds": 302.91527837503236,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 79723,
+        "cached_input_tokens": 40704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9077,
+        "reasoning_output_tokens": 898,
+        "total_tokens": 88800
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 12,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 5,
+          "substrate_commands": 0,
+          "ran": 0,
+          "read": 0,
+          "listed": 0,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": null,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {},
+        "image_paths": {},
+        "commands": 5,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 15344,
+            "output_tokens": 290,
+            "list_price_usd": 0.1172652
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T100746-seasonal-cca-reproduction-outer-2005-2019--all-cells-L1-focused-luna-accord-6a35c9",
+      "directory": "var/template-runs/20261008T100746-seasonal-cca-reproduction-outer-2005-2019--all-cells-L1-focused-luna-accord-6a35c9",
+      "template": "seasonal-cca-reproduction",
+      "instance": "outer-2005-2019--all-cells",
+      "system": "focused-luna-accord",
+      "submission_spec_version": 1,
+      "submission_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "assessment_spec_version": 1,
+      "assessment_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "reassessment": null,
+      "original_completion": "pass",
+      "original_computed": "pass",
+      "system_sha256": "0ec8c57d6c6832d696b097446b813a208185cf045ba022f87cf497a6b343c600",
+      "runtime_image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+      "status": "submitted",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill": null,
+      "skill_valid_for_ranking": null,
+      "seconds": 93.32142220903188,
+      "tool_calls": 9,
+      "usage": {
+        "input_tokens": 153818,
+        "cached_input_tokens": 123648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7793,
+        "reasoning_output_tokens": 2855,
+        "total_tokens": 161611
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 12,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 9,
+          "substrate_commands": 0,
+          "ran": 0,
+          "read": 0,
+          "listed": 0,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": null,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {
+          "africas2s": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          },
+          "acmaddl": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          }
+        },
+        "image_paths": {
+          "/opt/accord-current/docs": {
+            "commands_naming": 1,
+            "of_which_failed": 0,
+            "first_step": 3,
+            "used": true
+          }
+        },
+        "commands": 9,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 10455,
+            "output_tokens": 327,
+            "list_price_usd": 0.0788932
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T100746-seasonal-cca-reproduction-outer-2005-2019--all-cells-L1-focused-luna-python-2fc4e0",
+      "directory": "var/template-runs/20261008T100746-seasonal-cca-reproduction-outer-2005-2019--all-cells-L1-focused-luna-python-2fc4e0",
+      "template": "seasonal-cca-reproduction",
+      "instance": "outer-2005-2019--all-cells",
+      "system": "focused-luna-python",
+      "submission_spec_version": 1,
+      "submission_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "assessment_spec_version": 1,
+      "assessment_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "reassessment": null,
+      "original_completion": "pass",
+      "original_computed": "pass",
+      "system_sha256": "b8c3a00e59c61c6ab82128bce59d850ec9a70a62e01b4a39c1f64532c258e818",
+      "runtime_image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+      "status": "submitted",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "ranking_gate": "pass",
+      "skill": null,
+      "skill_valid_for_ranking": null,
+      "seconds": 109.49869245907757,
+      "tool_calls": 9,
+      "usage": {
+        "input_tokens": 166476,
+        "cached_input_tokens": 136448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9179,
+        "reasoning_output_tokens": 3401,
+        "total_tokens": 175655
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 12,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 9,
+          "substrate_commands": 0,
+          "ran": 0,
+          "read": 0,
+          "listed": 0,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": null,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {},
+        "image_paths": {},
+        "commands": 9,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 10077,
+            "output_tokens": 326,
+            "list_price_usd": 0.07584919999999999
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "status": "run",
+  "attempts": 2,
+  "systems": [
+    "efficiency-luna-accord-guided-precision",
+    "efficiency-luna-python-precision"
+  ],
+  "attempts_with_an_unruled_unknown_answer": 0,
+  "attempts_assessed_under_another_fingerprint": 8,
+  "excluded_before_model_launch": [],
+  "rulings_awaiting_confirmation": 0,
+  "detail": "Every attempt's answer was classified.",
+  "runs": [
+    {
+      "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a",
+      "system": "efficiency-luna-accord-guided-precision",
+      "instance": "kenya-interior--mam-2016",
+      "level": 1,
+      "outcome": "pass",
+      "computed_outcome": "pass",
+      "judged_outcome": "unresolved",
+      "supplied": [],
+      "parent": null,
+      "unknown_answer_checks": [],
+      "ruling": null
+    },
+    {
+      "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c",
+      "system": "efficiency-luna-python-precision",
+      "instance": "kenya-interior--mam-2016",
+      "level": 1,
+      "outcome": "fail",
+      "computed_outcome": "fail",
+      "judged_outcome": "unresolved",
+      "supplied": [],
+      "parent": null,
+      "unknown_answer_checks": [],
+      "ruling": null
+    }
+  ]
+}

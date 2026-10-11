@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "plan_sha256": "22613e8cc3c447cf519476af50460222c6c7b0c40231a1db892764213099a4ab",
+  "initial_runs": [
+    "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1",
+    "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee"
+  ],
+  "required_conditions": {
+    "guided_computed_pass": false,
+    "guided_substantive_helpers": true,
+    "guided_replay_pass": true,
+    "no_known_grader_runtime_issue_both_initial_arms": false
+  },
+  "relative_resource_improvements_guided": {
+    "fresh_input_plus_output": 0.4671636054141614,
+    "agent_seconds": -0.09248606107478219,
+    "cumulative_tokens": 0.17821133031566938
+  },
+  "baseline_computed": "fail",
+  "informative_improvement": true,
+  "eligible": false,
+  "launch_requires_shared_scientific_slot_coordination": true,
+  "replication_pairs_authorized": 0,
+  "interpretation": "Practical bounded replication gate, not statistical significance; missing evidence never satisfies a condition."
+}

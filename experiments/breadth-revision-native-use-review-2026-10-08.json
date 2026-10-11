@@ -1,0 +1,113 @@
+{
+  "reviewed_at": "2026-10-08T15:01:54.001748+00:00",
+  "run": "20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3",
+  "system": "breadth-luna-rhiza-revision",
+  "status": "pass",
+  "review_mode": "Independent text/JSON metadata review only; no scientific array decoding, Docker execution or model calls.",
+  "helpers": [
+    "weather_skills_core.units.deaccumulate_along_step"
+  ],
+  "dataflow_evidence": [
+    {
+      "file": "frozen/run.py",
+      "lines": [
+        22,
+        24,
+        27,
+        30,
+        33,
+        35,
+        42,
+        45,
+        46,
+        57,
+        58,
+        60,
+        70,
+        73,
+        82,
+        85,
+        96
+      ],
+      "finding": "Source precipitation loaded serially and promoted to float64; returned native rates multiplied by matching interval durations, window-selected and accumulated per member. Current and previous helper-derived means supply delivered arrays; their difference supplies regional weighted mean and claims."
+    },
+    {
+      "file": "frozen/report.md",
+      "finding": "Report identifies public helper call site, rate-to-amount conversion and negative-increment clipping; agrees with frozen calculation."
+    },
+    {
+      "file": "logs/events.jsonl",
+      "lines": [
+        16,
+        17,
+        19,
+        20,
+        25,
+        26
+      ],
+      "finding": "Three actual script executions; first reaches Dataset merge after both source helper calls but fails on conflicting time coordinates. Coordinate fix succeeds; final attribute-cleanup execution also succeeds."
+    },
+    {
+      "file": "assessment.json",
+      "finding": "Computed and overall pass; original command replay and changed-source replay both exit0 and pass. Changed source matches accepted clipped-increment reading."
+    }
+  ],
+  "calls": {
+    "agent_real_data": 6,
+    "agent_real_data_script_invocations": 3,
+    "per_complete_script": 2,
+    "synthetic_demo": 2,
+    "controller_replay": 4,
+    "controller_replay_commands": 2,
+    "imports_and_help_not_counted": true,
+    "count_method": "Inferred from recorded commands and reached code paths, including exception after both helper calls; not dynamically instrumented counters."
+  },
+  "actual_execution": true,
+  "import_or_toy_only": false,
+  "adapter_finish": {
+    "run_status": "submitted",
+    "final_event": "Codex completed its turn; harness evaluates filesystem deliverables.",
+    "budget_stopped": false
+  },
+  "failure_flags": {
+    "final_scientific_failure": false,
+    "final_infrastructure_failure": false,
+    "recovered_agent_error": true,
+    "initial_error": "xarray MergeError from retaining incompatible issue time scalar coordinates. Both arms encountered and repaired this packaging issue.",
+    "initial_shell_exit_masks_exception": true,
+    "masked_exit_detail": "Guided first execution is followed by ls, so tool result exit0 coexists with Python traceback. Review uses stderr/reached code, not shell status alone.",
+    "source_or_task_answer_leakage_observed": false
+  },
+  "redundant_work": {
+    "guided_real_script_runs": 3,
+    "python_real_script_runs": 2,
+    "guided_tool_calls": 9,
+    "python_tool_calls": 7,
+    "details": [
+      "Guided arm ran synthetic demo, read API guide plus skill/help, then printed public helper source; these discovery steps count toward resource use.",
+      "Both arms repaired scalar-coordinate merge conflicts. Guided arm additionally reran after cleaning inherited rate/GRIB attributes; that is packaging cleanup, not an extra scientific requirement."
+    ],
+    "limits": "These trace differences explain observable work; elapsed/token deltas cannot be causally allocated to individual operations or helper runtime."
+  },
+  "paired_resources": {
+    "python_run": "20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-python-revision-14929b",
+    "python_fresh_input_plus_output": 29254,
+    "rhiza_fresh_input_plus_output": 37002,
+    "rhiza_resource_change_fraction": 0.26485266972038013,
+    "python_agent_seconds": 65.37249287497252,
+    "rhiza_agent_seconds": 73.73426629090682,
+    "rhiza_agent_time_change_fraction": 0.12790966120760472,
+    "interpretation": "Both valid and substantive use verified; this single pair shows overhead rather than tooling savings."
+  },
+  "reviewfileshashes": {
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/run.json": "6bf69cf4791fb4b6425709054c0c11a0fa1ce31e0adbf527d8e42bc686d4490a",
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/assessment.json": "1659fb76ff55553547b6b85d69d62afc0bb5fcb3601706840cf5ac51b582dc9c",
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/frozen/run.py": "b5ec291243bb6683fa9d08e0cde4fc9b739e2de9ede9ea46252f449ec9756f03",
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/frozen/report.md": "d815e827f8a04b03ceb465b95d5cac4fa824913209757f0ac89e897ed0d1e17f",
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/frozen/answer.json": "91e96b1a543c27afad06f96959e25067462debb5817abc3b782754f32ac1766a",
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/logs/events.jsonl": "0f3d3f4a3e209460e58796d4d984008e0247dc34fc8662461f7eb0915e1ea787",
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/controller/provenance.json": "924e4bc50286de99402ebff725161e83a54b5f25ba3174644c7803cfbaa8bc2d",
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-python-revision-14929b/run.json": "6eebf3e4a7abbeec59914da371c2f443079917063bd1e991ee361632aeb611fa",
+    "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-python-revision-14929b/logs/events.jsonl": "5f1c06870336f5a145d616a567aa81750ebd4931f424a54281db6fa44430752f"
+  }
+}

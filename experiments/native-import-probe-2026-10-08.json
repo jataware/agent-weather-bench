@@ -1,0 +1,74 @@
+[
+  {
+    "image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+    "case": "cfgrib_then_pyproj",
+    "exit_code": 133,
+    "stdout": "imports completed\n",
+    "stderr": "double free or corruption (!prev)\n",
+    "passed": false
+  },
+  {
+    "image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+    "case": "pyproj_then_cfgrib",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  },
+  {
+    "image": "sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7",
+    "case": "backend_discovery",
+    "exit_code": 133,
+    "stdout": "imports completed\n",
+    "stderr": "double free or corruption (!prev)\n",
+    "passed": false
+  },
+  {
+    "image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+    "case": "cfgrib_then_pyproj",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  },
+  {
+    "image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+    "case": "pyproj_then_cfgrib",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  },
+  {
+    "image": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+    "case": "backend_discovery",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  },
+  {
+    "image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+    "case": "cfgrib_then_pyproj",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  },
+  {
+    "image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+    "case": "pyproj_then_cfgrib",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  },
+  {
+    "image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+    "case": "backend_discovery",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  }
+]

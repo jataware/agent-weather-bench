@@ -1,0 +1,325 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-08T17:52:48.988794+00:00",
+  "plan_sha256": "df0e0f47e7edd9e1e1fdcd7b727cdea1dbb025f1a20ce1e8ff2e9a90302819ca",
+  "fingerprint": "45b7ffbdf625119333a5a2510ae51221437ce1d3d61b4f0922d66179a44b592d",
+  "verifier_sha256": "ab331fb0780ef173ecfec5be99553899372a5c61149273c4259ed450309450bc",
+  "independent_reference_sha256": "620634874c84cb887a64c89c90596ebe366d7409f874ac881a2a31a4fdf50501",
+  "new_model_calls": 0,
+  "submitted_code_executed": false,
+  "rows": [
+    {
+      "system": "monthly-fragility-luna-accord",
+      "run": "20261008T174638-monthly-cycle-calibration-original-regional-monthly-1993-2023-L1-monthly-fragility-luna-accord-3aeafa",
+      "original_computed_outcome": "pass",
+      "original_completion": "pass",
+      "assessment_sha256": "0f60673abf40714607bf4849be10dcac43a122cfafb08a5f61da51050f3709c3",
+      "verification": "compared",
+      "numeric_reference_agrees": true,
+      "envelope_numeric_problems": {},
+      "fields": {
+        "outer_year": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "forecast_year": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "month": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "system": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "target": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "candidate": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "hindcast_mm": {
+          "agrees": true,
+          "largest_difference": 5.684341886080802e-14
+        },
+        "hindcast_coefficient": {
+          "agrees": true,
+          "largest_difference": 4.973799150320701e-14
+        },
+        "hindcast_standardized_coefficient": {
+          "agrees": true,
+          "largest_difference": 4.996003610813204e-16
+        },
+        "selected_candidate": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "inner_loss": {
+          "agrees": true,
+          "largest_difference": 6.661338147750939e-16
+        },
+        "xmean": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "xstd": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "ymean": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "ystd": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "squared_error": {
+          "agrees": true,
+          "largest_difference": 3.637978807091713e-12
+        },
+        "monthly_msss": {
+          "agrees": true,
+          "largest_difference": 4.440892098500626e-16
+        },
+        "msss": {
+          "agrees": true,
+          "largest_difference": 1.1102230246251565e-16
+        },
+        "forecast_mm": {
+          "agrees": true,
+          "largest_difference": 5.684341886080802e-14
+        },
+        "forecast_coefficient": {
+          "agrees": true,
+          "largest_difference": 3.552713678800501e-14
+        },
+        "forecast_standardized_coefficient": {
+          "agrees": true,
+          "largest_difference": 4.440892098500626e-16
+        },
+        "final_candidate": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "final_inner_loss": {
+          "agrees": true,
+          "largest_difference": 4.440892098500626e-16
+        }
+      },
+      "production_by_system": {
+        "climatology": {
+          "finite_pairs": 144,
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error_mm": 0.0,
+          "rmse_of_difference_mm": 0.0
+        },
+        "independent-month": {
+          "finite_pairs": 144,
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error_mm": 5.684341886080802e-14,
+          "rmse_of_difference_mm": 9.559959350870308e-15
+        },
+        "constant-slope": {
+          "finite_pairs": 144,
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error_mm": 2.842170943040401e-14,
+          "rmse_of_difference_mm": 3.797547027170516e-15
+        },
+        "nested-cyclic": {
+          "finite_pairs": 144,
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error_mm": 5.684341886080802e-14,
+          "rmse_of_difference_mm": 1.0880500325841706e-14
+        }
+      },
+      "selected_candidates": {
+        "selected_candidate": [
+          4.0,
+          3.0,
+          2.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "final_candidate": 3.0
+      },
+      "pooled_msss": [
+        0.0,
+        0.2454358437910138,
+        0.19844933507250717,
+        0.23434861149011854
+      ]
+    },
+    {
+      "system": "monthly-fragility-astra-accord",
+      "run": "20261008T174638-monthly-cycle-calibration-original-regional-monthly-1993-2023-L1-monthly-fragility-astra-accord-f05698",
+      "original_computed_outcome": "pass",
+      "original_completion": "pass",
+      "assessment_sha256": "abd1c29fd037cccae1f8e9fd5a0d17e246bceb5d549e527d49423f6036c68a25",
+      "verification": "compared",
+      "numeric_reference_agrees": true,
+      "envelope_numeric_problems": {},
+      "fields": {
+        "outer_year": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "forecast_year": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "month": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "system": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "target": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "candidate": {
+          "agrees": true,
+          "largest_difference": null
+        },
+        "hindcast_mm": {
+          "agrees": true,
+          "largest_difference": 5.684341886080802e-14
+        },
+        "hindcast_coefficient": {
+          "agrees": true,
+          "largest_difference": 4.973799150320701e-14
+        },
+        "hindcast_standardized_coefficient": {
+          "agrees": true,
+          "largest_difference": 6.106226635438361e-16
+        },
+        "selected_candidate": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "inner_loss": {
+          "agrees": true,
+          "largest_difference": 6.661338147750939e-16
+        },
+        "xmean": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "xstd": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "ymean": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "ystd": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "squared_error": {
+          "agrees": true,
+          "largest_difference": 3.637978807091713e-12
+        },
+        "monthly_msss": {
+          "agrees": true,
+          "largest_difference": 3.3306690738754696e-16
+        },
+        "msss": {
+          "agrees": true,
+          "largest_difference": 1.1102230246251565e-16
+        },
+        "forecast_mm": {
+          "agrees": true,
+          "largest_difference": 5.684341886080802e-14
+        },
+        "forecast_coefficient": {
+          "agrees": true,
+          "largest_difference": 3.552713678800501e-14
+        },
+        "forecast_standardized_coefficient": {
+          "agrees": true,
+          "largest_difference": 4.440892098500626e-16
+        },
+        "final_candidate": {
+          "agrees": true,
+          "largest_difference": 0.0
+        },
+        "final_inner_loss": {
+          "agrees": true,
+          "largest_difference": 4.440892098500626e-16
+        }
+      },
+      "production_by_system": {
+        "climatology": {
+          "finite_pairs": 144,
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error_mm": 0.0,
+          "rmse_of_difference_mm": 0.0
+        },
+        "independent-month": {
+          "finite_pairs": 144,
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error_mm": 5.684341886080802e-14,
+          "rmse_of_difference_mm": 9.57019688754705e-15
+        },
+        "constant-slope": {
+          "finite_pairs": 144,
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error_mm": 2.842170943040401e-14,
+          "rmse_of_difference_mm": 3.800070673833459e-15
+        },
+        "nested-cyclic": {
+          "finite_pairs": 144,
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error_mm": 5.684341886080802e-14,
+          "rmse_of_difference_mm": 1.0154883089170671e-14
+        }
+      },
+      "selected_candidates": {
+        "selected_candidate": [
+          4.0,
+          3.0,
+          2.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          4.0,
+          3.0,
+          3.0
+        ],
+        "final_candidate": 3.0
+      },
+      "pooled_msss": [
+        0.0,
+        0.2454358437910138,
+        0.19844933507250717,
+        0.23434861149011854
+      ]
+    }
+  ],
+  "scope": "Independent numeric comparison of frozen submissions only; replay and saved-state verdicts remain separate original instruments."
+}

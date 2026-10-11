@@ -1,0 +1,251 @@
+{
+ "schema_version": 1,
+ "template": "seasonal-objective-consolidation",
+ "spec_version": 1,
+ "fingerprint": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff",
+ "certified_at": "20261008T144107",
+ "executor": "local-trusted-snapshot",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 1,
+   "combinations": 4,
+   "comparisons": 4,
+   "largest_difference": 2.220446049250313e-16,
+   "problems": [],
+   "regression_checks": [
+    {
+     "name": "complete_vectors_missing_support_and_single_component",
+     "passed": true
+    }
+   ],
+   "tolerances": {
+    "tercile": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "lat": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 40.0,
+     "within_declared_magnitude": true
+    },
+    "lon": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 55.0,
+     "within_declared_magnitude": true
+    },
+    "probability": {
+     "tolerance": 2.8610270419507627e-06,
+     "declared": {
+      "precision": "float32",
+      "operations": 24,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.8977517678791243,
+     "within_declared_magnitude": true
+    },
+    "nominal_weighted_probability": {
+     "tolerance": 4.29154363248174e-06,
+     "declared": {
+      "precision": "float32",
+      "operations": 36,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.8977517678791243,
+     "within_declared_magnitude": true
+    },
+    "available_components": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 3.0,
+     "within_declared_magnitude": true
+    },
+    "disagreement_pp": {
+     "tolerance": 9.536747711538177e-05,
+     "declared": {
+      "precision": "float32",
+      "operations": 8,
+      "magnitude": 100
+     },
+     "largest_reference_value": 37.80008697509765,
+     "within_declared_magnitude": true
+    }
+   }
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "independent",
+     "kind": "known_correct",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "reordered",
+     "kind": "accepted_alternative",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    }
+   ]
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "climatology_fill",
+     "kind": "pitfall",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "nominal",
+     "kind": "pitfall",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "percent",
+     "kind": "incorrect",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "categorywise",
+     "kind": "incorrect",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    }
+   ],
+   "not_applicable": {
+    "skipped_process_step": "No process checklist.",
+    "false_method_pointer": "No scientific library is required."
+   }
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [
+    {
+     "pair": "climatology_fill",
+     "convention": "missing_support",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 1,
+     "instances": 1,
+     "smallest_separation_in_tolerances": 591835.3,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "nominal",
+     "convention": "weighting",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 1,
+     "instances": 1,
+     "smallest_separation_in_tolerances": 30009.2,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    }
+   ],
+   "known_ambiguities": []
+  },
+  "5_model_attempts": {
+   "passed": null,
+   "status": "run",
+   "attempts": 1,
+   "systems": [
+    "consolidation-luna-python"
+   ],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 0,
+   "excluded_before_model_launch": [],
+   "rulings_awaiting_confirmation": 0,
+   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+   "runs": [
+    {
+     "run": "20261008T144314-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-consolidation-luna-python-30b210",
+     "system": "consolidation-luna-python",
+     "instance": "aso-2026--full-source-grid",
+     "level": 1,
+     "outcome": "pass",
+     "computed_outcome": "pass",
+     "judged_outcome": "unresolved",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
+    }
+   ]
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "pending",
+  "scientific_approval": "pending"
+ }
+}

@@ -1,0 +1,210 @@
+{
+  "reviewed_at": "2026-10-08T15:44:09.963803+00:00",
+  "run": "20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91",
+  "system": "level2-astra-open-accord",
+  "status": "pass",
+  "review_mode": "Independent static code, text/JSON trace and opaque stored-byte SHA256 comparison only; no scientific decoding, candidate execution or intermediate final scoring.",
+  "method": {
+    "free_method": true,
+    "task_specific_recipe_or_solver_supplied": false,
+    "description": "Convex blend0.50 smooth seasonal climatology,0.12 ridge calibration,0.23 multi-output tree residual calibration,0.15 causal forecast-drift adaptation. Model families chosen with training-only diagnostics and blend selected using allowed development feedback.",
+    "native_weather_helper_used": false,
+    "native_weather_helper_required": false,
+    "libraries": "NumPy, pandas, xarray, scipy and scikit-learn; standard acmadDL/AfricaS2S helpers are neither imported nor executed. Availability does not establish tooling benefit."
+  },
+  "both_split_dataflow": {
+    "status": "pass",
+    "file": "frozen/forecast.py",
+    "lines": [
+      57,
+      67,
+      81,
+      89,
+      95,
+      104,
+      126,
+      129,
+      131,
+      133,
+      135,
+      137,
+      140,
+      143,
+      145,
+      148,
+      149,
+      150,
+      169,
+      176,
+      177,
+      179,
+      180,
+      187
+    ],
+    "finding": "Both splits freshly receive all four components from source training/features. Ridge and tree rainfall labels are taken only from supplied training; adaptive concatenation includes forecast features across dates, but label fitting selects only training rows. No cached prediction store or private target is loaded."
+  },
+  "causality": {
+    "status": "pass",
+    "lag_feature_present": true,
+    "lag_lines": [
+      44,
+      46,
+      77,
+      78
+    ],
+    "lag_finding": "Lag is previous-row raw forecast, with first row repeating current forecast. Feature files are sorted by issue date. Other components reset lag per file; adaptive component uses combined chronological source history. Same-issue regional raw means are permitted spatial features. No forward shift/centred window appears.",
+    "adaptive_lines": [
+      109,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      137,
+      139,
+      140,
+      143,
+      145
+    ],
+    "adaptive_finding": "For issue i drift fits and weighted residuals use raw[:i] only. Future rows exist in memory but do not enter earlier adjustments, fitted rainfall coefficients or issue features. Training recency weights depend solely on selected training years.",
+    "calendar_finding": "Issue-date harmonics are known covariates; use of them does not expose future observations.",
+    "diagnostic_validation_caveat": "Expanding and supplementary blocked validation operate entirely within supplied pre2015 data. Blocked validation uses observations later than some heldout training issues, so it is a model-selection diagnostic rather than a strict rolling-origin skill estimate. The final forecast still uses only information available by its issue."
+  },
+  "feedback_selection": {
+    "status": "pass",
+    "queries_used": 5,
+    "malformed_queries": 0,
+    "limit_denials": 0,
+    "final_score_exposed": false,
+    "final_observations_exposed": false,
+    "trajectory": [
+      {
+        "query": 1,
+        "prediction_file": "ridge.zarr",
+        "development_rmse_mm": 11.992727975395894
+      },
+      {
+        "query": 2,
+        "prediction_file": "tree.zarr",
+        "development_rmse_mm": 12.346515548948936
+      },
+      {
+        "query": 3,
+        "prediction_file": "clim.zarr",
+        "development_rmse_mm": 11.985997045717447
+      },
+      {
+        "query": 4,
+        "prediction_file": "adapt.zarr",
+        "development_rmse_mm": 11.952730060348522
+      },
+      {
+        "query": 5,
+        "prediction_file": "results.zarr",
+        "development_rmse_mm": 11.78388798041698
+      }
+    ],
+    "best_query": 5,
+    "best_development_rmse_mm": 11.78388798041698,
+    "best_development_forecast_preserved": true,
+    "preservation_evidence": {
+      "development_mm": {
+        "byte_identical": true,
+        "queried_inventory": {
+          "zarr.json": "54513c4499db4f82528bf8077add8fc5ef6032dd61f383afec71318349c61724",
+          "c/0/0": "d4de687d5651d24afcb26310131d2747622cd4eadd576e8fd44082e6be89e34f"
+        },
+        "submitted_inventory": {
+          "zarr.json": "54513c4499db4f82528bf8077add8fc5ef6032dd61f383afec71318349c61724",
+          "c/0/0": "d4de687d5651d24afcb26310131d2747622cd4eadd576e8fd44082e6be89e34f"
+        }
+      },
+      "development_issue": {
+        "byte_identical": true,
+        "queried_inventory": {
+          "zarr.json": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+          "c/0": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0"
+        },
+        "submitted_inventory": {
+          "zarr.json": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+          "c/0": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0"
+        }
+      },
+      "location": {
+        "byte_identical": true,
+        "queried_inventory": {
+          "zarr.json": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+          "c/0": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d"
+        },
+        "submitted_inventory": {
+          "zarr.json": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+          "c/0": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d"
+        }
+      }
+    },
+    "selection_execute_lines": [
+      38,
+      49
+    ],
+    "finalization_execute_lines": [
+      52,
+      55,
+      60
+    ],
+    "selection_finding": "Four named component stores are evaluated. Agent uses their measured MSEs and known pairwise prediction distances to obtain the component error Gram matrix, optimizes nonnegative sum-to-one blend weights, rounds to0.50/0.12/0.23/0.15, and uses query5 to measure the final blend. Queried query5 development output and coordinates remain byte-identical in delivery. Intermediate candidate final scores were not queried.",
+    "scalar_feedback_math": "Under the same weighted mean, G_ij=(MSE_i+MSE_j-MSE(p_i-p_j))/2. For convex weights summing1, blendMSE=w^T G w. Pairwise prediction distances need no labels. This is valid use of allowed aggregate feedback, not private-observation access.",
+    "budget_interpretation": "Five development requests bound oracle evaluations, not five candidate choices: exact quadratic reconstruction permits optimization over continuously many blends. Report this optimization rather than calling the trajectory merely five independent guesses.",
+    "checkpoint_caveat": "Separate component files were retained during search, then removed from final envelope; final best-query preservation is verified. No future robustness guarantee for a generic best-candidate manager is inferred."
+  },
+  "report_consistency": {
+    "status": "pass",
+    "finding": "Report describes all four components, their rounded weights, current/past-only covariates and lag resets, aggregate-score blend selection, development tuning and correlated-window limits. Measured development score matches ledger and checked claim. No final-score or significance claim is made.",
+    "input_hash_score_claim": "Source-file hash controls only whether a previously measured development score is restated. All numeric forecasts are recomputed from current inputs regardless of hash; changed inputs receive null score claim. This is an honest score applicability check, not cached prediction behavior."
+  },
+  "checks": {
+    "claim.development_rmse_mm": "pass",
+    "coverage": "pass",
+    "envelope": "pass",
+    "feedback.limit": "pass",
+    "interpretation.consistency_across_artifacts": "unresolved",
+    "interpretation.generalization": "unresolved",
+    "interpretation.statistical_support": "unresolved",
+    "invariant.magnitude_of_a_14_day_total": "pass",
+    "invariant.totals_not_negative": "pass",
+    "probe.no_future_information": "pass",
+    "probe.replay": "pass",
+    "probe.responds_to_inputs": "pass"
+  },
+  "computed_outcome": "pass",
+  "completion": "pass",
+  "failure_flags": {
+    "final_scientific_failure": false,
+    "final_infrastructure_failure": false,
+    "best_candidate_lost": false,
+    "future_information_in_final_code_observed": false,
+    "private_target_access_observed": false,
+    "report_contradiction_observed": false,
+    "recovered_implementation_parity_issue": true,
+    "parity_issue_detail": "Initial consolidated solver differed from measured tree components because residual subtraction promoted precision differently. Agent restored original in-place residual arithmetic, observed component differences below8.4e-8, and then queried the actual final solver asquery5. These numerical statements come from recorded trace, not reviewer re-execution."
+  },
+  "limits": [
+    "Static code review plus existing intervention checks cannot establish absence of pretrained historical-data contamination.",
+    "No intermediate final skill was calculated during this review.",
+    "Continuous blend optimization may overfit development despite the small oracle count; independent final performance must remain separate."
+  ],
+  "reviewfileshashes": {
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91/run.json": "6865550aaf0a4613f7a8dedb4fa48c5f3813a25aceeaa66bdc021233413a892b",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91/assessment.json": "92cd935dadbab93718717b58f07aeee41f2089b9e831b7343926721de88291bf",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91/frozen/forecast.py": "e1cb294238b0eaebac8d319007a76b2751ab563e4a7032b02e668b5802fa7c88",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91/frozen/answer.json": "cf3efa1e6649d3aa98de69c3ce52795d8061bfbc5753055d046a2b013fe5f2a9",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91/frozen/report.md": "54faab6ebdf04a5cf820ec99e85844781040daa2617b68aed1f4258f77e062c7",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91/logs/events.jsonl": "edcb722f62f07b64df19f07fceb50dc6b238bff14ef06778261dd00ba4571462",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91/controller/development-feedback/ledger.json": "d19d8b4690d510ec2601a5867329eebc2e846033a0ac8332a649da6e753dde3c",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91/controller/provenance.json": "20257006b9ee15dace2e36c5302425588d1cb0269e05cbe28d077344edbdb470",
+    "systems/level2-astra-open-accord/system.yaml": "9bc8cda88a41e0d3c888049999c006dd8b12ba42a76dd1191501ecf792ff4670",
+    "experiments/level2-open-plan-2026-10-08.json": "e0c30a1041d88e4ec1199752dfb89b201012c19361df8999e0ee6e0f7421e84e"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "source": "Kenya frozen 2026-09-27 forecast",
+  "runtime_image": "sha256:edd28272c516d699f1e3208da40a0f63f285ae10bc577e49a788b5d9669b50f7",
+  "script": "/catalog/skills/weather-skills/deaccumulate/scripts/deaccumulate.py",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py:246: ZarrUserWarning: Consolidated metadata is currently not part in the Zarr format 3 specification. It may not be supported by other zarr implementations and may change in the future.\n  warnings.warn(\nWrote: /out/rates.zarr\n",
+  "expected": "Clipped increments in kg/m\u00b2 (numerically mm), divided by actual step duration in days.",
+  "maximum_difference_mm_per_day": 7.105427357601002e-15,
+  "roundoff_bound_mm_per_day": 2.1316282072803082e-12,
+  "input_steps": 47,
+  "output_steps": 46,
+  "input_units": "kg m**-2",
+  "output_units": "mm day-1",
+  "selection_limit": "Matches the clipped accepted Kenya reading; does not establish an agent-level tooling advantage."
+}

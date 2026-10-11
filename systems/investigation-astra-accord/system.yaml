@@ -1,0 +1,39 @@
+schema_version: 1
+id: investigation-astra-accord
+kind: agent
+description: 'Parallel investigation: Astra high; matched general dependencies; accord tooling condition.
+  Separate from historical studies.'
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 20
+  command_seconds: 120
+  max_total_tokens: 150000
+substrate:
+  paths:
+  - adapter.py
+  instructions: 'Read the task, input metadata and any supplied candidate workflow. Deliver complete reproducible
+    results, code and claims before optional exploration; reserve time to rerun and validate. Keep command
+    output concise: inspect shapes, units and selected metadata rather than dumping arrays or entire large
+    files. Remaining cumulative token and tool-call budgets are visible in tool results. Current AfricaS2S
+    and acmadDL are installed. Start at /opt/accord-current/docs/africas2s/skills/africas2s/SKILL.md and
+    /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md; matching READMEs are in those package documentation
+    directories. Inspect the installed Python API/source as needed. Check whether a library method matches
+    the supplied algorithm; adapt it when necessary. Inputs are frozen and runtime is offline, so acquisition
+    APIs cannot download new data. Generic Python is also allowed.'
+  libraries:
+  - africas2s
+  - acmaddl
+  - sheerwater
+  image_paths:
+  - /opt/accord-current/docs

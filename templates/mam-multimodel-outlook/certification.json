@@ -1,0 +1,486 @@
+{
+ "schema_version": 1,
+ "template": "mam-multimodel-outlook",
+ "spec_version": 2,
+ "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+ "certified_at": "20261008T142508",
+ "executor": "local-trusted-snapshot",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 1,
+   "combinations": 16,
+   "comparisons": 16,
+   "largest_difference": 1.1368683772161603e-13,
+   "problems": [],
+   "regression_checks": [],
+   "tolerances": {
+    "model": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 3.0,
+     "within_declared_magnitude": true
+    },
+    "year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2015.0,
+     "within_declared_magnitude": true
+    },
+    "new_year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2016.0,
+     "within_declared_magnitude": true
+    },
+    "tercile": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "lat": {
+     "tolerance": 3.996802888650564e-14,
+     "declared": {
+      "precision": "float64",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 2.5,
+     "within_declared_magnitude": true
+    },
+    "lon": {
+     "tolerance": 3.996802888650564e-14,
+     "declared": {
+      "precision": "float64",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 38.5,
+     "within_declared_magnitude": true
+    },
+    "train_model_mean_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 737.898006001424,
+     "within_declared_magnitude": true
+    },
+    "train_observed_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 788.5427725007396,
+     "within_declared_magnitude": true
+    },
+    "new_model_mean_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 534.5488004386425,
+     "within_declared_magnitude": true
+    },
+    "model_hindcast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.9986623564577575,
+     "within_declared_magnitude": true
+    },
+    "model_forecast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.9036576816600719,
+     "within_declared_magnitude": true
+    },
+    "hindcast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.9684462484731658,
+     "within_declared_magnitude": true
+    },
+    "forecast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.767418698636901,
+     "within_declared_magnitude": true
+    },
+    "observed_category": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "cv_rps": {
+     "tolerance": 4.440892098993664e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 2
+     },
+     "largest_reference_value": 0.41168878984058377,
+     "within_declared_magnitude": true
+    },
+    "cv_rps_climatology": {
+     "tolerance": 4.440892098993664e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 2
+     },
+     "largest_reference_value": 0.45410628019323673,
+     "within_declared_magnitude": true
+    },
+    "cv_rpss": {
+     "tolerance": 2.220446049496832e-09,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10
+     },
+     "largest_reference_value": 0.09340872875531026,
+     "within_declared_magnitude": true
+    }
+   }
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4312408099416133,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.4554377335529447,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "independent",
+     "kind": "known_correct",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4312408099416133,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.4554377335529447,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "reordered",
+     "kind": "accepted_alternative",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4312408099416133,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.4554377335529447,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    }
+   ]
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "thirty_days",
+     "kind": "pitfall",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.431385310224725,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.45592542200844655,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "full_record_thresholds",
+     "kind": "pitfall",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4312408099416133,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.4554377335529447,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "member_weighted",
+     "kind": "pitfall",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.42928619315960953,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.44884090191368187,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "missing_seconds",
+     "kind": "pitfall",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4312408099416134,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.45543773355294515,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "missing_millimetres",
+     "kind": "pitfall",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4312408099416134,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.45543773355294515,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "new_years",
+      "rps": 0.4312408099416133,
+      "climatology_rps": 0.29629629629629634,
+      "rpss": -0.4554377335529447,
+      "years": [
+       2016
+      ],
+      "cells": 18,
+      "ranking_enabled": false
+     }
+    }
+   ],
+   "not_applicable": {}
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [
+    {
+     "pair": "thirty_days",
+     "convention": "integration",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 1,
+     "instances": 1,
+     "smallest_separation_in_tolerances": 36888174.9,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "missing_seconds",
+     "convention": "integration",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 1,
+     "instances": 1,
+     "smallest_separation_in_tolerances": 332315872.2,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "missing_millimetres",
+     "convention": "integration",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 1,
+     "instances": 1,
+     "smallest_separation_in_tolerances": 331987398.7,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "full_record_thresholds",
+     "convention": "thresholds",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 1,
+     "instances": 1,
+     "smallest_separation_in_tolerances": 435402405.3,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "member_weighted",
+     "convention": "weighting",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 1,
+     "instances": 1,
+     "smallest_separation_in_tolerances": 214960135.0,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    }
+   ],
+   "known_ambiguities": []
+  },
+  "5_model_attempts": {
+   "passed": true,
+   "status": "run",
+   "attempts": 2,
+   "systems": [
+    "efficiency-luna-accord-guided-precision",
+    "efficiency-luna-python-precision"
+   ],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 8,
+   "excluded_before_model_launch": [],
+   "rulings_awaiting_confirmation": 0,
+   "detail": "Every attempt's answer was classified.",
+   "runs": [
+    {
+     "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a",
+     "system": "efficiency-luna-accord-guided-precision",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "outcome": "pass",
+     "computed_outcome": "pass",
+     "judged_outcome": "unresolved",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c",
+     "system": "efficiency-luna-python-precision",
+     "instance": "kenya-interior--mam-2016",
+     "level": 1,
+     "outcome": "fail",
+     "computed_outcome": "fail",
+     "judged_outcome": "unresolved",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
+    }
+   ]
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "reviewed",
+  "scientific_approval": "pending"
+ }
+}

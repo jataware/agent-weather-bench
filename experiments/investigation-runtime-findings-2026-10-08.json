@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "kind": "runtime_incident_evidence",
+  "model_calls_to_prepare_report": 0,
+  "crash_reproductions_to_prepare_report": 0,
+  "evidence": [
+    {
+      "path": "experiments/collection-recovery-2026-10-08.json",
+      "sha256": "8d9b7e79399c437974327cf881d280d15cfab071226b6709c79d07dea30f35a1",
+      "bytes": 1545
+    },
+    {
+      "path": "tests/test_optional_retention.py",
+      "sha256": "5a2c4963e48f812cb510d7b7f4ea525e983186b09caf374d34a65bdb0627b613",
+      "bytes": 1669
+    },
+    {
+      "path": "var/review/audit-certification-threaded-failure.log",
+      "sha256": "6a26317efb5ac0a496b7ca95056302e4d77bda2f6ab001ed34cf4efb3cf73bb5",
+      "bytes": 2074628
+    },
+    {
+      "path": "var/review/audit-partial-cache-before-groups-threaded-failure.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "var/review/audit-partial-cache-before-groups.json",
+      "sha256": "fe97f844a27f1466cb6a0f51c1eb4a16f577f3a59a6cbb8a9eef1745f534ad96",
+      "bytes": 1709
+    },
+    {
+      "path": "var/template-runs/20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-python-3c1235/run.json",
+      "sha256": "b28eacd3435a5619a620019e09564ebe51162594370445040073c3f764305fea",
+      "bytes": 1582
+    },
+    {
+      "path": "var/template-runs/20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-python-3c1235/controller/provenance.json",
+      "sha256": "3cccb53efe7fa107abcb730a45d7481d201b41e742e74fdbfcbf082314af78a3",
+      "bytes": 11186
+    },
+    {
+      "path": "var/template-runs/20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-python-3c1235/assessment.json",
+      "sha256": "aa358197cc5dbdf03e3f114f714e94639df2cf11cd2232d46afa6e5106960032",
+      "bytes": 13645
+    },
+    {
+      "path": "var/review/docker-recovery-2026-10-08.txt",
+      "sha256": "c3f24d2ade4fc1130253bb588c3d19b75ff55178fb019811e6967a1391dd4378",
+      "bytes": 158
+    }
+  ],
+  "crash": {
+    "path": "/Users/ezekielbarnett/Library/Logs/DiagnosticReports/Python-2026-10-08-140558.ips",
+    "sha256": "78fc45b9ebe513062e6677a9ec6d54df9562c8c5cddf3da8b14e81d4c029b970",
+    "report_timestamp": "2026-10-08 14:05:58.00 +0200",
+    "capture_time": "2026-10-08 14:05:50.1859 +0200",
+    "pid": 42423,
+    "exception": {
+      "codes": "0x0000000000000001, 0x0000000000000041",
+      "rawCodes": [
+        1,
+        65
+      ],
+      "type": "EXC_BAD_ACCESS",
+      "signal": "SIGSEGV",
+      "subtype": "KERN_INVALID_ADDRESS at 0x0000000000000041"
+    },
+    "termination": {
+      "flags": 0,
+      "code": 11,
+      "namespace": "SIGNAL",
+      "indicator": "Segmentation fault: 11",
+      "byProc": "exc handler",
+      "byPid": 42423
+    },
+    "faulting_thread": 2,
+    "faulting_symbols": [
+      "H5F_addr_decode",
+      "H5VL__native_blob_specific",
+      "H5VL_blob_specific",
+      "H5T__vlen_disk_isnull",
+      "H5T__conv_vlen",
+      "H5T_convert",
+      "H5D_get_create_plist",
+      "H5VL__native_dataset_get",
+      "H5VL_dataset_get",
+      "H5Dget_create_plist",
+      "nc4_get_var_meta",
+      "nc4_hdf5_find_grp_var_att",
+      "NC4_HDF5_inq_var_all",
+      "nc_inq_varname",
+      "__pyx_f_7netCDF4_8_netCDF4__get_vars",
+      "__pyx_pf_7netCDF4_8_netCDF4_7Dataset___init__"
+    ],
+    "partial_cache_controller_exit_code": 139,
+    "separate_threaded_certification_stop": {
+      "pid": 41066,
+      "signal": "SIGTERM",
+      "exit_code": 143,
+      "source": "forecast-audit author handoff"
+    }
+  },
+  "source_manifest": {
+    "path": "templates/seasonal-forecast-audit/sources.json",
+    "sha256": "0c994ff93a12003735f667e7b861d4199a4c0f548e9b60a40215bd1873185114"
+  },
+  "source_integrity": [
+    {
+      "path": "var/private/templates/seasonal-forecast-audit/agent-inputs/predictors.nc",
+      "expected_sha256": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+      "observed_sha256": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+      "matches": true,
+      "bytes": 16000
+    },
+    {
+      "path": "var/private/templates/seasonal-forecast-audit/agent-inputs/source-manifest.json",
+      "expected_sha256": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+      "observed_sha256": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+      "matches": true,
+      "bytes": 125
+    },
+    {
+      "path": "var/private/templates/seasonal-forecast-audit/agent-inputs/targets.nc",
+      "expected_sha256": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+      "observed_sha256": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+      "matches": true,
+      "bytes": 11384
+    }
+  ],
+  "serial_diagnostic": {
+    "cases": [
+      {
+        "control": "cached_hindcasts",
+        "fingerprint": "8bd27081296c047198a839c0bc536928a4cb94b8cb63182116623b850c382492",
+        "computed_outcome": "pass",
+        "subprocess_exit_codes": {
+          "training_targets": 0,
+          "features": 0
+        }
+      },
+      {
+        "control": "cached_forecasts",
+        "fingerprint": "8bd27081296c047198a839c0bc536928a4cb94b8cb63182116623b850c382492",
+        "computed_outcome": "pass",
+        "subprocess_exit_codes": {
+          "training_targets": 0,
+          "features": 0
+        }
+      }
+    ],
+    "interpretation": "Clean process execution; scientific pass results demonstrate the pre-refinement partial-cache false-acceptance gap."
+  },
+  "validation_strategy": {
+    "scientific_io_in_shared_controller_threads": "stopped",
+    "replacement": "Fresh subprocess interpreters, at most two; scientific file I/O stays within each worker.",
+    "author_workflow_script": "var/review/parallel_audit_certify.py",
+    "handoff_state": "Prepared, awaiting response-group controller revision; no later certification result asserted here."
+  },
+  "limits": [
+    "Concurrent native I/O is the observed failing path; an exact upstream defect has not been isolated.",
+    "Source hashes verify source-byte integrity, not success of the failed threaded certification.",
+    "Recovery run exact duration is unavailable and excluded from timing comparisons.",
+    "Older Docker import-order and deliberately signaled host-test failures are separate incidents.",
+    "Recovered scientific grading passes do not reconstruct missing end-of-run sandbox attestation; that attestation remains unresolved.",
+    "The later daemon outage cause is unknown; a healthy snapshot after restart does not explain the failure."
+  ],
+  "evidence_history": [
+    {
+      "path": "experiments/collection-recovery-2026-10-08.json",
+      "sha256": "e6d9c604657a5c751344d5c20af143174d16205269afedfdf23d63a92a6db599",
+      "bytes": 1319,
+      "scope": "Recovery ledger before explicit end-sandbox-attestation qualification; superseded by current evidence hash."
+    }
+  ],
+  "collection_recovery_qualification": {
+    "run": "20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-python-3c1235",
+    "seconds": null,
+    "timing_comparison_eligible": false,
+    "startup_attestation": "Successful model tool calls evidence that required ToolSandbox startup inspection completed.",
+    "original_final_inspection_payload": "lost before persistence",
+    "end_sandbox_attestation": {
+      "passed": null,
+      "state": "unresolved",
+      "network": "none",
+      "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+      "model_credentials_mounted": false,
+      "private_references_mounted": false,
+      "trusted_controller_adapter": true,
+      "evidence": "Successful model tool calls establish that ToolSandbox startup inspection completed. The original end-inspection payload was not persisted before collection failed; recovery does not claim to reconstruct it.",
+      "inspection_payload_lost": true
+    },
+    "assessment_sandbox_state": "unresolved",
+    "numerical_outcome": "pass",
+    "prose_outcome": "pass",
+    "inferred_end_attestation": false,
+    "agent_rerun": false,
+    "submission_changed": false
+  },
+  "transient_docker_daemon_outage": {
+    "sequence": "After full tests; no forecast-audit model inference had launched or was in flight.",
+    "unavailability_and_restart_evidence": "Investigation lead tool transcript and direct incident handoff; no separate initial failure log.",
+    "restoration_action_reported": "open -a Docker",
+    "cause": "unknown",
+    "saved_health_snapshot": "var/review/docker-recovery-2026-10-08.txt",
+    "verified_healthy_at_utc": "2026-10-08 12:28:50 UTC",
+    "server_version": "28.0.4",
+    "cpus": 12,
+    "configured_memory_bytes": 8217751552,
+    "desktop_status": "running",
+    "followup": "Investigation lead resumed fresh trusted-control replays; no replay result asserted by this incident record.",
+    "audit_model_attempt_failed": false,
+    "docker_actions_to_prepare_this_report": 0,
+    "causal_link_to_earlier_native_crash": "not established"
+  }
+}

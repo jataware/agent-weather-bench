@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-08T14:39:17.056379+00:00",
+  "state": "pass",
+  "current_fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+  "historical_contract_status": "historical v1; probe dtype confound repaired in v2; original verdict preserved",
+  "recorded_attempts": 4,
+  "no_pending_attempts": true,
+  "original_initial_archive_verified": true,
+  "all_config_hashes_verified": true,
+  "frozen_artifacts_and_inputs_and_substrate_inventories_verified": true,
+  "execution_trace_and_HTTP_log_hashes_verified": true,
+  "guided_precision_computed_pass": true,
+  "guided_precision_substantive_tool_use": "pass",
+  "direct_paid_api_usd": 0,
+  "model_calls_during_verification": 0,
+  "evidence_sha256": {
+    "experiments/efficiency_plan_2026-10-08.json": "22613e8cc3c447cf519476af50460222c6c7b0c40231a1db892764213099a4ab",
+    "experiments/efficiency_precision_plan_2026-10-08.json": "00259b80ab8794647304a0ae48e1ec28ffd7ccf5d06f1599466b5cb8fdc46e6c",
+    "experiments/efficiency_results_2026-10-08.json": "73c4a9fd06cf2de248a327f635c033f6c42db646be140a5035ff0a1b59329882",
+    "experiments/efficiency_precision_results_2026-10-08.json": "6196e14f8de0734659d4ed53d24304cac0fa0985432a914cba9553fd1b52a09b",
+    "experiments/efficiency_tool_review_2026-10-08.json": "7995323be9311d56c5cd38d11b44bf43921b3b25d1acc11f16e2a70283ce182d",
+    "experiments/efficiency_precision_tool_review_2026-10-08.json": "6f93a0c453c7a49b7fa5fd3495f3c85c5112c81904a4cb496f79a7b1280a4c90",
+    "experiments/efficiency_all_phases_results_2026-10-08.json": "4e8b288e28e2e59f58d245e0609d4f4114c540ed5d935b1d0089808180158834",
+    "experiments/efficiency_initial_verified_summary_2026-10-08.json": "2bde34a494bad0c74fb1ac1d1fd80812514546f3d469dd2014adae5eaaee25ea",
+    "experiments/efficiency_replication_gate_2026-10-08.json": "b9b5ca13ae0715d8a4706053344174e9d150ea5a119decceb1468422b77ad321",
+    "docs/mam-efficiency-study-2026-10-08.md": "c0ef80714e2aab4962b65d112c0f09b3306b550a9ae600ffc6d5f3bf390a5cd3"
+  },
+  "scientific_binary_decoding_during_verification": false,
+  "binary_evidence_hashed_without_decoding": true
+}

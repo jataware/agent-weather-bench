@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-08",
+  "status": "Concrete acquisition leads; no additional locally complete daily hindcast/forecast/observation triplet verified",
+  "scope": "Read-only filename, bounded pickle-header and serial ncdump metadata inspection plus official documentation. No model calls, weather API retrievals, scientific Python imports, package changes or bulk downloads.",
+  "searched": ["~/.nuthatch", "~/.cache/rosetta", "from_icpac/ghacof", "seasonal-hindcasting-gha", "africas2s/examples", "acmadDL/catalog and adapter source"],
+  "additional_local_lead": {
+    "path": "~/.cache/rosetta/c18f8986093505b9.nc",
+    "bytes": 11287214,
+    "metadata": "ECMWF system51; member51, init_time1, lead_time92, lat15, lon40; normalized precip units mm/day; initialization2024-02-01; time coordinate labels2024-03-01 through2024-05-31; WestAfrica native1-degree grid",
+    "readiness": "Not a raw hindcast archive. Historical normalization needs independent checking, including daily interval/end-label semantics. No matching daily observations/hindcasts or onset guard tail found. Useful as an acquisition breadcrumb only.",
+    "other_local_findings": [
+      "~/.cache/rosetta/de66b125e31fb8df.nc is24monthlyCHIRPS3records, not daily.",
+      "Seven bare-name chirps cache headers resolve to CHIRPS3monthlyCOG URLs and monthly time counts; names alone must not be treated as daily archives.",
+      "~/.nuthatch/rosetta/_tmp/tmpvvfuury2.nc is an empty0-byte temporary file.",
+      "Legacy ghacof/scripts/onset_and_exceedance.py contains real CDSdaily acquisition requests and IRI dailyCHIRPS routes; its expected daily cds_cache files were not found locally. It is not an independent scientific reference."
+    ]
+  },
+  "preferred_full_season_archive": {
+    "product": "ECMWF SEAS5 daily accumulated precipitation, CDS seasonal-original-single-levels",
+    "official_url": "https://cds.climate.copernicus.eu/datasets/seasonal-original-single-levels?tab=overview",
+    "official_verified_metadata": "Daily/subdaily originals on1-degree global grid; hindcasts1993–2016 and forecasts2017 onward; total precipitation in metres accumulated from forecast start; GRIB distribution.",
+    "minimal_candidate": "Small inland Kenya box, February initializations, matched observation years2001–2015 plus held-out2016 reforecast. Preserve genuine members. Retrieve preceding accumulation endpoint and daily coverage through at leastJune24 for a full MAM onset search.",
+    "pinned_acquisition_helper": "acmaddl.fetch('c3s/ecmwf','precip',init='2016-02',hindcast=(2001,2016),region=small_bbox,year_index=False); full lead-resolved acquisition before target-season cropping. CDS catalogue and CDSAdapter implement daily accumulation retrieval and normalize implements deaccumulation.",
+    "access": "CDS account and accepted dataset terms; no credential contents inspected. Queue/access and actual field completeness remain untested in this scout.",
+    "observations": {
+      "efficient_candidate": "obs/chirps-v3-daily-rhiza via public GCS Zarr; local pinned catalogue/integration test describes0.25-degree daily data2000 to approximatelymid2024, cropped before compute. Appropriate for retrospective2016, not current2026 verification.",
+      "local_evidence": ["acmadDL/src/acmaddl/catalog.yaml:1063", "acmadDL/src/acmaddl/adapters/sheerwater.py", "acmadDL/tests/test_sheerwater_integration.py"],
+      "native_official_documentation": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt",
+      "scientific_limit": "CHIRPS3daily is temporal disaggregation of pentadal totals, using either ERA5(rnl) or IMERG(sat); it is not separate daily station blending. Record the actual daily variant, aggregation and UTC labels. Daily-event conclusions depend on this choice.",
+      "avoid": "Native global daily NetCDF download through the generic HTTP route can be very large; first prove an efficient bounded subset path. Rhiza coarsening is an explicit source transformation."
+    }
+  },
+  "cheaper_public_dry_spell_alternative": {
+    "product": "CHIRPS3-GEFS daily issuance archive",
+    "official_urls": ["https://www.chc.ucsb.edu/node/251", "https://data.chc.ucsb.edu/products/CHIRPS-GEFS/v3/README.txt"],
+    "official_verified_metadata": "Daily bias-corrected0.05-degree ensemble-mean GEFS product; complete years2001–2019 and2021 onward,2020 omitted. Sixteen forecast days; no member-resolved ensemble in this product.",
+    "candidate": "Fourteen-day longest dry spell or probability of a seven-day dry run at a fixed calendar issuance, calibrated against matched daily observations. This horizon cannot verify the default3-day-trigger plus21-day-guard onset definition.",
+    "pinned_helper": "acmaddl.fetch('chc/chirps-gefs-daily','precip',init=[same_calendar_date_across_years],region=small_bbox) stacks issuance/lead/valid_time. Native tif paths and rate limits are in the pinned catalogue.",
+    "access_check_limit": "Official archive/README verified; direct selected-year directory listing failed through web tool. No field/HTTP-range retrieval tested. Confirm cheap spatial window reads and genuine daily endpoints before any bulk acquisition.",
+    "calibration_limit": "Already bias-corrected/downscaled ensemble mean, not raw GEFS members. Define a further calibration method honestly; do not invent ensemble members or present this as raw-model postprocessing."
+  },
+  "native_methods_and_independent_grading": {
+    "africas2s_commit": "4f8526a32232f9c9af400a01e5a6f103a865c735",
+    "acmaddl_commit": "e751bc231ab0ed8fb1a95bfad2971d6202a03431",
+    "verified_present_at_pinned_commit": ["africas2s.aggregations.onset", "africas2s.aggregations.dry_spell", "TimingResult.occurred three-state event/no-event/missing distinction"],
+    "reference_plan": "Independent scalar rainfall-window and run scanner, checked against native helpers on frozen genuine daily fields plus small diagnostic boundary fixtures. Keep daily amounts and actual24-hour bounds independently checked before deriving events.",
+    "essential_controls": ["Inclusive20mm trigger and1mm dry-day ties", "False onset followed by qualifying dry run", "Late onset needing complete guard tail", "Missing/interior dates versus genuinely failed onset", "Runs spanning season or forecast-horizon boundaries", "Held-out-year calibration leakage", "Changed forecast and training observations", "Private target observations excluded from acquisition catalogue"],
+    "onset_calibration_blocker": "No-onset is a distinct outcome, not missing data and not an ordinary onset-day tercile. Native aggregation is supported, but a scientifically specified calibrated four-outcome or censored-time contract and its independent parity are still needed. Do not silently drop failed seasons into calibrate/tercile helpers.",
+    "readiness": "No frontier inference justified yet. First freeze one genuine daily archive subset, verify daily intervals/tail/observation variant, build independent parity and controls, then decide whether the supported helpers offer useful scientific implementation assistance."
+  }
+}

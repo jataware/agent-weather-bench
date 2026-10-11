@@ -216,7 +216,7 @@ def apply(result, files, backend, spec=None, recorded=None):
         except JudgeUnavailable as error:
             judgement["unavailable"] = str(error)[:500]
     for name, question in questions.items():
-        kept = {key: result["checks"][name][key] for key in ("requirement", "source", "pointer", "stated") if key in result["checks"][name]}
+        kept = {key: result["checks"][name][key] for key in ("requirement", "source", "pointer", "stated", "required_for", "implementation") if key in result["checks"][name]}
         if "unavailable" in judgement:
             row = outcome(UNRESOLVED, "The judge could not be run: " + judgement["unavailable"], "infrastructure")
         else:
@@ -235,7 +235,7 @@ def claude_cli(questions, files, seconds=900):
     binary = shutil.which("claude")
     if not binary:
         raise JudgeUnavailable("The claude command is not installed")
-    command = [binary, "--print", "--model", MODEL, "--effort", EFFORT, "--safe-mode", "--tools", "", "--no-session-persistence",
+    command = [binary, "--print", "--model", MODEL, "--effort", EFFORT, "--safe-mode", "--tools", "", "--no-session-persistence", "--max-budget-usd", "2",
                "--disable-slash-commands", "--system-prompt", PROMPT.read_text(), "--output-format", "json", "--json-schema", json.dumps(SCHEMA)]
     with tempfile.TemporaryDirectory(prefix="assessment-judge-") as empty:
         try:

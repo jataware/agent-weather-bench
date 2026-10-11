@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/tasks/native-rainfall-reconciliation",
+  "source_weather_is_synthetic": false,
+  "scientific_approval": "pending",
+  "redistribution_approval": "pending",
+  "files": [
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/latitude/c/0",
+      "sha256": "87dcfb2b5408e07ff1b521e06db081e37a49a19d992ad7cdd1dcb6b79c190ac6",
+      "bytes": 48,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/latitude/zarr.json",
+      "sha256": "764c4d9148d198af4423cd2b8d79024a98893d4ee1985a0de94bd9cbfdee0e70",
+      "bytes": 828,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/longitude/c/0",
+      "sha256": "9032259bb25012e542cc64b5907851d5379169516dea99ee5649afc91b6a7236",
+      "bytes": 45,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/longitude/zarr.json",
+      "sha256": "c92dff45bbc9016018b44831871fc5a0f5b31ce10f70a676db7bc3d129e5e11e",
+      "bytes": 792,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/number/c/0",
+      "sha256": "52188db1d0c19df75556c4dbe05c0591391e2233d93f8c4b8a39650cde3f50c7",
+      "bytes": 148,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/number/zarr.json",
+      "sha256": "dd465346660d198b98ad90654d0324e30a4f969a2513814f0d65aa47fe1c343d",
+      "bytes": 658,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/step/c/0",
+      "sha256": "20f43cc5abbed455ca1f094affd8dab11b75f4301496f8e3a0abecac2537b939",
+      "bytes": 154,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/step/zarr.json",
+      "sha256": "2384070b989549c58aa47985d75021414e0e09541594eb153f1071b224e38c7d",
+      "bytes": 845,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/surface/c",
+      "sha256": "1b1e87eef1594dc3e508a21fbe69efeea94081c6a715d377ecc539eecb003e3e",
+      "bytes": 17,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/surface/zarr.json",
+      "sha256": "2f8ef99d7a42de7be81706f0b7219a8fd67aad551ae77a1a2429f3d28102040f",
+      "bytes": 716,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/time/c",
+      "sha256": "9b88d432740d8891d9527ee0f0949b84730a1b468a93074bddcb9e062b315136",
+      "bytes": 17,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/time/zarr.json",
+      "sha256": "1e8ae8e8cf7a2d4e7a6fae3daad254574b5158933a65a294c7e3225c4b169594",
+      "bytes": 762,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/0/0/0/0",
+      "sha256": "92d95fede6617802ca2bad21db31de7928ac70aa0db15e1a965f6a7196160379",
+      "bytes": 34810,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/0/1/0/0",
+      "sha256": "e7cd3809de207c717886a42d8f3102f135fd41321cb50e1387fc386cccebc0cd",
+      "bytes": 41853,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/0/2/0/0",
+      "sha256": "d9d004d145c33d341a994bf8d5e4920544054f1239a1acf5fe7a62864242214d",
+      "bytes": 44131,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/0/3/0/0",
+      "sha256": "5d1947c86799efceaf107efc45a0c7afea99dd0f80f3bc4348b466ead6110c61",
+      "bytes": 39928,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/1/0/0/0",
+      "sha256": "eb93ef27af2f07fd0a3c629bf6af6935a543d722aa7194dc4ddc4e22886dcc74",
+      "bytes": 34908,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/1/1/0/0",
+      "sha256": "f5b7ccf1e45f8302f5fb812444e5e6aec521b316c17ba9ba3ff1ce4a4060fb26",
+      "bytes": 42222,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/1/2/0/0",
+      "sha256": "95c2e0cb912b375793d1227656019662d2d688142c40fcf7ee81a06dbed63664",
+      "bytes": 44271,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/1/3/0/0",
+      "sha256": "87cbcdb5241432616b1b574076997d7c37f81b63036b3e8775cd0c9a96489310",
+      "bytes": 39709,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/2/0/0/0",
+      "sha256": "610554a67b97208b0fa9c720bd33f22f8b7f94cf193f87ed76e453a7e7c61084",
+      "bytes": 35301,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/2/1/0/0",
+      "sha256": "0b683603d1c07d0e29956fbce5055ff0a3f63b1fc195c47914d7247b0af15f0f",
+      "bytes": 42374,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/2/2/0/0",
+      "sha256": "c91d07ede9319fad0ea3ca62959418923528306c3b3969e9f86f0b86ec106677",
+      "bytes": 44428,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/2/3/0/0",
+      "sha256": "f4a63c91c479369e3ceed4efb8d1789bba57922fe23164150cd031eec1e3938a",
+      "bytes": 40023,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/3/0/0/0",
+      "sha256": "917aeb43283919b7101e954cef21c0651739b1cd6d3070c3739abb4772f49b38",
+      "bytes": 31195,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/3/1/0/0",
+      "sha256": "40379cb39fb06ebf8812ef1d11fc767675217cbcf0be8d023613f8c3704c722d",
+      "bytes": 36796,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/3/2/0/0",
+      "sha256": "8e431974e2ef242773d480a66de9e117c71c6399a9cfe96e0995c9d8c62e3f1b",
+      "bytes": 38946,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/c/3/3/0/0",
+      "sha256": "ea5ef3da6b93c7eb7aa8bd99c824d7b9274d606d0bbc00cff241194cd27fee03",
+      "bytes": 34835,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/tp/zarr.json",
+      "sha256": "e7b29ad035ebd2905c9b12c8243b55fb57851c60ceaa5ee6fa60ebd5c621757b",
+      "bytes": 1972,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/valid_time/c/0",
+      "sha256": "9568cca1ecf0410c09719cedb22cc64aeace0f6e8f08a334c5d320c3c844b58c",
+      "bytes": 193,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/valid_time/zarr.json",
+      "sha256": "5c2cc9096e02fa4d98e8c6cea23f9a43e588be7756e6d6e67037dc5d38ad077c",
+      "bytes": 830,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/ECMWF_s2s_precip_2026-09-27.zarr/zarr.json",
+      "sha256": "43c9f58c5116e8a250dd02f00d1c6c228cf8540169f9ea0325a2aa92716dfa90",
+      "bytes": 10659,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/previous-interval-rates.nc",
+      "sha256": "451f5a51ca7c2caa53744a6a9e2b1aca6528951a38c516dfc11a38831efd0127",
+      "bytes": 1234049,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/prior-bulletin.json",
+      "sha256": "958cd935fa4ad42cf65dcf6cbaf49bdb058cc74a0511fa65130c4e08a1692334",
+      "bytes": 175,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/provenance.json",
+      "sha256": "398cb62ac6c9ded8621fc16623b1dfb2009c402dcf3e7d856aff8ab68fa4471d",
+      "bytes": 11712,
+      "visibility": "agent"
+    }
+  ]
+}

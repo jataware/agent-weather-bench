@@ -1,0 +1,235 @@
+schema_version: 1
+template: monthly-cycle-calibration
+spec_version: 1
+title: Cyclic monthly calibration with whole-year validation
+task_set_row: 14
+mode: product
+question: compute_quantity
+reference_match: true
+status: development; scientific and data-rights review pending
+params: []
+results:
+  outer_year:
+    kind: coordinate
+    tolerance:
+      exact: true
+  forecast_year:
+    kind: coordinate
+    tolerance:
+      exact: true
+  month:
+    kind: coordinate
+    tolerance:
+      exact: true
+  system:
+    kind: coordinate
+    tolerance:
+      exact: true
+  target:
+    kind: coordinate
+    tolerance:
+      exact: true
+  candidate:
+    kind: coordinate
+    tolerance:
+      exact: true
+  hindcast_mm:
+    dims:
+    - outer_year
+    - system
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 10000
+  hindcast_coefficient:
+    dims:
+    - outer_year
+    - system
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 10000
+  hindcast_standardized_coefficient:
+    dims:
+    - outer_year
+    - system
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 100
+  selected_candidate:
+    dims:
+    - outer_year
+    tolerance:
+      exact: true
+  inner_loss:
+    dims:
+    - outer_year
+    - candidate
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 100
+  xmean:
+    dims:
+    - outer_year
+    - month
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 10000
+  xstd:
+    dims:
+    - outer_year
+    - month
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 10000
+  ymean:
+    dims:
+    - outer_year
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 10000
+  ystd:
+    dims:
+    - outer_year
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 10000
+  squared_error:
+    dims:
+    - outer_year
+    - system
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 1000000.0
+  monthly_msss:
+    dims:
+    - system
+    - month
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 100
+  msss:
+    dims:
+    - system
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 100
+  forecast_mm:
+    dims:
+    - system
+    - forecast_year
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 10000
+  forecast_coefficient:
+    dims:
+    - system
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 10000
+  forecast_standardized_coefficient:
+    dims:
+    - system
+    - month
+    - target
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 100
+  final_candidate:
+    dims: []
+    tolerance:
+      exact: true
+  final_inner_loss:
+    dims:
+    - candidate
+    tolerance:
+      precision: float64
+      operations: 100000
+      magnitude: 100
+conventions:
+  recipe:
+    specified: accepted
+pitfalls: {}
+public_conventions: []
+invariants:
+- fitted
+- nested
+- verification
+- production
+probes:
+- replay
+- changed_data
+- whole_year_isolation
+- forecast_batch_isolation
+- saved_state_prediction
+claims:
+  rainfall_units: Are rainfall predictions and fitted means/scales in mm?
+  physical_coefficient_units: Are physical slopes in mm/degree_Celsius?
+  dynamical_hindcasts_used: Does this adaptation use dynamical hindcasts?
+  full_paper_reproduction: Does this adapted experiment reproduce the source paper
+    in full?
+interpretation:
+- statistical_support
+- generalization
+- consistency_across_artifacts
+judge_questions:
+  statistical_support:
+    requirement: Any uncertainty or significance claim treats paired whole years as
+      blocks; the36month-region cases within a year are not independent replications.
+      Silence about inferential claims passes.
+    silence: passes
+  generalization:
+    requirement: "Describe this as specified cyclic standardized-slope method adaptation\
+      \ using final-vintage prior-month observed SST and regional CHIRPS. Do not claim\
+      \ original CanSIPS paper replication, operational availability at historical\
+      \ issue time, or unseen2020\u20132023 outcome gains. Negative deterministic\
+      \ predictions are permitted by the method."
+    silence: passes
+  consistency_across_artifacts:
+    requirement: The report, answer, code and computed arrays agree about fitted/validation/production
+      procedures, the constant standardized-slope comparator, selection, units and
+      actual MSSS.
+    silence: passes
+assessment_policy:
+  completion:
+  - envelope
+  - coverage
+  - variant
+  - invariant.*
+  - probe.*
+  - claim.*
+  ranking:
+  - envelope
+  - coverage
+  - variant
+  - invariant.*
+  - probe.*
+  - claim.*

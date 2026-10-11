@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "reason": "Refresh automatic certification under optional forecast response projection controller revision.",
+  "revision_ledger": "experiments/response-projection-revision-2026-10-08.json",
+  "executor": "local-trusted",
+  "model_calls": 0,
+  "judge_calls": 0,
+  "paid_api_calls": 0,
+  "reference_scope": "all candidate instances (--full)",
+  "control_instances_per_template": 2,
+  "before_certifications": {
+    "kenya-forecast-revision": {
+      "path": "var/review/before-response-projection-certifications/kenya-forecast-revision.json",
+      "sha256": "95a3e99fae357a21d6875621538e2ad582894f3d6dded2e5154340d0b354f73b",
+      "fingerprint": "51b8673acc949e4322eb83ab01d194e08b2b3a55204f8d6aef9bc7d304bdc9ad",
+      "spec_version": 3
+    },
+    "seasonal-rainfall-calibration": {
+      "path": "var/review/before-response-projection-certifications/seasonal-rainfall-calibration.json",
+      "sha256": "a2a184109f62664002af14f834837d6176c2d62508027e58482df1158444d246",
+      "fingerprint": "5e788998b0eebb967e2bfaf416628e618376b369438fd83bb6ac45cceeb4ac6f",
+      "spec_version": 4
+    },
+    "weeks34-rainfall": {
+      "path": "var/review/before-response-projection-certifications/weeks34-rainfall.json",
+      "sha256": "26426997022eaf30a957fbf4075b8d03f1f399164bf895238921f46acced2916",
+      "fingerprint": "a1d9574e2497cf06e5aa7f8ea5e3830b0125186fb341b859014eca583403bd22",
+      "spec_version": 4
+    },
+    "seasonal-cca-reproduction": {
+      "path": "var/review/before-response-projection-certifications/seasonal-cca-reproduction.json",
+      "sha256": "f65e821db8ea9630a7955a225da22c5cf30bf814180ccc2caf0d7c7b3548384a",
+      "fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "spec_version": 1
+    },
+    "rainfall-downscaling": {
+      "path": "var/review/before-response-projection-certifications/rainfall-downscaling.json",
+      "sha256": "e17685a182846e67ad906979cd85d308217cb5fcbef8ac235676ab7de7666b1d",
+      "fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+      "spec_version": 2
+    }
+  },
+  "templates": [
+    {
+      "template": "seasonal-rainfall-calibration",
+      "command": [
+        "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+        "-m",
+        "assessment",
+        "certify",
+        "seasonal-rainfall-calibration",
+        "--full",
+        "--local-trusted"
+      ],
+      "exit_code": 0,
+      "log": "var/review/response-projection-certify-seasonal-rainfall-calibration.log",
+      "after_fingerprint": "539476dcdc82568bdf2c08c6262b12a1440df04ebc3fcdd93297c9f5fe4b3ab9",
+      "spec_version": 4,
+      "summary": "var/review/certifications-before-response-groups/seasonal-rainfall-calibration.json",
+      "summary_sha256": "c10d668c756470d78a5eae402e07352c1098c3fe6bd4ec136cb586ab2e39692e",
+      "full_certification": "var/certification/seasonal-rainfall-calibration/20261008T115831/certification.json",
+      "full_certification_sha256": "22b28b5e6a9201312681d6fb6f5fe157aa445a855bfc41d616e3136075eb321f",
+      "automatic_tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true
+      },
+      "review_status": {
+        "automatic_checks": "passed",
+        "trial_attempts": "pending",
+        "scientific_approval": "pending"
+      },
+      "test_5": {
+        "passed": null,
+        "status": "not_run",
+        "attempts": 0,
+        "systems": [],
+        "attempts_with_an_unruled_unknown_answer": 0,
+        "attempts_assessed_under_another_fingerprint": 17,
+        "rulings_awaiting_confirmation": 0,
+        "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+        "runs": []
+      },
+      "passed": true
+    },
+    {
+      "template": "kenya-forecast-revision",
+      "command": [
+        "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+        "-m",
+        "assessment",
+        "certify",
+        "kenya-forecast-revision",
+        "--full",
+        "--local-trusted"
+      ],
+      "exit_code": 0,
+      "log": "var/review/response-projection-certify-kenya-forecast-revision.log",
+      "after_fingerprint": "b627869cd1811544b99aaf6c3ea02a553a3c5cdd9f0615f2ffcc8c58928d5934",
+      "spec_version": 3,
+      "summary": "var/review/certifications-before-response-groups/kenya-forecast-revision.json",
+      "summary_sha256": "09ffa40a3c1fa29de1f9cf212a06ad8d7a90e92f92b72e0e7f56115bf6f152ca",
+      "full_certification": "var/certification/kenya-forecast-revision/20261008T115831/certification.json",
+      "full_certification_sha256": "b300fc706003b99fbb1a33b3ff533014e988e39f4a65dbd497f4d6f748ae0aa0",
+      "automatic_tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true
+      },
+      "review_status": {
+        "automatic_checks": "passed",
+        "trial_attempts": "pending",
+        "scientific_approval": "pending"
+      },
+      "test_5": {
+        "passed": null,
+        "status": "not_run",
+        "attempts": 0,
+        "systems": [],
+        "attempts_with_an_unruled_unknown_answer": 0,
+        "attempts_assessed_under_another_fingerprint": 15,
+        "rulings_awaiting_confirmation": 0,
+        "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+        "runs": []
+      },
+      "passed": true
+    },
+    {
+      "template": "weeks34-rainfall",
+      "command": [
+        "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+        "-m",
+        "assessment",
+        "certify",
+        "weeks34-rainfall",
+        "--full",
+        "--local-trusted"
+      ],
+      "exit_code": 0,
+      "log": "var/review/response-projection-certify-weeks34-rainfall.log",
+      "after_fingerprint": "91c7cebe3a6fc632778be2a852645d4329357659e70ae68ee16d9beaee3421ab",
+      "spec_version": 4,
+      "summary": "var/review/certifications-before-response-groups/weeks34-rainfall.json",
+      "summary_sha256": "025af082efac6574624f86f15ce264ccf0821c004955b5ff8d8a7c6d8fc3927f",
+      "full_certification": "var/certification/weeks34-rainfall/20261008T120115/certification.json",
+      "full_certification_sha256": "7654217f8f2c291357b952d6a3a849d3f35362532736bc8af39362b1eb28954b",
+      "automatic_tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true
+      },
+      "review_status": {
+        "automatic_checks": "passed",
+        "trial_attempts": "pending",
+        "scientific_approval": "pending"
+      },
+      "test_5": {
+        "passed": null,
+        "status": "not_run",
+        "attempts": 0,
+        "systems": [],
+        "attempts_with_an_unruled_unknown_answer": 0,
+        "attempts_assessed_under_another_fingerprint": 10,
+        "rulings_awaiting_confirmation": 0,
+        "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+        "runs": []
+      },
+      "passed": true
+    },
+    {
+      "template": "rainfall-downscaling",
+      "command": [
+        "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+        "-m",
+        "assessment",
+        "certify",
+        "rainfall-downscaling",
+        "--full",
+        "--local-trusted"
+      ],
+      "exit_code": 0,
+      "log": "var/review/response-projection-certify-rainfall-downscaling.log",
+      "after_fingerprint": "f0412578ce70c6246face1da88ab5114d148d7fe3fc98eaefb32ebca7c1d9e65",
+      "spec_version": 2,
+      "summary": "var/review/certifications-before-response-groups/rainfall-downscaling.json",
+      "summary_sha256": "0a27206fac5e881825f963ae939a59abbcc3499f08297cb545a2cc49d6750d42",
+      "full_certification": "var/certification/rainfall-downscaling/20261008T120312/certification.json",
+      "full_certification_sha256": "0a25ba82c02364e90ed3c455e99ca8f4e2ce462edcead9184d5479de399a6382",
+      "automatic_tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true
+      },
+      "review_status": {
+        "automatic_checks": "passed",
+        "trial_attempts": "pending",
+        "scientific_approval": "pending"
+      },
+      "test_5": {
+        "passed": null,
+        "status": "not_run",
+        "attempts": 0,
+        "systems": [],
+        "attempts_with_an_unruled_unknown_answer": 0,
+        "attempts_assessed_under_another_fingerprint": 2,
+        "rulings_awaiting_confirmation": 0,
+        "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+        "runs": []
+      },
+      "passed": true
+    },
+    {
+      "template": "seasonal-cca-reproduction",
+      "command": [
+        "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+        "-m",
+        "assessment",
+        "certify",
+        "seasonal-cca-reproduction",
+        "--full",
+        "--local-trusted"
+      ],
+      "exit_code": 0,
+      "log": "var/review/response-projection-certify-seasonal-cca-reproduction.log",
+      "after_fingerprint": "aaae6cd49b507bea87474c98a03ae990cebdee9187c9a476f6a8a0a53315628e",
+      "spec_version": 1,
+      "summary": "var/review/certifications-before-response-groups/seasonal-cca-reproduction.json",
+      "summary_sha256": "4460b2d66e85324ba859c36bc14728823d68dc97659fc811357ac21ecab92c5e",
+      "full_certification": "var/certification/seasonal-cca-reproduction/20261008T120118/certification.json",
+      "full_certification_sha256": "9ef780a6ae13c0d5bde1da674337c76179bb768d1e39bccddae1865b8dc942c3",
+      "automatic_tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true
+      },
+      "review_status": {
+        "automatic_checks": "passed",
+        "trial_attempts": "pending",
+        "scientific_approval": "pending"
+      },
+      "test_5": {
+        "passed": null,
+        "status": "not_run",
+        "attempts": 0,
+        "systems": [],
+        "attempts_with_an_unruled_unknown_answer": 0,
+        "attempts_assessed_under_another_fingerprint": 4,
+        "rulings_awaiting_confirmation": 0,
+        "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+        "runs": []
+      },
+      "passed": true
+    }
+  ],
+  "completed": true,
+  "passed": true,
+  "notes": [
+    "Only automatic tests 1\u20134 were rerun. Test 5 is a read-only inventory under the new fingerprint; historical agent attempts remain under their original controller.",
+    "No template job or scientific implementation changed. The shared controller fingerprint changes for every template, including those not using the optional hook."
+  ],
+  "scope": "First projection revision only. Summaries pinned to preserved snapshots before response-group refinement."
+}

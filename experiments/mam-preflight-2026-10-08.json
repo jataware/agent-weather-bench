@@ -1,0 +1,513 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-08T13:38:22.236757+00:00",
+  "template": "mam-multimodel-outlook",
+  "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+  "readings": 16,
+  "source_manifest_sha256": "04e394c97525cb812ee1197d84f5bbcefda55bcae5483770d7cfb66ff171b1a6",
+  "evidence": {
+    "native_calibration": {
+      "path": "var/review/mam-science-check-20261008/native-parity.json",
+      "sha256": "7f6880e4d8d5ccdd9768fb67f78ef1fa513da05e7b0ea61c4cdfeee0ef09bccd",
+      "record": {
+        "passed": true,
+        "max_absolute_discrepancies": {
+          "independent_train_model_mean_mm": 0.0,
+          "independent_train_observed_mm": 1.1368683772161603e-13,
+          "independent_new_model_mean_mm": 0.0,
+          "independent_model_hindcast_probability": 9.43689570931383e-16,
+          "independent_model_forecast_probability": 6.661338147750939e-16,
+          "independent_hindcast_probability": 5.551115123125783e-16,
+          "independent_forecast_probability": 4.440892098500626e-16,
+          "independent_observed_category": 0.0,
+          "independent_cv_rps": 0.0,
+          "independent_cv_rps_climatology": 5.551115123125783e-17,
+          "independent_cv_rpss": 1.1102230246251565e-16,
+          "native_combined_cv": 4.996003610813204e-16,
+          "native_ecmwf_cv": 6.661338147750939e-16,
+          "native_cmcc_cv": 1.1102230246251565e-15,
+          "native_ukmo_cv": 1.1657341758564144e-15,
+          "native_meteofrance_cv": 6.661338147750939e-16,
+          "native_combined_new_2016": 3.885780586188048e-16,
+          "native_ecmwf_new_2016": 2.220446049250313e-16,
+          "native_cmcc_new_2016": 7.771561172376096e-16,
+          "native_ukmo_new_2016": 6.661338147750939e-16,
+          "native_meteofrance_new_2016": 3.3306690738754696e-16
+        },
+        "members": {
+          "ecmwf": 25,
+          "cmcc": 40,
+          "ukmo": 28,
+          "meteofrance": 31
+        },
+        "cv_rps": 0.41168878984058377,
+        "cv_rps_climatology": 0.45410628019323673,
+        "cv_rpss": 0.09340872875531026,
+        "forecast_spatial_mean_probabilities": [
+          [
+            0.18854223543562346,
+            0.2608120756621665,
+            0.55064568890221
+          ]
+        ],
+        "max_abs_seasonal_mm": 788.5427725007396
+      }
+    },
+    "native_normalization": {
+      "path": "var/review/mam-toolkit-preflight/acmaddl-normalization.json",
+      "sha256": "094f6bf9e93588acc28f9e9b93f3c9ace2416daccddc47abb27acbb3345f2035",
+      "record": {
+        "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+        "acmaddl_version": "0.2.0",
+        "acmaddl_normalize_file_sha256": "97bf8f5e4a7afd4b982a58df9661ac56e8e308fa7ad90b0a41b6e0223fc467f2",
+        "numpy_version": "2.5.3",
+        "xarray_version": "2026.7.0",
+        "acmaddl_commit": "e751bc231ab0ed8fb1a95bfad2971d6202a03431",
+        "method": "Compare actual supported normalize(year_index=True) with independent scalar calendar integration using math.fsum; no shared scientific helpers.",
+        "config": {
+          "variables": {
+            "precip": {
+              "native_name": "tprate",
+              "units": "m s-1",
+              "target_units": "mm/day"
+            }
+          },
+          "target_range": [
+            "2016-03-01T00:00:00",
+            "2016-05-31T00:00:00"
+          ],
+          "leadtime_month": [
+            2,
+            3,
+            4
+          ]
+        },
+        "unit_note": "Native m s**-1 is the same physical unit as catalogue m s-1; no unit values are inferred or silently changed.",
+        "models": {
+          "ecmwf": {
+            "source_sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "native_time_dimension": "forecast_reference_time",
+            "member_count": 25,
+            "expected_min_mm": 4.459591582417488,
+            "expected_max_mm": 911.7840556427836,
+            "variants": {
+              "native_float32": {
+                "max_abs_error_mm": 3.056973218917847e-05,
+                "mean_abs_error_mm": 2.9249327596719217e-06,
+                "output_dtype": "float64",
+                "output_shape": [
+                  24,
+                  25,
+                  6,
+                  3
+                ],
+                "coordinate_labels_and_members_preserved": true,
+                "output_units": "mm"
+              },
+              "promote_float64": {
+                "max_abs_error_mm": 0.0,
+                "mean_abs_error_mm": 0.0,
+                "output_dtype": "float64",
+                "output_shape": [
+                  24,
+                  25,
+                  6,
+                  3
+                ],
+                "coordinate_labels_and_members_preserved": true,
+                "output_units": "mm"
+              }
+            }
+          },
+          "cmcc": {
+            "source_sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "native_time_dimension": "forecast_reference_time",
+            "member_count": 40,
+            "expected_min_mm": 25.616408047568484,
+            "expected_max_mm": 766.3519139214259,
+            "variants": {
+              "native_float32": {
+                "max_abs_error_mm": 2.7756443159887567e-05,
+                "mean_abs_error_mm": 3.5184773209143663e-06,
+                "output_dtype": "float64",
+                "output_shape": [
+                  24,
+                  40,
+                  6,
+                  3
+                ],
+                "coordinate_labels_and_members_preserved": true,
+                "output_units": "mm"
+              },
+              "promote_float64": {
+                "max_abs_error_mm": 0.0,
+                "mean_abs_error_mm": 0.0,
+                "output_dtype": "float64",
+                "output_shape": [
+                  24,
+                  40,
+                  6,
+                  3
+                ],
+                "coordinate_labels_and_members_preserved": true,
+                "output_units": "mm"
+              }
+            }
+          },
+          "ukmo": {
+            "source_sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "native_time_dimension": "indexing_time",
+            "member_count": 28,
+            "expected_min_mm": 18.0628512595149,
+            "expected_max_mm": 716.6828960180283,
+            "variants": {
+              "native_float32": {
+                "max_abs_error_mm": 3.205853863619268e-05,
+                "mean_abs_error_mm": 2.972565660840888e-06,
+                "output_dtype": "float64",
+                "output_shape": [
+                  24,
+                  28,
+                  6,
+                  3
+                ],
+                "coordinate_labels_and_members_preserved": true,
+                "output_units": "mm"
+              },
+              "promote_float64": {
+                "max_abs_error_mm": 0.0,
+                "mean_abs_error_mm": 0.0,
+                "output_dtype": "float64",
+                "output_shape": [
+                  24,
+                  28,
+                  6,
+                  3
+                ],
+                "coordinate_labels_and_members_preserved": true,
+                "output_units": "mm"
+              }
+            }
+          },
+          "meteofrance": {
+            "source_sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "native_time_dimension": "forecast_reference_time",
+            "member_count": 31,
+            "expected_min_mm": 0.0,
+            "expected_max_mm": 1234.0709567070007,
+            "variants": {
+              "native_float32": {
+                "max_abs_error_mm": 3.591868153307587e-05,
+                "mean_abs_error_mm": 1.8791950295582782e-06,
+                "output_dtype": "float64",
+                "output_shape": [
+                  24,
+                  31,
+                  6,
+                  3
+                ],
+                "coordinate_labels_and_members_preserved": true,
+                "output_units": "mm"
+              },
+              "promote_float64": {
+                "max_abs_error_mm": 0.0,
+                "mean_abs_error_mm": 0.0,
+                "output_dtype": "float64",
+                "output_shape": [
+                  24,
+                  31,
+                  6,
+                  3
+                ],
+                "coordinate_labels_and_members_preserved": true,
+                "output_units": "mm"
+              }
+            }
+          }
+        },
+        "passed": true,
+        "implementation_guidance": "Promote native float32 tprate to float64 before normalize; set target_range=MAM and leadtime_month=[2,3,4], then use returned mm fields directly. No manual post-helper rainfall correction is required."
+      }
+    },
+    "legacy_contracts": {
+      "path": "var/review/mam-suite-20261008/legacy-fingerprints.json",
+      "sha256": "6cd824c0688af0f11b8f8043be5ec3ad09cac02c3eaea8d7e520eb3aed24a333",
+      "record": {
+        "collected_at": "2026-10-08T13:26:13.905847+00:00",
+        "rows": [
+          {
+            "template": "kenya-forecast-revision",
+            "current_fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851",
+            "certification_fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851",
+            "matches": true
+          },
+          {
+            "template": "native-rainfall-reconciliation",
+            "current_fingerprint": "3d29f5d5c44fe0fd3acadcbc54dcdd6057f5a0248aa1be9fb3b43c4a7b6b069f",
+            "certification_fingerprint": "3d29f5d5c44fe0fd3acadcbc54dcdd6057f5a0248aa1be9fb3b43c4a7b6b069f",
+            "matches": true
+          },
+          {
+            "template": "rainfall-downscaling",
+            "current_fingerprint": "26aa0881c11621c0d80e26ba9ba97833464e91724db4451f3e9f7cf7d40a2377",
+            "certification_fingerprint": "26aa0881c11621c0d80e26ba9ba97833464e91724db4451f3e9f7cf7d40a2377",
+            "matches": true
+          },
+          {
+            "template": "seasonal-cca-reproduction",
+            "current_fingerprint": "ee679a3b68725486fc9fd7fa2826a33be156b17a485d4568d90f1abed05ae514",
+            "certification_fingerprint": "ee679a3b68725486fc9fd7fa2826a33be156b17a485d4568d90f1abed05ae514",
+            "matches": true
+          },
+          {
+            "template": "seasonal-forecast-audit",
+            "current_fingerprint": "e32176d11683385384639d6841067525fc9ab522e4ca9b61366a0dafda7da5f8",
+            "certification_fingerprint": "e32176d11683385384639d6841067525fc9ab522e4ca9b61366a0dafda7da5f8",
+            "matches": true
+          },
+          {
+            "template": "seasonal-rainfall-calibration",
+            "current_fingerprint": "93b76c9e582f7e42bc73183552e9e969b4442f153d4e0b72e0b73738dd21a6ee",
+            "certification_fingerprint": "93b76c9e582f7e42bc73183552e9e969b4442f153d4e0b72e0b73738dd21a6ee",
+            "matches": true
+          },
+          {
+            "template": "weeks34-rainfall",
+            "current_fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+            "certification_fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+            "matches": true
+          }
+        ],
+        "all_match": true
+      }
+    },
+    "full_suite_metadata": {
+      "path": "var/review/mam-suite-20261008/metadata.json",
+      "sha256": "6b771e36e477b4e768bd5230ab299ae30fe1ba481beef5c20d1a4cd0e6ba65f2",
+      "record": {
+        "started_at": "2026-10-08T13:26:04.554956+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "pytest",
+          "-q"
+        ],
+        "fresh_subprocess": true,
+        "scientific_threads": 1,
+        "exit_code": 0,
+        "finished_at": "2026-10-08T13:27:45.356879+00:00"
+      }
+    },
+    "docker_correct_final16": {
+      "path": "var/review/mam-suite-20261008/final16-docker-correct-summary.json",
+      "sha256": "4d474d1a2c7c06367cc35718635841316f0e382462cc00ec170856285a42741c",
+      "record": {
+        "collected_at": "2026-10-08T13:35:51.302065+00:00",
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "accepted_recipe": {
+          "integration": "calendar",
+          "thresholds": "fold_only",
+          "weighting": "equal_models"
+        },
+        "comparison": "Archived earlier correct-control arrays versus final accepted reference on unchanged archived original provider",
+        "numeric_arrays": [
+          {
+            "result": "cv_rps",
+            "shape": [],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "cv_rps_climatology",
+            "shape": [],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "cv_rpss",
+            "shape": [],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "forecast_probability",
+            "shape": [
+              1,
+              3,
+              6,
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "hindcast_probability",
+            "shape": [
+              23,
+              3,
+              6,
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "lat",
+            "shape": [
+              6
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "lon",
+            "shape": [
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "model",
+            "shape": [
+              4
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "model_forecast_probability",
+            "shape": [
+              4,
+              1,
+              3,
+              6,
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "model_hindcast_probability",
+            "shape": [
+              4,
+              23,
+              3,
+              6,
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "new_model_mean_mm",
+            "shape": [
+              4,
+              1,
+              6,
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "new_year",
+            "shape": [
+              1
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "observed_category",
+            "shape": [
+              23,
+              6,
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "tercile",
+            "shape": [
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "train_model_mean_mm",
+            "shape": [
+              4,
+              23,
+              6,
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "train_observed_mm",
+            "shape": [
+              23,
+              6,
+              3
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          },
+          {
+            "result": "year",
+            "shape": [
+              23
+            ],
+            "exactly_equal": true,
+            "max_abs_difference": 0.0
+          }
+        ],
+        "all_numeric_arrays_exactly_equal": true,
+        "withheld_skill_exactly_equal": true,
+        "outcome": "pass",
+        "computed_outcome": "pass",
+        "checks": {
+          "claim.cv_skill": "pass",
+          "coverage": "pass",
+          "envelope": "pass",
+          "interpretation.outlook_support": "unresolved",
+          "invariant.cv_score_identity": "pass",
+          "invariant.equal_model_combination": "pass",
+          "invariant.probabilities_valid": "pass",
+          "probe.changed_data": "pass",
+          "probe.held_out_year_isolation": "pass",
+          "probe.replay": "pass",
+          "variant": "pass"
+        },
+        "acquisition": {
+          "probe_count": 3,
+          "bytes": 20417098,
+          "persisted_logs_valid": true,
+          "scratch_cleaned": true
+        }
+      }
+    }
+  },
+  "final_certification": {
+    "path": "var/review/mam-science-final16-20261008/certification-final16.json",
+    "sha256": "ae3ccc6cf7e5fc58eb74e9b03b06fe3f11f107010925f79ec18bd0bc760608e1",
+    "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+    "automatic_tests_passed": true,
+    "tests": {
+      "1_reference_implementations_agree": true,
+      "2_known_correct_solutions_pass": true,
+      "3_incorrect_solutions_are_caught": true,
+      "4_separability": true,
+      "5_model_attempts": null
+    },
+    "readings": 16,
+    "scientific_approval": "pending"
+  },
+  "direct_paid_api_spend_usd": 0,
+  "interpretation": "Native operation parity and control validation establish task attainability, not agent-level tooling benefit or frontier difficulty.",
+  "current_trial_record": "templates/mam-multimodel-outlook/certification.json"
+}

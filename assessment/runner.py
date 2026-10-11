@@ -5,6 +5,7 @@ sandbox, the adapter protocol and the tooling-use record (substrate_use.py). The
 the agent, keeps the provenance record.
 """
 import json
+import os
 import shutil
 import time
 import uuid
@@ -26,6 +27,38 @@ from .spec import ROOT
 from .substrate import image_path_use, substrate_record
 
 RUNS = ROOT / "var/template-runs"
+
+
+def retain_bundle(source, destination):
+    """Retain ordinary optional state; record links/special files without following them.
+
+    Submissions still use strict copy_bundle. Optional scratch state is not part
+    of the scientific envelope and must not prevent a submission being assessed.
+    """
+    import os
+    source, destination = Path(source), Path(destination)
+    destination.mkdir(parents=True, exist_ok=False)
+    omitted = []
+    if source.is_symlink() or not source.is_dir():
+        omitted.append({"path": ".", "reason": "symlink" if source.is_symlink() else "not_directory",
+                        **({"target": str(source.readlink())} if source.is_symlink() else {})})
+        return {"omitted": omitted, "files": {}}
+    for current, directories, files in os.walk(source, followlinks=False):
+        current = Path(current)
+        target = destination / current.relative_to(source)
+        target.mkdir(parents=True, exist_ok=True)
+        for name in list(directories) + files:
+            path = current / name
+            relative = str(path.relative_to(source))
+            if path.is_symlink():
+                omitted.append({"path": relative, "reason": "symlink", "target": str(path.readlink())})
+                if name in directories:
+                    directories.remove(name)
+            elif path.is_file():
+                shutil.copyfile(path, target / name)
+            elif not path.is_dir():
+                omitted.append({"path": relative, "reason": "special_file"})
+    return {"omitted": omitted, "files": inventory(destination)}
 
 
 def resolve_run(value):
@@ -53,13 +86,21 @@ def development_scorer(template, params, inputs):
 def run(template, params, system, parent=None, level=1, supplied=(), judge=True):
     config_path = resolve_system(system)
     config = validate(config_path)
-    preflight(config["runtime"]["image"])
+    if config["driver"]["kind"] == "command":
+        for name in config["driver"].get("env", []):
+            if name not in os.environ:
+                raise ValueError(f"Missing controller environment variable: {name}")
     if level not in (1, 2) or (level == 2 and "level2" not in template.spec):
         raise ValueError("This template has no such level")
     supplied = sorted(set(supplied))
     unknown = [name for name in supplied if name not in template.spec.get("supplements", {})]
     if unknown:
         raise ValueError(f"This template has no supplement named {unknown[0]}")
+    try:
+        brief = template.brief(params, level, supplied)
+    except (IndexError, KeyError, ValueError) as error:
+        raise ValueError(f"Task brief could not be rendered: {error}") from error
+    preflight(config["runtime"]["image"])
     if parent:
         parent = resolve_run(parent)
         if read(parent / "run.json")["system_sha256"] != digest(config_path):
@@ -81,7 +122,7 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True)
     task, work, inputs = folder / "task", folder / "work", folder / "inputs"
     for path in (task, work / "submission", work / "state", work / "prior", folder / "logs", folder / "controller"):
         path.mkdir(parents=True)
-    brief, envelope = template.brief(params, level, supplied), (ROOT / "assessment/envelope.md").read_text()
+    envelope = (ROOT / "assessment/envelope.md").read_text()
     (task / "brief.md").write_text(brief)
     (task / "envelope.md").write_text(envelope)
     for supplement in supplied:                                   # an experimental condition: recorded, and part of what the agent saw
@@ -116,7 +157,8 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True)
     metadata["status"] = "running"
     write(folder / "run.json", metadata)
     try:
-        with ToolSandbox(config["runtime"]["image"], work, task, folder / "system", inputs,
+        sandbox_factory = getattr(template.hooks, "sandbox_factory", ToolSandbox)
+        with sandbox_factory(config["runtime"]["image"], work, task, folder / "system", inputs,
                          memory=config["runtime"]["memory"], cpus=config["runtime"]["cpus"], feedback=feedback) as box:
             if config["driver"]["kind"] == "command":
                 result = adapters.command_driver(config, folder / "system", request, box, folder / "logs/events.jsonl", folder / "logs/driver.stderr")
@@ -132,11 +174,15 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True)
         public_feedback = feedback.public_summary()
         write(folder / "controller/feedback-public.json", public_feedback)
     metadata.update(result)
+    # Save the adapter result before optional retention or assessment can fail.
+    write(folder / "controller/adapter-result.json", result)
+    write(folder / "controller/sandbox.json", boundary)
+    write(folder / "run.json", metadata)
     artifacts = copy_bundle(work / "submission", folder / "frozen")
     write(folder / "artifacts.json", artifacts)
     (folder / "retained").mkdir()
-    copy_bundle(work / "state", folder / "retained/state")
-    copy_bundle(work / "prior", folder / "retained/prior")
+    retention = {area: retain_bundle(work / area, folder / "retained" / area) for area in ("state", "prior")}
+    write(folder / "controller/retention.json", retention)
     write(folder / "retained-manifest.json", inventory(folder / "retained"))
     inputs_unchanged = inventory(inputs) == read(folder / "input-manifest.json")
     system_unchanged = inventory(folder / "system") == bundle
@@ -183,6 +229,10 @@ def _keep(folder, assessment):
     """Earlier assessments are kept: one file per fingerprint, and a convenience copy of the latest."""
     write(folder / "controller/assessments" / f"{assessment['fingerprint'][:16]}.json", assessment)
     write(folder / "assessment.json", assessment)
+    if "rubric" in assessment:
+        from .rubric import markdown
+        (folder / "review.md").write_text(markdown(assessment["rubric"], assessment))
+        write(folder / "controller/rubric.json", assessment["rubric"])
 
 
 def _assess_run(template, folder, judge=True):
@@ -192,10 +242,14 @@ def _assess_run(template, folder, judge=True):
         raise ValueError("Frozen submission changed")
     feedback = folder / "controller/feedback-public.json"
     executor = Docker(config["runtime"]["image"], config["runtime"]["memory"], config["runtime"]["cpus"])
+    executor = getattr(template.hooks, "executor_factory", lambda value: value)(executor)
     work = folder / "controller/assessment-work"
     shutil.rmtree(work, ignore_errors=True)
     assessment = assess(template, meta["instance"], folder / "frozen", executor, work, level=meta.get("level", 1),
                         feedback=read(feedback) if feedback.is_file() else None)
+    evidence = getattr(template.hooks, "acquisition_evidence", None)
+    if evidence is not None:
+        assessment["acquisition"] = evidence(work, folder / "controller/acquisition-evidence" / uuid.uuid4().hex)
     assessment["sandbox"] = read(folder / "controller/provenance.json")["sandbox"]["state"]
     assessment["assessed_at"] = datetime.now(timezone.utc).isoformat()
     shutil.rmtree(work, ignore_errors=True)

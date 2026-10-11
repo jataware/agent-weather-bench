@@ -1,0 +1,27 @@
+schema_version: 1
+id: checkpoint-astra-python
+kind: agent
+description: GPT-6 Astra, high effort, pinned Codex CLI, short three-task grading
+  checkpoint; python condition from the original pilot.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:f3e8ae979462b203c101bf92270943ddb6d559cf852be8a941d1ccd881bf3db7
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 600
+  max_tool_calls: 32
+  command_seconds: 90
+  max_total_tokens: 120000
+substrate:
+  paths:
+  - adapter.py
+  instructions: ''
+  libraries: []
+  image_paths: []

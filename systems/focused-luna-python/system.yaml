@@ -1,0 +1,30 @@
+schema_version: 1
+id: focused-luna-python
+kind: agent
+description: 'Focused post-checkpoint study: GPT-6 Luna high effort; python; repaired native import order,
+  visible budgets and common delivery-first guidance. Separate from historical checkpoint.'
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 24
+  command_seconds: 120
+  max_total_tokens: 180000
+substrate:
+  paths:
+  - adapter.py
+  instructions: Read the supplied task and any algorithm files before coding. Deliver a complete reproducible
+    submission before optional exploration; reserve budget to rerun it and check its arrays and claims.
+    Remaining cumulative token and tool budgets are returned with tool results. General scientific Python
+    is installed; no weather-specific catalog is supplied.
+  libraries: []
+  image_paths: []

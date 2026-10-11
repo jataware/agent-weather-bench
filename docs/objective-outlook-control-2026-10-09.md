@@ -80,38 +80,47 @@ climatology. These are descriptive, not a skill claim.
 
 ## Planted faults, one per stage
 
-| Stage | Control | Checks expected to fail |
-| --- | --- | --- |
-| acquire | `wrong_initialization`: the other season's files under this season's names | CCA-agreement invariant; variant and changed-data probe unresolved (no reading matches) |
-| prepare | `thirty_days`: ninety-day season | variant |
-| WVG | `wvg_leak`: each year's fit includes that year | held-out probe; variant and changed-data probe unresolved |
-| eReg | `ereg_no_cross_validation` | held-out probe; variant and changed-data probe unresolved |
-| CCA | `cca_future_training`: hindcasts from a fit on all years | held-out probe |
-| combine | `unequal_weights` (its verification recomputed from its own combination) | equal-stream-combination invariant |
-| verify | `wrong_climatology_score`: training-frequency baseline | score-identity invariant |
-| issue | `issue_mismatch`: categories reversed in the issued array | issue-identity invariant |
+| Stage | Control | Checks expected to fail | Stage rows |
+| --- | --- | --- | --- |
+| acquire | `wrong_initialization`: the other season's files under this season's names | CCA-agreement invariant; variant and changed-data probe unresolved (no reading matches) | `stage.cca` fails; `stage.prepare`, `stage.wvg`, `stage.ereg` unresolved (no reading fits) |
+| prepare | `thirty_days`: ninety-day season | variant | `stage.prepare` fails |
+| WVG | `wvg_leak`: each year's fit includes that year | held-out probe and its WVG part; WVG-from-own-prepare invariant; variant and changed-data probe unresolved | `stage.wvg` fails |
+| eReg | `ereg_no_cross_validation` | held-out probe and its eReg part; eReg-from-own-prepare invariant; variant and changed-data probe unresolved | `stage.ereg` fails |
+| CCA | `cca_future_training`: hindcasts from a fit on all years | held-out probe and its CCA part | `stage.cca` fails |
+| combine | `unequal_weights` (its verification recomputed from its own combination) | equal-stream-combination invariant | `stage.combine` fails |
+| verify | `wrong_climatology_score`: training-frequency baseline | score-identity invariant | `stage.verify` fails |
+| issue | `issue_mismatch`: categories reversed in the issued array | issue-identity invariant | `stage.issue` fails |
 
 Also `full_record` (the thresholds pitfall), `cached` (stale results on changed
 data), `reordered` and `bilinear_residual` (accepted alternatives) and
 `independent`.
 
-## Certification: the four automatic tests pass on both instances
+- `full_record` fails `stage.wvg`, `stage.ereg` and `stage.cca` and passes
+  `stage.prepare`. A year's own category is the same whether or not that year
+  sits in the boundary sample (zero differing cell-years on both instances),
+  so the pitfall shows only in the labels of the other years inside each
+  fold, which the streams use and the prepare arrays do not. The first
+  certification under the stage rubric expected `stage.prepare` to fail and
+  was corrected.
+- `cached` fails the changed-data probe and `stage.prepare`, `stage.wvg` and
+  `stage.ereg`, whose absolute verdicts include the per-stage changed-data test.
+
+## Certification: the four automatic tests pass on both instances under the stage rubric
 
 Record: `templates/objective-seasonal-outlook/certification.json` (local trusted
-executor, 9 October 2026, about 63 minutes).
+executor, spec version 2, started 9 October 2026; the machine slept during the
+run, and the running time projected from its control pace is about 85 minutes). An earlier run
+under spec version 1 (before the stage rubric) also passed all four tests.
 
 | Test | Result |
 | --- | --- |
 | 1 reference implementations agree | 36 reading combinations on 2 instances, 72 comparisons, largest difference 1.4e-12 |
-| 2 known-correct solutions pass | `correct`, `independent`, `reordered`, `bilinear_residual` pass on both instances |
-| 3 incorrect solutions are caught | all 10 faulty controls fail with exactly the expected checks on both instances |
+| 2 known-correct solutions pass | `correct`, `independent`, `reordered`, `bilinear_residual` pass every computed check, including all eight `stage.*` rows, on both instances |
+| 3 incorrect solutions are caught | all 10 faulty controls fail with exactly the expected checks and stage rows on both instances (table above) |
 | 4 separability | all 6 reading pairs separated by the numbers on every instance |
-| 5 model attempts | pending (needs Docker) |
+| 5 model attempts | pending (needs Docker; the daemon does not answer on this machine) |
 
-The first run failed tests 1 and 3. Test 1 failed because of tercile-boundary ties
-in CHIRPS desert cells (the 1e-6 mm category margin fixed it; see the task record).
-Test 3 failed because the leak and wrong-initialization faults match no listed
-reading, which the matcher reports as `unresolved`, not `fail`; the expectations
-now name the check that catches each fault. The `unequal_weights` fault also
-tripped the score-identity invariant until it verified its own combination.
-Scientific approval and trial attempts remain pending.
+The first run under the stage rubric failed test 3 on one expectation only:
+`full_record` was expected to fail `stage.prepare` and passed it. The
+expectation was wrong (see the fault list above) and was corrected; the
+grader was not changed.

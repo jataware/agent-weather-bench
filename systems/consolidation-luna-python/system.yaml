@@ -1,0 +1,28 @@
+schema_version: 1
+id: consolidation-luna-python
+kind: agent
+description: Lean objective seasonal outlook consolidation; single bounded scientific-difficulty pilot.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 20
+  command_seconds: 120
+  max_total_tokens: 350000
+  max_uncached_and_output_tokens: 100000
+  max_output_tokens: 20000
+substrate:
+  paths:
+  - adapter.py
+  instructions: 'Read the task and source metadata, retrieve the frozen HTTP catalogue and required objects, then deliver reproducible arrays and retained code. General scientific Python is installed. Use catalogue hashes; fetch current objects during every replay rather than override them with stale cached data. Keep command output concise. The task is scientific probability consolidation, not a request to fit/calibrate models. Use serial scientific file I/O; never read NetCDF/HDF5 files from Python threads.'
+  libraries: []
+  image_paths: []

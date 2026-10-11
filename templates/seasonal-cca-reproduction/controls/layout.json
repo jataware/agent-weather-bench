@@ -1,0 +1,185 @@
+{
+  "outer_year": {
+    "kind": "coordinate",
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "forecast_year": {
+    "kind": "coordinate",
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "target": {
+    "kind": "coordinate",
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "system": {
+    "kind": "coordinate",
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "category": {
+    "kind": "coordinate",
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "boundary": {
+    "kind": "coordinate",
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "candidate": {
+    "kind": "coordinate",
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "hindcast_mean_mm": {
+    "dims": [
+      "outer_year",
+      "system",
+      "target"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+    }
+  },
+  "hindcast_probability": {
+    "dims": [
+      "outer_year",
+      "system",
+      "target",
+      "category"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+    }
+  },
+  "hindcast_threshold_mm": {
+    "dims": [
+      "outer_year",
+      "boundary",
+      "target"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+    }
+  },
+  "selected_candidate": {
+    "dims": [
+      "outer_year"
+    ],
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "inner_loss": {
+    "dims": [
+      "outer_year",
+      "candidate"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1000
+    }
+  },
+  "hindcast_rpss": {
+    "dims": [
+      "system"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1000
+    }
+  },
+  "forecast_mean_mm": {
+    "dims": [
+      "forecast_year",
+      "system",
+      "target"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+    }
+  },
+  "forecast_probability": {
+    "dims": [
+      "forecast_year",
+      "system",
+      "target",
+      "category"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+    }
+  },
+  "forecast_threshold_mm": {
+    "dims": [
+      "boundary",
+      "target"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+    }
+  },
+  "final_candidate": {
+    "dims": [],
+    "tolerance": {
+      "exact": true
+    }
+  },
+  "final_inner_loss": {
+    "dims": [
+      "candidate"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1000
+    }
+  },
+  "full_fit_mean_mm": {
+    "dims": [
+      "outer_year",
+      "target"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+    }
+  },
+  "full_fit_probability": {
+    "dims": [
+      "outer_year",
+      "target",
+      "category"
+    ],
+    "tolerance": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+    }
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "image": "sha256:e234ed6b2a9ef389eb73fd8719135ae790ff87d1e6dbb97e58120870473937c7",
+    "case": "cfgrib_then_pyproj",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  },
+  {
+    "image": "sha256:e234ed6b2a9ef389eb73fd8719135ae790ff87d1e6dbb97e58120870473937c7",
+    "case": "pyproj_then_cfgrib",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  },
+  {
+    "image": "sha256:e234ed6b2a9ef389eb73fd8719135ae790ff87d1e6dbb97e58120870473937c7",
+    "case": "backend_discovery",
+    "exit_code": 0,
+    "stdout": "imports completed\n",
+    "stderr": "",
+    "passed": true
+  }
+]

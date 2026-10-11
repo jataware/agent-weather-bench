@@ -11,7 +11,8 @@ JUDGE = "judge"                                                    # value of `d
 
 # Why a question stayed open. Each names a cause outside the submission. Never merged with a failure.
 REASONS = ("ambiguous_clause", "ambiguous_variant", "unknown_answer", "infrastructure",
-           "judge_not_run", "invalid_citation", "missing_evidence")
+           "judge_not_run", "invalid_citation", "missing_evidence",
+           "invalid_upstream_contract")                            # a stage's own inputs, made by the submission upstream, are unusable
 
 
 def outcome(state, detail="", reason=None, **evidence):
@@ -44,15 +45,19 @@ def combine(rows):
 def headline(result):
     """Fill in the summary fields of an assessment from its checks.
 
-    `outcome` is the headline and counts every check. `computed_outcome` leaves out
-    the checks a judge decides, and is kept as a component.
+    `outcome` combines the declared completion gates; legacy contracts count every
+    check. Computed, judged, supplementary and ranking summaries remain visible.
     """
     checks = result["checks"]
     result["checks"] = dict(sorted(checks.items()))
     result["computed_outcome"] = combine([row for row in checks.values() if row.get("decided_by") != JUDGE])
     result["judged_outcome"] = combine([row for row in checks.values() if row.get("decided_by") == JUDGE] or [outcome(PASS)])
-    result["outcome"] = combine(list(checks.values()))
+    result["all_checks_outcome"] = combine(list(checks.values()))
+    explicit = "assessment_policy" in result
+    result["outcome"] = combine([row for row in checks.values() if "completion" in row.get("required_for", [])]) if explicit else result["all_checks_outcome"]
+    result["ranking_outcome"] = combine([row for row in checks.values() if "ranking" in row.get("required_for", [])]) if explicit else result["computed_outcome"]
+    result["advisory_outcome"] = combine([row for row in checks.values() if not row.get("required_for")]) if explicit else result["judged_outcome"]
     result["unresolved_reasons"] = sorted({row["reason"] for row in checks.values() if row["state"] == UNRESOLVED})
     if "skill" in result:
-        result["skill_valid_for_ranking"] = result["computed_outcome"] == PASS
+        result["skill_valid_for_ranking"] = result["ranking_outcome"] == PASS and result.get("ranking_enabled", True)
     return result

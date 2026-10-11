@@ -1,10 +1,10 @@
 {
  "schema_version": 1,
  "template": "weeks34-rainfall",
- "spec_version": 3,
- "fingerprint": "db4a1ad492749779e6cbf0c63219ac2fb8da9df503bac34251f1392d62433a14",
- "certified_at": "20261007T095801",
- "executor": "docker-offline",
+ "spec_version": 4,
+ "fingerprint": "9ce7e0ef3ce90765aa18964df523f9459df2a2adf8cd651b2675e7cdd397ae2c",
+ "certified_at": "20261009T133517",
+ "executor": "local-trusted",
  "tests": {
   "1_reference_implementations_agree": {
    "passed": true,
@@ -437,11 +437,11 @@
      "computed_outcome": "fail",
      "skill": {
       "split": "final",
-      "rmse_mm": 14.034547789347087,
+      "rmse_mm": 14.049263720536997,
       "raw_model_rmse_mm": 14.890051309463692,
       "climatology_rmse_mm": 14.281531566506088,
-      "skill_vs_raw_model": 0.05745470598700164,
-      "skill_vs_climatology": 0.01729392789623785,
+      "skill_vs_raw_model": 0.056466399708932746,
+      "skill_vs_climatology": 0.01626351101683099,
       "issues": 208,
       "cells": 9,
       "observations_are_public_history": true
@@ -458,11 +458,11 @@
      "computed_outcome": "fail",
      "skill": {
       "split": "final",
-      "rmse_mm": 11.892534582650331,
+      "rmse_mm": 11.894758274595114,
       "raw_model_rmse_mm": 14.903258441509173,
       "climatology_rmse_mm": 11.994282318739515,
-      "skill_vs_raw_model": 0.20201782520748945,
-      "skill_vs_climatology": 0.008483019941111114,
+      "skill_vs_raw_model": 0.20186861676736811,
+      "skill_vs_climatology": 0.00829762394277711,
       "issues": 151,
       "cells": 9,
       "observations_are_public_history": true
@@ -632,59 +632,23 @@
    "known_ambiguities": []
   },
   "5_model_attempts": {
-   "passed": true,
-   "status": "run",
-   "attempts": 3,
-   "systems": [
-    "codex-luna-pinned"
-   ],
+   "passed": null,
+   "status": "not_run",
+   "attempts": 0,
+   "systems": [],
    "attempts_with_an_unruled_unknown_answer": 0,
-   "attempts_assessed_under_another_fingerprint": 5,
+   "attempts_assessed_under_another_fingerprint": 12,
+   "excluded_before_model_launch": [],
    "rulings_awaiting_confirmation": 0,
-   "detail": "Every attempt's answer was classified.",
-   "runs": [
-    {
-     "run": "20261006T164832-weeks34-rainfall-final-2018-2021--all-cells-L1-codex-luna-pinned-49fd7c",
-     "system": "codex-luna-pinned",
-     "instance": "final-2018-2021--all-cells",
-     "level": 1,
-     "outcome": "pass",
-     "computed_outcome": "pass",
-     "judged_outcome": "pass",
-     "supplied": [],
-     "parent": null,
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T164911-weeks34-rainfall-final-2015-2017--all-cells-L1-codex-luna-pinned-40c7f4",
-     "system": "codex-luna-pinned",
-     "instance": "final-2015-2017--all-cells",
-     "level": 1,
-     "outcome": "pass",
-     "computed_outcome": "pass",
-     "judged_outcome": "pass",
-     "supplied": [],
-     "parent": null,
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T165106-weeks34-rainfall-final-2018-2021--all-cells-L2-codex-luna-pinned-4e643a",
-     "system": "codex-luna-pinned",
-     "instance": "final-2018-2021--all-cells",
-     "level": 2,
-     "outcome": "fail",
-     "computed_outcome": "fail",
-     "judged_outcome": "fail",
-     "supplied": [],
-     "parent": "20261006T164832-weeks34-rainfall-final-2018-2021--all-cells-L1-codex-luna-pinned-49fd7c",
-     "unknown_answer_checks": [],
-     "ruling": null
-    }
-   ]
+   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+   "runs": []
   }
  },
  "automatic_tests_passed": true,
- "certified": false
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "pending",
+  "scientific_approval": "pending"
+ }
 }

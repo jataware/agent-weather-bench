@@ -1,0 +1,67 @@
+{
+  "template": "seasonal-objective-consolidation",
+  "run": "20261008T144314-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-consolidation-luna-python-30b210",
+  "system": "consolidation-luna-python",
+  "fingerprint": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff",
+  "runtime_status": "submitted",
+  "completion": "pass",
+  "computed_outcome": "pass",
+  "advisory_outcome": "unresolved",
+  "ranking_outcome": "pass",
+  "checks": {
+    "coverage": "pass",
+    "envelope": "pass",
+    "interpretation.consistency_across_artifacts": "unresolved",
+    "interpretation.outlook_scope": "unresolved",
+    "invariant.simplex_and_support": "pass",
+    "probe.changed_data": "pass",
+    "probe.replay": "pass",
+    "variant": "pass"
+  },
+  "usage": {
+    "input_tokens": 119909,
+    "cached_input_tokens": 92672,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 4409,
+    "reasoning_output_tokens": 1138,
+    "total_tokens": 124318
+  },
+  "seconds": 62.993326666997746,
+  "tool_calls": 10,
+  "cli_seconds": 72.50957816606387,
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_cost_usd": null,
+  "agent_retries": 0,
+  "actual_model_attempts": 1,
+  "prelaunch_harness_failures_without_inference": 1,
+  "prelaunch_failure_evidence": "experiments/hard-task-consolidation-prelaunch-failure-2026-10-08.json",
+  "acquisition": {
+    "probe_count": 2,
+    "bytes": 1943556,
+    "seconds": 0.017221125999981268,
+    "replay_resources": {
+      "changed-data": [
+        "catalog.json",
+        "forecast-precip.nc",
+        "forecast-sst.nc",
+        "observed-sst.nc",
+        "provenance.json",
+        "source-manifest.json"
+      ],
+      "replay": [
+        "catalog.json",
+        "forecast-precip.nc",
+        "forecast-sst.nc",
+        "observed-sst.nc",
+        "provenance.json",
+        "source-manifest.json"
+      ]
+    }
+  },
+  "science_validity_is_not_observed_skill": true,
+  "observations_in_source": false,
+  "assessment_sha256": "38accd8e3dbdc1238280e0554887ebe5ac20a4e7c59f9d0db9d4e719084fa3af",
+  "original_submission_and_assessment_unchanged": true,
+  "interpretation": "Luna passed lean canonical objective consolidation, including partial-vector changed-input check. No capability boundary found; bounded round stops.",
+  "uncached_input_tokens": 27237
+}

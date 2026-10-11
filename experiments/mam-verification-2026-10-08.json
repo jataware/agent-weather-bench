@@ -1,0 +1,77 @@
+{
+  "recorded_at": "2026-10-08T13:59:27.489394+00:00",
+  "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+  "full_suite": {
+    "path": "var/review/mam-suite-20261008/final-pytest.log",
+    "sha256": "a8882b98e77c15e76b382a5fbb4498c0603633016b46dee3cbcadfc6bce2a492",
+    "passed": 185,
+    "skipped": 1,
+    "seconds": 88.7
+  },
+  "final_controller_targeted": {
+    "path": "var/review/mam-suite-20261008/final-controller-targeted.log",
+    "sha256": "24ad8f3778b08d2cce8c6fc099a794bf11913562b5a015fe47b7f89662408c4f",
+    "passed": 8,
+    "seconds": 0.56,
+    "reason": "Covers final pre-runtime environment validation and evidence retention change."
+  },
+  "certification": {
+    "path": "var/review/mam-probe-dtype-v1-20261008/templates/mam-multimodel-outlook/certification.json",
+    "sha256": "10d4316581f0479fdc8a73ebd9cebd761853d1bab85667a66779e539c14825d7",
+    "all_automatic_and_trial_checks_pass": true,
+    "scientific_approval": "pending",
+    "certified": false,
+    "scope": "Immutable v1 four-attempt certificate, prior to efficiency phase and dtype-probe revision."
+  },
+  "pretrial_certificate": {
+    "path": "var/review/mam-science-final16-20261008/certification-final16.json",
+    "sha256": "ae3ccc6cf7e5fc58eb74e9b03b06fe3f11f107010925f79ec18bd0bc760608e1"
+  },
+  "docker_control_and_replay": {
+    "path": "var/review/mam-suite-20261008/final16-docker-correct-summary.json",
+    "sha256": "4d474d1a2c7c06367cc35718635841316f0e382462cc00ec170856285a42741c"
+  },
+  "legacy_contracts": {
+    "kenya-forecast-revision": {
+      "fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851",
+      "matches_certificate": true
+    },
+    "native-rainfall-reconciliation": {
+      "fingerprint": "3d29f5d5c44fe0fd3acadcbc54dcdd6057f5a0248aa1be9fb3b43c4a7b6b069f",
+      "matches_certificate": true
+    },
+    "rainfall-downscaling": {
+      "fingerprint": "26aa0881c11621c0d80e26ba9ba97833464e91724db4451f3e9f7cf7d40a2377",
+      "matches_certificate": true
+    },
+    "seasonal-cca-reproduction": {
+      "fingerprint": "ee679a3b68725486fc9fd7fa2826a33be156b17a485d4568d90f1abed05ae514",
+      "matches_certificate": true
+    },
+    "seasonal-forecast-audit": {
+      "fingerprint": "e32176d11683385384639d6841067525fc9ab522e4ca9b61366a0dafda7da5f8",
+      "matches_certificate": true
+    },
+    "seasonal-rainfall-calibration": {
+      "fingerprint": "93b76c9e582f7e42bc73183552e9e969b4442f153d4e0b72e0b73738dd21a6ee",
+      "matches_certificate": true
+    },
+    "weeks34-rainfall": {
+      "fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+      "matches_certificate": true
+    }
+  },
+  "validated_results": {
+    "path": "var/review/mam-probe-dtype-v1-20261008/mam-results-original.json",
+    "sha256": "fdf8e1e99a584c4fd3bcf4e325afebac5d757af54d3bafd0eb303873fc871b1b",
+    "scope": "Immutable original four-attempt result summary; current convenience summary may add verified historical-contract labels."
+  },
+  "counts": {
+    "completed_attempts": 4,
+    "scientific_submissions": 1,
+    "infrastructure_launch_failures": 2,
+    "recorded_launches": 6,
+    "direct_paid_api_spend_usd": 0
+  },
+  "no_additional_inference": "Validation and summary generation only; model expansion stopped after four actual attempts."
+}

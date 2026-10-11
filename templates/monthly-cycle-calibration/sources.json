@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/tasks/monthly-cycle-calibration",
+  "source_weather_is_synthetic": false,
+  "scientific_approval": "pending",
+  "redistribution_approval": "pending",
+  "files": [
+    {
+      "file": "agent-inputs/africas2s-smoothed-method.py.txt",
+      "sha256": "835b4339746f10b81a3687e9813e6268fc7599ba08f1e71b2260b5570f5ac2eb",
+      "bytes": 4912,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/algorithm.md",
+      "sha256": "8147ffbda31c026b9d3ba1a1382d31474df3f83f71a11e82966eb5d57fbe10d2",
+      "bytes": 3955,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/candidates.json",
+      "sha256": "d8a24265fdb2b58d4c50508971fe67ae7f0ef47daf2fcc794c94de36553c4fb8",
+      "bytes": 246,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/literature-notes.md",
+      "sha256": "a994b617eda3545e725978fd776019441ed4907543d4285853d8e9a5edf5c7c2",
+      "bytes": 1958,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/predictors.nc",
+      "sha256": "2ae904c759f57f71caaa34fc18b5a607f5b1eb7d9809cff22d95f2e7c9c65346",
+      "bytes": 14584,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "c1e6d9d7c8318e56e5a9621dc9740251d5d3516453312ee7779870c1f0996082",
+      "bytes": 123,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/targets.nc",
+      "sha256": "21aec9fac551e94392efa1c4401471d7e98be5f29c65d5b1bfa826b7de0872b7",
+      "bytes": 17973,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/forecast.nc",
+      "sha256": "70c131842ae87d06860a48f57c50060d23c5f297e35c746911a3839ed20604de",
+      "bytes": 20275,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/hindcasts.nc",
+      "sha256": "3bab385dce5e9bbab65a6404ae82be258233c41acf70ea0df789731e3e146ade",
+      "bytes": 99389,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/model.json",
+      "sha256": "307890a36b8d9af5d4b2752e2cf04a3e2667b85240c5fc9a6d85e52a24d4306c",
+      "bytes": 19779,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/private-targets.nc",
+      "sha256": "d80a430060107925b1920a5b094ae1ba2b5c6149ec3e43eec52d8d446a633b8c",
+      "bytes": 10197,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/reference-audit.json",
+      "sha256": "1ed433bcf4eb5d098e4420b59bf8b7eff90b96b9cd9165515f6b35a4856dda30",
+      "bytes": 1376,
+      "visibility": "controller_only"
+    }
+  ],
+  "scientific_procedure": "Byte-preserved archived science.py; same inputs, folds, candidates and production periods; current four-part envelope only."
+}

@@ -1,0 +1,383 @@
+{
+ "schema_version": 1,
+ "template": "seasonal-cca-reproduction",
+ "spec_version": 1,
+ "fingerprint": "0ef43b6708652ef577157716742d3d183497832ebb31e67a3730158be12c53b4",
+ "certified_at": "20261009T134005",
+ "executor": "local-trusted",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 2,
+   "combinations": 2,
+   "comparisons": 4,
+   "largest_difference": 2.6147972675971687e-12,
+   "problems": [],
+   "regression_checks": [],
+   "tolerances": {
+    "outer_year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2019.0,
+     "within_declared_magnitude": true
+    },
+    "forecast_year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2023.0,
+     "within_declared_magnitude": true
+    },
+    "target": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 11.0,
+     "within_declared_magnitude": true
+    },
+    "system": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "category": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.0,
+     "within_declared_magnitude": true
+    },
+    "boundary": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 1.0,
+     "within_declared_magnitude": true
+    },
+    "candidate": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 13.0,
+     "within_declared_magnitude": true
+    },
+    "hindcast_mean_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 974.7190114843929,
+     "within_declared_magnitude": true
+    },
+    "hindcast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.7303063557777316,
+     "within_declared_magnitude": true
+    },
+    "hindcast_threshold_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 1070.9379170735674,
+     "within_declared_magnitude": true
+    },
+    "selected_candidate": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 10.0,
+     "within_declared_magnitude": true
+    },
+    "inner_loss": {
+     "tolerance": 2.220446049496832e-07,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1000
+     },
+     "largest_reference_value": 1.56213064103511,
+     "within_declared_magnitude": true
+    },
+    "hindcast_rpss": {
+     "tolerance": 2.220446049496832e-07,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1000
+     },
+     "largest_reference_value": 0.09922401620931132,
+     "within_declared_magnitude": true
+    },
+    "forecast_mean_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 1158.2720832224627,
+     "within_declared_magnitude": true
+    },
+    "forecast_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.8594952013418118,
+     "within_declared_magnitude": true
+    },
+    "forecast_threshold_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 885.3266906738281,
+     "within_declared_magnitude": true
+    },
+    "final_candidate": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 8.0,
+     "within_declared_magnitude": true
+    },
+    "final_inner_loss": {
+     "tolerance": 2.220446049496832e-07,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1000
+     },
+     "largest_reference_value": 1.1270044521507385,
+     "within_declared_magnitude": true
+    },
+    "full_fit_mean_mm": {
+     "tolerance": 2.220446049496832e-06,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 10000
+     },
+     "largest_reference_value": 1186.6091623385048,
+     "within_declared_magnitude": true
+    },
+    "full_fit_probability": {
+     "tolerance": 2.220446049496832e-10,
+     "declared": {
+      "precision": "float64",
+      "operations": 1000000,
+      "magnitude": 1
+     },
+     "largest_reference_value": 0.873891154306946,
+     "within_declared_magnitude": true
+    }
+   }
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "outer-2005-2019--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "outer-2008-2019--eastern-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    }
+   ]
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "full_training",
+     "kind": "pitfall",
+     "instance": "outer-2005-2019--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "full_training",
+     "kind": "pitfall",
+     "instance": "outer-2008-2019--eastern-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "invalid_probability",
+     "kind": "incorrect",
+     "instance": "outer-2005-2019--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "invalid_probability",
+     "kind": "incorrect",
+     "instance": "outer-2008-2019--eastern-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "false_claim",
+     "kind": "incorrect",
+     "instance": "outer-2005-2019--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "false_claim",
+     "kind": "incorrect",
+     "instance": "outer-2008-2019--eastern-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "pooled_forecasts",
+     "kind": "incorrect",
+     "instance": "outer-2005-2019--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "pooled_forecasts",
+     "kind": "incorrect",
+     "instance": "outer-2008-2019--eastern-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "outer-2005-2019--all-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "outer-2008-2019--eastern-cells",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    }
+   ],
+   "not_applicable": {
+    "optimized_forecast": "This task reproduces a specified experiment; freely optimized forecasting is a separate task."
+   }
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [
+    {
+     "pair": "full_training",
+     "convention": "training",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 4,
+     "instances": 4,
+     "smallest_separation_in_tolerances": 1017835203.3,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    }
+   ],
+   "known_ambiguities": []
+  },
+  "5_model_attempts": {
+   "passed": null,
+   "status": "not_run",
+   "attempts": 0,
+   "systems": [],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 4,
+   "excluded_before_model_launch": [],
+   "rulings_awaiting_confirmation": 0,
+   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+   "runs": []
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "pending",
+  "scientific_approval": "pending"
+ }
+}

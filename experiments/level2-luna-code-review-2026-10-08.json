@@ -1,0 +1,172 @@
+{
+  "reviewed_at": "2026-10-08T15:32:19.123724+00:00",
+  "run": "20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23",
+  "system": "level2-luna-open-accord",
+  "status": "pass",
+  "review_mode": "Independent static code, text/JSON trace and opaque stored-byte SHA256 comparison only; no scientific decoding, candidate execution or intermediate final scoring.",
+  "method": {
+    "free_method": true,
+    "task_specific_recipe_or_solver_supplied": false,
+    "description": "Per-cell calendar target-month training-observation mean plus beta0.1 times current raw CFSv2 anomaly from the corresponding training model mean. Twelve monthly bins.",
+    "native_weather_helper_used": false,
+    "native_weather_helper_required": false,
+    "libraries": "NumPy and xarray implement the selected method; ACCORD package availability is not substantive package use."
+  },
+  "both_split_dataflow": {
+    "status": "pass",
+    "file": "frozen/model.py",
+    "lines": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      17,
+      18,
+      19,
+      25,
+      26,
+      27,
+      28,
+      29,
+      32,
+      33,
+      36,
+      37,
+      41
+    ],
+    "finding": "Both delivered splits call the same forecast function against supplied training.nc and their own feature files. No cached prediction artifact or final target is read. Training labels and model monthly means supply fitted quantities; own-issue raw forecast and known target-start calendar month supply each prediction."
+  },
+  "causality": {
+    "status": "pass",
+    "final_method_has_lag_feature": false,
+    "finding": "There is no lagged feature in this Luna submission. Each output depends on fixed pre2015 training and its own issue raw forecast, with calendar month of deterministic target_start. No future forecast aggregation, split-wide feature centering, future observations, or updates using unavailable targets appear in the submitted code.",
+    "lag_note": "The requested lag audit is not applicable to this final method; do not attribute an Astra or other candidate lag to Luna.",
+    "diagnostic_validation_caveat": "Exploratory training-only holdouts use issue-year boundaries rather than target-close boundaries, so some training-validation examples may overlap near those boundaries. This weakens internal diagnostic interpretation; it does not introduce future information into the final fixed pre2015-trained procedure."
+  },
+  "feedback_selection": {
+    "status": "pass",
+    "queries_used": 5,
+    "malformed_queries": 0,
+    "limit_denials": 0,
+    "final_score_exposed": false,
+    "final_observations_exposed": false,
+    "trajectory": [
+      {
+        "query": 1,
+        "method": "Issue-month per-cell climatology",
+        "development_rmse_mm": 12.165158114157496,
+        "trace_execute_line": 13
+      },
+      {
+        "query": 2,
+        "method": "Regularized per-cell affine raw-model regression",
+        "development_rmse_mm": 12.62214701311737,
+        "trace_execute_line": 20
+      },
+      {
+        "query": 3,
+        "method": "Six seasonal bins with cyclic mean smoothing",
+        "development_rmse_mm": 12.180204688533497,
+        "trace_execute_line": 26
+      },
+      {
+        "query": 4,
+        "method": "Target-start-month per-cell climatology",
+        "development_rmse_mm": 11.97270865732134,
+        "trace_execute_line": 32
+      },
+      {
+        "query": 5,
+        "method": "Target-start-month climatology plus0.1 model anomaly",
+        "development_rmse_mm": 11.824007148725183,
+        "trace_execute_line": 39
+      }
+    ],
+    "best_query": 5,
+    "best_development_rmse_mm": 11.824007148725183,
+    "best_development_forecast_preserved": true,
+    "preservation_evidence": {
+      "development_mm": {
+        "byte_identical": true,
+        "queried_inventory": {
+          "zarr.json": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+          "c/0/0": "b65c8a2bc28793af3405b60a23dee29e2661de9f4c7d17556b29263e5c6f4b05"
+        },
+        "submitted_inventory": {
+          "zarr.json": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+          "c/0/0": "b65c8a2bc28793af3405b60a23dee29e2661de9f4c7d17556b29263e5c6f4b05"
+        }
+      },
+      "development_issue": {
+        "byte_identical": true,
+        "queried_inventory": {
+          "zarr.json": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+          "c/0": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0"
+        },
+        "submitted_inventory": {
+          "zarr.json": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+          "c/0": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0"
+        }
+      },
+      "location": {
+        "byte_identical": true,
+        "queried_inventory": {
+          "zarr.json": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+          "c/0": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d"
+        },
+        "submitted_inventory": {
+          "zarr.json": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+          "c/0": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d"
+        }
+      }
+    },
+    "method_finalization_execute_line": 48,
+    "selection_finding": "Agent retained its best measured candidate, then rewrote the same formula as one parameterized reproducible program for both splits. Query5 development array and both relevant coordinate subtrees are byte-identical to submission. Final labels or scores did not enter selection."
+  },
+  "report_consistency": {
+    "status": "pass",
+    "finding": "Report and answer correctly describe twelve target-month bins and beta0.1 anomaly, cite the queried development RMSE, acknowledge development selection/overlap, and make no final-score claim. Frozen code implements this calculation. Score claim passes controller recomputation."
+  },
+  "checks": {
+    "claim.development_rmse_mm": "pass",
+    "coverage": "pass",
+    "envelope": "pass",
+    "feedback.limit": "pass",
+    "interpretation.consistency_across_artifacts": "unresolved",
+    "interpretation.generalization": "unresolved",
+    "interpretation.statistical_support": "unresolved",
+    "invariant.magnitude_of_a_14_day_total": "pass",
+    "invariant.totals_not_negative": "pass",
+    "probe.no_future_information": "pass",
+    "probe.replay": "pass",
+    "probe.responds_to_inputs": "pass"
+  },
+  "computed_outcome": "pass",
+  "completion": "pass",
+  "failure_flags": {
+    "final_scientific_failure": false,
+    "final_infrastructure_failure": false,
+    "best_candidate_lost": false,
+    "future_information_in_final_code_observed": false,
+    "private_target_access_observed": false,
+    "report_contradiction_observed": false
+  },
+  "limits": [
+    "One static review does not establish absence of pretrained historical-data contamination.",
+    "No final skill or other actor information is used in this code review or fed back into an attempt.",
+    "Generalization/performance interpretation belongs to the frozen two-attempt pilot, not a fresh capability-boundary claim."
+  ],
+  "reviewfileshashes": {
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23/run.json": "210bc5655b89c526b88f50009b32121a0a69b7c0cfbd5acc6f881ced25468fbb",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23/assessment.json": "18710b47093320cd8a20fc4962bb7574d36bbf9ddf7a6b054b1839a40240baba",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23/frozen/model.py": "0fc6311069efd9a8c39e040f88b2141cccc3c508b9aee1b011b961a80df98aa4",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23/frozen/answer.json": "942990dc8e74a66b226c4fe428ae67cdabb04059ab69fb3258b5374c2fd846b2",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23/frozen/report.md": "6e4c9fa3300c2c4ff283a38311bad4a63b16ccfb3bf4b5e4a36303a0a0988106",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23/logs/events.jsonl": "cbadf66a053e307fc65dcacb15fb19939f33394283cd36dde9ff6ceeece77fee",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23/controller/development-feedback/ledger.json": "375008a016e3e8bf2ac1afeb8b96d6851902504182bd87bbfdf325a6711a5dd2",
+    "var/template-runs/20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23/controller/provenance.json": "45a580c2ad379dde1e4cc6a07169ce667a0a180d6f912d031c423362fe2dc09d",
+    "systems/level2-luna-open-accord/system.yaml": "c2d99fe1ec0d3e1bdddde18d9438a0ae4d97cd5395520d1ff2d232fcfe48152d",
+    "experiments/level2-open-plan-2026-10-08.json": "e0c30a1041d88e4ec1199752dfb89b201012c19361df8999e0ee6e0f7421e84e"
+  }
+}

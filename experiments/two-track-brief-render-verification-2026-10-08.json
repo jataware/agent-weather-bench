@@ -1,0 +1,55 @@
+{
+  "all_passed": true,
+  "templates": [
+    {
+      "template": "kenya-forecast-revision",
+      "rendered_variants": 144,
+      "fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851"
+    },
+    {
+      "template": "mam-forecast-synthesis",
+      "rendered_variants": 2,
+      "fingerprint": "d0f38aef16d5056579d99ac36afba0ea13394369aa4a0b7e4194586155fbd291"
+    },
+    {
+      "template": "mam-multimodel-outlook",
+      "rendered_variants": 2,
+      "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056"
+    },
+    {
+      "template": "native-rainfall-reconciliation",
+      "rendered_variants": 6,
+      "fingerprint": "3d29f5d5c44fe0fd3acadcbc54dcdd6057f5a0248aa1be9fb3b43c4a7b6b069f"
+    },
+    {
+      "template": "rainfall-downscaling",
+      "rendered_variants": 8,
+      "fingerprint": "26aa0881c11621c0d80e26ba9ba97833464e91724db4451f3e9f7cf7d40a2377"
+    },
+    {
+      "template": "seasonal-cca-reproduction",
+      "rendered_variants": 8,
+      "fingerprint": "ee679a3b68725486fc9fd7fa2826a33be156b17a485d4568d90f1abed05ae514"
+    },
+    {
+      "template": "seasonal-forecast-audit",
+      "rendered_variants": 8,
+      "fingerprint": "e32176d11683385384639d6841067525fc9ab522e4ca9b61366a0dafda7da5f8"
+    },
+    {
+      "template": "seasonal-objective-consolidation",
+      "rendered_variants": 2,
+      "fingerprint": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff"
+    },
+    {
+      "template": "seasonal-rainfall-calibration",
+      "rendered_variants": 18,
+      "fingerprint": "93b76c9e582f7e42bc73183552e9e969b4442f153d4e0b72e0b73738dd21a6ee"
+    },
+    {
+      "template": "weeks34-rainfall",
+      "rendered_variants": 32,
+      "fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163"
+    }
+  ]
+}

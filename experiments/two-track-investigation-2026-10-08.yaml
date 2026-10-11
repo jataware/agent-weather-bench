@@ -1,0 +1,43 @@
+schema_version: 1
+purpose: Run efficiency and scientific-difficulty investigations concurrently without conflating their evidence.
+requested_by_user: true
+tracks:
+  efficiency:
+    owner: forecast_audit
+    task: mam-multimodel-outlook
+    intervention: Concise tested public weather-tool API guide and runnable synthetic examples.
+    comparator: Fresh Luna general-Python attempt on the identical frozen task.
+    initial_attempts: 2
+    conditional_replication_attempts: 2
+    expansion_rule: One matched replication pair only if initial results are informative and controller/grader work correctly.
+    measures: [valid_completion, uncached_input_tokens, cached_input_tokens, output_tokens, total_tokens, agent_seconds, command_seconds, acquisition_seconds, helper_use]
+    accounting: Include every assigned attempt and failed attempt; subscription invoice cost is unknown, direct paid spend is recorded separately.
+  scientific_difficulty:
+    owner: ingestion
+    task: Choose and validate one harder canonical forecasting task from real data.
+    implemented_candidate_limit: 2
+    model_attempt_limit: 2
+    inference_gate: Genuine frozen data, independently checked reference or score, known-correct control, scientific faults, and explicit outcome criterion.
+    interpretation: Scientific failure or forecast-performance target is distinct from runtime, context-budget, API-discovery and evaluator failures.
+    candidates:
+      - Blind multiyear MAM synthesis; no model attempt if the expert fails to outperform climatology.
+      - ASO objective consolidation; test earlier partial Luna evidence with clean grading, without assuming difficulty.
+    deferred_lead: Daily onset and false-start outlook, pending a complete independently verified daily archive.
+  independent_review:
+    owner: grader_stress
+    scope: Fair matched comparison, leakage, source and grading integrity, failure accounting, and attainability of the hard-task criterion.
+runtime:
+  max_concurrent_scientific_workers_across_tracks: 2
+  coordination: Root reserves slots; paired inference can use both while hard-track metadata, network scouting and code writing continue.
+  native_io: Serial file I/O inside fresh processes; no scientific file reads from Python threads.
+  model_code: Docker only.
+  paid_api_total_cap_usd_for_session: 100
+  permission_questions: None; continue within existing authorization.
+preservation:
+  - Original system configurations, submissions, assessments and source snapshots remain intact.
+  - New interventions and attempts receive separate names and evidence records.
+  - Scientific contract changes invalidate earlier certification and are validated before inference.
+success_claims:
+  - Report observed efficiency differences with their small sample and matched settings; do not invent dollar savings.
+  - Do not claim a hard capability boundary from a discovery, budget or runtime failure.
+  - If no scientifically hard task is established, report the tested candidates and actual findings.

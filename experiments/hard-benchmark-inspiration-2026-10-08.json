@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-08",
+  "research_only": true,
+  "model_calls": 0,
+  "native_workers": 0,
+  "new_templates_built": 0,
+  "ambiguous_name_resolution": {
+    "AIRS-Bench": "Meta AI Research Science Benchmark; not AIR-Bench audio or retrieval",
+    "AI R&D benchmark": "Most likely METR RE-Bench; MLE-bench and PaperBench complementary, user intent not assumed certain"
+  },
+  "primary_sources": [
+    {
+      "id": "airs",
+      "paper": "https://arxiv.org/html/2602.06855v1",
+      "repo": "https://github.com/facebookresearch/airs-bench",
+      "facts": [
+        "20 tasks; no baseline code",
+        "24 hours, one H200, at least ten seeds",
+        "Four tasks exceed published SOTA; sixteen do not"
+      ],
+      "limitations": [
+        "Original models/scaffolds; not currentLuna or CPU pilot evidence"
+      ]
+    },
+    {
+      "id": "rebench",
+      "paper": "https://arxiv.org/html/2411.15114v1",
+      "repo": "https://github.com/METR/RE-Bench",
+      "facts": [
+        "7 environments;71eight-hour attempts/61experts",
+        "Starting solution/reference score anchors",
+        "Discarded>12specifications and>5implementations"
+      ]
+    },
+    {
+      "id": "mlebench",
+      "paper": "https://arxiv.org/html/2410.07095v2",
+      "repo": "https://github.com/openai/mle-bench",
+      "facts": [
+        "75competitions; predictionCSV interface",
+        "Validity-only local feedback",
+        "o1-preview16.9%,GPT4o8.7% originalAIDE medals"
+      ]
+    },
+    {
+      "id": "paperbench",
+      "paper": "https://cdn.openai.com/papers/22265bac-3191-44e5-b057-7aaacd8e90cd/paperbench.pdf",
+      "release": "https://openai.com/index/paperbench/",
+      "repo": "https://github.com/openai/frontier-evals/tree/main/project/paperbench",
+      "facts": [
+        "20paper replications; author-developed criteria; separately assessedjudge"
+      ]
+    },
+    {
+      "id": "aira",
+      "paper": "https://arxiv.org/html/2507.02554v1",
+      "repo": "https://github.com/facebookresearch/aira-dojo",
+      "task_api": "https://raw.githubusercontent.com/facebookresearch/aira-dojo/main/docs/TASK_DEVELOPMENT.md",
+      "facts": [
+        "Separate operators/search policies",
+        "Reported MLElite medals47.7vs39.6%; validation-test selectiongap",
+        "Task prepare/step/evaluate/close interface"
+      ]
+    },
+    {
+      "id": "mlgym",
+      "paper": "https://arxiv.org/abs/2502.14499",
+      "repo": "https://github.com/facebookresearch/MLGym",
+      "facts": [
+        "Sequential research environment; tool,step,cost controls; trajectories"
+      ]
+    },
+    {
+      "id": "aide",
+      "paper": "https://arxiv.org/abs/2502.13138",
+      "repo": "https://github.com/WecoAI/aideml",
+      "facts": [
+        "Draft/debug/improve candidate scripts with metric-guided tree search"
+      ]
+    },
+    {
+      "id": "metr_task_standard",
+      "repo": "https://github.com/METR/task-standard",
+      "template": "https://raw.githubusercontent.com/METR/task-standard/main/template/template.py",
+      "facts": [
+        "ArchivedOct7,2026; no longer maintained; METR usesInspect"
+      ]
+    },
+    {
+      "id": "vivaria",
+      "docs": "https://vivaria.metr.org/",
+      "facts": [
+        "Official documentation recommendsInspect fornewprojects; developmentrampingdown"
+      ]
+    },
+    {
+      "id": "inspect",
+      "docs": "https://inspect.aisi.org.uk/",
+      "facts": [
+        "Composable dataset/solver/scorer; sandbox and external-agent extensions"
+      ]
+    },
+    {
+      "id": "airs_solar_scorer",
+      "url": "https://raw.githubusercontent.com/facebookresearch/airs-bench/main/airsbench/tasks/rad/TimeSeriesForecastingSolarWeeklyMAE/evaluate.py",
+      "facts": [
+        "Lines60\u201368 exclude predictionNaNs from metric support"
+      ],
+      "inference": "SelectiveNaN predictions can omit hardcases; not executed and not claimed as observed agentbehavior"
+    },
+    {
+      "id": "subseasonal",
+      "paper": "https://arxiv.org/abs/2109.10399",
+      "repo": "https://github.com/microsoft/subseasonal_toolkit",
+      "facts": [
+        "Publisheddataset andmodelimplementations for genuine subseasonalforecasting; includes adaptivebiascorrection"
+      ]
+    }
+  ],
+  "inferences_and_recommendations": {
+    "highest_value": "Existing weeks 3\u20134 Level 2 with bounded controller-owned development search and an attainable published-method comparator verified on the exact split.",
+    "difficulty_mechanisms": [
+      "Open method choices",
+      "Experiment design and analysis under a shared budget",
+      "Reliable selection from noisy development feedback",
+      "Scientific audit and repair across a genuine pipeline"
+    ],
+    "candidate_adaptations": [
+      {
+        "name": "adaptive-weeks34-correction",
+        "available": "ExistinggenuineCFSv2/truthsnapshot andLevel2 RMSEfeedback",
+        "blockers": [
+          "Exactfrozeninputsupportedbaseline/positiveheadroom verification",
+          "Freshunseenfinalregion/period fornewboundary"
+        ]
+      },
+      {
+        "name": "free-OND-probability-design",
+        "available": "ExistingantecedentSST/CHIRPSsource andAfricaS2Scandidates",
+        "blockers": [
+          "ExistingprescribedCCA alreadypasses",
+          "Onlyfourexistingfinalyears; previousverificationnotpristine",
+          "Freshdata andgenericRPSfeedbackschema"
+        ]
+      },
+      {
+        "name": "seasonal-pipeline-audit-and-improvement",
+        "available": "Existingscientificauditconcept andcausalforecastarrayprobes",
+        "blockers": [
+          "Genuineattainablerepaircontrol",
+          "Methodselectionindependencebeyondregression",
+          "Noobscurepackagingrequirements"
+        ]
+      }
+    ],
+    "pilot_search": {
+      "draft_nodes": 2,
+      "improvement_nodes": 2,
+      "max_development_requests_including_invalid": 6,
+      "final_selection": "Development information only; one final candidate.",
+      "matched_conditions": [
+        "backbone",
+        "packages",
+        "tokens",
+        "wall time",
+        "CPU/memory",
+        "total feedback allowance"
+      ],
+      "budget": "Reuse the current bounded pilot; do not import 24-hour/H200 quotas."
+    },
+    "grading_guards": [
+      "Controller-defined support; finite predictions required",
+      "Fixed anchors and raw scores, rather than observed-worst normalization",
+      "Private final scores excluded from search",
+      "Independent metrics and meaningful fault controls",
+      "All failures included in cost/time",
+      "No new hard claim after retuning a previously inspected holdout"
+    ],
+    "local_constraint": "runner.development_scorer currently hardcodes RMSE keys and a final-prefix result filter; it is not generic RPS feedback."
+  },
+  "local_evidence_paths": [
+    "assessment/runner.py",
+    "assessment/feedback.py",
+    "assessment/runtime.py",
+    "templates/weeks34-rainfall/sources.json",
+    "templates/seasonal-cca-reproduction/sources.json",
+    "docs/hard-task-search-2026-10-08.md",
+    "experiments/hard-task-mam-baseline-verification-2026-10-08.json"
+  ],
+  "document": "docs/hard-benchmark-inspiration-2026-10-08.md"
+}

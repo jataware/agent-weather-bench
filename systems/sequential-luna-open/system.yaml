@@ -1,0 +1,35 @@
+schema_version: 1
+id: sequential-luna-open
+kind: agent
+description: Open-method weekly updating forecast pilot; ordinary library documentation, no task-specific guide.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 32
+  command_seconds: 120
+  max_uncached_and_output_tokens: 100000
+  max_output_tokens: 20000
+substrate:
+  paths:
+  - adapter.py
+  instructions: acmadDL and AfricaS2S are installed. Their standard documentation
+    is under /opt/accord-current/docs. Use these libraries where useful; general Python
+    scientific libraries are also available. Use serial scientific file I/O in each
+    process, never NetCDF/HDF5 reads from Python threads. The declared token limits
+    cover uncached input plus output and output separately; cached input is recorded
+    but does not consume those limits.
+  libraries:
+  - acmadDL
+  - africas2s
+  image_paths:
+  - /opt/accord-current/docs

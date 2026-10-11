@@ -1,0 +1,18 @@
+Produce a consolidated **ASO 2026 objective seasonal rainfall outlook** from three genuine local ACMAD-replication component products: observed-SST, forecast-SST and forecast-precipitation. This is the final probability-consolidation step; do not refit the components, reproduce a forecaster consensus map or claim observation-verified skill.
+
+Read `inputs/acquisition.json`, GET its HTTP catalogue, retrieve the source files and verify their catalogue hashes. The service is a frozen source snapshot, not a live institution API. `observed-sst.nc`, `forecast-sst.nc` and `forecast-precip.nc` contain `below`, `normal`, `above` on an identical `lat,lon` grid, in **percent**. They inherit upstream skill (0.3) and dry (50 mm) masks. Preserve that grid and these masks; do not reapply them or fill missing forecasts with climatology. Provenance records the local centre-replication origin and remaining approval limits.
+
+At each cell, a component contributes only if its **entire three-category vector is finite**. Average the available complete component distributions with equal component weights, then renormalize the resulting probability vector to sum to one. If none is available, use numeric **zero storage fills** for all three probability values. `available_components==0` is the authoritative absence mask: those zeros are **not forecast probabilities** and must be masked before interpretation. Count contributing components. Also produce the nominal-weight sensitivity forecast using weights **[2,8,8]** in the source order above, renormalized among available components and then across categories. Nominal upstream contributor counts are a declared sensitivity scenario, **not actual surviving per-cell member counts** or the headline weights.
+
+For each category and cell, `disagreement_pp` is maximum minus minimum probability among contributing components, in **percentage points**. A single component gives zero disagreement; no components uses the same numeric zero storage fill, distinguished by its zero support count. Component support is decided for whole vectors before every calculation, including disagreement. Do not reject a complete vector merely because finite rounding makes its sum slightly different from 100; the final forecast normalization handles this.
+
+Deliver `results.zarr` containing:
+
+| Variable | Dimensions | Values |
+| --- | --- | --- |
+| `probability` | tercile,lat,lon | Headline fractions, units1 |
+| `nominal_weighted_probability` | tercile,lat,lon | Sensitivity fractions, units1 |
+| `available_components` | lat,lon | Integer0..3 |
+| `disagreement_pp` | tercile,lat,lon | Percentage points |
+
+Use numeric `tercile=[0,1,2]` for below, normal, above. Labels and dimension order may be rearranged consistently. Include `answer.json` with `claims:{{}}` and `run.argv` using `{{input_dir}}` and `{{output_dir}}`, retained executable code, and `report.md` briefly explaining support, normalization, sensitivity and limitations. For example `{{"run":{{"argv":["python","solve.py","--inputs","{{input_dir}}","--output","{{output_dir}}"]}},"claims":{{}}}}`. There is no required plot, method library or report length. Your command must retrieve changed source objects through the same catalogue and regenerate the numerical artifacts. The controller replays it and changes source fields, including a declared supplementary partial-vector missingness perturbation. Original historical source files remain unchanged; this diagnostic does not assert that partial vectors occurred in the historical snapshot. Numeric validity is the completion gate; report questions appear separately. No verifying observations or forecast-skill ranking are available for these products.

@@ -1,0 +1,44 @@
+schema_version: 1
+id: breadth-luna-rhiza-revision
+kind: agent
+description: Fresh bounded Luna tooling breadth pair revision; assigned arm guided_rhiza.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:e00aa260554859887759253ca180db576a9c2e1cfa0d5e014333baa9e57774ec
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 20
+  command_seconds: 120
+  max_total_tokens: 350000
+  max_uncached_and_output_tokens: 100000
+  max_output_tokens: 20000
+substrate:
+  paths:
+  - adapter.py
+  - API.md
+  - synthetic_deaccumulation.py
+  instructions: 'Read the task, envelope, supplied guidance and source metadata. Deliver
+    complete reproducible arrays, code and claims before optional exploration. Keep
+    command output concise: shapes, units and selected metadata. Promote native floating-point
+    weather values to float64 before arithmetic. Use serial scientific file I/O, never
+    NetCDF/HDF5 reads from Python threads. The request declares cumulative, uncached-plus-output
+    and output token caps; tool results display cumulative tokens and remaining time/calls.
+    Once the envelope is complete, execute its own command once, check the output
+    and finish; avoid repeated optional verification. Start by reading /substrate/API.md
+    and running python /substrate/synthetic_deaccumulation.py. Use the documented
+    public helper substantively: returned helper arrays must feed the submitted calculation.
+    General Python remains available for other operations. Cite helper call sites
+    in report.md. Run installed Rhiza scripts with python, not uv; the offline runtime
+    has dependencies installed. Do not dump whole catalogs or private modules.'
+  libraries:
+  - weather_skills_core
+  image_paths:
+  - /catalog/skills

@@ -1,0 +1,44 @@
+schema_version: 1
+id: efficiency-luna-accord-guided-2
+kind: agent
+description: Predeclared matched Luna tooling-efficiency study, replication 2, assigned
+  arm guided_accord.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 20
+  command_seconds: 120
+  max_total_tokens: 350000
+  max_uncached_and_output_tokens: 100000
+  max_output_tokens: 20000
+substrate:
+  paths:
+  - adapter.py
+  - WEATHER_TOOLS.md
+  - weather_tools_examples.py
+  instructions: 'Start by reading /substrate/WEATHER_TOOLS.md and running python /substrate/weather_tools_examples.py.
+    This concise guide and offline example show the supported public APIs; use them
+    rather than exploring private modules. Use acmadDL normalization and AfricaS2S
+    default-Wilks ereg calibration substantively in the forecast calculation. Read
+    the task and source metadata, retrieve the current frozen HTTP snapshot using
+    acquisition.json on every rerun, and deliver reproducible arrays, code and claims.
+    Keep output concise: shapes, units and selected metadata. Use the helpers for
+    their supported operations, and general Python for retrieval, observations, grid
+    alignment, diagnostics and packaging. Document both helper call sites in report.md.
+    Use serial scientific file I/O. The request declares cumulative, uncached-plus-output
+    and output token caps; tool results display cumulative tokens and remaining time/calls.'
+  libraries:
+  - africas2s
+  - acmaddl
+  image_paths:
+  - /opt/accord-current/docs

@@ -1,0 +1,23 @@
+schema_version: 1
+purpose: Explore grading correctness and difficulty before expanding the benchmark.
+systems: [checkpoint-astra-python, checkpoint-astra-rhiza]
+tasks:
+  - template: kenya-forecast-revision
+    instance: service-area--weeks-1-2
+  - template: seasonal-rainfall-calibration
+    instance: train-1993-2004--new-2005-2006--all-cells
+  - template: weeks34-rainfall
+    instance: final-2018-2021--all-cells
+concurrency: 2
+sequence: Run the Kenya pair first, inspect, then run remaining pairs.
+stop_on: [infrastructure_failure, evaluator_defect, unclassified_answer]
+agent_retries: 0
+judge: Deferred until computed checks and frozen submissions are inspected.
+paid_api_cap_usd: 100
+selection: >-
+  These are the three existing tasks and cover quantity calculation, a prescribed
+  standard and a free forecast. Both configurations use the same pinned Codex
+  adapter and GPT-6 Astra at high effort, with matched Python environments.
+  Rhiza adds the original weather-skills catalog. ACCORD's acmadDL/africaS2S
+  configuration and additional backbones follow only after this checkpoint;
+  the initial comparison isolates one change and uses subscription inference.

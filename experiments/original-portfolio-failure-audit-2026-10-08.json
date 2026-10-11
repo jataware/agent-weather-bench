@@ -1,0 +1,505 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-08T16:21:08.748707+00:00",
+  "scope": "Read-only audit of actual historical Luna originals, not a plan, model trial, new numeric recomputation, regrade, or task modification.",
+  "new_model_calls": 0,
+  "native_scientific_executions": 0,
+  "paid_api_usd": 0,
+  "originals_unchanged": true,
+  "runs": {
+    "station": {
+      "run_id": "20261005T181603-station-verification-codex-luna-ff16df",
+      "original_assessment_completion": "partial",
+      "original_agent_status": "submitted",
+      "agent_seconds": 143.61745983397122,
+      "tool_calls": 8,
+      "usage": {
+        "input_tokens": 233847,
+        "cached_input_tokens": 195840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6923,
+        "reasoning_output_tokens": 187,
+        "total_tokens": 240770
+      },
+      "scientific_skill_gate": false,
+      "frozen_inventory_verified": true,
+      "frozen_file_count": 8,
+      "sources": {
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/assessment.json": "7a8655c080f8cc2300212c32ad25739a465631a027ad92253147ea896caa9586",
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/controller/assessments/7e6d17d6271578be-none/evaluation.json": "7d119cdc383cd5d67274ab2149a6d3fec73d01dac3ec0047f5c954ec90cde08d",
+        "var/calibration/overnight-static-diagnostics/20261005T181603-station-verification-codex-luna-ff16df.json": "3b52b163a1b13844fc2878f7d87e54fb27e3b9bdd866bbc47691d1ac6e26ee1e",
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/run.json": "bd46478f9e2f7d306001989677f9d788bf39c8724cf0d8527639c852eedb513b",
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/artifacts.json": "3da7ddf8de4cc6dcc14c80fe36bf137ffec534f47f5706bf5d1eb144881cf79d",
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/frozen/workflow.py": "531e0a2a7fb7149303b14c456a7505aa6e1f8fb91bf945fcc49cb3e2c379d3ca",
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/task/prompt.md": "21a39fe4aad2041bad9fd46bb6f5224db7fd4aeb4ecfe43838d08df1e9cbd380",
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/task/rubric.yaml": "6e4d95457cccedc645a6737eb663e3029253e35584024cb03ed32767e79924d4",
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/frozen/execution.json": "26bc4e7fb85279566e12ac029a9357b3fda67933c3c9fb6d874614176f2b92d5",
+        "var/runs/20261005T181603-station-verification-codex-luna-ff16df/frozen/provenance.json": "59c123ff3e5e14d089a5b875592d1ab3f8ce21ec80918ee09261fb50f319ed55"
+      },
+      "stored_checks": {
+        "delivery": {
+          "state": "pass",
+          "detail": ""
+        },
+        "execution_schema": {
+          "state": "fail",
+          "detail": "Declare nonempty retained_files"
+        },
+        "provenance_fields": {
+          "state": "fail",
+          "detail": "Retained paths must stay inside the submission"
+        },
+        "source_coverage": {
+          "state": "fail",
+          "detail": ""
+        },
+        "station_alignment": {
+          "state": "pass",
+          "detail": "Independent station truth, interpolation, exact support, units and metrics agree"
+        },
+        "support_alignment": {
+          "state": "pass",
+          "detail": "Independent station truth, interpolation, exact support, units and metrics agree"
+        },
+        "metric_values": {
+          "state": "pass",
+          "detail": "Independent station truth, interpolation, exact support, units and metrics agree"
+        },
+        "fault_contrasts": {
+          "state": "fail",
+          "detail": "diagnostic_rmse: numerical discrepancy"
+        },
+        "answer_schema": {
+          "state": "pass",
+          "detail": "Declared NOAA truth, method adaptation and constructed controls checked"
+        },
+        "answer_metrics": {
+          "state": "pass",
+          "detail": "Independent RMSE curves and station-support counts checked"
+        }
+      },
+      "stored_execution": {
+        "replay": {
+          "state": "pass",
+          "exit_code": 0,
+          "detail": "Independent station truth, interpolation, exact support, units and metrics agree; regenerated answer schema and numerical metrics checked",
+          "probe": null
+        },
+        "counterfactual": {
+          "state": "fail",
+          "exit_code": 0,
+          "detail": "diagnostic_rmse: numerical discrepancy; regenerated answer schema and numerical metrics checked",
+          "probe": "Controller modifies actual HRES East Africa stencil and supplied method availability mask; independent station reference recomputation"
+        },
+        "prediction": {
+          "state": "not_applicable",
+          "exit_code": null,
+          "detail": null,
+          "probe": null
+        }
+      },
+      "notes": [
+        "Stored original run and assessments only; no submitted or native scientific code executed in this audit.",
+        "Original assessments remain immutable; numeric diagnostics cited here are pre-existing read-only overlays, not new reassessments."
+      ],
+      "scientific_findings": [
+        {
+          "check": "fault_contrasts",
+          "state": "fail",
+          "error": "The all-three diagnostic omits the Celsius-as-Kelvin transformation: v==2 subtracts273.15 but v==4 does not. Time and own-support substitutions are present.",
+          "code": {
+            "path": "var/runs/20261005T181603-station-verification-codex-luna-ff16df/frozen/workflow.py",
+            "sha256": "531e0a2a7fb7149303b14c456a7505aa6e1f8fb91bf945fcc49cb3e2c379d3ca",
+            "first_line": 59,
+            "last_line": 66,
+            "lines": [
+              {
+                "line": 59,
+                "text": "   for v in range(5):"
+              },
+              {
+                "line": 60,
+                "text": "    mask=common[:,l,:].copy(); truth=obs[:,l,:].copy()"
+              },
+              {
+                "line": 61,
+                "text": "    if v in (1,4): mask &= np.isfinite(issueobs)"
+              },
+              {
+                "line": 62,
+                "text": "    if v in (1,4): truth=issueobs"
+              },
+              {
+                "line": 63,
+                "text": "    if v==2: truth=truth-273.15"
+              },
+              {
+                "line": 64,
+                "text": "    if v in (3,4): mask=av[m,:,l,:]&np.isfinite(fc[m,:,l,:])&np.isfinite(obs[:,l,:])"
+              },
+              {
+                "line": 65,
+                "text": "    if v==4: mask &=np.isfinite(issueobs)"
+              },
+              {
+                "line": 66,
+                "text": "    if mask.any():diag[v,m,l]=np.sqrt(np.mean((fc[m,:,l,:][mask]-truth[mask])**2))"
+              }
+            ]
+          },
+          "stored_numeric_diagnostic": {
+            "status": "compared",
+            "pairing": "positional",
+            "finite_paired_count": 40,
+            "max_abs_error": 270.5651399379333,
+            "rmse": 120.96191475993862,
+            "missing_nonfinite": {
+              "nan": {
+                "actual_count": 0,
+                "reference_count": 0,
+                "mask_agrees": true,
+                "mask_difference_count": 0
+              },
+              "positive_infinity": {
+                "actual_count": 0,
+                "reference_count": 0,
+                "mask_agrees": true,
+                "mask_difference_count": 0
+              },
+              "negative_infinity": {
+                "actual_count": 0,
+                "reference_count": 0,
+                "mask_agrees": true,
+                "mask_difference_count": 0
+              },
+              "nonfinite": {
+                "actual_count": 0,
+                "reference_count": 0,
+                "mask_agrees": true,
+                "mask_difference_count": 0
+              }
+            }
+          },
+          "units_diagnostic": {
+            "required": true,
+            "reference": "K",
+            "actual": "K",
+            "status": "match"
+          },
+          "scope": "Constructed combined-fault diagnostic only; all headline verification fields pass."
+        }
+      ],
+      "scientific_successes": [
+        "station_alignment",
+        "support_alignment",
+        "metric_values",
+        "answer_metrics",
+        "answer_schema"
+      ],
+      "packaging_findings": [
+        "execution_schema fails because retained_files is nested in replay rather than declared at top level.",
+        "provenance_fields fails: ../state/inputs records leave the frozen submission.",
+        "source_coverage fails separately; declared friendly source IDs also differ from manifest-required canonical IDs. These are delivery/attribution failures, not evidence of incorrect station physics."
+      ],
+      "execution_interpretation": "Ordinary replay passes. Changed-forecast/mask replay executes successfully, reaches diagnostic_rmse comparison, then fails the same combined-fault discrepancy. It is not evidence that headline scores were cached or did not respond.",
+      "boundary_interpretation": "One genuine scientific omission, reproducible under original and changed inputs; most actual station-verification science succeeds. This is not a persistent capability boundary or failure to perform station verification."
+    },
+    "monthly": {
+      "run_id": "20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0",
+      "original_assessment_completion": "partial",
+      "original_agent_status": "submitted",
+      "agent_seconds": 181.24730862502474,
+      "tool_calls": 16,
+      "usage": {
+        "input_tokens": 555370,
+        "cached_input_tokens": 490240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6281,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 561651
+      },
+      "scientific_skill_gate": false,
+      "frozen_inventory_verified": true,
+      "frozen_file_count": 18,
+      "sources": {
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/assessment.json": "8612f9a8f1af10d0d9f424b986fe0c95e4da314cacf1a1429563f7a14b70dec2",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/controller/assessments/7e6d17d6271578be-none/evaluation.json": "bc8fad0720a435522408e04bf2f9003e03ece48831bf38d1d4ac225c1d210fa2",
+        "var/calibration/overnight-static-diagnostics/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0.json": "16952ebf46810109d8bb3b6b9e3bbfbcde827f883f24782d62ad18bc1507e416",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/run.json": "a72ed0a48865b6a174768407fce9e1e0db46a2ae8f7f0da7274f57c4c29f030e",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/artifacts.json": "030337157531912cd84673c7c8e488a720dbc39b02b533e1ebb05cae3bf6433d",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/frozen/workflow.py": "dbca1b604b02cfc1fdd8634fd36444414123f32836d9c8a9849a676531a141bc",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/task/prompt.md": "1e5f9b9fb2d0db3d08d8053db732916f30317a7bc5b9677d152271f8b1e4ba49",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/task/rubric.yaml": "ac33cec5368cc69b6143382b8b574d1b034be14f4a38745b53d5a9706d6b5221",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/frozen/execution.json": "2ed92091ac9fe554a583820ef9329d5b4dab6913cc634a50d350b2b146cff9bc",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/frozen/provenance.json": "4924e1f2cc54e9191b17a85eda6030ec1763d0ba3f06d8dce20cdd5ea7214644"
+      },
+      "stored_checks": {
+        "delivery": {
+          "state": "pass",
+          "detail": ""
+        },
+        "execution_schema": {
+          "state": "pass",
+          "detail": ""
+        },
+        "provenance_fields": {
+          "state": "fail",
+          "detail": "Retained-file records need unique paths and matching SHA-256 hashes"
+        },
+        "source_coverage": {
+          "state": "fail",
+          "detail": ""
+        },
+        "fold_moments": {
+          "state": "pass",
+          "detail": "xmean: maximum difference 0, absolute tolerance 2e-07; xstd: maximum difference 0, absolute tolerance 2e-07; ymean: maximum difference 0, absolute tolerance 2e-07; ystd: maximum difference 0, absolute tolerance 2e-07"
+        },
+        "cyclic_coefficients": {
+          "state": "pass",
+          "detail": "coefficient: maximum difference 1.42109e-14, absolute tolerance 2e-07; standardized_coefficient: maximum difference 1.11022e-16, absolute tolerance 2e-07"
+        },
+        "nested_selection": {
+          "state": "pass",
+          "detail": "selected_candidate: maximum difference 0, absolute tolerance 2e-07; inner_loss: maximum difference 4.44089e-16, absolute tolerance 2e-07"
+        },
+        "outer_prediction": {
+          "state": "pass",
+          "detail": "prediction: maximum difference 2.84217e-14, absolute tolerance 2e-07"
+        },
+        "production_prediction": {
+          "state": "fail",
+          "detail": "prediction: incorrect units"
+        },
+        "verification_arithmetic": {
+          "state": "pass",
+          "detail": "squared_error: maximum difference 4.54747e-12, absolute tolerance 2e-05; monthly_msss: maximum difference 3.33067e-16, absolute tolerance 2e-07; msss: maximum difference 1.11022e-16, absolute tolerance 2e-07"
+        },
+        "answer_schema": {
+          "state": "pass",
+          "detail": "Declared experiment periods, statistical predictor/method boundaries and pooled MSSS"
+        }
+      },
+      "stored_execution": {
+        "replay": {
+          "state": "fail",
+          "exit_code": 1,
+          "detail": "Traceback (most recent call last):\n  File \"/work/workflow.py\", line 74, in <module>\n    p=argparse.ArgumentParser();p.add_argument('--inputs',default='/work/inputs');p.add_argument('--outputs',default='/work/submission');p.add_argument('--model');a=p.parse_args();run(a.inputs,a.outputs,a.model)\n                                                                                                                                                                                    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/workflow.py\", line 72, in run\n    run(inp,out,os.path.join(out,'model.json'))\n    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/workflow.py\", line 23, in run\n    ds['prediction']=(('system','year','month','target'),preds)\n    ^^\nUnboundLocalError: cannot access local variable 'ds' where it is not associated with a value\n",
+          "probe": null
+        },
+        "counterfactual": {
+          "state": "fail",
+          "exit_code": 1,
+          "detail": "Traceback (most recent call last):\n  File \"/work/workflow.py\", line 74, in <module>\n    p=argparse.ArgumentParser();p.add_argument('--inputs',default='/work/inputs');p.add_argument('--outputs',default='/work/submission');p.add_argument('--model');a=p.parse_args();run(a.inputs,a.outputs,a.model)\n                                                                                                                                                                                    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/workflow.py\", line 72, in run\n    run(inp,out,os.path.join(out,'model.json'))\n    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/workflow.py\", line 23, in run\n    ds['prediction']=(('system','year','month','target'),preds)\n    ^^\nUnboundLocalError: cannot access local variable 'ds' where it is not associated with a value\n",
+          "probe": null
+        },
+        "prediction": {
+          "state": "fail",
+          "exit_code": 1,
+          "detail": "Traceback (most recent call last):\n  File \"/usr/local/lib/python3.13/site-packages/xarray/backends/file_manager.py\", line 265, in _acquire_with_cache_info\n    file = self._cache[self._key]\n           ~~~~~~~~~~~^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/site-packages/xarray/backends/lru_cache.py\", line 56, in __getitem__\n    value = self._cache[key]\n            ~~~~~~~~~~~^^^^^\nKeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/work/_controller_inputs/targets.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), 'e6c9fbaa-ac8a-4e1f-b031-1d9609ba5675']\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/work/workflow.py\", line 74, in <module>\n    p=argparse.ArgumentParser();p.add_argument('--inputs',default='/work/inputs');p.add_argument('--outputs',default='/work/submission');p.add_argument('--model');a=p.parse_args();run(a.inputs,a.outputs,a.model)\n                                                                                                                                                                                    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/workflow.py\", line 18, in run\n    xd=xr.open_dataset(os.path.join(inp,'predictors.nc')); yd=xr.open_dataset(os.path.join(inp,'targets.nc'))\n                                                              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/site-packages/xarray/backends/api.py\", line 619, in open_dataset\n    backend_ds = backend.open_dataset(\n        filename_or_obj,\n    ...<2 lines>...\n        **kwargs,\n    )\n  File \"/usr/local/lib/python3.13/site-packages/xarray/backends/netCDF4_.py\", line 797, in open_dataset\n    store = NetCDF4DataStore.open(\n        filename_or_obj,\n    ...<8 lines>...\n        autoclose=autoclose,\n    )\n  File \"/usr/local/lib/python3.13/site-packages/xarray/backends/netCDF4_.py\", line 555, in open\n    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)\n  File \"/usr/local/lib/python3.13/site-packages/xarray/backends/netCDF4_.py\", line 454, in __init__\n    with manager.acquire_context():\n         ~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/usr/local/lib/python3.13/contextlib.py\", line 141, in __enter__\n    return next(self.gen)\n  File \"/usr/local/lib/python3.13/site-packages/xarray/backends/file_manager.py\", line 235, in acquire_context\n    file, cached = self._acquire_with_cache_info(needs_lock)\n                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/site-packages/xarray/backends/file_manager.py\", line 278, in _acquire_with_cache_info\n    file = self._opener(*self._args, **kwargs)\n  File \"src/netCDF4/_netCDF4.pyx\", line 2521, in netCDF4._netCDF4.Dataset.__init__\n  File \"src/netCDF4/_netCDF4.pyx\", line 2158, in netCDF4._netCDF4._ensure_nc_success\nFileNotFoundError: [Errno 2] No such file or directory: '/work/_controller_inputs/targets.nc'\n",
+          "probe": null
+        }
+      },
+      "notes": [
+        "Stored original run and assessments only; no submitted or native scientific code executed in this audit.",
+        "Original assessments remain immutable; numeric diagnostics cited here are pre-existing read-only overlays, not new reassessments."
+      ],
+      "scientific_findings": [
+        {
+          "check": "production_prediction",
+          "state": "fail",
+          "error": "Production constant-slope predictions use predict(...,1), i.e. the lambda0.25 cyclic candidate, while exported constant-slope coefficients use the intended average standardized monthly slope.",
+          "code": {
+            "path": "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/frozen/workflow.py",
+            "sha256": "dbca1b604b02cfc1fdd8634fd36444414123f32836d9c8a9849a676531a141bc",
+            "first_line": 20,
+            "last_line": 27,
+            "lines": [
+              {
+                "line": 20,
+                "text": " if model:"
+              },
+              {
+                "line": 21,
+                "text": "  st=json.load(open(model)); pars=tuple(np.array(st[k]) for k in ['xmean','xstd','ymean','ystd','raw','betas']); sel=st['selected']; losses=np.array(st['inner_loss']); idx=np.where(yrs>=2020)[0]"
+              },
+              {
+                "line": 22,
+                "text": "  preds=np.empty((4,len(idx),12,3)); preds[0]=pars[2]; preds[1]=predict(x[idx],pars,0); preds[2]=predict(x[idx],pars,1); preds[3]=predict(x[idx],pars,sel)"
+              },
+              {
+                "line": 23,
+                "text": "  ds['prediction']=(('system','year','month','target'),preds)"
+              },
+              {
+                "line": 24,
+                "text": "  ds['coefficient']=(('system','month','target'),np.stack([np.zeros((12,3)),pars[4]*pars[3]/pars[1][:,None],np.broadcast_to(pars[4].mean(0)*pars[3]/pars[1][:,None],(12,3)),pars[5][sel]*pars[3]/pars[1][:,None]]))"
+              },
+              {
+                "line": 25,
+                "text": "  ds['standardized_coefficient']=(('system','month','target'),np.stack([np.zeros((12,3)),pars[4],np.broadcast_to(pars[4].mean(0),(12,3)),pars[5][sel]]))"
+              },
+              {
+                "line": 26,
+                "text": "  ds['selected_candidate']=xr.DataArray(sel); ds['inner_loss']=(('candidate',),losses)"
+              },
+              {
+                "line": 27,
+                "text": "  ds=ds.assign_coords(system=['climatology','independent-month','constant-slope','nested-cyclic'],year=yrs[idx],month=np.arange(1,13),target=yd.target.values,candidate=np.arange(6)); ds.to_netcdf(os.path.join(out,'forecast.nc'));return"
+              }
+            ]
+          },
+          "stored_numeric_diagnostic": {
+            "status": "compared",
+            "pairing": "positional",
+            "finite_paired_count": 576,
+            "max_abs_error": 34.9690993608007,
+            "rmse": 4.575141388323179,
+            "missing_nonfinite": {
+              "nan": {
+                "actual_count": 0,
+                "reference_count": 0,
+                "mask_agrees": true,
+                "mask_difference_count": 0
+              },
+              "positive_infinity": {
+                "actual_count": 0,
+                "reference_count": 0,
+                "mask_agrees": true,
+                "mask_difference_count": 0
+              },
+              "negative_infinity": {
+                "actual_count": 0,
+                "reference_count": 0,
+                "mask_agrees": true,
+                "mask_difference_count": 0
+              },
+              "nonfinite": {
+                "actual_count": 0,
+                "reference_count": 0,
+                "mask_agrees": true,
+                "mask_difference_count": 0
+              }
+            }
+          },
+          "units_diagnostic": {
+            "required": true,
+            "reference": "mm",
+            "actual": null,
+            "status": "missing"
+          },
+          "scope": "Wrong production constant-slope comparator, not nested selection mathematics."
+        }
+      ],
+      "scientific_successes": [
+        "fold_moments",
+        "cyclic_coefficients",
+        "nested_selection",
+        "outer_prediction",
+        "verification_arithmetic",
+        "answer_schema"
+      ],
+      "execution_findings": [
+        {
+          "check": "replay",
+          "error": "UnboundLocalError on ds at frozen workflow line23. Late edit removed dataset initialization after the last successful generating run.",
+          "code": {
+            "path": "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/frozen/workflow.py",
+            "sha256": "dbca1b604b02cfc1fdd8634fd36444414123f32836d9c8a9849a676531a141bc",
+            "first_line": 20,
+            "last_line": 27,
+            "lines": [
+              {
+                "line": 20,
+                "text": " if model:"
+              },
+              {
+                "line": 21,
+                "text": "  st=json.load(open(model)); pars=tuple(np.array(st[k]) for k in ['xmean','xstd','ymean','ystd','raw','betas']); sel=st['selected']; losses=np.array(st['inner_loss']); idx=np.where(yrs>=2020)[0]"
+              },
+              {
+                "line": 22,
+                "text": "  preds=np.empty((4,len(idx),12,3)); preds[0]=pars[2]; preds[1]=predict(x[idx],pars,0); preds[2]=predict(x[idx],pars,1); preds[3]=predict(x[idx],pars,sel)"
+              },
+              {
+                "line": 23,
+                "text": "  ds['prediction']=(('system','year','month','target'),preds)"
+              },
+              {
+                "line": 24,
+                "text": "  ds['coefficient']=(('system','month','target'),np.stack([np.zeros((12,3)),pars[4]*pars[3]/pars[1][:,None],np.broadcast_to(pars[4].mean(0)*pars[3]/pars[1][:,None],(12,3)),pars[5][sel]*pars[3]/pars[1][:,None]]))"
+              },
+              {
+                "line": 25,
+                "text": "  ds['standardized_coefficient']=(('system','month','target'),np.stack([np.zeros((12,3)),pars[4],np.broadcast_to(pars[4].mean(0),(12,3)),pars[5][sel]]))"
+              },
+              {
+                "line": 26,
+                "text": "  ds['selected_candidate']=xr.DataArray(sel); ds['inner_loss']=(('candidate',),losses)"
+              },
+              {
+                "line": 27,
+                "text": "  ds=ds.assign_coords(system=['climatology','independent-month','constant-slope','nested-cyclic'],year=yrs[idx],month=np.arange(1,13),target=yd.target.values,candidate=np.arange(6)); ds.to_netcdf(os.path.join(out,'forecast.nc'));return"
+              }
+            ]
+          },
+          "trace_evidence": "logs/events.jsonl lines30/31 last successful workflow;55/56 remove ds initialization without rerunning;60/61 inspect existing forecast;64/65 copy existing artifacts/state."
+        },
+        {
+          "check": "counterfactual",
+          "error": "Same UnboundLocalError, before changed-target isolation can be assessed; do not describe as demonstrated leakage."
+        },
+        {
+          "check": "prediction",
+          "error": "Saved-model inference unconditionally opens targets.nc before checking model mode, then fails FileNotFoundError when target file is absent.",
+          "code": {
+            "path": "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/frozen/workflow.py",
+            "sha256": "dbca1b604b02cfc1fdd8634fd36444414123f32836d9c8a9849a676531a141bc",
+            "first_line": 16,
+            "last_line": 21,
+            "lines": [
+              {
+                "line": 16,
+                "text": "def run(inp,out,model=None):"
+              },
+              {
+                "line": 17,
+                "text": " os.makedirs(out,exist_ok=True)"
+              },
+              {
+                "line": 18,
+                "text": " xd=xr.open_dataset(os.path.join(inp,'predictors.nc')); yd=xr.open_dataset(os.path.join(inp,'targets.nc'))"
+              },
+              {
+                "line": 19,
+                "text": " x=xd.iod.values; y=yd.rainfall.values; yrs=xd.year.values; ty=yd.year.values"
+              },
+              {
+                "line": 20,
+                "text": " if model:"
+              },
+              {
+                "line": 21,
+                "text": "  st=json.load(open(model)); pars=tuple(np.array(st[k]) for k in ['xmean','xstd','ymean','ystd','raw','betas']); sel=st['selected']; losses=np.array(st['inner_loss']); idx=np.where(yrs>=2020)[0]"
+              }
+            ]
+          }
+        }
+      ],
+      "packaging_findings": [
+        "forecast.nc prediction/coefficient unit metadata absent; first-failure checker reports units and hides the distinct34.9690993608007mm numeric production error.",
+        "provenance_fields detects stale workflow.py hash after late code edit. All5 required source IDs are actually declared; source_coverage also fails through provenance-validation attribution coupling."
+      ],
+      "grader_scope_findings": [
+        "nested_whole_year_selection aggregated leaf is fail because production_prediction joins that leaf, despite nested_selection/outer_prediction checks passing.",
+        "The original fail is supported, but calling it a nested-selection failure is misleading.",
+        "The original production check reports units only. Pre-existing independent value diagnostics expose the real comparator error."
+      ],
+      "additional_sources": {
+        "var/calibration/overnight-final-task-audit.md": "35a82226298b6bd4d5bb1f387c3a320604f548026e3f071ef0b7ed5c60dd02a1",
+        "var/runs/20261005T183342-monthly-cycle-calibration-codex-luna-e7f6e0/logs/events.jsonl": "8b0d7303d565f6f821e38cdb06921caa46dddea9ce03c52a9dd87e2bb87187d6"
+      },
+      "boundary_interpretation": "A genuine production forecast/comparator error and saved-inference/replay defects, with correct nested cyclic calibration core. One historical attempt does not establish persistent inability or a frontier boundary."
+    }
+  },
+  "conclusion": "Both originals contain actual scientific output errors beyond packaging. Station error is confined to the combined constructed-fault diagnostic; monthly error is confined to production constant-slope prediction, with separate deployment defects. Preserve component successes and avoid claiming a persistent capability boundary."
+}

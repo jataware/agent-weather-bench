@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "kind": "offline synthetic API validation; no model inference",
+  "system": "mam-luna-accord-guided",
+  "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+  "exit_code": 0,
+  "checks": {
+    "normalize": {
+      "dimensions": [
+        "year",
+        "member",
+        "lat",
+        "lon"
+      ],
+      "shape": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "units": "mm",
+      "years": [
+        2000,
+        2001
+      ]
+    },
+    "calibrate": {
+      "cv_dimensions": [
+        "year",
+        "tercile",
+        "lat",
+        "lon"
+      ],
+      "cv_shape": [
+        12,
+        3,
+        2,
+        2
+      ],
+      "forecast_dimensions": [
+        "tercile",
+        "lat",
+        "lon"
+      ],
+      "forecast_shape": [
+        3,
+        2,
+        2
+      ],
+      "tercile_labels": [
+        0,
+        1,
+        2
+      ],
+      "per_model_keys": [
+        "centre_a",
+        "centre_b"
+      ]
+    },
+    "synthetic_only": true
+  },
+  "validation": [
+    "System schema valid",
+    "Substrate snapshot contains guide, examples, adapter",
+    "Adapter byte-identical to original context-budget condition",
+    "Scientific task fingerprint unchanged"
+  ],
+  "model_attempts": 0,
+  "direct_paid_api_spend_usd": 0,
+  "comparison": "Only discovery instructions and guide/example substrate change from mam-luna-required-accord-context-budget; original system and trials preserved.",
+  "substrate_sha256": {
+    "WEATHER_TOOLS.md": "be28c1a3ca02975419e4c48ce9a2f589d56b36efaa48a603f79a23753f7d8bf2",
+    "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+    "system.yaml": "33dfca120600d60c4b2dcd62623c82a2e8aacc02a045ff89a003b403f5b9b65b",
+    "weather_tools_examples.py": "cd292ac3e587a7765c1327a5cc168e027511de40676502edfc4e96ce5454f6be"
+  },
+  "review_note": "Instructions accurately distinguish declared uncached/output caps from the cumulative remaining-token counter displayed in tool results."
+}

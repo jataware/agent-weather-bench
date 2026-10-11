@@ -1,0 +1,30 @@
+source_category: frozen_real_weather_subset_with_constructed_candidate_experiments
+source_snapshot: var/private/templates/seasonal-cca-reproduction
+sources:
+- id: chirps3
+  url: https://chc.ucsb.edu/data/chirps3
+  product: CHIRPS v3 final monthly
+- id: era5-sst
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-monthly-means
+  product: ERA5 monthly observed SST, retrospective final-vintage source fixture
+- id: legacy-normalization
+  repository: v4zeek
+  revision: e364ce0ed6cb210b0872c4e35d76ddb329b6dfa5
+  locators: [src/fetch_fixtures.py, archive/legacy-libraries/rosetta/src/rosetta/normalize.py]
+  processing: Existing source acquisition divided native CHIRPS monthly totals by30; source-task construction undoes it before OND summation.
+- id: pycpt-source
+  url: https://github.com/iri-pycpt/pycpt
+  revision: 62b90ccf4cb543f2a5680a5c553bcf4ca6b846c0
+  evidence: Historical source-task method provenance; the audit candidate does not implement PyCPT.
+- id: africas2s-source
+  url: https://github.com/ACMAD-Niamey/africas2s
+  revision: 4f8526a32232f9c9af400a01e5a6f103a865c735
+  evidence: Historical source-task method provenance; repaired agent methods may choose available libraries.
+method_scope: Constructed audit experiments; no claim of reproducing CPT, a published method, or an operational forecast system.
+curator_choices:
+- June-August observed SST predictors and October-December rainfall targets retain the existing frozen CCA subset byte for byte.
+- Four readable candidate experiments isolate correct evaluation, whole-record target centering, whole-record predictor screening, and unsupported reuse of development scores.
+- Candidate ridge penalty is fixed at one. Repaired methods are freely chosen and need not reproduce ridge.
+- Each hindcast issued before OND may use strictly earlier rainfall seasons and its own JJA predictors; production forecasts may use targets through 2019 and their own predictors.
+- Scores are equal-weight retrospective diagnostics at twelve neighbouring cells over fifteen years; ranking is disabled.
+redistribution_status: Pending human source/data-rights review; internal development only.

@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/templates/mam-multimodel-outlook",
+  "source_weather_is_synthetic": false,
+  "scientific_approval": "pending",
+  "redistribution_approval": "pending",
+  "decoder_image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+  "files": [
+    {
+      "file": "private-source-records/decoded-metadata.json",
+      "sha256": "13e616b758c7d6ecc2ac05e2ff7199821aacb5ead0df8dcbd675f05da3e8132f",
+      "bytes": 117968,
+      "visibility": "controller"
+    },
+    {
+      "file": "private-source-records/raw-cache-records.json",
+      "sha256": "0eed281a5437525525a6f6592f1edc19d704f0f28fe6e61f66d2404c999b49b3",
+      "bytes": 1764,
+      "visibility": "controller"
+    },
+    {
+      "file": "private-targets/chirps-monthly-2016.nc",
+      "sha256": "1c8add1f1fea66fe30615252fb097501d365f8ad15f1e381d1e77ae28bde9e71",
+      "bytes": 145664,
+      "visibility": "controller"
+    },
+    {
+      "file": "provider/catalog.json",
+      "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+      "bytes": 1124,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/cmcc.nc",
+      "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+      "bytes": 439326,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/ecmwf.nc",
+      "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+      "bytes": 283806,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/meteofrance.nc",
+      "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+      "bytes": 346014,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/ukmo.nc",
+      "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+      "bytes": 314912,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/observations/chirps-monthly-pre2016.nc",
+      "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+      "bytes": 3001776,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/provenance.json",
+      "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+      "bytes": 27656,
+      "visibility": "provider"
+    }
+  ],
+  "raw_cache_records": {
+    "ecmwf": {
+      "cache_key": "1993_2016_None_2_c3s/ecmwf-monthly_-3.0_3.0_36.0_42.0_precip.pkl",
+      "sha256": "ec016d1073c8fa7cfc8a64be175760062bdfc00166ac03c8176e7acab83eee4b",
+      "bytes": 264591
+    },
+    "cmcc": {
+      "cache_key": "1993_2016_None_2_c3s/cmcc_-3.0_3.0_36.0_42.0_precip.pkl",
+      "sha256": "8f876058bfe38696992b754dcec1b28ce5a857c4d51bcad2fb6d0d14e00e469b",
+      "bytes": 420142
+    },
+    "ukmo": {
+      "cache_key": "1993_2016_None_2_c3s/ukmo_-3.0_3.0_36.0_42.0_precip.pkl",
+      "sha256": "db7ff58ec37061fc96ea23bbd5ce7f361a079b0c5dffac17bfc28a90d8eda6a4",
+      "bytes": 295683
+    },
+    "meteofrance": {
+      "cache_key": "1993_2016_None_2_c3s/meteofrance_-3.0_3.0_36.0_42.0_precip.pkl",
+      "sha256": "a5921362f62bbb298c7f69faf906cc403dfd53488697b01eceedb8f2629ec8cb",
+      "bytes": 326813
+    },
+    "chirps": {
+      "cache_key": "1993_2016_None_obs/chirps-v2-monthly_-12.0_15.0_22.0_52.0_precip.pkl",
+      "sha256": "d95973696a68d4d922d75ae24481fdce7f01bee2fb10179f5b99f349dc88962a",
+      "bytes": 427639564
+    }
+  },
+  "limitations": [
+    "No claim that these reforecasts or observations were available as final data at historical issuance dates",
+    "Source GRIB/COG downloads are not retained here; cache hashes and native decoding history establish the available lineage",
+    "Model grid and 1993\u20132016 overlap are a small Kenya service window, not a country-wide or global product"
+  ]
+}

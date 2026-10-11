@@ -1,0 +1,45 @@
+{
+  "state": "pass",
+  "verified_at": "2026-10-08T15:14:12.881990+00:00",
+  "actual_agent_attempts": 6,
+  "new_task_pairs": 2,
+  "exact_same_condition_MAM_repeat_pairs": 1,
+  "no_pending_attempts": true,
+  "automatic_retries": 0,
+  "required_or_supplementary_judge_requests": 0,
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "all_six_assigned_attempts_included_in_resource_totals": true,
+  "computed_passes": 5,
+  "native_use_verified_in_all_three_guided_attempts": true,
+  "original_failed_attempt_remains_failed": true,
+  "source_substrate_frozen_artifact_inventories_verified": true,
+  "current_task_fingerprints_verified": true,
+  "all_proof_and_review_hashes_verified": true,
+  "analysis_gates_verified": true,
+  "targeted_tests": {
+    "passed": 25,
+    "skipped": 1,
+    "scope": "Acquisition, orchestration, probe precision and launch accounting; scientific native/control checks recorded in preflight artifacts."
+  },
+  "token_totals_including_failures": {
+    "input_tokens": 914786,
+    "cached_input_tokens": 687104,
+    "output_tokens": 38107,
+    "total_tokens": 952893
+  },
+  "verification_model_calls": 0,
+  "scientific_binary_decoding_during_verification": false,
+  "artifact_sha256": {
+    "experiments/tooling-breadth-plan-2026-10-08.json": "96e355427f41272e28debf84f838a548d674904d2f6ea321a2bf671937eaaf5a",
+    "experiments/tooling-breadth-verified-results-2026-10-08.json": "174678f26e8ab398f008a835cfc1cacf4ae2e088242be56fb186e5ef7ae7c15e",
+    "experiments/tooling-breadth-results-2026-10-08.json": "a6f3f2ed044927a999e69f293d29a1d021d05c7d188ae539bee2a28e4a6b62a1",
+    "experiments/breadth_efficiency.py": "5886f102fb43215007ceebfa41ff45aee9ba6256d198967ddca7941a5cf2d5d5",
+    "experiments/verify_breadth_efficiency.py": "f1cd89c5d14bbfeff99f919f2f113cb1b62a8f9bbd1b6877a4f4b7bfbaa54070",
+    "experiments/breadth-rhiza-preflight-2026-10-08.json": "ead1f7336d0932dff8679e60805b606ea318a1009aa549858b21369e0989776b",
+    "experiments/breadth-consolidation-preflight-2026-10-08.json": "0f2886b52fcba89006882fa47d28fe2c73eb484220dbe9efb907595cda2475fa",
+    "experiments/breadth-consolidation-portability-diagnostic-2026-10-08.json": "756bc54a40da8ee418726095fc27c740f41dec1d16ad05b3900ddcba7087a254",
+    "docs/tooling-breadth-study-2026-10-08.md": "2b120fb738da594778707dd38e9c9dd84a3d3b53fe3570ae399c1b1966181254",
+    "var/review/tooling-breadth-targeted-pytest-20261008.log": "97d013b6a9ffb89a91a62143fa8b0db4f8ac465cb602ba394f115979cb184788"
+  }
+}

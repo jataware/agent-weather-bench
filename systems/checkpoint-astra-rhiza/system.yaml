@@ -1,0 +1,30 @@
+schema_version: 1
+id: checkpoint-astra-rhiza
+kind: agent
+description: GPT-6 Astra, high effort, pinned Codex CLI, short three-task grading
+  checkpoint; rhiza condition from the original pilot.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:67c8e092049d10b9180a4b030bc447d7f4798e94e8ac7d05b14f8d2a9c6dbf63
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 600
+  max_tool_calls: 32
+  command_seconds: 90
+  max_total_tokens: 120000
+substrate:
+  paths:
+  - adapter.py
+  instructions: Rhiza skills and scripts are under /catalog; generic Python is also
+    allowed.
+  libraries:
+  - weather_skills_core
+  image_paths:
+  - /catalog

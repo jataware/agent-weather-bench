@@ -1,5 +1,17 @@
 # The results so far come from one cheap model and show what the checks catch
 
+This is the preserved **7 October report**. Its uses of “current” refer to that
+date's contracts. The [8 October grading checkpoint](checkpoint-2026-10-08.md)
+uses newer contracts and is reported separately, followed by the
+[focused study](focused-study-2026-10-08.md) and the
+[parallel investigations](parallel-investigations-2026-10-08.md). The subsequent
+[two-track investigation](two-track-investigation-2026-10-08.md) reports acquisition,
+tool efficiency and the search for forecasting difficulty separately.
+The latest [tooling breadth study](tooling-breadth-study-2026-10-08.md) adds six
+Luna attempts across revision, consolidation and an exact MAM repeat. Its time
+benefit, overhead and portability failures remain separate from this historical
+report.
+
 Status: 7 October 2026. Everything below comes from one cheap model, gpt-6-luna, through one harness, on three templates (parameterised tasks). There is one attempt per cell. These results show that the machinery works and what it catches. They do not rank anything.
 
 ![A forecasting task goes into a sandbox; what comes out is checked by computation and by a narrow judge](figures/overview.png)

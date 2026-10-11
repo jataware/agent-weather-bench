@@ -13,9 +13,11 @@ from pathlib import Path
 
 from .compare import STORE, EnvelopeError, align, compare, read_results, summary
 from .execute import valid_argv
-from .judge import interpretation_question, pending, report_question, statement_question, views
+from .judge import pending, report_question, statement_question, views
 from .outcomes import FAIL, JUDGE, PASS, UNRESOLVED, blocked, combine, headline, outcome
 from .variant import _reference, classes, consistent, decide, split, summarise, table
+from .rubric import annotate, interpretation
+from . import stages
 
 __all__ = ["assess", "judge_files", "answer_digest", "JUDGE"]
 
@@ -23,6 +25,9 @@ __all__ = ["assess", "judge_files", "answer_digest", "JUDGE"]
 def read_envelope(template, submission):
     """(answer, usable results, run command or None, problems by part). An EnvelopeError when no result can be read."""
     path, problems, answer = Path(submission) / "answer.json", {}, {}
+    report = Path(submission) / "report.md"
+    if not report.is_file() or not report.read_text(errors="replace").strip():
+        problems["report.md"] = "The submission needs a nonempty report.md"
     if not path.is_file():
         problems["answer.json"] = "The submission has no answer.json"
     else:
@@ -72,6 +77,7 @@ class _Context:
         self.template, self.spec, self.hooks = template, template.spec, template.hooks
         self.params, self.submission, self.executor, self.scratch, self.seed = params, submission, executor, scratch, seed
         self.argv, self.usable, self.reference_rows, self.probe_rows = None, set(), None, None
+        self.results, self.changed_rerun, self.changed_partial, self.changed_problem = None, None, None, None
         self.framed = callable(getattr(self.hooks, "expected_coordinates", None))
 
     def stage(self, label, prepare=None):
@@ -125,18 +131,23 @@ def assess(template, params, submission, executor, scratch, level=1, feedback=No
               "mode": spec["mode"], "level": level, "instance": params, "executor": executor.name, "seed": seed}
     claims = {**spec.get("claims", {}), **(spec["level2"].get("claims", {}) if level == 2 else {})}
     context = _Context(template, params, submission, executor, scratch, seed)
-    planned = ((["variant"] if spec["mode"] != "outcome" else []) + (["coverage"] if context.framed else [])
+    planned = ((["variant"] if template.uses_reference else []) + (["coverage"] if context.framed else [])
                + [f"invariant.{n}" for n in spec.get("invariants", [])] + [f"probe.{n}" for n in spec.get("probes", [])]
                + [f"claim.{n}" for n in claims] + (["feedback.limit"] if level == 2 else []))
     checks = {}
 
     def finish(answer):
         _process_steps(context, answer, checks, result)
+        if spec.get("stages"):
+            failed = checks.get("coverage", {}).get("state") == FAIL
+            result["stages"], result["stage_score"] = stages.evaluate(spec, checks, context.usable, lambda names: _stage_absolute(context, names),
+                                                                       checks["coverage"]["detail"] if failed else None)
         for name in spec.get("interpretation", []):
-            checks[f"interpretation.{name}"] = pending(name, interpretation_question(name))
+            checks[f"interpretation.{name}"] = pending(name, interpretation(spec, name))
         for folder in scratch.glob("probe-*/stage"):
             shutil.rmtree(folder, ignore_errors=True)
         result["checks"] = checks
+        annotate(result, template, level)
         return headline(result)
 
     def stop(check, message, answer):
@@ -157,6 +168,7 @@ def assess(template, params, submission, executor, scratch, level=1, feedback=No
     context.usable = set(raw)
     try:
         results = context.frame(raw, original)
+        context.results = results
         if context.framed:
             checks["coverage"] = outcome(PASS, "The results cover exactly the required cases, each labelled with its own coordinates.")
     except EnvelopeError as error:
@@ -168,7 +180,7 @@ def assess(template, params, submission, executor, scratch, level=1, feedback=No
             checks[f"invariant.{name}"] = outcome(PASS if ok else FAIL, detail)
         except KeyError as missing:
             checks[f"invariant.{name}"] = blocked("envelope", f"Fails with the envelope: it needs the result {missing}, which is unusable.")
-    if spec["mode"] == "outcome":
+    if not template.uses_reference:
         _forecast_probes(context, results, original, checks)
     else:
         _reference_checks(context, results, original, answer, checks, result)
@@ -257,8 +269,10 @@ def _reference_checks(context, results, original, answer, checks, result):
         seed, separates = _separating_seed(context, rows, hits, results)
         changed = context.stage("changed-data", prepare=lambda folder: hooks.perturb_inputs(folder, seed, "data"))
         rerun, slim, problem = context.rerun("changed-data", changed)
+        context.changed_problem = problem
         if problem is None:
             changed_rows = context.probe_rows = table(template, changed, params, given=rerun)
+            context.changed_rerun, context.changed_partial = rerun, consistent(template, rerun, changed_rows, context.usable)[1]
             if hits and any(rows[i][1] is not None and changed_rows[i][1] is not None and compare(template.matched(), changed_rows[i][1], rows[i][1])[0] for i in hits):
                 problem, shared = outcome(UNRESOLVED, "The controller's data change did not alter the reference, so the probe cannot decide.", "infrastructure"), []
             else:
@@ -323,6 +337,13 @@ def _forecast_probes(context, forecast, original, checks):
         checks["probe.replay"] = problem
     if "responds_to_inputs" in probes:
         moved, records, broken = [], {}, None
+        groups = getattr(hooks, "RESPONSE_GROUPS", None)
+        if groups is not None and (not isinstance(groups, dict) or not groups
+                                   or any(not isinstance(name, str) or not name or not isinstance(members, list) or not members
+                                          or any(not isinstance(member, str) or member not in spec["results"] for member in members)
+                                          for name, members in groups.items())):
+            raise ValueError("RESPONSE_GROUPS must map nonempty group names to nonempty lists of declared results")
+        group_changes = {name: [] for name in groups} if groups is not None else None
         for kind in hooks.RESPONSE_PERTURBATIONS:
             folder = context.stage(f"changed-{kind}", prepare=lambda folder, kind=kind: hooks.perturb_inputs(folder, context.seed, kind))
             produced, slim, problem = context.rerun(f"changed-{kind}", folder)
@@ -330,12 +351,40 @@ def _forecast_probes(context, forecast, original, checks):
             if problem is not None:
                 broken = problem
                 break
-            if not compare(spec["results"], produced, forecast)[0]:
+            projection = getattr(hooks, "response_results", None)
+            try:
+                before = projection(forecast, original, context.params) if callable(projection) else forecast
+                after = projection(produced, folder, context.params) if callable(projection) else produced
+            except KeyError as missing:
+                broken = blocked("envelope", f"Fails with the envelope: the input-response probe needs result {missing}, which is unusable.")
+                break
+            if callable(projection) and (not isinstance(before, dict) or not before or not isinstance(after, dict)
+                                         or set(before) != set(after) or set(before) - set(spec["results"])):
+                raise ValueError("response_results must return the same nonempty set of declared results before and after an input change")
+            if not compare(spec["results"], after, before)[0]:
                 moved.append(kind)
+            if groups is not None:
+                for name, members in groups.items():
+                    try:
+                        first = {member: before[member] for member in members}
+                        changed = {member: after[member] for member in members}
+                    except KeyError as missing:
+                        broken = blocked("envelope", f"Fails with the envelope: response group {name} needs result {missing}, which is unusable.")
+                        break
+                    if not compare(spec["results"], changed, first)[0]:
+                        group_changes[name].append(kind)
+                if broken is not None:
+                    break
+        responds = all(group_changes.values()) if group_changes is not None else bool(moved)
+        detail = (("The forecast changes when these inputs change: " + ", ".join(moved) + ".") if moved else
+                  "The forecast does not change when any supplied input changes, so it does not come from the supplied data.")
+        if group_changes is not None:
+            unchanged = [name for name, kinds in group_changes.items() if not kinds]
+            detail = ("Every required forecast group responds to at least one relevant input change." if responds else
+                      "These required forecast groups do not respond to any relevant input change: " + ", ".join(unchanged) + ".")
         checks["probe.responds_to_inputs"] = broken or outcome(
-            PASS if moved else FAIL, ("The forecast changes when these inputs change: " + ", ".join(moved) + ".") if moved else
-            "The forecast does not change when any supplied input changes, so it does not come from the supplied data.",
-            responds_to=moved, runs=records)
+            PASS if responds else FAIL, detail, responds_to=moved, runs=records,
+            **({"responds_to_groups": group_changes} if group_changes is not None else {}))
 
 
 # ---- checks shared by every mode ---------------------------------------------------
@@ -353,13 +402,22 @@ def _invariance_probes(context, results, checks):
         probe = declared[name]
         folder = context.stage(f"invariance-{name}", prepare=lambda folder, probe=probe: context.hooks.perturb_inputs(folder, context.seed, probe["perturb"]))
         produced, slim, problem = context.rerun(f"invariance-{name}", folder)
+        parts = {part: problem for part in probe.get("parts", {})}
         if problem is None:
             try:
                 same = compare(context.spec["results"], probe["unchanged"](produced, folder, context.params), probe["unchanged"](results, folder, context.params))[0]
                 problem = outcome(PASS if same else FAIL, probe["passes"] if same else probe["fails"], run=slim)
             except KeyError as missing:
                 problem = {**blocked("envelope", f"Fails with the envelope: it needs the result {missing}, which is unusable."), "run": slim}
+            for part, projection in probe.get("parts", {}).items():      # the same rerun, judged on one part of the results
+                try:
+                    same = compare(context.spec["results"], projection(produced, folder, context.params), projection(results, folder, context.params))[0]
+                    parts[part] = outcome(PASS if same else FAIL, probe.get("part_passes", {}).get(part, probe["passes"]) if same else probe.get("part_fails", {}).get(part, probe["fails"]), run=slim)
+                except KeyError as missing:
+                    parts[part] = {**blocked("envelope", f"Fails with the envelope: it needs the result {missing}, which is unusable."), "run": slim}
         checks[f"probe.{name}"] = problem
+        for part, row in parts.items():
+            checks[f"probe.{name}.{part}"] = row
 
 
 def _claims(context, results, answer, claims, checks, result):
@@ -444,6 +502,46 @@ def _process_steps(context, answer, checks, result):
         checks[f"process.{step['id']}"] = row
     if context.spec.get("process"):
         result["process_not_applicable"] = context.spec.get("process_not_applicable", [])
+
+
+def _stage_absolute(context, names):
+    """The absolute verdict of a stage that rests on results: reference agreement on those results, and,
+    where the changed-data probe ran, whether those results follow the data under a reading consistent with them."""
+    agreement = _results_step(context, names, {})
+    if "changed_data" not in context.spec.get("probes", []):
+        return {**agreement, "agreement": {"state": agreement["state"], "detail": agreement["detail"]}}
+    changed = _stage_follows_inputs(context, names)
+    state = combine([agreement, changed])
+    reason = next((row["reason"] for row in (agreement, changed) if row["state"] == UNRESOLVED), None) if state == UNRESOLVED else None
+    row = outcome(state, f"Reference agreement: {agreement['detail']} Changed data: {changed['detail']}", reason,
+                  agreement={key: agreement[key] for key in agreement if key != "detail"}, changed_data={key: changed[key] for key in changed if key != "detail"},
+                  evidence_results=names)
+    row["agreement"]["detail"], row["changed_data"]["detail"] = agreement["detail"], changed["detail"]
+    return row
+
+
+def _stage_follows_inputs(context, names):
+    """Per-stage changed-data verdict from the one changed-data rerun: the stage's results must move, and move to a
+    reading consistent with the submitted ones. Each stage answers for its own results only."""
+    if context.changed_rerun is None:
+        if context.changed_problem is not None:
+            return {**context.changed_problem}
+        return outcome(UNRESOLVED, "No changed-data rerun is available.", "infrastructure")
+    if any(name not in context.usable for name in names):
+        return blocked("envelope", "Fails with the envelope: " + ", ".join(n for n in names if n not in context.usable) + " is unusable.")
+    subset = {name: context.template.matched()[name] for name in names}
+    if compare(subset, context.changed_rerun, context.results)[0]:
+        return outcome(FAIL, "The stage's results did not change when the data changed.")
+    def hits(partial):
+        return {i for i, detail in enumerate(partial) if detail and all(detail.get(name, {}).get("agrees") for name in names)}
+    before, after = hits(context.partial), hits(context.changed_partial)
+    if not before:
+        return outcome(UNRESOLVED, "The stage's results change with the data but match no listed reading, so their correctness is not established.", "unknown_answer")
+    shared = sorted(before & after)
+    if shared:
+        return outcome(PASS, "On changed data, the stage's results agree with a reading consistent with the submitted ones.",
+                       consistent_with=summarise(context.template, context.reference_rows, shared))
+    return outcome(FAIL, "On changed data, the stage's results match no reading consistent with the submitted ones.")
 
 
 def _pointer_resolves(where, files):

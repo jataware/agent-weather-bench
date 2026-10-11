@@ -1,0 +1,28 @@
+# Shared package versions come from the verified current ACCORD image.
+# Build using var/runtime-build/accord-current as context (recorded wheels/docs).
+# Local image IDs cannot be used as Dockerfile FROM references. Verify these
+# tags against the recorded IDs before building; pin output IDs in systems.
+ARG ACCORD_SOURCE=agent-weather-bench-accord:current
+ARG RHIZA_SOURCE=agent-weather-bench-rhiza:reader-repair
+FROM ${ACCORD_SOURCE} AS accord-source
+FROM ${RHIZA_SOURCE} AS rhiza-source
+
+FROM accord-source AS common
+RUN pip uninstall -y africas2s acmadDL accord-rosetta sheerwater \
+    && rm -rf /opt/accord-current /opt/accord-docs
+# Keep every general dependency, including scikit-learn and statsmodels, in
+# every arm. The pyproj preload workaround is inherited unchanged.
+FROM common AS python
+
+FROM common AS rhiza
+COPY --from=rhiza-source /usr/local/lib/python3.12/site-packages/weather_skills_core/ /usr/local/lib/python3.12/site-packages/weather_skills_core/
+COPY --from=rhiza-source /usr/local/lib/python3.12/site-packages/weather_skills_core-0.1.0.dist-info/ /usr/local/lib/python3.12/site-packages/weather_skills_core-0.1.0.dist-info/
+COPY --from=rhiza-source /catalog/ /catalog/
+
+FROM common AS accord
+# Sheerwater is a weather-specific acmadDL dependency, part of this tooling arm.
+COPY --from=accord-source /usr/local/lib/python3.12/site-packages/sheerwater/ /usr/local/lib/python3.12/site-packages/sheerwater/
+COPY --from=accord-source /usr/local/lib/python3.12/site-packages/sheerwater-0.2.5.dist-info/ /usr/local/lib/python3.12/site-packages/sheerwater-0.2.5.dist-info/
+COPY wheels/ /tmp/accord-wheels/
+RUN pip install --no-cache-dir --no-deps /tmp/accord-wheels/*.whl && rm -rf /tmp/accord-wheels
+COPY docs/ /opt/accord-current/docs/

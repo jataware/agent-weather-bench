@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-08T17:31:32.238356+00:00",
+  "scope": "Adapter --check startup only, no turn/start and no model inference.",
+  "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+  "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+  "rows": [
+    {
+      "system": "monthly-fragility-luna-accord",
+      "exit_code": 0,
+      "stdout": "var/review/monthly-fragility-adapter-preflight-20261008/monthly-fragility-luna-accord/stdout.json",
+      "stderr": "var/review/monthly-fragility-adapter-preflight-20261008/monthly-fragility-luna-accord/stderr.log",
+      "adapter_sha256": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+      "readiness": {
+        "ready": true,
+        "model": "gpt-6-luna",
+        "cli_version": "0.160.0",
+        "authentication": "chatgpt",
+        "inference_started": false
+      },
+      "stdout_sha256": "4ad5be83f987a75fa7e0ba1b4278621941e56c75bf29601882b7ff65b971750f",
+      "sanitized_stderr_sha256": "cc79feb607d07091fad0ee59f1fbd3ac0655a436464e140be92783065179409d"
+    },
+    {
+      "system": "monthly-fragility-astra-accord",
+      "exit_code": 0,
+      "stdout": "var/review/monthly-fragility-adapter-preflight-20261008/monthly-fragility-astra-accord/stdout.json",
+      "stderr": "var/review/monthly-fragility-adapter-preflight-20261008/monthly-fragility-astra-accord/stderr.log",
+      "adapter_sha256": "706963c311d676bbd70780cdc3bc8914fd99fa7ae9fd79adac427eabb21fecb5",
+      "readiness": {
+        "ready": true,
+        "model": "gpt-6-astra",
+        "cli_version": "0.160.0",
+        "authentication": "chatgpt",
+        "inference_started": false
+      },
+      "stdout_sha256": "cdf3434839082a667440f0ac631db63803689b208678c08d965a934d87d2ffa6",
+      "sanitized_stderr_sha256": "cc79feb607d07091fad0ee59f1fbd3ac0655a436464e140be92783065179409d"
+    }
+  ],
+  "state": "pass",
+  "model_calls": 0,
+  "native_scientific_executions": 0,
+  "direct_paid_api_usd": 0,
+  "retention": "Only sanitized readiness and startup method-count metadata retained; no raw RPC request/reply bodies."
+}

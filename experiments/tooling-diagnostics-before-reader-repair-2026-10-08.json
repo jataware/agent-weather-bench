@@ -1,0 +1,129 @@
+{
+  "type": "synthetic functional diagnostics; not benchmark attempts",
+  "interpretation": "Validate useful tool capabilities before building real-data tasks. These tests do not establish an agent-level tooling advantage or capability boundary.",
+  "rows": [
+    {
+      "arm": "rhiza",
+      "runtime_image": "sha256:edd28272c516d699f1e3208da40a0f63f285ae10bc577e49a788b5d9669b50f7",
+      "exit_code": 0,
+      "passed": false,
+      "cases": [
+        {
+          "case": "mass",
+          "consolidated_metadata": false,
+          "input_units": "kg m**-2",
+          "exit_code": 1,
+          "passed": false,
+          "stderr": "\n  File \"/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py\", line 430, in open_consolidated\n    return await open_group(*args, use_consolidated=use_consolidated, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py\", line 865, in open_group\n    return await AsyncGroup.open(\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/core/group.py\", line 607, in open\n    return cls._from_bytes_v3(\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/core/group.py\", line 666, in _from_bytes_v3\n    raise ValueError(msg)\nValueError: Consolidated metadata requested with 'use_consolidated=True' but not found in ''.\n"
+        },
+        {
+          "case": "depth",
+          "consolidated_metadata": false,
+          "input_units": "m",
+          "exit_code": 1,
+          "passed": false,
+          "stderr": "\n  File \"/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py\", line 430, in open_consolidated\n    return await open_group(*args, use_consolidated=use_consolidated, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py\", line 865, in open_group\n    return await AsyncGroup.open(\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/core/group.py\", line 607, in open\n    return cls._from_bytes_v3(\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/core/group.py\", line 666, in _from_bytes_v3\n    raise ValueError(msg)\nValueError: Consolidated metadata requested with 'use_consolidated=True' but not found in ''.\n"
+        },
+        {
+          "case": "rate_guard",
+          "consolidated_metadata": false,
+          "input_units": "mm day-1",
+          "exit_code": 1,
+          "expected": "Reject already-rate data without differencing",
+          "passed": false,
+          "stderr": "\n  File \"/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py\", line 430, in open_consolidated\n    return await open_group(*args, use_consolidated=use_consolidated, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py\", line 865, in open_group\n    return await AsyncGroup.open(\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/core/group.py\", line 607, in open\n    return cls._from_bytes_v3(\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/zarr/core/group.py\", line 666, in _from_bytes_v3\n    raise ValueError(msg)\nValueError: Consolidated metadata requested with 'use_consolidated=True' but not found in ''.\n"
+        },
+        {
+          "case": "mass",
+          "consolidated_metadata": true,
+          "input_units": "kg m**-2",
+          "exit_code": 0,
+          "expected_mm_per_day": [
+            4,
+            6,
+            6
+          ],
+          "actual_mm_per_day": [
+            4.0,
+            6.0,
+            6.0
+          ],
+          "maximum_error": 0.0,
+          "passed": true
+        },
+        {
+          "case": "depth",
+          "consolidated_metadata": true,
+          "input_units": "m",
+          "exit_code": 0,
+          "expected_mm_per_day": [
+            4,
+            6,
+            6
+          ],
+          "actual_mm_per_day": [
+            4.0,
+            6.0,
+            6.0
+          ],
+          "maximum_error": 0.0,
+          "passed": true
+        },
+        {
+          "case": "rate_guard",
+          "consolidated_metadata": true,
+          "input_units": "mm day-1",
+          "exit_code": 2,
+          "expected": "Reject already-rate data without differencing",
+          "passed": true,
+          "stderr": "Error: 'tp' looks like a rate; refuse to deaccumulate\n"
+        }
+      ],
+      "stderr": "/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py:246: ZarrUserWarning: Consolidated metadata is currently not part in the Zarr format 3 specification. It may not be supported by other zarr implementations and may change in the future.\n  warnings.warn(\n/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py:246: ZarrUserWarning: Consolidated metadata is currently not part in the Zarr format 3 specification. It may not be supported by other zarr implementations and may change in the future.\n  warnings.warn(\n/usr/local/lib/python3.12/site-packages/zarr/api/asynchronous.py:246: ZarrUserWarning: Consolidated metadata is currently not part in the Zarr format 3 specification. It may not be supported by other zarr implementations and may change in the future.\n  warnings.warn(\n"
+    },
+    {
+      "arm": "accord",
+      "runtime_image": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a",
+      "exit_code": 0,
+      "passed": true,
+      "cases": [
+        {
+          "case": "DJF_leap_year_and_canonical_axes",
+          "expected_mm": [
+            182,
+            180
+          ],
+          "actual_mm": [
+            182.0,
+            180.0
+          ],
+          "year_labels": [
+            2019,
+            2020
+          ],
+          "latitude": [
+            0.0,
+            1.0
+          ],
+          "units": "mm",
+          "passed": true
+        },
+        {
+          "case": "antimeridian_on_0_360_grid",
+          "expected_longitude": [
+            170,
+            180,
+            190
+          ],
+          "actual_longitude": [
+            170,
+            180,
+            190
+          ],
+          "passed": true
+        }
+      ],
+      "stderr": ""
+    }
+  ]
+}

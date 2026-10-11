@@ -1,0 +1,7 @@
+ARG BASE=agent-weather-bench-accord:io-repair
+FROM ${BASE}
+# Context contains wheels and docs built from the recorded clean local commits.
+# Preserve the matched scientific dependency stack: no dependency resolution.
+COPY wheels/ /tmp/accord-wheels/
+RUN pip install --no-cache-dir --no-deps --force-reinstall /tmp/accord-wheels/*.whl && rm -rf /tmp/accord-wheels
+COPY docs/ /opt/accord-current/docs/

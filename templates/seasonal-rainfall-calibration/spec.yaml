@@ -1,13 +1,17 @@
 schema_version: 1
 template: seasonal-rainfall-calibration
-spec_version: 3
+spec_version: 4
 version_history:
+  - version: 4
+    change: Explicit completion and ranking gates; standing prose reviews are supplementary.
+      Template owns judge wording. Earlier contracts remain archived.
   - {version: 1, change: First version.}
   - {version: 2, change: 'instance.json no longer carries the internal cell-selection field, which the brief never explained and three agent scripts misread. Runs made under version 1 saw different inputs and are not reassessed under version 2.'}
   - {version: 3, change: 'Arrays are delivered in a labelled Zarr store, with a category coordinate. The run command may hard-code the task parameters. The changed-instance rerun is gone; a second instance is a second episode. Runs made under versions 1 and 2 answered a different contract and are not reassessed under version 3.'}
 title: Seasonal rainfall calibration to the WMO guidance
 task_set_row: 11
 mode: process
+reference_match: true
 standard: wmo-objective-seasonal-forecasting
 status: development; the checklist is a draft and no domain scientist has reviewed it
 params: [training_years, new_years, latitude_limit]
@@ -74,6 +78,7 @@ invariants: [probabilities_valid]
 probes: [replay, changed_data, held_out_year_isolation, new_years_forecast_separately]
 claims: {}
 skill:
+  ranking_enabled: false
   ranking: rpss of the forecast for the new years; higher is better
   splits: [new_years]
   caveat: Two years on a few neighbouring cells. Reported for completeness, not for ranking.
@@ -131,3 +136,45 @@ process_not_applicable:
   - {source: practice 8, reason: A fixed operational schedule cannot be observed in one run.}
   - {source: practice 9, reason: User feedback mechanisms cannot be observed in one run.}
 interpretation: [statistical_support, generalization, consistency_across_artifacts]
+
+# The task owns its verdict policy and every question used to review its prose.
+question: follow_standard
+assessment_policy:
+  completion: &id001
+  - envelope
+  - coverage
+  - variant
+  - invariant.probabilities_valid
+  - probe.replay
+  - probe.changed_data
+  - probe.held_out_year_isolation
+  - probe.new_years_forecast_separately
+  - process.reproducible
+  - process.model_forecast_prepared
+  - process.observations_prepared
+  - process.cross_validated
+  - process.verification_categories
+  - process.historical_performance
+  - process.probabilistic_format
+  - process.operational_application
+  - process.documented_calibration
+  - process.documented_cross_validation
+  - process.plain_language_uncertainty
+  ranking: *id001
+judge_questions:
+  statistical_support:
+    requirement: 'Every claim of statistical significance, confidence or uncertainty
+      respects the dependence in the data (neighbouring grid cells, overlapping periods,
+      a small number of years). Silence passes: a report that makes no such claim
+      meets this.'
+    silence: passes
+  generalization:
+    requirement: 'The report does not extend a result beyond the sample, region or
+      period it was computed on. Silence passes: a report that only describes what
+      it computed meets this.'
+    silence: passes
+  consistency_across_artifacts:
+    requirement: The report, the structured answer and the code say the same thing
+      about what was done and what was found. A statement in one that another contradicts
+      is a violation.
+    silence: passes

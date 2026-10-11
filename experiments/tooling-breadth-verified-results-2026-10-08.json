@@ -1,0 +1,791 @@
+{
+  "plan_sha256": "96e355427f41272e28debf84f838a548d674904d2f6ea321a2bf671937eaaf5a",
+  "rows": [
+    {
+      "run": "20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-python-revision-14929b",
+      "system": "breadth-luna-python-revision",
+      "pair": "revision",
+      "arm": "python",
+      "status": "submitted",
+      "computed": "pass",
+      "completion": "pass",
+      "advisory": "unresolved",
+      "checks": {
+        "claim.direction": "pass",
+        "envelope": "pass",
+        "interpretation.consistency_across_artifacts": "unresolved",
+        "interpretation.generalization": "unresolved",
+        "interpretation.source_attribution": "unresolved",
+        "invariant.change_equals_current_minus_previous": "pass",
+        "invariant.regional_change_within_cell_range": "pass",
+        "invariant.weekly_totals_not_negative": "pass",
+        "probe.changed_data": "pass",
+        "probe.replay": "pass",
+        "variant": "pass"
+      },
+      "usage": {
+        "input_tokens": 82242,
+        "cached_input_tokens": 56832,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3844,
+        "reasoning_output_tokens": 1441,
+        "total_tokens": 86086
+      },
+      "uncached_input_tokens": 25410,
+      "fresh_input_plus_output_tokens": 29254,
+      "agent_seconds": 65.37249287497252,
+      "command_seconds": 8.463416041224264,
+      "cli_seconds": 71.33136145898607,
+      "tool_calls": 7,
+      "judge": null,
+      "assessment_sha256": "aa4cd73a3389f702c3c3a689673becaa318ca9676c71bd6c903529bba151edf6",
+      "tool_compliance": "not assigned"
+    },
+    {
+      "run": "20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3",
+      "system": "breadth-luna-rhiza-revision",
+      "pair": "revision",
+      "arm": "guided_rhiza",
+      "status": "submitted",
+      "computed": "pass",
+      "completion": "pass",
+      "advisory": "unresolved",
+      "checks": {
+        "claim.direction": "pass",
+        "envelope": "pass",
+        "interpretation.consistency_across_artifacts": "unresolved",
+        "interpretation.generalization": "unresolved",
+        "interpretation.source_attribution": "unresolved",
+        "invariant.change_equals_current_minus_previous": "pass",
+        "invariant.regional_change_within_cell_range": "pass",
+        "invariant.weekly_totals_not_negative": "pass",
+        "probe.changed_data": "pass",
+        "probe.replay": "pass",
+        "variant": "pass"
+      },
+      "usage": {
+        "input_tokens": 124310,
+        "cached_input_tokens": 92160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4852,
+        "reasoning_output_tokens": 1906,
+        "total_tokens": 129162
+      },
+      "uncached_input_tokens": 32150,
+      "fresh_input_plus_output_tokens": 37002,
+      "agent_seconds": 73.73426629090682,
+      "command_seconds": 12.60351733432617,
+      "cli_seconds": 79.03814895800315,
+      "tool_calls": 9,
+      "judge": null,
+      "assessment_sha256": "1659fb76ff55553547b6b85d69d62afc0bb5fcb3601706840cf5ac51b582dc9c",
+      "tool_compliance": "pass",
+      "native_use_review": {
+        "reviewed_at": "2026-10-08T15:01:54.001748+00:00",
+        "run": "20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3",
+        "system": "breadth-luna-rhiza-revision",
+        "status": "pass",
+        "review_mode": "Independent text/JSON metadata review only; no scientific array decoding, Docker execution or model calls.",
+        "helpers": [
+          "weather_skills_core.units.deaccumulate_along_step"
+        ],
+        "dataflow_evidence": [
+          {
+            "file": "frozen/run.py",
+            "lines": [
+              22,
+              24,
+              27,
+              30,
+              33,
+              35,
+              42,
+              45,
+              46,
+              57,
+              58,
+              60,
+              70,
+              73,
+              82,
+              85,
+              96
+            ],
+            "finding": "Source precipitation loaded serially and promoted to float64; returned native rates multiplied by matching interval durations, window-selected and accumulated per member. Current and previous helper-derived means supply delivered arrays; their difference supplies regional weighted mean and claims."
+          },
+          {
+            "file": "frozen/report.md",
+            "finding": "Report identifies public helper call site, rate-to-amount conversion and negative-increment clipping; agrees with frozen calculation."
+          },
+          {
+            "file": "logs/events.jsonl",
+            "lines": [
+              16,
+              17,
+              19,
+              20,
+              25,
+              26
+            ],
+            "finding": "Three actual script executions; first reaches Dataset merge after both source helper calls but fails on conflicting time coordinates. Coordinate fix succeeds; final attribute-cleanup execution also succeeds."
+          },
+          {
+            "file": "assessment.json",
+            "finding": "Computed and overall pass; original command replay and changed-source replay both exit0 and pass. Changed source matches accepted clipped-increment reading."
+          }
+        ],
+        "calls": {
+          "agent_real_data": 6,
+          "agent_real_data_script_invocations": 3,
+          "per_complete_script": 2,
+          "synthetic_demo": 2,
+          "controller_replay": 4,
+          "controller_replay_commands": 2,
+          "imports_and_help_not_counted": true,
+          "count_method": "Inferred from recorded commands and reached code paths, including exception after both helper calls; not dynamically instrumented counters."
+        },
+        "actual_execution": true,
+        "import_or_toy_only": false,
+        "adapter_finish": {
+          "run_status": "submitted",
+          "final_event": "Codex completed its turn; harness evaluates filesystem deliverables.",
+          "budget_stopped": false
+        },
+        "failure_flags": {
+          "final_scientific_failure": false,
+          "final_infrastructure_failure": false,
+          "recovered_agent_error": true,
+          "initial_error": "xarray MergeError from retaining incompatible issue time scalar coordinates. Both arms encountered and repaired this packaging issue.",
+          "initial_shell_exit_masks_exception": true,
+          "masked_exit_detail": "Guided first execution is followed by ls, so tool result exit0 coexists with Python traceback. Review uses stderr/reached code, not shell status alone.",
+          "source_or_task_answer_leakage_observed": false
+        },
+        "redundant_work": {
+          "guided_real_script_runs": 3,
+          "python_real_script_runs": 2,
+          "guided_tool_calls": 9,
+          "python_tool_calls": 7,
+          "details": [
+            "Guided arm ran synthetic demo, read API guide plus skill/help, then printed public helper source; these discovery steps count toward resource use.",
+            "Both arms repaired scalar-coordinate merge conflicts. Guided arm additionally reran after cleaning inherited rate/GRIB attributes; that is packaging cleanup, not an extra scientific requirement."
+          ],
+          "limits": "These trace differences explain observable work; elapsed/token deltas cannot be causally allocated to individual operations or helper runtime."
+        },
+        "paired_resources": {
+          "python_run": "20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-python-revision-14929b",
+          "python_fresh_input_plus_output": 29254,
+          "rhiza_fresh_input_plus_output": 37002,
+          "rhiza_resource_change_fraction": 0.26485266972038013,
+          "python_agent_seconds": 65.37249287497252,
+          "rhiza_agent_seconds": 73.73426629090682,
+          "rhiza_agent_time_change_fraction": 0.12790966120760472,
+          "interpretation": "Both valid and substantive use verified; this single pair shows overhead rather than tooling savings."
+        },
+        "reviewfileshashes": {
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/run.json": "6bf69cf4791fb4b6425709054c0c11a0fa1ce31e0adbf527d8e42bc686d4490a",
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/assessment.json": "1659fb76ff55553547b6b85d69d62afc0bb5fcb3601706840cf5ac51b582dc9c",
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/frozen/run.py": "b5ec291243bb6683fa9d08e0cde4fc9b739e2de9ede9ea46252f449ec9756f03",
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/frozen/report.md": "d815e827f8a04b03ceb465b95d5cac4fa824913209757f0ac89e897ed0d1e17f",
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/frozen/answer.json": "91e96b1a543c27afad06f96959e25067462debb5817abc3b782754f32ac1766a",
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/logs/events.jsonl": "0f3d3f4a3e209460e58796d4d984008e0247dc34fc8662461f7eb0915e1ea787",
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-rhiza-revision-e1f9b3/controller/provenance.json": "924e4bc50286de99402ebff725161e83a54b5f25ba3174644c7803cfbaa8bc2d",
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-python-revision-14929b/run.json": "6eebf3e4a7abbeec59914da371c2f443079917063bd1e991ee361632aeb611fa",
+          "var/template-runs/20261008T145913-kenya-forecast-revision-service-area--weeks-1-2-L1-breadth-luna-python-revision-14929b/logs/events.jsonl": "5f1c06870336f5a145d616a567aa81750ebd4931f424a54281db6fa44430752f"
+        }
+      }
+    },
+    {
+      "run": "20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198",
+      "system": "breadth-luna-accord-consolidation",
+      "pair": "consolidation",
+      "arm": "guided_accord",
+      "status": "submitted",
+      "computed": "fail",
+      "completion": "fail",
+      "advisory": "unresolved",
+      "checks": {
+        "coverage": "pass",
+        "envelope": "pass",
+        "interpretation.consistency_across_artifacts": "unresolved",
+        "interpretation.outlook_scope": "unresolved",
+        "invariant.simplex_and_support": "pass",
+        "probe.changed_data": "fail",
+        "probe.replay": "fail",
+        "variant": "pass"
+      },
+      "usage": {
+        "input_tokens": 87096,
+        "cached_input_tokens": 58624,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4945,
+        "reasoning_output_tokens": 1349,
+        "total_tokens": 92041
+      },
+      "uncached_input_tokens": 28472,
+      "fresh_input_plus_output_tokens": 33417,
+      "agent_seconds": 90.97915254195686,
+      "command_seconds": 11.10283570701722,
+      "cli_seconds": 100.58255820907652,
+      "tool_calls": 8,
+      "judge": null,
+      "assessment_sha256": "5f1b35834add32a7fa5117540a17d5348c0f53f1fb16936f1b2629043054bc0f",
+      "tool_compliance": "pass",
+      "native_use_review": {
+        "reviewed_at": "2026-10-08T15:05:07.897897+00:00",
+        "run": "20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198",
+        "system": "breadth-luna-accord-consolidation",
+        "status": "pass",
+        "status_scope": "Substantive native-helper use only; overall attempt remains fail.",
+        "review_mode": "Independent text/JSON metadata review only; no scientific array decoding, Docker execution, model calls or attempt edits.",
+        "helpers": [
+          "africas2s.combine_terciles"
+        ],
+        "dataflow_evidence": [
+          {
+            "file": "frozen/solve.py",
+            "lines": [
+              72,
+              75,
+              76,
+              77,
+              78,
+              99,
+              100,
+              104,
+              105,
+              106,
+              117,
+              118,
+              120,
+              121,
+              127,
+              128,
+              142
+            ],
+            "finding": "Complete finite component vectors promoted to float64 and converted percent\u2192fraction; partial vectors wholly absent. Returned equal and explicit-weight native helper arrays supply both delivered probability fields, with zero storage fills only where support count is zero. Support/disagreement computed independently from the same component eligibility."
+          },
+          {
+            "file": "frozen/report.md",
+            "finding": "Report identifies helper call sites, correct component completeness, normalization, nominal sensitivity and absence-mask interpretation; agrees with frozen numerical code."
+          },
+          {
+            "file": "logs/events.jsonl",
+            "lines": [
+              19,
+              20,
+              22,
+              23
+            ],
+            "finding": "One actual full-data solve.py execution succeeds and writes the submitted arrays; following call inspects existing results. API source inspection and synthetic demonstration are separate from this substantive call."
+          },
+          {
+            "file": "assessment.json",
+            "finding": "Original envelope/coverage/variant/simplex-and-support pass. Both required replays fail at unconditional scratch-retention directory creation, before source resource retrieval or helper execution."
+          }
+        ],
+        "calls": {
+          "agent_real_data": 2,
+          "agent_real_data_script_invocations": 1,
+          "per_complete_script": 2,
+          "synthetic_demo": 2,
+          "controller_replay": 0,
+          "controller_replay_commands": 2,
+          "controller_replay_abort_before_helper": true,
+          "imports_and_help_not_counted": true,
+          "count_method": "Inferred from recorded commands, frozen code and reached traceback locations; not dynamically instrumented counters."
+        },
+        "actual_execution": true,
+        "import_or_toy_only": false,
+        "adapter_finish": {
+          "run_status": "submitted",
+          "budget_stopped": false
+        },
+        "failure_flags": {
+          "final_scientific_failure": true,
+          "final_infrastructure_failure": false,
+          "source_or_task_answer_leakage_observed": false,
+          "classification": "Agent regeneration-command portability error; no controller defect found.",
+          "required_replay_states": {
+            "probe.replay": "fail",
+            "probe.changed_data": "fail"
+          },
+          "exact_error": "OSError: [Errno 30] Read-only file system: '/work/state'",
+          "code_cause": "solve.py96 hardcodes /work/state/source_snapshot as retained_dir; fetch_catalogue line32 mkdir is mandatory despite retention being optional.",
+          "reached_stage": "Catalogue GET succeeds; scratch /tmp directory exists. Retention mkdir fails before resource loop, before read_components and before both combine_terciles calls.",
+          "controller_behavior": "Task-owned AcquisitionDocker mounts /work read-only and /output writable (acquisition.py435\u2013442). Temporary /tmp is available. This is the normal regeneration boundary.",
+          "contract_evidence": "Envelope requires fresh results.zarr and answer.json written into {output_dir}; neither task brief, system instructions nor API guide requires retaining source copies at /work/state. request.paths exposes actor state but does not guarantee its existence or writability during standalone replay.",
+          "baseline_evidence": "Python keeps source retention during interactive exploration separate from its portable regeneration command; both original replays pass.",
+          "repair_without_changing_grade": "A future submission could retain optional copies under output_dir or temporary storage, or keep actor-only retention outside the declared command. No repair or reassessment performed here.",
+          "clarity_opportunity": "Future common envelope documentation could explicitly say actor /work/state is not a portable writable replay directory; this would clarify the existing boundary, not justify retroactively changing this verdict."
+        },
+        "scientific_completion": {
+          "original_computed_outcome": "fail",
+          "original_outcome": "fail",
+          "original_variant": "pass",
+          "original_invariant": "pass",
+          "original_verdict_preserved": true,
+          "changed_source_correctness": "Not established: changed-source command fails before producing any numerical output.",
+          "python_computed_outcome": "pass",
+          "python_outcome": "pass"
+        },
+        "paired_resources": {
+          "python_run": "20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef",
+          "python_fresh_input_plus_output": 55320,
+          "guided_fresh_input_plus_output": 33417,
+          "python_agent_seconds": 96.70465154096019,
+          "guided_agent_seconds": 90.97915254195686,
+          "interpretation": "Raw consumption only. Guided attempt fails required regeneration while Python passes; lower guided token or elapsed usage cannot establish an efficiency saving at valid completion. Retain failed-attempt usage in the assigned arm."
+        },
+        "reviewfileshashes": {
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/run.json": "a22cfea6a60ad5bde6b2341a4be5309f1cbebf60bf37212428a2778169db20dc",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/assessment.json": "5f1b35834add32a7fa5117540a17d5348c0f53f1fb16936f1b2629043054bc0f",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/frozen/solve.py": "61fee513c8d00a0ee51c9ac4fcd5b6510ade0631ddc90853da9cbd9d916e61d5",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/frozen/report.md": "e6a7dbc0ba7d0ee10fc0c4d5d01d05725ed158ca64589dda53e45d4f597bc9f0",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/frozen/answer.json": "c80f0eb11333512e318c44549bb76cff2c86dddd65ccbb7b7f3ec9efd362ccdc",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/logs/events.jsonl": "c9544fbe0445fc7ba417e1137db15d91a306bdafccf1e84374cd2069330e6b93",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/controller/provenance.json": "58c0760d1f667c985ad5a8af75f7ac6e30d5844bd29a92100e96e74bf832fed3",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/request.json": "d2fca3b5592a93d9fbcb57b8d25910d2fea661b6f9e0369761e3130c3cdc1560",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/system.json": "d3b3040bfdf4006fe6e8d082b60eba8d3e0431d63fab51cbfe314b0aa2a657e1",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef/run.json": "2a81b878c234df8ff55bfe20029f61d8d835e9209a7099716f265e7a128c17cb",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef/assessment.json": "674ece5cddb71b32db6c106d8983a378e45f6032ed9c33a17a4fa99a552929b5",
+          "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef/logs/events.jsonl": "dab0d60c80a84bc2c7a95d4c144fd9b876fd887b7331bdc1bcf5e4671d20dd85",
+          "assessment/envelope.md": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec",
+          "templates/seasonal-objective-consolidation/acquisition.py": "bd44197e9a198f50d830e030afa9d5e75644c113043db232de98e8240782332b",
+          "systems/breadth-luna-accord-consolidation/API.md": "a67e5e4a7d17f85f31258a23ec4daf5b26edbd4a7e2e063a591edc743ac2fe80",
+          "systems/breadth-luna-accord-consolidation/synthetic_combination.py": "4188ad6199b85f709eb030be72af2b6e091c702a3f500aa406619225c3d155b2",
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/controller/acquisition-evidence/59b5a5a9f6654a5b902d4a641ec025af/probe-changed-data-requests.jsonl": "718667236361c8a6afb1d97f8f3f25efe252218b4d1f93e6bc0ca511bb273545",
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/controller/acquisition-evidence/59b5a5a9f6654a5b902d4a641ec025af/probe-replay-requests.jsonl": "389dc7861371c83f9b9eebd417e0404af5f873b837ba741bda6a47c8855193fc"
+        }
+      }
+    },
+    {
+      "run": "20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef",
+      "system": "breadth-luna-python-consolidation",
+      "pair": "consolidation",
+      "arm": "python",
+      "status": "submitted",
+      "computed": "pass",
+      "completion": "pass",
+      "advisory": "unresolved",
+      "checks": {
+        "coverage": "pass",
+        "envelope": "pass",
+        "interpretation.consistency_across_artifacts": "unresolved",
+        "interpretation.outlook_scope": "unresolved",
+        "invariant.simplex_and_support": "pass",
+        "probe.changed_data": "pass",
+        "probe.replay": "pass",
+        "variant": "pass"
+      },
+      "usage": {
+        "input_tokens": 189398,
+        "cached_input_tokens": 141056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6978,
+        "reasoning_output_tokens": 2432,
+        "total_tokens": 196376
+      },
+      "uncached_input_tokens": 48342,
+      "fresh_input_plus_output_tokens": 55320,
+      "agent_seconds": 96.70465154096019,
+      "command_seconds": 18.338011330808513,
+      "cli_seconds": 105.71046895906329,
+      "tool_calls": 11,
+      "judge": null,
+      "assessment_sha256": "674ece5cddb71b32db6c106d8983a378e45f6032ed9c33a17a4fa99a552929b5",
+      "tool_compliance": "not assigned"
+    },
+    {
+      "run": "20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905",
+      "system": "breadth-luna-accord-mam-repeat",
+      "pair": "mam_replication",
+      "arm": "guided_accord",
+      "status": "submitted",
+      "computed": "pass",
+      "completion": "pass",
+      "advisory": "unresolved",
+      "checks": {
+        "claim.cv_skill": "pass",
+        "coverage": "pass",
+        "envelope": "pass",
+        "interpretation.outlook_support": "unresolved",
+        "invariant.cv_score_identity": "pass",
+        "invariant.equal_model_combination": "pass",
+        "invariant.probabilities_valid": "pass",
+        "probe.changed_data": "pass",
+        "probe.held_out_year_isolation": "pass",
+        "probe.replay": "pass",
+        "variant": "pass"
+      },
+      "usage": {
+        "input_tokens": 215298,
+        "cached_input_tokens": 164864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7293,
+        "reasoning_output_tokens": 2485,
+        "total_tokens": 222591
+      },
+      "uncached_input_tokens": 50434,
+      "fresh_input_plus_output_tokens": 57727,
+      "agent_seconds": 117.4434766669292,
+      "command_seconds": 30.41456300020218,
+      "cli_seconds": 168.78119279094972,
+      "tool_calls": 12,
+      "judge": null,
+      "assessment_sha256": "6e714176a44a5bff04ff7bda202cc6518c1116147df68e98debec506dbb79b79",
+      "tool_compliance": "pass",
+      "native_use_review": {
+        "reviewed_at": "2026-10-08T15:10:32.336481+00:00",
+        "run": "20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905",
+        "system": "breadth-luna-accord-mam-repeat",
+        "status": "pass",
+        "review_mode": "Independent text/JSON metadata review only; no scientific array decoding, Docker execution or model calls.",
+        "helpers": [
+          "acmaddl.normalize.normalize",
+          "africas2s.calibrate"
+        ],
+        "dataflow_evidence": [
+          {
+            "file": "frozen/run.py",
+            "lines": [
+              31,
+              39,
+              43,
+              45,
+              60,
+              64,
+              69,
+              70,
+              73,
+              90,
+              91,
+              111,
+              113
+            ],
+            "finding": "Float64 model rates go through public normalize. Returned seasonal mm arrays are spatially aligned, split into native member-resolved centre pairs, and supply delivered training/new model means."
+          },
+          {
+            "file": "frozen/run.py",
+            "lines": [
+              77,
+              81,
+              87,
+              88,
+              92,
+              93,
+              94,
+              95,
+              103,
+              105,
+              108,
+              114,
+              115,
+              116,
+              117,
+              119,
+              125
+            ],
+            "finding": "CHIRPS promoted before seasonal summation. Public calibrate receives separate centre pairs and observations. Per-centre and combined native returns directly supply all required probability fields; combined hindcasts supply RPS/RPSS and skill claim."
+          },
+          {
+            "file": "frozen/run.py",
+            "lines": [
+              13,
+              15,
+              18,
+              19,
+              21,
+              23,
+              56,
+              57
+            ],
+            "finding": "Every command fetches current catalogue and resources, checks byte counts/SHA256, and uses a fresh temporary directory; exploratory state-source cache does not feed frozen main."
+          },
+          {
+            "file": "logs/events.jsonl",
+            "lines": [
+              13,
+              14,
+              16,
+              17,
+              19,
+              20,
+              22,
+              23
+            ],
+            "finding": "Three script executions: first runs one normalization before coordinate-name error; exploratory call normalizes one ECMWF file; second script completes four normalizations and two calibrations before forecast-dimension error; third script completes successfully."
+          },
+          {
+            "file": "frozen/report.md",
+            "finding": "Report names normalize and calibrate call sites and explains their outputs; distinguishes cross-validated training skill from unavailable target observation verification."
+          },
+          {
+            "file": "assessment.json",
+            "finding": "All ten computed instruments pass, including changed-source, held-out-year isolation and original command replay. All three replay records exit0; retained acquisition evidence records all three."
+          }
+        ],
+        "calls": {
+          "agent_real_data": {
+            "normalize": 10,
+            "calibrate": 4
+          },
+          "agent_real_data_script_invocations": 3,
+          "agent_real_data_scripts_only": {
+            "normalize": 9,
+            "calibrate": 4
+          },
+          "agent_exploratory_real_data": {
+            "normalize": 1,
+            "calibrate": 0
+          },
+          "per_complete_script": {
+            "normalize": 4,
+            "calibrate": 2
+          },
+          "synthetic_demo": {
+            "normalize": 1,
+            "calibrate": 2
+          },
+          "controller_replay": {
+            "normalize": 12,
+            "calibrate": 6
+          },
+          "controller_replay_commands": 3,
+          "imports_and_help_not_counted": true,
+          "count_method": "Inferred from recorded commands, native call order, exception positions and successful replay exit records; not dynamically instrumented counters."
+        },
+        "actual_execution": true,
+        "import_or_toy_only": false,
+        "adapter_finish": {
+          "run_status": "submitted",
+          "final_event": "Codex completed its turn; harness evaluates filesystem deliverables.",
+          "budget_stopped": false
+        },
+        "failure_flags": {
+          "final_scientific_failure": false,
+          "final_infrastructure_failure": false,
+          "recovered_agent_error": true,
+          "recovered_errors": [
+            "Unconditional latitude/longitude rename after normalize already returned lat/lon; failed after first centre normalization.",
+            "Forecast calibration returns no year axis for a single forecast year; fixed transpose and restored requested singleton new_year axis before delivery."
+          ],
+          "initial_shell_exit_masks_exception": false,
+          "source_or_task_answer_leakage_observed": false
+        },
+        "redundant_work": {
+          "guided_real_script_runs": 3,
+          "guided_tool_calls": 12,
+          "details": [
+            "Synthetic demo, metadata discovery and one exploratory normalization are additional measured work.",
+            "Two schema-repair script reruns are retained as agent resource costs.",
+            "After successful execution, three output inspection commands summarize scores/probabilities/finite simplex checks; report generation is separate."
+          ],
+          "limits": "Do not attribute total elapsed or token differences solely to native-kernel runtime."
+        },
+        "computed_outcome": "pass",
+        "outcome": "pass",
+        "usage": {
+          "input_tokens": 215298,
+          "cached_input_tokens": 164864,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 7293,
+          "reasoning_output_tokens": 2485,
+          "total_tokens": 222591
+        },
+        "agent_seconds": 117.4434766669292,
+        "interpretation": "Substantive guided-tool completion in an exact same-instance v2 repetition. Compare only against matched Python repeat and prior precision-phase pair; do not pool original v1 failures or call this independent-dataset replication.",
+        "reviewfileshashes": {
+          "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/run.json": "610ec1b538e475949b8b663757c340f16689b364c803b0c0c0dab2b9d0a2ce40",
+          "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/assessment.json": "6e714176a44a5bff04ff7bda202cc6518c1116147df68e98debec506dbb79b79",
+          "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/frozen/run.py": "cf6b930806841ecf4198ef788828378cf2eb35c2656dca97ec18781c5083e01c",
+          "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/frozen/report.md": "3eadc061b7fcc461c74598bdec38f09b10a9cd8af894b40f2d71141140bebdd5",
+          "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/frozen/answer.json": "4ba4c5cb02aa7cef8a23352a7d10e8d121c1b77284accc168c98d0daa61b737d",
+          "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/logs/events.jsonl": "40042b194a7267f17b3dd9727bd34cc58758f6770fc75703cff2116828e3ef98",
+          "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/controller/provenance.json": "c71094f3e3cb8a7a9465c34319de0024887402a43269471d2f3888d4f504ac7d",
+          "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/controller/adapter-result.json": "b4f5feb1f2c9947720c62cdfd335f8f9237472e9a3311e74eb0c0866527ad489",
+          "var/review/tooling-breadth-20261008/breadth-luna-accord-mam-repeat/invocation.json": "f3925e3486e3ac07ce7ba13121192da34779eb71391b27c00ba836b40517ddb4"
+        }
+      }
+    },
+    {
+      "run": "20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-python-mam-repeat-513703",
+      "system": "breadth-luna-python-mam-repeat",
+      "pair": "mam_replication",
+      "arm": "python",
+      "status": "submitted",
+      "computed": "pass",
+      "completion": "pass",
+      "advisory": "unresolved",
+      "checks": {
+        "claim.cv_skill": "pass",
+        "coverage": "pass",
+        "envelope": "pass",
+        "interpretation.outlook_support": "unresolved",
+        "invariant.cv_score_identity": "pass",
+        "invariant.equal_model_combination": "pass",
+        "invariant.probabilities_valid": "pass",
+        "probe.changed_data": "pass",
+        "probe.held_out_year_isolation": "pass",
+        "probe.replay": "pass",
+        "variant": "pass"
+      },
+      "usage": {
+        "input_tokens": 216442,
+        "cached_input_tokens": 173568,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10195,
+        "reasoning_output_tokens": 2555,
+        "total_tokens": 226637
+      },
+      "uncached_input_tokens": 42874,
+      "fresh_input_plus_output_tokens": 53069,
+      "agent_seconds": 149.93589741701726,
+      "command_seconds": 14.58950250223279,
+      "cli_seconds": 191.5042825830169,
+      "tool_calls": 9,
+      "judge": null,
+      "assessment_sha256": "6f6942c639f432180501255ab29067b670838b1d8616d5694b69291403502205",
+      "tool_compliance": "not assigned"
+    }
+  ],
+  "paired_comparisons": {
+    "revision": {
+      "python_computed": "pass",
+      "tool_computed": "pass",
+      "python_completion": "pass",
+      "tool_completion": "pass",
+      "interpretation": "Both completed validly and native dataflow is verified; descriptive resource comparison only.",
+      "efficiency_comparison_eligible": true,
+      "substantive_native_use": true,
+      "raw_descriptive_resource_reductions": {
+        "fresh_input_plus_output_tokens": -0.26485266972038013,
+        "uncached_input_tokens": -0.26524990161353795,
+        "agent_seconds": -0.1279096612076048,
+        "command_seconds": -0.48917615215132754,
+        "cli_seconds": -0.10804206370641492,
+        "input_tokens": -0.5115147977918825,
+        "cached_input_tokens": -0.6216216216216216,
+        "output_tokens": -0.26222684703433924,
+        "total_tokens": -0.5003833375926399
+      },
+      "eligible_efficiency_resource_reductions": {
+        "fresh_input_plus_output_tokens": -0.26485266972038013,
+        "uncached_input_tokens": -0.26524990161353795,
+        "agent_seconds": -0.1279096612076048,
+        "command_seconds": -0.48917615215132754,
+        "cli_seconds": -0.10804206370641492,
+        "input_tokens": -0.5115147977918825,
+        "cached_input_tokens": -0.6216216216216216,
+        "output_tokens": -0.26222684703433924,
+        "total_tokens": -0.5003833375926399
+      }
+    },
+    "consolidation": {
+      "python_computed": "pass",
+      "tool_computed": "fail",
+      "python_completion": "pass",
+      "tool_completion": "fail",
+      "interpretation": "Python completed and guided did not; guided resource differences are not savings at valid completion.",
+      "efficiency_comparison_eligible": false,
+      "substantive_native_use": true,
+      "raw_descriptive_resource_reductions": {
+        "fresh_input_plus_output_tokens": 0.3959327548806941,
+        "uncached_input_tokens": 0.41102974639030243,
+        "agent_seconds": 0.05920603515724609,
+        "command_seconds": 0.3945452695645323,
+        "cli_seconds": 0.04850901524211918,
+        "input_tokens": 0.540142979334523,
+        "cached_input_tokens": 0.5843920145190563,
+        "output_tokens": 0.29134422470621957,
+        "total_tokens": 0.5313021957876727
+      },
+      "eligible_efficiency_resource_reductions": null
+    },
+    "mam_replication": {
+      "python_computed": "pass",
+      "tool_computed": "pass",
+      "python_completion": "pass",
+      "tool_completion": "pass",
+      "interpretation": "Both completed validly and native dataflow is verified; descriptive resource comparison only.",
+      "efficiency_comparison_eligible": true,
+      "substantive_native_use": true,
+      "raw_descriptive_resource_reductions": {
+        "fresh_input_plus_output_tokens": -0.0877725225649626,
+        "uncached_input_tokens": -0.17633064328030976,
+        "agent_seconds": 0.21670874893766615,
+        "command_seconds": -1.0846881513298694,
+        "cli_seconds": 0.11865577879291943,
+        "input_tokens": 0.005285480636844975,
+        "cached_input_tokens": 0.05014749262536873,
+        "output_tokens": 0.28464933791074054,
+        "total_tokens": 0.017852336555813923
+      },
+      "eligible_efficiency_resource_reductions": {
+        "fresh_input_plus_output_tokens": -0.0877725225649626,
+        "uncached_input_tokens": -0.17633064328030976,
+        "agent_seconds": 0.21670874893766615,
+        "command_seconds": -1.0846881513298694,
+        "cli_seconds": 0.11865577879291943,
+        "input_tokens": 0.005285480636844975,
+        "cached_input_tokens": 0.05014749262536873,
+        "output_tokens": 0.28464933791074054,
+        "total_tokens": 0.017852336555813923
+      }
+    }
+  },
+  "pending": [],
+  "launched_cells": 6,
+  "assessed_attempts": 6,
+  "unlaunched_cells": [],
+  "token_totals_including_failures": {
+    "input_tokens": 914786,
+    "cached_input_tokens": 687104,
+    "output_tokens": 38107,
+    "total_tokens": 952893
+  },
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "interpretation": "Do not pool weather questions, related datasets, judge costs or changed study phases into one causal efficiency estimate.",
+  "verified_at": "2026-10-08T15:11:00.664445+00:00",
+  "state": "pass: evidence accounting verified; individual failed attempts remain failures",
+  "raw_summary_sha256": "a6f3f2ed044927a999e69f293d29a1d021d05c7d188ae539bee2a28e4a6b62a1",
+  "resource_totals_complete_for_all_six_assigned_attempts": true,
+  "mam_same_condition_two_pair_ledger": {
+    "original_precision_results_sha256": "6196e14f8de0734659d4ed53d24304cac0fa0985432a914cba9553fd1b52a09b",
+    "by_arm": {
+      "python": {
+        "attempts": 2,
+        "computed_valid_completions": 1,
+        "fresh_input_plus_output_including_failures": 111519,
+        "agent_seconds_including_failures": 355.1229311260395,
+        "fresh_input_plus_output_per_valid_completion": 111519.0,
+        "agent_seconds_per_valid_completion": 355.1229311260395
+      },
+      "guided_accord": {
+        "attempts": 2,
+        "computed_valid_completions": 2,
+        "fresh_input_plus_output_including_failures": 112298,
+        "agent_seconds_including_failures": 267.92757829185575,
+        "fresh_input_plus_output_per_valid_completion": 56149.0,
+        "agent_seconds_per_valid_completion": 133.96378914592788
+      }
+    },
+    "interpretation": "Two fresh matched pairs on one historical instance. Original v1 failures excluded from this same-condition comparison but preserved in their own ledger. No statistical confidence or cross-task generalization."
+  },
+  "separate_diagnostic": {
+    "path": "experiments/breadth-consolidation-portability-diagnostic-2026-10-08.json",
+    "sha256": "756bc54a40da8ee418726095fc27c740f41dec1d16ad05b3900ddcba7087a254",
+    "original_guided_failure_remains_failure": true
+  },
+  "evidence_sha256": {
+    "experiments/tooling-breadth-plan-2026-10-08.json": "96e355427f41272e28debf84f838a548d674904d2f6ea321a2bf671937eaaf5a",
+    "experiments/tooling-breadth-results-2026-10-08.json": "a6f3f2ed044927a999e69f293d29a1d021d05c7d188ae539bee2a28e4a6b62a1",
+    "experiments/efficiency_precision_results_2026-10-08.json": "6196e14f8de0734659d4ed53d24304cac0fa0985432a914cba9553fd1b52a09b",
+    "experiments/breadth-revision-native-use-review-2026-10-08.json": "95b07d1c1f5dd95277d68be0201868d23c7fb652ffa6e21ac55b26e97227fe51",
+    "experiments/breadth-consolidation-native-use-review-2026-10-08.json": "bbd3321f53de90e46fff68f6b0d9903e729fb1a6785d98c40ccfab925a9751ad",
+    "experiments/breadth-mam-replication-native-use-review-2026-10-08.json": "e1336386481cfad2ba4bad7d897146ca7ee35eec4fb1bacf11f29ef551c89d56",
+    "experiments/breadth-consolidation-portability-diagnostic-2026-10-08.json": "756bc54a40da8ee418726095fc27c740f41dec1d16ad05b3900ddcba7087a254"
+  },
+  "verification_model_calls": 0,
+  "verification_scientific_binary_decoding": false
+}

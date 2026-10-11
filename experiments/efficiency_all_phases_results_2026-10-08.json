@@ -1,0 +1,1919 @@
+{
+  "schema_version": 1,
+  "phases": {
+    "initial_v1": {
+      "schema_version": 1,
+      "plan": "experiments/efficiency_plan_2026-10-08.json",
+      "contract_status": "historical v1; probe dtype confound repaired in v2; original verdict preserved",
+      "plan_sha256": "22613e8cc3c447cf519476af50460222c6c7b0c40231a1db892764213099a4ab",
+      "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "rows": [
+        {
+          "run": "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1",
+          "system": "efficiency-luna-accord-guided-1",
+          "assigned_arm": "guided_accord",
+          "replication": 1,
+          "directory": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1",
+          "status": "submitted",
+          "reason": null,
+          "computed": "fail",
+          "overall": "fail",
+          "supplementary": "unresolved",
+          "failed_checks": [
+            "probe.held_out_year_isolation"
+          ],
+          "unresolved_checks": [
+            "interpretation.outlook_support",
+            "probe.changed_data",
+            "variant"
+          ],
+          "replay": {
+            "state": "pass",
+            "detail": "The run command regenerates the submitted results.",
+            "run": {
+              "exit_code": 0,
+              "executor": "docker-snapshot-http"
+            },
+            "required_for": [
+              "completion",
+              "ranking"
+            ],
+            "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+            "requirement": "Does the submitted command regenerate its results?"
+          },
+          "usage": {
+            "input_tokens": 214950,
+            "cached_input_tokens": 183040,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 6905,
+            "reasoning_output_tokens": 2369,
+            "total_tokens": 221855
+          },
+          "uncached_input_tokens": 31910,
+          "fresh_input_plus_output_tokens": 38815,
+          "agent_seconds": 117.05127329204697,
+          "command_seconds": 32.74374012381304,
+          "model_adapter_transport_overhead_proxy_seconds": 84.30753316823393,
+          "cli_assessment_seconds": 168.1759389169747,
+          "controller_assessment_overhead_proxy_seconds": 51.12466562492773,
+          "tool_calls": 13,
+          "initial_transfer": {
+            "evidence": "verified",
+            "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/controller/acquisition-457787c6e9b8/requests.jsonl",
+            "log_sha256": "2a90b0909b7f5fd6284904bdc50354c866c7b20f0583ee29fa0acfc8bb7a4445",
+            "requests": 44,
+            "successful_get_bytes": 26489932
+          },
+          "replay_transfer": [
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/controller/acquisition-evidence/a86ea9961d4449c6b8f823c05b605abb/probe-changed-data-requests.jsonl",
+              "log_sha256": "8b46a2d355435ea5626b1bcd57a1dc916487ac8f319294b84f90ef2d3488e22e",
+              "requests": 7,
+              "successful_get_bytes": 8685622
+            },
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/controller/acquisition-evidence/a86ea9961d4449c6b8f823c05b605abb/probe-invariance-held_out_year_isolation-requests.jsonl",
+              "log_sha256": "8678fbc009f7edf41c404c0dba1301e8e1ee47cc4706245ee58fa16bf5436109",
+              "requests": 7,
+              "successful_get_bytes": 7399830
+            },
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/controller/acquisition-evidence/a86ea9961d4449c6b8f823c05b605abb/probe-replay-requests.jsonl",
+              "log_sha256": "43c0dc6dca0d910870a56d3011e18a54fb15bb4a2074a0b360e2ebe4040b442e",
+              "requests": 7,
+              "successful_get_bytes": 4414614
+            }
+          ],
+          "tool_review": {
+            "system": "efficiency-luna-accord-guided-1",
+            "assigned_arm": "guided_accord",
+            "assigned_condition_retained": true,
+            "review_status": "frozen_text_and_original_replays_reviewed",
+            "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+            "evidence": {
+              "run.json": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/run.json",
+                "sha256": "87a26cf011b04eeb2fba1d75365e0bfcc35f22be93f7882269836e7563e35c0a"
+              },
+              "assessment.json": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/assessment.json",
+                "sha256": "2382d38903602d6ab6f75a0ebaa0a331429b2b3b3a505737e6e72109646f946c"
+              },
+              "artifacts.json": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/artifacts.json",
+                "sha256": "96241f31ef7e6f21e923457560dc21214fb6343bcb3bbd8877c7b8a2b05a26d5"
+              },
+              "system.json": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/system.json",
+                "sha256": "e098eebe7cf1c5332c23f9b99b925cf75842a020d98aa4490084b07270ea363e"
+              },
+              "request.json": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/request.json",
+                "sha256": "539bdfb58e9228a141ef7581ae001fe5d47c4305e0f1820246b0093efae07ac4"
+              },
+              "logs/events.jsonl": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/logs/events.jsonl",
+                "sha256": "ebfa4a716bdabf539e2332fcb54a52faded272afc081b061aa8d2b3cc20e8208"
+              },
+              "frozen/run.py": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/run.py",
+                "sha256": "5debfd612883c5793f75e3b476015a85d830d80032812ec514268a77fa9e3d05"
+              },
+              "frozen/report.md": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/report.md",
+                "sha256": "461d5f3e8efe1060512c4828454d2d6e862ca85f8f0fbe43c4086fcf6641ea69"
+              },
+              "frozen/answer.json": {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/answer.json",
+                "sha256": "69be931f7353d8d3c8e3a4013db9fd6cba4ea2481dbcd7b8893fffc967ca622d"
+              }
+            },
+            "condition_compliance": {
+              "state": "pass",
+              "reason": "Actual native outputs feed all required model seasonal means and calibrated per-model/combined probabilities; no hand-calculated probability replacement."
+            },
+            "no_known_grader_runtime_issue": false,
+            "grader_caveat": "Held-out intervention promotes every monthly observation tofloat64; submissions accumulate originalnativefloat32 first, so unchangedtrainingyears change rounding. Original failcannotaloneestablish targetleakage. Independentreviewpending.",
+            "code_pointers": [
+              {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/run.py",
+                "lines": [
+                  29,
+                  36,
+                  38,
+                  44,
+                  46,
+                  47,
+                  68,
+                  69,
+                  73,
+                  77,
+                  79,
+                  80,
+                  99,
+                  109
+                ]
+              },
+              {
+                "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/logs/events.jsonl",
+                "lines": [
+                  19,
+                  20,
+                  22,
+                  23,
+                  25,
+                  26,
+                  28,
+                  29,
+                  37,
+                  38
+                ]
+              }
+            ],
+            "callflow": [
+              "Retrieve catalogue and all hash-verified raw resources on every run (run.py12\u201324).",
+              "Each of4nativecentres promoted tofloat64, normalized using leads2,3,4/MAM and unitsm/s\u2192mm/day\u2192seasonalmm (29\u201338).",
+              "Returned seasonalmemberfields are aligned, splitintotraining/new pairs; their membermeans are submitted (39\u201348,100,102).",
+              "Native calibrate(pairs,observed,method=ereg,cv=loyo) and calibrate(...forecast_year=2016) retain unequalmembers/defaultWilks (68\u201369).",
+              "Native per_model and combined probabilities are transposed/labelled then submitted directly; native hindcast probabilities feed RPS/RPSS (71\u2013108)."
+            ],
+            "native_parameters": {
+              "normalize": {
+                "dtype_before_call": "float64",
+                "native_variable": "tprate",
+                "native_units": "m s-1",
+                "target_rate_units": "mm/day",
+                "leadtime_month": [
+                  2,
+                  3,
+                  4
+                ],
+                "year_index": true
+              },
+              "calibrate": {
+                "method": "ereg",
+                "predictive_variance": "public default Wilks; no override",
+                "cv": "loyo",
+                "forecast_year": 2016,
+                "return_components": true,
+                "combination": "native equal model",
+                "members": [
+                  25,
+                  40,
+                  28,
+                  31
+                ]
+              }
+            },
+            "package_call_counts": {
+              "counting_method": "Deterministic codepath+originalexecutetrace counts, notinstrumented dynamiccounters; excludes internal regressionfits.",
+              "per_successful_own_command": {
+                "normalize": 4,
+                "calibrate": 2
+              },
+              "synthetic_smoke_agent_phase": {
+                "normalize": 1,
+                "calibrate": 2
+              },
+              "agent_phase_realdata": {
+                "normalize": 17,
+                "calibrate": 8,
+                "explanation": "Five run.py invocations: firstnormalizesonecentrethenerrorsonrename; following4normalizeseach4andcalibrate2, twoofthoseerrorlaterinRPS. Final2complete."
+              },
+              "controller_original_replays": {
+                "invocations": 3,
+                "normalize": 12,
+                "calibrate": 6,
+                "source": "All3originalreplays exit0 and runfrozencode; normalreplaypass."
+              }
+            },
+            "scientific_completion": {
+              "computed": "fail",
+              "overall": "fail",
+              "replay": "pass",
+              "failed_checks": [
+                "probe.held_out_year_isolation"
+              ],
+              "nearest_reading": {
+                "conventions": {
+                  "integration": "calendar",
+                  "thresholds": "fold_only",
+                  "weighting": "equal_models"
+                },
+                "pitfalls": [],
+                "results_agreeing": [
+                  "cv_rps_climatology",
+                  "lat",
+                  "lon",
+                  "model",
+                  "new_model_mean_mm",
+                  "new_year",
+                  "observed_category",
+                  "tercile",
+                  "train_model_mean_mm",
+                  "year"
+                ],
+                "results_differing": {
+                  "train_observed_mm": 2.2891265643920633e-05,
+                  "model_hindcast_probability": 5.378225054197827e-08,
+                  "model_forecast_probability": 3.346965760098186e-08,
+                  "hindcast_probability": 4.707952439009233e-08,
+                  "forecast_probability": 2.9733601025760947e-08,
+                  "cv_rps": 1.1910380459667635e-09,
+                  "cv_rpss": 2.622817851793968e-09
+                }
+              },
+              "precision_explanation": "CHIRPS montharrays summed beforeastypefloat64 (56\u201365), changing seasonalobservations by2.289e-5mm and probabilities by5.38e-8; numericalreference contractrequiresfloat64errorbounds."
+            },
+            "review_actions": {
+              "model_calls": 0,
+              "scientific_binary_io": false,
+              "attempt_modified": false,
+              "instrumented_reruns": 0
+            }
+          },
+          "invocation": {
+            "system": "efficiency-luna-accord-guided-1",
+            "assigned_arm": "guided_accord",
+            "replication": 1,
+            "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+            "plan_sha256": "22613e8cc3c447cf519476af50460222c6c7b0c40231a1db892764213099a4ab",
+            "system_sha256": "b82380eb6283514791fcd02f24f2a7657b9768d346b927f6476ed78773a1d69e",
+            "started_at": "2026-10-08T14:16:49.066660+00:00",
+            "command": [
+              "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+              "-m",
+              "assessment",
+              "run",
+              "mam-multimodel-outlook",
+              "kenya-interior--mam-2016",
+              "--system",
+              "efficiency-luna-accord-guided-1",
+              "--no-judge"
+            ],
+            "status": "finished",
+            "agent_retries": 0,
+            "direct_paid_api_usd": 0,
+            "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+            "codex_version": "codex-cli 0.160.0",
+            "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+            "exit_code": 0,
+            "finished_at": "2026-10-08T14:19:37.373745+00:00",
+            "cli_wall_seconds": 168.1759389169747,
+            "result": {
+              "run": "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1",
+              "level": 1,
+              "status": "submitted",
+              "outcome": "fail",
+              "computed_outcome": "fail",
+              "judged_outcome": "unresolved",
+              "skill": {
+                "split": "new_years",
+                "rps": 0.4312408105543176,
+                "climatology_rps": 0.29629629629629634,
+                "rpss": -0.4554377356208217,
+                "years": [
+                  2016
+                ],
+                "cells": 18,
+                "ranking_enabled": false
+              },
+              "directory": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1"
+            }
+          }
+        },
+        {
+          "run": "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee",
+          "system": "efficiency-luna-python-1",
+          "assigned_arm": "python",
+          "replication": 1,
+          "directory": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee",
+          "status": "submitted",
+          "reason": null,
+          "computed": "fail",
+          "overall": "fail",
+          "supplementary": "unresolved",
+          "failed_checks": [
+            "probe.held_out_year_isolation"
+          ],
+          "unresolved_checks": [
+            "interpretation.outlook_support",
+            "probe.changed_data",
+            "variant"
+          ],
+          "replay": {
+            "state": "pass",
+            "detail": "The run command regenerates the submitted results.",
+            "run": {
+              "exit_code": 0,
+              "executor": "docker-snapshot-http"
+            },
+            "required_for": [
+              "completion",
+              "ranking"
+            ],
+            "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+            "requirement": "Does the submitted command regenerate its results?"
+          },
+          "usage": {
+            "input_tokens": 262321,
+            "cached_input_tokens": 197120,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 7645,
+            "reasoning_output_tokens": 2664,
+            "total_tokens": 269966
+          },
+          "uncached_input_tokens": 65201,
+          "fresh_input_plus_output_tokens": 72846,
+          "agent_seconds": 107.14212058403064,
+          "command_seconds": 18.85781362594571,
+          "model_adapter_transport_overhead_proxy_seconds": 88.28430695808493,
+          "cli_assessment_seconds": 147.26888179196976,
+          "controller_assessment_overhead_proxy_seconds": 40.126761207939126,
+          "tool_calls": 11,
+          "initial_transfer": {
+            "evidence": "verified",
+            "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee/controller/acquisition-1e52a48c905d/requests.jsonl",
+            "log_sha256": "7b86d972c8115bd04115b27f96fdba1dbe9d086ae10d2148eda93ba47b8ce518",
+            "requests": 37,
+            "successful_get_bytes": 22075318
+          },
+          "replay_transfer": [
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee/controller/acquisition-evidence/c9bd6f2d53f046b793658b53c93f7914/probe-changed-data-requests.jsonl",
+              "log_sha256": "01b5b21281c86dcdfecc34322193d5b3d25c9bc2675c5c81527793dbd9ababff",
+              "requests": 7,
+              "successful_get_bytes": 8685622
+            },
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee/controller/acquisition-evidence/c9bd6f2d53f046b793658b53c93f7914/probe-invariance-held_out_year_isolation-requests.jsonl",
+              "log_sha256": "ca9bf192773c98d5137e23ee534a9846381ee627b0d12bfffad1216b52143f54",
+              "requests": 7,
+              "successful_get_bytes": 7399830
+            },
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee/controller/acquisition-evidence/c9bd6f2d53f046b793658b53c93f7914/probe-replay-requests.jsonl",
+              "log_sha256": "24adde30734135976210595dc7c1be71d662711de0071fc9c7daa4b7410d99bd",
+              "requests": 7,
+              "successful_get_bytes": 4414614
+            }
+          ],
+          "tool_review": {
+            "status": "pending"
+          },
+          "invocation": {
+            "system": "efficiency-luna-python-1",
+            "assigned_arm": "python",
+            "replication": 1,
+            "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+            "plan_sha256": "22613e8cc3c447cf519476af50460222c6c7b0c40231a1db892764213099a4ab",
+            "system_sha256": "326d8690d832a80fddcb2d014c75dece1e76a1c3478f79f60f9244394c93a555",
+            "started_at": "2026-10-08T14:16:49.066630+00:00",
+            "command": [
+              "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+              "-m",
+              "assessment",
+              "run",
+              "mam-multimodel-outlook",
+              "kenya-interior--mam-2016",
+              "--system",
+              "efficiency-luna-python-1",
+              "--no-judge"
+            ],
+            "status": "finished",
+            "agent_retries": 0,
+            "direct_paid_api_usd": 0,
+            "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+            "codex_version": "codex-cli 0.160.0",
+            "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+            "exit_code": 0,
+            "finished_at": "2026-10-08T14:19:16.470568+00:00",
+            "cli_wall_seconds": 147.26888179196976,
+            "result": {
+              "run": "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee",
+              "level": 1,
+              "status": "submitted",
+              "outcome": "fail",
+              "computed_outcome": "fail",
+              "judged_outcome": "unresolved",
+              "skill": {
+                "split": "new_years",
+                "rps": 0.4312408105543177,
+                "climatology_rps": 0.29629629629629634,
+                "rpss": -0.4554377356208219,
+                "years": [
+                  2016
+                ],
+                "cells": 18,
+                "ranking_enabled": false
+              },
+              "directory": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee"
+            }
+          }
+        }
+      ],
+      "pending": [],
+      "by_arm": {
+        "python": {
+          "assigned_attempts": 1,
+          "scientifically_valid_completions": 0,
+          "unknown_usage_runs": [],
+          "token_totals": {
+            "input_tokens": 262321,
+            "cached_input_tokens": 197120,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 7645,
+            "reasoning_output_tokens": 2664,
+            "total_tokens": 269966
+          },
+          "known_fresh_input_plus_output_lower_bound": 72846,
+          "fresh_input_plus_output_including_failures": 72846,
+          "fresh_input_plus_output_per_valid_completion": null,
+          "agent_seconds_including_failures": 107.14212058403064,
+          "cli_seconds_including_failures": 147.26888179196976
+        },
+        "guided_accord": {
+          "assigned_attempts": 1,
+          "scientifically_valid_completions": 0,
+          "unknown_usage_runs": [],
+          "token_totals": {
+            "input_tokens": 214950,
+            "cached_input_tokens": 183040,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 6905,
+            "reasoning_output_tokens": 2369,
+            "total_tokens": 221855
+          },
+          "known_fresh_input_plus_output_lower_bound": 38815,
+          "fresh_input_plus_output_including_failures": 38815,
+          "fresh_input_plus_output_per_valid_completion": null,
+          "agent_seconds_including_failures": 117.05127329204697,
+          "cli_seconds_including_failures": 168.1759389169747
+        }
+      },
+      "paired_comparison": {
+        "guided_relative_resource_reductions": {
+          "fresh_input_plus_output": 0.4671636054141614,
+          "agent_time": -0.09248606107478219,
+          "command_time": -0.7363486973252424,
+          "full_cli_time": -0.14196520589147948,
+          "input_tokens": 0.18058409353425764,
+          "cached_input_tokens": 0.07142857142857142,
+          "output_tokens": 0.09679529103989536,
+          "total_tokens": 0.17821133031566938,
+          "uncached_input_tokens": 0.5105903283691968
+        },
+        "baseline_computed": "fail",
+        "guided_computed": "fail",
+        "variable_token_charge_proxy": {
+          "all_three_active_components_lower": true,
+          "hypothetical_rate_weighted_reduction_bounds": {
+            "minimum": 0.07142857142857142,
+            "maximum": 0.5105903283691968
+          },
+          "formula": "fresh_input * p_fresh + cached_input * p_cached + output * p_output",
+          "assumptions": "Same model, nonnegative rates, positive billed denominator, only these three active metered classes, no fixed or tool fees. Both reported cache-write counts are zero. Reasoning is already inside output.",
+          "interpretation": "Hypothetical per-attempt variable token charge, not subscription invoice, dollars saved, or a reliable cost per valid completion."
+        },
+        "interpretation": "One fresh matched pair; descriptive resource and completion differences, not statistical significance."
+      },
+      "direct_paid_api_usd": 0,
+      "subscription_invoice_usd": null,
+      "interpretation": "Bundle comparison on one instance; no significance, dollar savings or cross-instance generalization claimed."
+    },
+    "precision_clarification_v2": {
+      "schema_version": 1,
+      "plan": "experiments/efficiency_precision_plan_2026-10-08.json",
+      "contract_status": "current",
+      "plan_sha256": "00259b80ab8794647304a0ae48e1ec28ffd7ccf5d06f1599466b5cb8fdc46e6c",
+      "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+      "rows": [
+        {
+          "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a",
+          "system": "efficiency-luna-accord-guided-precision",
+          "assigned_arm": "guided_accord",
+          "replication": 1,
+          "directory": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a",
+          "status": "token_limit",
+          "reason": null,
+          "computed": "pass",
+          "overall": "pass",
+          "supplementary": "unresolved",
+          "failed_checks": [],
+          "unresolved_checks": [
+            "interpretation.outlook_support"
+          ],
+          "replay": {
+            "state": "pass",
+            "detail": "The run command regenerates the submitted results.",
+            "run": {
+              "exit_code": 0,
+              "executor": "docker-snapshot-http"
+            },
+            "required_for": [
+              "completion",
+              "ranking"
+            ],
+            "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+            "requirement": "Does the submitted command regenerate its results?"
+          },
+          "usage": {
+            "input_tokens": 341505,
+            "cached_input_tokens": 298240,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 11306,
+            "reasoning_output_tokens": 2824,
+            "total_tokens": 352811
+          },
+          "uncached_input_tokens": 43265,
+          "fresh_input_plus_output_tokens": 54571,
+          "agent_seconds": 150.48410162492655,
+          "command_seconds": 36.96380162483547,
+          "model_adapter_transport_overhead_proxy_seconds": 113.52030000009108,
+          "cli_assessment_seconds": 197.56547895807307,
+          "controller_assessment_overhead_proxy_seconds": 47.08137733314652,
+          "tool_calls": 14,
+          "initial_transfer": {
+            "evidence": "verified",
+            "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/controller/acquisition-d6f194c9d809/requests.jsonl",
+            "log_sha256": "1fe6111b2290dfc95fa976bb33ff964a7e29d78b326dcd232d9797764418bb7b",
+            "requests": 46,
+            "successful_get_bytes": 26545244
+          },
+          "replay_transfer": [
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/controller/acquisition-evidence/b85c514094c64d9aa72080d46f74e059/probe-changed-data-requests.jsonl",
+              "log_sha256": "2ac8bff661e83f1eb2dcc81bc79adee6c6ccb3651a63a8005e47c5b00c119b25",
+              "requests": 7,
+              "successful_get_bytes": 4414670
+            },
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/controller/acquisition-evidence/b85c514094c64d9aa72080d46f74e059/probe-invariance-held_out_year_isolation-requests.jsonl",
+              "log_sha256": "189b44890d6cfb586dcc37bd5818a7e1d0ad81aafaaa64542610b6dfd8a544c9",
+              "requests": 7,
+              "successful_get_bytes": 4414614
+            },
+            {
+              "evidence": "verified",
+              "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/controller/acquisition-evidence/b85c514094c64d9aa72080d46f74e059/probe-replay-requests.jsonl",
+              "log_sha256": "ae41cbdaeccb082e38bdf4402aee68dd99a4299bbbfd550dfc8e67f17e781a15",
+              "requests": 7,
+              "successful_get_bytes": 4414614
+            }
+          ],
+          "tool_review": {
+            "system": "efficiency-luna-accord-guided-precision",
+            "assigned_arm": "guided_accord",
+            "assigned_condition_retained": true,
+            "review_status": "frozen source and original execution traces reviewed",
+            "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+            "evidence": {
+              "run.json": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/run.json",
+                "sha256": "51dcc7e2b769c7a10312470b3651b3ad1ab299a4b0705497a450e79ea5394b97"
+              },
+              "assessment.json": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/assessment.json",
+                "sha256": "3157e7180ec4b3616c7f90a02f6eab9a90b2d866e8faecaa5f81eeaa35952d82"
+              },
+              "artifacts.json": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/artifacts.json",
+                "sha256": "be796334bc9a8b23d6433040d6a41045a5129829907e6942f1cc2eddca9795d7"
+              },
+              "system.json": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/system.json",
+                "sha256": "500c55791fb6d11fd464b81165adbb9bf473b2f7f8738958cbfd98f71ac28315"
+              },
+              "request.json": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/request.json",
+                "sha256": "d7edc05264d03a165c54990918e13ecf113f75516e259ce9fa10e8dfefe3b869"
+              },
+              "logs/events.jsonl": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/logs/events.jsonl",
+                "sha256": "f6d3255370fd5ef9f35827835697afee96ca0d58da3ee570b54bce78803ee53f"
+              },
+              "frozen/run.py": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/run.py",
+                "sha256": "02078d26f25d5a40245e018251fa00d99d1e2cb1dd4bc62ac96430ee5a0c659f"
+              },
+              "frozen/report.md": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/report.md",
+                "sha256": "9a9d19cdd2feccf5669518c39a099329a0e050d806b361ccc2f3491808a17738"
+              },
+              "frozen/answer.json": {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/answer.json",
+                "sha256": "21bafe000e5f86f19e17ea73fd146e59008322f03174d9f93551c5e900df188b"
+              }
+            },
+            "condition_compliance": {
+              "state": "pass",
+              "reason": "Native normalized member fields feed submitted seasonal means and native calibration; returned per-model/combined probabilities are submitted directly and feed scores."
+            },
+            "both_initial_arms_runtime_and_grading_clearance": true,
+            "no_known_grader_runtime_issue": true,
+            "code_pointers": [
+              {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/run.py",
+                "lines": [
+                  25,
+                  29,
+                  30,
+                  32,
+                  34,
+                  39,
+                  43,
+                  57,
+                  58,
+                  60,
+                  62,
+                  63,
+                  64,
+                  68,
+                  69,
+                  71,
+                  77,
+                  78,
+                  83
+                ]
+              },
+              {
+                "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/logs/events.jsonl",
+                "lines": [
+                  13,
+                  14,
+                  17,
+                  18,
+                  20,
+                  21,
+                  23,
+                  24,
+                  26,
+                  27,
+                  38,
+                  39
+                ]
+              }
+            ],
+            "callflow": [
+              "Fresh catalogue and resources fetched/hash-verified on each invocation (13\u201321).",
+              "All four native rainfall-rate fields promoted before normalize, with MAM leads and actual-calendar normalization (22\u201335).",
+              "CHIRPS promoted before monthly sums, then seasonal spatial interpolation (36\u201347).",
+              "Returned member fields split into training/new pairs; their member means form submitted model predictors (57\u201362,78,80).",
+              "Native default-Wilks ereg LOYO and full-training forecast calibration return per-model/combined probabilities (63\u201371).",
+              "Returned probabilities directly form required arrays and RPS/RPSS; no independently substituted forecast probabilities (77\u201383)."
+            ],
+            "native_parameters": {
+              "normalize": {
+                "dtype_before_call": "float64",
+                "native_variable": "tprate",
+                "native_units": "m s-1",
+                "target_rate_units": "mm/day",
+                "leadtime_month": [
+                  2,
+                  3,
+                  4
+                ],
+                "year_index": true
+              },
+              "calibrate": {
+                "method": "ereg",
+                "predictive_variance": "public default Wilks; no override",
+                "cv": "loyo",
+                "forecast_year": 2016,
+                "return_components": true,
+                "combination": "native equal-model",
+                "members": [
+                  25,
+                  40,
+                  28,
+                  31
+                ]
+              }
+            },
+            "package_call_counts": {
+              "counting_method": "Code-path inference from original execute traces and frozen source, not added dynamic counters; internal regression fits excluded.",
+              "per_successful_own_command": {
+                "normalize": 4,
+                "calibrate": 2
+              },
+              "synthetic_agent_smoke": {
+                "normalize": 1,
+                "calibrate": 2
+              },
+              "agent_exploratory_realdata": {
+                "normalize": 4,
+                "calibrate": 0
+              },
+              "agent_submitted_script": {
+                "invocations": 5,
+                "normalize": 20,
+                "calibrate": 10,
+                "explanation": "Five invocations all reach normalization/calibration; first two subsequently fail on forecast year dimension and RPS one-hot axis, final three complete."
+              },
+              "agent_realdata_total": {
+                "normalize": 24,
+                "calibrate": 10
+              },
+              "controller_original_replays": {
+                "invocations": 3,
+                "normalize": 12,
+                "calibrate": 6
+              }
+            },
+            "scientific_completion": {
+              "driver_status": "token_limit",
+              "computed": "pass",
+              "overall": "pass",
+              "replay": "pass",
+              "all_computed_checks_pass": true,
+              "supplementary_prose": "unresolved; no judge run"
+            },
+            "stopping_loop": {
+              "reason": "Cumulative provider tokens reached352811 after the final optional dtype/coordinate validation command.",
+              "completion_before_stop": true,
+              "execution_debugging": [
+                "Missing forecast year dimension in native forecast result required expand_dims before transpose.",
+                "General RPS one-hot axis ordering error corrected.",
+                "Optional scalar .item() failed on a lazy Dask array; original forecast arrays already existed."
+              ],
+              "last_successful_own_command_trace_lines": [
+                38,
+                39
+              ],
+              "last_optional_check_trace_lines": [
+                41,
+                42
+              ],
+              "interpretation": "Budget stop retained independently from scientific validity. Native calculations and required envelope completed before stop; no additional inference or retry."
+            },
+            "review_actions": {
+              "model_calls": 0,
+              "scientific_binary_io": false,
+              "attempt_modified": false,
+              "instrumented_reruns": 0
+            }
+          },
+          "invocation": {
+            "system": "efficiency-luna-accord-guided-precision",
+            "assigned_arm": "guided_accord",
+            "replication": 1,
+            "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+            "plan_sha256": "00259b80ab8794647304a0ae48e1ec28ffd7ccf5d06f1599466b5cb8fdc46e6c",
+            "system_sha256": "25c05fea06fbcb7b408692df5b165853a6ed696a2f866d847c4f6b3de8323438",
+            "started_at": "2026-10-08T14:32:22.457300+00:00",
+            "command": [
+              "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+              "-m",
+              "assessment",
+              "run",
+              "mam-multimodel-outlook",
+              "kenya-interior--mam-2016",
+              "--system",
+              "efficiency-luna-accord-guided-precision",
+              "--no-judge"
+            ],
+            "status": "finished",
+            "agent_retries": 0,
+            "direct_paid_api_usd": 0,
+            "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+            "codex_version": "codex-cli 0.160.0",
+            "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+            "exit_code": 0,
+            "finished_at": "2026-10-08T14:35:40.167549+00:00",
+            "cli_wall_seconds": 197.56547895807307,
+            "result": {
+              "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a",
+              "level": 1,
+              "status": "token_limit",
+              "outcome": "pass",
+              "computed_outcome": "pass",
+              "judged_outcome": "unresolved",
+              "skill": {
+                "split": "new_years",
+                "rps": 0.4312408099416133,
+                "climatology_rps": 0.29629629629629634,
+                "rpss": -0.4554377335529447,
+                "years": [
+                  2016
+                ],
+                "cells": 18,
+                "ranking_enabled": false
+              },
+              "directory": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a"
+            }
+          }
+        },
+        {
+          "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c",
+          "system": "efficiency-luna-python-precision",
+          "assigned_arm": "python",
+          "replication": 1,
+          "directory": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c",
+          "status": "token_limit",
+          "reason": null,
+          "computed": "fail",
+          "overall": "fail",
+          "supplementary": "unresolved",
+          "failed_checks": [
+            "claim.cv_skill",
+            "coverage",
+            "envelope",
+            "invariant.cv_score_identity",
+            "invariant.equal_model_combination",
+            "invariant.probabilities_valid",
+            "probe.changed_data",
+            "probe.held_out_year_isolation",
+            "probe.replay",
+            "variant"
+          ],
+          "unresolved_checks": [
+            "interpretation.outlook_support"
+          ],
+          "replay": {
+            "state": "fail",
+            "detail": "Fails with the envelope: the submission has no usable answer to check.",
+            "blocked_by": "envelope",
+            "required_for": [
+              "completion",
+              "ranking"
+            ],
+            "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+            "requirement": "Does the submitted command regenerate its results?"
+          },
+          "usage": {
+            "input_tokens": 361332,
+            "cached_input_tokens": 314368,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 11486,
+            "reasoning_output_tokens": 1997,
+            "total_tokens": 372818
+          },
+          "uncached_input_tokens": 46964,
+          "fresh_input_plus_output_tokens": 58450,
+          "agent_seconds": 205.18703370902222,
+          "command_seconds": 6.239202374126762,
+          "model_adapter_transport_overhead_proxy_seconds": 198.94783133489545,
+          "cli_assessment_seconds": 207.7029389590025,
+          "controller_assessment_overhead_proxy_seconds": 2.5159052499802783,
+          "tool_calls": 13,
+          "initial_transfer": {
+            "evidence": "verified",
+            "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c/controller/acquisition-e95d544d17fc/requests.jsonl",
+            "log_sha256": "66b0780cc17267ab6988caf5aa0663bf5dbe56aaed64671a809464d2dcc208da",
+            "requests": 9,
+            "successful_get_bytes": 4699544
+          },
+          "replay_transfer": [],
+          "tool_review": {
+            "status": "pending"
+          },
+          "invocation": {
+            "system": "efficiency-luna-python-precision",
+            "assigned_arm": "python",
+            "replication": 1,
+            "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+            "plan_sha256": "00259b80ab8794647304a0ae48e1ec28ffd7ccf5d06f1599466b5cb8fdc46e6c",
+            "system_sha256": "3a6ab27c3dd8e12f4d7c98f81bf04a604dcc18416819ac6743c8ac051a045546",
+            "started_at": "2026-10-08T14:32:22.387660+00:00",
+            "command": [
+              "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+              "-m",
+              "assessment",
+              "run",
+              "mam-multimodel-outlook",
+              "kenya-interior--mam-2016",
+              "--system",
+              "efficiency-luna-python-precision",
+              "--no-judge"
+            ],
+            "status": "finished",
+            "agent_retries": 0,
+            "direct_paid_api_usd": 0,
+            "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+            "codex_version": "codex-cli 0.160.0",
+            "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+            "exit_code": 0,
+            "finished_at": "2026-10-08T14:35:50.246421+00:00",
+            "cli_wall_seconds": 207.7029389590025,
+            "result": {
+              "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c",
+              "level": 1,
+              "status": "token_limit",
+              "outcome": "fail",
+              "computed_outcome": "fail",
+              "judged_outcome": "unresolved",
+              "skill": null,
+              "directory": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c"
+            }
+          }
+        }
+      ],
+      "pending": [],
+      "by_arm": {
+        "python": {
+          "assigned_attempts": 1,
+          "scientifically_valid_completions": 0,
+          "unknown_usage_runs": [],
+          "token_totals": {
+            "input_tokens": 361332,
+            "cached_input_tokens": 314368,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 11486,
+            "reasoning_output_tokens": 1997,
+            "total_tokens": 372818
+          },
+          "known_fresh_input_plus_output_lower_bound": 58450,
+          "fresh_input_plus_output_including_failures": 58450,
+          "fresh_input_plus_output_per_valid_completion": null,
+          "agent_seconds_including_failures": 205.18703370902222,
+          "cli_seconds_including_failures": 207.7029389590025
+        },
+        "guided_accord": {
+          "assigned_attempts": 1,
+          "scientifically_valid_completions": 1,
+          "unknown_usage_runs": [],
+          "token_totals": {
+            "input_tokens": 341505,
+            "cached_input_tokens": 298240,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 11306,
+            "reasoning_output_tokens": 2824,
+            "total_tokens": 352811
+          },
+          "known_fresh_input_plus_output_lower_bound": 54571,
+          "fresh_input_plus_output_including_failures": 54571,
+          "fresh_input_plus_output_per_valid_completion": 54571.0,
+          "agent_seconds_including_failures": 150.48410162492655,
+          "cli_seconds_including_failures": 197.56547895807307
+        }
+      },
+      "paired_comparison": {
+        "guided_relative_resource_reductions": {
+          "fresh_input_plus_output": 0.06636441402908469,
+          "agent_time": 0.2666003357778954,
+          "command_time": -4.924443447790699,
+          "full_cli_time": 0.04880749425953192,
+          "input_tokens": 0.054871973697319915,
+          "cached_input_tokens": 0.05130293159609121,
+          "output_tokens": 0.015671251958906496,
+          "total_tokens": 0.053664254408317194,
+          "uncached_input_tokens": 0.07876245634954433
+        },
+        "baseline_computed": "fail",
+        "guided_computed": "pass",
+        "variable_token_charge_proxy": {
+          "all_three_active_components_lower": true,
+          "hypothetical_rate_weighted_reduction_bounds": {
+            "minimum": 0.015671251958906496,
+            "maximum": 0.07876245634954433
+          },
+          "formula": "fresh_input * p_fresh + cached_input * p_cached + output * p_output",
+          "assumptions": "Same model, nonnegative rates, positive billed denominator, only these three active metered classes, no fixed or tool fees. Both reported cache-write counts are zero. Reasoning is already inside output.",
+          "interpretation": "Hypothetical per-attempt variable token charge, not subscription invoice, dollars saved, or a reliable cost per valid completion."
+        },
+        "interpretation": "One fresh matched pair; descriptive resource and completion differences, not statistical significance."
+      },
+      "direct_paid_api_usd": 0,
+      "subscription_invoice_usd": null,
+      "interpretation": "Bundle comparison on one instance; no significance, dollar savings or cross-instance generalization claimed."
+    }
+  },
+  "all_attempts_ledger": [
+    {
+      "run": "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1",
+      "system": "efficiency-luna-accord-guided-1",
+      "assigned_arm": "guided_accord",
+      "replication": 1,
+      "directory": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1",
+      "status": "submitted",
+      "reason": null,
+      "computed": "fail",
+      "overall": "fail",
+      "supplementary": "unresolved",
+      "failed_checks": [
+        "probe.held_out_year_isolation"
+      ],
+      "unresolved_checks": [
+        "interpretation.outlook_support",
+        "probe.changed_data",
+        "variant"
+      ],
+      "replay": {
+        "state": "pass",
+        "detail": "The run command regenerates the submitted results.",
+        "run": {
+          "exit_code": 0,
+          "executor": "docker-snapshot-http"
+        },
+        "required_for": [
+          "completion",
+          "ranking"
+        ],
+        "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+        "requirement": "Does the submitted command regenerate its results?"
+      },
+      "usage": {
+        "input_tokens": 214950,
+        "cached_input_tokens": 183040,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6905,
+        "reasoning_output_tokens": 2369,
+        "total_tokens": 221855
+      },
+      "uncached_input_tokens": 31910,
+      "fresh_input_plus_output_tokens": 38815,
+      "agent_seconds": 117.05127329204697,
+      "command_seconds": 32.74374012381304,
+      "model_adapter_transport_overhead_proxy_seconds": 84.30753316823393,
+      "cli_assessment_seconds": 168.1759389169747,
+      "controller_assessment_overhead_proxy_seconds": 51.12466562492773,
+      "tool_calls": 13,
+      "initial_transfer": {
+        "evidence": "verified",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/controller/acquisition-457787c6e9b8/requests.jsonl",
+        "log_sha256": "2a90b0909b7f5fd6284904bdc50354c866c7b20f0583ee29fa0acfc8bb7a4445",
+        "requests": 44,
+        "successful_get_bytes": 26489932
+      },
+      "replay_transfer": [
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/controller/acquisition-evidence/a86ea9961d4449c6b8f823c05b605abb/probe-changed-data-requests.jsonl",
+          "log_sha256": "8b46a2d355435ea5626b1bcd57a1dc916487ac8f319294b84f90ef2d3488e22e",
+          "requests": 7,
+          "successful_get_bytes": 8685622
+        },
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/controller/acquisition-evidence/a86ea9961d4449c6b8f823c05b605abb/probe-invariance-held_out_year_isolation-requests.jsonl",
+          "log_sha256": "8678fbc009f7edf41c404c0dba1301e8e1ee47cc4706245ee58fa16bf5436109",
+          "requests": 7,
+          "successful_get_bytes": 7399830
+        },
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/controller/acquisition-evidence/a86ea9961d4449c6b8f823c05b605abb/probe-replay-requests.jsonl",
+          "log_sha256": "43c0dc6dca0d910870a56d3011e18a54fb15bb4a2074a0b360e2ebe4040b442e",
+          "requests": 7,
+          "successful_get_bytes": 4414614
+        }
+      ],
+      "tool_review": {
+        "system": "efficiency-luna-accord-guided-1",
+        "assigned_arm": "guided_accord",
+        "assigned_condition_retained": true,
+        "review_status": "frozen_text_and_original_replays_reviewed",
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "evidence": {
+          "run.json": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/run.json",
+            "sha256": "87a26cf011b04eeb2fba1d75365e0bfcc35f22be93f7882269836e7563e35c0a"
+          },
+          "assessment.json": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/assessment.json",
+            "sha256": "2382d38903602d6ab6f75a0ebaa0a331429b2b3b3a505737e6e72109646f946c"
+          },
+          "artifacts.json": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/artifacts.json",
+            "sha256": "96241f31ef7e6f21e923457560dc21214fb6343bcb3bbd8877c7b8a2b05a26d5"
+          },
+          "system.json": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/system.json",
+            "sha256": "e098eebe7cf1c5332c23f9b99b925cf75842a020d98aa4490084b07270ea363e"
+          },
+          "request.json": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/request.json",
+            "sha256": "539bdfb58e9228a141ef7581ae001fe5d47c4305e0f1820246b0093efae07ac4"
+          },
+          "logs/events.jsonl": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/logs/events.jsonl",
+            "sha256": "ebfa4a716bdabf539e2332fcb54a52faded272afc081b061aa8d2b3cc20e8208"
+          },
+          "frozen/run.py": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/run.py",
+            "sha256": "5debfd612883c5793f75e3b476015a85d830d80032812ec514268a77fa9e3d05"
+          },
+          "frozen/report.md": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/report.md",
+            "sha256": "461d5f3e8efe1060512c4828454d2d6e862ca85f8f0fbe43c4086fcf6641ea69"
+          },
+          "frozen/answer.json": {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/answer.json",
+            "sha256": "69be931f7353d8d3c8e3a4013db9fd6cba4ea2481dbcd7b8893fffc967ca622d"
+          }
+        },
+        "condition_compliance": {
+          "state": "pass",
+          "reason": "Actual native outputs feed all required model seasonal means and calibrated per-model/combined probabilities; no hand-calculated probability replacement."
+        },
+        "no_known_grader_runtime_issue": false,
+        "grader_caveat": "Held-out intervention promotes every monthly observation tofloat64; submissions accumulate originalnativefloat32 first, so unchangedtrainingyears change rounding. Original failcannotaloneestablish targetleakage. Independentreviewpending.",
+        "code_pointers": [
+          {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/run.py",
+            "lines": [
+              29,
+              36,
+              38,
+              44,
+              46,
+              47,
+              68,
+              69,
+              73,
+              77,
+              79,
+              80,
+              99,
+              109
+            ]
+          },
+          {
+            "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/logs/events.jsonl",
+            "lines": [
+              19,
+              20,
+              22,
+              23,
+              25,
+              26,
+              28,
+              29,
+              37,
+              38
+            ]
+          }
+        ],
+        "callflow": [
+          "Retrieve catalogue and all hash-verified raw resources on every run (run.py12\u201324).",
+          "Each of4nativecentres promoted tofloat64, normalized using leads2,3,4/MAM and unitsm/s\u2192mm/day\u2192seasonalmm (29\u201338).",
+          "Returned seasonalmemberfields are aligned, splitintotraining/new pairs; their membermeans are submitted (39\u201348,100,102).",
+          "Native calibrate(pairs,observed,method=ereg,cv=loyo) and calibrate(...forecast_year=2016) retain unequalmembers/defaultWilks (68\u201369).",
+          "Native per_model and combined probabilities are transposed/labelled then submitted directly; native hindcast probabilities feed RPS/RPSS (71\u2013108)."
+        ],
+        "native_parameters": {
+          "normalize": {
+            "dtype_before_call": "float64",
+            "native_variable": "tprate",
+            "native_units": "m s-1",
+            "target_rate_units": "mm/day",
+            "leadtime_month": [
+              2,
+              3,
+              4
+            ],
+            "year_index": true
+          },
+          "calibrate": {
+            "method": "ereg",
+            "predictive_variance": "public default Wilks; no override",
+            "cv": "loyo",
+            "forecast_year": 2016,
+            "return_components": true,
+            "combination": "native equal model",
+            "members": [
+              25,
+              40,
+              28,
+              31
+            ]
+          }
+        },
+        "package_call_counts": {
+          "counting_method": "Deterministic codepath+originalexecutetrace counts, notinstrumented dynamiccounters; excludes internal regressionfits.",
+          "per_successful_own_command": {
+            "normalize": 4,
+            "calibrate": 2
+          },
+          "synthetic_smoke_agent_phase": {
+            "normalize": 1,
+            "calibrate": 2
+          },
+          "agent_phase_realdata": {
+            "normalize": 17,
+            "calibrate": 8,
+            "explanation": "Five run.py invocations: firstnormalizesonecentrethenerrorsonrename; following4normalizeseach4andcalibrate2, twoofthoseerrorlaterinRPS. Final2complete."
+          },
+          "controller_original_replays": {
+            "invocations": 3,
+            "normalize": 12,
+            "calibrate": 6,
+            "source": "All3originalreplays exit0 and runfrozencode; normalreplaypass."
+          }
+        },
+        "scientific_completion": {
+          "computed": "fail",
+          "overall": "fail",
+          "replay": "pass",
+          "failed_checks": [
+            "probe.held_out_year_isolation"
+          ],
+          "nearest_reading": {
+            "conventions": {
+              "integration": "calendar",
+              "thresholds": "fold_only",
+              "weighting": "equal_models"
+            },
+            "pitfalls": [],
+            "results_agreeing": [
+              "cv_rps_climatology",
+              "lat",
+              "lon",
+              "model",
+              "new_model_mean_mm",
+              "new_year",
+              "observed_category",
+              "tercile",
+              "train_model_mean_mm",
+              "year"
+            ],
+            "results_differing": {
+              "train_observed_mm": 2.2891265643920633e-05,
+              "model_hindcast_probability": 5.378225054197827e-08,
+              "model_forecast_probability": 3.346965760098186e-08,
+              "hindcast_probability": 4.707952439009233e-08,
+              "forecast_probability": 2.9733601025760947e-08,
+              "cv_rps": 1.1910380459667635e-09,
+              "cv_rpss": 2.622817851793968e-09
+            }
+          },
+          "precision_explanation": "CHIRPS montharrays summed beforeastypefloat64 (56\u201365), changing seasonalobservations by2.289e-5mm and probabilities by5.38e-8; numericalreference contractrequiresfloat64errorbounds."
+        },
+        "review_actions": {
+          "model_calls": 0,
+          "scientific_binary_io": false,
+          "attempt_modified": false,
+          "instrumented_reruns": 0
+        }
+      },
+      "invocation": {
+        "system": "efficiency-luna-accord-guided-1",
+        "assigned_arm": "guided_accord",
+        "replication": 1,
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "plan_sha256": "22613e8cc3c447cf519476af50460222c6c7b0c40231a1db892764213099a4ab",
+        "system_sha256": "b82380eb6283514791fcd02f24f2a7657b9768d346b927f6476ed78773a1d69e",
+        "started_at": "2026-10-08T14:16:49.066660+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "efficiency-luna-accord-guided-1",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "direct_paid_api_usd": 0,
+        "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+        "codex_version": "codex-cli 0.160.0",
+        "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+        "exit_code": 0,
+        "finished_at": "2026-10-08T14:19:37.373745+00:00",
+        "cli_wall_seconds": 168.1759389169747,
+        "result": {
+          "run": "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1",
+          "level": 1,
+          "status": "submitted",
+          "outcome": "fail",
+          "computed_outcome": "fail",
+          "judged_outcome": "unresolved",
+          "skill": {
+            "split": "new_years",
+            "rps": 0.4312408105543176,
+            "climatology_rps": 0.29629629629629634,
+            "rpss": -0.4554377356208217,
+            "years": [
+              2016
+            ],
+            "cells": 18,
+            "ranking_enabled": false
+          },
+          "directory": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1"
+        }
+      },
+      "phase": "initial_v1"
+    },
+    {
+      "run": "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee",
+      "system": "efficiency-luna-python-1",
+      "assigned_arm": "python",
+      "replication": 1,
+      "directory": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee",
+      "status": "submitted",
+      "reason": null,
+      "computed": "fail",
+      "overall": "fail",
+      "supplementary": "unresolved",
+      "failed_checks": [
+        "probe.held_out_year_isolation"
+      ],
+      "unresolved_checks": [
+        "interpretation.outlook_support",
+        "probe.changed_data",
+        "variant"
+      ],
+      "replay": {
+        "state": "pass",
+        "detail": "The run command regenerates the submitted results.",
+        "run": {
+          "exit_code": 0,
+          "executor": "docker-snapshot-http"
+        },
+        "required_for": [
+          "completion",
+          "ranking"
+        ],
+        "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+        "requirement": "Does the submitted command regenerate its results?"
+      },
+      "usage": {
+        "input_tokens": 262321,
+        "cached_input_tokens": 197120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7645,
+        "reasoning_output_tokens": 2664,
+        "total_tokens": 269966
+      },
+      "uncached_input_tokens": 65201,
+      "fresh_input_plus_output_tokens": 72846,
+      "agent_seconds": 107.14212058403064,
+      "command_seconds": 18.85781362594571,
+      "model_adapter_transport_overhead_proxy_seconds": 88.28430695808493,
+      "cli_assessment_seconds": 147.26888179196976,
+      "controller_assessment_overhead_proxy_seconds": 40.126761207939126,
+      "tool_calls": 11,
+      "initial_transfer": {
+        "evidence": "verified",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee/controller/acquisition-1e52a48c905d/requests.jsonl",
+        "log_sha256": "7b86d972c8115bd04115b27f96fdba1dbe9d086ae10d2148eda93ba47b8ce518",
+        "requests": 37,
+        "successful_get_bytes": 22075318
+      },
+      "replay_transfer": [
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee/controller/acquisition-evidence/c9bd6f2d53f046b793658b53c93f7914/probe-changed-data-requests.jsonl",
+          "log_sha256": "01b5b21281c86dcdfecc34322193d5b3d25c9bc2675c5c81527793dbd9ababff",
+          "requests": 7,
+          "successful_get_bytes": 8685622
+        },
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee/controller/acquisition-evidence/c9bd6f2d53f046b793658b53c93f7914/probe-invariance-held_out_year_isolation-requests.jsonl",
+          "log_sha256": "ca9bf192773c98d5137e23ee534a9846381ee627b0d12bfffad1216b52143f54",
+          "requests": 7,
+          "successful_get_bytes": 7399830
+        },
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee/controller/acquisition-evidence/c9bd6f2d53f046b793658b53c93f7914/probe-replay-requests.jsonl",
+          "log_sha256": "24adde30734135976210595dc7c1be71d662711de0071fc9c7daa4b7410d99bd",
+          "requests": 7,
+          "successful_get_bytes": 4414614
+        }
+      ],
+      "tool_review": {
+        "status": "pending"
+      },
+      "invocation": {
+        "system": "efficiency-luna-python-1",
+        "assigned_arm": "python",
+        "replication": 1,
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "plan_sha256": "22613e8cc3c447cf519476af50460222c6c7b0c40231a1db892764213099a4ab",
+        "system_sha256": "326d8690d832a80fddcb2d014c75dece1e76a1c3478f79f60f9244394c93a555",
+        "started_at": "2026-10-08T14:16:49.066630+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "efficiency-luna-python-1",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "direct_paid_api_usd": 0,
+        "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+        "codex_version": "codex-cli 0.160.0",
+        "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+        "exit_code": 0,
+        "finished_at": "2026-10-08T14:19:16.470568+00:00",
+        "cli_wall_seconds": 147.26888179196976,
+        "result": {
+          "run": "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee",
+          "level": 1,
+          "status": "submitted",
+          "outcome": "fail",
+          "computed_outcome": "fail",
+          "judged_outcome": "unresolved",
+          "skill": {
+            "split": "new_years",
+            "rps": 0.4312408105543177,
+            "climatology_rps": 0.29629629629629634,
+            "rpss": -0.4554377356208219,
+            "years": [
+              2016
+            ],
+            "cells": 18,
+            "ranking_enabled": false
+          },
+          "directory": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-1-2b95ee"
+        }
+      },
+      "phase": "initial_v1"
+    },
+    {
+      "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a",
+      "system": "efficiency-luna-accord-guided-precision",
+      "assigned_arm": "guided_accord",
+      "replication": 1,
+      "directory": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a",
+      "status": "token_limit",
+      "reason": null,
+      "computed": "pass",
+      "overall": "pass",
+      "supplementary": "unresolved",
+      "failed_checks": [],
+      "unresolved_checks": [
+        "interpretation.outlook_support"
+      ],
+      "replay": {
+        "state": "pass",
+        "detail": "The run command regenerates the submitted results.",
+        "run": {
+          "exit_code": 0,
+          "executor": "docker-snapshot-http"
+        },
+        "required_for": [
+          "completion",
+          "ranking"
+        ],
+        "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+        "requirement": "Does the submitted command regenerate its results?"
+      },
+      "usage": {
+        "input_tokens": 341505,
+        "cached_input_tokens": 298240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11306,
+        "reasoning_output_tokens": 2824,
+        "total_tokens": 352811
+      },
+      "uncached_input_tokens": 43265,
+      "fresh_input_plus_output_tokens": 54571,
+      "agent_seconds": 150.48410162492655,
+      "command_seconds": 36.96380162483547,
+      "model_adapter_transport_overhead_proxy_seconds": 113.52030000009108,
+      "cli_assessment_seconds": 197.56547895807307,
+      "controller_assessment_overhead_proxy_seconds": 47.08137733314652,
+      "tool_calls": 14,
+      "initial_transfer": {
+        "evidence": "verified",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/controller/acquisition-d6f194c9d809/requests.jsonl",
+        "log_sha256": "1fe6111b2290dfc95fa976bb33ff964a7e29d78b326dcd232d9797764418bb7b",
+        "requests": 46,
+        "successful_get_bytes": 26545244
+      },
+      "replay_transfer": [
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/controller/acquisition-evidence/b85c514094c64d9aa72080d46f74e059/probe-changed-data-requests.jsonl",
+          "log_sha256": "2ac8bff661e83f1eb2dcc81bc79adee6c6ccb3651a63a8005e47c5b00c119b25",
+          "requests": 7,
+          "successful_get_bytes": 4414670
+        },
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/controller/acquisition-evidence/b85c514094c64d9aa72080d46f74e059/probe-invariance-held_out_year_isolation-requests.jsonl",
+          "log_sha256": "189b44890d6cfb586dcc37bd5818a7e1d0ad81aafaaa64542610b6dfd8a544c9",
+          "requests": 7,
+          "successful_get_bytes": 4414614
+        },
+        {
+          "evidence": "verified",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/controller/acquisition-evidence/b85c514094c64d9aa72080d46f74e059/probe-replay-requests.jsonl",
+          "log_sha256": "ae41cbdaeccb082e38bdf4402aee68dd99a4299bbbfd550dfc8e67f17e781a15",
+          "requests": 7,
+          "successful_get_bytes": 4414614
+        }
+      ],
+      "tool_review": {
+        "system": "efficiency-luna-accord-guided-precision",
+        "assigned_arm": "guided_accord",
+        "assigned_condition_retained": true,
+        "review_status": "frozen source and original execution traces reviewed",
+        "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+        "evidence": {
+          "run.json": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/run.json",
+            "sha256": "51dcc7e2b769c7a10312470b3651b3ad1ab299a4b0705497a450e79ea5394b97"
+          },
+          "assessment.json": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/assessment.json",
+            "sha256": "3157e7180ec4b3616c7f90a02f6eab9a90b2d866e8faecaa5f81eeaa35952d82"
+          },
+          "artifacts.json": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/artifacts.json",
+            "sha256": "be796334bc9a8b23d6433040d6a41045a5129829907e6942f1cc2eddca9795d7"
+          },
+          "system.json": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/system.json",
+            "sha256": "500c55791fb6d11fd464b81165adbb9bf473b2f7f8738958cbfd98f71ac28315"
+          },
+          "request.json": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/request.json",
+            "sha256": "d7edc05264d03a165c54990918e13ecf113f75516e259ce9fa10e8dfefe3b869"
+          },
+          "logs/events.jsonl": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/logs/events.jsonl",
+            "sha256": "f6d3255370fd5ef9f35827835697afee96ca0d58da3ee570b54bce78803ee53f"
+          },
+          "frozen/run.py": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/run.py",
+            "sha256": "02078d26f25d5a40245e018251fa00d99d1e2cb1dd4bc62ac96430ee5a0c659f"
+          },
+          "frozen/report.md": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/report.md",
+            "sha256": "9a9d19cdd2feccf5669518c39a099329a0e050d806b361ccc2f3491808a17738"
+          },
+          "frozen/answer.json": {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/answer.json",
+            "sha256": "21bafe000e5f86f19e17ea73fd146e59008322f03174d9f93551c5e900df188b"
+          }
+        },
+        "condition_compliance": {
+          "state": "pass",
+          "reason": "Native normalized member fields feed submitted seasonal means and native calibration; returned per-model/combined probabilities are submitted directly and feed scores."
+        },
+        "both_initial_arms_runtime_and_grading_clearance": true,
+        "no_known_grader_runtime_issue": true,
+        "code_pointers": [
+          {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/run.py",
+            "lines": [
+              25,
+              29,
+              30,
+              32,
+              34,
+              39,
+              43,
+              57,
+              58,
+              60,
+              62,
+              63,
+              64,
+              68,
+              69,
+              71,
+              77,
+              78,
+              83
+            ]
+          },
+          {
+            "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/logs/events.jsonl",
+            "lines": [
+              13,
+              14,
+              17,
+              18,
+              20,
+              21,
+              23,
+              24,
+              26,
+              27,
+              38,
+              39
+            ]
+          }
+        ],
+        "callflow": [
+          "Fresh catalogue and resources fetched/hash-verified on each invocation (13\u201321).",
+          "All four native rainfall-rate fields promoted before normalize, with MAM leads and actual-calendar normalization (22\u201335).",
+          "CHIRPS promoted before monthly sums, then seasonal spatial interpolation (36\u201347).",
+          "Returned member fields split into training/new pairs; their member means form submitted model predictors (57\u201362,78,80).",
+          "Native default-Wilks ereg LOYO and full-training forecast calibration return per-model/combined probabilities (63\u201371).",
+          "Returned probabilities directly form required arrays and RPS/RPSS; no independently substituted forecast probabilities (77\u201383)."
+        ],
+        "native_parameters": {
+          "normalize": {
+            "dtype_before_call": "float64",
+            "native_variable": "tprate",
+            "native_units": "m s-1",
+            "target_rate_units": "mm/day",
+            "leadtime_month": [
+              2,
+              3,
+              4
+            ],
+            "year_index": true
+          },
+          "calibrate": {
+            "method": "ereg",
+            "predictive_variance": "public default Wilks; no override",
+            "cv": "loyo",
+            "forecast_year": 2016,
+            "return_components": true,
+            "combination": "native equal-model",
+            "members": [
+              25,
+              40,
+              28,
+              31
+            ]
+          }
+        },
+        "package_call_counts": {
+          "counting_method": "Code-path inference from original execute traces and frozen source, not added dynamic counters; internal regression fits excluded.",
+          "per_successful_own_command": {
+            "normalize": 4,
+            "calibrate": 2
+          },
+          "synthetic_agent_smoke": {
+            "normalize": 1,
+            "calibrate": 2
+          },
+          "agent_exploratory_realdata": {
+            "normalize": 4,
+            "calibrate": 0
+          },
+          "agent_submitted_script": {
+            "invocations": 5,
+            "normalize": 20,
+            "calibrate": 10,
+            "explanation": "Five invocations all reach normalization/calibration; first two subsequently fail on forecast year dimension and RPS one-hot axis, final three complete."
+          },
+          "agent_realdata_total": {
+            "normalize": 24,
+            "calibrate": 10
+          },
+          "controller_original_replays": {
+            "invocations": 3,
+            "normalize": 12,
+            "calibrate": 6
+          }
+        },
+        "scientific_completion": {
+          "driver_status": "token_limit",
+          "computed": "pass",
+          "overall": "pass",
+          "replay": "pass",
+          "all_computed_checks_pass": true,
+          "supplementary_prose": "unresolved; no judge run"
+        },
+        "stopping_loop": {
+          "reason": "Cumulative provider tokens reached352811 after the final optional dtype/coordinate validation command.",
+          "completion_before_stop": true,
+          "execution_debugging": [
+            "Missing forecast year dimension in native forecast result required expand_dims before transpose.",
+            "General RPS one-hot axis ordering error corrected.",
+            "Optional scalar .item() failed on a lazy Dask array; original forecast arrays already existed."
+          ],
+          "last_successful_own_command_trace_lines": [
+            38,
+            39
+          ],
+          "last_optional_check_trace_lines": [
+            41,
+            42
+          ],
+          "interpretation": "Budget stop retained independently from scientific validity. Native calculations and required envelope completed before stop; no additional inference or retry."
+        },
+        "review_actions": {
+          "model_calls": 0,
+          "scientific_binary_io": false,
+          "attempt_modified": false,
+          "instrumented_reruns": 0
+        }
+      },
+      "invocation": {
+        "system": "efficiency-luna-accord-guided-precision",
+        "assigned_arm": "guided_accord",
+        "replication": 1,
+        "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+        "plan_sha256": "00259b80ab8794647304a0ae48e1ec28ffd7ccf5d06f1599466b5cb8fdc46e6c",
+        "system_sha256": "25c05fea06fbcb7b408692df5b165853a6ed696a2f866d847c4f6b3de8323438",
+        "started_at": "2026-10-08T14:32:22.457300+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "efficiency-luna-accord-guided-precision",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "direct_paid_api_usd": 0,
+        "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+        "codex_version": "codex-cli 0.160.0",
+        "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+        "exit_code": 0,
+        "finished_at": "2026-10-08T14:35:40.167549+00:00",
+        "cli_wall_seconds": 197.56547895807307,
+        "result": {
+          "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a",
+          "level": 1,
+          "status": "token_limit",
+          "outcome": "pass",
+          "computed_outcome": "pass",
+          "judged_outcome": "unresolved",
+          "skill": {
+            "split": "new_years",
+            "rps": 0.4312408099416133,
+            "climatology_rps": 0.29629629629629634,
+            "rpss": -0.4554377335529447,
+            "years": [
+              2016
+            ],
+            "cells": 18,
+            "ranking_enabled": false
+          },
+          "directory": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a"
+        }
+      },
+      "phase": "precision_clarification_v2"
+    },
+    {
+      "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c",
+      "system": "efficiency-luna-python-precision",
+      "assigned_arm": "python",
+      "replication": 1,
+      "directory": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c",
+      "status": "token_limit",
+      "reason": null,
+      "computed": "fail",
+      "overall": "fail",
+      "supplementary": "unresolved",
+      "failed_checks": [
+        "claim.cv_skill",
+        "coverage",
+        "envelope",
+        "invariant.cv_score_identity",
+        "invariant.equal_model_combination",
+        "invariant.probabilities_valid",
+        "probe.changed_data",
+        "probe.held_out_year_isolation",
+        "probe.replay",
+        "variant"
+      ],
+      "unresolved_checks": [
+        "interpretation.outlook_support"
+      ],
+      "replay": {
+        "state": "fail",
+        "detail": "Fails with the envelope: the submission has no usable answer to check.",
+        "blocked_by": "envelope",
+        "required_for": [
+          "completion",
+          "ranking"
+        ],
+        "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+        "requirement": "Does the submitted command regenerate its results?"
+      },
+      "usage": {
+        "input_tokens": 361332,
+        "cached_input_tokens": 314368,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11486,
+        "reasoning_output_tokens": 1997,
+        "total_tokens": 372818
+      },
+      "uncached_input_tokens": 46964,
+      "fresh_input_plus_output_tokens": 58450,
+      "agent_seconds": 205.18703370902222,
+      "command_seconds": 6.239202374126762,
+      "model_adapter_transport_overhead_proxy_seconds": 198.94783133489545,
+      "cli_assessment_seconds": 207.7029389590025,
+      "controller_assessment_overhead_proxy_seconds": 2.5159052499802783,
+      "tool_calls": 13,
+      "initial_transfer": {
+        "evidence": "verified",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c/controller/acquisition-e95d544d17fc/requests.jsonl",
+        "log_sha256": "66b0780cc17267ab6988caf5aa0663bf5dbe56aaed64671a809464d2dcc208da",
+        "requests": 9,
+        "successful_get_bytes": 4699544
+      },
+      "replay_transfer": [],
+      "tool_review": {
+        "status": "pending"
+      },
+      "invocation": {
+        "system": "efficiency-luna-python-precision",
+        "assigned_arm": "python",
+        "replication": 1,
+        "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+        "plan_sha256": "00259b80ab8794647304a0ae48e1ec28ffd7ccf5d06f1599466b5cb8fdc46e6c",
+        "system_sha256": "3a6ab27c3dd8e12f4d7c98f81bf04a604dcc18416819ac6743c8ac051a045546",
+        "started_at": "2026-10-08T14:32:22.387660+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "efficiency-luna-python-precision",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "direct_paid_api_usd": 0,
+        "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+        "codex_version": "codex-cli 0.160.0",
+        "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+        "exit_code": 0,
+        "finished_at": "2026-10-08T14:35:50.246421+00:00",
+        "cli_wall_seconds": 207.7029389590025,
+        "result": {
+          "run": "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c",
+          "level": 1,
+          "status": "token_limit",
+          "outcome": "fail",
+          "computed_outcome": "fail",
+          "judged_outcome": "unresolved",
+          "skill": null,
+          "directory": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-python-precision-3bac3c"
+        }
+      },
+      "phase": "precision_clarification_v2"
+    }
+  ],
+  "recorded_attempts": 4,
+  "maximum_authorized_attempts": 4,
+  "pending": [],
+  "token_totals_including_failures": {
+    "input_tokens": 1180108,
+    "cached_input_tokens": 992768,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 37342,
+    "reasoning_output_tokens": 9854,
+    "total_tokens": 1217450
+  },
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "interpretation": "All attempts count toward investigation resources. Scientific completion and success-adjusted efficiency remain phase-specific because the grading version and common precision instruction changed. No third pair."
+}

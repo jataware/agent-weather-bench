@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-08T17:55:38.537185+00:00",
+  "state": "pass",
+  "new_agent_attempts": 2,
+  "agent_retries": 0,
+  "judge_requests": 8,
+  "judge_retries": 0,
+  "original_frozen_files_verified": {
+    "station": 8,
+    "monthly": 18
+  },
+  "scientific_fingerprint": "45b7ffbdf625119333a5a2510ae51221437ce1d3d61b4f0922d66179a44b592d",
+  "contract_and_sources_preserved": true,
+  "certificate_metadata_update": "Only test5/review_status changed after trials; exact prelaunch bytes retained and verified against frozen contract.",
+  "certification_tests_1_to_5": "pass",
+  "scientific_approval": "pending",
+  "current_pair": {
+    "monthly-fragility-luna-accord": {
+      "computed_outcome": "pass",
+      "prose_review": "unresolved supplementary",
+      "agent_seconds": 113.72987358295359,
+      "tool_calls": 9,
+      "fresh_input_plus_output_tokens": 42439,
+      "weather_library_execution_observed": false
+    },
+    "monthly-fragility-astra-accord": {
+      "computed_outcome": "pass",
+      "prose_review": "unresolved supplementary",
+      "agent_seconds": 330.07118974998593,
+      "tool_calls": 5,
+      "fresh_input_plus_output_tokens": 45928,
+      "weather_library_execution_observed": false
+    }
+  },
+  "regressions": {
+    "command": ".venv/bin/python -m pytest -q tests/test_failure_judge_calibration.py tests/test_monthly_fragility.py tests/test_monthly_cycle_saved_state.py",
+    "passed": 20,
+    "failed": 0,
+    "seconds": 0.15,
+    "model_calls": 0
+  },
+  "judge_cli_list_price_usd": 1.0410032,
+  "actual_judge_billing_usd": null,
+  "agent_direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "conclusion": "Historical scientific errors and a broad-judge false pass are verified. Both fresh agents completed the unchanged prescribed science. No persistent capability boundary, saturation estimate or weather-tooling advantage is established.",
+  "evidence": {
+    "experiments/monthly-fragility-v2-plan-2026-10-08.json": "df0e0f47e7edd9e1e1fdcd7b727cdea1dbb025f1a20ce1e8ff2e9a90302819ca",
+    "experiments/monthly-fragility-v2-results-2026-10-08.json": "3a46721aea129e7f094b4c22af3a729103811ed683c896aa1e9c3c9e8134f004",
+    "experiments/monthly-fragility-v2-numeric-verification-2026-10-08.json": "15f1825e03b98df1284d6437463ec681195e10da6ebdf9a9f84f9a8b0c05c22e",
+    "experiments/failure-judge-calibration-eight-call-2026-10-08.json": "ce1a32993b58a246be738aaa50fae9d44a73dfae0d87986dae3fa4f63908dba7",
+    "experiments/original-portfolio-failure-audit-2026-10-08.json": "46f8e7335ec71cdc138fdaeeeaf0c8ee9040984bf673d9dcfde1c057f18f576f",
+    "experiments/station-surgical-replay-2026-10-08.json": "019eefc1ef7ccd3c3fcd7758e481496dbf4fadce41a8e13e61513d3bce99d665",
+    "experiments/historical-science-slices-2026-10-08.json": "8bf7274b6dfd9868fd097d03e54d05fbb0287d1c67425ad54c5da8b4e18559bd",
+    "experiments/monthly-cycle-staging-revision-v2-2026-10-08.json": "bd235694f734998eb5992aaafc516884b7dfac1ab8d2821045c41baf1ca88a24",
+    "experiments/monthly-fragility-v2-trial-review-2026-10-08.json": "b9fc96802730a30511e4b88694df58dfb73adfbce1fad2be7546dbff2c096d62",
+    "docs/hard-task-search-2026-10-08.md": "58370287e1570608c0b9dedf518d780505b826cdd561a2c52148c1eab32ed947",
+    "templates/monthly-cycle-calibration/certification.json": "5d82ce48bac5b8e5be397f7b641a9a0e87325fb623f79925e8ce46496783663f"
+  }
+}

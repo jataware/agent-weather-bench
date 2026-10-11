@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/tasks/cca-seasonal-reproduction",
+  "source_weather_is_synthetic": false,
+  "scientific_approval": "pending",
+  "redistribution_approval": "pending",
+  "files": [
+    {
+      "file": "agent-inputs/africas2s-cca-method.py.txt",
+      "sha256": "c6ab0a5b6e9d78e4a8fabaa37926fcbf2a7d25697f2247d26cc07b66aa7fac48",
+      "bytes": 20480,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/africas2s-method-record.txt",
+      "sha256": "9a996d3d170670e7c65e97192974872bad2458d9f6662ec09eee57a2b3df486d",
+      "bytes": 4784,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/algorithm.md",
+      "sha256": "9005e59ffd534e7f6efe066df43ae357de36e81c25dc2090d5515043604b1ba8",
+      "bytes": 3921,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/candidates.json",
+      "sha256": "08d85d2dc5d2094788532c86b327d8664b99fd4c44b503ac27b7faa498f1df17",
+      "bytes": 945,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/predictors.nc",
+      "sha256": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+      "bytes": 16000,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/pycpt-probabilistic-route.py.txt",
+      "sha256": "3ca7686d2e98eca1019c6c0a7c99e0efcf74af5bd1f999f0927bf2b84f41636c",
+      "bytes": 1527,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+      "bytes": 125,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/targets.nc",
+      "sha256": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+      "bytes": 11384,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/forecast.nc",
+      "sha256": "971bdb9a9cc2b4f1a764ed63377c6b9a3bbfb1ec4225f8617cd11acb39e50116",
+      "bytes": 17639,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/hindcasts.nc",
+      "sha256": "e10aa3c033dd07f90197c9df5a7cb467393fc85d22ec951d5cbed160ab0894d1",
+      "bytes": 48008,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/model.json",
+      "sha256": "6aaf8f4722cc4d77adc719c8a16c5d735021d56ef9e90ca3af000e1c143f0de3",
+      "bytes": 76466,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/private-targets.nc",
+      "sha256": "3554768d83eb1de2e848da2002eb3453b2e93d4decd1f14aa90879be907f8db2",
+      "bytes": 8992,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/reference-audit.json",
+      "sha256": "2b62643a63cea610bc86f34a82ab5d9e209576afbb6ab369cfaf72f17980afdb",
+      "bytes": 1299,
+      "visibility": "controller_only"
+    }
+  ]
+}

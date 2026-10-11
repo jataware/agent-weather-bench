@@ -1,0 +1,246 @@
+{
+  "started_at": "2026-10-08T14:58:00.560050+00:00",
+  "model_calls": 0,
+  "image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+  "fingerprint_before": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff",
+  "template": "seasonal-objective-consolidation",
+  "native_io_policy": "One reserved scientific worker; serial commands, no native I/O threads.",
+  "guide": "systems/breadth-luna-accord-consolidation/API.md",
+  "toy": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--memory",
+      "1536m",
+      "--cpus",
+      "2",
+      "--mount",
+      "type=bind,src=/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/systems/breadth-luna-accord-consolidation,dst=/substrate,readonly",
+      "--entrypoint",
+      "python",
+      "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "/substrate/synthetic_combination.py"
+    ],
+    "exit_code": 0,
+    "result": {
+      "synthetic_only": true,
+      "dimensions": [
+        "tercile",
+        "lat",
+        "lon"
+      ],
+      "support": [
+        [
+          2,
+          1,
+          0
+        ]
+      ],
+      "checks": "passed"
+    }
+  },
+  "private_control_exposed_to_agent": false,
+  "finished_at": "2026-10-08T14:58:12.763409+00:00",
+  "fingerprint_after": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff",
+  "fingerprint_unchanged": true,
+  "computed_outcome": "pass",
+  "outcome": "pass",
+  "checks": {
+    "coverage": "pass",
+    "envelope": "pass",
+    "interpretation.consistency_across_artifacts": "unresolved",
+    "interpretation.outlook_scope": "unresolved",
+    "invariant.simplex_and_support": "pass",
+    "probe.changed_data": "pass",
+    "probe.replay": "pass",
+    "variant": "pass"
+  },
+  "acquisition": {
+    "mode": "private-snapshot-http",
+    "scientific_headline_instrument": false,
+    "probes": [
+      {
+        "state": "recorded",
+        "mode": "private-snapshot-http",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/review/breadth-consolidation-preflight/retained-acquisition/probe-changed-data-requests.jsonl",
+        "log_sha256": "bade478ca378e9b27e50ec32d9f2532517877ba97d1b045d1840e129137b7b83",
+        "requests": [
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 786,
+            "sha256": "a548781ca10ba7bf1c1ffc1e2bbd0c1dda3a7007931550dd0a0d693f4ccc1889",
+            "seconds": 0.0010305410000341908,
+            "timestamp_unix": 1791471491.7933793
+          },
+          {
+            "method": "GET",
+            "resource": "observed-sst.nc",
+            "status": 200,
+            "bytes": 324628,
+            "sha256": "d951110a5b230cd3384d6b1d41e6311df895ce5f9b18f825558acc45a97c26f1",
+            "seconds": 0.007419792000007419,
+            "timestamp_unix": 1791471491.801558
+          },
+          {
+            "method": "GET",
+            "resource": "forecast-sst.nc",
+            "status": 200,
+            "bytes": 324628,
+            "sha256": "50d190f5389846605544e26b291aedfe304a14a108c02b929d8f572ff1736dcc",
+            "seconds": 0.008373500000004697,
+            "timestamp_unix": 1791471491.8585644
+          },
+          {
+            "method": "GET",
+            "resource": "forecast-precip.nc",
+            "status": 200,
+            "bytes": 324628,
+            "sha256": "fe39221f6e59d2930d399f999bd26687669cae212faa6645484bdc1e6bd070a6",
+            "seconds": 0.003849208000019644,
+            "timestamp_unix": 1791471491.8675606
+          }
+        ],
+        "bytes": 974670,
+        "seconds": 0.02067304100006595,
+        "retrieved_resources": [
+          "catalog.json",
+          "forecast-precip.nc",
+          "forecast-sst.nc",
+          "observed-sst.nc"
+        ],
+        "provider_download_bytes": 0,
+        "live_provider": false,
+        "probe": "changed-data",
+        "evidence_persisted": true,
+        "original_log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/review/breadth-consolidation-preflight/assessment-work/probe-changed-data/acquisition/requests.jsonl"
+      },
+      {
+        "state": "recorded",
+        "mode": "private-snapshot-http",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/review/breadth-consolidation-preflight/retained-acquisition/probe-replay-requests.jsonl",
+        "log_sha256": "1f6737ff547e95c8465404e22d644528b12ab387cb27017505bcf3727c395c66",
+        "requests": [
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 786,
+            "sha256": "6bdf9781019aafd29fde70c975274eb7fb1a5ce4500f64ae43b1431b87edcef6",
+            "seconds": 0.0010661250000225664,
+            "timestamp_unix": 1791471488.6753182
+          },
+          {
+            "method": "GET",
+            "resource": "observed-sst.nc",
+            "status": 200,
+            "bytes": 321820,
+            "sha256": "29d46edeed09b857fa34be5c0166e6fbccf8a37d766d446801aca532d33be212",
+            "seconds": 0.004517792000001464,
+            "timestamp_unix": 1791471488.6805623
+          },
+          {
+            "method": "GET",
+            "resource": "forecast-sst.nc",
+            "status": 200,
+            "bytes": 321820,
+            "sha256": "3683486b689f0c6a6523c481fb15f11f0991d215e0dc5d9204e176b9485cbaf6",
+            "seconds": 0.004444666000040343,
+            "timestamp_unix": 1791471488.7415774
+          },
+          {
+            "method": "GET",
+            "resource": "forecast-precip.nc",
+            "status": 200,
+            "bytes": 321820,
+            "sha256": "17f3dd0ca263d667d73f8ba82ac94b10f3336915571a3c736c9e4899ac159ba7",
+            "seconds": 0.004878917000041838,
+            "timestamp_unix": 1791471488.7565582
+          }
+        ],
+        "bytes": 966246,
+        "seconds": 0.01490750000010621,
+        "retrieved_resources": [
+          "catalog.json",
+          "forecast-precip.nc",
+          "forecast-sst.nc",
+          "observed-sst.nc"
+        ],
+        "provider_download_bytes": 0,
+        "live_provider": false,
+        "probe": "replay",
+        "evidence_persisted": true,
+        "original_log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/review/breadth-consolidation-preflight/assessment-work/probe-replay/acquisition/requests.jsonl"
+      }
+    ],
+    "probe_count": 2,
+    "bytes": 1940916,
+    "seconds": 0.03558054100017216
+  },
+  "initial_acquisition": {
+    "state": "recorded",
+    "mode": "private-snapshot-http",
+    "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/review/breadth-consolidation-preflight/initial/acquisition/requests.jsonl",
+    "log_sha256": "a1cd602b96f76b6f1aaa0cba852a6e9e76eba82df6cd92c8babc1b8ec93c1748",
+    "requests": [
+      {
+        "method": "GET",
+        "resource": "catalog.json",
+        "status": 200,
+        "bytes": 786,
+        "sha256": "6bdf9781019aafd29fde70c975274eb7fb1a5ce4500f64ae43b1431b87edcef6",
+        "seconds": 0.0012944580000180395,
+        "timestamp_unix": 1791471485.0807693
+      },
+      {
+        "method": "GET",
+        "resource": "observed-sst.nc",
+        "status": 200,
+        "bytes": 321820,
+        "sha256": "29d46edeed09b857fa34be5c0166e6fbccf8a37d766d446801aca532d33be212",
+        "seconds": 0.004248042000028818,
+        "timestamp_unix": 1791471485.0855618
+      },
+      {
+        "method": "GET",
+        "resource": "forecast-sst.nc",
+        "status": 200,
+        "bytes": 321820,
+        "sha256": "3683486b689f0c6a6523c481fb15f11f0991d215e0dc5d9204e176b9485cbaf6",
+        "seconds": 0.004842209000003095,
+        "timestamp_unix": 1791471485.146554
+      },
+      {
+        "method": "GET",
+        "resource": "forecast-precip.nc",
+        "status": 200,
+        "bytes": 321820,
+        "sha256": "17f3dd0ca263d667d73f8ba82ac94b10f3336915571a3c736c9e4899ac159ba7",
+        "seconds": 0.00435116599999219,
+        "timestamp_unix": 1791471485.1605701
+      }
+    ],
+    "bytes": 966246,
+    "seconds": 0.014735875000042142,
+    "retrieved_resources": [
+      "catalog.json",
+      "forecast-precip.nc",
+      "forecast-sst.nc",
+      "observed-sst.nc"
+    ],
+    "provider_download_bytes": 0,
+    "live_provider": false
+  },
+  "native_calls_per_command": {
+    "combine_terciles": 2
+  },
+  "native_call_count_method": "Trusted control has two unconditional public calls; initial and replay exit codes recorded.",
+  "assessment": "var/review/breadth-consolidation-preflight/assessment.json",
+  "control_sha256": "475bc581a41671680f510329377e431517a45271afa088864ce50dedab4783e1",
+  "guide_sha256": "a67e5e4a7d17f85f31258a23ec4daf5b26edbd4a7e2e063a591edc743ac2fe80",
+  "toy_sha256": "4188ad6199b85f709eb030be72af2b6e091c702a3f500aa406619225c3d155b2"
+}

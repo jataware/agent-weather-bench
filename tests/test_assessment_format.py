@@ -245,7 +245,8 @@ def _assess(kenya, controls, name, instance, tmp_path):
 @needs_data
 def test_correct_solution_passes_and_judge_checks_stay_unresolved(kenya, controls, tmp_path):
     result = _assess(kenya, controls, "correct", "service-area--weeks-1-2", tmp_path)
-    assert result["computed_outcome"] == PASS and result["outcome"] == UNRESOLVED
+    assert result["computed_outcome"] == PASS and result["outcome"] == PASS
+    assert result["advisory_outcome"] == UNRESOLVED
     assert result["unresolved_reasons"] == ["judge_not_run"]
     assert result["matched_conventions"]["negative_increments"] == ["clipped"]      # settled by the changed-data probe
 
@@ -423,7 +424,8 @@ def test_outcome_spec_has_no_reference_answer_and_two_levels(weeks):
 
 
 @pytest.mark.parametrize("template_name, systems", [(KENYA, ["kenya-revision-fixture"]), (WEEKS, ["weeks34-fixture", "weeks34-level2-fixture"]),
-                                                    ("seasonal-rainfall-calibration", ["seasonal-calibration-fixture"])])
+                                                    ("seasonal-rainfall-calibration", ["seasonal-calibration-fixture"]),
+                                                    ("rainfall-downscaling", []), ("seasonal-cca-reproduction", [])])
 def test_certification_and_fixtures_are_current(template_name, systems):
     template = Template(template_name)
     record = json.loads((template.folder / "certification.json").read_text())
@@ -663,15 +665,25 @@ def test_runtime_crash_is_not_blamed_on_the_method(kenya, controls, tmp_path):
     """Images from the pilot crashed inside a native library on exit. Three runs were first marked as failing every probe."""
     params = kenya.instance("service-area--weeks-1-2")
     kenya.hooks.stage_inputs(kenya.private, params, tmp_path / "inputs")
-    for name, ending, expected in (("after", "os._exit(3)", PASS), ("before", "os.kill(os.getpid(), signal.SIGSEGV)", UNRESOLVED)):
+    class SimulatedCrash(Local):
+        def __init__(self, when):
+            self.when = when
+
+        def run(self, submission, inputs, argv, scratch, seconds=120):
+            if self.when == "after":
+                record = super().run(submission, inputs, argv, scratch, seconds)
+                assert record["exit_code"] == 0
+                return {**record, "exit_code": -11, "crashed_by_signal": True}
+            output = scratch / "output"
+            output.mkdir(parents=True)
+            return {"exit_code": -11, "crashed_by_signal": True, "executor": self.name,
+                    "output": str(output), "answer": None, "stderr": "Simulated native crash"}
+
+    # Simulate the executor record: sending SIGSEGV to a real host Python process
+    # opens macOS crash dialogs and does not exercise any additional grading logic.
+    for name, expected in (("after", PASS), ("before", UNRESOLVED)):
         submission = controls.build("correct", tmp_path / "inputs", params, tmp_path / name / "submission")
-        source = (submission / "solve.py").read_text()
-        write = '    arrays.to_zarr(output / "results.zarr", mode="w", zarr_format=3, consolidated=False)\n'
-        last = '    (output / "answer.json").write_text(json.dumps(answer, allow_nan=False) + "\\n")\n'
-        assert write in source and source.endswith(last)
-        crash = f"    import os, signal\n    {ending}\n"
-        (submission / "solve.py").write_text(source + crash if name == "after" else source.replace(write, crash + write))
-        result = assess(kenya, params, submission, Local(), tmp_path / name / "work")
+        result = assess(kenya, params, submission, SimulatedCrash(name), tmp_path / name / "work")
         replay = result["checks"]["probe.replay"]
         assert replay["state"] == expected
         if name == "after":
@@ -694,7 +706,7 @@ def test_agents_are_told_only_what_the_brief_explains(weeks, seasonal, tmp_path)
     for template, instance, internal in ((weeks, "final-2012-2014--western-six", "longitude_limit"),
                                          (seasonal, "train-1993-2000--new-2001-2002--southern-rows", "latitude_limit")):
         params = template.instance(instance)
-        assert params[internal] is not None and template.spec["spec_version"] == 3
+        assert params[internal] is not None and template.spec["spec_version"] == 4
         template.hooks.stage_inputs(template.private, params, tmp_path / template.name)
         told = json.loads((tmp_path / template.name / "instance.json").read_text())
         assert internal not in told and told["id"] == instance

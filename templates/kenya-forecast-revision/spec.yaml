@@ -1,12 +1,16 @@
 schema_version: 1
 template: kenya-forecast-revision
-spec_version: 2
+spec_version: 3
 version_history:
+  - version: 3
+    change: Explicit completion and ranking gates; standing prose reviews are supplementary.
+      Template owns judge wording. Earlier contracts remain archived.
   - {version: 1, change: First version. Results were nested lists in answer.json.}
   - {version: 2, change: 'Arrays are delivered in a labelled Zarr store, with a period coordinate. The run command may hard-code the task parameters. The changed-instance rerun is gone; a second instance is a second episode. Runs made under version 1 answered a different contract and are not reassessed under version 2.'}
 title: Kenya forecast revision
 task_set_row: 4
 mode: product
+reference_match: true
 status: development; not reviewed by a domain scientist
 params: [issue_current, issue_previous, rectangle, period_start]
 
@@ -78,3 +82,33 @@ probes: [replay, changed_data]
 claims:
   direction: One of wetter or drier for each period, keyed by the period's start date, following the sign of regional_change_mm.
 interpretation: [consistency_across_artifacts, source_attribution, generalization]
+
+# The task owns its verdict policy and every question used to review its prose.
+question: compute_quantity
+assessment_policy:
+  completion: &id001
+  - envelope
+  - variant
+  - invariant.change_equals_current_minus_previous
+  - invariant.regional_change_within_cell_range
+  - invariant.weekly_totals_not_negative
+  - probe.replay
+  - probe.changed_data
+  - claim.direction
+  ranking: *id001
+judge_questions:
+  consistency_across_artifacts:
+    requirement: The report, the structured answer and the code say the same thing
+      about what was done and what was found. A statement in one that another contradicts
+      is a violation.
+    silence: passes
+  source_attribution:
+    requirement: The report separates correctly what the data source provides, what
+      the brief specified, and what the agent chose. Presenting the agent's own choice
+      as a fact about the data, or as an instruction of the brief, is a violation.
+    silence: passes
+  generalization:
+    requirement: 'The report does not extend a result beyond the sample, region or
+      period it was computed on. Silence passes: a report that only describes what
+      it computed meets this.'
+    silence: passes

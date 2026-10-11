@@ -1,0 +1,13 @@
+ARG BASE=agent-weather-bench-rhiza:io-repair
+FROM ${BASE}
+# Consolidated metadata is optional in valid Zarr stores. Let xarray discover
+# it and fall back to ordinary metadata. Retain the exact scientific transform.
+RUN python - <<'PY'
+from pathlib import Path
+import weather_skills_core
+path = Path(weather_skills_core.__file__).parent / 'decorator.py'
+text = path.read_text()
+old = 'xr.open_zarr(path, consolidated=True)'
+assert text.count(old) == 1, 'Reader changed; review before applying this patch'
+path.write_text(text.replace(old, 'xr.open_zarr(path, consolidated=None)'))
+PY

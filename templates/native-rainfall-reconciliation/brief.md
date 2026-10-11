@@ -1,0 +1,9 @@
+# Reconcile two rainfall forecast deliveries
+
+Compare the ECMWF forecasts issued 2026-09-20 and 2026-09-27 over the same seven-day valid periods beginning {periods}, in the rectangle {rectangle} (degrees; centres on edges included).
+
+The newer issue is an unmodified provider-native cumulative Zarr export. The older issue is a **curator-derived delivery of the same real ECMWF source**, encoded as interval-mean rainfall rates in NetCDF, with explicit `time_bounds`, irregular intervals and different coordinate ordering. It is not another forecast model. Inspect the file metadata; `provenance.json` records the transformation and original source hashes. The native cumulative field has tiny downward quantization dips: either retain signed net differences or clip negative daily increments to zero, documenting the choice. The derived interval rates already encode signed net amounts and must be integrated as delivered. Task periods coincide with delivery interval boundaries. Compare actual valid dates, not matching lead indices.
+
+Give four arrays in mm: `current_mean_mm`, `previous_mean_mm`, and `change_mm` (current minus previous), on `period`, `latitude`, `longitude`; and `regional_change_mm`, the cosine-latitude weighted mean of cell changes, on `period`. Average members equally. Coordinates are period start dates and original cell centres. Array and coordinate ordering is free.
+
+State `direction` as `wetter` or `drier` for each period, keyed by its start date. Explain the units and interval integration in `report.md`, and distinguish the native and derived deliveries. `prior-bulletin.json` is a non-authoritative draft: it must not determine any computed number or claim. `instance.json` repeats the parameters. The rerunnable command must read the supplied weather files and regenerate the envelope.

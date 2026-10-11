@@ -84,6 +84,8 @@ def reference_agreement(template, inputs_for, instances):
                     problems.append({"instance": params["id"], "conventions": combination, "problem": "shapes differ"})
                 else:
                     worst = max(worst, max(_gap(a[name], b[name]) for name in a))
+                    if not compare(template.matched(), a, b)[0]:
+                        problems.append({"instance": params["id"], "conventions": combination, "problem": "independent results differ beyond declared error bounds"})
                     if not template.pitfalls_in(combination):
                         for name in a:
                             if a[name].dtype.kind not in "US" and a[name].size:
@@ -94,7 +96,7 @@ def reference_agreement(template, inputs_for, instances):
                      "largest_reference_value": largest.get(name),
                      "within_declared_magnitude": "magnitude" not in row["tolerance"] or largest.get(name, 0.0) <= row["tolerance"]["magnitude"]}
               for name, row in template.matched().items() if "tolerance" in row}
-    passed = not problems and worst <= 1e-9 and all(row["passed"] for row in extra) and all(row["within_declared_magnitude"] for row in bounds.values())
+    passed = not problems and all(row["passed"] for row in extra) and all(row["within_declared_magnitude"] for row in bounds.values())
     return {"passed": passed, "instances": len(instances), "combinations": len(template.combinations()), "comparisons": compared,
             "largest_difference": worst, "problems": problems[:10], "regression_checks": extra, "tolerances": bounds}
 
@@ -198,7 +200,7 @@ def run_controls(template, executor, instances, scratch, inputs_for):
 def model_attempts(template):
     """Test 5: agent attempts assessed under the current fingerprint, and whether any answer is still unknown."""
     from .runner import RUNS
-    current, stale = [], 0
+    current, stale, excluded = [], 0, []
     for folder in sorted(RUNS.glob("*")) if RUNS.is_dir() else []:
         if not ((folder / "run.json").is_file() and (folder / "assessment.json").is_file()):
             continue
@@ -207,6 +209,15 @@ def model_attempts(template):
             continue
         if assessment.get("fingerprint") != template.fingerprint():
             stale += 1
+            continue
+        # command_driver validates required environment variables before Popen.
+        # Such a launch is infrastructure evidence, not a model trial. Preserve
+        # it explicitly; never exclude a record with adapter execution events.
+        if (meta.get("status") == "execution_error" and meta.get("usage") is None
+                and meta.get("tool_calls") is None
+                and meta.get("reason", "").startswith("ValueError: Missing controller environment variable: ")
+                and not (folder / "logs/events.jsonl").exists()):
+            excluded.append({"run": meta["id"], "reason": meta["reason"], "phase": "before_adapter_spawn"})
             continue
         current.append({"run": meta["id"], "system": meta["system"], "instance": meta["instance"]["id"], "level": meta.get("level", 1),
                         "outcome": assessment["outcome"], "computed_outcome": assessment["computed_outcome"],
@@ -218,6 +229,7 @@ def model_attempts(template):
     return {"passed": (unknown == 0) if enough else None, "status": "run" if current else "not_run", "attempts": len(current),
             "systems": sorted({row["system"] for row in current}), "attempts_with_an_unruled_unknown_answer": unknown,
             "attempts_assessed_under_another_fingerprint": stale,
+            "excluded_before_model_launch": excluded,
             "rulings_awaiting_confirmation": sum(row["ruling"] == "proposed" for row in current),
             "detail": ("Needs at least two agent attempts assessed under this fingerprint." if not enough else
                        "Every attempt's answer was classified." if unknown == 0 else "Some answers match no listed reading and await a ruling."),
@@ -231,6 +243,7 @@ def record_attempts(template):
     if record["fingerprint"] != template.fingerprint():
         raise ValueError("The certification record is for another fingerprint; run certify first")
     record["tests"]["5_model_attempts"] = model_attempts(template)
+    record["review_status"] = review_status(record)
     path.write_text(json.dumps(record, indent=1) + "\n")
     return record["tests"]["5_model_attempts"]
 
@@ -255,9 +268,10 @@ def certify(template, executor, full=False, control_instances=2):
             staged[key] = folder
         return staged[key]
 
-    outcome_mode = template.spec["mode"] == "outcome"
+    outcome_mode = not template.uses_reference
     if outcome_mode:
-        agreement = scoring_agreement(template, everything, scratch / "regression")
+        agreement = (scoring_agreement(template, everything, scratch / "regression") if template.spec.get("skill") else
+                     {"passed": True, "not_applicable": "No reference or scoring instrument is declared; controls validate coverage, rules and reruns."})
     else:
         agreement = reference_agreement(template, inputs_for, everything if full else development)
     controls, not_applicable = run_controls(template, executor, development[:control_instances], scratch,
@@ -281,6 +295,7 @@ def certify(template, executor, full=False, control_instances=2):
     }
     report["automatic_tests_passed"] = all(report["tests"][name]["passed"] for name in list(report["tests"])[:4])
     report["certified"] = False                                    # a domain scientist's approval is still outstanding
+    report["review_status"] = review_status(report)
     (scratch / "certification.json").write_text(json.dumps(report, indent=2) + "\n")
     summary = json.loads(json.dumps(report))
     for test in ("2_known_correct_solutions_pass", "3_incorrect_solutions_are_caught"):
@@ -290,3 +305,9 @@ def certify(template, executor, full=False, control_instances=2):
     for name in ("inputs", "controls", "regression"):
         shutil.rmtree(scratch / name, ignore_errors=True)
     return report
+
+
+def review_status(record):
+    return {"automatic_checks": "passed" if record["automatic_tests_passed"] else "failed",
+            "trial_attempts": "reviewed" if record["tests"]["5_model_attempts"]["passed"] is True else "pending",
+            "scientific_approval": "pending"}

@@ -1,0 +1,40 @@
+{
+  "round": "hard canonical task search2026-10-08",
+  "new_executable_templates": [
+    {
+      "template": "mam-forecast-synthesis",
+      "spec_version": 1,
+      "fingerprint": "d0f38aef16d5056579d99ac36afba0ea13394369aa4a0b7e4194586155fbd291",
+      "automatic_tests_1_to_4_passed": true,
+      "model_attempts": 0,
+      "scientific_approval": "pending",
+      "source_manifest_sha256": "162685063ac1bb9351538bef5adc542cf1176ef04d54d7b25badf2af247aac27"
+    },
+    {
+      "template": "seasonal-objective-consolidation",
+      "spec_version": 1,
+      "fingerprint": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff",
+      "automatic_tests_1_to_4_passed": true,
+      "model_attempts": 1,
+      "scientific_approval": "pending",
+      "source_manifest_sha256": "f3451ff469fbe90a8bac22982f644d0060e2831852fff73d8e4a3e00b161b7a0"
+    }
+  ],
+  "deferred_candidate": "Daily onset/dryspell; no full raw archive triplet/parity qualified",
+  "actual_model_calls": 1,
+  "paid_api_calls": 0,
+  "direct_paid_api_usd": 0,
+  "prelaunch_harness_failures_without_inference": 1,
+  "inference_retries": 0,
+  "hard_capability_boundary_found": false,
+  "synthesis": "Train-only expert missed climatology; predeclared informativeness gate stopped before inference; no retuning",
+  "consolidation": "Single Luna/Python scientifically passed; bounded round stopped",
+  "evidence": {
+    "design": "experiments/hard-task-mam-expert-design-2026-10-08.json",
+    "baseline_verification": "experiments/hard-task-mam-baseline-verification-2026-10-08.json",
+    "pilot": "experiments/hard-task-consolidation-results-2026-10-08.json",
+    "prelaunch": "experiments/hard-task-consolidation-prelaunch-failure-2026-10-08.json",
+    "report": "docs/hard-task-search-2026-10-08.md"
+  },
+  "original_sources_submissions_assessments_unchanged": true
+}

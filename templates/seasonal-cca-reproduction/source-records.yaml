@@ -1,0 +1,31 @@
+source_category: published_method_and_pinned_code
+sources:
+- id: pycpt-source
+  url: https://github.com/iri-pycpt/pycpt
+  revision: 62b90ccf4cb543f2a5680a5c553bcf4ca6b846c0
+  locators: [pycpt/src/pycpt/notebook.py lines 380-410]
+  evidence: Actual inspected separate in-sample probability route and explicit optimism warning.
+- id: africas2s-source
+  url: https://github.com/ACMAD-Niamey/africas2s
+  revision: 4f8526a32232f9c9af400a01e5a6f103a865c735
+  locators: [src/africas2s/methods/cca.py, scripts/benchmark_pycpt.py, scripts/reproduce.py, tests/test_cca_parity.py]
+  evidence: Inspected local code; reported CPT parity remains an author claim.
+- id: chirps3
+  url: https://chc.ucsb.edu/data/chirps3
+  product: CHIRPS v3 final monthly
+- id: era5-sst
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-monthly-means
+  product: ERA5 monthly observed SST, retrospective final-vintage source fixture
+- id: legacy-normalization
+  repository: v4zeek
+  revision: e364ce0ed6cb210b0872c4e35d76ddb329b6dfa5
+  locators: [src/fetch_fixtures.py, archive/legacy-libraries/rosetta/src/rosetta/normalize.py]
+  processing: Existing source acquisition divided native CHIRPS monthly totals by30; task construction undoes it before OND summation.
+method_scope: Bounded method adaptation, not original published-paper numerical replication or exact CPT binary parity.
+curator_choices:
+- Prior June-August observed SST predicts OND rainfall at small native grid subsets.
+- Nested expanding-year selection over fourteen joint EOF/CCA truncations using standardized area-weighted MSE, rather than source CPT Kendall mode selection.
+- Rotation-invariant squared-norm leverage replaces CPT sign-dependent square-of-sum convention.
+- Student-t uncertainty uses training-local fixed-configuration leave-one-out residual variance.
+- Frozen final train1993-2019 and controller-only2020-2023 targets; historical public sources may already be known.
+redistribution_status: Pending human source/data-rights review; internal development only.

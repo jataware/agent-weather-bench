@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "type": "Separate frozen-submission controller diagnostic, not a model attempt or original reassessment",
+  "created_at": "2026-10-08T15:05:50.591586+00:00",
+  "original_run": "20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198",
+  "template": "seasonal-objective-consolidation",
+  "fingerprint": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff",
+  "instance": {
+    "id": "aso-2026--full-source-grid",
+    "season": "ASO2026",
+    "nominal_weights": [
+      2,
+      8,
+      8
+    ]
+  },
+  "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+  "original_counted_outcome": "fail",
+  "original_states": {
+    "coverage": "pass",
+    "envelope": "pass",
+    "interpretation.consistency_across_artifacts": "unresolved",
+    "interpretation.outlook_scope": "unresolved",
+    "invariant.simplex_and_support": "pass",
+    "probe.changed_data": "fail",
+    "probe.replay": "fail",
+    "variant": "pass"
+  },
+  "original_failure_details": {
+    "probe.replay": {
+      "state": "fail",
+      "detail": "The run command did not produce usable results: There is no results.zarr store",
+      "run": {
+        "exit_code": 1,
+        "executor": "docker-snapshot-http",
+        "stderr": "\n    main()\n  File \"/work/solve.py\", line 96, in main\n    paths = fetch_catalogue(input_dir, Path(tmp), Path(\"/work/state/source_snapshot\"))\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/solve.py\", line 32, in fetch_catalogue\n    retained_dir.mkdir(parents=True, exist_ok=True)\n  File \"/usr/local/lib/python3.12/pathlib.py\", line 1315, in mkdir\n    self.parent.mkdir(parents=True, exist_ok=True)\n  File \"/usr/local/lib/python3.12/pathlib.py\", line 1311, in mkdir\n    os.mkdir(self, mode)\nOSError: [Errno 30] Read-only file system: '/work/state'\n"
+      },
+      "required_for": [
+        "completion",
+        "ranking"
+      ],
+      "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+      "requirement": "Does the submitted command regenerate its results?"
+    },
+    "probe.changed_data": {
+      "state": "fail",
+      "detail": "The run command did not produce usable results: There is no results.zarr store",
+      "run": {
+        "exit_code": 1,
+        "executor": "docker-snapshot-http",
+        "stderr": "\n    main()\n  File \"/work/solve.py\", line 96, in main\n    paths = fetch_catalogue(input_dir, Path(tmp), Path(\"/work/state/source_snapshot\"))\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/solve.py\", line 32, in fetch_catalogue\n    retained_dir.mkdir(parents=True, exist_ok=True)\n  File \"/usr/local/lib/python3.12/pathlib.py\", line 1315, in mkdir\n    self.parent.mkdir(parents=True, exist_ok=True)\n  File \"/usr/local/lib/python3.12/pathlib.py\", line 1311, in mkdir\n    os.mkdir(self, mode)\nOSError: [Errno 30] Read-only file system: '/work/state'\n"
+      },
+      "required_for": [
+        "completion",
+        "ranking"
+      ],
+      "implementation": "reference.py:perturb_inputs; assessment/assess.py",
+      "requirement": "Does the command follow changed data under the same accepted reading?"
+    }
+  },
+  "one_change": {
+    "before": "Path(\"/work/state/source_snapshot\")",
+    "after": "output_dir / \"source_snapshot\"",
+    "occurrences": 1
+  },
+  "patch_file": "var/review/breadth-consolidation-portability-diagnostic/one-line-portability.patch",
+  "patch_sha256": "b37e23741e748940929eaa059a42b556b7d3e56dc647b83b821e68fc9efd7d04",
+  "hashes": {
+    "original_run_metadata_sha256": "a22cfea6a60ad5bde6b2341a4be5309f1cbebf60bf37212428a2778169db20dc",
+    "original_assessment_sha256": "5f1b35834add32a7fa5117540a17d5348c0f53f1fb16936f1b2629043054bc0f",
+    "original_source_sha256": "61fee513c8d00a0ee51c9ac4fcd5b6510ade0631ddc90853da9cbd9d916e61d5",
+    "diagnostic_source_sha256": "009f012d5a6a7a63ecb4acd76dfe80ce6507078b6661d2f494c8e513aacd26e0",
+    "patch_sha256": "b37e23741e748940929eaa059a42b556b7d3e56dc647b83b821e68fc9efd7d04"
+  },
+  "diagnostic_assessment_file": "var/review/breadth-consolidation-portability-diagnostic/assessment/assessment.json",
+  "diagnostic_assessment_sha256": "239e98c452f68049375094451047908b8167c848c2239e462372d285c220b25f",
+  "diagnostic_outcome": "pass",
+  "diagnostic_computed_outcome": "pass",
+  "diagnostic_advisory_outcome": "unresolved",
+  "diagnostic_states": {
+    "coverage": "pass",
+    "envelope": "pass",
+    "interpretation.consistency_across_artifacts": "unresolved",
+    "interpretation.outlook_scope": "unresolved",
+    "invariant.simplex_and_support": "pass",
+    "probe.changed_data": "pass",
+    "probe.replay": "pass",
+    "variant": "pass"
+  },
+  "acquisition": {
+    "mode": "private-snapshot-http",
+    "scientific_headline_instrument": false,
+    "probes": [
+      {
+        "state": "recorded",
+        "mode": "private-snapshot-http",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/review/breadth-consolidation-portability-diagnostic/assessment/acquisition-evidence/probe-changed-data-requests.jsonl",
+        "log_sha256": "1560a39ef9e15af0349c48eff27f63fb4f6309b3f2235c3b9b8bcb0cdf051a8b",
+        "requests": [
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 786,
+            "sha256": "a548781ca10ba7bf1c1ffc1e2bbd0c1dda3a7007931550dd0a0d693f4ccc1889",
+            "seconds": 0.0016339170000492231,
+            "timestamp_unix": 1791471875.4601777
+          },
+          {
+            "method": "GET",
+            "resource": "forecast-precip.nc",
+            "status": 200,
+            "bytes": 324628,
+            "sha256": "fe39221f6e59d2930d399f999bd26687669cae212faa6645484bdc1e6bd070a6",
+            "seconds": 0.0040878749999819775,
+            "timestamp_unix": 1791471875.4678006
+          },
+          {
+            "method": "GET",
+            "resource": "forecast-sst.nc",
+            "status": 200,
+            "bytes": 324628,
+            "sha256": "50d190f5389846605544e26b291aedfe304a14a108c02b929d8f572ff1736dcc",
+            "seconds": 0.001763583000069957,
+            "timestamp_unix": 1791471875.4729939
+          },
+          {
+            "method": "GET",
+            "resource": "observed-sst.nc",
+            "status": 200,
+            "bytes": 324628,
+            "sha256": "d951110a5b230cd3384d6b1d41e6311df895ce5f9b18f825558acc45a97c26f1",
+            "seconds": 0.0013056249999863212,
+            "timestamp_unix": 1791471875.4769683
+          },
+          {
+            "method": "GET",
+            "resource": "provenance.json",
+            "status": 200,
+            "bytes": 818,
+            "sha256": "3bb6dc2713dd36df9b41e680fb1d1e13f78cbb51f5d6e5a9bb0ebc2fb9ce60aa",
+            "seconds": 0.0008432089999814707,
+            "timestamp_unix": 1791471875.4796546
+          },
+          {
+            "method": "GET",
+            "resource": "source-manifest.json",
+            "status": 200,
+            "bytes": 502,
+            "sha256": "3ea072da81dc2ad6ba4197e53ff2e05d6026472a508179e3400a30c8e7cdb6a7",
+            "seconds": 0.0007473340000387907,
+            "timestamp_unix": 1791471875.4818957
+          }
+        ],
+        "bytes": 975990,
+        "seconds": 0.01038154300010774,
+        "retrieved_resources": [
+          "catalog.json",
+          "forecast-precip.nc",
+          "forecast-sst.nc",
+          "observed-sst.nc",
+          "provenance.json",
+          "source-manifest.json"
+        ],
+        "provider_download_bytes": 0,
+        "live_provider": false,
+        "probe": "changed-data",
+        "evidence_persisted": true,
+        "original_log_path": "/var/folders/sp/n9nbh21s4kq7lqlfn8md_t3w0000gn/T/assessment-lthjqt3h/work/probe-changed-data/acquisition/requests.jsonl"
+      },
+      {
+        "state": "recorded",
+        "mode": "private-snapshot-http",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/review/breadth-consolidation-portability-diagnostic/assessment/acquisition-evidence/probe-replay-requests.jsonl",
+        "log_sha256": "c692182495c7fa3becd4cac92c842a970c7e00278a5e21f053eb69c64f8d83f4",
+        "requests": [
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 786,
+            "sha256": "6bdf9781019aafd29fde70c975274eb7fb1a5ce4500f64ae43b1431b87edcef6",
+            "seconds": 0.0007041249999701904,
+            "timestamp_unix": 1791471871.7720082
+          },
+          {
+            "method": "GET",
+            "resource": "forecast-precip.nc",
+            "status": 200,
+            "bytes": 321820,
+            "sha256": "17f3dd0ca263d667d73f8ba82ac94b10f3336915571a3c736c9e4899ac159ba7",
+            "seconds": 0.002694916999985253,
+            "timestamp_unix": 1791471871.7757692
+          },
+          {
+            "method": "GET",
+            "resource": "forecast-sst.nc",
+            "status": 200,
+            "bytes": 321820,
+            "sha256": "3683486b689f0c6a6523c481fb15f11f0991d215e0dc5d9204e176b9485cbaf6",
+            "seconds": 0.0014515420000407175,
+            "timestamp_unix": 1791471871.7817273
+          },
+          {
+            "method": "GET",
+            "resource": "observed-sst.nc",
+            "status": 200,
+            "bytes": 321820,
+            "sha256": "29d46edeed09b857fa34be5c0166e6fbccf8a37d766d446801aca532d33be212",
+            "seconds": 0.0014308329999721536,
+            "timestamp_unix": 1791471871.7850971
+          },
+          {
+            "method": "GET",
+            "resource": "provenance.json",
+            "status": 200,
+            "bytes": 818,
+            "sha256": "3bb6dc2713dd36df9b41e680fb1d1e13f78cbb51f5d6e5a9bb0ebc2fb9ce60aa",
+            "seconds": 0.0004208750000316286,
+            "timestamp_unix": 1791471871.7874563
+          },
+          {
+            "method": "GET",
+            "resource": "source-manifest.json",
+            "status": 200,
+            "bytes": 502,
+            "sha256": "3ea072da81dc2ad6ba4197e53ff2e05d6026472a508179e3400a30c8e7cdb6a7",
+            "seconds": 0.00046162499995716644,
+            "timestamp_unix": 1791471871.7886257
+          }
+        ],
+        "bytes": 967566,
+        "seconds": 0.0071639169999571095,
+        "retrieved_resources": [
+          "catalog.json",
+          "forecast-precip.nc",
+          "forecast-sst.nc",
+          "observed-sst.nc",
+          "provenance.json",
+          "source-manifest.json"
+        ],
+        "provider_download_bytes": 0,
+        "live_provider": false,
+        "probe": "replay",
+        "evidence_persisted": true,
+        "original_log_path": "/var/folders/sp/n9nbh21s4kq7lqlfn8md_t3w0000gn/T/assessment-lthjqt3h/work/probe-replay/acquisition/requests.jsonl"
+      }
+    ],
+    "probe_count": 2,
+    "bytes": 1943556,
+    "seconds": 0.01754546000006485
+  },
+  "original_frozen_file_count": 27,
+  "all_original_hashes_reverified_after_diagnostic": true,
+  "all_other_copied_files_byte_identical": true,
+  "scientific_library_source_recipe_changes": false,
+  "original_submission_assessment_run_metadata_modified": false,
+  "model_calls": 0,
+  "direct_paid_api_usd": 0,
+  "interpretation": "The tested original and changed-input pipelines pass all declared computational instruments after only moving optional source retention under the declared writable output directory. This isolates the observed failure to command portability for these probes; it does not reclassify the original failed attempt, establish prose correctness, or imply correctness for untested inputs."
+}

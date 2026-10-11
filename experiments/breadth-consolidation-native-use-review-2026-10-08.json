@@ -1,0 +1,127 @@
+{
+  "reviewed_at": "2026-10-08T15:05:07.897897+00:00",
+  "run": "20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198",
+  "system": "breadth-luna-accord-consolidation",
+  "status": "pass",
+  "status_scope": "Substantive native-helper use only; overall attempt remains fail.",
+  "review_mode": "Independent text/JSON metadata review only; no scientific array decoding, Docker execution, model calls or attempt edits.",
+  "helpers": [
+    "africas2s.combine_terciles"
+  ],
+  "dataflow_evidence": [
+    {
+      "file": "frozen/solve.py",
+      "lines": [
+        72,
+        75,
+        76,
+        77,
+        78,
+        99,
+        100,
+        104,
+        105,
+        106,
+        117,
+        118,
+        120,
+        121,
+        127,
+        128,
+        142
+      ],
+      "finding": "Complete finite component vectors promoted to float64 and converted percent\u2192fraction; partial vectors wholly absent. Returned equal and explicit-weight native helper arrays supply both delivered probability fields, with zero storage fills only where support count is zero. Support/disagreement computed independently from the same component eligibility."
+    },
+    {
+      "file": "frozen/report.md",
+      "finding": "Report identifies helper call sites, correct component completeness, normalization, nominal sensitivity and absence-mask interpretation; agrees with frozen numerical code."
+    },
+    {
+      "file": "logs/events.jsonl",
+      "lines": [
+        19,
+        20,
+        22,
+        23
+      ],
+      "finding": "One actual full-data solve.py execution succeeds and writes the submitted arrays; following call inspects existing results. API source inspection and synthetic demonstration are separate from this substantive call."
+    },
+    {
+      "file": "assessment.json",
+      "finding": "Original envelope/coverage/variant/simplex-and-support pass. Both required replays fail at unconditional scratch-retention directory creation, before source resource retrieval or helper execution."
+    }
+  ],
+  "calls": {
+    "agent_real_data": 2,
+    "agent_real_data_script_invocations": 1,
+    "per_complete_script": 2,
+    "synthetic_demo": 2,
+    "controller_replay": 0,
+    "controller_replay_commands": 2,
+    "controller_replay_abort_before_helper": true,
+    "imports_and_help_not_counted": true,
+    "count_method": "Inferred from recorded commands, frozen code and reached traceback locations; not dynamically instrumented counters."
+  },
+  "actual_execution": true,
+  "import_or_toy_only": false,
+  "adapter_finish": {
+    "run_status": "submitted",
+    "budget_stopped": false
+  },
+  "failure_flags": {
+    "final_scientific_failure": true,
+    "final_infrastructure_failure": false,
+    "source_or_task_answer_leakage_observed": false,
+    "classification": "Agent regeneration-command portability error; no controller defect found.",
+    "required_replay_states": {
+      "probe.replay": "fail",
+      "probe.changed_data": "fail"
+    },
+    "exact_error": "OSError: [Errno 30] Read-only file system: '/work/state'",
+    "code_cause": "solve.py96 hardcodes /work/state/source_snapshot as retained_dir; fetch_catalogue line32 mkdir is mandatory despite retention being optional.",
+    "reached_stage": "Catalogue GET succeeds; scratch /tmp directory exists. Retention mkdir fails before resource loop, before read_components and before both combine_terciles calls.",
+    "controller_behavior": "Task-owned AcquisitionDocker mounts /work read-only and /output writable (acquisition.py435\u2013442). Temporary /tmp is available. This is the normal regeneration boundary.",
+    "contract_evidence": "Envelope requires fresh results.zarr and answer.json written into {output_dir}; neither task brief, system instructions nor API guide requires retaining source copies at /work/state. request.paths exposes actor state but does not guarantee its existence or writability during standalone replay.",
+    "baseline_evidence": "Python keeps source retention during interactive exploration separate from its portable regeneration command; both original replays pass.",
+    "repair_without_changing_grade": "A future submission could retain optional copies under output_dir or temporary storage, or keep actor-only retention outside the declared command. No repair or reassessment performed here.",
+    "clarity_opportunity": "Future common envelope documentation could explicitly say actor /work/state is not a portable writable replay directory; this would clarify the existing boundary, not justify retroactively changing this verdict."
+  },
+  "scientific_completion": {
+    "original_computed_outcome": "fail",
+    "original_outcome": "fail",
+    "original_variant": "pass",
+    "original_invariant": "pass",
+    "original_verdict_preserved": true,
+    "changed_source_correctness": "Not established: changed-source command fails before producing any numerical output.",
+    "python_computed_outcome": "pass",
+    "python_outcome": "pass"
+  },
+  "paired_resources": {
+    "python_run": "20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef",
+    "python_fresh_input_plus_output": 55320,
+    "guided_fresh_input_plus_output": 33417,
+    "python_agent_seconds": 96.70465154096019,
+    "guided_agent_seconds": 90.97915254195686,
+    "interpretation": "Raw consumption only. Guided attempt fails required regeneration while Python passes; lower guided token or elapsed usage cannot establish an efficiency saving at valid completion. Retain failed-attempt usage in the assigned arm."
+  },
+  "reviewfileshashes": {
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/run.json": "a22cfea6a60ad5bde6b2341a4be5309f1cbebf60bf37212428a2778169db20dc",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/assessment.json": "5f1b35834add32a7fa5117540a17d5348c0f53f1fb16936f1b2629043054bc0f",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/frozen/solve.py": "61fee513c8d00a0ee51c9ac4fcd5b6510ade0631ddc90853da9cbd9d916e61d5",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/frozen/report.md": "e6a7dbc0ba7d0ee10fc0c4d5d01d05725ed158ca64589dda53e45d4f597bc9f0",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/frozen/answer.json": "c80f0eb11333512e318c44549bb76cff2c86dddd65ccbb7b7f3ec9efd362ccdc",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/logs/events.jsonl": "c9544fbe0445fc7ba417e1137db15d91a306bdafccf1e84374cd2069330e6b93",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/controller/provenance.json": "58c0760d1f667c985ad5a8af75f7ac6e30d5844bd29a92100e96e74bf832fed3",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/request.json": "d2fca3b5592a93d9fbcb57b8d25910d2fea661b6f9e0369761e3130c3cdc1560",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/system.json": "d3b3040bfdf4006fe6e8d082b60eba8d3e0431d63fab51cbfe314b0aa2a657e1",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef/run.json": "2a81b878c234df8ff55bfe20029f61d8d835e9209a7099716f265e7a128c17cb",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef/assessment.json": "674ece5cddb71b32db6c106d8983a378e45f6032ed9c33a17a4fa99a552929b5",
+    "var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-python-consolidation-0329ef/logs/events.jsonl": "dab0d60c80a84bc2c7a95d4c144fd9b876fd887b7331bdc1bcf5e4671d20dd85",
+    "assessment/envelope.md": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec",
+    "templates/seasonal-objective-consolidation/acquisition.py": "bd44197e9a198f50d830e030afa9d5e75644c113043db232de98e8240782332b",
+    "systems/breadth-luna-accord-consolidation/API.md": "a67e5e4a7d17f85f31258a23ec4daf5b26edbd4a7e2e063a591edc743ac2fe80",
+    "systems/breadth-luna-accord-consolidation/synthetic_combination.py": "4188ad6199b85f709eb030be72af2b6e091c702a3f500aa406619225c3d155b2",
+    "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/controller/acquisition-evidence/59b5a5a9f6654a5b902d4a641ec025af/probe-changed-data-requests.jsonl": "718667236361c8a6afb1d97f8f3f25efe252218b4d1f93e6bc0ca511bb273545",
+    "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T150043-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-breadth-luna-accord-consolidation-79f198/controller/acquisition-evidence/59b5a5a9f6654a5b902d4a641ec025af/probe-replay-requests.jsonl": "389dc7861371c83f9b9eebd417e0404af5f873b837ba741bda6a47c8855193fc"
+  }
+}

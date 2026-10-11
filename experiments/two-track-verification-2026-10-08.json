@@ -1,0 +1,74 @@
+{
+  "state": "pass",
+  "verified_at": "2026-10-08T14:48:01.257779+00:00",
+  "actual_model_attempts_this_round": 5,
+  "no_pending_model_attempts": true,
+  "paid_api_calls_this_round": 0,
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "all_attempt_token_totals": {
+    "input_tokens": 1300017,
+    "cached_input_tokens": 1085440,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 41751,
+    "reasoning_output_tokens": 10992,
+    "total_tokens": 1341768,
+    "uncached_input_tokens": 214577
+  },
+  "comparisons_remain_phase_specific": true,
+  "efficiency_signal": "One valid guided completion vs incomplete Python; 6.6% fewer fresh+output tokens,26.7% less agent time; one pair only.",
+  "hard_capability_boundary_found": false,
+  "current_templates": [
+    {
+      "template": "mam-forecast-synthesis",
+      "spec_version": 1,
+      "fingerprint": "d0f38aef16d5056579d99ac36afba0ea13394369aa4a0b7e4194586155fbd291",
+      "automatic_tests_1_to_4_passed": true,
+      "model_attempts": 0,
+      "scientific_approval": "pending",
+      "source_manifest_sha256": "162685063ac1bb9351538bef5adc542cf1176ef04d54d7b25badf2af247aac27"
+    },
+    {
+      "template": "seasonal-objective-consolidation",
+      "spec_version": 1,
+      "fingerprint": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff",
+      "automatic_tests_1_to_4_passed": true,
+      "model_attempts": 1,
+      "scientific_approval": "pending",
+      "source_manifest_sha256": "f3451ff469fbe90a8bac22982f644d0060e2831852fff73d8e4a3e00b161b7a0"
+    }
+  ],
+  "all_10_template_briefs_rendered": true,
+  "rendered_variants": 230,
+  "tests": {
+    "full_suite_before_launch_preflight_patch": {
+      "passed": 189,
+      "skipped": 1
+    },
+    "targeted_launch_and_probe_after_patch": {
+      "passed": 6
+    }
+  },
+  "consolidation_inventories_and_assessment_hash_verified": true,
+  "efficiency_evidence_hashes_verified": true,
+  "v1_contract_reconstructed_and_pretrial_certificate_preserved": true,
+  "verification_model_calls": 0,
+  "scientific_binary_decoding_during_verification": false,
+  "artifact_sha256": {
+    "experiments/efficiency_verification_2026-10-08.json": "f149fc63286c2954727808420eb69371aa3d4519efb45c9b1a2cabf046368d52",
+    "experiments/hard-task-round-summary-2026-10-08.json": "16c6490d0092a858b80e32bcf3894bf70df7b652e112c8333de392dd294ddbbf",
+    "experiments/hard-task-consolidation-results-2026-10-08.json": "c9ff8de49c8e05c83ba27a45455b5eec08725f6291ccaf48c125afdc34a8eeb9",
+    "experiments/hard-task-consolidation-readiness-rendered-2026-10-08.json": "9f3d1b5bb5eca9b2dea0077a7c83f367a01a96cb7f50a156954d3b67afb8b1f9",
+    "experiments/hard-task-mam-baseline-verification-2026-10-08.json": "a665e7972d53c89350c192dc4bfbc3cc4913dd274fd14562539eb35af429911f",
+    "experiments/two-track-brief-render-verification-2026-10-08.json": "d925ef5f8e15870841593f71ab9f257a993fe89e17ffa4af695e7300a38c4028",
+    "experiments/hard-benchmark-inspiration-2026-10-08.json": "8cdc09ca71a82d6e893bc406c93338d27c37d6f6464bec67c72e61de06dfed7e",
+    "experiments/mam-v2-trial-review-2026-10-08.json": "a61e25b9a0189ded6e1829fa967f3977e5ecf88b1d35b470fb61672de9ac8d18",
+    "var/review/two-track-final-pytest-20261008.log": "b2a5af80f83befee80e0a911151fc6ad9af1eabfaadb1156dee0a4731dfe6480",
+    "var/review/two-track-launch-preflight-pytest-20261008.log": "e2edb01d708fa49697c4302268a176c486ad7401ab735fd47f7af9d43d08f855",
+    "assessment/runner.py": "41d430b2f7815e63dd23c6746caaf01bdffbcb65ede5267d8e9f062de59efa1a",
+    "tests/test_trial_launch_accounting.py": "f2e5cc677ae48535cc60ef490a13829c893575c73b119bd3088fc1146e8e0bb0",
+    "docs/two-track-investigation-2026-10-08.md": "70aa94ca69904f9e5ee016eaa8aa2c1c912339337b7c14b4c5e0a35dd2a995db",
+    "docs/hard-task-search-2026-10-08.md": "bce8fea2aba18a7c868cdfd455257581bae60ebc5702722c3725c04acf652b99",
+    "docs/hard-benchmark-inspiration-2026-10-08.md": "bb03e4fd2f5b812a63ac46e4dd2831b152e5765ea14a7fcff69109203cf44251"
+  }
+}

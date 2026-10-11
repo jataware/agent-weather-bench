@@ -7,13 +7,14 @@ from pathlib import Path
 import yaml
 
 from .compare import tolerance
+from .stages import validate as validate_stages
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATES = ROOT / "templates"
 PRIVATE = ROOT / "var/private/templates"
 MODES = ("outcome", "product", "process")
 # The modules that decide an outcome. The runner, the certifier and the command line only orchestrate them.
-DECIDING = ("assess.py", "compare.py", "execute.py", "feedback.py", "judge.py", "judge-prompt.md", "outcomes.py", "spec.py", "variant.py", "envelope.md")
+DECIDING = ("assess.py", "compare.py", "execute.py", "feedback.py", "judge.py", "judge-prompt.md", "outcomes.py", "spec.py", "variant.py", "rubric.py", "sources.py", "stages.py", "envelope.md")
 HOOKS = ("prepare", "stage_inputs", "perturb_inputs", "candidate_instances", "brief_fields")
 MODE_HOOKS = {"product": ("reference",), "process": ("reference",), "outcome": ("expected_coordinates", "score")}
 
@@ -29,7 +30,8 @@ class Template:
         module = importlib.util.spec_from_file_location(f"template_{name.replace('-', '_')}", self.folder / "reference.py")
         self.hooks = importlib.util.module_from_spec(module)
         module.loader.exec_module(self.hooks)
-        missing = [hook for hook in HOOKS + MODE_HOOKS[self.spec["mode"]] if not callable(getattr(self.hooks, hook, None))]
+        required = HOOKS + (("reference",) if self.uses_reference else ("expected_coordinates",)) + (("score",) if self.spec.get("skill") else ())
+        missing = [hook for hook in required if not callable(getattr(self.hooks, hook, None))]
         if missing:
             raise ValueError(f"reference.py lacks hooks: {missing}")
         unknown = set(self.spec.get("invariants", [])) - set(getattr(self.hooks, "INVARIANTS", {}))
@@ -42,6 +44,23 @@ class Template:
             raise ValueError("Spec needs schema_version 1, its own template name and an integer spec_version")
         if spec.get("mode") not in MODES:
             raise ValueError("Spec mode must be outcome, product or process")
+        if spec.get("question", spec["mode"]) not in (*MODES, "compute_quantity", "follow_standard", "produce_forecast"):
+            raise ValueError("Question must ask to compute a quantity, follow a standard or produce a forecast")
+        if "reference_match" in spec and type(spec["reference_match"]) is not bool:
+            raise ValueError("reference_match must be true or false")
+        if not self.uses_reference and any("results" in step for step in spec.get("process", [])):
+            raise ValueError("A process step using reference results needs reference_match: true")
+        policy = spec.get("assessment_policy")
+        if policy is not None:
+            if not isinstance(policy, dict) or set(policy) != {"completion", "ranking"}:
+                raise ValueError("assessment_policy needs completion and ranking lists")
+            if any(not isinstance(patterns, list) or not patterns or not all(isinstance(p, str) and p for p in patterns) for patterns in policy.values()):
+                raise ValueError("Each assessment policy must be a nonempty list of check names or patterns")
+            if any("envelope" not in patterns and "*" not in patterns for patterns in policy.values()):
+                raise ValueError("Both policies must require the envelope")
+        for name, question in spec.get("judge_questions", {}).items():
+            if name not in spec.get("interpretation", []) or not question.get("requirement") or question.get("silence") not in ("passes", "fails"):
+                raise ValueError("A judge question needs a declared interpretation name, requirement and silence policy")
         if not isinstance(spec.get("results"), dict) or not spec["results"]:
             raise ValueError("Spec needs named results")
         for name, row in spec["results"].items():
@@ -70,16 +89,22 @@ class Template:
             raise ValueError(f"Pitfalls without a description: {sorted(named - described)}")
         if set(spec.get("public_conventions", [])) - set(spec.get("conventions", {})):
             raise ValueError("public_conventions must name declared conventions")
-        if (spec["mode"] == "process") != bool(spec.get("process")):
-            raise ValueError("A process-mode spec needs a process checklist, and only a process-mode spec may have one")
+        if spec.get("question", spec["mode"]) in ("process", "follow_standard") and not spec.get("process"):
+            raise ValueError("A task asking for standard conformance needs a process checklist")
         for step in spec.get("process", []):
             kinds = [key for key in ("checks", "results", "method_statement", "judge") if key in step]
             if not isinstance(step.get("id"), str) or not step.get("requirement") or not step.get("source") or len(kinds) != 1:
                 raise ValueError("Each process step needs an id, a requirement, a source and exactly one kind of evidence")
+        validate_stages(spec)
 
     def matched(self):
         """The results that have a reference answer. Results marked `free` are valid under any sound method."""
         return {name: row for name, row in self.spec["results"].items() if not row.get("free")}
+
+    @property
+    def uses_reference(self):
+        """Explicit instrument choice; legacy modes supply the old default."""
+        return self.spec.get("reference_match", self.spec["mode"] != "outcome")
 
     def combinations(self):
         conventions = self.spec.get("conventions", {})

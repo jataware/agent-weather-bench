@@ -373,6 +373,25 @@ departure from the design above, with its reason.
   initialization by the CCA agreement invariant, and both leave the variant match and
   the changed-data probe unresolved. The step-3 rubric must make this explicit: an
   unresolved absolute verdict with a failed local verdict is a failed stage.
+- **Step 3 is built and certified: the stage layer is `assessment/stages.py`.** The spec declares the
+  eight stages with their result groups, an absolute verdict (reference agreement on the
+  stage's results plus a per-stage changed-data test, or the CCA gate) and a local verdict
+  (three new invariants that recompute WVG, eReg and the CCA gate from the submission's own
+  prepare arrays, and per-stream parts of the held-out-year probe from the one rerun). A
+  stage whose results are unusable fails its schema; a downstream local verdict is then
+  `unresolved: invalid_upstream_contract`. Completion gates on `stage.*`, the envelope,
+  coverage and the two whole-submission invariants; the whole-submission match and
+  probes are evidence. On the MAM instance the correct control passes 8 of 8 stages and
+  the WVG-leak control fails exactly `stage.wvg` (absolute unresolved, local fail), 7 of 8.
+  Review questions a stage lists are informational: the judge rows keep their own place
+  in the policy, so a control without a judge run is not unresolved on a stage.
+- **The thresholds pitfall is invisible in the prepare stage.** Classifying a year with
+  boundaries from all training years gives the same category as boundaries that exclude
+  that year: measured zero differing cell-years on both instances (confirmed), and the
+  rank argument makes it general under linear quantile interpolation (likely). The pitfall
+  changes the labels of the other years in each fold, so it fires in `stage.wvg`,
+  `stage.ereg` and `stage.cca` and not in `stage.prepare`; the control expectation was
+  corrected after the first stage-rubric certification.
 - **The unequal-weights fault verifies its own combination.** As first planted it left
   the verify arrays from the equal-weight combination, so the score-identity invariant
   failed as well; an agent that weights unequally would verify what it combined. The

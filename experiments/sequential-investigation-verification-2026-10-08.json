@@ -1,0 +1,32 @@
+{
+  "state": "pass",
+  "scientific_comparator_streams": 14,
+  "fixed_methods": 7,
+  "actor_calls": 0,
+  "direct_paid_api_usd": 0,
+  "targeted_tests": "46 passed",
+  "current_controller_transport_proof": "pass",
+  "existing_contract_changes": false,
+  "registered_template_added": false,
+  "hard_capability_boundary_established": false,
+  "comparison_result": "Fixed monthly climatology beats all updating comparators on development and final; no actor launched.",
+  "historical_failure_evidence": "Separate original station and monthly Luna scientific errors verified without changing original artifacts.",
+  "evidence": {
+    "assessment/sequential.py": "9e960b38a1ad365425a83fdf2dea3080028d8efe61e7faed2df869e9a45e8623",
+    "experiments/sequential_actor.py": "cdadaf9193eb4a89413c878f659fdf652b1cb678d014ff5c7663385ae587c0c1",
+    "experiments/sequential_forecast_data.py": "6edc09504293e4b0fdd9408301a30a459ce67b17f4c7a9130d23a45114a0be60",
+    "experiments/sequential_controls.py": "c7fbf80a57489946a280ca8ce5f265d7237e5593c472c564b1fd85305eb75b21",
+    "tests/test_sequential_forecast.py": "3725a0a1d8458408cdbc5c1791109c14b6fdf1384dc3ef8fe5cbabdb8a669e0d",
+    "tests/test_sequential_actor.py": "0069e64038da077fa800cefbd40a5f6205693dcbcd8a11396b278bd5eba8d809",
+    "templates/weekly-updating-rainfall/brief.md": "e9c1c016407eb6bfbe087cfb25a7ec06697a9560e398279b6a0ba31b97cc626a",
+    "experiments/sequential-forecast-data-2026-10-08.json": "73a0c63759975fd8038218fbd40193a31f67ff3dc43b3cfd63f8eec49f15d32b",
+    "experiments/sequential-controls-plan-2026-10-08.json": "a988c3acd6fb89c99452d7a76c9c11186dbdf92b8f19a318d57d8b6b88c06400",
+    "experiments/sequential-controls-results-2026-10-08.json": "15c16cd992d14095b83a8dac82b7942414c3d6791ddbff69ab2cd4dfcb7723ed",
+    "experiments/sequential-fault-controls-2026-10-08.json": "9ce39442a72a64b1b1d106ee43f70a368b9e12e8e65d06b2397240a5c7fd94a5",
+    "experiments/sequential-control-final-transport-proof-2-2026-10-08.json": "b03b719e0824fb4a8d4811a39294a962f0e0d70d1c676cca2e0631e93251054e",
+    "experiments/sequential-actor-preflight-2026-10-08.json": "ea4bec77bddad4b6c8bc6f0dcee37f0948ccdf4a491e9dc8a36c09b93bb74251",
+    "experiments/original-portfolio-failure-audit-2026-10-08.json": "46f8e7335ec71cdc138fdaeeeaf0c8ee9040984bf673d9dcfde1c057f18f576f",
+    "docs/sequential-forecast-investigation-2026-10-08.md": "f4a78a33a842da140fd996652161e4ff79c88679cf6ee8484dda99507a71e0af",
+    "var/review/sequential-tests-final.log": "99cf41367be7523b299f3c8459dea1044fdbd8389980e1af519070f40f709742"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "run": "20261008T144013-seasonal-objective-consolidation-aso-2026--full-source-grid-L1-consolidation-luna-python-676b3c",
+  "status": "created",
+  "usage": null,
+  "tool_calls": null,
+  "events_exist": false,
+  "assessment_exists": false,
+  "driver_logs_exist": false,
+  "failure": "IndexError rendering literal unescaped brief braces before adapter or sandbox construction",
+  "inference_started": false,
+  "direct_paid_api_usd": 0,
+  "original_record_unchanged": true,
+  "correction": "Escape literal braces in the two new task briefs; verify rendered text preserves JSON and argv placeholders; certify/prove new fingerprint; one verified pre-launch recovery only"
+}

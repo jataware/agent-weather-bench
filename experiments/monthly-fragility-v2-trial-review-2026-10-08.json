@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-08T17:54:07.490806+00:00",
+  "plan_sha256": "df0e0f47e7edd9e1e1fdcd7b727cdea1dbb025f1a20ce1e8ff2e9a90302819ca",
+  "frozen_contract_validated_before_status_update": true,
+  "fingerprint_before": "45b7ffbdf625119333a5a2510ae51221437ce1d3d61b4f0922d66179a44b592d",
+  "fingerprint_after": "45b7ffbdf625119333a5a2510ae51221437ce1d3d61b4f0922d66179a44b592d",
+  "certification_snapshot": "var/review/monthly-fragility-v2-20261008/certification-at-launch.json",
+  "certification_at_launch_sha256": "48ce2fcfaba7e1efd23c82c6ebfad598a9500fea66fc2c2c3d9664f8c77e9fef",
+  "current_certification_sha256": "5d82ce48bac5b8e5be397f7b641a9a0e87325fb623f79925e8ce46496783663f",
+  "trial_review": {
+    "passed": true,
+    "status": "run",
+    "attempts": 2,
+    "systems": [
+      "monthly-fragility-astra-accord",
+      "monthly-fragility-luna-accord"
+    ],
+    "attempts_with_an_unruled_unknown_answer": 0,
+    "attempts_assessed_under_another_fingerprint": 0,
+    "excluded_before_model_launch": [],
+    "rulings_awaiting_confirmation": 0,
+    "detail": "Every attempt's answer was classified.",
+    "runs": [
+      {
+        "run": "20261008T174638-monthly-cycle-calibration-original-regional-monthly-1993-2023-L1-monthly-fragility-astra-accord-f05698",
+        "system": "monthly-fragility-astra-accord",
+        "instance": "original-regional-monthly-1993-2023",
+        "level": 1,
+        "outcome": "pass",
+        "computed_outcome": "pass",
+        "judged_outcome": "unresolved",
+        "supplied": [],
+        "parent": null,
+        "unknown_answer_checks": [],
+        "ruling": null
+      },
+      {
+        "run": "20261008T174638-monthly-cycle-calibration-original-regional-monthly-1993-2023-L1-monthly-fragility-luna-accord-3aeafa",
+        "system": "monthly-fragility-luna-accord",
+        "instance": "original-regional-monthly-1993-2023",
+        "level": 1,
+        "outcome": "pass",
+        "computed_outcome": "pass",
+        "judged_outcome": "unresolved",
+        "supplied": [],
+        "parent": null,
+        "unknown_answer_checks": [],
+        "ruling": null
+      }
+    ]
+  },
+  "certified": false,
+  "scope": "Only non-deciding certification metadata updated after both frozen attempts and independent numeric verification. Scientific approval remains pending. Original attempts, source data and deciding files unchanged.",
+  "launch_contract_note": "The consumed launch plan pins the pretrial certificate. Its exact certificate bytes remain at certification_snapshot; current certification metadata now records the two trials."
+}

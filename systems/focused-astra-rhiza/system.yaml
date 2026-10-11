@@ -1,0 +1,36 @@
+schema_version: 1
+id: focused-astra-rhiza
+kind: agent
+description: 'Focused post-checkpoint study: GPT-6 Astra high effort; rhiza; repaired native import order,
+  visible budgets and common delivery-first guidance. Separate from historical checkpoint. Prepared after
+  direct diagnostics with a patched optional-Zarr-metadata reader; not yet evaluated as a focused agent.'
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:e234ed6b2a9ef389eb73fd8719135ae790ff87d1e6dbb97e58120870473937c7
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 24
+  command_seconds: 120
+  max_total_tokens: 180000
+substrate:
+  paths:
+  - adapter.py
+  instructions: 'Read the supplied task and any algorithm files before coding. Deliver a complete reproducible
+    submission before optional exploration; reserve budget to rerun it and check its arrays and claims.
+    Remaining cumulative token and tool budgets are returned with tool results. Rhiza weather skills are
+    under /catalog/skills/weather-skills and CHC skills under /catalog/skills/chc-skills. Discover actual
+    SKILL.md files with find /catalog/skills -name SKILL.md. Run the installed scripts with python, not
+    uv run: dependencies are preinstalled and the runtime is offline. Read the relevant skill and its
+    --help before use. Generic Python is also allowed.'
+  libraries:
+  - weather_skills_core
+  image_paths:
+  - /catalog/skills

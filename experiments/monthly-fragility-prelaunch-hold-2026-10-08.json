@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-08T17:42:45.255199+00:00",
+  "status": "held_before_inference",
+  "original_plan": "experiments/monthly-fragility-plan-2026-10-08.json",
+  "original_plan_sha256": "ba37b7cf2141544d64a69a4ce112e70aa4a0e4a7f32c617cb732c127935d7662",
+  "actor_calls": 0,
+  "reason": "Root prelaunch review identified benchmark-curated AfricaS2S function excerpt in staged agent inputs, conflicting with ordinary installed documentation only. Author will exclude staged excerpt while preserving original private/archive bytes.",
+  "next_version": "experiments/monthly-fragility-v2-plan-2026-10-08.json",
+  "original_plan_modified": false,
+  "review_directory_created": false
+}

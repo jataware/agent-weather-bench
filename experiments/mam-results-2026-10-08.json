@@ -1,0 +1,2752 @@
+{
+  "schema_version": 1,
+  "plan": "experiments/mam-acquisition-study.yaml",
+  "completed_attempts": 4,
+  "scientific_submissions": 1,
+  "infrastructure_launch_failures": 2,
+  "recorded_launches": 6,
+  "pending_attempts": [],
+  "direct_api_key_calls": 0,
+  "direct_paid_api_spend_usd": 0,
+  "billing": "Subscription inference. Invoice cost unknown; no list-price estimate is treated as paid spend.",
+  "token_totals": {
+    "input_tokens": 790487,
+    "cached_input_tokens": 630016,
+    "output_tokens": 19954,
+    "total_tokens": 810441
+  },
+  "uncached_input_tokens": 160471,
+  "unknown_usage_runs": [],
+  "by_arm_including_both_budget_stages": {
+    "python": {
+      "assigned_attempts": 2,
+      "valid_completions": 1,
+      "uncached_input_plus_output_tokens_including_failures": 104251,
+      "tokens_per_valid_completion_including_failures": 104251.0,
+      "invoice_cost_per_valid_completion": "unknown; subscription inference"
+    },
+    "required_accord": {
+      "assigned_attempts": 2,
+      "valid_completions": 0,
+      "uncached_input_plus_output_tokens_including_failures": 76174,
+      "tokens_per_valid_completion_including_failures": null,
+      "invoice_cost_per_valid_completion": "unknown; subscription inference"
+    }
+  },
+  "interpretation": "One attempt per assigned condition; no stable ranking, causal tool benefit or frontier boundary established.",
+  "rows": [
+    {
+      "run": "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-4ebeb3",
+      "system": "mam-luna-python",
+      "directory": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-4ebeb3",
+      "status": "execution_error",
+      "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "contract_status": "historical v1; probe dtype confound repaired in v2; original verdict preserved",
+      "model_attempt_evaluable": false,
+      "scientific_performance_evaluable": false,
+      "model_inference_started": false,
+      "infrastructure_reason": "ValueError: Missing controller environment variable: CODEX_BINARY",
+      "instance": "kenya-interior--mam-2016",
+      "system_sha256": "1d83b5658b7c2088bb7f4640f56ff81965bc7b3d37f5e80013c7ae64d44c56fc",
+      "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+      "completion": "fail",
+      "computed": "fail",
+      "supplementary": "unresolved",
+      "skill": null,
+      "seconds": 1.5011232080869377,
+      "command_seconds": 0,
+      "model_and_adapter_overhead_seconds": 1.5011232080869377,
+      "invocation": {
+        "system": "mam-luna-python",
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "system_sha256": "1d83b5658b7c2088bb7f4640f56ff81965bc7b3d37f5e80013c7ae64d44c56fc",
+        "started_at": "2026-10-08T13:40:20.932224+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "mam-luna-python",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "exit_code": 0,
+        "finished_at": "2026-10-08T13:40:23.177705+00:00",
+        "cli_wall_seconds": 2.24510212498717,
+        "result": {
+          "run": "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-4ebeb3",
+          "level": 1,
+          "status": "execution_error",
+          "outcome": "fail",
+          "computed_outcome": "fail",
+          "judged_outcome": "unresolved",
+          "skill": null,
+          "directory": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-4ebeb3"
+        }
+      },
+      "tool_calls": null,
+      "usage": null,
+      "usage_source": "unknown",
+      "uncached_input_tokens": null,
+      "failed_checks": [
+        "claim.cv_skill",
+        "coverage",
+        "envelope",
+        "invariant.cv_score_identity",
+        "invariant.equal_model_combination",
+        "invariant.probabilities_valid",
+        "probe.changed_data",
+        "probe.held_out_year_isolation",
+        "probe.replay",
+        "variant"
+      ],
+      "unresolved_checks": [
+        "interpretation.outlook_support"
+      ],
+      "initial_acquisition": {},
+      "replay_acquisition": {
+        "mode": "private-snapshot-http",
+        "scientific_headline_instrument": false,
+        "probes": [],
+        "probe_count": 0,
+        "bytes": 0,
+        "seconds": 0
+      },
+      "sandbox": {
+        "passed": false,
+        "state": "unresolved"
+      },
+      "static_imports": [],
+      "tool_use_review": {
+        "status": "pending"
+      },
+      "judge": {}
+    },
+    {
+      "run": "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42",
+      "system": "mam-luna-required-accord",
+      "directory": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42",
+      "status": "execution_error",
+      "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "contract_status": "historical v1; probe dtype confound repaired in v2; original verdict preserved",
+      "model_attempt_evaluable": false,
+      "scientific_performance_evaluable": false,
+      "model_inference_started": false,
+      "infrastructure_reason": "ValueError: Missing controller environment variable: CODEX_BINARY",
+      "instance": "kenya-interior--mam-2016",
+      "system_sha256": "de630d39f5afbf0aa0cc709039c7be9ca788e4490b303ffcfc37fe5792d974b8",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "completion": "fail",
+      "computed": "fail",
+      "supplementary": "unresolved",
+      "skill": null,
+      "seconds": 1.3981760420138016,
+      "command_seconds": 0,
+      "model_and_adapter_overhead_seconds": 1.3981760420138016,
+      "invocation": {
+        "system": "mam-luna-required-accord",
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "system_sha256": "de630d39f5afbf0aa0cc709039c7be9ca788e4490b303ffcfc37fe5792d974b8",
+        "started_at": "2026-10-08T13:40:20.932224+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "mam-luna-required-accord",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "exit_code": 0,
+        "finished_at": "2026-10-08T13:40:23.032032+00:00",
+        "cli_wall_seconds": 2.099562415969558,
+        "result": {
+          "run": "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42",
+          "level": 1,
+          "status": "execution_error",
+          "outcome": "fail",
+          "computed_outcome": "fail",
+          "judged_outcome": "unresolved",
+          "skill": null,
+          "directory": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42"
+        }
+      },
+      "tool_calls": null,
+      "usage": null,
+      "usage_source": "unknown",
+      "uncached_input_tokens": null,
+      "failed_checks": [
+        "claim.cv_skill",
+        "coverage",
+        "envelope",
+        "invariant.cv_score_identity",
+        "invariant.equal_model_combination",
+        "invariant.probabilities_valid",
+        "probe.changed_data",
+        "probe.held_out_year_isolation",
+        "probe.replay",
+        "variant"
+      ],
+      "unresolved_checks": [
+        "interpretation.outlook_support"
+      ],
+      "initial_acquisition": {},
+      "replay_acquisition": {
+        "mode": "private-snapshot-http",
+        "scientific_headline_instrument": false,
+        "probes": [],
+        "probe_count": 0,
+        "bytes": 0,
+        "seconds": 0
+      },
+      "sandbox": {
+        "passed": false,
+        "state": "unresolved"
+      },
+      "static_imports": [],
+      "tool_use_review": {
+        "system": "mam-luna-required-accord",
+        "assigned_condition": "required_native_accord",
+        "assigned_condition_retained": true,
+        "template_fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "review_status": "not_evaluable_pre_driver_infrastructure_error",
+        "run_status": "execution_error",
+        "reason": "ValueError: Missing controller environment variable: CODEX_BINARY",
+        "source_evidence": {
+          "run.json": {
+            "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/run.json",
+            "sha256": "eb96975fd9fe6c4a40b8c4a91fc4422f973449f445dc3997f501c8ff9799f1a5"
+          },
+          "assessment.json": {
+            "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/assessment.json",
+            "sha256": "34707484f83c49bc61376bcd5d360af7a67012147e505c92021996790f280be7"
+          },
+          "artifacts.json": {
+            "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/artifacts.json",
+            "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+          },
+          "system.json": {
+            "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/system.json",
+            "sha256": "42c04b1ca853784fd47608da0f26581219e4a69f3149e85fb3108462e4392582"
+          },
+          "request.json": {
+            "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/request.json",
+            "sha256": "45cac889c16af6bfa16cb1ddf28fcb73c334a8eac308c2cc6c4c0519321a8c56"
+          },
+          "controller/adapter-result.json": {
+            "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/controller/adapter-result.json",
+            "sha256": "1107c6b10e495d4af74320bace07adfe73c0bacac5082670b09607d15b1a1833"
+          },
+          "system/adapter.py": {
+            "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/system/adapter.py",
+            "sha256": "0617da7b243123b50532e79a1fe8ee39c7c707dc3f5dcb746105cf18769bdbaa"
+          }
+        },
+        "frozen_submission_files": 0,
+        "code_pointers": [],
+        "observed_callflow": [],
+        "native_tool_use": {
+          "acmaddl_normalize": "not_observed",
+          "africas2s_calibrate": "not_observed",
+          "returned_values_feed_submission": "not_evaluable"
+        },
+        "condition_compliance": {
+          "state": "not_evaluable",
+          "reason": "The command driver raises while resolving required controller environment, before launching its adapter subprocess; the frozen submission is empty. This is not evidence of agent noncompliance."
+        },
+        "scientific_completion": {
+          "original_computed_outcome": "fail",
+          "original_outcome": "fail",
+          "model_scientific_performance_evaluable": false,
+          "reason": "No agent submission exists; preserve the original infrastructure-triggered fail separately from scientific performance."
+        },
+        "review_actions": {
+          "read_only_attempt_review": true,
+          "scientific_binary_io": false,
+          "model_calls": 0,
+          "attempt_modified": false
+        }
+      },
+      "judge": {}
+    },
+    {
+      "run": "20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-ec43df",
+      "system": "mam-luna-python",
+      "directory": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-ec43df",
+      "status": "token_limit",
+      "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "contract_status": "historical v1; probe dtype confound repaired in v2; original verdict preserved",
+      "model_attempt_evaluable": true,
+      "scientific_performance_evaluable": false,
+      "model_inference_started": "attempted; see adapter trace and usage",
+      "infrastructure_reason": null,
+      "instance": "kenya-interior--mam-2016",
+      "system_sha256": "1d83b5658b7c2088bb7f4640f56ff81965bc7b3d37f5e80013c7ae64d44c56fc",
+      "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+      "completion": "fail",
+      "computed": "fail",
+      "supplementary": "unresolved",
+      "skill": null,
+      "seconds": 101.38693045801483,
+      "command_seconds": 12.528441043221392,
+      "model_and_adapter_overhead_seconds": 88.85848941479344,
+      "invocation": {
+        "system": "mam-luna-python",
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "system_sha256": "1d83b5658b7c2088bb7f4640f56ff81965bc7b3d37f5e80013c7ae64d44c56fc",
+        "started_at": "2026-10-08T13:43:11.371996+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "mam-luna-python",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "recovered_from": "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-4ebeb3",
+        "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+        "codex_version": "codex-cli 0.160.0",
+        "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+        "exit_code": 0,
+        "finished_at": "2026-10-08T13:44:55.494946+00:00",
+        "cli_wall_seconds": 103.94753895909525,
+        "result": {
+          "run": "20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-ec43df",
+          "level": 1,
+          "status": "token_limit",
+          "outcome": "fail",
+          "computed_outcome": "fail",
+          "judged_outcome": "unresolved",
+          "skill": null,
+          "directory": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-ec43df"
+        }
+      },
+      "tool_calls": 8,
+      "usage": {
+        "input_tokens": 115522,
+        "cached_input_tokens": 72192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9196,
+        "reasoning_output_tokens": 1325,
+        "total_tokens": 124718
+      },
+      "usage_source": "adapter_reported",
+      "uncached_input_tokens": 43330,
+      "failed_checks": [
+        "claim.cv_skill",
+        "coverage",
+        "envelope",
+        "invariant.cv_score_identity",
+        "invariant.equal_model_combination",
+        "invariant.probabilities_valid",
+        "probe.changed_data",
+        "probe.held_out_year_isolation",
+        "probe.replay",
+        "variant"
+      ],
+      "unresolved_checks": [
+        "interpretation.outlook_support"
+      ],
+      "initial_acquisition": {
+        "state": "recorded",
+        "mode": "private-snapshot-http",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-ec43df/controller/acquisition-3dd830bbd941/requests.jsonl",
+        "log_sha256": "2d202f544e6a4dbc7c622d4b5927d9126e2392c993b3050310d3b06fd4400211",
+        "requests": [
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0019374579999862362,
+            "timestamp_unix": 1791467003.9023442
+          },
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0023683330000494607,
+            "timestamp_unix": 1791467008.4058454
+          },
+          {
+            "method": "GET",
+            "resource": "models/cmcc.nc",
+            "status": 200,
+            "bytes": 439326,
+            "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "seconds": 0.0021082920000026206,
+            "timestamp_unix": 1791467008.4090834
+          },
+          {
+            "method": "GET",
+            "resource": "models/ecmwf.nc",
+            "status": 200,
+            "bytes": 283806,
+            "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "seconds": 0.001434165999967263,
+            "timestamp_unix": 1791467008.413343
+          },
+          {
+            "method": "GET",
+            "resource": "models/meteofrance.nc",
+            "status": 200,
+            "bytes": 346014,
+            "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "seconds": 0.0017199579999669368,
+            "timestamp_unix": 1791467008.416704
+          },
+          {
+            "method": "GET",
+            "resource": "models/ukmo.nc",
+            "status": 200,
+            "bytes": 314912,
+            "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "seconds": 0.001879834000021674,
+            "timestamp_unix": 1791467008.4206583
+          },
+          {
+            "method": "GET",
+            "resource": "observations/chirps-monthly-pre2016.nc",
+            "status": 200,
+            "bytes": 3001776,
+            "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+            "seconds": 0.006790874999978769,
+            "timestamp_unix": 1791467008.4294958
+          },
+          {
+            "method": "GET",
+            "resource": "provenance.json",
+            "status": 200,
+            "bytes": 27656,
+            "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+            "seconds": 0.0012371249999887368,
+            "timestamp_unix": 1791467008.4380174
+          },
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0013046669999994265,
+            "timestamp_unix": 1791467085.6120777
+          },
+          {
+            "method": "GET",
+            "resource": "models/cmcc.nc",
+            "status": 200,
+            "bytes": 439326,
+            "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "seconds": 0.0020504579999851558,
+            "timestamp_unix": 1791467085.6158025
+          },
+          {
+            "method": "GET",
+            "resource": "models/ecmwf.nc",
+            "status": 200,
+            "bytes": 283806,
+            "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "seconds": 0.0016054170000643353,
+            "timestamp_unix": 1791467085.6196992
+          },
+          {
+            "method": "GET",
+            "resource": "models/meteofrance.nc",
+            "status": 200,
+            "bytes": 346014,
+            "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "seconds": 0.001476415999945857,
+            "timestamp_unix": 1791467085.62338
+          },
+          {
+            "method": "GET",
+            "resource": "models/ukmo.nc",
+            "status": 200,
+            "bytes": 314912,
+            "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "seconds": 0.0026693749999822103,
+            "timestamp_unix": 1791467085.6287036
+          },
+          {
+            "method": "GET",
+            "resource": "observations/chirps-monthly-pre2016.nc",
+            "status": 200,
+            "bytes": 3001776,
+            "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+            "seconds": 0.011101124999981948,
+            "timestamp_unix": 1791467085.6423793
+          },
+          {
+            "method": "GET",
+            "resource": "provenance.json",
+            "status": 200,
+            "bytes": 27656,
+            "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+            "seconds": 0.0009808749999820066,
+            "timestamp_unix": 1791467085.6522863
+          },
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0010257079999291818,
+            "timestamp_unix": 1791467093.4118958
+          },
+          {
+            "method": "GET",
+            "resource": "models/cmcc.nc",
+            "status": 200,
+            "bytes": 439326,
+            "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "seconds": 0.0023722920000182057,
+            "timestamp_unix": 1791467093.4193442
+          },
+          {
+            "method": "GET",
+            "resource": "models/ecmwf.nc",
+            "status": 200,
+            "bytes": 283806,
+            "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "seconds": 0.0010049999999637294,
+            "timestamp_unix": 1791467093.4232397
+          },
+          {
+            "method": "GET",
+            "resource": "models/meteofrance.nc",
+            "status": 200,
+            "bytes": 346014,
+            "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "seconds": 0.0011570000000347136,
+            "timestamp_unix": 1791467093.4259076
+          },
+          {
+            "method": "GET",
+            "resource": "models/ukmo.nc",
+            "status": 200,
+            "bytes": 314912,
+            "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "seconds": 0.0010527079999747002,
+            "timestamp_unix": 1791467093.4287941
+          },
+          {
+            "method": "GET",
+            "resource": "observations/chirps-monthly-pre2016.nc",
+            "status": 200,
+            "bytes": 3001776,
+            "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+            "seconds": 0.006623207999950864,
+            "timestamp_unix": 1791467093.4368558
+          },
+          {
+            "method": "GET",
+            "resource": "provenance.json",
+            "status": 200,
+            "bytes": 27656,
+            "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+            "seconds": 0.001788042000043788,
+            "timestamp_unix": 1791467093.4509444
+          }
+        ],
+        "bytes": 13244966,
+        "seconds": 0.05568833199981782,
+        "retrieved_resources": [
+          "catalog.json",
+          "models/cmcc.nc",
+          "models/ecmwf.nc",
+          "models/meteofrance.nc",
+          "models/ukmo.nc",
+          "observations/chirps-monthly-pre2016.nc",
+          "provenance.json"
+        ],
+        "provider_download_bytes": 0,
+        "live_provider": false
+      },
+      "replay_acquisition": {
+        "mode": "private-snapshot-http",
+        "scientific_headline_instrument": false,
+        "probes": [],
+        "probe_count": 0,
+        "bytes": 0,
+        "seconds": 0
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "isolated-internal-snapshot",
+        "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "private_observations_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "acquisition": {
+          "state": "recorded",
+          "mode": "private-snapshot-http",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-ec43df/controller/acquisition-3dd830bbd941/requests.jsonl",
+          "log_sha256": "2d202f544e6a4dbc7c622d4b5927d9126e2392c993b3050310d3b06fd4400211",
+          "requests": [
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0019374579999862362,
+              "timestamp_unix": 1791467003.9023442
+            },
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0023683330000494607,
+              "timestamp_unix": 1791467008.4058454
+            },
+            {
+              "method": "GET",
+              "resource": "models/cmcc.nc",
+              "status": 200,
+              "bytes": 439326,
+              "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+              "seconds": 0.0021082920000026206,
+              "timestamp_unix": 1791467008.4090834
+            },
+            {
+              "method": "GET",
+              "resource": "models/ecmwf.nc",
+              "status": 200,
+              "bytes": 283806,
+              "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+              "seconds": 0.001434165999967263,
+              "timestamp_unix": 1791467008.413343
+            },
+            {
+              "method": "GET",
+              "resource": "models/meteofrance.nc",
+              "status": 200,
+              "bytes": 346014,
+              "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+              "seconds": 0.0017199579999669368,
+              "timestamp_unix": 1791467008.416704
+            },
+            {
+              "method": "GET",
+              "resource": "models/ukmo.nc",
+              "status": 200,
+              "bytes": 314912,
+              "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+              "seconds": 0.001879834000021674,
+              "timestamp_unix": 1791467008.4206583
+            },
+            {
+              "method": "GET",
+              "resource": "observations/chirps-monthly-pre2016.nc",
+              "status": 200,
+              "bytes": 3001776,
+              "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+              "seconds": 0.006790874999978769,
+              "timestamp_unix": 1791467008.4294958
+            },
+            {
+              "method": "GET",
+              "resource": "provenance.json",
+              "status": 200,
+              "bytes": 27656,
+              "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+              "seconds": 0.0012371249999887368,
+              "timestamp_unix": 1791467008.4380174
+            },
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0013046669999994265,
+              "timestamp_unix": 1791467085.6120777
+            },
+            {
+              "method": "GET",
+              "resource": "models/cmcc.nc",
+              "status": 200,
+              "bytes": 439326,
+              "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+              "seconds": 0.0020504579999851558,
+              "timestamp_unix": 1791467085.6158025
+            },
+            {
+              "method": "GET",
+              "resource": "models/ecmwf.nc",
+              "status": 200,
+              "bytes": 283806,
+              "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+              "seconds": 0.0016054170000643353,
+              "timestamp_unix": 1791467085.6196992
+            },
+            {
+              "method": "GET",
+              "resource": "models/meteofrance.nc",
+              "status": 200,
+              "bytes": 346014,
+              "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+              "seconds": 0.001476415999945857,
+              "timestamp_unix": 1791467085.62338
+            },
+            {
+              "method": "GET",
+              "resource": "models/ukmo.nc",
+              "status": 200,
+              "bytes": 314912,
+              "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+              "seconds": 0.0026693749999822103,
+              "timestamp_unix": 1791467085.6287036
+            },
+            {
+              "method": "GET",
+              "resource": "observations/chirps-monthly-pre2016.nc",
+              "status": 200,
+              "bytes": 3001776,
+              "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+              "seconds": 0.011101124999981948,
+              "timestamp_unix": 1791467085.6423793
+            },
+            {
+              "method": "GET",
+              "resource": "provenance.json",
+              "status": 200,
+              "bytes": 27656,
+              "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+              "seconds": 0.0009808749999820066,
+              "timestamp_unix": 1791467085.6522863
+            },
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0010257079999291818,
+              "timestamp_unix": 1791467093.4118958
+            },
+            {
+              "method": "GET",
+              "resource": "models/cmcc.nc",
+              "status": 200,
+              "bytes": 439326,
+              "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+              "seconds": 0.0023722920000182057,
+              "timestamp_unix": 1791467093.4193442
+            },
+            {
+              "method": "GET",
+              "resource": "models/ecmwf.nc",
+              "status": 200,
+              "bytes": 283806,
+              "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+              "seconds": 0.0010049999999637294,
+              "timestamp_unix": 1791467093.4232397
+            },
+            {
+              "method": "GET",
+              "resource": "models/meteofrance.nc",
+              "status": 200,
+              "bytes": 346014,
+              "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+              "seconds": 0.0011570000000347136,
+              "timestamp_unix": 1791467093.4259076
+            },
+            {
+              "method": "GET",
+              "resource": "models/ukmo.nc",
+              "status": 200,
+              "bytes": 314912,
+              "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+              "seconds": 0.0010527079999747002,
+              "timestamp_unix": 1791467093.4287941
+            },
+            {
+              "method": "GET",
+              "resource": "observations/chirps-monthly-pre2016.nc",
+              "status": 200,
+              "bytes": 3001776,
+              "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+              "seconds": 0.006623207999950864,
+              "timestamp_unix": 1791467093.4368558
+            },
+            {
+              "method": "GET",
+              "resource": "provenance.json",
+              "status": 200,
+              "bytes": 27656,
+              "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+              "seconds": 0.001788042000043788,
+              "timestamp_unix": 1791467093.4509444
+            }
+          ],
+          "bytes": 13244966,
+          "seconds": 0.05568833199981782,
+          "retrieved_resources": [
+            "catalog.json",
+            "models/cmcc.nc",
+            "models/ecmwf.nc",
+            "models/meteofrance.nc",
+            "models/ukmo.nc",
+            "observations/chirps-monthly-pre2016.nc",
+            "provenance.json"
+          ],
+          "provider_download_bytes": 0,
+          "live_provider": false
+        },
+        "state": "pass"
+      },
+      "static_imports": [
+        "argparse",
+        "calendar",
+        "hashlib",
+        "json",
+        "numpy",
+        "pathlib",
+        "scipy",
+        "shutil",
+        "urllib",
+        "xarray"
+      ],
+      "tool_use_review": {
+        "status": "pending"
+      },
+      "judge": {}
+    },
+    {
+      "run": "20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929",
+      "system": "mam-luna-required-accord",
+      "directory": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929",
+      "status": "token_limit",
+      "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "contract_status": "historical v1; probe dtype confound repaired in v2; original verdict preserved",
+      "model_attempt_evaluable": true,
+      "scientific_performance_evaluable": false,
+      "model_inference_started": "attempted; see adapter trace and usage",
+      "infrastructure_reason": null,
+      "instance": "kenya-interior--mam-2016",
+      "system_sha256": "de630d39f5afbf0aa0cc709039c7be9ca788e4490b303ffcfc37fe5792d974b8",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "completion": "fail",
+      "computed": "fail",
+      "supplementary": "unresolved",
+      "skill": null,
+      "seconds": 29.616429540910758,
+      "command_seconds": 10.525261499802582,
+      "model_and_adapter_overhead_seconds": 19.091168041108176,
+      "invocation": {
+        "system": "mam-luna-required-accord",
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "system_sha256": "de630d39f5afbf0aa0cc709039c7be9ca788e4490b303ffcfc37fe5792d974b8",
+        "started_at": "2026-10-08T13:43:11.372016+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "mam-luna-required-accord",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "recovered_from": "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42",
+        "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+        "codex_version": "codex-cli 0.160.0",
+        "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+        "exit_code": 0,
+        "finished_at": "2026-10-08T13:43:43.445397+00:00",
+        "cli_wall_seconds": 31.84211033396423,
+        "result": {
+          "run": "20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929",
+          "level": 1,
+          "status": "token_limit",
+          "outcome": "fail",
+          "computed_outcome": "fail",
+          "judged_outcome": "unresolved",
+          "skill": null,
+          "directory": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929"
+        }
+      },
+      "tool_calls": 7,
+      "usage": {
+        "input_tokens": 103340,
+        "cached_input_tokens": 76288,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 978,
+        "reasoning_output_tokens": 204,
+        "total_tokens": 104318
+      },
+      "usage_source": "adapter_reported",
+      "uncached_input_tokens": 27052,
+      "failed_checks": [
+        "claim.cv_skill",
+        "coverage",
+        "envelope",
+        "invariant.cv_score_identity",
+        "invariant.equal_model_combination",
+        "invariant.probabilities_valid",
+        "probe.changed_data",
+        "probe.held_out_year_isolation",
+        "probe.replay",
+        "variant"
+      ],
+      "unresolved_checks": [
+        "interpretation.outlook_support"
+      ],
+      "initial_acquisition": {
+        "state": "recorded",
+        "mode": "private-snapshot-http",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/controller/acquisition-b76cd451db5f/requests.jsonl",
+        "log_sha256": "ac9d31d25032bc7e7a9281a6c53f14c0bc217c929597a6f609397f9082da8925",
+        "requests": [
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0016013329999964299,
+            "timestamp_unix": 1791467006.6529844
+          },
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0014602080000258866,
+            "timestamp_unix": 1791467010.4286015
+          },
+          {
+            "method": "GET",
+            "resource": "models/cmcc.nc",
+            "status": 200,
+            "bytes": 439326,
+            "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "seconds": 0.002908958000034545,
+            "timestamp_unix": 1791467010.4328988
+          },
+          {
+            "method": "GET",
+            "resource": "models/ecmwf.nc",
+            "status": 200,
+            "bytes": 283806,
+            "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "seconds": 0.002822459000071831,
+            "timestamp_unix": 1791467010.4374592
+          },
+          {
+            "method": "GET",
+            "resource": "models/meteofrance.nc",
+            "status": 200,
+            "bytes": 346014,
+            "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "seconds": 0.0014488749999372885,
+            "timestamp_unix": 1791467010.44038
+          },
+          {
+            "method": "GET",
+            "resource": "models/ukmo.nc",
+            "status": 200,
+            "bytes": 314912,
+            "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "seconds": 0.001332583000021259,
+            "timestamp_unix": 1791467010.4437647
+          },
+          {
+            "method": "GET",
+            "resource": "observations/chirps-monthly-pre2016.nc",
+            "status": 200,
+            "bytes": 3001776,
+            "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+            "seconds": 0.008217500000000655,
+            "timestamp_unix": 1791467010.4535015
+          },
+          {
+            "method": "GET",
+            "resource": "provenance.json",
+            "status": 200,
+            "bytes": 27656,
+            "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+            "seconds": 0.0010000419999869337,
+            "timestamp_unix": 1791467010.4600866
+          }
+        ],
+        "bytes": 4415738,
+        "seconds": 0.02079195800007483,
+        "retrieved_resources": [
+          "catalog.json",
+          "models/cmcc.nc",
+          "models/ecmwf.nc",
+          "models/meteofrance.nc",
+          "models/ukmo.nc",
+          "observations/chirps-monthly-pre2016.nc",
+          "provenance.json"
+        ],
+        "provider_download_bytes": 0,
+        "live_provider": false
+      },
+      "replay_acquisition": {
+        "mode": "private-snapshot-http",
+        "scientific_headline_instrument": false,
+        "probes": [],
+        "probe_count": 0,
+        "bytes": 0,
+        "seconds": 0
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "isolated-internal-snapshot",
+        "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "private_observations_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "acquisition": {
+          "state": "recorded",
+          "mode": "private-snapshot-http",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/controller/acquisition-b76cd451db5f/requests.jsonl",
+          "log_sha256": "ac9d31d25032bc7e7a9281a6c53f14c0bc217c929597a6f609397f9082da8925",
+          "requests": [
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0016013329999964299,
+              "timestamp_unix": 1791467006.6529844
+            },
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0014602080000258866,
+              "timestamp_unix": 1791467010.4286015
+            },
+            {
+              "method": "GET",
+              "resource": "models/cmcc.nc",
+              "status": 200,
+              "bytes": 439326,
+              "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+              "seconds": 0.002908958000034545,
+              "timestamp_unix": 1791467010.4328988
+            },
+            {
+              "method": "GET",
+              "resource": "models/ecmwf.nc",
+              "status": 200,
+              "bytes": 283806,
+              "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+              "seconds": 0.002822459000071831,
+              "timestamp_unix": 1791467010.4374592
+            },
+            {
+              "method": "GET",
+              "resource": "models/meteofrance.nc",
+              "status": 200,
+              "bytes": 346014,
+              "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+              "seconds": 0.0014488749999372885,
+              "timestamp_unix": 1791467010.44038
+            },
+            {
+              "method": "GET",
+              "resource": "models/ukmo.nc",
+              "status": 200,
+              "bytes": 314912,
+              "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+              "seconds": 0.001332583000021259,
+              "timestamp_unix": 1791467010.4437647
+            },
+            {
+              "method": "GET",
+              "resource": "observations/chirps-monthly-pre2016.nc",
+              "status": 200,
+              "bytes": 3001776,
+              "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+              "seconds": 0.008217500000000655,
+              "timestamp_unix": 1791467010.4535015
+            },
+            {
+              "method": "GET",
+              "resource": "provenance.json",
+              "status": 200,
+              "bytes": 27656,
+              "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+              "seconds": 0.0010000419999869337,
+              "timestamp_unix": 1791467010.4600866
+            }
+          ],
+          "bytes": 4415738,
+          "seconds": 0.02079195800007483,
+          "retrieved_resources": [
+            "catalog.json",
+            "models/cmcc.nc",
+            "models/ecmwf.nc",
+            "models/meteofrance.nc",
+            "models/ukmo.nc",
+            "observations/chirps-monthly-pre2016.nc",
+            "provenance.json"
+          ],
+          "provider_download_bytes": 0,
+          "live_provider": false
+        },
+        "state": "pass"
+      },
+      "static_imports": [],
+      "tool_use_review": {
+        "system": "mam-luna-required-accord",
+        "assigned_condition": "required_native_accord",
+        "assigned_condition_retained": true,
+        "template_fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "review_status": "reviewed_frozen_budget_stopped_attempt",
+        "run_status": "token_limit",
+        "source_evidence": {
+          "run.json": {
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/run.json",
+            "sha256": "d861451c7d45103ed5866fdf35fe2de116a2686f2812cd5fdd3a8b02d8964e9f"
+          },
+          "assessment.json": {
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/assessment.json",
+            "sha256": "266601534ef5c0b004961d3ca16ae60d4fd225d51d523cd3db136a0ea1855b6d"
+          },
+          "artifacts.json": {
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/artifacts.json",
+            "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+          },
+          "system.json": {
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/system.json",
+            "sha256": "42c04b1ca853784fd47608da0f26581219e4a69f3149e85fb3108462e4392582"
+          },
+          "request.json": {
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/request.json",
+            "sha256": "45cac889c16af6bfa16cb1ddf28fcb73c334a8eac308c2cc6c4c0519321a8c56"
+          },
+          "controller/adapter-result.json": {
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/controller/adapter-result.json",
+            "sha256": "d00d20d279175a91348bfe22ae0ff66062ea61884c1b7f019af17adb9a9e158a"
+          },
+          "logs/events.jsonl": {
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl",
+            "sha256": "4a939be25eabce2cc194570dc0ec5ef74877dfc4ce44ba14671e3e030e7b1b3b"
+          },
+          "system/adapter.py": {
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/system/adapter.py",
+            "sha256": "0617da7b243123b50532e79a1fe8ee39c7c707dc3f5dcb746105cf18769bdbaa"
+          }
+        },
+        "frozen_submission_files": 0,
+        "code_pointers": [
+          {
+            "event_id": "exec-12b3a97c-6d3f-489d-af8c-f4845350d110",
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:1",
+            "command_sha256": "a6d0724c0fd7ac1e09af51a07e163fe9863b796f713f1de2c8c3219578e8324f",
+            "command": "ls -la /work/inputs; cat /work/inputs/acquisition.json; ls -la /opt/accord-current/docs/acmadDL/skills/acmaddl /opt/accord-current/docs/africas2s/skills/africas2s"
+          },
+          {
+            "event_id": "exec-c0327247-ffda-4aac-8626-59479bdd753e",
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:4",
+            "command_sha256": "12c8dfb8694faab8472174fffafeb275c1926bd95f3461e7e3d9d52394d7ab61",
+            "command": "cat /work/inputs/instance.json; cat /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md; cat /opt/accord-current/docs/africas2s/skills/africas2s/SKILL.md"
+          },
+          {
+            "event_id": "exec-516ebfdd-1418-4bde-b701-69af29c1f836",
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:7",
+            "command_sha256": "c7c28c68b9fb3dd7d9b8db54456b7785ee233a3cf0f89a720c077720552e0744",
+            "command": "cat /work/inputs/instance.json; grep -n -E 'normalize|def calibrate|ereg|variance' /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md /opt/accord-current/docs/africas2s/skills/africas2s/references/api.md"
+          },
+          {
+            "event_id": "exec-09e8413e-e70e-4ce9-bd68-07ebbb74c1af",
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:10",
+            "command_sha256": "fb15320494358de7d2caadd41c19d490ad87200bd40615b21b6cb24bb3f482cb",
+            "command": "python - <<'PY'\nimport urllib.request\nu='http://weather-source:8000/catalog.json'\nr=urllib.request.urlopen(u); print(r.status,r.read().decode()[:10000])\nPY"
+          },
+          {
+            "event_id": "exec-a8406c03-7aeb-47bf-a368-954b32b23a3a",
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:13",
+            "command_sha256": "6ed279df7c395dd9621fc18b4fd96e1c8325952e5a9450935c216ec354aad30b",
+            "command": "mkdir -p /work/state/raw /work/submission && python - <<'PY'\nimport urllib.request,json,hashlib,pathlib\nbase='http://weather-source:8000/'\nc=json.load(urllib.request.urlopen(base+'catalog.json'))\nfor x in c['resources']:\n d=urllib.request.urlopen(base+x['path']).read(); assert len(d)==x['bytes'] and hashlib.sha256(d).hexdigest()==x['sha256']\n p=pathlib.Path('/work/state/raw')/x['path'];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(d);print(x['path'],len(d))\nPY\npython - <<'PY'\nimport xarray as xr,glob\nfor p in glob.glob('/work/state/raw/**/*.nc',recursive=True):\n d=xr.open_dataset(p);print('\\n',p,d)\n for k,v in d.data_vars.items(): print(k,v.dims,v.shape,v.dtype,v.attrs)\nPY"
+          },
+          {
+            "event_id": "exec-1bd0642a-996c-4471-a233-0d4f77d498d9",
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:16",
+            "command_sha256": "e2c7c19b5160b3549d18255fe8f575082f19f7c0f01010061eea707afab0514d",
+            "command": "python - <<'PY'\nimport acmaddl,inspect\nprint(acmaddl,dir(acmaddl))\nimport acmaddl.normalize as n\nprint('normalize',dir(n))\nfor x in dir(n):\n o=getattr(n,x)\n if callable(o):\n  try: print(x,inspect.signature(o))\n  except: pass\nimport africas2s as a,inspect\nprint('calibrate',inspect.signature(a.calibrate))\nPY"
+          },
+          {
+            "event_id": "exec-6f5ebd57-acf2-4985-b1fd-1b8787bce663",
+            "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:19",
+            "command_sha256": "0eb73a3060abebda033c3fdd0f1f211baa048eb9f2208b3683f3b70f455dba43",
+            "command": "python - <<'PY'\nimport acmaddl.normalize as n,inspect\nprint(inspect.getsource(n.normalize))\nPY\nsed -n '47,59p' /opt/accord-current/docs/africas2s/skills/africas2s/references/api.md"
+          }
+        ],
+        "observed_callflow": [
+          {
+            "step": 1,
+            "events": [
+              1,
+              4,
+              7
+            ],
+            "operation": "Inspect descriptor, instance and tool documentation; combined skill-document output was truncated."
+          },
+          {
+            "step": 2,
+            "events": [
+              10,
+              13
+            ],
+            "operation": "Fetch catalogue; acquire all six listed objects to /work/state/raw; check byte counts and SHA256; inspect raw NetCDF metadata."
+          },
+          {
+            "step": 3,
+            "events": [
+              16
+            ],
+            "operation": "Import acmaddl/africas2s and inspect exported functions/signatures; no normalization or calibration execution."
+          },
+          {
+            "step": 4,
+            "events": [
+              19
+            ],
+            "operation": "Print acmaddl.normalize source and calibration API documentation; no normalization or calibration execution."
+          },
+          {
+            "step": 5,
+            "events": [
+              22
+            ],
+            "operation": "Adapter checkpoint stops at cumulative token budget before implementation or submission."
+          }
+        ],
+        "native_tool_use": {
+          "acmaddl_normalize": "not_executed_introspection_only",
+          "africas2s_calibrate": "not_executed_introspection_only",
+          "returned_values_feed_submission": "absent_no_submitted_arrays",
+          "native_parameters_verified": null,
+          "native_parameter_detail": "No executed call supplied method, variance, threshold or CV parameters; API/source inspection is not a forecast operation."
+        },
+        "condition_compliance": {
+          "state": "not_satisfied",
+          "reason": "The assigned attempt ended before either required transformation was executed. Imports and API/source inspection do not satisfy the substantive-use condition. Assignment remains required_native_accord."
+        },
+        "scientific_completion": {
+          "original_computed_outcome": "fail",
+          "original_outcome": "fail",
+          "task_completion_evaluable": true,
+          "task_completion_state": "fail",
+          "forecast_science_evaluable": false,
+          "reason": "The real model attempt hit its token checkpoint with an empty frozen submission. This demonstrates noncompletion under the assigned budget, not an identified scientific-method error or a frontier capability boundary."
+        },
+        "usage": {
+          "input_tokens": 103340,
+          "cached_input_tokens": 76288,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 978,
+          "reasoning_output_tokens": 204,
+          "total_tokens": 104318
+        },
+        "usage_source": "adapter_reported",
+        "seconds": 29.616429540910758,
+        "tool_calls": 7,
+        "budget_interpretation": {
+          "cumulative_provider_total_tokens": 104318,
+          "cached_input_tokens_included": 76288,
+          "noncached_input_plus_output_tokens": 28030,
+          "detail": "The configured 100000 cumulative-provider-token checkpoint counts cached input. The final response crossed the remaining checkpoint; 13 tool calls and most wall time remained."
+        },
+        "review_actions": {
+          "read_only_attempt_review": true,
+          "scientific_binary_io": false,
+          "model_calls": 0,
+          "attempt_modified": false
+        }
+      },
+      "judge": {}
+    },
+    {
+      "run": "20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0",
+      "system": "mam-luna-python-context-budget",
+      "directory": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0",
+      "status": "submitted",
+      "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "contract_status": "historical v1; probe dtype confound repaired in v2; original verdict preserved",
+      "model_attempt_evaluable": true,
+      "scientific_performance_evaluable": true,
+      "model_inference_started": "attempted; see adapter trace and usage",
+      "infrastructure_reason": null,
+      "instance": "kenya-interior--mam-2016",
+      "system_sha256": "d5512d0acc6d107941985c32097a2a954270b74f2a7927ae334929352d47ce3d",
+      "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "skill": {
+        "new_years": {
+          "split": "new_years",
+          "rps": 0.4312408099416133,
+          "climatology_rps": 0.29629629629629634,
+          "rpss": -0.4554377335529447,
+          "years": [
+            2016
+          ],
+          "cells": 18,
+          "ranking_enabled": false
+        }
+      },
+      "seconds": 100.42695499991532,
+      "command_seconds": 12.485352084157057,
+      "model_and_adapter_overhead_seconds": 87.94160291575827,
+      "invocation": {
+        "system": "mam-luna-python-context-budget",
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "system_sha256": "d5512d0acc6d107941985c32097a2a954270b74f2a7927ae334929352d47ce3d",
+        "started_at": "2026-10-08T13:47:27.676830+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "mam-luna-python-context-budget",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "recovered_from": null,
+        "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+        "codex_version": "codex-cli 0.160.0",
+        "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+        "exit_code": 0,
+        "finished_at": "2026-10-08T13:49:46.908782+00:00",
+        "cli_wall_seconds": 138.87671879201662,
+        "result": {
+          "run": "20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0",
+          "level": 1,
+          "status": "submitted",
+          "outcome": "pass",
+          "computed_outcome": "pass",
+          "judged_outcome": "unresolved",
+          "skill": {
+            "split": "new_years",
+            "rps": 0.4312408099416133,
+            "climatology_rps": 0.29629629629629634,
+            "rpss": -0.4554377335529447,
+            "years": [
+              2016
+            ],
+            "cells": 18,
+            "ranking_enabled": false
+          },
+          "directory": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0"
+        }
+      },
+      "tool_calls": 10,
+      "usage": {
+        "input_tokens": 199179,
+        "cached_input_tokens": 155392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7938,
+        "reasoning_output_tokens": 2514,
+        "total_tokens": 207117
+      },
+      "usage_source": "adapter_reported",
+      "uncached_input_tokens": 43787,
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "initial_acquisition": {
+        "state": "recorded",
+        "mode": "private-snapshot-http",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0/controller/acquisition-558bb1d7f96b/requests.jsonl",
+        "log_sha256": "b17add5f5cf71e4d4ee6e54ad4f3e49f11795d7cc8b01ddf78026c080d8195ac",
+        "requests": [
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.005533791000061683,
+            "timestamp_unix": 1791467259.361688
+          },
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0007150829999318375,
+            "timestamp_unix": 1791467263.7068274
+          },
+          {
+            "method": "GET",
+            "resource": "models/cmcc.nc",
+            "status": 200,
+            "bytes": 439326,
+            "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "seconds": 0.0015156670000351369,
+            "timestamp_unix": 1791467263.7092996
+          },
+          {
+            "method": "GET",
+            "resource": "models/ecmwf.nc",
+            "status": 200,
+            "bytes": 283806,
+            "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "seconds": 0.0017750840000871904,
+            "timestamp_unix": 1791467263.7137282
+          },
+          {
+            "method": "GET",
+            "resource": "models/meteofrance.nc",
+            "status": 200,
+            "bytes": 346014,
+            "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "seconds": 0.0013306669999337828,
+            "timestamp_unix": 1791467263.7165601
+          },
+          {
+            "method": "GET",
+            "resource": "models/ukmo.nc",
+            "status": 200,
+            "bytes": 314912,
+            "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "seconds": 0.0012683749999951033,
+            "timestamp_unix": 1791467263.7191157
+          },
+          {
+            "method": "GET",
+            "resource": "observations/chirps-monthly-pre2016.nc",
+            "status": 200,
+            "bytes": 3001776,
+            "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+            "seconds": 0.008344000000079177,
+            "timestamp_unix": 1791467263.7293072
+          },
+          {
+            "method": "GET",
+            "resource": "provenance.json",
+            "status": 200,
+            "bytes": 27656,
+            "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+            "seconds": 0.0009028329999409834,
+            "timestamp_unix": 1791467263.7390711
+          },
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.002676250000035907,
+            "timestamp_unix": 1791467308.176122
+          },
+          {
+            "method": "GET",
+            "resource": "models/cmcc.nc",
+            "status": 200,
+            "bytes": 439326,
+            "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "seconds": 0.004741874999922402,
+            "timestamp_unix": 1791467308.1819372
+          },
+          {
+            "method": "GET",
+            "resource": "models/ecmwf.nc",
+            "status": 200,
+            "bytes": 283806,
+            "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "seconds": 0.0027934580000419373,
+            "timestamp_unix": 1791467308.18529
+          },
+          {
+            "method": "GET",
+            "resource": "models/meteofrance.nc",
+            "status": 200,
+            "bytes": 346014,
+            "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "seconds": 0.0031882499999937863,
+            "timestamp_unix": 1791467308.1904738
+          },
+          {
+            "method": "GET",
+            "resource": "models/ukmo.nc",
+            "status": 200,
+            "bytes": 314912,
+            "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "seconds": 0.0051586249999218126,
+            "timestamp_unix": 1791467308.1964133
+          },
+          {
+            "method": "GET",
+            "resource": "observations/chirps-monthly-pre2016.nc",
+            "status": 200,
+            "bytes": 3001776,
+            "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+            "seconds": 0.02299616600009813,
+            "timestamp_unix": 1791467308.220262
+          },
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.003647791999924266,
+            "timestamp_unix": 1791467314.9844315
+          },
+          {
+            "method": "GET",
+            "resource": "models/cmcc.nc",
+            "status": 200,
+            "bytes": 439326,
+            "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "seconds": 0.001852624999969521,
+            "timestamp_unix": 1791467314.987267
+          },
+          {
+            "method": "GET",
+            "resource": "models/ecmwf.nc",
+            "status": 200,
+            "bytes": 283806,
+            "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "seconds": 0.001844209000068986,
+            "timestamp_unix": 1791467314.9909954
+          },
+          {
+            "method": "GET",
+            "resource": "models/meteofrance.nc",
+            "status": 200,
+            "bytes": 346014,
+            "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "seconds": 0.0014263329999266716,
+            "timestamp_unix": 1791467314.992954
+          },
+          {
+            "method": "GET",
+            "resource": "models/ukmo.nc",
+            "status": 200,
+            "bytes": 314912,
+            "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "seconds": 0.0019167089999427844,
+            "timestamp_unix": 1791467314.9962919
+          },
+          {
+            "method": "GET",
+            "resource": "observations/chirps-monthly-pre2016.nc",
+            "status": 200,
+            "bytes": 3001776,
+            "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+            "seconds": 0.011718875000042317,
+            "timestamp_unix": 1791467315.0086365
+          }
+        ],
+        "bytes": 13189654,
+        "seconds": 0.08534666699995341,
+        "retrieved_resources": [
+          "catalog.json",
+          "models/cmcc.nc",
+          "models/ecmwf.nc",
+          "models/meteofrance.nc",
+          "models/ukmo.nc",
+          "observations/chirps-monthly-pre2016.nc",
+          "provenance.json"
+        ],
+        "provider_download_bytes": 0,
+        "live_provider": false
+      },
+      "replay_acquisition": {
+        "mode": "private-snapshot-http",
+        "scientific_headline_instrument": false,
+        "probes": [
+          {
+            "state": "recorded",
+            "mode": "private-snapshot-http",
+            "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0/controller/acquisition-evidence/74739dfca9424851a06d13a653d8197e/probe-changed-data-requests.jsonl",
+            "log_sha256": "1f76c253a2a080abf18ec05c0f812a226c961147908368a943287cefef4898e8",
+            "requests": [
+              {
+                "method": "GET",
+                "resource": "catalog.json",
+                "status": 200,
+                "bytes": 1124,
+                "sha256": "77d8f79cb3aa13f793ec526b2772410ea05db1ae2f2d404c18bd63ec31e53de7",
+                "seconds": 0.0014043340000853277,
+                "timestamp_unix": 1791467369.6534688
+              },
+              {
+                "method": "GET",
+                "resource": "models/cmcc.nc",
+                "status": 200,
+                "bytes": 854107,
+                "sha256": "e276a929b491cfe4bd826e267db36a74dabc57058f49da7a40f969ad2e105b6c",
+                "seconds": 0.0021030420000442973,
+                "timestamp_unix": 1791467369.6561575
+              },
+              {
+                "method": "GET",
+                "resource": "models/ecmwf.nc",
+                "status": 200,
+                "bytes": 543067,
+                "sha256": "b71f0e44e357060a5ea836a0acc4990576e2b67e4217ad34a4e663c8fe3c2af5",
+                "seconds": 0.002925708000020677,
+                "timestamp_unix": 1791467369.661672
+              },
+              {
+                "method": "GET",
+                "resource": "models/meteofrance.nc",
+                "status": 200,
+                "bytes": 667483,
+                "sha256": "d2bd648b48955a4185494add67363b57c871a77a4a56fc63a78e2250b44fa05d",
+                "seconds": 0.00138183299998218,
+                "timestamp_unix": 1791467369.6635702
+              },
+              {
+                "method": "GET",
+                "resource": "models/ukmo.nc",
+                "status": 200,
+                "bytes": 605193,
+                "sha256": "0ebfd785760f1231dd9f33468bc1bab04bce690c54ae1b27c521484515472165",
+                "seconds": 0.0025200000000040745,
+                "timestamp_unix": 1791467369.6677372
+              },
+              {
+                "method": "GET",
+                "resource": "observations/chirps-monthly-pre2016.nc",
+                "status": 200,
+                "bytes": 5986992,
+                "sha256": "9205f3a09de26573d5f0706e11d70a0306a2f5561a7a37b462caad839a4b03f2",
+                "seconds": 0.012871291999999812,
+                "timestamp_unix": 1791467369.681041
+              }
+            ],
+            "bytes": 8657966,
+            "seconds": 0.02320620900013637,
+            "retrieved_resources": [
+              "catalog.json",
+              "models/cmcc.nc",
+              "models/ecmwf.nc",
+              "models/meteofrance.nc",
+              "models/ukmo.nc",
+              "observations/chirps-monthly-pre2016.nc"
+            ],
+            "provider_download_bytes": 0,
+            "live_provider": false,
+            "probe": "changed-data",
+            "evidence_persisted": true,
+            "original_log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0/controller/assessment-work/probe-changed-data/acquisition/requests.jsonl"
+          },
+          {
+            "state": "recorded",
+            "mode": "private-snapshot-http",
+            "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0/controller/acquisition-evidence/74739dfca9424851a06d13a653d8197e/probe-invariance-held_out_year_isolation-requests.jsonl",
+            "log_sha256": "55c0d7c526a9d157c22d48820dafddb5cdcc4ee0b009cebf3cfa4e36858dc469",
+            "requests": [
+              {
+                "method": "GET",
+                "resource": "catalog.json",
+                "status": 200,
+                "bytes": 1124,
+                "sha256": "016242a08c2a724ad6ad14eaa871a2f1cee765bcccf86195665b34fa5d3a9c3e",
+                "seconds": 0.0022689999999556676,
+                "timestamp_unix": 1791467384.0798297
+              },
+              {
+                "method": "GET",
+                "resource": "models/cmcc.nc",
+                "status": 200,
+                "bytes": 439326,
+                "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+                "seconds": 0.002816957999925762,
+                "timestamp_unix": 1791467384.083958
+              },
+              {
+                "method": "GET",
+                "resource": "models/ecmwf.nc",
+                "status": 200,
+                "bytes": 283806,
+                "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+                "seconds": 0.0021586670000033337,
+                "timestamp_unix": 1791467384.0871103
+              },
+              {
+                "method": "GET",
+                "resource": "models/meteofrance.nc",
+                "status": 200,
+                "bytes": 346014,
+                "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+                "seconds": 0.003769166999973095,
+                "timestamp_unix": 1791467384.091484
+              },
+              {
+                "method": "GET",
+                "resource": "models/ukmo.nc",
+                "status": 200,
+                "bytes": 314912,
+                "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+                "seconds": 0.0015687499999330612,
+                "timestamp_unix": 1791467384.0936902
+              },
+              {
+                "method": "GET",
+                "resource": "observations/chirps-monthly-pre2016.nc",
+                "status": 200,
+                "bytes": 5986992,
+                "sha256": "35c6a92399479d1cb88bb65be7c98ce157c14fd548f92ad6320d1388bd18dc1d",
+                "seconds": 0.014296959000034803,
+                "timestamp_unix": 1791467384.1095428
+              }
+            ],
+            "bytes": 7372174,
+            "seconds": 0.026879500999825723,
+            "retrieved_resources": [
+              "catalog.json",
+              "models/cmcc.nc",
+              "models/ecmwf.nc",
+              "models/meteofrance.nc",
+              "models/ukmo.nc",
+              "observations/chirps-monthly-pre2016.nc"
+            ],
+            "provider_download_bytes": 0,
+            "live_provider": false,
+            "probe": "invariance-held_out_year_isolation",
+            "evidence_persisted": true,
+            "original_log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0/controller/assessment-work/probe-invariance-held_out_year_isolation/acquisition/requests.jsonl"
+          },
+          {
+            "state": "recorded",
+            "mode": "private-snapshot-http",
+            "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0/controller/acquisition-evidence/74739dfca9424851a06d13a653d8197e/probe-replay-requests.jsonl",
+            "log_sha256": "16502a4e6afb601a434be45a520cd5f9373578435be68c3b12992434e28e0ddd",
+            "requests": [
+              {
+                "method": "GET",
+                "resource": "catalog.json",
+                "status": 200,
+                "bytes": 1124,
+                "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+                "seconds": 0.0014107920000014929,
+                "timestamp_unix": 1791467365.7847152
+              },
+              {
+                "method": "GET",
+                "resource": "models/cmcc.nc",
+                "status": 200,
+                "bytes": 439326,
+                "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+                "seconds": 0.0014683749999448992,
+                "timestamp_unix": 1791467365.7867527
+              },
+              {
+                "method": "GET",
+                "resource": "models/ecmwf.nc",
+                "status": 200,
+                "bytes": 283806,
+                "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+                "seconds": 0.0020959999999377033,
+                "timestamp_unix": 1791467365.7907639
+              },
+              {
+                "method": "GET",
+                "resource": "models/meteofrance.nc",
+                "status": 200,
+                "bytes": 346014,
+                "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+                "seconds": 0.0019457910000255652,
+                "timestamp_unix": 1791467365.7932956
+              },
+              {
+                "method": "GET",
+                "resource": "models/ukmo.nc",
+                "status": 200,
+                "bytes": 314912,
+                "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+                "seconds": 0.0016370000000733853,
+                "timestamp_unix": 1791467365.7953053
+              },
+              {
+                "method": "GET",
+                "resource": "observations/chirps-monthly-pre2016.nc",
+                "status": 200,
+                "bytes": 3001776,
+                "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+                "seconds": 0.006250499999964632,
+                "timestamp_unix": 1791467365.8019617
+              }
+            ],
+            "bytes": 4386958,
+            "seconds": 0.014808457999947677,
+            "retrieved_resources": [
+              "catalog.json",
+              "models/cmcc.nc",
+              "models/ecmwf.nc",
+              "models/meteofrance.nc",
+              "models/ukmo.nc",
+              "observations/chirps-monthly-pre2016.nc"
+            ],
+            "provider_download_bytes": 0,
+            "live_provider": false,
+            "probe": "replay",
+            "evidence_persisted": true,
+            "original_log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0/controller/assessment-work/probe-replay/acquisition/requests.jsonl"
+          }
+        ],
+        "probe_count": 3,
+        "bytes": 20417098,
+        "seconds": 0.06489416799990977
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "isolated-internal-snapshot",
+        "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "private_observations_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "acquisition": {
+          "state": "recorded",
+          "mode": "private-snapshot-http",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-context-budget-fa47a0/controller/acquisition-558bb1d7f96b/requests.jsonl",
+          "log_sha256": "b17add5f5cf71e4d4ee6e54ad4f3e49f11795d7cc8b01ddf78026c080d8195ac",
+          "requests": [
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.005533791000061683,
+              "timestamp_unix": 1791467259.361688
+            },
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0007150829999318375,
+              "timestamp_unix": 1791467263.7068274
+            },
+            {
+              "method": "GET",
+              "resource": "models/cmcc.nc",
+              "status": 200,
+              "bytes": 439326,
+              "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+              "seconds": 0.0015156670000351369,
+              "timestamp_unix": 1791467263.7092996
+            },
+            {
+              "method": "GET",
+              "resource": "models/ecmwf.nc",
+              "status": 200,
+              "bytes": 283806,
+              "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+              "seconds": 0.0017750840000871904,
+              "timestamp_unix": 1791467263.7137282
+            },
+            {
+              "method": "GET",
+              "resource": "models/meteofrance.nc",
+              "status": 200,
+              "bytes": 346014,
+              "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+              "seconds": 0.0013306669999337828,
+              "timestamp_unix": 1791467263.7165601
+            },
+            {
+              "method": "GET",
+              "resource": "models/ukmo.nc",
+              "status": 200,
+              "bytes": 314912,
+              "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+              "seconds": 0.0012683749999951033,
+              "timestamp_unix": 1791467263.7191157
+            },
+            {
+              "method": "GET",
+              "resource": "observations/chirps-monthly-pre2016.nc",
+              "status": 200,
+              "bytes": 3001776,
+              "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+              "seconds": 0.008344000000079177,
+              "timestamp_unix": 1791467263.7293072
+            },
+            {
+              "method": "GET",
+              "resource": "provenance.json",
+              "status": 200,
+              "bytes": 27656,
+              "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+              "seconds": 0.0009028329999409834,
+              "timestamp_unix": 1791467263.7390711
+            },
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.002676250000035907,
+              "timestamp_unix": 1791467308.176122
+            },
+            {
+              "method": "GET",
+              "resource": "models/cmcc.nc",
+              "status": 200,
+              "bytes": 439326,
+              "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+              "seconds": 0.004741874999922402,
+              "timestamp_unix": 1791467308.1819372
+            },
+            {
+              "method": "GET",
+              "resource": "models/ecmwf.nc",
+              "status": 200,
+              "bytes": 283806,
+              "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+              "seconds": 0.0027934580000419373,
+              "timestamp_unix": 1791467308.18529
+            },
+            {
+              "method": "GET",
+              "resource": "models/meteofrance.nc",
+              "status": 200,
+              "bytes": 346014,
+              "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+              "seconds": 0.0031882499999937863,
+              "timestamp_unix": 1791467308.1904738
+            },
+            {
+              "method": "GET",
+              "resource": "models/ukmo.nc",
+              "status": 200,
+              "bytes": 314912,
+              "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+              "seconds": 0.0051586249999218126,
+              "timestamp_unix": 1791467308.1964133
+            },
+            {
+              "method": "GET",
+              "resource": "observations/chirps-monthly-pre2016.nc",
+              "status": 200,
+              "bytes": 3001776,
+              "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+              "seconds": 0.02299616600009813,
+              "timestamp_unix": 1791467308.220262
+            },
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.003647791999924266,
+              "timestamp_unix": 1791467314.9844315
+            },
+            {
+              "method": "GET",
+              "resource": "models/cmcc.nc",
+              "status": 200,
+              "bytes": 439326,
+              "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+              "seconds": 0.001852624999969521,
+              "timestamp_unix": 1791467314.987267
+            },
+            {
+              "method": "GET",
+              "resource": "models/ecmwf.nc",
+              "status": 200,
+              "bytes": 283806,
+              "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+              "seconds": 0.001844209000068986,
+              "timestamp_unix": 1791467314.9909954
+            },
+            {
+              "method": "GET",
+              "resource": "models/meteofrance.nc",
+              "status": 200,
+              "bytes": 346014,
+              "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+              "seconds": 0.0014263329999266716,
+              "timestamp_unix": 1791467314.992954
+            },
+            {
+              "method": "GET",
+              "resource": "models/ukmo.nc",
+              "status": 200,
+              "bytes": 314912,
+              "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+              "seconds": 0.0019167089999427844,
+              "timestamp_unix": 1791467314.9962919
+            },
+            {
+              "method": "GET",
+              "resource": "observations/chirps-monthly-pre2016.nc",
+              "status": 200,
+              "bytes": 3001776,
+              "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+              "seconds": 0.011718875000042317,
+              "timestamp_unix": 1791467315.0086365
+            }
+          ],
+          "bytes": 13189654,
+          "seconds": 0.08534666699995341,
+          "retrieved_resources": [
+            "catalog.json",
+            "models/cmcc.nc",
+            "models/ecmwf.nc",
+            "models/meteofrance.nc",
+            "models/ukmo.nc",
+            "observations/chirps-monthly-pre2016.nc",
+            "provenance.json"
+          ],
+          "provider_download_bytes": 0,
+          "live_provider": false
+        },
+        "state": "pass"
+      },
+      "static_imports": [
+        "argparse",
+        "calendar",
+        "hashlib",
+        "json",
+        "numpy",
+        "os",
+        "pandas",
+        "pathlib",
+        "requests",
+        "scipy",
+        "shutil",
+        "tempfile",
+        "xarray"
+      ],
+      "tool_use_review": {
+        "status": "pending"
+      },
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 11893,
+            "output_tokens": 769,
+            "list_price_usd": 0.110516
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4",
+      "system": "mam-luna-required-accord-context-budget",
+      "directory": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4",
+      "status": "token_limit",
+      "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "contract_status": "historical v1; probe dtype confound repaired in v2; original verdict preserved",
+      "model_attempt_evaluable": true,
+      "scientific_performance_evaluable": false,
+      "model_inference_started": "attempted; see adapter trace and usage",
+      "infrastructure_reason": null,
+      "instance": "kenya-interior--mam-2016",
+      "system_sha256": "1c32fe43c241a142e24fe304f86405a9423a8be7409643bf1ae823679a5bd3c1",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "completion": "fail",
+      "computed": "fail",
+      "supplementary": "unresolved",
+      "skill": null,
+      "seconds": 54.315887417062186,
+      "command_seconds": 20.96627249591984,
+      "model_and_adapter_overhead_seconds": 33.34961492114235,
+      "invocation": {
+        "system": "mam-luna-required-accord-context-budget",
+        "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "system_sha256": "1c32fe43c241a142e24fe304f86405a9423a8be7409643bf1ae823679a5bd3c1",
+        "started_at": "2026-10-08T13:47:27.676748+00:00",
+        "command": [
+          "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/.venv/bin/python",
+          "-m",
+          "assessment",
+          "run",
+          "mam-multimodel-outlook",
+          "kenya-interior--mam-2016",
+          "--system",
+          "mam-luna-required-accord-context-budget",
+          "--no-judge"
+        ],
+        "status": "finished",
+        "agent_retries": 0,
+        "recovered_from": null,
+        "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+        "codex_version": "codex-cli 0.160.0",
+        "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+        "exit_code": 0,
+        "finished_at": "2026-10-08T13:48:25.335704+00:00",
+        "cli_wall_seconds": 57.30562941590324,
+        "result": {
+          "run": "20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4",
+          "level": 1,
+          "status": "token_limit",
+          "outcome": "fail",
+          "computed_outcome": "fail",
+          "judged_outcome": "unresolved",
+          "skill": null,
+          "directory": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4"
+        }
+      },
+      "tool_calls": 15,
+      "usage": {
+        "input_tokens": 372446,
+        "cached_input_tokens": 326144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1842,
+        "reasoning_output_tokens": 467,
+        "total_tokens": 374288
+      },
+      "usage_source": "adapter_reported",
+      "uncached_input_tokens": 46302,
+      "failed_checks": [
+        "claim.cv_skill",
+        "coverage",
+        "envelope",
+        "invariant.cv_score_identity",
+        "invariant.equal_model_combination",
+        "invariant.probabilities_valid",
+        "probe.changed_data",
+        "probe.held_out_year_isolation",
+        "probe.replay",
+        "variant"
+      ],
+      "unresolved_checks": [
+        "interpretation.outlook_support"
+      ],
+      "initial_acquisition": {
+        "state": "recorded",
+        "mode": "private-snapshot-http",
+        "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/controller/acquisition-3f5b1b02ab24/requests.jsonl",
+        "log_sha256": "21997722078137d156d2172048ab0e004a40c45febf8f58ee7c4187bf2b1595a",
+        "requests": [
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0014042500000641667,
+            "timestamp_unix": 1791467263.3229232
+          },
+          {
+            "method": "GET",
+            "resource": "catalog.json",
+            "status": 200,
+            "bytes": 1124,
+            "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+            "seconds": 0.0012049169999954756,
+            "timestamp_unix": 1791467266.7216475
+          },
+          {
+            "method": "GET",
+            "resource": "models/cmcc.nc",
+            "status": 200,
+            "bytes": 439326,
+            "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+            "seconds": 0.0020842500000526343,
+            "timestamp_unix": 1791467266.724755
+          },
+          {
+            "method": "GET",
+            "resource": "models/ecmwf.nc",
+            "status": 200,
+            "bytes": 283806,
+            "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+            "seconds": 0.0009269999999332867,
+            "timestamp_unix": 1791467266.727308
+          },
+          {
+            "method": "GET",
+            "resource": "models/meteofrance.nc",
+            "status": 200,
+            "bytes": 346014,
+            "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+            "seconds": 0.0009452919999830556,
+            "timestamp_unix": 1791467266.7294996
+          },
+          {
+            "method": "GET",
+            "resource": "models/ukmo.nc",
+            "status": 200,
+            "bytes": 314912,
+            "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+            "seconds": 0.0010272499999928186,
+            "timestamp_unix": 1791467266.7316802
+          },
+          {
+            "method": "GET",
+            "resource": "observations/chirps-monthly-pre2016.nc",
+            "status": 200,
+            "bytes": 3001776,
+            "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+            "seconds": 0.008899041999939072,
+            "timestamp_unix": 1791467266.7416697
+          },
+          {
+            "method": "GET",
+            "resource": "provenance.json",
+            "status": 200,
+            "bytes": 27656,
+            "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+            "seconds": 0.0004079580000961869,
+            "timestamp_unix": 1791467266.7465348
+          }
+        ],
+        "bytes": 4415738,
+        "seconds": 0.016899959000056697,
+        "retrieved_resources": [
+          "catalog.json",
+          "models/cmcc.nc",
+          "models/ecmwf.nc",
+          "models/meteofrance.nc",
+          "models/ukmo.nc",
+          "observations/chirps-monthly-pre2016.nc",
+          "provenance.json"
+        ],
+        "provider_download_bytes": 0,
+        "live_provider": false
+      },
+      "replay_acquisition": {
+        "mode": "private-snapshot-http",
+        "scientific_headline_instrument": false,
+        "probes": [],
+        "probe_count": 0,
+        "bytes": 0,
+        "seconds": 0
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "isolated-internal-snapshot",
+        "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "private_observations_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "acquisition": {
+          "state": "recorded",
+          "mode": "private-snapshot-http",
+          "log_path": "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/controller/acquisition-3f5b1b02ab24/requests.jsonl",
+          "log_sha256": "21997722078137d156d2172048ab0e004a40c45febf8f58ee7c4187bf2b1595a",
+          "requests": [
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0014042500000641667,
+              "timestamp_unix": 1791467263.3229232
+            },
+            {
+              "method": "GET",
+              "resource": "catalog.json",
+              "status": 200,
+              "bytes": 1124,
+              "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+              "seconds": 0.0012049169999954756,
+              "timestamp_unix": 1791467266.7216475
+            },
+            {
+              "method": "GET",
+              "resource": "models/cmcc.nc",
+              "status": 200,
+              "bytes": 439326,
+              "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+              "seconds": 0.0020842500000526343,
+              "timestamp_unix": 1791467266.724755
+            },
+            {
+              "method": "GET",
+              "resource": "models/ecmwf.nc",
+              "status": 200,
+              "bytes": 283806,
+              "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+              "seconds": 0.0009269999999332867,
+              "timestamp_unix": 1791467266.727308
+            },
+            {
+              "method": "GET",
+              "resource": "models/meteofrance.nc",
+              "status": 200,
+              "bytes": 346014,
+              "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+              "seconds": 0.0009452919999830556,
+              "timestamp_unix": 1791467266.7294996
+            },
+            {
+              "method": "GET",
+              "resource": "models/ukmo.nc",
+              "status": 200,
+              "bytes": 314912,
+              "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+              "seconds": 0.0010272499999928186,
+              "timestamp_unix": 1791467266.7316802
+            },
+            {
+              "method": "GET",
+              "resource": "observations/chirps-monthly-pre2016.nc",
+              "status": 200,
+              "bytes": 3001776,
+              "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+              "seconds": 0.008899041999939072,
+              "timestamp_unix": 1791467266.7416697
+            },
+            {
+              "method": "GET",
+              "resource": "provenance.json",
+              "status": 200,
+              "bytes": 27656,
+              "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+              "seconds": 0.0004079580000961869,
+              "timestamp_unix": 1791467266.7465348
+            }
+          ],
+          "bytes": 4415738,
+          "seconds": 0.016899959000056697,
+          "retrieved_resources": [
+            "catalog.json",
+            "models/cmcc.nc",
+            "models/ecmwf.nc",
+            "models/meteofrance.nc",
+            "models/ukmo.nc",
+            "observations/chirps-monthly-pre2016.nc",
+            "provenance.json"
+          ],
+          "provider_download_bytes": 0,
+          "live_provider": false
+        },
+        "state": "pass"
+      },
+      "static_imports": [],
+      "tool_use_review": {
+        "system": "mam-luna-required-accord-context-budget",
+        "assigned_condition": "required_native_accord",
+        "assigned_condition_retained": true,
+        "template_fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+        "review_status": "reviewed_frozen_shared_budget_diagnostic",
+        "run_status": "token_limit",
+        "source_evidence": {
+          "run.json": {
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/run.json",
+            "sha256": "f230b9b2c15a3c6b909fa6b0f2a02f009719175f2b54f4b0ad962886ac4ea631"
+          },
+          "assessment.json": {
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/assessment.json",
+            "sha256": "090dab411021c74b355cb80d78d58420194698fff1c504d01418fcab100e4b8f"
+          },
+          "artifacts.json": {
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/artifacts.json",
+            "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+          },
+          "system.json": {
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/system.json",
+            "sha256": "0c05c14b84434abae940f3d559fbee151f3fa43dcc7a1c032d77c1c310869478"
+          },
+          "request.json": {
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/request.json",
+            "sha256": "bdfe0d7855d521511a3d513e6726771cf39f2e5859cedc89c5f31713e753efc0"
+          },
+          "controller/adapter-result.json": {
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/controller/adapter-result.json",
+            "sha256": "fe6773fb0eef4fb0f8f9a7415f7c7ecf5d30c34a5ae1deccb05d0594fc01ac06"
+          },
+          "logs/events.jsonl": {
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl",
+            "sha256": "a23ec02c341c1a8932f5d8f4d44d99fdd4353f8f7dbe30b6e8b7e98fc91a5546"
+          },
+          "system/adapter.py": {
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/system/adapter.py",
+            "sha256": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53"
+          }
+        },
+        "frozen_submission_files": 0,
+        "code_pointers": [
+          {
+            "command_number": 1,
+            "event_id": "exec-4e4425c2-6f78-41b4-b73e-88768a78ae92",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:1",
+            "command_sha256": "f17a59973d7e833c8bda26f839120c466876f0dab108775479e21f1c8adaa21b",
+            "command": "ls -la /work/inputs && cat /work/inputs/acquisition.json && echo '\n--- instance ---' && cat /work/inputs/instance.json && echo '\n--- skill acmaddl ---' && cat /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md && echo '\n--- skill africas2s ---' && cat /opt/accord-current/docs/africas2s/skills/africas2s/SKILL.md",
+            "exit_code": 0,
+            "stdout_chars": 24000,
+            "stdout_truncated": true
+          },
+          {
+            "command_number": 2,
+            "event_id": "exec-02902ad7-2454-42ed-af72-b340b5d7848a",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:4",
+            "command_sha256": "609c5ce516c299fad89163aad337e5415776dd6eacc632fbc3d86fd2e67b9611",
+            "command": "cat /work/inputs/acquisition.json; echo; cat /work/inputs/instance.json; python - <<'PY'\nimport inspect, acmaddl, africas2s\nprint('acmaddl',acmaddl.__file__)\nprint('africas2s',africas2s.__file__)\nPY",
+            "exit_code": 0,
+            "stdout_chars": 930,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 3,
+            "event_id": "exec-81b182fa-b808-44aa-bc5f-d64cad5d318b",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:7",
+            "command_sha256": "e90a17e6bce520768cd02bc16863f6afe55163cca1356207aff62485c34997de",
+            "command": "sed -n '1,180p' /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md; python - <<'PY'\nimport requests\nu='http://weather-source:8000/catalog.json'; r=requests.get(u); print(r.status_code, r.text[:5000])\nPY",
+            "exit_code": 0,
+            "stdout_chars": 14313,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 4,
+            "event_id": "exec-33c06abe-195d-4894-8808-98036c4311cf",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:10",
+            "command_sha256": "d38d0c1e051e82ff555f6a3ed8197ff92d55b7fb21a4f4c3f2c67ecd7ffd2a42",
+            "command": "mkdir -p /work/state /work/submission /tmp/source; python - <<'PY'\nimport requests,json,hashlib,pathlib\nbase='http://weather-source:8000'; c=requests.get(base+'/catalog.json').json()\nfor x in c['resources']:\n r=requests.get(base+'/'+x['path']); print(x['path'],r.status_code,len(r.content),hashlib.sha256(r.content).hexdigest()==x['sha256']); p=pathlib.Path('/tmp/source')/x['path'];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(r.content)\nPY\n",
+            "exit_code": 0,
+            "stdout_chars": 219,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 5,
+            "event_id": "exec-7a5b26f7-179e-407d-9f85-18c9a3b0d347",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:13",
+            "command_sha256": "3f23c635fce550e53385d7a649e3d728aa1b1c4a0033b0f4e985206b0a8f1e9f",
+            "command": "python - <<'PY'\nimport xarray as xr,glob,json\nfor f in glob.glob('/tmp/source/**/*.nc',recursive=True):\n ds=xr.open_dataset(f);print('\\n',f,ds);print(ds.attrs); \n for v in ds.data_vars: print(v,ds[v].attrs)\nPY",
+            "exit_code": 0,
+            "stdout_chars": 12113,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 6,
+            "event_id": "exec-bc707af8-399b-46d9-8a9e-b055315df3a3",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:16",
+            "command_sha256": "ba89af2fb9ab73939174750a6f34225609a80a0692bb4c6eb156a192cc22cf3b",
+            "command": "python - <<'PY'\nimport acmaddl,inspect\nprint([x for x in dir(acmaddl) if 'normal' in x.lower()]);\nimport pkgutil\nprint([m.name for m in pkgutil.iter_modules(acmaddl.__path__)])\nPY\n",
+            "exit_code": 0,
+            "stdout_chars": 181,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 7,
+            "event_id": "exec-b58d33bb-90e9-4b94-aeac-b9d1e79a61ae",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:19",
+            "command_sha256": "ffa80abf3a4342b25b65ec659b80ca255e4976239f71e778167cd5f9f3ba694c",
+            "command": "python - <<'PY'\nimport acmaddl.normalize as n,inspect\nprint(n.__file__);print([x for x in dir(n) if not x.startswith('_')]);\nfor x in ['normalize_forecast','normalize','normalize_dataset','prepare']:\n if hasattr(n,x): print(x,inspect.signature(getattr(n,x)),inspect.getsource(getattr(n,x))[:2000])\nPY\n",
+            "exit_code": 0,
+            "stdout_chars": 2316,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 8,
+            "event_id": "exec-fa75c67d-9317-49a8-aec0-adfd3dc8be06",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:22",
+            "command_sha256": "cdebbced2dfb07dd1a595c2397f320e49c2b5ea1c7cf60151d9c57365cbe6c3b",
+            "command": "python - <<'PY'\nimport inspect,acmaddl.normalize as n\ns=inspect.getsource(n.normalize); print(s)\nPY",
+            "exit_code": 0,
+            "stdout_chars": 8117,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 9,
+            "event_id": "exec-a831602d-032b-4c77-a479-2efe5949969d",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:25",
+            "command_sha256": "4cbc84cc2b2bee2fca222d342c4fb992e4c94223c3406d79ee1f1aa8e58daa2c",
+            "command": "python - <<'PY'\nimport acmaddl.normalize as n\nprint(n._CONVERSIONS.keys());print(n._COORD_RENAMES)\nimport africas2s,inspect\nprint(inspect.signature(africas2s.calibrate)); print(inspect.getsource(africas2s.calibrate)[:3000])\nPY",
+            "exit_code": 0,
+            "stdout_chars": 3795,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 10,
+            "event_id": "exec-7665e408-1153-408e-8af6-0c9b8a90144d",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:28",
+            "command_sha256": "fed544f562676d8c56146d5165849cb4c7931d3adeaa026e34d8d309476507c6",
+            "command": "python - <<'PY'\nimport json\np=json.load(open('/tmp/source/provenance.json')); print(type(p));print(str(p)[:7000])\nPY",
+            "exit_code": 0,
+            "stdout_chars": 7016,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 11,
+            "event_id": "exec-7cbded1a-657c-4557-bc77-40ff21c93a37",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:31",
+            "command_sha256": "b3f4fb5bd1af8f71a66776b3487cade65c56e09ccbf8c7df9a21155644994611",
+            "command": "python - <<'PY'\nimport africas2s,inspect\nfrom africas2s.calibrators import ereg\nprint(ereg,inspect.signature(ereg));print(inspect.getsource(ereg)[:5000])\nPY",
+            "exit_code": 1,
+            "stdout_chars": 0,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 12,
+            "event_id": "exec-b8b4e421-1cd6-4b80-8097-fd7bdb3e1a87",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:34",
+            "command_sha256": "1bfe45901cff6df6e7b08f107859c80a2f923ad081d901182c86271922ff834c",
+            "command": "python - <<'PY'\nimport africas2s,os\nprint(africas2s.__path__)\nPY\ngrep -R \"variance.*wilks\\|class.*Ereg\\|def ereg\\|eregister\" -n /usr/local/lib/python3.12/site-packages/africas2s | head -25",
+            "exit_code": 0,
+            "stdout_chars": 933,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 13,
+            "event_id": "exec-2457363f-0c1b-4109-9478-6734d34667a1",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:37",
+            "command_sha256": "dbb3370722df386a1c0907f968770f4e994c070fe5e56d8e3e06b43b72786676",
+            "command": "sed -n '1,240p' /usr/local/lib/python3.12/site-packages/africas2s/methods/ensemble_regression.py; sed -n '480,620p' /usr/local/lib/python3.12/site-packages/africas2s/calibrate.py",
+            "exit_code": 0,
+            "stdout_chars": 17954,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 14,
+            "event_id": "exec-6f6271dd-c035-443c-8104-46d1569b16df",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:40",
+            "command_sha256": "c00ba86dc1e11e9263f19667e4f8c4528a0e78608f04c6d00f94524adce2cf2d",
+            "command": "grep -n \"def predict_tercile\\|quantile\" /usr/local/lib/python3.12/site-packages/africas2s/methods/ensemble_regression.py | head -20",
+            "exit_code": 0,
+            "stdout_chars": 413,
+            "stdout_truncated": false
+          },
+          {
+            "command_number": 15,
+            "event_id": "exec-a7d873de-440e-49f4-ace4-0a4517915ca9",
+            "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:43",
+            "command_sha256": "956cd857c3850d8916338eb266a2e5b448f3e11e6fb1759eb83504a51860e35c",
+            "command": "sed -n '250,395p' /usr/local/lib/python3.12/site-packages/africas2s/methods/ensemble_regression.py",
+            "exit_code": 0,
+            "stdout_chars": 6473,
+            "stdout_truncated": false
+          }
+        ],
+        "observed_callflow": [
+          {
+            "commands": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "operation": "Read descriptors/skills, download and hash-check six catalogue objects, inspect raw metadata. Initial combined skill output is truncated."
+          },
+          {
+            "commands": [
+              6,
+              7,
+              8,
+              9
+            ],
+            "operation": "Inspect acmadDL exports, normalization signature/source/conversion table and africaS2S calibration signature/source; no scientific helper execution."
+          },
+          {
+            "commands": [
+              10
+            ],
+            "operation": "Print source-provenance metadata."
+          },
+          {
+            "commands": [
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "operation": "Explore calibration internals; guessed africas2s.calibrators import fails, then search and print regression/variance/tercile source. No calibration execution."
+          },
+          {
+            "operation": "Stop at cumulative max_total_tokens checkpoint before implementation or submission."
+          }
+        ],
+        "native_tool_use": {
+          "acmaddl_normalize": "not_executed_introspection_only",
+          "africas2s_calibrate": "not_executed_introspection_only",
+          "returned_values_feed_submission": "absent_no_submitted_arrays",
+          "native_parameters_verified": null,
+          "native_parameter_checks": {
+            "float64_promotion": "not_observed",
+            "default_wilks": "not_invoked",
+            "loyo_fold_refits": "not_invoked",
+            "equal_model_probability_combination": "not_materialized"
+          },
+          "native_parameter_detail": "No executed scientific API call has parameters or returned values to audit. Reading implementations is not substantive native use."
+        },
+        "condition_compliance": {
+          "state": "not_satisfied",
+          "reason": "Neither required native transformation ran before the budget stop. Keep the attempt assigned to the required-tool arm; imports and introspection do not satisfy it."
+        },
+        "scientific_completion": {
+          "original_computed_outcome": "fail",
+          "original_outcome": "fail",
+          "task_completion_evaluable": true,
+          "task_completion_state": "fail",
+          "forecast_science_evaluable": false,
+          "reason": "No code/report/results were submitted. This is an observed task-completion failure under the declared shared budgets, not a demonstrated scientific method error or frontier capability boundary."
+        },
+        "usage": {
+          "input_tokens": 372446,
+          "cached_input_tokens": 326144,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1842,
+          "reasoning_output_tokens": 467,
+          "total_tokens": 374288
+        },
+        "usage_source": "adapter_reported",
+        "seconds": 54.315887417062186,
+        "tool_calls": 15,
+        "budgets": {
+          "max_seconds": 900,
+          "max_tool_calls": 20,
+          "command_seconds": 120,
+          "max_total_tokens": 350000,
+          "max_uncached_and_output_tokens": 100000,
+          "max_output_tokens": 20000
+        },
+        "budget_accounting": {
+          "stopping_limit": "max_total_tokens",
+          "cumulative_provider_tokens": 374288,
+          "cached_input_tokens_included": 326144,
+          "cached_fraction_of_cumulative_total": 0.8713717778822725,
+          "uncached_input_plus_output_tokens": 48144,
+          "uncached_budget_remaining": 51856,
+          "output_budget_remaining": 18158,
+          "tool_calls_remaining": 5,
+          "wall_seconds_remaining": 845.6841125829378,
+          "detail": "Cached input dominates the cumulative total ceiling. The unique-input/output, output-only, tool-call and wall-time caps all retain headroom. Checkpoint evaluation occurs after a model response, so total usage can cross the cap."
+        },
+        "navigation_findings": {
+          "dedicated_api_inspection_commands": [
+            6,
+            7,
+            8,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "dedicated_api_inspection_command_count": 9,
+          "dedicated_api_inspection_stdout_chars": 40182,
+          "all_stdout_chars": 98773,
+          "failed_private_module_guess_command": 11,
+          "first_combined_required_skill_read_truncated": true,
+          "interpretation": "Evidence supports documentation/API-navigation overhead and budget noncompletion. It does not show an attempted normalization/calibration calculation failing."
+        },
+        "review_actions": {
+          "read_only_attempt_review": true,
+          "scientific_binary_io": false,
+          "model_calls": 0,
+          "attempt_modified": false,
+          "automatic_retry_requested": false
+        }
+      },
+      "judge": {}
+    }
+  ]
+}

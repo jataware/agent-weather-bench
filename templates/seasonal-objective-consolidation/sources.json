@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/templates/seasonal-objective-consolidation",
+  "files": [
+    {
+      "file": "provider/catalog.json",
+      "sha256": "6bdf9781019aafd29fde70c975274eb7fb1a5ce4500f64ae43b1431b87edcef6",
+      "bytes": 786,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/forecast-precip.nc",
+      "sha256": "17f3dd0ca263d667d73f8ba82ac94b10f3336915571a3c736c9e4899ac159ba7",
+      "bytes": 321820,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/forecast-sst.nc",
+      "sha256": "3683486b689f0c6a6523c481fb15f11f0991d215e0dc5d9204e176b9485cbaf6",
+      "bytes": 321820,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/observed-sst.nc",
+      "sha256": "29d46edeed09b857fa34be5c0166e6fbccf8a37d766d446801aca532d33be212",
+      "bytes": 321820,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/provenance.json",
+      "sha256": "3bb6dc2713dd36df9b41e680fb1d1e13f78cbb51f5d6e5a9bb0ebc2fb9ce60aa",
+      "bytes": 818,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/source-manifest.json",
+      "sha256": "3ea072da81dc2ad6ba4197e53ff2e05d6026472a508179e3400a30c8e7cdb6a7",
+      "bytes": 502,
+      "visibility": "provider"
+    }
+  ],
+  "lineage": {
+    "source": "Real local ACMAD forecast-replication ASO2026 calibrated component MMEs",
+    "data_is_synthetic": false,
+    "scope": "Final objective consolidation only; no refitting/verification/consensus-map replication",
+    "input_units": "percent",
+    "inherited_masks": {
+      "skill_threshold": 0.3,
+      "dry_mm": 50
+    },
+    "no_new_mask": "Source component masks are inherited, not reimplemented",
+    "source_manifest_sha256": "3ea072da81dc2ad6ba4197e53ff2e05d6026472a508179e3400a30c8e7cdb6a7",
+    "method_snapshot": "archive/evaluator-v1-2026-10/tasks/acmad-objective/source-material/ACMAD_forecast_replication/OPEN_QUESTIONS.md.txt",
+    "interpretation": "Curator/local centre-replication component products; not asserted byte-original official ACMAD operational outputs. Redistribution/scientific approval pending."
+  }
+}

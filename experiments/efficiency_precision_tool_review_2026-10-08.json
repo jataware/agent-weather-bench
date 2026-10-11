@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "scope": "Guided precision phase: substantive native use distinct from driver termination and scientific validity.",
+  "runs": {
+    "20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a": {
+      "system": "efficiency-luna-accord-guided-precision",
+      "assigned_arm": "guided_accord",
+      "assigned_condition_retained": true,
+      "review_status": "frozen source and original execution traces reviewed",
+      "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+      "evidence": {
+        "run.json": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/run.json",
+          "sha256": "51dcc7e2b769c7a10312470b3651b3ad1ab299a4b0705497a450e79ea5394b97"
+        },
+        "assessment.json": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/assessment.json",
+          "sha256": "3157e7180ec4b3616c7f90a02f6eab9a90b2d866e8faecaa5f81eeaa35952d82"
+        },
+        "artifacts.json": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/artifacts.json",
+          "sha256": "be796334bc9a8b23d6433040d6a41045a5129829907e6942f1cc2eddca9795d7"
+        },
+        "system.json": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/system.json",
+          "sha256": "500c55791fb6d11fd464b81165adbb9bf473b2f7f8738958cbfd98f71ac28315"
+        },
+        "request.json": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/request.json",
+          "sha256": "d7edc05264d03a165c54990918e13ecf113f75516e259ce9fa10e8dfefe3b869"
+        },
+        "logs/events.jsonl": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/logs/events.jsonl",
+          "sha256": "f6d3255370fd5ef9f35827835697afee96ca0d58da3ee570b54bce78803ee53f"
+        },
+        "frozen/run.py": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/run.py",
+          "sha256": "02078d26f25d5a40245e018251fa00d99d1e2cb1dd4bc62ac96430ee5a0c659f"
+        },
+        "frozen/report.md": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/report.md",
+          "sha256": "9a9d19cdd2feccf5669518c39a099329a0e050d806b361ccc2f3491808a17738"
+        },
+        "frozen/answer.json": {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/answer.json",
+          "sha256": "21bafe000e5f86f19e17ea73fd146e59008322f03174d9f93551c5e900df188b"
+        }
+      },
+      "condition_compliance": {
+        "state": "pass",
+        "reason": "Native normalized member fields feed submitted seasonal means and native calibration; returned per-model/combined probabilities are submitted directly and feed scores."
+      },
+      "both_initial_arms_runtime_and_grading_clearance": true,
+      "no_known_grader_runtime_issue": true,
+      "code_pointers": [
+        {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/frozen/run.py",
+          "lines": [
+            25,
+            29,
+            30,
+            32,
+            34,
+            39,
+            43,
+            57,
+            58,
+            60,
+            62,
+            63,
+            64,
+            68,
+            69,
+            71,
+            77,
+            78,
+            83
+          ]
+        },
+        {
+          "path": "var/template-runs/20261008T143223-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-precision-654f9a/logs/events.jsonl",
+          "lines": [
+            13,
+            14,
+            17,
+            18,
+            20,
+            21,
+            23,
+            24,
+            26,
+            27,
+            38,
+            39
+          ]
+        }
+      ],
+      "callflow": [
+        "Fresh catalogue and resources fetched/hash-verified on each invocation (13\u201321).",
+        "All four native rainfall-rate fields promoted before normalize, with MAM leads and actual-calendar normalization (22\u201335).",
+        "CHIRPS promoted before monthly sums, then seasonal spatial interpolation (36\u201347).",
+        "Returned member fields split into training/new pairs; their member means form submitted model predictors (57\u201362,78,80).",
+        "Native default-Wilks ereg LOYO and full-training forecast calibration return per-model/combined probabilities (63\u201371).",
+        "Returned probabilities directly form required arrays and RPS/RPSS; no independently substituted forecast probabilities (77\u201383)."
+      ],
+      "native_parameters": {
+        "normalize": {
+          "dtype_before_call": "float64",
+          "native_variable": "tprate",
+          "native_units": "m s-1",
+          "target_rate_units": "mm/day",
+          "leadtime_month": [
+            2,
+            3,
+            4
+          ],
+          "year_index": true
+        },
+        "calibrate": {
+          "method": "ereg",
+          "predictive_variance": "public default Wilks; no override",
+          "cv": "loyo",
+          "forecast_year": 2016,
+          "return_components": true,
+          "combination": "native equal-model",
+          "members": [
+            25,
+            40,
+            28,
+            31
+          ]
+        }
+      },
+      "package_call_counts": {
+        "counting_method": "Code-path inference from original execute traces and frozen source, not added dynamic counters; internal regression fits excluded.",
+        "per_successful_own_command": {
+          "normalize": 4,
+          "calibrate": 2
+        },
+        "synthetic_agent_smoke": {
+          "normalize": 1,
+          "calibrate": 2
+        },
+        "agent_exploratory_realdata": {
+          "normalize": 4,
+          "calibrate": 0
+        },
+        "agent_submitted_script": {
+          "invocations": 5,
+          "normalize": 20,
+          "calibrate": 10,
+          "explanation": "Five invocations all reach normalization/calibration; first two subsequently fail on forecast year dimension and RPS one-hot axis, final three complete."
+        },
+        "agent_realdata_total": {
+          "normalize": 24,
+          "calibrate": 10
+        },
+        "controller_original_replays": {
+          "invocations": 3,
+          "normalize": 12,
+          "calibrate": 6
+        }
+      },
+      "scientific_completion": {
+        "driver_status": "token_limit",
+        "computed": "pass",
+        "overall": "pass",
+        "replay": "pass",
+        "all_computed_checks_pass": true,
+        "supplementary_prose": "unresolved; no judge run"
+      },
+      "stopping_loop": {
+        "reason": "Cumulative provider tokens reached352811 after the final optional dtype/coordinate validation command.",
+        "completion_before_stop": true,
+        "execution_debugging": [
+          "Missing forecast year dimension in native forecast result required expand_dims before transpose.",
+          "General RPS one-hot axis ordering error corrected.",
+          "Optional scalar .item() failed on a lazy Dask array; original forecast arrays already existed."
+        ],
+        "last_successful_own_command_trace_lines": [
+          38,
+          39
+        ],
+        "last_optional_check_trace_lines": [
+          41,
+          42
+        ],
+        "interpretation": "Budget stop retained independently from scientific validity. Native calculations and required envelope completed before stop; no additional inference or retry."
+      },
+      "review_actions": {
+        "model_calls": 0,
+        "scientific_binary_io": false,
+        "attempt_modified": false,
+        "instrumented_reruns": 0
+      }
+    }
+  }
+}

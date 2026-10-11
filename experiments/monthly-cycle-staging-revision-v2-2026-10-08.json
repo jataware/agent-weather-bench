@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "template": "monthly-cycle-calibration",
+  "before_fingerprint": "21656220f6090345f4defaf9fe775c7272ef5523e85d1db2e1bfa3d011868255",
+  "after_fingerprint": "45b7ffbdf625119333a5a2510ae51221437ce1d3d61b4f0922d66179a44b592d",
+  "spec_version": 1,
+  "revision_scope": "Prelaunch actor-staging refinement; zero model attempts under either draft contract.",
+  "changed_files": [
+    {
+      "path": "templates/monthly-cycle-calibration/reference.py",
+      "before_sha256": "4c46700c157458c6b114148a987daa85e909a25d1bd9c1d5a96b5dc0fb772660",
+      "after_sha256": "d48ea146674d32654f1b56b4b35578c0796ff5ff24219dc7dea7bb20e34f80ac"
+    },
+    {
+      "path": "templates/monthly-cycle-calibration/literature-notes.md",
+      "before_sha256": "a994b617eda3545e725978fd776019441ed4907543d4285853d8e9a5edf5c7c2",
+      "after_sha256": "0c9921c690fca18331f38ec90aaa594cfb3bee0de6a248fd750344dd7e03a049"
+    }
+  ],
+  "removed_actor_input": "africas2s-smoothed-method.py.txt",
+  "staged_inputs": {
+    "algorithm.md": {
+      "sha256": "8147ffbda31c026b9d3ba1a1382d31474df3f83f71a11e82966eb5d57fbe10d2",
+      "bytes": 3955
+    },
+    "candidates.json": {
+      "sha256": "d8a24265fdb2b58d4c50508971fe67ae7f0ef47daf2fcc794c94de36553c4fb8",
+      "bytes": 246
+    },
+    "instance.json": {
+      "sha256": "b327a28d562cf59169da09d9a0d9658de8ad87c638ce562181c6eda182c3bd6e",
+      "bytes": 46
+    },
+    "literature-notes.md": {
+      "sha256": "0c9921c690fca18331f38ec90aaa594cfb3bee0de6a248fd750344dd7e03a049",
+      "bytes": 1809
+    },
+    "predictors.nc": {
+      "sha256": "2ae904c759f57f71caaa34fc18b5a607f5b1eb7d9809cff22d95f2e7c9c65346",
+      "bytes": 14584
+    },
+    "source-manifest.json": {
+      "sha256": "c1e6d9d7c8318e56e5a9621dc9740251d5d3516453312ee7779870c1f0996082",
+      "bytes": 123
+    },
+    "source-record.yaml": {
+      "sha256": "2c56564e02f01e07b6d305b05f4e57f4a995e558f6acc90ac4035390496d4d90",
+      "bytes": 2208
+    },
+    "targets.nc": {
+      "sha256": "21aec9fac551e94392efa1c4401471d7e98be5f29c65d5b1bfa826b7de0872b7",
+      "bytes": 17973
+    }
+  },
+  "private_snapshot_unchanged": true,
+  "scientific_implementation_unchanged": true,
+  "netcdf_inputs_unchanged": true,
+  "original_archive_unchanged": true,
+  "prior_evidence_archive": "var/review/monthly-cycle-staging-v1-20261008",
+  "prior_evidence_hashes": {
+    "preserved-science.json": "4f65f304abfc5d91cc37986e2777bc6afa0d71f9cc78e1231c0f5d1ef42208a6",
+    "docker-assessment.json": "ef9af6437cf8f834038ee04c61160d6b6c1846bb20b9225864f9102da4235b01",
+    "certification.json": "ccafdd5c6b7476ea3a20839317725d8d0004789b5a391d52903847e6006d2574"
+  },
+  "model_attempts_launched_before_revision": 0,
+  "validation_status": "ready; automatic1\u20134 and freshDocker knowncorrect pass",
+  "certificate": {
+    "path": "templates/monthly-cycle-calibration/certification.json",
+    "sha256_at_validation": "48ce2fcfaba7e1efd23c82c6ebfad598a9500fea66fc2c2c3d9664f8c77e9fef"
+  },
+  "docker_proof": {
+    "path": "var/review/monthly-cycle-docker-correct-v2-20261008/assessment.json",
+    "sha256": "2301077f5adbf0e1f0e7c539352230fad5b65b8a470730b878b253dfd2602776"
+  },
+  "fresh_preserved_science": {
+    "path": "experiments/monthly-cycle-preserved-science-v2-2026-10-08.json",
+    "sha256": "16214447e70dd8ddea998f948829ec31af0a7c15f772d77b7d025ab24d1cc895"
+  },
+  "scientific_approval": "pending",
+  "trial_attempts": "pending",
+  "model_calls": 0
+}

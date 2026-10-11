@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "scope": "Required ACCORD arm; native dataflow and condition compliance are separate from scientific completion.",
+  "runs": {
+    "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42": {
+      "system": "mam-luna-required-accord",
+      "assigned_condition": "required_native_accord",
+      "assigned_condition_retained": true,
+      "template_fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "review_status": "not_evaluable_pre_driver_infrastructure_error",
+      "run_status": "execution_error",
+      "reason": "ValueError: Missing controller environment variable: CODEX_BINARY",
+      "source_evidence": {
+        "run.json": {
+          "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/run.json",
+          "sha256": "eb96975fd9fe6c4a40b8c4a91fc4422f973449f445dc3997f501c8ff9799f1a5"
+        },
+        "assessment.json": {
+          "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/assessment.json",
+          "sha256": "34707484f83c49bc61376bcd5d360af7a67012147e505c92021996790f280be7"
+        },
+        "artifacts.json": {
+          "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/artifacts.json",
+          "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+        },
+        "system.json": {
+          "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/system.json",
+          "sha256": "42c04b1ca853784fd47608da0f26581219e4a69f3149e85fb3108462e4392582"
+        },
+        "request.json": {
+          "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/request.json",
+          "sha256": "45cac889c16af6bfa16cb1ddf28fcb73c334a8eac308c2cc6c4c0519321a8c56"
+        },
+        "controller/adapter-result.json": {
+          "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/controller/adapter-result.json",
+          "sha256": "1107c6b10e495d4af74320bace07adfe73c0bacac5082670b09607d15b1a1833"
+        },
+        "system/adapter.py": {
+          "path": "var/template-runs/20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42/system/adapter.py",
+          "sha256": "0617da7b243123b50532e79a1fe8ee39c7c707dc3f5dcb746105cf18769bdbaa"
+        }
+      },
+      "frozen_submission_files": 0,
+      "code_pointers": [],
+      "observed_callflow": [],
+      "native_tool_use": {
+        "acmaddl_normalize": "not_observed",
+        "africas2s_calibrate": "not_observed",
+        "returned_values_feed_submission": "not_evaluable"
+      },
+      "condition_compliance": {
+        "state": "not_evaluable",
+        "reason": "The command driver raises while resolving required controller environment, before launching its adapter subprocess; the frozen submission is empty. This is not evidence of agent noncompliance."
+      },
+      "scientific_completion": {
+        "original_computed_outcome": "fail",
+        "original_outcome": "fail",
+        "model_scientific_performance_evaluable": false,
+        "reason": "No agent submission exists; preserve the original infrastructure-triggered fail separately from scientific performance."
+      },
+      "review_actions": {
+        "read_only_attempt_review": true,
+        "scientific_binary_io": false,
+        "model_calls": 0,
+        "attempt_modified": false
+      }
+    },
+    "20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929": {
+      "system": "mam-luna-required-accord",
+      "assigned_condition": "required_native_accord",
+      "assigned_condition_retained": true,
+      "template_fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "review_status": "reviewed_frozen_budget_stopped_attempt",
+      "run_status": "token_limit",
+      "source_evidence": {
+        "run.json": {
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/run.json",
+          "sha256": "d861451c7d45103ed5866fdf35fe2de116a2686f2812cd5fdd3a8b02d8964e9f"
+        },
+        "assessment.json": {
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/assessment.json",
+          "sha256": "266601534ef5c0b004961d3ca16ae60d4fd225d51d523cd3db136a0ea1855b6d"
+        },
+        "artifacts.json": {
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/artifacts.json",
+          "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+        },
+        "system.json": {
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/system.json",
+          "sha256": "42c04b1ca853784fd47608da0f26581219e4a69f3149e85fb3108462e4392582"
+        },
+        "request.json": {
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/request.json",
+          "sha256": "45cac889c16af6bfa16cb1ddf28fcb73c334a8eac308c2cc6c4c0519321a8c56"
+        },
+        "controller/adapter-result.json": {
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/controller/adapter-result.json",
+          "sha256": "d00d20d279175a91348bfe22ae0ff66062ea61884c1b7f019af17adb9a9e158a"
+        },
+        "logs/events.jsonl": {
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl",
+          "sha256": "4a939be25eabce2cc194570dc0ec5ef74877dfc4ce44ba14671e3e030e7b1b3b"
+        },
+        "system/adapter.py": {
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/system/adapter.py",
+          "sha256": "0617da7b243123b50532e79a1fe8ee39c7c707dc3f5dcb746105cf18769bdbaa"
+        }
+      },
+      "frozen_submission_files": 0,
+      "code_pointers": [
+        {
+          "event_id": "exec-12b3a97c-6d3f-489d-af8c-f4845350d110",
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:1",
+          "command_sha256": "a6d0724c0fd7ac1e09af51a07e163fe9863b796f713f1de2c8c3219578e8324f",
+          "command": "ls -la /work/inputs; cat /work/inputs/acquisition.json; ls -la /opt/accord-current/docs/acmadDL/skills/acmaddl /opt/accord-current/docs/africas2s/skills/africas2s"
+        },
+        {
+          "event_id": "exec-c0327247-ffda-4aac-8626-59479bdd753e",
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:4",
+          "command_sha256": "12c8dfb8694faab8472174fffafeb275c1926bd95f3461e7e3d9d52394d7ab61",
+          "command": "cat /work/inputs/instance.json; cat /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md; cat /opt/accord-current/docs/africas2s/skills/africas2s/SKILL.md"
+        },
+        {
+          "event_id": "exec-516ebfdd-1418-4bde-b701-69af29c1f836",
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:7",
+          "command_sha256": "c7c28c68b9fb3dd7d9b8db54456b7785ee233a3cf0f89a720c077720552e0744",
+          "command": "cat /work/inputs/instance.json; grep -n -E 'normalize|def calibrate|ereg|variance' /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md /opt/accord-current/docs/africas2s/skills/africas2s/references/api.md"
+        },
+        {
+          "event_id": "exec-09e8413e-e70e-4ce9-bd68-07ebbb74c1af",
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:10",
+          "command_sha256": "fb15320494358de7d2caadd41c19d490ad87200bd40615b21b6cb24bb3f482cb",
+          "command": "python - <<'PY'\nimport urllib.request\nu='http://weather-source:8000/catalog.json'\nr=urllib.request.urlopen(u); print(r.status,r.read().decode()[:10000])\nPY"
+        },
+        {
+          "event_id": "exec-a8406c03-7aeb-47bf-a368-954b32b23a3a",
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:13",
+          "command_sha256": "6ed279df7c395dd9621fc18b4fd96e1c8325952e5a9450935c216ec354aad30b",
+          "command": "mkdir -p /work/state/raw /work/submission && python - <<'PY'\nimport urllib.request,json,hashlib,pathlib\nbase='http://weather-source:8000/'\nc=json.load(urllib.request.urlopen(base+'catalog.json'))\nfor x in c['resources']:\n d=urllib.request.urlopen(base+x['path']).read(); assert len(d)==x['bytes'] and hashlib.sha256(d).hexdigest()==x['sha256']\n p=pathlib.Path('/work/state/raw')/x['path'];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(d);print(x['path'],len(d))\nPY\npython - <<'PY'\nimport xarray as xr,glob\nfor p in glob.glob('/work/state/raw/**/*.nc',recursive=True):\n d=xr.open_dataset(p);print('\\n',p,d)\n for k,v in d.data_vars.items(): print(k,v.dims,v.shape,v.dtype,v.attrs)\nPY"
+        },
+        {
+          "event_id": "exec-1bd0642a-996c-4471-a233-0d4f77d498d9",
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:16",
+          "command_sha256": "e2c7c19b5160b3549d18255fe8f575082f19f7c0f01010061eea707afab0514d",
+          "command": "python - <<'PY'\nimport acmaddl,inspect\nprint(acmaddl,dir(acmaddl))\nimport acmaddl.normalize as n\nprint('normalize',dir(n))\nfor x in dir(n):\n o=getattr(n,x)\n if callable(o):\n  try: print(x,inspect.signature(o))\n  except: pass\nimport africas2s as a,inspect\nprint('calibrate',inspect.signature(a.calibrate))\nPY"
+        },
+        {
+          "event_id": "exec-6f5ebd57-acf2-4985-b1fd-1b8787bce663",
+          "path": "var/template-runs/20261008T134312-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-a0a929/logs/events.jsonl:19",
+          "command_sha256": "0eb73a3060abebda033c3fdd0f1f211baa048eb9f2208b3683f3b70f455dba43",
+          "command": "python - <<'PY'\nimport acmaddl.normalize as n,inspect\nprint(inspect.getsource(n.normalize))\nPY\nsed -n '47,59p' /opt/accord-current/docs/africas2s/skills/africas2s/references/api.md"
+        }
+      ],
+      "observed_callflow": [
+        {
+          "step": 1,
+          "events": [
+            1,
+            4,
+            7
+          ],
+          "operation": "Inspect descriptor, instance and tool documentation; combined skill-document output was truncated."
+        },
+        {
+          "step": 2,
+          "events": [
+            10,
+            13
+          ],
+          "operation": "Fetch catalogue; acquire all six listed objects to /work/state/raw; check byte counts and SHA256; inspect raw NetCDF metadata."
+        },
+        {
+          "step": 3,
+          "events": [
+            16
+          ],
+          "operation": "Import acmaddl/africas2s and inspect exported functions/signatures; no normalization or calibration execution."
+        },
+        {
+          "step": 4,
+          "events": [
+            19
+          ],
+          "operation": "Print acmaddl.normalize source and calibration API documentation; no normalization or calibration execution."
+        },
+        {
+          "step": 5,
+          "events": [
+            22
+          ],
+          "operation": "Adapter checkpoint stops at cumulative token budget before implementation or submission."
+        }
+      ],
+      "native_tool_use": {
+        "acmaddl_normalize": "not_executed_introspection_only",
+        "africas2s_calibrate": "not_executed_introspection_only",
+        "returned_values_feed_submission": "absent_no_submitted_arrays",
+        "native_parameters_verified": null,
+        "native_parameter_detail": "No executed call supplied method, variance, threshold or CV parameters; API/source inspection is not a forecast operation."
+      },
+      "condition_compliance": {
+        "state": "not_satisfied",
+        "reason": "The assigned attempt ended before either required transformation was executed. Imports and API/source inspection do not satisfy the substantive-use condition. Assignment remains required_native_accord."
+      },
+      "scientific_completion": {
+        "original_computed_outcome": "fail",
+        "original_outcome": "fail",
+        "task_completion_evaluable": true,
+        "task_completion_state": "fail",
+        "forecast_science_evaluable": false,
+        "reason": "The real model attempt hit its token checkpoint with an empty frozen submission. This demonstrates noncompletion under the assigned budget, not an identified scientific-method error or a frontier capability boundary."
+      },
+      "usage": {
+        "input_tokens": 103340,
+        "cached_input_tokens": 76288,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 978,
+        "reasoning_output_tokens": 204,
+        "total_tokens": 104318
+      },
+      "usage_source": "adapter_reported",
+      "seconds": 29.616429540910758,
+      "tool_calls": 7,
+      "budget_interpretation": {
+        "cumulative_provider_total_tokens": 104318,
+        "cached_input_tokens_included": 76288,
+        "noncached_input_plus_output_tokens": 28030,
+        "detail": "The configured 100000 cumulative-provider-token checkpoint counts cached input. The final response crossed the remaining checkpoint; 13 tool calls and most wall time remained."
+      },
+      "review_actions": {
+        "read_only_attempt_review": true,
+        "scientific_binary_io": false,
+        "model_calls": 0,
+        "attempt_modified": false
+      }
+    },
+    "20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4": {
+      "system": "mam-luna-required-accord-context-budget",
+      "assigned_condition": "required_native_accord",
+      "assigned_condition_retained": true,
+      "template_fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "review_status": "reviewed_frozen_shared_budget_diagnostic",
+      "run_status": "token_limit",
+      "source_evidence": {
+        "run.json": {
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/run.json",
+          "sha256": "f230b9b2c15a3c6b909fa6b0f2a02f009719175f2b54f4b0ad962886ac4ea631"
+        },
+        "assessment.json": {
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/assessment.json",
+          "sha256": "090dab411021c74b355cb80d78d58420194698fff1c504d01418fcab100e4b8f"
+        },
+        "artifacts.json": {
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/artifacts.json",
+          "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+        },
+        "system.json": {
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/system.json",
+          "sha256": "0c05c14b84434abae940f3d559fbee151f3fa43dcc7a1c032d77c1c310869478"
+        },
+        "request.json": {
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/request.json",
+          "sha256": "bdfe0d7855d521511a3d513e6726771cf39f2e5859cedc89c5f31713e753efc0"
+        },
+        "controller/adapter-result.json": {
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/controller/adapter-result.json",
+          "sha256": "fe6773fb0eef4fb0f8f9a7415f7c7ecf5d30c34a5ae1deccb05d0594fc01ac06"
+        },
+        "logs/events.jsonl": {
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl",
+          "sha256": "a23ec02c341c1a8932f5d8f4d44d99fdd4353f8f7dbe30b6e8b7e98fc91a5546"
+        },
+        "system/adapter.py": {
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/system/adapter.py",
+          "sha256": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53"
+        }
+      },
+      "frozen_submission_files": 0,
+      "code_pointers": [
+        {
+          "command_number": 1,
+          "event_id": "exec-4e4425c2-6f78-41b4-b73e-88768a78ae92",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:1",
+          "command_sha256": "f17a59973d7e833c8bda26f839120c466876f0dab108775479e21f1c8adaa21b",
+          "command": "ls -la /work/inputs && cat /work/inputs/acquisition.json && echo '\n--- instance ---' && cat /work/inputs/instance.json && echo '\n--- skill acmaddl ---' && cat /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md && echo '\n--- skill africas2s ---' && cat /opt/accord-current/docs/africas2s/skills/africas2s/SKILL.md",
+          "exit_code": 0,
+          "stdout_chars": 24000,
+          "stdout_truncated": true
+        },
+        {
+          "command_number": 2,
+          "event_id": "exec-02902ad7-2454-42ed-af72-b340b5d7848a",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:4",
+          "command_sha256": "609c5ce516c299fad89163aad337e5415776dd6eacc632fbc3d86fd2e67b9611",
+          "command": "cat /work/inputs/acquisition.json; echo; cat /work/inputs/instance.json; python - <<'PY'\nimport inspect, acmaddl, africas2s\nprint('acmaddl',acmaddl.__file__)\nprint('africas2s',africas2s.__file__)\nPY",
+          "exit_code": 0,
+          "stdout_chars": 930,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 3,
+          "event_id": "exec-81b182fa-b808-44aa-bc5f-d64cad5d318b",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:7",
+          "command_sha256": "e90a17e6bce520768cd02bc16863f6afe55163cca1356207aff62485c34997de",
+          "command": "sed -n '1,180p' /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md; python - <<'PY'\nimport requests\nu='http://weather-source:8000/catalog.json'; r=requests.get(u); print(r.status_code, r.text[:5000])\nPY",
+          "exit_code": 0,
+          "stdout_chars": 14313,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 4,
+          "event_id": "exec-33c06abe-195d-4894-8808-98036c4311cf",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:10",
+          "command_sha256": "d38d0c1e051e82ff555f6a3ed8197ff92d55b7fb21a4f4c3f2c67ecd7ffd2a42",
+          "command": "mkdir -p /work/state /work/submission /tmp/source; python - <<'PY'\nimport requests,json,hashlib,pathlib\nbase='http://weather-source:8000'; c=requests.get(base+'/catalog.json').json()\nfor x in c['resources']:\n r=requests.get(base+'/'+x['path']); print(x['path'],r.status_code,len(r.content),hashlib.sha256(r.content).hexdigest()==x['sha256']); p=pathlib.Path('/tmp/source')/x['path'];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(r.content)\nPY\n",
+          "exit_code": 0,
+          "stdout_chars": 219,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 5,
+          "event_id": "exec-7a5b26f7-179e-407d-9f85-18c9a3b0d347",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:13",
+          "command_sha256": "3f23c635fce550e53385d7a649e3d728aa1b1c4a0033b0f4e985206b0a8f1e9f",
+          "command": "python - <<'PY'\nimport xarray as xr,glob,json\nfor f in glob.glob('/tmp/source/**/*.nc',recursive=True):\n ds=xr.open_dataset(f);print('\\n',f,ds);print(ds.attrs); \n for v in ds.data_vars: print(v,ds[v].attrs)\nPY",
+          "exit_code": 0,
+          "stdout_chars": 12113,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 6,
+          "event_id": "exec-bc707af8-399b-46d9-8a9e-b055315df3a3",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:16",
+          "command_sha256": "ba89af2fb9ab73939174750a6f34225609a80a0692bb4c6eb156a192cc22cf3b",
+          "command": "python - <<'PY'\nimport acmaddl,inspect\nprint([x for x in dir(acmaddl) if 'normal' in x.lower()]);\nimport pkgutil\nprint([m.name for m in pkgutil.iter_modules(acmaddl.__path__)])\nPY\n",
+          "exit_code": 0,
+          "stdout_chars": 181,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 7,
+          "event_id": "exec-b58d33bb-90e9-4b94-aeac-b9d1e79a61ae",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:19",
+          "command_sha256": "ffa80abf3a4342b25b65ec659b80ca255e4976239f71e778167cd5f9f3ba694c",
+          "command": "python - <<'PY'\nimport acmaddl.normalize as n,inspect\nprint(n.__file__);print([x for x in dir(n) if not x.startswith('_')]);\nfor x in ['normalize_forecast','normalize','normalize_dataset','prepare']:\n if hasattr(n,x): print(x,inspect.signature(getattr(n,x)),inspect.getsource(getattr(n,x))[:2000])\nPY\n",
+          "exit_code": 0,
+          "stdout_chars": 2316,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 8,
+          "event_id": "exec-fa75c67d-9317-49a8-aec0-adfd3dc8be06",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:22",
+          "command_sha256": "cdebbced2dfb07dd1a595c2397f320e49c2b5ea1c7cf60151d9c57365cbe6c3b",
+          "command": "python - <<'PY'\nimport inspect,acmaddl.normalize as n\ns=inspect.getsource(n.normalize); print(s)\nPY",
+          "exit_code": 0,
+          "stdout_chars": 8117,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 9,
+          "event_id": "exec-a831602d-032b-4c77-a479-2efe5949969d",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:25",
+          "command_sha256": "4cbc84cc2b2bee2fca222d342c4fb992e4c94223c3406d79ee1f1aa8e58daa2c",
+          "command": "python - <<'PY'\nimport acmaddl.normalize as n\nprint(n._CONVERSIONS.keys());print(n._COORD_RENAMES)\nimport africas2s,inspect\nprint(inspect.signature(africas2s.calibrate)); print(inspect.getsource(africas2s.calibrate)[:3000])\nPY",
+          "exit_code": 0,
+          "stdout_chars": 3795,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 10,
+          "event_id": "exec-7665e408-1153-408e-8af6-0c9b8a90144d",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:28",
+          "command_sha256": "fed544f562676d8c56146d5165849cb4c7931d3adeaa026e34d8d309476507c6",
+          "command": "python - <<'PY'\nimport json\np=json.load(open('/tmp/source/provenance.json')); print(type(p));print(str(p)[:7000])\nPY",
+          "exit_code": 0,
+          "stdout_chars": 7016,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 11,
+          "event_id": "exec-7cbded1a-657c-4557-bc77-40ff21c93a37",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:31",
+          "command_sha256": "b3f4fb5bd1af8f71a66776b3487cade65c56e09ccbf8c7df9a21155644994611",
+          "command": "python - <<'PY'\nimport africas2s,inspect\nfrom africas2s.calibrators import ereg\nprint(ereg,inspect.signature(ereg));print(inspect.getsource(ereg)[:5000])\nPY",
+          "exit_code": 1,
+          "stdout_chars": 0,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 12,
+          "event_id": "exec-b8b4e421-1cd6-4b80-8097-fd7bdb3e1a87",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:34",
+          "command_sha256": "1bfe45901cff6df6e7b08f107859c80a2f923ad081d901182c86271922ff834c",
+          "command": "python - <<'PY'\nimport africas2s,os\nprint(africas2s.__path__)\nPY\ngrep -R \"variance.*wilks\\|class.*Ereg\\|def ereg\\|eregister\" -n /usr/local/lib/python3.12/site-packages/africas2s | head -25",
+          "exit_code": 0,
+          "stdout_chars": 933,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 13,
+          "event_id": "exec-2457363f-0c1b-4109-9478-6734d34667a1",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:37",
+          "command_sha256": "dbb3370722df386a1c0907f968770f4e994c070fe5e56d8e3e06b43b72786676",
+          "command": "sed -n '1,240p' /usr/local/lib/python3.12/site-packages/africas2s/methods/ensemble_regression.py; sed -n '480,620p' /usr/local/lib/python3.12/site-packages/africas2s/calibrate.py",
+          "exit_code": 0,
+          "stdout_chars": 17954,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 14,
+          "event_id": "exec-6f6271dd-c035-443c-8104-46d1569b16df",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:40",
+          "command_sha256": "c00ba86dc1e11e9263f19667e4f8c4528a0e78608f04c6d00f94524adce2cf2d",
+          "command": "grep -n \"def predict_tercile\\|quantile\" /usr/local/lib/python3.12/site-packages/africas2s/methods/ensemble_regression.py | head -20",
+          "exit_code": 0,
+          "stdout_chars": 413,
+          "stdout_truncated": false
+        },
+        {
+          "command_number": 15,
+          "event_id": "exec-a7d873de-440e-49f4-ace4-0a4517915ca9",
+          "path": "var/template-runs/20261008T134728-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-context-budget-679df4/logs/events.jsonl:43",
+          "command_sha256": "956cd857c3850d8916338eb266a2e5b448f3e11e6fb1759eb83504a51860e35c",
+          "command": "sed -n '250,395p' /usr/local/lib/python3.12/site-packages/africas2s/methods/ensemble_regression.py",
+          "exit_code": 0,
+          "stdout_chars": 6473,
+          "stdout_truncated": false
+        }
+      ],
+      "observed_callflow": [
+        {
+          "commands": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "operation": "Read descriptors/skills, download and hash-check six catalogue objects, inspect raw metadata. Initial combined skill output is truncated."
+        },
+        {
+          "commands": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "operation": "Inspect acmadDL exports, normalization signature/source/conversion table and africaS2S calibration signature/source; no scientific helper execution."
+        },
+        {
+          "commands": [
+            10
+          ],
+          "operation": "Print source-provenance metadata."
+        },
+        {
+          "commands": [
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "operation": "Explore calibration internals; guessed africas2s.calibrators import fails, then search and print regression/variance/tercile source. No calibration execution."
+        },
+        {
+          "operation": "Stop at cumulative max_total_tokens checkpoint before implementation or submission."
+        }
+      ],
+      "native_tool_use": {
+        "acmaddl_normalize": "not_executed_introspection_only",
+        "africas2s_calibrate": "not_executed_introspection_only",
+        "returned_values_feed_submission": "absent_no_submitted_arrays",
+        "native_parameters_verified": null,
+        "native_parameter_checks": {
+          "float64_promotion": "not_observed",
+          "default_wilks": "not_invoked",
+          "loyo_fold_refits": "not_invoked",
+          "equal_model_probability_combination": "not_materialized"
+        },
+        "native_parameter_detail": "No executed scientific API call has parameters or returned values to audit. Reading implementations is not substantive native use."
+      },
+      "condition_compliance": {
+        "state": "not_satisfied",
+        "reason": "Neither required native transformation ran before the budget stop. Keep the attempt assigned to the required-tool arm; imports and introspection do not satisfy it."
+      },
+      "scientific_completion": {
+        "original_computed_outcome": "fail",
+        "original_outcome": "fail",
+        "task_completion_evaluable": true,
+        "task_completion_state": "fail",
+        "forecast_science_evaluable": false,
+        "reason": "No code/report/results were submitted. This is an observed task-completion failure under the declared shared budgets, not a demonstrated scientific method error or frontier capability boundary."
+      },
+      "usage": {
+        "input_tokens": 372446,
+        "cached_input_tokens": 326144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1842,
+        "reasoning_output_tokens": 467,
+        "total_tokens": 374288
+      },
+      "usage_source": "adapter_reported",
+      "seconds": 54.315887417062186,
+      "tool_calls": 15,
+      "budgets": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "budget_accounting": {
+        "stopping_limit": "max_total_tokens",
+        "cumulative_provider_tokens": 374288,
+        "cached_input_tokens_included": 326144,
+        "cached_fraction_of_cumulative_total": 0.8713717778822725,
+        "uncached_input_plus_output_tokens": 48144,
+        "uncached_budget_remaining": 51856,
+        "output_budget_remaining": 18158,
+        "tool_calls_remaining": 5,
+        "wall_seconds_remaining": 845.6841125829378,
+        "detail": "Cached input dominates the cumulative total ceiling. The unique-input/output, output-only, tool-call and wall-time caps all retain headroom. Checkpoint evaluation occurs after a model response, so total usage can cross the cap."
+      },
+      "navigation_findings": {
+        "dedicated_api_inspection_commands": [
+          6,
+          7,
+          8,
+          9,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "dedicated_api_inspection_command_count": 9,
+        "dedicated_api_inspection_stdout_chars": 40182,
+        "all_stdout_chars": 98773,
+        "failed_private_module_guess_command": 11,
+        "first_combined_required_skill_read_truncated": true,
+        "interpretation": "Evidence supports documentation/API-navigation overhead and budget noncompletion. It does not show an attempted normalization/calibration calculation failing."
+      },
+      "review_actions": {
+        "read_only_attempt_review": true,
+        "scientific_binary_io": false,
+        "model_calls": 0,
+        "attempt_modified": false,
+        "automatic_retry_requested": false
+      }
+    }
+  },
+  "reviewed_at": "2026-10-08T13:51:13.782399+00:00"
+}

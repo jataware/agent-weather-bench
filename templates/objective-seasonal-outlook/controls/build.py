@@ -10,18 +10,31 @@ CONTROLS = {
     "independent": {"kind": "known_correct", "expect": {}},
     "reordered": {"kind": "accepted_alternative", "expect": {}},
     "bilinear_residual": {"kind": "accepted_alternative", "expect": {}, "matched": {"obs_regridding": ["bilinear"], "ereg_variance": ["residual"]}},
-    # one planted fault per stage
-    # a result that matches no listed reading leaves the variant match and the changed-data probe unresolved; the fault is caught elsewhere
-    "wrong_initialization": {"kind": "incorrect", "expect": {"invariant.cca_agreement": "fail", "variant": "unresolved", "probe.changed_data": "unresolved"}},  # acquire
-    "thirty_days": {"kind": "pitfall", "pitfall": "thirty_days", "expect": {"variant": "fail"}},                         # prepare
-    "wvg_leak": {"kind": "incorrect", "expect": {"probe.held_out_year_isolation": "fail", "variant": "unresolved", "probe.changed_data": "unresolved"}},  # WVG
-    "ereg_no_cross_validation": {"kind": "incorrect", "expect": {"probe.held_out_year_isolation": "fail", "variant": "unresolved", "probe.changed_data": "unresolved"}},  # eReg
-    "cca_future_training": {"kind": "incorrect", "expect": {"probe.held_out_year_isolation": "fail"}},                   # CCA
-    "unequal_weights": {"kind": "incorrect", "expect": {"invariant.equal_stream_combination": "fail"}},                 # combine
-    "wrong_climatology_score": {"kind": "incorrect", "expect": {"invariant.score_identity": "fail"}},                   # verify
-    "issue_mismatch": {"kind": "incorrect", "expect": {"invariant.issue_identity": "fail"}},                            # issue
-    "full_record": {"kind": "pitfall", "pitfall": "full_record", "expect": {"variant": "fail", "probe.held_out_year_isolation": "fail"}},
-    "cached": {"kind": "incorrect", "expect": {"probe.changed_data": "fail"}},
+    # One planted fault per stage. Every check not listed is expected to pass. A result that matches no listed reading
+    # leaves the whole-submission variant match and changed-data probe unresolved; the stage rows say which stage is at fault.
+    "wrong_initialization": {"kind": "incorrect", "expect": {                                                          # acquire
+        "invariant.cca_agreement": "fail", "variant": "unresolved", "probe.changed_data": "unresolved",
+        "stage.prepare": "unresolved", "stage.wvg": "unresolved", "stage.ereg": "unresolved", "stage.cca": "fail"}},
+    "thirty_days": {"kind": "pitfall", "pitfall": "thirty_days", "expect": {"variant": "fail", "stage.prepare": "fail"}},    # prepare
+    "wvg_leak": {"kind": "incorrect", "expect": {                                                                      # WVG
+        "probe.held_out_year_isolation": "fail", "probe.held_out_year_isolation.wvg": "fail", "invariant.wvg_from_own_prepare": "fail",
+        "variant": "unresolved", "probe.changed_data": "unresolved", "stage.wvg": "fail"}},
+    "ereg_no_cross_validation": {"kind": "incorrect", "expect": {                                                      # eReg
+        "probe.held_out_year_isolation": "fail", "probe.held_out_year_isolation.ereg": "fail", "invariant.ereg_from_own_prepare": "fail",
+        "variant": "unresolved", "probe.changed_data": "unresolved", "stage.ereg": "fail"}},
+    "cca_future_training": {"kind": "incorrect", "expect": {                                                           # CCA
+        "probe.held_out_year_isolation": "fail", "probe.held_out_year_isolation.cca": "fail", "stage.cca": "fail"}},
+    "unequal_weights": {"kind": "incorrect", "expect": {"invariant.equal_stream_combination": "fail", "stage.combine": "fail"}},   # combine
+    "wrong_climatology_score": {"kind": "incorrect", "expect": {"invariant.score_identity": "fail", "stage.verify": "fail"}},    # verify
+    "issue_mismatch": {"kind": "incorrect", "expect": {"invariant.issue_identity": "fail", "stage.issue": "fail"}},            # issue
+    "full_record": {"kind": "pitfall", "pitfall": "full_record", "expect": {
+        "variant": "fail", "probe.held_out_year_isolation": "fail", "probe.held_out_year_isolation.wvg": "fail",
+        "probe.held_out_year_isolation.ereg": "fail", "probe.held_out_year_isolation.cca": "fail",
+        "invariant.wvg_from_own_prepare": "fail", "invariant.ereg_from_own_prepare": "fail",
+        # stage.prepare passes: a year's own category is the same whether or not the year is in the boundary sample
+        # (measured: zero differing cell-years on both instances), so the pitfall shows only in the streams' fold labels
+        "stage.wvg": "fail", "stage.ereg": "fail", "stage.cca": "fail"}},
+    "cached": {"kind": "incorrect", "expect": {"probe.changed_data": "fail", "stage.prepare": "fail", "stage.wvg": "fail", "stage.ereg": "fail"}},
 }
 NOT_APPLICABLE = {}
 

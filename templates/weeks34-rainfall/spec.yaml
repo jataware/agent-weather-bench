@@ -1,13 +1,17 @@
 schema_version: 1
 template: weeks34-rainfall
-spec_version: 3
+spec_version: 4
 version_history:
+  - version: 4
+    change: Explicit completion and ranking gates; standing prose reviews are supplementary.
+      Template owns judge wording. Earlier contracts remain archived.
   - {version: 1, change: First version.}
   - {version: 2, change: 'instance.json no longer carries the internal cell-selection field, which the brief never explained and three agent scripts misread. Runs made under version 1 saw different inputs and are not reassessed under version 2.'}
   - {version: 3, change: 'Forecasts are delivered in a labelled Zarr store, and the development-score tool takes a store. The run command may hard-code the task parameters. The changed-instance rerun is gone; a second instance is a second episode. Runs made under versions 1 and 2 answered a different contract and are not reassessed under version 3.'}
 title: Weeks 3–4 rainfall
 task_set_row: 15
 mode: outcome
+reference_match: false
 status: development; not reviewed by a domain scientist
 params: [training_boundary, development_boundary, final_boundary, longitude_limit]
 
@@ -41,3 +45,35 @@ level2:
   claims:
     development_rmse_mm: {split: development, metric: rmse_mm, atol: 1.0e-4}
 interpretation: [statistical_support, generalization, consistency_across_artifacts]
+
+# The task owns its verdict policy and every question used to review its prose.
+question: produce_forecast
+assessment_policy:
+  completion: &id001
+  - envelope
+  - coverage
+  - invariant.totals_not_negative
+  - invariant.magnitude_of_a_14_day_total
+  - probe.replay
+  - probe.responds_to_inputs
+  - probe.no_future_information
+  - feedback.limit
+  - claim.*
+  ranking: *id001
+judge_questions:
+  statistical_support:
+    requirement: 'Every claim of statistical significance, confidence or uncertainty
+      respects the dependence in the data (neighbouring grid cells, overlapping periods,
+      a small number of years). Silence passes: a report that makes no such claim
+      meets this.'
+    silence: passes
+  generalization:
+    requirement: 'The report does not extend a result beyond the sample, region or
+      period it was computed on. Silence passes: a report that only describes what
+      it computed meets this.'
+    silence: passes
+  consistency_across_artifacts:
+    requirement: The report, the structured answer and the code say the same thing
+      about what was done and what was found. A statement in one that another contradicts
+      is a violation.
+    silence: passes

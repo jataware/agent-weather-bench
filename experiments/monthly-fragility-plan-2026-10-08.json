@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-08T17:41:25.000964+00:00",
+  "status": "ready",
+  "template": "monthly-cycle-calibration",
+  "instance": "original-regional-monthly-1993-2023",
+  "level": 1,
+  "fingerprint": "21656220f6090345f4defaf9fe775c7272ef5523e85d1db2e1bfa3d011868255",
+  "max_new_agent_attempts": 2,
+  "agent_retries": 0,
+  "systems": {
+    "monthly-fragility-luna-accord": {
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "files": {
+        "system.yaml": "2645c3b842b1504d5b6c465c2fe87fc528131b98e3382beef13b117317846d6b",
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53"
+      }
+    },
+    "monthly-fragility-astra-accord": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "files": {
+        "system.yaml": "a314661ba36366bf47280964d11cd2127243a108a5fee2154becd1a2e2c4d408",
+        "adapter.py": "706963c311d676bbd70780cdc3bc8914fd99fa7ae9fd79adac427eabb21fecb5"
+      }
+    }
+  },
+  "design": "One matched Luna/Astra pair on a prescribed scientific reproduction job; ordinary installed documentation only.",
+  "selection": "Fresh counterparts to historical Luna production-comparator/inference failures; single attempts probe reproducibility, not a persistent capability boundary.",
+  "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+  "budget": {
+    "max_seconds": 900,
+    "max_tool_calls": 32,
+    "command_seconds": 120,
+    "max_uncached_and_output_tokens": 100000,
+    "max_output_tokens": 20000
+  },
+  "no_judge": true,
+  "cached_token_note": "Cache tokens recorded without a total-token cap; usage checkpoint overshoot retained.",
+  "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+  "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+  "contract_manifest": "experiments/monthly-fragility-plan-2026-10-08-contract.json",
+  "contract_manifest_sha256": "377e50301d2ca6aef27909fa1a4677de143ace8f168e94bfa238e27e65fae9ed",
+  "private_source_manifest": {
+    "agent-inputs/africas2s-smoothed-method.py.txt": {
+      "sha256": "835b4339746f10b81a3687e9813e6268fc7599ba08f1e71b2260b5570f5ac2eb",
+      "bytes": 4912
+    },
+    "agent-inputs/algorithm.md": {
+      "sha256": "8147ffbda31c026b9d3ba1a1382d31474df3f83f71a11e82966eb5d57fbe10d2",
+      "bytes": 3955
+    },
+    "agent-inputs/candidates.json": {
+      "sha256": "d8a24265fdb2b58d4c50508971fe67ae7f0ef47daf2fcc794c94de36553c4fb8",
+      "bytes": 246
+    },
+    "agent-inputs/literature-notes.md": {
+      "sha256": "a994b617eda3545e725978fd776019441ed4907543d4285853d8e9a5edf5c7c2",
+      "bytes": 1958
+    },
+    "agent-inputs/predictors.nc": {
+      "sha256": "2ae904c759f57f71caaa34fc18b5a607f5b1eb7d9809cff22d95f2e7c9c65346",
+      "bytes": 14584
+    },
+    "agent-inputs/source-manifest.json": {
+      "sha256": "c1e6d9d7c8318e56e5a9621dc9740251d5d3516453312ee7779870c1f0996082",
+      "bytes": 123
+    },
+    "agent-inputs/targets.nc": {
+      "sha256": "21aec9fac551e94392efa1c4401471d7e98be5f29c65d5b1bfa826b7de0872b7",
+      "bytes": 17973
+    },
+    "controller/forecast.nc": {
+      "sha256": "70c131842ae87d06860a48f57c50060d23c5f297e35c746911a3839ed20604de",
+      "bytes": 20275
+    },
+    "controller/hindcasts.nc": {
+      "sha256": "3bab385dce5e9bbab65a6404ae82be258233c41acf70ea0df789731e3e146ade",
+      "bytes": 99389
+    },
+    "controller/model.json": {
+      "sha256": "307890a36b8d9af5d4b2752e2cf04a3e2667b85240c5fc9a6d85e52a24d4306c",
+      "bytes": 19779
+    },
+    "controller/private-targets.nc": {
+      "sha256": "d80a430060107925b1920a5b094ae1ba2b5c6149ec3e43eec52d8d446a633b8c",
+      "bytes": 10197
+    },
+    "controller/reference-audit.json": {
+      "sha256": "1ed433bcf4eb5d098e4420b59bf8b7eff90b96b9cd9165515f6b35a4856dda30",
+      "bytes": 1376
+    }
+  },
+  "preflight_evidence": [
+    {
+      "path": "experiments/monthly-fragility-launcher-preflight-2026-10-08.json",
+      "sha256": "6b11522bc87bed12fb08eeefd25c9fb276e7427eff13ee68991016fca7d8104f"
+    },
+    {
+      "path": "experiments/monthly-fragility-adapter-readiness-2026-10-08.json",
+      "sha256": "810ccbfb2b10dfb96900e8bfdebfebe44615f43a06457db241c519536efce461"
+    },
+    {
+      "path": "experiments/monthly-cycle-preserved-science-2026-10-08.json",
+      "sha256": "4f65f304abfc5d91cc37986e2777bc6afa0d71f9cc78e1231c0f5d1ef42208a6"
+    },
+    {
+      "path": "var/review/monthly-cycle-docker-correct-20261008/assessment.json",
+      "sha256": "ef9af6437cf8f834038ee04c61160d6b6c1846bb20b9225864f9102da4235b01"
+    },
+    {
+      "path": "templates/monthly-cycle-calibration/certification.json",
+      "sha256": "ccafdd5c6b7476ea3a20839317725d8d0004789b5a391d52903847e6006d2574"
+    },
+    {
+      "path": "experiments/original-portfolio-failure-audit-2026-10-08.json",
+      "sha256": "46f8e7335ec71cdc138fdaeeeaf0c8ee9040984bf673d9dcfde1c057f18f576f"
+    },
+    {
+      "path": "experiments/monthly_fragility_verify.py",
+      "sha256": "ab331fb0780ef173ecfec5be99553899372a5c61149273c4259ed450309450bc"
+    }
+  ],
+  "review_directory": "var/review/monthly-fragility-20261008",
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "rules": [
+    "No launch until root releases author-validation workers and explicitly gives go.",
+    "Exactly two fresh attempts; preserve all failures and frozen original assessments.",
+    "Use normal assessment.run with --no-judge; prose remains separately unresolved.",
+    "Report numeric science, reproducibility and packaging separately.",
+    "No capability boundary from one failure, budget exhaustion or API failure."
+  ],
+  "historical_comparison_caveat": "Original Luna used medium reasoning,90toolcalls andPython14ded image; this pair useshigh,32toolcalls,100kfresh+20koutput andACCORD08db. Originalcompleted181s16tools. Currentpairmatchedtoeachother; anyfreshpassisnot a matchedlongitudinal repairestimate.",
+  "hypothesis": "Historical Luna production-comparator and saved-inference errors may recur under a clearer envelope and independently repaired grading; exact prescribed scientific outputs and five rerun/isolation probes stay fixed before inference.",
+  "decision_rules": [
+    "Treat fitted,nested,verification,production,unit claims and five execution/isolation probes separately.",
+    "Prose review is supplementary; numerical completion is not forecast improvement.",
+    "Bothmodels have identical optionalordinarylibrarydocs, with no function guide,demo or benchmark-specificsolver source.",
+    "No extraattempts or targetchanges afterseeing results.",
+    "A single scientificfail versus stronger-backbonepass is case evidence, not a persistentfrontier capabilityboundary.",
+    "Budget/API/runtimefailure is not standalone scientificdifficulty evidence."
+  ],
+  "holdout_caveat": "Genuinepublichistorical source/archivedtask alreadyinspected. This is prescribedmethodreproduction, not an untouchedholdout or operationalvintage forecasting-skill test."
+}

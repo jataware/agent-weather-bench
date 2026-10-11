@@ -1,10 +1,10 @@
 {
  "schema_version": 1,
  "template": "kenya-forecast-revision",
- "spec_version": 2,
- "fingerprint": "539a595018860b4e77f210d402b09d9419b54762e47ff848737905cd848e798d",
- "certified_at": "20261007T095631",
- "executor": "docker-offline",
+ "spec_version": 3,
+ "fingerprint": "3847d889fd6ebf362de01d9a663d98c6b505c93edfc6828e5d9d98f60cdf61cc",
+ "certified_at": "20261009T133405",
+ "executor": "local-trusted",
  "tests": {
   "1_reference_implementations_agree": {
    "passed": true,
@@ -516,74 +516,23 @@
    ]
   },
   "5_model_attempts": {
-   "passed": true,
-   "status": "run",
-   "attempts": 4,
-   "systems": [
-    "codex-luna-pinned"
-   ],
+   "passed": null,
+   "status": "not_run",
+   "attempts": 0,
+   "systems": [],
    "attempts_with_an_unruled_unknown_answer": 0,
-   "attempts_assessed_under_another_fingerprint": 9,
+   "attempts_assessed_under_another_fingerprint": 17,
+   "excluded_before_model_launch": [],
    "rulings_awaiting_confirmation": 0,
-   "detail": "Every attempt's answer was classified.",
-   "runs": [
-    {
-     "run": "20261006T164832-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-pinned-b1515f",
-     "system": "codex-luna-pinned",
-     "instance": "central--weeks-2-3",
-     "level": 1,
-     "outcome": "pass",
-     "computed_outcome": "pass",
-     "judged_outcome": "pass",
-     "supplied": [
-      "conventions"
-     ],
-     "parent": null,
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T164832-kenya-forecast-revision-central--weeks-2-3-L1-codex-luna-pinned-b4c408",
-     "system": "codex-luna-pinned",
-     "instance": "central--weeks-2-3",
-     "level": 1,
-     "outcome": "pass",
-     "computed_outcome": "pass",
-     "judged_outcome": "pass",
-     "supplied": [],
-     "parent": null,
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T164832-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-pinned-5087b4",
-     "system": "codex-luna-pinned",
-     "instance": "service-area--weeks-1-2",
-     "level": 1,
-     "outcome": "pass",
-     "computed_outcome": "pass",
-     "judged_outcome": "pass",
-     "supplied": [],
-     "parent": null,
-     "unknown_answer_checks": [],
-     "ruling": null
-    },
-    {
-     "run": "20261006T165106-kenya-forecast-revision-north-west--weeks-3-4-L1-codex-luna-pinned-f2e0bf",
-     "system": "codex-luna-pinned",
-     "instance": "north-west--weeks-3-4",
-     "level": 1,
-     "outcome": "pass",
-     "computed_outcome": "pass",
-     "judged_outcome": "pass",
-     "supplied": [],
-     "parent": "20261006T164832-kenya-forecast-revision-service-area--weeks-1-2-L1-codex-luna-pinned-5087b4",
-     "unknown_answer_checks": [],
-     "ruling": null
-    }
-   ]
+   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+   "runs": []
   }
  },
  "automatic_tests_passed": true,
- "certified": false
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "pending",
+  "scientific_approval": "pending"
+ }
 }

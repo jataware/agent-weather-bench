@@ -1,0 +1,186 @@
+# Float64 results: an upper operation allowance of 1e6 includes nested fits and the retained rank-3 covariance solves.
+# Magnitudes bound mm outputs by 10000, dimensionless losses/RPSS by 1000, and probabilities by 1.
+# Certification checks these magnitudes and independent eigen/SVD agreement; selected IDs must agree exactly.
+schema_version: 1
+template: seasonal-cca-reproduction
+spec_version: 1
+title: Seasonal CCA method reproduction
+task_set_row: 13
+mode: product
+question: compute_quantity
+reference_match: true
+status: automatic validation in progress; scientific approval pending
+params:
+- outer_start
+- region
+results:
+  outer_year:
+    kind: coordinate
+    tolerance:
+      exact: true
+  forecast_year:
+    kind: coordinate
+    tolerance:
+      exact: true
+  target:
+    kind: coordinate
+    tolerance:
+      exact: true
+  system:
+    kind: coordinate
+    tolerance:
+      exact: true
+  category:
+    kind: coordinate
+    tolerance:
+      exact: true
+  boundary:
+    kind: coordinate
+    tolerance:
+      exact: true
+  candidate:
+    kind: coordinate
+    tolerance:
+      exact: true
+  hindcast_mean_mm:
+    dims:
+    - outer_year
+    - system
+    - target
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 10000
+  hindcast_probability:
+    dims:
+    - outer_year
+    - system
+    - target
+    - category
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 1
+  hindcast_threshold_mm:
+    dims:
+    - outer_year
+    - boundary
+    - target
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 10000
+  selected_candidate:
+    dims:
+    - outer_year
+    tolerance:
+      exact: true
+  inner_loss:
+    dims:
+    - outer_year
+    - candidate
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 1000
+  hindcast_rpss:
+    dims:
+    - system
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 1000
+  forecast_mean_mm:
+    dims:
+    - forecast_year
+    - system
+    - target
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 10000
+  forecast_probability:
+    dims:
+    - forecast_year
+    - system
+    - target
+    - category
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 1
+  forecast_threshold_mm:
+    dims:
+    - boundary
+    - target
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 10000
+  final_candidate:
+    dims: []
+    tolerance:
+      exact: true
+  final_inner_loss:
+    dims:
+    - candidate
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 1000
+  full_fit_mean_mm:
+    dims:
+    - outer_year
+    - target
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 10000
+  full_fit_probability:
+    dims:
+    - outer_year
+    - target
+    - category
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 1
+conventions:
+  training:
+    expanding: accepted
+    full_training: pitfall
+pitfalls:
+  full_training: "Used all 1993\u20132019 target observations in each outer fit, leaking\
+    \ future and held-out years."
+public_conventions: []
+invariants:
+- probabilities_valid
+- rpss_identity
+probes:
+- replay
+- changed_data
+- outer_year_isolation
+- forecast_batch_isolation
+claims:
+  nested_beats_fixed: Does the nested configuration beat the fixed configuration on
+    pooled outer RPSS?
+  full_fit_is_independent: Are the overlapping full-fit diagnostics independent hindcast
+    skill?
+process:
+- id: validation_scope
+  source: algorithm.md
+  requirement: The report distinguishes expanding outer hindcasts from overlapping
+    full-fit diagnostics and describes this as a specified CPT-inspired adaptation.
+  judge: Does the report avoid presenting full-fit diagnostics as independent validation
+    or claiming exact reproduction of the CPT binary?
+interpretation: []
+assessment_policy:
+  completion: &id001
+  - envelope
+  - coverage
+  - variant
+  - invariant.*
+  - probe.*
+  - claim.*
+  - process.*
+  ranking: *id001

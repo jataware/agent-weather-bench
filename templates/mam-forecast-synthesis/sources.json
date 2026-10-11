@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/templates/mam-forecast-synthesis",
+  "source_weather_is_synthetic": false,
+  "files": [
+    {
+      "file": "controller/expert-lock.json",
+      "sha256": "30aaef5060c49cd2b3ccdb0bb9ae6c529e063cb87eeb052822de6cb9c54ba0e6",
+      "bytes": 8548,
+      "visibility": "controller"
+    },
+    {
+      "file": "controller/heldout-observations.nc",
+      "sha256": "1cf68bf274549624f8a7b7bb73c03ecdbbf680cfe0116c25058354d97ab5d2dc",
+      "bytes": 15990,
+      "visibility": "controller"
+    },
+    {
+      "file": "provider/catalog.json",
+      "sha256": "9574899d9acd7d7330add62d301909f7575e911dcbe3557a743cbdd79750db32",
+      "bytes": 946,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/cmcc.nc",
+      "sha256": "8a0144eceee15372ec39db26a89e972cd951e83611da90541c52ea9a15fdc834",
+      "bytes": 158560,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/ecmwf.nc",
+      "sha256": "3f15f6a1e7a5306fde0c7845b55bcafecf5c569975abf6c46623f7721ffa3ff0",
+      "bytes": 106600,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/meteofrance.nc",
+      "sha256": "4a3c22c7f40bfc25372c0d94578db1678952c7215d5ea9dcdbe9277bc612a4ad",
+      "bytes": 127384,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/models/ukmo.nc",
+      "sha256": "9ec27da590389b56f1226be382e16277d970c13c8959e887a37df60c600f5865",
+      "bytes": 116992,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/observations/training.nc",
+      "sha256": "7d0d04cd8249666c86846690bf12e060573749d1ef23ec319c63f5c066e64faf",
+      "bytes": 15990,
+      "visibility": "provider"
+    },
+    {
+      "file": "provider/provenance.json",
+      "sha256": "d9e0c7c44adbce356883f4b380a6c23312915d94eabfab0ea1eea93318332469",
+      "bytes": 2460,
+      "visibility": "provider"
+    }
+  ],
+  "lineage": {
+    "source": "Genuine frozen C3S seasonal monthly model rates and CHIRPS v2 monthly totals",
+    "source_manifest_sha256": "04e394c97525cb812ee1197d84f5bbcefda55bcae5483770d7cfb66ff171b1a6",
+    "source_manifest": "templates/mam-multimodel-outlook/sources.json",
+    "source_files": [
+      {
+        "file": "provider/catalog.json",
+        "sha256": "609bde3d22086d625e6102e193593b3361b5f5496abb2230802b4c2e478836e0",
+        "bytes": 1124
+      },
+      {
+        "file": "provider/models/cmcc.nc",
+        "sha256": "0742473a4f5a0384a5c7f81470a9616d54c466ff6bc09fbd0959c66c7217ff9a",
+        "bytes": 439326
+      },
+      {
+        "file": "provider/models/ecmwf.nc",
+        "sha256": "89f25028510e033ed412c669f19d71a1a4b5ea5ba98dd9c4bc4c1243f5edf36b",
+        "bytes": 283806
+      },
+      {
+        "file": "provider/models/meteofrance.nc",
+        "sha256": "6aadcc33c8202349eda5027701d7830a890656b0945d4101ee0f7403139f5e93",
+        "bytes": 346014
+      },
+      {
+        "file": "provider/models/ukmo.nc",
+        "sha256": "a41244a6e57dc90e7e4585ffc5c221cf880c468d5107cf7dedfada640079828c",
+        "bytes": 314912
+      },
+      {
+        "file": "provider/observations/chirps-monthly-pre2016.nc",
+        "sha256": "cb7afd43a5878a438d173030b861577dee6421159b90fb06df126737ecddf21f",
+        "bytes": 3001776
+      },
+      {
+        "file": "provider/provenance.json",
+        "sha256": "440ccbb263b368d57597e802003e65b30083ec4b2f4dcdc2ccecfab9f8673bb0",
+        "bytes": 27656
+      }
+    ],
+    "transformation": "Curator normalized seasonal totals, not byte-original native products. Four models retain native unequal member counts; common inland service grid. Model/all-year predictors; observations only 1993-2004.",
+    "years_in_observation_service": [
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004
+    ],
+    "not_claimed": [
+      "historical operational vintages",
+      "country-wide Kenya coverage",
+      "raw GRIB ingestion exercise"
+    ],
+    "scientific_normalization_agreement_mm": {
+      "ecmwf": 0.0,
+      "cmcc": 0.0,
+      "ukmo": 0.0,
+      "meteofrance": 0.0,
+      "chirps_pre2016": 1.1368683772161603e-13
+    },
+    "target_coordinates": {
+      "lat": [
+        -2.5,
+        -1.5,
+        -0.5,
+        0.5,
+        1.5,
+        2.5
+      ],
+      "lon": [
+        36.5,
+        37.5,
+        38.5
+      ]
+    },
+    "provider_urls": [
+      "https://cds.climate.copernicus.eu/datasets/seasonal-monthly-single-levels?tab=overview",
+      "https://www.chc.ucsb.edu/data/chirps"
+    ]
+  },
+  "normalization_independent_max_gap_mm": {
+    "ecmwf": 0.0,
+    "cmcc": 0.0,
+    "ukmo": 0.0,
+    "meteofrance": 0.0,
+    "chirps_pre2016": 1.1368683772161603e-13,
+    "chirps_2016": 5.684341886080802e-14
+  },
+  "expert_lock_sha256": "30aaef5060c49cd2b3ccdb0bb9ae6c529e063cb87eeb052822de6cb9c54ba0e6"
+}

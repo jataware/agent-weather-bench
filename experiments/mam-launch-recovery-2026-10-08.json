@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "failed_launches": [
+    {
+      "run": "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-python-4ebeb3",
+      "system": "mam-luna-python",
+      "phase": "before_adapter_spawn",
+      "reason": "ValueError: Missing controller environment variable: CODEX_BINARY",
+      "model_inference_started": false,
+      "scientific_performance_evaluable": false,
+      "run_json_sha256": "9e9664e7c48eb4b047621d2533c704d81d9ee8e0ebf111ca71606463fef6ace8",
+      "original_assessment_sha256": "2ade230f0c0b305101861fc0529421b183a49dbb603127fba4e4bb0e1c62824d"
+    },
+    {
+      "run": "20261008T134021-mam-multimodel-outlook-kenya-interior--mam-2016-L1-mam-luna-required-accord-9f0c42",
+      "system": "mam-luna-required-accord",
+      "phase": "before_adapter_spawn",
+      "reason": "ValueError: Missing controller environment variable: CODEX_BINARY",
+      "model_inference_started": false,
+      "scientific_performance_evaluable": false,
+      "run_json_sha256": "eb96975fd9fe6c4a40b8c4a91fc4422f973449f445dc3997f501c8ff9799f1a5",
+      "original_assessment_sha256": "34707484f83c49bc61376bcd5d360af7a67012147e505c92021996790f280be7"
+    }
+  ],
+  "recovery": "One environment-only recovery per condition; no model retry. Original runs and assessments remain immutable.",
+  "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+  "codex_version": "0.160.0",
+  "binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+  "standalone_current_version": "0.161.0; deliberately not selected because adapters pin 0.160.0",
+  "source_evidence": "assessment/adapters.py validates driver.env before subprocess.Popen; neither failed launch has an event log.",
+  "paid_api_spend_usd": 0
+}

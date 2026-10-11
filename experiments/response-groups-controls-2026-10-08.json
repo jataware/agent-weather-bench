@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "revision": "experiments/response-projection-revision-2026-10-08.json",
+  "model_calls": 0,
+  "judge_calls": 0,
+  "scientific_workers": "two fresh interpreter subprocesses; threads only orchestrate",
+  "passed": true,
+  "rows": [
+    {
+      "template": "seasonal-rainfall-calibration",
+      "exit_code": 0,
+      "passed": true,
+      "log": "var/review/response-groups-certify-seasonal-rainfall-calibration.log",
+      "fingerprint": "93b76c9e582f7e42bc73183552e9e969b4442f153d4e0b72e0b73738dd21a6ee",
+      "certification": "templates/seasonal-rainfall-calibration/certification.json",
+      "sha256": "3cb2e6367a7636b07f5f3ea7eaf7e1426e3c3f2ec7e6901b8d0625b8b075972d",
+      "tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true,
+        "5_model_attempts": null
+      }
+    },
+    {
+      "template": "kenya-forecast-revision",
+      "exit_code": 0,
+      "passed": true,
+      "log": "var/review/response-groups-certify-kenya-forecast-revision.log",
+      "fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851",
+      "certification": "templates/kenya-forecast-revision/certification.json",
+      "sha256": "c188ec23989ee3a7533eac38b7e27612e81fe15a91cc877b466d44f44d00ceb7",
+      "tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true,
+        "5_model_attempts": null
+      }
+    },
+    {
+      "template": "weeks34-rainfall",
+      "exit_code": 0,
+      "passed": true,
+      "log": "var/review/response-groups-certify-weeks34-rainfall.log",
+      "fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+      "certification": "templates/weeks34-rainfall/certification.json",
+      "sha256": "26d01131f76dd35b9888e6b62404869944270656a20a8d6184ec53e4eb0f687d",
+      "tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true,
+        "5_model_attempts": null
+      }
+    },
+    {
+      "template": "rainfall-downscaling",
+      "exit_code": 0,
+      "passed": true,
+      "log": "var/review/response-groups-certify-rainfall-downscaling.log",
+      "fingerprint": "26aa0881c11621c0d80e26ba9ba97833464e91724db4451f3e9f7cf7d40a2377",
+      "certification": "templates/rainfall-downscaling/certification.json",
+      "sha256": "cb64ac0c87ac705e5c62a62168ba5f02f9de96fdcd33d593a546e3da74e0476e",
+      "tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true,
+        "5_model_attempts": null
+      }
+    },
+    {
+      "template": "seasonal-cca-reproduction",
+      "exit_code": 0,
+      "passed": true,
+      "log": "var/review/response-groups-certify-seasonal-cca-reproduction.log",
+      "fingerprint": "ee679a3b68725486fc9fd7fa2826a33be156b17a485d4568d90f1abed05ae514",
+      "certification": "templates/seasonal-cca-reproduction/certification.json",
+      "sha256": "63e4e32048eacd03b26005874248cf2ff7c451963db69b5463d1d2a3b29c40c4",
+      "tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true,
+        "5_model_attempts": null
+      }
+    },
+    {
+      "template": "native-rainfall-reconciliation",
+      "exit_code": 0,
+      "passed": true,
+      "log": "var/review/response-groups-certify-native-rainfall-reconciliation.log",
+      "fingerprint": "3d29f5d5c44fe0fd3acadcbc54dcdd6057f5a0248aa1be9fb3b43c4a7b6b069f",
+      "certification": "templates/native-rainfall-reconciliation/certification.json",
+      "sha256": "92a8ed90965faa71c2fe5a5595f97c2cd0ebcabed0d039bc7def8c5861ee250c",
+      "tests": {
+        "1_reference_implementations_agree": true,
+        "2_known_correct_solutions_pass": true,
+        "3_incorrect_solutions_are_caught": true,
+        "4_separability": true,
+        "5_model_attempts": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/tasks/conservative-downscaling",
+  "source_weather_is_synthetic": false,
+  "scientific_approval": "pending",
+  "redistribution_approval": "pending",
+  "files": [
+    {
+      "file": "agent-inputs/africas2s-bcsd.py.txt",
+      "sha256": "6eaa4e8bbdb4c509d9a68c4116c33824d8037fbc16b19aa03eea2c92693ae5d0",
+      "bytes": 2965,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/coarse-forecast.nc",
+      "sha256": "90bff5538782ff2b7edbc11da6d41867da67451e9e0751fc27cdf38919189b47",
+      "bytes": 11296,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/fine-training.nc",
+      "sha256": "2ccac5d8de7d9dd72246c73857b17db00a8ea10c5e8fe10d59886dde01818397",
+      "bytes": 214684,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/geometry.nc",
+      "sha256": "8e7c9fc191f7b57aa7bda646f5fe1e273baab2bc4052ed2f0a23f5066383b601",
+      "bytes": 3270,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/old-chirps-catalog.yaml.txt",
+      "sha256": "2077e61f65e432e0c4da1f18c25086d73026d662719333c9b5bed3723f3f3d65",
+      "bytes": 825,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/old-normalize.py.txt",
+      "sha256": "f4533fd2085f28e1356a1feb9f226693b3fee0e7bd073bfeff2b94d8902b2f9c",
+      "bytes": 16286,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/original-cpt-header.txt",
+      "sha256": "a47907d2e78b81696958c135ecd4005a6726913ece1a72d7bc87c41991c84397",
+      "bytes": 591,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-audit.json",
+      "sha256": "b5afb6c5e51e063e70fd8cc24cceb0ea0d267b7db2ce3910e39de13831e6998f",
+      "bytes": 1400,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "ca93fab64b2cba09530f037ee94980f8fa4d83ad90d9a77b027341d9d85fbf06",
+      "bytes": 146,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-notes.txt",
+      "sha256": "0047339ad86af9b70715e6f0865ab45904e8d7f87b1ac33aa3079101d0894437",
+      "bytes": 2441,
+      "visibility": "agent"
+    },
+    {
+      "file": "controller/fine-verification.nc",
+      "sha256": "a762ce7b3d9764ed6a7563c65ae4dd961ab616734d396bdbeea86813c73f602b",
+      "bytes": 112284,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/forecast.nc",
+      "sha256": "76d7f9c2ccd34273207ee4e5e2875e890e6722d28c20527ebeded12f56d9fd78",
+      "bytes": 139311,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/hindcasts.nc",
+      "sha256": "1a6ef4edce7676a6585d852f4b25d91b6e3f4dac57b008745f55b02dc460123a",
+      "bytes": 215139,
+      "visibility": "controller_only"
+    },
+    {
+      "file": "controller/model.json",
+      "sha256": "11cd4375576fce1803c727d9c8be91b75f1fc4f6ba11bca0dfe3e878f4e29b02",
+      "bytes": 33731,
+      "visibility": "controller_only"
+    }
+  ]
+}

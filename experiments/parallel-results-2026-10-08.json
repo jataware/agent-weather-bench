@@ -1,0 +1,619 @@
+{
+  "schema_version": 1,
+  "plan": "experiments/parallel-investigations.yaml",
+  "completed_attempts": 5,
+  "pending_attempts": [],
+  "direct_api_key_calls": 0,
+  "billing": "Subscription-authenticated inference; provider list-price estimates are not invoices.",
+  "agent_token_totals": {
+    "input_tokens": 528714,
+    "cached_input_tokens": 381952,
+    "output_tokens": 27316,
+    "total_tokens": 556030
+  },
+  "judge_list_price_usd": 0.49149,
+  "rows": [
+    {
+      "run": "20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-python-3c1235",
+      "directory": "var/template-runs/20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-python-3c1235",
+      "template": "native-rainfall-reconciliation",
+      "instance": "service-area--weeks-1-2",
+      "system": "investigation-astra-python",
+      "system_sha256": "a6a9426e88df5295ef6b0235020ef04e0c82ffcd01f9616ae02bc22498a51f8e",
+      "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+      "spec_version": 1,
+      "fingerprint": "8fa15410fc77b64ae1b57ac5d6212c3f12559f697ac52dda7306f3744960d417",
+      "status": "submitted",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "skill": null,
+      "seconds": null,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 91070,
+        "cached_input_tokens": 65920,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5481,
+        "reasoning_output_tokens": 290,
+        "total_tokens": 96551
+      },
+      "collection_recovery": {
+        "reason": "Original runner aborted retaining an optional scratch-state symlink after freezing complete ordinary submission files.",
+        "agent_rerun": false,
+        "submission_changed": false,
+        "seconds": "Exact adapter duration lost before metadata persistence; excluded from timing comparisons.",
+        "recovered_at": "2026-10-08T12:07:43.763518+00:00"
+      },
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 9,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 5,
+          "substrate_commands": 2,
+          "ran": 0,
+          "read": 0,
+          "listed": 2,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": 1,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {},
+        "image_paths": {},
+        "commands": 5,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": null,
+        "state": "unresolved",
+        "network": "none",
+        "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+        "model_credentials_mounted": false,
+        "private_references_mounted": false,
+        "trusted_controller_adapter": true,
+        "evidence": "Successful model tool calls establish that ToolSandbox startup inspection completed. The original end-inspection payload was not persisted before collection failed; recovery does not claim to reconstruct it.",
+        "inspection_payload_lost": true
+      },
+      "declared_submission_imports": [
+        "argparse",
+        "json",
+        "numpy",
+        "pathlib",
+        "shutil",
+        "xarray"
+      ],
+      "import_note": "Static imports in submitted Python; command-log tooling use is separate. Imports alone do not prove benefit.",
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 9465,
+            "output_tokens": 430,
+            "list_price_usd": 0.07303319999999999
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-rhiza-94d9ae",
+      "directory": "var/template-runs/20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-rhiza-94d9ae",
+      "template": "native-rainfall-reconciliation",
+      "instance": "service-area--weeks-1-2",
+      "system": "investigation-astra-rhiza",
+      "system_sha256": "c9ea5c10b1fdad2f298fafe7026a645d60bbc1f8b6d431ece9e2f738c59af83a",
+      "runtime_image": "sha256:e00aa260554859887759253ca180db576a9c2e1cfa0d5e014333baa9e57774ec",
+      "spec_version": 1,
+      "fingerprint": "8fa15410fc77b64ae1b57ac5d6212c3f12559f697ac52dda7306f3744960d417",
+      "status": "submitted",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "skill": null,
+      "seconds": 470.68997100007255,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 80609,
+        "cached_input_tokens": 56960,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1885,
+        "reasoning_output_tokens": 298,
+        "total_tokens": 82494
+      },
+      "collection_recovery": null,
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 9,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 5,
+          "substrate_commands": 1,
+          "ran": 0,
+          "read": 0,
+          "listed": 1,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": 1,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {
+          "weather_skills_core": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          }
+        },
+        "image_paths": {
+          "/catalog/skills": {
+            "commands_naming": 3,
+            "of_which_failed": 0,
+            "first_step": 1,
+            "used": true
+          }
+        },
+        "commands": 5,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:e00aa260554859887759253ca180db576a9c2e1cfa0d5e014333baa9e57774ec",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "declared_submission_imports": [
+        "argparse",
+        "json",
+        "numpy",
+        "pathlib",
+        "xarray"
+      ],
+      "import_note": "Static imports in submitted Python; command-log tooling use is separate. Imports alone do not prove benefit.",
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 9749,
+            "output_tokens": 375,
+            "list_price_usd": 0.0742052
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T120650-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-accord-8e1867",
+      "directory": "var/template-runs/20261008T120650-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-accord-8e1867",
+      "template": "native-rainfall-reconciliation",
+      "instance": "service-area--weeks-1-2",
+      "system": "investigation-astra-accord",
+      "system_sha256": "5a8a2df177db4c34bd7bdfa9aface255dd9f4a0f0f69b4a21e99ec9af10b1a9b",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "spec_version": 1,
+      "fingerprint": "8fa15410fc77b64ae1b57ac5d6212c3f12559f697ac52dda7306f3744960d417",
+      "status": "token_limit",
+      "contract_status": "historical; added response hooks unused; original verdict preserved",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "skill": null,
+      "seconds": 241.8050814169692,
+      "tool_calls": 7,
+      "usage": {
+        "input_tokens": 164573,
+        "cached_input_tokens": 124544,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5714,
+        "reasoning_output_tokens": 342,
+        "total_tokens": 170287
+      },
+      "collection_recovery": null,
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 9,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 7,
+          "substrate_commands": 2,
+          "ran": 0,
+          "read": 1,
+          "listed": 1,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": 2,
+          "paths": [
+            "/substrate/adapter.py"
+          ],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {
+          "africas2s": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          },
+          "acmaddl": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          },
+          "sheerwater": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          }
+        },
+        "image_paths": {
+          "/opt/accord-current/docs": {
+            "commands_naming": 2,
+            "of_which_failed": 0,
+            "first_step": 1,
+            "used": true
+          }
+        },
+        "commands": 7,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "declared_submission_imports": [
+        "argparse",
+        "json",
+        "numpy",
+        "pathlib",
+        "xarray"
+      ],
+      "import_note": "Static imports in submitted Python; command-log tooling use is separate. Imports alone do not prove benefit.",
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 9236,
+            "output_tokens": 390,
+            "list_price_usd": 0.0704012
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8",
+      "directory": "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8",
+      "template": "seasonal-forecast-audit",
+      "instance": "case-c",
+      "system": "investigation-astra-accord",
+      "system_sha256": "5a8a2df177db4c34bd7bdfa9aface255dd9f4a0f0f69b4a21e99ec9af10b1a9b",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "spec_version": 1,
+      "fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+      "status": "submitted",
+      "contract_status": "historical v1; objective path corrected in v2; original verdict preserved",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "skill": {
+        "hindcast": {
+          "split": "hindcast",
+          "rmse_mm": 166.1334589560595,
+          "climatology_rmse_mm": 165.8271154115503,
+          "skill_vs_climatology": -0.0018473670228715822,
+          "years": 15,
+          "cells": 12
+        }
+      },
+      "seconds": 271.59239316696767,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 112703,
+        "cached_input_tokens": 76288,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7148,
+        "reasoning_output_tokens": 1469,
+        "total_tokens": 119851
+      },
+      "collection_recovery": null,
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 29,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 5,
+          "substrate_commands": 0,
+          "ran": 0,
+          "read": 0,
+          "listed": 0,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": null,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {
+          "africas2s": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          },
+          "acmaddl": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          },
+          "sheerwater": {
+            "commands_importing": 0,
+            "first_step": null,
+            "submitted_files_importing": [],
+            "used": false
+          }
+        },
+        "image_paths": {
+          "/opt/accord-current/docs": {
+            "commands_naming": 2,
+            "of_which_failed": 0,
+            "first_step": 1,
+            "used": true
+          }
+        },
+        "commands": 5,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "declared_submission_imports": [
+        "argparse",
+        "candidate_science",
+        "json",
+        "numpy",
+        "pathlib",
+        "xarray"
+      ],
+      "import_note": "Static imports in submitted Python; command-log tooling use is separate. Imports alone do not prove benefit.",
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 16448,
+            "output_tokens": 495,
+            "list_price_usd": 0.13019719999999999
+          }
+        ]
+      }
+    },
+    {
+      "run": "20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4",
+      "directory": "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4",
+      "template": "seasonal-forecast-audit",
+      "instance": "case-c",
+      "system": "investigation-astra-python",
+      "system_sha256": "a6a9426e88df5295ef6b0235020ef04e0c82ffcd01f9616ae02bc22498a51f8e",
+      "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+      "spec_version": 1,
+      "fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+      "status": "submitted",
+      "contract_status": "historical v1; objective path corrected in v2; original verdict preserved",
+      "completion": "pass",
+      "computed": "pass",
+      "supplementary": "pass",
+      "skill": {
+        "hindcast": {
+          "split": "hindcast",
+          "rmse_mm": 166.1334589560595,
+          "climatology_rmse_mm": 165.8271154115503,
+          "skill_vs_climatology": -0.0018473670228715822,
+          "years": 15,
+          "cells": 12
+        }
+      },
+      "seconds": 247.01362795801833,
+      "tool_calls": 5,
+      "usage": {
+        "input_tokens": 79759,
+        "cached_input_tokens": 58240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7088,
+        "reasoning_output_tokens": 558,
+        "total_tokens": 86847
+      },
+      "collection_recovery": null,
+      "failed_checks": [],
+      "unresolved_checks": [],
+      "check_counts": {
+        "pass": 29,
+        "fail": 0,
+        "unresolved": 0
+      },
+      "substrate_use": {
+        "mounted_files": {
+          "commands": 5,
+          "substrate_commands": 0,
+          "ran": 0,
+          "read": 0,
+          "listed": 0,
+          "entered": 0,
+          "ran_ok": 0,
+          "ran_failed": 0,
+          "first_step": null,
+          "paths": [],
+          "unreadable_log_lines": 0,
+          "method": "command-text lower bound; use is not quality"
+        },
+        "libraries": {},
+        "image_paths": {},
+        "commands": 5,
+        "method": "Mounted files: command text naming /substrate paths (assessment.substrate_use). Libraries: import statements in executed command text and in submitted code. Image paths: command text naming them. All are lower bounds; use is not quality."
+      },
+      "sandbox": {
+        "passed": true,
+        "network": "none",
+        "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+        "mounts": [
+          {
+            "destination": "/work",
+            "writable": true
+          },
+          {
+            "destination": "/task",
+            "writable": false
+          },
+          {
+            "destination": "/substrate",
+            "writable": false
+          },
+          {
+            "destination": "/work/inputs",
+            "writable": false
+          }
+        ],
+        "private_references_mounted": false,
+        "model_credentials_mounted": false,
+        "trusted_controller_adapter": true,
+        "state": "pass"
+      },
+      "declared_submission_imports": [
+        "argparse",
+        "importlib",
+        "json",
+        "numpy",
+        "pathlib",
+        "run",
+        "subprocess",
+        "sys",
+        "xarray"
+      ],
+      "import_note": "Static imports in submitted Python; command-log tooling use is separate. Imports alone do not prove benefit.",
+      "judge": {
+        "id": "ca1a70a82ddb4947",
+        "model": "claude-opus-5-5",
+        "effort": "high",
+        "requests": 1,
+        "unavailable": false,
+        "usage": [
+          {
+            "input_tokens": 17335,
+            "output_tokens": 813,
+            "list_price_usd": 0.14365319999999998
+          }
+        ]
+      }
+    }
+  ]
+}

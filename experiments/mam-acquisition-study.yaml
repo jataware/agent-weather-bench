@@ -1,0 +1,57 @@
+schema_version: 1
+purpose: Test a canonical retrieval-to-outlook workflow and whether native weather tools help a smaller backbone.
+template: mam-multimodel-outlook
+instance: kenya-interior--mam-2016
+initial_systems: [mam-luna-python, mam-luna-required-accord]
+conditional_system: mam-astra-python
+concurrency: 2
+agent_retries: 0
+initial_attempt_limit: 2
+conditional_attempt_limit: 1
+context_budget_diagnostic:
+  trigger: Both initial attempts hit 100k cumulative context before completion; no scientific capability conclusion is supported.
+  systems: [mam-luna-python-context-budget, mam-luna-required-accord-context-budget]
+  new_attempt_limit: 2
+  automatic_retries: 0
+  limits: {max_total_tokens: 350000, max_uncached_and_output_tokens: 100000, max_output_tokens: 20000}
+  unchanged: [scientific_task, source_snapshot, backbone, reasoning_effort, instructions, compute, wall_time, tool_calls]
+  accounting: Keep the original two budget failures and their usage; report both stages and failures per completed forecast.
+environment_recovery:
+  record: experiments/mam-launch-recovery-2026-10-08.json
+  scope: One recovery per arm for verified missing CODEX_BINARY before adapter spawn; no inference occurred in those original launches.
+paid_api_cap_usd: 100
+paid_api_spend_to_date_usd: 0
+inference: Existing authenticated ChatGPT subscription, no API fallback.
+preconditions:
+  - All four native sources and monthly observations hash-verified, forecast-year observations excluded from provider.
+  - Known-correct end-to-end control passes; independent references agree over all sixteen readings.
+  - Native acmadDL and AfricaS2S operations reproduce the prescribed science on actual inputs.
+  - Planted scientific faults and cached-answer controls are caught as declared.
+  - Actual Docker acquisition boundary and changed-source replay tests pass.
+stop_on: [infrastructure_failure, evaluator_defect, unclassified_answer]
+conditional_frontier_attempt: Only after diagnosing a smaller-model scientific failure under a functioning grader.
+selection: >-
+  Luna already completed the prior CCA reproduction with Python and ACCORD.
+  The new pair changes the job to actual retrieval and a forecast recipe supported
+  by the native toolkit. Both arms use the same backbone, scientific task, source
+  snapshot, budgets and matched general dependencies. The ACCORD condition requires
+  substantive normalization and calibration calls; ignored-tool attempts remain
+  assigned to that condition and their compliance is reported. Astra is a staged
+  capability comparison if the smaller backbone exposes a scientific boundary.
+  Rhiza remains relevant, but its current skills emphasize provider products and
+  their readers; adding it now would not isolate this native calibration question.
+measures:
+  - Scientific completion and each failing or unresolved instrument.
+  - Supplementary prose review and descriptive withheld-season skill separately.
+  - Initial source retrieval and replay retrieval hashes, bytes and time separately.
+  - Submission wall time, command count and final provider token counters.
+  - Uncached input, cached input and output tokens separately; cumulative token counters counted once.
+  - Observed substantive package use from executable code and traces, not import evidence alone.
+  - Cost per valid completion includes unsuccessful assigned attempts; subscription invoice cost remains unknown.
+interpretation: >-
+  One attempt per condition is a debugging comparison, not causal evidence or
+  a stable ranking. Required tools are an experimental condition. Source access
+  is frozen HTTP rather than live CDS/acmadDL fetch, so provider-download benefit
+  cannot be claimed. Do not expand automatically if both arms pass or if a grading
+  defect is found. Repeat informative findings on another independently graded
+  instance before calling them tooling benefit or hard capability boundary.

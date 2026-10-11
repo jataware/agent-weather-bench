@@ -1,0 +1,408 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-08T15:28:23.275187+00:00",
+  "state": "pass",
+  "template": "weeks34-rainfall",
+  "spec_version": 4,
+  "fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+  "instance": {
+    "id": "final-2018-2021--all-cells",
+    "training_boundary": "2015-01-01",
+    "development_boundary": "2018-01-01",
+    "final_boundary": "2022-01-01",
+    "longitude_limit": null
+  },
+  "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+  "certificate_sha256": "26d01131f76dd35b9888e6b62404869944270656a20a8d6184ec53e4eb0f687d",
+  "certificate_automatic_tests_passed": true,
+  "domain_scientist_certified": false,
+  "interface": "ToolSandbox.score_development \u2192 DevelopmentFeedback.query \u2192 runner.development_scorer",
+  "actor_solver_execution": "Docker only; two original actor executions, plus controller Docker validity replays",
+  "actor_boundary": {
+    "passed": true,
+    "network": "none",
+    "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+    "mounts": [
+      {
+        "destination": "/work",
+        "writable": true
+      },
+      {
+        "destination": "/task",
+        "writable": false
+      },
+      {
+        "destination": "/substrate",
+        "writable": false
+      },
+      {
+        "destination": "/work/inputs",
+        "writable": false
+      }
+    ],
+    "private_references_mounted": false,
+    "model_credentials_mounted": false,
+    "trusted_controller_adapter": true
+  },
+  "execute_results": [
+    {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 2.911679374985397,
+      "truncated": false
+    },
+    {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "seconds": 1.9445730419829488,
+      "truncated": false
+    }
+  ],
+  "public_tool_replies": [
+    {
+      "exit_code": 0,
+      "stdout": "{\"split\": \"development\", \"rmse_mm\": 11.929103525870605, \"raw_model_rmse_mm\": 14.889753146548957, \"climatology_rmse_mm\": 12.051599332178203, \"skill_vs_raw_model\": 0.19883805940493715, \"skill_vs_climatology\": 0.010164278029101803}",
+      "stderr": "",
+      "prediction_sha256": "57482463cf9170e9bdd8fdf136272a9095c84e164fa671bc1be353b595d119b0",
+      "seconds": 0.14623524993658066,
+      "feedback_scope": "development_only",
+      "feedback_query": 1,
+      "feedback_remaining": 4
+    },
+    {
+      "exit_code": 0,
+      "stdout": "{\"split\": \"development\", \"rmse_mm\": 11.929103525870605, \"raw_model_rmse_mm\": 14.889753146548957, \"climatology_rmse_mm\": 12.051599332178203, \"skill_vs_raw_model\": 0.19883805940493715, \"skill_vs_climatology\": 0.010164278029101803}",
+      "stderr": "",
+      "prediction_sha256": "57482463cf9170e9bdd8fdf136272a9095c84e164fa671bc1be353b595d119b0",
+      "seconds": 0.03205066698137671,
+      "feedback_scope": "development_only",
+      "feedback_query": 2,
+      "feedback_remaining": 3
+    },
+    {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "The development forecast could not be scored (ValueError); check the store's layout and its name",
+      "seconds": 0.0001646250020712614,
+      "feedback_scope": "development_only",
+      "feedback_query": 3,
+      "feedback_remaining": 2
+    },
+    {
+      "exit_code": 0,
+      "stdout": "{\"split\": \"development\", \"rmse_mm\": 11.929103525870605, \"raw_model_rmse_mm\": 14.889753146548957, \"climatology_rmse_mm\": 12.051599332178203, \"skill_vs_raw_model\": 0.19883805940493715, \"skill_vs_climatology\": 0.010164278029101803}",
+      "stderr": "",
+      "prediction_sha256": "57482463cf9170e9bdd8fdf136272a9095c84e164fa671bc1be353b595d119b0",
+      "seconds": 0.023298208019696176,
+      "feedback_scope": "development_only",
+      "feedback_query": 4,
+      "feedback_remaining": 1
+    },
+    {
+      "exit_code": 0,
+      "stdout": "{\"split\": \"development\", \"rmse_mm\": 11.929103525870605, \"raw_model_rmse_mm\": 14.889753146548957, \"climatology_rmse_mm\": 12.051599332178203, \"skill_vs_raw_model\": 0.19883805940493715, \"skill_vs_climatology\": 0.010164278029101803}",
+      "stderr": "",
+      "prediction_sha256": "57482463cf9170e9bdd8fdf136272a9095c84e164fa671bc1be353b595d119b0",
+      "seconds": 0.021184084005653858,
+      "feedback_scope": "development_only",
+      "feedback_query": 5,
+      "feedback_remaining": 0
+    },
+    {
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Development feedback submission limit reached",
+      "feedback_scope": "development_only",
+      "feedback_remaining": 0
+    }
+  ],
+  "feedback_public_summary": {
+    "scope": "development_only",
+    "max_submissions": 5,
+    "limit_denials": 1,
+    "requests": [
+      {
+        "query": 1,
+        "prediction_file": "results.zarr",
+        "status": "scored",
+        "prediction_sha256": "57482463cf9170e9bdd8fdf136272a9095c84e164fa671bc1be353b595d119b0",
+        "bytes": 28390,
+        "metrics": {
+          "split": "development",
+          "rmse_mm": 11.929103525870605,
+          "raw_model_rmse_mm": 14.889753146548957,
+          "climatology_rmse_mm": 12.051599332178203,
+          "skill_vs_raw_model": 0.19883805940493715,
+          "skill_vs_climatology": 0.010164278029101803
+        },
+        "seconds": 0.14623524993658066
+      },
+      {
+        "query": 2,
+        "prediction_file": "results.zarr",
+        "status": "scored",
+        "prediction_sha256": "57482463cf9170e9bdd8fdf136272a9095c84e164fa671bc1be353b595d119b0",
+        "bytes": 28390,
+        "metrics": {
+          "split": "development",
+          "rmse_mm": 11.929103525870605,
+          "raw_model_rmse_mm": 14.889753146548957,
+          "climatology_rmse_mm": 12.051599332178203,
+          "skill_vs_raw_model": 0.19883805940493715,
+          "skill_vs_climatology": 0.010164278029101803
+        },
+        "seconds": 0.03205066698137671
+      },
+      {
+        "query": 3,
+        "prediction_file": "../escape.zarr",
+        "status": "failed",
+        "seconds": 0.0001646250020712614,
+        "error_type": "ValueError"
+      },
+      {
+        "query": 4,
+        "prediction_file": "results.zarr",
+        "status": "scored",
+        "prediction_sha256": "57482463cf9170e9bdd8fdf136272a9095c84e164fa671bc1be353b595d119b0",
+        "bytes": 28390,
+        "metrics": {
+          "split": "development",
+          "rmse_mm": 11.929103525870605,
+          "raw_model_rmse_mm": 14.889753146548957,
+          "climatology_rmse_mm": 12.051599332178203,
+          "skill_vs_raw_model": 0.19883805940493715,
+          "skill_vs_climatology": 0.010164278029101803
+        },
+        "seconds": 0.023298208019696176
+      },
+      {
+        "query": 5,
+        "prediction_file": "results.zarr",
+        "status": "scored",
+        "prediction_sha256": "57482463cf9170e9bdd8fdf136272a9095c84e164fa671bc1be353b595d119b0",
+        "bytes": 28390,
+        "metrics": {
+          "split": "development",
+          "rmse_mm": 11.929103525870605,
+          "raw_model_rmse_mm": 14.889753146548957,
+          "climatology_rmse_mm": 12.051599332178203,
+          "skill_vs_raw_model": 0.19883805940493715,
+          "skill_vs_climatology": 0.010164278029101803
+        },
+        "seconds": 0.021184084005653858
+      }
+    ],
+    "final_score_exposed": false,
+    "final_observations_exposed": false
+  },
+  "scorer_invocations": [
+    {
+      "store": "controller/development-feedback/prediction-001.zarr",
+      "metrics": {
+        "split": "development",
+        "rmse_mm": 11.929103525870605,
+        "raw_model_rmse_mm": 14.889753146548957,
+        "climatology_rmse_mm": 12.051599332178203,
+        "skill_vs_raw_model": 0.19883805940493715,
+        "skill_vs_climatology": 0.010164278029101803
+      }
+    },
+    {
+      "store": "controller/development-feedback/prediction-002.zarr",
+      "metrics": {
+        "split": "development",
+        "rmse_mm": 11.929103525870605,
+        "raw_model_rmse_mm": 14.889753146548957,
+        "climatology_rmse_mm": 12.051599332178203,
+        "skill_vs_raw_model": 0.19883805940493715,
+        "skill_vs_climatology": 0.010164278029101803
+      }
+    },
+    {
+      "store": "controller/development-feedback/prediction-004.zarr",
+      "metrics": {
+        "split": "development",
+        "rmse_mm": 11.929103525870605,
+        "raw_model_rmse_mm": 14.889753146548957,
+        "climatology_rmse_mm": 12.051599332178203,
+        "skill_vs_raw_model": 0.19883805940493715,
+        "skill_vs_climatology": 0.010164278029101803
+      }
+    },
+    {
+      "store": "controller/development-feedback/prediction-005.zarr",
+      "metrics": {
+        "split": "development",
+        "rmse_mm": 11.929103525870605,
+        "raw_model_rmse_mm": 14.889753146548957,
+        "climatology_rmse_mm": 12.051599332178203,
+        "skill_vs_raw_model": 0.19883805940493715,
+        "skill_vs_climatology": 0.010164278029101803
+      }
+    }
+  ],
+  "development_score": {
+    "split": "development",
+    "rmse_mm": 11.929103525870605,
+    "raw_model_rmse_mm": 14.889753146548957,
+    "climatology_rmse_mm": 12.051599332178203,
+    "skill_vs_raw_model": 0.19883805940493715,
+    "skill_vs_climatology": 0.010164278029101803
+  },
+  "original_measured_claim": 11.929103525870605,
+  "assessment": {
+    "path": "var/review/level2-preflight-20261008/assessment.json",
+    "sha256": "7030012a89eb71e2902b959a503d18541ff579280a35f5761b0906aab29c7d55",
+    "computed_outcome": "pass",
+    "outcome": "pass",
+    "checks": {
+      "claim.development_rmse_mm": "pass",
+      "coverage": "pass",
+      "envelope": "pass",
+      "feedback.limit": "pass",
+      "interpretation.consistency_across_artifacts": "unresolved",
+      "interpretation.generalization": "unresolved",
+      "interpretation.statistical_support": "unresolved",
+      "invariant.magnitude_of_a_14_day_total": "pass",
+      "invariant.totals_not_negative": "pass",
+      "probe.no_future_information": "pass",
+      "probe.replay": "pass",
+      "probe.responds_to_inputs": "pass"
+    },
+    "skill": {
+      "final": {
+        "split": "final",
+        "rmse_mm": 14.015441824941522,
+        "raw_model_rmse_mm": 14.890051309463692,
+        "climatology_rmse_mm": 14.281531566506088,
+        "skill_vs_raw_model": 0.058737842223974934,
+        "skill_vs_climatology": 0.01863173710224575,
+        "issues": 208,
+        "cells": 9,
+        "observations_are_public_history": true
+      },
+      "development": {
+        "split": "development",
+        "rmse_mm": 11.929103525870605,
+        "raw_model_rmse_mm": 14.889753146548957,
+        "climatology_rmse_mm": 12.051599332178203,
+        "skill_vs_raw_model": 0.19883805940493715,
+        "skill_vs_climatology": 0.010164278029101803,
+        "issues": 147,
+        "cells": 9,
+        "observations_are_public_history": true
+      }
+    }
+  },
+  "request_budget": {
+    "allowed": 5,
+    "reserved_requests": 5,
+    "malformed_requests_counted": 1,
+    "actual_score_computations": 4,
+    "additional_denials": 1,
+    "sixth_request_returned_score": false
+  },
+  "final_score_exposed_to_actor": false,
+  "final_observations_exposed_to_actor": false,
+  "template_unchanged": true,
+  "model_artifacts_modified": false,
+  "model_calls": 0,
+  "paid_api_calls": 0,
+  "evidence": {
+    "folder": "var/review/level2-preflight-20261008",
+    "input_manifest": {
+      "data-notes.txt": {
+        "sha256": "09f7e1fa4f17947326754741a715a7d899922cda3ed2d6482ecec8a314dbd32f",
+        "bytes": 1531
+      },
+      "development-features.nc": {
+        "sha256": "be8133c20b85754377356c4916daa150eaca83fc2296ea1755c0fea269dc9f21",
+        "bytes": 16892
+      },
+      "final-features.nc": {
+        "sha256": "dce9513eb3d8690cdf951a212f18ffeb949e743ea74cab805e4d5d22ec720a98",
+        "bytes": 19576
+      },
+      "instance.json": {
+        "sha256": "341d2f5192262cd652577b16ee67d2ced5eedb71a0d7ad172694777e7ccec6a1",
+        "bytes": 152
+      },
+      "training.nc": {
+        "sha256": "f51accc7617926b6f11ce391166f76db25981e0d7264417bd43c50e8d2fd083b",
+        "bytes": 84466
+      }
+    },
+    "frozen_manifest": {
+      "answer.json": {
+        "sha256": "c3c08775941568f63995525a57d960be4e59e4e74c13cec43551b49b0de1e246",
+        "bytes": 183
+      },
+      "report.md": {
+        "sha256": "5b0b858aded3d31ff3a2c566f225cb4027e9e433061a657a0d543e51d2e482ba",
+        "bytes": 137
+      },
+      "results.zarr/development_issue/c/0": {
+        "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+        "bytes": 258
+      },
+      "results.zarr/development_issue/zarr.json": {
+        "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+        "bytes": 757
+      },
+      "results.zarr/development_mm/c/0/0": {
+        "sha256": "78abf16f9527a7978bda2555c5aab61fff0bf82468133dde7b85e7c98c87f32a",
+        "bytes": 9989
+      },
+      "results.zarr/development_mm/zarr.json": {
+        "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+        "bytes": 745
+      },
+      "results.zarr/final_issue/c/0": {
+        "sha256": "b83622758e7b316f7870b8922763c500ba4a2b2b7c3193e18ad84b7ad2b006e4",
+        "bytes": 328
+      },
+      "results.zarr/final_issue/zarr.json": {
+        "sha256": "27faf69acbd485ccdf0ffb4bf3ef98933f3e8ba5018c2a3cd22f279b511bf486",
+        "bytes": 751
+      },
+      "results.zarr/final_mm/c/0/0": {
+        "sha256": "4a627d8229f0c09a7a1c35089e094b9f72eb715e5c0ed54ddddacc4e17f085eb",
+        "bytes": 14061
+      },
+      "results.zarr/final_mm/zarr.json": {
+        "sha256": "9a3e70a62650e05071976db2c957cccc2011db557273c8e360578ce00ee828e4",
+        "bytes": 739
+      },
+      "results.zarr/location/c/0": {
+        "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+        "bytes": 40
+      },
+      "results.zarr/location/zarr.json": {
+        "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+        "bytes": 656
+      },
+      "results.zarr/zarr.json": {
+        "sha256": "36615682d5be9646729635067a75185212eb0c48d708ef06ad34c1f58dd587d2",
+        "bytes": 66
+      },
+      "solve.py": {
+        "sha256": "674666426e53f660ba2f2c6ee963d56407ba58ff7d958df72d6b14e5430c8a0f",
+        "bytes": 3767
+      },
+      "variant.json": {
+        "sha256": "56b3abdedc5e822d4c0b9635d9b836fb66d9b1f976839e82dff2f8c83c434064",
+        "bytes": 55
+      }
+    },
+    "feedback_ledger_sha256": "bdedbc553b74e1f548796a9a1a2314698bdaf6f72cd77b14f4f73dc7f6a9ec94"
+  },
+  "blockers": [],
+  "caveats": [
+    "Public historical targets, not an untouched holdout.",
+    "Outcome task permits arbitrary valid methods; no prescribed statistical recipe.",
+    "No domain scientist certification."
+  ]
+}

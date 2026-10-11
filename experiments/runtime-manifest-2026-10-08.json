@@ -1,0 +1,139 @@
+{
+  "africas2s": {
+    "commit": "4f8526a32232f9c9af400a01e5a6f103a865c735",
+    "repository": "/Users/ezekielbarnett/Developer/ACCORD/africas2s"
+  },
+  "acmadDL": {
+    "commit": "e751bc231ab0ed8fb1a95bfad2971d6202a03431",
+    "repository": "/Users/ezekielbarnett/Developer/ACCORD/acmadDL"
+  },
+  "wheels": {
+    "africas2s-0.2.0-py3-none-any.whl": "a186e31ace2904c820fe2463709f639f48b34bef432eedb8f4a8bed4c84d39de",
+    "acmaddl-0.2.0-py3-none-any.whl": "9ff97aa0fafb372e53f55d38ac711ee08965f9e5d14b60e11045ca23f61d2960"
+  },
+  "images": {
+    "python": "sha256:f2f6305d7a7b1a78a7dd39bdd08a91e06d3ed67b2b024a15b1dbbe5ef21fa678",
+    "rhiza": "sha256:e234ed6b2a9ef389eb73fd8719135ae790ff87d1e6dbb97e58120870473937c7",
+    "accord": "sha256:cfbde79dea2813f21e192e9671a56f7de77ccc1c768d378675850ca3569b837a"
+  },
+  "workaround": "Initialize pyproj before xarray backend discovery; retains all original packages.",
+  "io_probe": "var/review/runtime-io-import-order.json",
+  "verified_environment": {
+    "python": {
+      "python": "3.12.14 (main, Sep 19 2026, 01:11:14) [GCC 14.2.0]",
+      "packages": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "xarray": "2026.7.0",
+        "netCDF4": "1.7.4",
+        "h5py": "3.16.0",
+        "h5netcdf": "1.8.1",
+        "zarr": "3.4.0",
+        "pandas": "3.0.6",
+        "scikit-learn": null,
+        "statsmodels": null,
+        "pyproj": "3.8.0",
+        "cfgrib": "0.9.15.1",
+        "eccodeslib": "2.49.0.30",
+        "rasterio": "1.5.2"
+      },
+      "weather_modules": {
+        "africas2s": false,
+        "acmaddl": false,
+        "weather_skills_core": false
+      }
+    },
+    "rhiza": {
+      "python": "3.12.14 (main, Sep 19 2026, 01:11:14) [GCC 14.2.0]",
+      "packages": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "xarray": "2026.7.0",
+        "netCDF4": "1.7.4",
+        "h5py": "3.16.0",
+        "h5netcdf": "1.8.1",
+        "zarr": "3.4.0",
+        "pandas": "3.0.6",
+        "scikit-learn": null,
+        "statsmodels": null,
+        "pyproj": "3.8.0",
+        "cfgrib": "0.9.15.1",
+        "eccodeslib": "2.49.0.30",
+        "rasterio": "1.5.2"
+      },
+      "weather_modules": {
+        "africas2s": false,
+        "acmaddl": false,
+        "weather_skills_core": true
+      }
+    },
+    "accord": {
+      "python": "3.12.14 (main, Sep 19 2026, 01:11:14) [GCC 14.2.0]",
+      "packages": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "xarray": "2026.7.0",
+        "netCDF4": "1.7.4",
+        "h5py": "3.16.0",
+        "h5netcdf": "1.8.1",
+        "zarr": "3.4.0",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "statsmodels": "0.15.0",
+        "pyproj": "3.8.0",
+        "cfgrib": "0.9.15.1",
+        "eccodeslib": "2.49.0.30",
+        "rasterio": "1.5.2"
+      },
+      "weather_modules": {
+        "africas2s": true,
+        "acmaddl": true,
+        "weather_skills_core": false
+      }
+    }
+  },
+  "package_differences": {
+    "scikit-learn": {
+      "python": null,
+      "rhiza": null,
+      "accord": "1.9.1"
+    },
+    "statsmodels": {
+      "python": null,
+      "rhiza": null,
+      "accord": "0.15.0"
+    }
+  },
+  "matched_core_packages": [
+    "numpy",
+    "scipy",
+    "xarray",
+    "netCDF4",
+    "h5py",
+    "h5netcdf",
+    "zarr",
+    "pandas",
+    "pyproj",
+    "cfgrib",
+    "eccodeslib",
+    "rasterio"
+  ],
+  "image_history": [
+    {
+      "arm": "rhiza",
+      "image": "sha256:edd28272c516d699f1e3208da40a0f63f285ae10bc577e49a788b5d9669b50f7",
+      "use": "Pre-reader-repair functional diagnostic; no focused agent attempt used this arm."
+    }
+  ],
+  "rhiza_reader_patch": {
+    "base_image": "sha256:edd28272c516d699f1e3208da40a0f63f285ae10bc577e49a788b5d9669b50f7",
+    "module": "weather_skills_core/decorator.py",
+    "sha256_after": "a142bf8e8bd94d1340656b1ff8fd752dab4c59a2ab3ca26be4fb211283d5de8d",
+    "change": "Read with consolidated=None rather than requiring optional consolidated metadata. No scientific transform changes.",
+    "dockerfile": "runtime/Dockerfile.rhiza-reader",
+    "original_diagnostics": "experiments/tooling-diagnostics-before-reader-repair-2026-10-08.json",
+    "functional_probe": "experiments/tooling-diagnostics-2026-10-08.json",
+    "native_probe": "experiments/rhiza-reader-native-probe-2026-10-08.json",
+    "package_versions": "Inherited unchanged from the verified pre-reader-repair Rhiza image; this patch edits only decorator.py."
+  }
+}

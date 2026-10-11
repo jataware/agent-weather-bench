@@ -1,0 +1,77 @@
+source_category: frozen_real_member_resolved_retrospective_seasonal_forecasts
+source_snapshot: var/private/templates/mam-multimodel-outlook
+source_weather_is_synthetic: false
+delivery_form: Curator NetCDF serialization of decoded native-schema xarray caches; not original provider GRIB or COG bytes.
+sources:
+  - id: c3s-seasonal-monthly
+    url: https://cds.climate.copernicus.eu/datasets/seasonal-monthly-single-levels
+    product: C3S seasonal forecast monthly single-level data
+    originating_centres:
+      - {id: ecmwf, product_id: c3s/ecmwf-monthly, system: '51', members: 25}
+      - {id: cmcc, product_id: c3s/cmcc, system: '35', members: 40}
+      - {id: ukmo, product_id: c3s/ukmo, system: '604', members: 28}
+      - {id: meteofrance, product_id: c3s/meteofrance, system: '9', members: 31}
+    variable: Time-mean total precipitation rate (tprate)
+    native_units: m s**-1
+    initialization: Every February 1, 1993 through 2016
+    forecastMonth: [2, 3, 4]
+    lead_meaning: One-based forecast calendar months; initialization month is 1, so these leads verify in March, April and May.
+    original_cache_request:
+      product_type: monthly_mean
+      variable: total_precipitation
+      init_month: 2
+      years: [1993, 2016]
+      region_bbox_latlon: [-3.0, 3.0, 36.0, 42.0]
+    frozen_native_grid:
+      latitude: [2.5, 1.5, 0.5, -0.5, -1.5, -2.5]
+      longitude: [36.5, 37.5, 38.5, 39.5, 40.5, 41.5]
+    source_history: Native cfgrib decoding histories preserved in NetCDF attributes; histories date to June 19, 2026.
+    processing: No rainfall rescaling, lead aggregation, spatial interpolation, ensemble reduction, coordinate reordering or synthetic members in these source serializations.
+  - id: chirps-v2-monthly
+    url: https://www.chc.ucsb.edu/data/chirps
+    source_url_pattern: https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/cogs/chirps-v2.0.{year}.{month:02d}.cog
+    product: CHIRPS v2.0 monthly accumulated rainfall, native 0.05-degree grid
+    native_units: mm/month
+    units_annotation: The decoded raw xarray cache omitted units. Curator adds mm/month from the monthly product contract without changing any values.
+    original_cache_request:
+      years: [1993, 2016]
+      region_bbox_latlon: [-12.0, 15.0, 22.0, 52.0]
+    delivery_subset:
+      months: [3, 4, 5]
+      latitude_count: 104
+      longitude_count: 104
+      latitude_first_last: [2.5749992933124304, -2.5750007834285498]
+      longitude_first_last: [36.42500322498381, 41.57500330172479]
+    processing:
+      - Retain native float32 monthly totals and missing cells without rescaling, filling or interpolation.
+      - Crop to native coordinates bracketing the full model grid by at least 0.075 degrees.
+      - Select March, April and May; serialize training observations through 2015 separately from private 2016 observations.
+      - Preserve native coordinate names, order and source attributes; add only the omitted monthly-total unit annotation.
+    metadata_limit: TIFF tags retained by the aggregated raw cache describe the first raster. Explicit coordinate arrays define the cropped NetCDF grid.
+  - id: acmaddl-catalogue
+    repository: https://github.com/ACMAD-Niamey/acmadDL
+    revision: e751bc231ab0ed8fb1a95bfad2971d6202a03431
+    locators: [src/acmaddl/catalog.yaml, src/acmaddl/normalize.py]
+    evidence: Reviewed catalogue metadata for native model units, CHIRPS monthly totals, coordinate aliases and calendar-weighted source normalization; original data were already cached by legacy rosetta.
+freeze_checks:
+  - Restricted climate-object unpickler in a digest-pinned isolated nonroot container, exact-file read-only mounts, no network, one scientific thread.
+  - Verify all initialization dates, forecast months, model member counts, common native coordinates, physical units and finite nonnegative model values.
+  - Hash original cache bytes and decoded dataset content, retaining cache request keys and native decoding histories.
+  - Assert identical model arrays, coordinates, dtypes and attributes after NetCDF serialization/read-back.
+  - Assert identical cropped CHIRPS arrays and coordinates after serialization/read-back; unit annotation is recorded explicitly.
+  - Verify every training and private target monthly observation has finite bilinear support at all eighteen inland service centres.
+  - Verify frozen file hashes on reuse; never silently regenerate an existing manifest.
+visibility:
+  provider: Four native model files, pre-2016 CHIRPS monthly observations, provenance and hash catalogue.
+  controller_only: Every 2016 CHIRPS observation and detailed decoded-cache diagnostics.
+service_scope:
+  latitude: [-2.5, -1.5, -0.5, 0.5, 1.5, 2.5]
+  longitude: [36.5, 37.5, 38.5]
+  description: Small inland Kenya service window, eighteen point-interpolated forecast centres; not a country-wide area-mean product.
+limitations:
+  - These are retrospective final-vintage data. No claim that the reforecasts or final CHIRPS observations were available at their nominal historical issue times.
+  - Held-out 2016 model predictors are reforecasts from the same archive, not a recovered 2016 operational forecast bulletin.
+  - Original GRIB and COG byte files are not retained in this snapshot; raw-cache hashes and provider-native decoding metadata establish the available lineage.
+  - The four models share one native grid and one initialization month. This task does not exercise full twelve-month cyclic smoothed calibration.
+  - Earlier target-year instances require a fresh provider cutoff before that target year; the default provider snapshot is for 2016 only.
+redistribution_status: Pending source and data-rights review; internal development only.

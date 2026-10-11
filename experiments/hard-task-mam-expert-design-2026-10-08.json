@@ -1,0 +1,17 @@
+{
+  "template": "mam-forecast-synthesis",
+  "status": "predeclared before withheld scoring or model inference",
+  "scientific_question": "Choose a calibrated combination from genuine training hindcasts and issue fixed-calibration blind multi-year seasonal outlooks",
+  "training_years": [1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004],
+  "forecast_years": [2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],
+  "expert_candidates": {"combination": ["equal_models","ecmwf","cmcc","ukmo","meteofrance"], "shrinkage_alpha": [0,0.25,0.5,0.75,1]},
+  "expert_fit": "Per-cell OLS of observed seasonal rain against each centre ensemble mean; Gaussian predictive variance residual SSE/(n-2) times 1+1/n+(x_new-xbar)^2/Sxx. Zero Sxx gives intercept-only with leverage zero. Variance floor 1e-12 square mm. Fixed observational terciles, linear quantiles.",
+  "selection": "Mean annual RPS on chronological development years 2000-2004, refitting using only prior 1993+ years in each fold. Stable exact ties use declaration order (equal_models first, lower alpha first). Selected method then fits all 1993-2004 observations once.",
+  "metric": "Unnormalized ordered three-category RPS, sum over all three cumulative category probabilities, range 0-2; mean cells within each year then equally mean 12 years. Category equality goes to normal.",
+  "performance_target": "RPS <= min(frozen TRAIN-selected expert RPS, uniform-climatology RPS) + 1e-6. Performance never changes submission validity.",
+  "inference_gate": "Skip Luna if expert fails to improve private climatology by at least 0.01 absolute RPS, or if alpha=0 is selected. This is an economical informativeness gate, not a benchmark validity requirement. Do not change years, selection, target or scientific method after scoring.",
+  "uncertainty": "Paired annual RPS differences, 12-year sample; deterministic circular moving-block bootstrap length2, 2000 resamples, seed 8102026. Descriptive interval, not a significance gate.",
+  "data_scope": "Curator-normalized seasonal mm from genuine frozen C3S and CHIRPS monthly data. HTTP catalogue acquisition retained. Not a full native-format ingestion task, sequential updating experiment, or real-time-vintage evaluation.",
+  "attempt_budget": "At most one Luna attempt on this frozen instance after controls and independent review. No paid API calls from this track.",
+  "boundary_rule": "A skill target miss is performance evidence, not an invalid submission or a hard capability boundary by itself. Infrastructure/token-limit failures do not establish scientific inability. No boundary found is acceptable."
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-08T12:42:22.787110+00:00",
+  "completed_attempts": 5,
+  "all_declared_completion_checks_pass": true,
+  "agent_retries": 0,
+  "direct_api_key_calls": 0,
+  "frozen_deliveries_and_inputs_intact": true,
+  "system_definitions_intact": true,
+  "contracts": [
+    {
+      "template": "kenya-forecast-revision",
+      "spec_version": 3,
+      "fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851",
+      "automatic_tests_passed": true,
+      "trial_status": "pending",
+      "scientific_approval": "pending"
+    },
+    {
+      "template": "native-rainfall-reconciliation",
+      "spec_version": 1,
+      "fingerprint": "3d29f5d5c44fe0fd3acadcbc54dcdd6057f5a0248aa1be9fb3b43c4a7b6b069f",
+      "automatic_tests_passed": true,
+      "trial_status": "pending",
+      "scientific_approval": "pending"
+    },
+    {
+      "template": "rainfall-downscaling",
+      "spec_version": 2,
+      "fingerprint": "26aa0881c11621c0d80e26ba9ba97833464e91724db4451f3e9f7cf7d40a2377",
+      "automatic_tests_passed": true,
+      "trial_status": "pending",
+      "scientific_approval": "pending"
+    },
+    {
+      "template": "seasonal-cca-reproduction",
+      "spec_version": 1,
+      "fingerprint": "ee679a3b68725486fc9fd7fa2826a33be156b17a485d4568d90f1abed05ae514",
+      "automatic_tests_passed": true,
+      "trial_status": "pending",
+      "scientific_approval": "pending"
+    },
+    {
+      "template": "seasonal-forecast-audit",
+      "spec_version": 2,
+      "fingerprint": "e32176d11683385384639d6841067525fc9ab522e4ca9b61366a0dafda7da5f8",
+      "automatic_tests_passed": true,
+      "trial_status": "pending",
+      "scientific_approval": "pending"
+    },
+    {
+      "template": "seasonal-rainfall-calibration",
+      "spec_version": 4,
+      "fingerprint": "93b76c9e582f7e42bc73183552e9e969b4442f153d4e0b72e0b73738dd21a6ee",
+      "automatic_tests_passed": true,
+      "trial_status": "pending",
+      "scientific_approval": "pending"
+    },
+    {
+      "template": "weeks34-rainfall",
+      "spec_version": 4,
+      "fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+      "automatic_tests_passed": true,
+      "trial_status": "pending",
+      "scientific_approval": "pending"
+    }
+  ],
+  "tests": [
+    {
+      "path": "var/review/parallel-investigations-full-tests-current.log",
+      "sha256": "aab0f2f74599b88f25e79e2b87371d55d9480749bad7471da9da5b5e59d430b4"
+    },
+    {
+      "path": "var/review/audit-brief-v2-targeted-tests.log",
+      "sha256": "c507ce903b3556c3c275fcd6d783823dcab7910aade0ef126cb753f4ecb178f0"
+    }
+  ],
+  "results": {
+    "path": "experiments/parallel-results-2026-10-08.json",
+    "sha256": "ae94d33c06b553c5789acf289023ba8fa02b4d40dc398012c1ca5f541740b9ed"
+  },
+  "limitations": [
+    "Baseline ingestion end sandbox inspection remains unresolved and exact duration is unavailable.",
+    "Audit attempts remain historical v1; path-only v2 carries unchanged scientific controls and awaits agent trials.",
+    "No scientific approval; no established tooling benefit or hard capability boundary."
+  ],
+  "latest_host_python_crash_report": "Python-2026-10-08-140558.ips"
+}

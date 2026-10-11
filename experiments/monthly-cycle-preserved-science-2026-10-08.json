@@ -1,0 +1,255 @@
+{
+  "template": "monthly-cycle-calibration",
+  "fingerprint": "21656220f6090345f4defaf9fe775c7272ef5523e85d1db2e1bfa3d011868255",
+  "state": "pass",
+  "archived_parity": [
+    {
+      "name": "archived_output_parity.outer_year",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 0.0
+    },
+    {
+      "name": "archived_output_parity.forecast_year",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 0.0
+    },
+    {
+      "name": "archived_output_parity.month",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 0.0
+    },
+    {
+      "name": "archived_output_parity.system",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 0.0
+    },
+    {
+      "name": "archived_output_parity.target",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 0.0
+    },
+    {
+      "name": "archived_output_parity.candidate",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 0.0
+    },
+    {
+      "name": "archived_output_parity.hindcast_mm",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-07
+    },
+    {
+      "name": "archived_output_parity.hindcast_coefficient",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-07
+    },
+    {
+      "name": "archived_output_parity.hindcast_standardized_coefficient",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-09
+    },
+    {
+      "name": "archived_output_parity.selected_candidate",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 0.0
+    },
+    {
+      "name": "archived_output_parity.inner_loss",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-09
+    },
+    {
+      "name": "archived_output_parity.xmean",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-07
+    },
+    {
+      "name": "archived_output_parity.xstd",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-07
+    },
+    {
+      "name": "archived_output_parity.ymean",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-07
+    },
+    {
+      "name": "archived_output_parity.ystd",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-07
+    },
+    {
+      "name": "archived_output_parity.squared_error",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-05
+    },
+    {
+      "name": "archived_output_parity.monthly_msss",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-09
+    },
+    {
+      "name": "archived_output_parity.msss",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-09
+    },
+    {
+      "name": "archived_output_parity.forecast_mm",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-07
+    },
+    {
+      "name": "archived_output_parity.forecast_coefficient",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-07
+    },
+    {
+      "name": "archived_output_parity.forecast_standardized_coefficient",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-09
+    },
+    {
+      "name": "archived_output_parity.final_candidate",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 0.0
+    },
+    {
+      "name": "archived_output_parity.final_inner_loss",
+      "passed": true,
+      "largest_difference": 0.0,
+      "atol": 2.220446049274965e-09
+    },
+    {
+      "name": "archived_science_byte_identity",
+      "passed": true,
+      "archived_sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5",
+      "current_sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5"
+    },
+    {
+      "name": "original_source_inputs_unchanged",
+      "passed": true,
+      "manifest_sha256": "c88561d619ccc6767b835dc9a2b1ba6e3d26b07486aaf4e9a64546e88d66d028"
+    }
+  ],
+  "new_independent_driver_agreement": {
+    "outer_year": {
+      "agrees": true,
+      "largest_difference": null
+    },
+    "forecast_year": {
+      "agrees": true,
+      "largest_difference": null
+    },
+    "month": {
+      "agrees": true,
+      "largest_difference": null
+    },
+    "system": {
+      "agrees": true,
+      "largest_difference": null
+    },
+    "target": {
+      "agrees": true,
+      "largest_difference": null
+    },
+    "candidate": {
+      "agrees": true,
+      "largest_difference": null
+    },
+    "hindcast_mm": {
+      "agrees": true,
+      "largest_difference": 5.684341886080802e-14
+    },
+    "hindcast_coefficient": {
+      "agrees": true,
+      "largest_difference": 4.973799150320701e-14
+    },
+    "hindcast_standardized_coefficient": {
+      "agrees": true,
+      "largest_difference": 4.996003610813204e-16
+    },
+    "selected_candidate": {
+      "agrees": true,
+      "largest_difference": 0.0
+    },
+    "inner_loss": {
+      "agrees": true,
+      "largest_difference": 4.440892098500626e-16
+    },
+    "xmean": {
+      "agrees": true,
+      "largest_difference": 0.0
+    },
+    "xstd": {
+      "agrees": true,
+      "largest_difference": 0.0
+    },
+    "ymean": {
+      "agrees": true,
+      "largest_difference": 0.0
+    },
+    "ystd": {
+      "agrees": true,
+      "largest_difference": 0.0
+    },
+    "squared_error": {
+      "agrees": true,
+      "largest_difference": 3.637978807091713e-12
+    },
+    "monthly_msss": {
+      "agrees": true,
+      "largest_difference": 3.3306690738754696e-16
+    },
+    "msss": {
+      "agrees": true,
+      "largest_difference": 0.0
+    },
+    "forecast_mm": {
+      "agrees": true,
+      "largest_difference": 5.684341886080802e-14
+    },
+    "forecast_coefficient": {
+      "agrees": true,
+      "largest_difference": 3.552713678800501e-14
+    },
+    "forecast_standardized_coefficient": {
+      "agrees": true,
+      "largest_difference": 4.440892098500626e-16
+    },
+    "final_candidate": {
+      "agrees": true,
+      "largest_difference": 0.0
+    },
+    "final_inner_loss": {
+      "agrees": true,
+      "largest_difference": 4.440892098500626e-16
+    }
+  },
+  "source_manifest_sha256": "c88561d619ccc6767b835dc9a2b1ba6e3d26b07486aaf4e9a64546e88d66d028",
+  "scientific_procedure_changed": false,
+  "source_values_changed": false,
+  "model_calls": 0,
+  "scientific_workers": 1
+}

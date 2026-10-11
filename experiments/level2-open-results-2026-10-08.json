@@ -1,0 +1,304 @@
+{
+  "plan_sha256": "e0c30a1041d88e4ec1199752dfb89b201012c19361df8999e0ee6e0f7421e84e",
+  "rows": [
+    {
+      "system": "level2-luna-open-accord",
+      "run": "20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23",
+      "status": "submitted",
+      "computed": "pass",
+      "completion": "pass",
+      "checks": {
+        "claim.development_rmse_mm": "pass",
+        "coverage": "pass",
+        "envelope": "pass",
+        "feedback.limit": "pass",
+        "interpretation.consistency_across_artifacts": "unresolved",
+        "interpretation.generalization": "unresolved",
+        "interpretation.statistical_support": "unresolved",
+        "invariant.magnitude_of_a_14_day_total": "pass",
+        "invariant.totals_not_negative": "pass",
+        "probe.no_future_information": "pass",
+        "probe.replay": "pass",
+        "probe.responds_to_inputs": "pass"
+      },
+      "skill": {
+        "final": {
+          "split": "final",
+          "rmse_mm": 13.944505926715205,
+          "raw_model_rmse_mm": 14.890051309463692,
+          "climatology_rmse_mm": 14.281531566506088,
+          "skill_vs_raw_model": 0.063501821659105,
+          "skill_vs_climatology": 0.023598704258112946,
+          "issues": 208,
+          "cells": 9,
+          "observations_are_public_history": true
+        },
+        "development": {
+          "split": "development",
+          "rmse_mm": 11.824007148725183,
+          "raw_model_rmse_mm": 14.889753146548957,
+          "climatology_rmse_mm": 12.051599332178203,
+          "skill_vs_raw_model": 0.2058963615883942,
+          "skill_vs_climatology": 0.018884811648636535,
+          "issues": 147,
+          "cells": 9,
+          "observations_are_public_history": true
+        }
+      },
+      "usage": {
+        "input_tokens": 254571,
+        "cached_input_tokens": 225280,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5390,
+        "reasoning_output_tokens": 1649,
+        "total_tokens": 259961
+      },
+      "fresh_input_plus_output_tokens": 34681,
+      "agent_seconds": 81.69198362494353,
+      "cli_seconds": 89.81017912505195,
+      "tool_calls": 18,
+      "feedback": {
+        "scope": "development_only",
+        "max_submissions": 5,
+        "limit_denials": 0,
+        "requests": [
+          {
+            "query": 1,
+            "prediction_file": "results.zarr",
+            "status": "scored",
+            "prediction_sha256": "1a1a1767a54db18d5a06ffebcfacb3227a22d9b1569bdcbdb68f7253e2b43842",
+            "bytes": 6671,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 12.165158114157496,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.18298456700895327,
+              "skill_vs_climatology": -0.00942271468286271
+            },
+            "seconds": 0.17864929093047976
+          },
+          {
+            "query": 2,
+            "prediction_file": "results.zarr",
+            "status": "scored",
+            "prediction_sha256": "57da90fa1df86cd3e3331dfde0cc33426f1adcdffc407ce4a04a835f04ac40a7",
+            "bytes": 15626,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 12.62214701311737,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.15229306430490797,
+              "skill_vs_climatology": -0.047342071804178376
+            },
+            "seconds": 0.03409241698682308
+          },
+          {
+            "query": 3,
+            "prediction_file": "results.zarr",
+            "status": "scored",
+            "prediction_sha256": "0a49eacd16a54a4d1fcfac7ebd8f69e50c72f31c591e124f8859532682c8925f",
+            "bytes": 6199,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 12.180204688533497,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.1819740348511728,
+              "skill_vs_climatology": -0.010671227345893763
+            },
+            "seconds": 0.04546249995473772
+          },
+          {
+            "query": 4,
+            "prediction_file": "results.zarr",
+            "status": "scored",
+            "prediction_sha256": "b23a614155d0aa1614b9e9626a1b6bd2181d0812926457c2a4f86ff7baf9b2a9",
+            "bytes": 6655,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 11.97270865732134,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.1959095265393107,
+              "skill_vs_climatology": 0.0065460751459121
+            },
+            "seconds": 0.03611508395988494
+          },
+          {
+            "query": 5,
+            "prediction_file": "results.zarr",
+            "status": "scored",
+            "prediction_sha256": "df3508727644cb9d7bee9ba9926fd113a335c077b33454bbe85bc9f955eedf29",
+            "bytes": 14300,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 11.824007148725183,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.2058963615883942,
+              "skill_vs_climatology": 0.018884811648636535
+            },
+            "seconds": 0.03674908308312297
+          }
+        ],
+        "final_score_exposed": false,
+        "final_observations_exposed": false
+      },
+      "assessment_sha256": "18710b47093320cd8a20fc4962bb7574d36bbf9ddf7a6b054b1839a40240baba",
+      "events_sha256": "cbadf66a053e307fc65dcacb15fb19939f33394283cd36dde9ff6ceeece77fee"
+    },
+    {
+      "system": "level2-astra-open-accord",
+      "run": "20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91",
+      "status": "submitted",
+      "computed": "pass",
+      "completion": "pass",
+      "checks": {
+        "claim.development_rmse_mm": "pass",
+        "coverage": "pass",
+        "envelope": "pass",
+        "feedback.limit": "pass",
+        "interpretation.consistency_across_artifacts": "unresolved",
+        "interpretation.generalization": "unresolved",
+        "interpretation.statistical_support": "unresolved",
+        "invariant.magnitude_of_a_14_day_total": "pass",
+        "invariant.totals_not_negative": "pass",
+        "probe.no_future_information": "pass",
+        "probe.replay": "pass",
+        "probe.responds_to_inputs": "pass"
+      },
+      "skill": {
+        "final": {
+          "split": "final",
+          "rmse_mm": 14.143402700376402,
+          "raw_model_rmse_mm": 14.890051309463692,
+          "climatology_rmse_mm": 14.281531566506088,
+          "skill_vs_raw_model": 0.05014412600531071,
+          "skill_vs_climatology": 0.009671852454090635,
+          "issues": 208,
+          "cells": 9,
+          "observations_are_public_history": true
+        },
+        "development": {
+          "split": "development",
+          "rmse_mm": 11.78388798041698,
+          "raw_model_rmse_mm": 14.889753146548957,
+          "climatology_rmse_mm": 12.051599332178203,
+          "skill_vs_raw_model": 0.20859077619106348,
+          "skill_vs_climatology": 0.022213761375755703,
+          "issues": 147,
+          "cells": 9,
+          "observations_are_public_history": true
+        }
+      },
+      "usage": {
+        "input_tokens": 449080,
+        "cached_input_tokens": 397824,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 18487,
+        "reasoning_output_tokens": 4814,
+        "total_tokens": 467567
+      },
+      "fresh_input_plus_output_tokens": 69743,
+      "agent_seconds": 742.737286083051,
+      "cli_seconds": 770.996705916943,
+      "tool_calls": 22,
+      "feedback": {
+        "scope": "development_only",
+        "max_submissions": 5,
+        "limit_denials": 0,
+        "requests": [
+          {
+            "query": 1,
+            "prediction_file": "ridge.zarr",
+            "status": "scored",
+            "prediction_sha256": "52cb2af60b1814f8b1b6ab3bf66e75e5febbee462c834c0806835615d4b24c98",
+            "bytes": 33736,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 11.992727975395894,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.1945650235191787,
+              "skill_vs_climatology": 0.004884941422265809
+            },
+            "seconds": 0.20763145806267858
+          },
+          {
+            "query": 2,
+            "prediction_file": "tree.zarr",
+            "status": "scored",
+            "prediction_sha256": "5148c83428a428ea0a94d85f2e4c4910aedf69faea03e773691cac2e878a20e1",
+            "bytes": 33819,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 12.346515548948936,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.1708045507919972,
+              "skill_vs_climatology": -0.024471126913694796
+            },
+            "seconds": 0.047316750045865774
+          },
+          {
+            "query": 3,
+            "prediction_file": "clim.zarr",
+            "status": "scored",
+            "prediction_sha256": "e41c13f5c926bddc09730a1ff92b7d920da1f6278c370780fabb4a82f271f73a",
+            "bytes": 33807,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 11.985997045717447,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.19501707464535922,
+              "skill_vs_climatology": 0.005443450670119421
+            },
+            "seconds": 0.04924466693773866
+          },
+          {
+            "query": 4,
+            "prediction_file": "adapt.zarr",
+            "status": "scored",
+            "prediction_sha256": "5faad5e35879e235b456607ccfa2fc687c19d96ea5e882cc901fb5e0e143155c",
+            "bytes": 33535,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 11.952730060348522,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.19725129471882197,
+              "skill_vs_climatology": 0.008203829973478793
+            },
+            "seconds": 0.03844300005584955
+          },
+          {
+            "query": 5,
+            "prediction_file": "results.zarr",
+            "status": "scored",
+            "prediction_sha256": "3dce7d497b02479ad7b21b4322c1287c35ec492e5227ac4063227ead891862fc",
+            "bytes": 28754,
+            "metrics": {
+              "split": "development",
+              "rmse_mm": 11.78388798041698,
+              "raw_model_rmse_mm": 14.889753146548957,
+              "climatology_rmse_mm": 12.051599332178203,
+              "skill_vs_raw_model": 0.20859077619106348,
+              "skill_vs_climatology": 0.022213761375755703
+            },
+            "seconds": 0.035579083021730185
+          }
+        ],
+        "final_score_exposed": false,
+        "final_observations_exposed": false
+      },
+      "assessment_sha256": "92cd935dadbab93718717b58f07aeee41f2089b9e831b7343926721de88291bf",
+      "events_sha256": "edcb722f62f07b64df19f07fceb50dc6b238bff14ef06778261dd00ba4571462"
+    }
+  ],
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "interpretation": "Two descriptive attempts on an already-inspected historical split; no tooling-effect or frontier-boundary inference."
+}

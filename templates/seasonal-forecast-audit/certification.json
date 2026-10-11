@@ -1,0 +1,1384 @@
+{
+ "schema_version": 1,
+ "template": "seasonal-forecast-audit",
+ "spec_version": 2,
+ "fingerprint": "e32176d11683385384639d6841067525fc9ab522e4ca9b61366a0dafda7da5f8",
+ "certified_at": "2026-10-08T12:40:22.185572+00:00",
+ "executor": "local-trusted",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 4,
+   "comparisons": 4,
+   "largest_difference": 0.0,
+   "problems": [],
+   "regression_checks": [
+    {
+     "name": "independent original audit case-a",
+     "passed": true,
+     "detail": "maximum primal/dual difference 3.7516656e-12 mm"
+    },
+    {
+     "name": "independent original audit case-b",
+     "passed": true,
+     "detail": "maximum primal/dual difference 4.4337867e-12 mm"
+    },
+    {
+     "name": "independent original audit case-c",
+     "passed": true,
+     "detail": "maximum primal/dual difference 4.5474735e-13 mm"
+    },
+    {
+     "name": "independent original audit case-d",
+     "passed": true,
+     "detail": "maximum primal/dual difference 3.7516656e-12 mm"
+    }
+   ],
+   "evidence_carry_forward": {
+    "status": "carried_forward_unchanged_scientific_evidence",
+    "source_spec_version": 1,
+    "source_fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+    "source_certificate": {
+     "path": "var/review/seasonal-forecast-audit-v1-path-erratum/certification-v1-with-trials.json",
+     "sha256": "67653d07042a3f4def0d7b371976f868e101e3654e49ca0fe0bdf2decf7a51a1"
+    },
+    "source_certified_at": "20261008T122510",
+    "reason": "Only the objective-document location in the brief and integer spec version changed. All scientific template files, controls, deciding modules and staged inputs are byte-identical. Tests1\u20134 are reused, not freshly rerun."
+   }
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "valid_climatology",
+     "kind": "accepted_alternative",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 165.8271154115503,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "valid_climatology",
+     "kind": "accepted_alternative",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 165.8271154115503,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "valid_float32",
+     "kind": "accepted_alternative",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213286944033,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.10893886330384639,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "valid_float32",
+     "kind": "accepted_alternative",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213286944033,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.10893886330384639,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "valid_climatology",
+     "kind": "accepted_alternative",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 165.8271154115503,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "valid_climatology",
+     "kind": "accepted_alternative",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 165.8271154115503,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "valid_float32",
+     "kind": "accepted_alternative",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213286944033,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.10893886330384639,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "valid_float32",
+     "kind": "accepted_alternative",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213286944033,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.10893886330384639,
+      "years": 15,
+      "cells": 12
+     }
+    }
+   ],
+   "evidence_carry_forward": {
+    "status": "carried_forward_unchanged_scientific_evidence",
+    "source_spec_version": 1,
+    "source_fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+    "source_certificate": {
+     "path": "var/review/seasonal-forecast-audit-v1-path-erratum/certification-v1-with-trials.json",
+     "sha256": "67653d07042a3f4def0d7b371976f868e101e3654e49ca0fe0bdf2decf7a51a1"
+    },
+    "source_certified_at": "20261008T122510",
+    "reason": "Only the objective-document location in the brief and integer spec version changed. All scientific template files, controls, deciding modules and staged inputs are byte-identical. Tests1\u20134 are reused, not freshly rerun."
+   }
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "global_preprocessing",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 178.30499007986546,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.07524628669652444,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_preprocessing",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 178.30499007986546,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.07524628669652444,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_selection",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 150.84848514915623,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.09032678537053518,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_selection",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 150.84848514915623,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.09032678537053518,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_lookahead",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 193.81286128146465,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.16876459438168023,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_lookahead",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 193.81286128146465,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.16876459438168023,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "uses_targets",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 0.0,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 1.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "uses_targets",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 0.0,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 1.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_future_features",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 176.21603524175478,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.06264910177338145,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_future_features",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 176.21603524175478,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.06264910177338145,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_production_features",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_production_features",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_future_features",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 185.9393574877337,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.12128439927492418,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_future_features",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 185.9393574877337,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.12128439927492418,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "pooled_features",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "pooled_features",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached_hindcasts",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached_hindcasts",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached_forecasts",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached_forecasts",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "false_skill",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 165.8271154115503,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "false_skill",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 165.8271154115503,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "wrong_metric",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "wrong_metric",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "false_audit",
+     "kind": "incorrect",
+     "instance": "case-a",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "false_audit",
+     "kind": "incorrect",
+     "instance": "case-c",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_preprocessing",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 178.30499007986546,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.07524628669652444,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_preprocessing",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 178.30499007986546,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.07524628669652444,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_selection",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 150.84848514915623,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.09032678537053518,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_selection",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 150.84848514915623,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.09032678537053518,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_lookahead",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 193.81286128146465,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.16876459438168023,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_lookahead",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 193.81286128146465,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.16876459438168023,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "uses_targets",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 0.0,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 1.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "uses_targets",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 0.0,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 1.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_future_features",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 176.21603524175478,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.06264910177338145,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_future_features",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 176.21603524175478,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.06264910177338145,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_production_features",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "localized_production_features",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_future_features",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 185.9393574877337,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.12128439927492418,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "global_future_features",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 185.9393574877337,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.12128439927492418,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "pooled_features",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "pooled_features",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached_hindcasts",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached_hindcasts",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached_forecasts",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "cached_forecasts",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "false_skill",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 165.8271154115503,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "false_skill",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 165.8271154115503,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": 0.0,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "wrong_metric",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "wrong_metric",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "false_audit",
+     "kind": "incorrect",
+     "instance": "case-b",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    },
+    {
+     "control": "false_audit",
+     "kind": "incorrect",
+     "instance": "case-d",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "hindcast",
+      "rmse_mm": 183.89213296368564,
+      "climatology_rmse_mm": 165.8271154115503,
+      "skill_vs_climatology": -0.1089388638721811,
+      "years": 15,
+      "cells": 12
+     }
+    }
+   ],
+   "not_applicable": {
+    "reference_pitfall": "Repaired forecasts are method-free; no reference-reading grid is declared."
+   },
+   "evidence_carry_forward": {
+    "status": "carried_forward_unchanged_scientific_evidence",
+    "source_spec_version": 1,
+    "source_fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+    "source_certificate": {
+     "path": "var/review/seasonal-forecast-audit-v1-path-erratum/certification-v1-with-trials.json",
+     "sha256": "67653d07042a3f4def0d7b371976f868e101e3654e49ca0fe0bdf2decf7a51a1"
+    },
+    "source_certified_at": "20261008T122510",
+    "reason": "Only the objective-document location in the brief and integer spec version changed. All scientific template files, controls, deciding modules and staged inputs are byte-identical. Tests1\u20134 are reused, not freshly rerun."
+   }
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [],
+   "not_applicable": "Outcome mode has no reference answer, so there are no readings to separate.",
+   "known_ambiguities": [],
+   "evidence_carry_forward": {
+    "status": "carried_forward_unchanged_scientific_evidence",
+    "source_spec_version": 1,
+    "source_fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+    "source_certificate": {
+     "path": "var/review/seasonal-forecast-audit-v1-path-erratum/certification-v1-with-trials.json",
+     "sha256": "67653d07042a3f4def0d7b371976f868e101e3654e49ca0fe0bdf2decf7a51a1"
+    },
+    "source_certified_at": "20261008T122510",
+    "reason": "Only the objective-document location in the brief and integer spec version changed. All scientific template files, controls, deciding modules and staged inputs are byte-identical. Tests1\u20134 are reused, not freshly rerun."
+   }
+  },
+  "5_model_attempts": {
+   "passed": null,
+   "status": "not_run",
+   "attempts": 0,
+   "systems": [],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 2,
+   "rulings_awaiting_confirmation": 0,
+   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+   "runs": []
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "pending",
+  "scientific_approval": "pending"
+ },
+ "control_evidence": {
+  "reason": "All68 controls completed successfully; reran independent agreement after converting only regression passed flag from numpy.bool to builtin bool for JSON serialization. No controls rerun.",
+  "prior_fingerprint": "bf80c8980ae40cf743515b74ae979fb0d2807ed414812cba24f2cb4a19f6aa8e",
+  "workers": [
+   {
+    "path": "var/certification/seasonal-forecast-audit/20261008T121256/process-workers/result-0.json",
+    "sha256": "318f459248c5031937af5753f2be9cfe47e8555d7e4ab622177a929d3b7160e0"
+   },
+   {
+    "path": "var/certification/seasonal-forecast-audit/20261008T121256/process-workers/result-1.json",
+    "sha256": "e34e9a22274a0bfcb8bf0e07769b240bc2be9a7c82b87417423c0ba51a0cded0"
+   }
+  ]
+ },
+ "automatic_evidence_carry_forward": {
+  "status": "carried_forward_unchanged_scientific_evidence",
+  "source_spec_version": 1,
+  "source_fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+  "source_certificate": {
+   "path": "var/review/seasonal-forecast-audit-v1-path-erratum/certification-v1-with-trials.json",
+   "sha256": "67653d07042a3f4def0d7b371976f868e101e3654e49ca0fe0bdf2decf7a51a1"
+  },
+  "source_certified_at": "20261008T122510",
+  "reason": "Only the objective-document location in the brief and integer spec version changed. All scientific template files, controls, deciding modules and staged inputs are byte-identical. Tests1\u20134 are reused, not freshly rerun."
+ },
+ "fresh_path_check": {
+  "assessment": "var/review/audit-v2-path-control/assessment.json",
+  "sha256": "9666befade752678efa3e8a41c596290d90dded9020e2a6c11f9a727e9079187",
+  "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+  "computed_outcome": "pass",
+  "completion": "unresolved",
+  "judge": "not_run",
+  "purpose": "One fresh Docker known-correct numerical assessment after objective-path repair; prose review intentionally not rerun.",
+  "staging_checks": {
+   "path": "var/review/audit-v2-path-staging/checks.json",
+   "sha256": "2faca578d57a9e34f7e0dd09835e835fe7907739ee515f402e204125b3aa71a0",
+   "instances": 4,
+   "staged_inputs_byte_identical_to_v1": true
+  }
+ }
+}

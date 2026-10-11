@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "study": "mam-guided-tooling-efficiency",
+  "declared_at": "2026-10-08",
+  "template": "mam-multimodel-outlook",
+  "instance": "kenya-interior--mam-2016",
+  "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+  "model": "gpt-6-luna",
+  "reasoning_effort": "high",
+  "systems": {
+    "efficiency-luna-python-1": {
+      "arm": "python",
+      "replication": 1,
+      "files": {
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "326d8690d832a80fddcb2d014c75dece1e76a1c3478f79f60f9244394c93a555"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508"
+    },
+    "efficiency-luna-accord-guided-1": {
+      "arm": "guided_accord",
+      "replication": 1,
+      "files": {
+        "WEATHER_TOOLS.md": "be28c1a3ca02975419e4c48ce9a2f589d56b36efaa48a603f79a23753f7d8bf2",
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "b82380eb6283514791fcd02f24f2a7657b9768d346b927f6476ed78773a1d69e",
+        "weather_tools_examples.py": "cd292ac3e587a7765c1327a5cc168e027511de40676502edfc4e96ce5454f6be"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49"
+    },
+    "efficiency-luna-python-2": {
+      "arm": "python",
+      "replication": 2,
+      "files": {
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "0469fedc7a237f7fcb9605998160b9e3211fd6e0f06e2e9fb2171166e5e959ae"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508"
+    },
+    "efficiency-luna-accord-guided-2": {
+      "arm": "guided_accord",
+      "replication": 2,
+      "files": {
+        "WEATHER_TOOLS.md": "be28c1a3ca02975419e4c48ce9a2f589d56b36efaa48a603f79a23753f7d8bf2",
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "4441057dbfba35b6bbdd673025a6238e1cbe2f38d63c8a21fc252eb896d3a987",
+        "weather_tools_examples.py": "cd292ac3e587a7765c1327a5cc168e027511de40676502edfc4e96ce5454f6be"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49"
+    }
+  },
+  "max_model_attempts": 4,
+  "launch": "Initial pair parallel; at most one replication pair. No automatic retries or paid API fallback.",
+  "replication_gate": {
+    "all": [
+      "guided computed pass",
+      "guided substantive normalization and calibration feed required arrays",
+      "guided replay pass",
+      "no known grading or runtime issue"
+    ],
+    "any": [
+      "baseline computed failure",
+      "guided at least 10% lower fresh-input-plus-output tokens",
+      "guided at least 10% lower cumulative tokens",
+      "guided at least 10% lower agent-phase seconds"
+    ],
+    "interpretation": "Practical replication trigger; repeated same instance measures stochastic repeatability, not cross-instance generalization."
+  },
+  "metrics": [
+    "scientific completion",
+    "assigned tool compliance",
+    "fresh-input-plus-output",
+    "cached input",
+    "output",
+    "reasoning subset of output",
+    "cumulative tokens",
+    "agent-phase seconds",
+    "command seconds",
+    "model-adapter-overhead proxy seconds",
+    "total CLI assessment wall seconds",
+    "source request bytes",
+    "substantive package calls"
+  ],
+  "accounting": {
+    "all_attempts_included": true,
+    "success_adjusted": "Aggregate resource consumption including failures divided by valid completions; undefined when zero.",
+    "direct_paid_api_usd": 0,
+    "subscription_invoice_usd": null,
+    "no_dollar_savings_claim": true,
+    "fresh_plus_output": "Resource proxy, not dollar-weighted cost."
+  },
+  "intervention": "Weather packages plus short tested public-API guide and synthetic runnable examples; not library-only causality.",
+  "evidence": {
+    "guided_validation": "experiments/mam-guided-discovery-validation-2026-10-08.json",
+    "source_study": "docs/mam-acquisition-study-2026-10-08.md"
+  }
+}

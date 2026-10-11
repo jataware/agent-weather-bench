@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "reason": "Spec 1 used final magnitude instead of the intermediate magnitude for spherical area roundoff. Both submissions implement the specified formula. Correct the bound and regrade both frozen artifacts symmetrically; original assessments remain untouched.",
+  "classification": "evaluator_defect",
+  "original_area_bound_m2": 3.552713678800514e-07,
+  "corrected_area_bound_m2": 0.0002842170943040411,
+  "observed_max_area_difference_m2": 2.0042061805725098e-06,
+  "new_agent_attempts": 0,
+  "original_template_snapshot": "var/review/downscaling-v1-template",
+  "rows": [
+    {
+      "run": "20261008T095132-rainfall-downscaling-train-to-2008--forecast-2009-2012-L1-focused-astra-python-db3f9f",
+      "submission_spec_version": 1,
+      "original_fingerprint": "f3e2f2571fe273c398e4353f29bd970d856b2e489af5226ad75e57a3be968d5f",
+      "original_completion": "unresolved",
+      "original_computed": "unresolved",
+      "assessment_spec_version": 2,
+      "assessment_fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+      "assessment_file": "var/review/downscaling-v2-python/assessment.json",
+      "assessment_sha256": "b344471887cb2cd9d62b80fb23fe70f178e99f8d43c192cd3eadb3a703cd25e1",
+      "completion": "pass",
+      "computed": "pass",
+      "brief_identical": true,
+      "inputs_byte_identical": true,
+      "envelope_identical": true,
+      "frozen_artifacts_unchanged": true
+    },
+    {
+      "run": "20261008T095132-rainfall-downscaling-train-to-2008--forecast-2009-2012-L1-focused-astra-accord-7c3bee",
+      "submission_spec_version": 1,
+      "original_fingerprint": "f3e2f2571fe273c398e4353f29bd970d856b2e489af5226ad75e57a3be968d5f",
+      "original_completion": "unresolved",
+      "original_computed": "unresolved",
+      "assessment_spec_version": 2,
+      "assessment_fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+      "assessment_file": "var/review/downscaling-v2-accord/assessment.json",
+      "assessment_sha256": "0e6611f36beaf5e43aa27b33281966f3f20f537433f9b6d33988babbd3f24341",
+      "completion": "pass",
+      "computed": "pass",
+      "brief_identical": true,
+      "inputs_byte_identical": true,
+      "envelope_identical": true,
+      "frozen_artifacts_unchanged": true
+    }
+  ]
+}

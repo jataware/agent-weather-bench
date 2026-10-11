@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-08T12:29:55.529254+00:00",
+  "template": "seasonal-forecast-audit",
+  "instance": "case-c",
+  "certification_snapshot": "var/review/audit-certification-before-agent-trials.json",
+  "certification_sha256": "a7cd50124d1d7ff35b399f08f95d95b64975bc79b4ee3befd73b907d18c8fa5d",
+  "automatic_tests_passed": true,
+  "controller_fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+  "controls": [
+    {
+      "condition": "python",
+      "assessment": "var/review/investigation-audit-python-control-final/assessment.json",
+      "sha256": "a6f5ce098421c260e24a508e84a3302a0906662cd05caa77379625ae3473bf42",
+      "fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+      "computed": "pass",
+      "completion": "pass"
+    },
+    {
+      "condition": "accord",
+      "assessment": "var/review/investigation-audit-accord-control-final/assessment.json",
+      "sha256": "5a7e8381801f9faa517ca8c4e9de1846c3dd82eb6d9cef1343c440642014ba0f",
+      "fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+      "computed": "pass",
+      "completion": "unresolved"
+    }
+  ],
+  "review_note": "The required report judge passed on the Python known-correct control. ACCORD uses the identical control scientific report; its duplicate judge was left unrun. Both Docker numeric gates passed before inference."
+}

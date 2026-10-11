@@ -67,6 +67,10 @@ composition reuses that template's instruments as its stage rubric.
 3. Add the per-stage rubric and declared rollup to the assessment format as a
    versioned change. Each stage keeps its own verdict; the composite reports a
    stage profile and a fractional score. Existing templates are unchanged.
+   Done 9 October 2026 (`assessment/stages.py`, spec version 2 of the
+   template): certification tests 1 to 4 pass on both instances under the
+   stage rubric (`docs/objective-outlook-control-2026-10-09.md`); test 5
+   waits on Docker.
 4. Review the task before any model call: the brief as the agent sees it,
    every rubric row, the controls, the budget and the cost estimate. The
    review is recorded. A domain scientist's reading is sought here if one is

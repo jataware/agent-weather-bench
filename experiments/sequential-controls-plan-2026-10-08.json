@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "declared_at": "2026-10-08T16:15:29.658926+00:00",
+  "methods": {
+    "raw": "Unmodified raw CFSv2 rainfall total.",
+    "monthly_climatology": "Fixed mean observations by target-start calendar month; initial released history only.",
+    "monthly_static": "Add initial-history observed-minus-raw mean by target-start month; clip at zero. Never update.",
+    "expanding_shrinkage": "Update monthly observed-minus-raw residuals from released observations, shrink to all-month residual with12pseudo-observations.",
+    "rolling_seasonal_bias": "Residual correction from released cases within previous3years and cyclic target-date distance<=45days, triangular seasonalweights,12pseudo-observations of rolling all-season bias.",
+    "adaptive_ridge": "Per-cell causal exponentially weighted ridge of rainfall/20 on intercept,raw/20,annualsin/cos andrawinteractions;3yearhalflife,ridge10towardrawforecast,interceptpenalty0.1.",
+    "adaptive_ensemble": "Online mixture of monthly_static/rolling_seasonal_bias/adaptive_ridge. Equal initial weights; losses update only when a previously issued forecast is released. Squared error/400,learningrate0.1,cumulative loss clipped percase at25,10%uniformweightfloor."
+  },
+  "method_settings_frozen_before_any_score": true,
+  "method_source_sha256": "c7fbf80a57489946a280ca8ce5f265d7237e5593c472c564b1fd85305eb75b21",
+  "episodes": {
+    "development": {
+      "path": "var/private/experiments/sequential-forecast-20261008/development.json",
+      "sha256": "e23189d19b81bcaa3aa7587a7135233168b7299e79a0a776caf5078afe2e990c"
+    },
+    "final": {
+      "path": "var/private/experiments/sequential-forecast-20261008/final.json",
+      "sha256": "fb92b32c85286b3a7e6fe390a00822dec8db444299854fe49505c521acfc8707"
+    }
+  },
+  "image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+  "selection": "No hyperparameter search or selection. All seven predeclared methods are retained on both splits.",
+  "static_baseline": "Fixed at each episode initialization using all then-released observations; final initialization legitimately includes released development observations.",
+  "publication_claim": "Local causal methods, no claim of replicating a published algorithm.",
+  "model_calls": 0
+}

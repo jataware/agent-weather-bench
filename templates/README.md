@@ -1,306 +1,172 @@
-# Templates are parameterised tasks assessed by the controller
+# Author a task and inspect its rubric
 
-A template is a task whose brief, inputs and answer key take parameters
-such as region and time window. One template yields many instances. Templates
-are assessed by the `assessment/` package, which implements
-[the assessment format](../docs/assessment-format.md). The controller is the
-trusted evaluator in `assessment/`; it launches the agent in a Docker sandbox,
-holds the private references and runs the checks.
-
-## A template folder holds these files
-
-- `spec.yaml` — the assessment specification: mode, named results with their
-  dimensions and error bounds, conventions labelled accepted or pitfall,
-  invariants, probes, claims and interpretation checks. It has a
-  `spec_version`.
-- `brief.md` — the text given to the agent, with fill-in fields. It names every
-  array, its dimensions and its unit. Briefs run to about 150 words.
-- `conventions.md` — optional. A page that states the accepted conventions. It
-  is handed to the agent only when a run asks for it with `--supply
-  conventions`, which makes it a supplement that can be switched on and off.
-- `reference.py` — the reference function and the controller hooks. This is the
-  only science code a template needs.
-- `reference_independent.py` — a second implementation that shares no code with
-  the first.
-- `instances.yaml` — the public development instances.
-- `sources.json` — the identity and hashes of the frozen source data.
-- `controls/` — a known-correct submission and deliberately incorrect ones, used
-  to certify the spec.
-- `certification.json` — the record of the last certification run.
-- `rulings.yaml` — optional. A reviewer's rulings on answers that matched no
-  listed reading, keyed by the hash of the answer.
-
-## A submission holds these parts
-
-The text every agent receives is [`assessment/envelope.md`](../assessment/envelope.md).
-
-- `results.zarr` — every array the brief names, in a Zarr store of format
-  version 3, each on named dimensions with a coordinate array of labels for
-  every dimension. The controller matches arrays by dimension name and label.
-- `answer.json` — single-number results, the agent's choices, its claims, its
-  method entries where the brief asks for them, and the run command.
-- The code the run command needs. The controller reruns it offline on changed
-  data for the same task. The task's parameters may be written into the code.
-- `report.md` — a short account of the work.
-
-## How a tolerance is declared
-
-A result's `tolerance` is an error bound, not a judgement.
-
-- `{precision: float32, operations: n, magnitude: m}` gives the tolerance
-  `2 * n * u * m`, where `u` is the unit roundoff of the precision. `n` is the
-  number of rounded operations in the longest chain that produces the result,
-  and `m` is the largest quantity that enters it. Two correct implementations
-  cannot differ by more.
-- `{exact: true}` requires equality, for whole numbers such as categories.
-- The spec states in a comment where `n` and `m` come from.
-- Certification checks `m` against the data: the largest reference value under
-  an accepted reading must not exceed it. Certification also reports, for each
-  pitfall, how many tolerances separate it from the accepted reading.
-
-## `reference.py` must provide these hooks
-
-- `prepare(private, source_dir)` — restore the private data from hash-checked
-  source archives.
-- `stage_inputs(private, params, destination)` — write exactly what the agent
-  may see, including `instance.json`.
-- `perturb_inputs(inputs, seed, kind)` — change the staged data in place, for
-  the changed-data probe and the invariance probes. A good change makes each
-  pitfall give different numbers from the accepted reading.
-- `reference(inputs, params, conventions)` — product and process modes: the
-  results for one instance under one combination of conventions, including the
-  coordinate labels.
-- `expected_coordinates(inputs, params)` and `score(results, params, private,
-  split)` — outcome mode: the cases a forecast must cover, and its skill
-  against the withheld observations.
-- `candidate_instances()` — every instance the frozen data supports.
-- `brief_fields(params)` — the values that fill the brief.
-- `INVARIANTS`, `INVARIANCE_PROBES`, `expected_claims`, `independent`,
-  `regression_checks` — the rules any valid answer obeys, the data changes that
-  must leave part of the results unmoved, the claims that follow from a set of
-  results, the second implementation, and any agreement checks against outside
-  answers.
-
-## These commands run, assess and certify a template
+Start with a known-correct control. Certification comes after the authoring loop.
 
 ```sh
-.venv/bin/python -m assessment templates
-.venv/bin/python -m assessment prepare kenya-forecast-revision --source ../weather-skills-bench/fixtures
-.venv/bin/python -m assessment instances kenya-forecast-revision
-.venv/bin/python -m assessment brief kenya-forecast-revision service-area--weeks-1-2
-.venv/bin/python -m assessment certify kenya-forecast-revision
-.venv/bin/python -m assessment assess kenya-forecast-revision service-area--weeks-1-2 PATH/TO/SUBMISSION
-.venv/bin/python -m assessment run kenya-forecast-revision service-area--weeks-1-2 --system kenya-revision-fixture
-.venv/bin/python -m assessment run kenya-forecast-revision central--weeks-2-3 --system kenya-revision-fixture --supply conventions
-.venv/bin/python -m assessment run kenya-forecast-revision north-west--weeks-3-4 --system kenya-revision-fixture --parent RUN_ID
-.venv/bin/python -m assessment run weeks34-rainfall final-2015-2017--all-cells --system weeks34-level2-fixture --level 2
-.venv/bin/python -m assessment runs
-.venv/bin/python -m assessment reassess RUN_ID
-.venv/bin/python -m assessment judge RUN_ID
-.venv/bin/python -m assessment judge-calibration
-.venv/bin/python -m assessment attempts kenya-forecast-revision
+.venv/bin/python -m assessment assess kenya-forecast-revision service-area--weeks-1-2 --control correct --output var/review/first-control
+.venv/bin/python -m assessment rubric kenya-forecast-revision
 ```
 
-- `run` launches a system on an instance, assesses its submission and has the
-  judge decide the questions no computation can settle. `--no-judge` leaves
-  those unresolved.
-- `--supply conventions` hands the agent the template's conventions sheet.
-- `--parent RUN_ID` starts a second episode: the earlier run's submission is
-  placed under `/work/prior`, and the agent may use it or not. The parent may be
-  a run of another instance, another level or another template, by the same
-  system.
-- `reassess` assesses an existing run again under the current spec and code and
-  keeps the earlier assessment. It refuses a run made under another spec
-  version, whose agent answered a different contract.
-- `judge` has the judge decide the open questions of a run's recorded
-  assessment, and leaves the computed checks as recorded. It works on runs of
-  any spec version.
-- `judge-calibration` runs the pinned judge on its twelve cases with known
-  answers and writes `assessment/judge-calibration.json`.
-- `attempts` refreshes the fifth certification test from the agent runs on disk.
+Choose another name from `controls/build.py` to see a planted fault fire. Every
+row shows its requirement, implementation, result and effect on completion or
+ranking. `assessment.json` retains evidence; `review.md` is the readable view.
+`--format json` emits the machine-readable assessment. `--local-trusted` is
+available only with `--control`; agent submissions always run in Docker.
 
-The judge is Claude Opus 5.5, called through the `claude` command line with no
-tools and a fixed prompt. It sends the brief, the report, `answer.json`, the
-submitted code and a summary of the arrays to Anthropic.
+## Four decisions, each with a home
 
-To run the Codex systems after the default command-line install has moved past
-the verified version, name the verified binary and use the pinned system:
+| Decision | Write it here | Inspect it here |
+| --- | --- | --- |
+| The job: arrays, dimensions, units and claims | `brief.md`, with detailed method material in staged inputs when the job prescribes one | `assessment brief TEMPLATE INSTANCE` |
+| The primary question: compute, conform, or forecast | `question` in `spec.yaml` | `assessment rubric TEMPLATE` |
+| The instruments and their scientific decisions | Declarations in `spec.yaml`, hooks in `reference.py`, template-owned judge wording | One row per instrument in the rubric |
+| Completion and ranking policy | `assessment_policy.completion` and `.ranking` in `spec.yaml` | Each row's `required_for`, plus the separate result columns |
+
+`mode` remains a compatibility label. `reference_match` selects the reference
+instrument explicitly. A task may combine reference quantities, freely chosen
+forecasts, process requirements and scores; its primary question does not add
+hidden checks. A checklist step based on reference results requires that
+instrument. Judge wording can be reused by name, but the five pilot templates
+own all wording they use.
+
+## Implement only the instruments the job needs
+
+| Declaration | Scientific implementation |
+| --- | --- |
+| `results` | Names, coordinate axes, dimensions, units in the brief, and numerical error bounds |
+| `reference_match: true`, `conventions`, `pitfalls` | `reference(inputs, params, conventions)`; accepted readings and named faults |
+| Exact required cases | `expected_coordinates(inputs, params)` |
+| `invariants` | Functions in `INVARIANTS` |
+| `probes` | `perturb_inputs`; optional `INVARIANCE_PROBES` for data that must leave an output unchanged |
+| Forecast input response | Optional `response_results` selects scientific outputs; `RESPONSE_GROUPS` requires each named deliverable to respond to at least one `RESPONSE_PERTURBATIONS` kind |
+| `claims` | `expected_claims(results, params)`, or `score` for a stated metric |
+| `process` | Evidence checks, reference results, method pointers or one explicit judge question per requirement |
+| `interpretation`, `judge_questions` | Exact requirement and silence policy for each prose review |
+| `skill` | `score(results, params, private, split)`; baselines and an independent metric implementation |
+
+Every template also stages inputs (`stage_inputs`), restores data (`prepare`),
+enumerates supported instances (`candidate_instances`) and fills the brief
+(`brief_fields`). Keep science helpers within the template folder so their code
+is fingerprinted. A Python implementation is part of the rubric's contract even
+when it lives in another file.
+
+For acquisition tasks, the job can start with a source catalogue rather than
+analysis-ready arrays. `mam-multimodel-outlook` stages public endpoint descriptors
+and a separate controller-owned provider snapshot. Its task-owned, fingerprinted
+`sandbox_factory` and `executor_factory` expose only the public descriptors to
+the actor and serve raw monthly files over an isolated HTTP source service.
+`acquisition_evidence` retains controller request logs before temporary replay
+directories disappear. Existing tasks keep their offline runtime unchanged.
+Use changed-source reruns to test that computation follows freshly acquired data;
+request logs alone cannot establish this. This snapshot transport does not test
+live-provider authentication, discovery or download speed.
+
+A reference task supplies an independent implementation through `independent`.
+A scoring task supplies `independent_score` and `baseline_results`. Independence
+means separate scientific implementation, not a switch inside the same function.
+Controls may reuse the primary implementation because they test the controller;
+they do not establish independent scientific agreement.
+
+For a task with audit diagnostics and multiple forecasts, changing diagnostics
+must not establish forecast responsiveness. Project onto the forecast arrays
+and declare separate response groups for each deliverable. A climatology method
+can legitimately respond to training targets while ignoring SST predictors.
+Test cached outputs both together and separately. Parallel scientific file I/O
+belongs in fresh Python processes: shared-thread HDF5 validation has crashed the
+host controller.
+
+Keep fitted parameters, nested selection, verification, production and saved
+inference visible separately when the job asks for each. Correct hindcasts can
+coexist with wrong production forecasts. Compare every required numerical field
+even when a separate units declaration or metadata check fails; state explicitly
+whether unit attributes are checked. `monthly-cycle-calibration` plants both
+faults together to verify that one does not hide the other.
+
+Calibrate prose questions on real faulty submissions, narrow corrected controls
+and unaffected components. Exact quotations establish that the cited text exists;
+they do not establish that the judge's reasoning is correct. The
+[historical calibration](../experiments/failure-judge-calibration-eight-call-2026-10-08.json)
+includes a broad method review that approves an incorrect combined diagnostic.
+Keep deterministic numerical checks in the completion gate, and distinguish a
+general discovery test from questions aimed at a particular required component.
+
+For an ordinary tooling comparison, give both arms the same job definition and
+let the tooling arm discover installed libraries through their normal
+documentation. Audit staged files for curated function excerpts, worked solutions
+or required helper recipes before launch. If such assistance is an experimental
+condition, label and compare it separately. A prescribed scientific algorithm
+defines a reproduction job; supplied implementation code is a different condition.
+
+## Declare the result policy
+
+```yaml
+question: compute_quantity
+reference_match: true
+assessment_policy:
+  completion: [envelope, coverage, variant, invariant.*, probe.*, claim.*, process.*]
+  ranking: [envelope, coverage, variant, invariant.*, probe.*, claim.*, process.*]
+```
+
+Include only patterns that match declared instruments. Both gates must require
+the envelope. List a prose check explicitly if it gates the task. Required
+process statements stay required even when a judge decides them. Checks omitted
+from both lists are supplementary and still appear in the result. Skill never
+becomes a pass/fail check. `skill.ranking_enabled: false` prevents an informative
+score on a small sample from being presented as a ranking.
+
+The envelope is shared in [assessment/envelope.md](../assessment/envelope.md).
+The [assessment contract](../docs/assessment-format.md) defines error bounds,
+variant matching, rulings and the three possible check results.
+
+## Declare stages for a long-horizon composition
+
+A job with several dependent parts declares `stages`, in order. Each stage
+names its `results` (the group it owns), an `absolute` verdict (`results:` for
+a reference match on matched results, or `checks:` for named instruments
+computed on the controller's inputs), a `local` verdict (`checks:` that
+recompute the stage from the submission's own upstream arrays, including
+`probe.<name>.<part>` rows from a probe that declares `parts`), its
+`upstream` stages, an optional `weight` and the judge `review` rows it owns.
+Gate completion on `stage.*` plus the envelope, coverage and any invariant
+that spans every stage; leave the whole-submission `variant` and probes
+supplementary. The record then carries a stage profile and a weighted
+fraction, and a fault in one stage stays in that stage. The reference module
+provides the local-verdict invariants; they take the submission's arrays and
+never read the controller's inputs. See
+[objective-seasonal-outlook/spec.yaml](objective-seasonal-outlook/spec.yaml).
+
+## Freeze data and build controls
+
+`instances.yaml` lists public development IDs. `sources.json` identifies frozen
+source files and their hashes. Private inputs stay under
+`var/private/templates/<template>/`, outside Git. Withheld targets are never
+staged for the agent. The two converted tasks can be restored from the original
+frozen task directories recorded in their manifests, using `prepare --source`.
+
+`controls/build.py` names the correct solution, accepted alternatives and planted
+faults. Each faulty control declares the checks expected to catch it. Test
+scientific defects, such as leakage or failed conservation, rather than incidental
+formatting. A correct control with an unrun required judge is numerically valid
+but not yet complete; the review must show that distinction.
+
+## Validate, then lock a comparison
 
 ```sh
-export CODEX_BINARY=$HOME/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex
-.venv/bin/python -m assessment run kenya-forecast-revision central--weeks-2-3 --system codex-luna-pinned
+.venv/bin/python -m assessment certify TEMPLATE --full
+.venv/bin/python -m assessment attempts TEMPLATE
 ```
 
-`certify` and `assess` run submitted code in the offline Docker runtime. The
-`--local-trusted` flag runs it on the controller without isolation and is only
-for the controller's own control submissions.
+The four automatic tests compare independent implementations, assess correct
+controls, catch planted faults on their intended checks, and measure pitfall
+separability. These control tests validate computed checks; required prose
+checks must also be evaluated before claiming a complete passing submission.
+The fifth test records real agent attempts and open unknown answers. Trial
+review requires at least two attempts under the current fingerprint.
 
-## Process-mode templates cite a standard
+The record distinguishes `automatic_checks`, `trial_attempts`, and
+`scientific_approval`. `certified` remains false pending scientific approval.
+Lock the spec before comparing systems. New scientific or verdict policy changes
+require a new version; earlier contracts and assessments remain historical.
 
-A process-mode spec names a standard and lists the steps it requires. The
-standard's practices and checklist live in `standards/<standard>/`, so that one
-checklist serves every template that names it. A test keeps each spec's steps
-identical to the checklist's. The only standard so far,
-`standards/wmo-objective-seasonal-forecasting/`, is a draft from a secondary
-source and has not been reviewed.
-
-## The data lives outside the repository
-
-Private data stays under `var/private/templates/<template>/`, which Git
-ignores. The tracked `sources.json` records the hash of every source object, so
-`prepare` either reproduces the private data exactly or fails. A fresh checkout
-needs the source archives named in `sources.json`.
-
-## A run records its provenance
-
-Each run lives in `var/template-runs/<run-id>/`. The controller writes
-`controller/provenance.json`: input hashes, source identity, artifact hashes at
-freeze, the system and its tooling files, the spec version and fingerprint,
-the tool trace hash, the sandbox boundary, the tooling-use record (`substrate_record`), and the
-parent run if any, the supplements handed to the agent, and, for a second
-episode, how many commands named the earlier work. The agent writes none of it.
-`assessment.json` holds every check with its outcome, the headline `outcome`,
-and its two components `computed_outcome` and `judged_outcome`.
-`controller/judgements/` holds the judge's raw replies under its identifier.
-
-## Certification runs five tests
-
-`certify` runs four automatic tests: the two reference implementations agree,
-and every declared magnitude covers the data; known-correct submissions pass;
-deliberately incorrect submissions are caught by the right check; and the
-separability of every accepted–pitfall pair is measured, in tolerances, on the
-submitted data and on the controller's changed data. The fifth test reads the agent runs on disk: it needs at least two
-attempts assessed under the current fingerprint, with no answer left
-unclassified. `certified` stays false until a domain scientist approves the
-task. A test in `tests/test_assessment_format.py` fails when the spec, the
-reference or a module that decides outcomes changes without a new
-certification.
-
-## Three templates are certified today
-
-| Template | Spec version | Task-set entry | Mode | Certification |
-| --- | --- | --- | --- | --- |
-| `kenya-forecast-revision` | 2 | 4 | Product | All five tests pass; 4 attempts by one cheap model under this version |
-| `weeks34-rainfall` | 3 | 15 | Outcome, Levels 1 and 2 | All five tests pass; 3 attempts by one cheap model under this version |
-| `seasonal-rainfall-calibration` | 3 | 11 | Process | All five tests pass; 4 attempts by one cheap model under this version; three proposed rulings; the checklist is a draft |
-
-The judge passed its 12 control cases. Twenty-five earlier attempts were made
-under the first contract; their recorded assessments stand, with the judge's
-verdicts added.
-
-No template is approved by a domain scientist.
-
-## The sandbox boundary keeps model-generated commands off the controller host
-
-The harness's adapter (`systems/<id>/adapter.py`) is trusted integration code.
-It calls the model or agent library and translates its tool requests to the
-protocol below. Model-generated commands go through the protocol and run in the
-offline Docker runtime, never on the controller host. An agent command line
-that executes its own tools needs an integration that routes them into the
-runtime container; pointing a host-executing command line at this repository
-does not establish the benchmark's information boundary.
-
-Adapters run in their snapshotted directory. `{python}` expands to the
-controller interpreter; `{driver}` expands to that directory. `driver.env` lists
-environment variable names to pass to the controller; do not store secret
-values in the system definition. Model credentials stay on the controller and
-are never mounted into the runtime container.
-
-## The adapter protocol is JSON lines over standard input and output
-
-The controller writes one JSON `start` request to the adapter's stdin. It
-contains the brief, the envelope, the budgets, the runtime paths, the tooling
-notes and an inventory of the retained earlier submission. The adapter writes
-JSON lines to stdout; stdout is reserved for the protocol, and diagnostics go to
-stderr.
-
-```json
-{"type":"execute","id":"step-1","command":"python workflow.py","timeout_seconds":60}
-```
-
-The controller executes the command in `/work` in the isolated container and
-replies:
-
-```json
-{"type":"tool_result","id":"step-1","exit_code":0,"stdout":"...","stderr":"...","remaining_seconds":300}
-```
-
-Request and result pairs continue, then the adapter emits cumulative usage when
-it is available and a final event:
-
-```json
-{"type":"usage","usage":{"input_tokens":1234,"output_tokens":567,"usd":0.02,"calls":3}}
-{"type":"final","message":"Submission written to /work/submission"}
-```
-
-Missing usage is `unknown`, not zero. A custom adapter's usage is labelled
-self-reported; the built-in provider driver records controller-observed usage.
-The controller enforces the wall-clock and tool limits; a custom adapter must
-enforce its own provider spending limit.
-
-## The tooling-use record says whether the agent touched the tooling
-
-A mounted tooling image measures availability; a tooling comparison also needs
-to know whether the agent used it. The controller derives this from the run's
-command log (`assessment/substrate_use.py`, kept under its original name; its
-output is the tooling-use record) with no model call and no change to any
-check. Each command that reached the runtime is classed by its strongest use of
-a path under the tooling mount: `ran` (a script executed directly or through
-`python`, `bash`, `sh`, `Rscript` or `uv run`), `read` (any other reference,
-such as `cat` or `sed`), `listed` (`ls`, `find`, `tree`) or `entered` (`cd`).
-Runs are split into `ran_ok` and `ran_failed` by exit status; the status
-belongs to the whole command, so a chained or piped command is attributed as
-one. Tool calls the built-in driver refused as truncated or invalid were never
-executed and are not counted. Log lines that cannot be parsed are skipped and
-counted in `unreadable_log_lines`. The record also gives the first step that
-touched the tooling and the paths named.
-
-This is a lower bound from command text. Relative paths after a `cd` into the
-mount, shell variables, and workflow code that opens tooling files itself are
-not attributed. Tooling installed as a library in the runtime image, rather
-than mounted, is not measured. `unknown` means the run has no execution log;
-`none` means it ran commands but none named the tooling. Use is diagnostic
-evidence: compare assigned tooling images as the primary analysis, not only the
-runs that used the tooling.
-
-## A second episode retains the earlier submission and nothing else
-
-A run with `--parent RUN_ID` carries the agent's earlier submission under
-`/work/prior`, never the assessment, the private references, the verification
-observations or the judge's verdicts. A plain run receives nothing. To separate
-reuse from difficulty, counterbalance instance order and compare the same
-instance at the same position.
-
-## Source data is frozen once and never replaced in place
-
-Start from a published outlook, a centre's replication procedure or a paper's
-analysis. Record the source version and the exact method or result to
-reproduce, and state the region, period, lead time, variable and resolution.
-Distinguish the source's requirements from the template author's choices, and
-state each open convention in the brief with its accepted reading in the spec.
-For a forecast template, freeze the data cutoff before the observations
-resolve, and keep later observations and the private reference outside the
-agent's workspace.
-
-`prepare` must fail if an existing frozen input differs from the source. Create
-a new reviewed spec version rather than silently replacing evidence, and keep
-the earlier references when a reference function is corrected; assessments keep
-the fingerprint they were made under.
-
-Useful controls include changed coordinates, wrong units, shifted periods, wrong
-category labels, changed missing masks, leaked verification data and a run
-command that cannot regenerate the result. Choose the controls that matter for
-the method, rather than repeating the implementation as checks. Numerical
-agreement alone can reward a copied output; a probe that reruns the submitted
-code on changed data catches it.
-
-## The runtime image is built with Docker
-
-```sh
-docker build -f runtime/Dockerfile -t agent-weather-bench-runtime:local .
-docker image inspect agent-weather-bench-runtime:local --format '{{.Id}}'
-```
-
-The base defaults to `python:3.13-slim`. For a fixed base image, add
-`--build-arg BASE=python@sha256:YOUR_BASE_DIGEST`. The system definition names
-the image a system runs in; `certify` and `assess` use the offline runtime.
+System configuration, the adapter protocol, tooling-use evidence and Docker
+setup belong in the [runtime guide](../docs/runtime.md).

@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "template": "seasonal-forecast-audit",
+  "created_at": "2026-10-08T12:40:22.185572+00:00",
+  "change": "Correct objective-document path to supplied input directory. No numerical or scientific rule changed.",
+  "before_fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+  "after_fingerprint": "e32176d11683385384639d6841067525fc9ab522e4ca9b61366a0dafda7da5f8",
+  "before_spec_version": 1,
+  "after_spec_version": 2,
+  "changed_files": [
+    {
+      "path": "templates/seasonal-forecast-audit/brief.md",
+      "before_sha256": "19cd592144443905bd39d59dc5db02f4b0302e0f5807cc572afba56bbd712386",
+      "after_sha256": "8bacde231390f2ea0ea643602d68d09df3bebd3b4a1bb4c0d2c10bc510c2b315"
+    },
+    {
+      "path": "templates/seasonal-forecast-audit/spec.yaml",
+      "before_sha256": "c6668a45425a32eda5e90228d50e3132719a12be671ed4d15363a34b07637dbe",
+      "after_sha256": "efee6ef06118262ca191be065d41db1f96a068f2034e8a33b5abed8baeef0741"
+    }
+  ],
+  "unchanged_files": {
+    "assessment/assess.py": "310292bb8583fcd12a83ef48b46761bd55f4bab7f4a1aec0b72555f53651d0e7",
+    "assessment/compare.py": "36d9d1e885b15145a23834717fd8a1f49167b9bf90e7e2823125c9e85963025d",
+    "assessment/envelope.md": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec",
+    "assessment/execute.py": "540488feba7d06bf88b4c1b6c884317d03a71209af7b6a5c94e7dbeebb3b305c",
+    "assessment/feedback.py": "e139ed1ab03b74da3c899e8ebd17e64ebede7434100ff8c7c2d4484a4b603b4d",
+    "assessment/judge-prompt.md": "44f9427caaca60e990d65e3306886d88862f3b6e51406c6c78495f63107a7a83",
+    "assessment/judge.py": "9d5a30f79978832d1385ffac0eb5349b8c1e7ff26f93a6a5f1c9cdd7cbeb5108",
+    "assessment/outcomes.py": "4e286ae9bb7be85a5808a736f6c0d5b256a09be8028021901b8f83d212ee6828",
+    "assessment/rubric.py": "ea9cc01ba96e910e9a33d7fdc702e37cfd4f2fcc6d157b3954a625c5e4b12650",
+    "assessment/sources.py": "b213e5a28bf6f4d7e53e02caf56c818678eb5f6c7e3099a147612bf95ff1a78b",
+    "assessment/spec.py": "309a4cc139ff9a8a5358144f3f266075037dc0e23ba65385fed6eeca8b71616f",
+    "assessment/variant.py": "79bf4cb4b648d432cc98f5a7fa3ef25745fada7d54795b590a30d24c434b0e6b",
+    "templates/seasonal-forecast-audit/candidate-pipeline.py": "c1e6f1cfeeadd712f8273cf6de78dd47c82e668801fec4146ba9ec35ccb41315",
+    "templates/seasonal-forecast-audit/candidate_science.py": "fa5d86355eaca6372ae6d8b298f3644d0c0a80e57533588485482255abe0104c",
+    "templates/seasonal-forecast-audit/controls/build.py": "cc4998d32ee1763bb95fe76bf03d1833eb1343df100c9ca5360099d72ea0be8a",
+    "templates/seasonal-forecast-audit/controls/solve.py": "4471d60f8222e40621fa1c50e2056d4178d3ba3850af139494b21e80623997b8",
+    "templates/seasonal-forecast-audit/instances.yaml": "10ebb5ae464f9af575409ade555b5773a6f0d466432cbc374764281eb5ef418c",
+    "templates/seasonal-forecast-audit/reference.py": "bb8e4e78b93345db682fd2c413e649713606ca2cc70715c028702726c51426ed",
+    "templates/seasonal-forecast-audit/reference_independent.py": "ff713aa45b351a25ba335853851c7f4a4089fb29cb2f881f5b31b44afba34fe7",
+    "templates/seasonal-forecast-audit/science.py": "6e5b11a789d4639e6c33b26f0ce79582f39050ae33e9e455fbda81ac1799181a",
+    "templates/seasonal-forecast-audit/scientific-objective.md": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+    "templates/seasonal-forecast-audit/source-records.yaml": "cb8e14c84f28574ce03e3c40e04380d2ca9939a023f004eb4327a860c85161bb",
+    "templates/seasonal-forecast-audit/sources.json": "0c994ff93a12003735f667e7b861d4199a4c0f548e9b60a40215bd1873185114"
+  },
+  "scientific_implementation_unchanged": true,
+  "original_assessments_preserved": true,
+  "original_agent_runs": [
+    {
+      "run": "20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8",
+      "spec_version": 1,
+      "fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+      "outcome": "pass",
+      "computed_outcome": "pass",
+      "judged_outcome": "pass",
+      "files": {
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/assessment.json": "1b8d477049bdb4ab74c3e195299a4e149410ede1257ca39374591007c22d1c10",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/answer.json": "09e11ca42c5b6a5bc51751b3d1a50022c11b6b66afa3e482f86ebe88c172e53e",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/candidate_science.py": "fa5d86355eaca6372ae6d8b298f3644d0c0a80e57533588485482255abe0104c",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/report.md": "8a5591b724d7732d1daec92c8857baed9e0b3e8efdabbaf412c52e03ba2574e7",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/requirements.txt": "0f2fcbf8a40ceed1ea2a97067e8a306d665b50adc8edf2cc4298aa6d8a8d313c",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/climatology_rmse_mm/c": "3527dd6d1fdd3f4c1d783e28d0f26dcb8829636245fced67639956cc2a1e58c9",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/climatology_rmse_mm/zarr.json": "4d9748a6f0306e96be1bdd7b02962123abe9ea0a2d4150156c6825ac1112d79a",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/forecast_mm/c/0/0": "8e2f15a90689b61804d3d3404d54e99a148fe719cb1987b92e4e657107e0bb65",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/forecast_mm/zarr.json": "53160c7ce7ed578f678c9535a8b935e6d5f0d5b91e380f6838cdead4b6657d92",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/forecast_year/c/0": "90ceeea28ca1d221f135f2e339fa573d7259d7f94f9ec13839e95ec1524da2a1",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/forecast_year/zarr.json": "88c66d53fd74d66ca67160c7ec140750926776997c078354b95d8b1f1e6d5577",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/hindcast_mm/c/0/0": "97bae8ac04e451cb6565a37d227b6274996bf4a2f2a1dddea36f9bef5749d6b7",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/hindcast_mm/zarr.json": "6465e6521e6c3ed0eab75446c96281d8f0d5cf6a1e4ff50eea05a21909a616a1",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/hindcast_rmse_mm/c": "5419aba2d5f1f780f26dfe94a0e1b424c2fe81ad4574e08044b986939821d929",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/hindcast_rmse_mm/zarr.json": "4d9748a6f0306e96be1bdd7b02962123abe9ea0a2d4150156c6825ac1112d79a",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/hindcast_year/c/0": "e60a9782ff92defad7905a0f0773a10ec09feaa12a07fceaae36e80036a54093",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/hindcast_year/zarr.json": "370e75844f4215fb55ff05c1dfd73bdd0f3d620419201292eed70da18d4dd1cd",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/original_hindcast_mm/c/0/0": "2d4f0ae64e58b0720895a31269f49f77479f17fd717811b4c4fa70ab087e76fd",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/original_hindcast_mm/zarr.json": "6465e6521e6c3ed0eab75446c96281d8f0d5cf6a1e4ff50eea05a21909a616a1",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/original_rmse_mm/c": "4e22a753ee900a0c7c2c04516ee05b42b044c70a74b64c0e89122de08c15a6bf",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/original_rmse_mm/zarr.json": "4d9748a6f0306e96be1bdd7b02962123abe9ea0a2d4150156c6825ac1112d79a",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/target/c/0": "bc7063337fdd61a20a11ef4e340f970303e8bd619b70f310d7a9d9d788c59b23",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/target/zarr.json": "af6d58e38514214a9af3deba55137b5432a57a1af1e876e4989503dc5052ac52",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/results.zarr/zarr.json": "4537f17c40b91058224e90cbba83c81b7505b17c884a93052871a8b95f7ce76f",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/frozen/run.py": "86744d47086018fb502053539f7a1f272956bc8460894c369ac6314d118f2e36",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/input-manifest.json": "5526fc9af6fb43e8074d86022bd14611d9a2e101155fd67385c8518e2f536bec",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/request.json": "fd31c7bc603b6a0c20c05b19693372f0b46c788783e550e4108587f29a57c20d",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/run.json": "830864069c4a81b5473c02a5005603aa79634e22c4841c5a872955d8b121e85b",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8/task/brief.md": "79f7dc35940d96b5c6a2a3cef571a290f59b8821967c38f95b55e255d1b19f76"
+      }
+    },
+    {
+      "run": "20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4",
+      "spec_version": 1,
+      "fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+      "outcome": "pass",
+      "computed_outcome": "pass",
+      "judged_outcome": "pass",
+      "files": {
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/assessment.json": "953c9e37f8abcf6e109754d741a811cc06c454f7705f4bd3129439ceb8d2ec79",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/answer.json": "597ecbf89dca856298f34925d99aebbb23c45fb5346fbedbf0c4ed4df8031b10",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/report.md": "8b99cb658b3a7d87a6534ddd06e81b89d624b167f23168d889b861f70c88b15b",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/requirements.txt": "0b86f48213118ad3c201802fe234b7779bb55b6f8a14b65c2680e0f3a1a28aa9",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/climatology_rmse_mm/c": "3527dd6d1fdd3f4c1d783e28d0f26dcb8829636245fced67639956cc2a1e58c9",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/climatology_rmse_mm/zarr.json": "4d9748a6f0306e96be1bdd7b02962123abe9ea0a2d4150156c6825ac1112d79a",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/forecast_mm/c/0/0": "8e2f15a90689b61804d3d3404d54e99a148fe719cb1987b92e4e657107e0bb65",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/forecast_mm/zarr.json": "53160c7ce7ed578f678c9535a8b935e6d5f0d5b91e380f6838cdead4b6657d92",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/forecast_year/c/0": "90ceeea28ca1d221f135f2e339fa573d7259d7f94f9ec13839e95ec1524da2a1",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/forecast_year/zarr.json": "88c66d53fd74d66ca67160c7ec140750926776997c078354b95d8b1f1e6d5577",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/hindcast_mm/c/0/0": "97bae8ac04e451cb6565a37d227b6274996bf4a2f2a1dddea36f9bef5749d6b7",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/hindcast_mm/zarr.json": "6465e6521e6c3ed0eab75446c96281d8f0d5cf6a1e4ff50eea05a21909a616a1",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/hindcast_rmse_mm/c": "5419aba2d5f1f780f26dfe94a0e1b424c2fe81ad4574e08044b986939821d929",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/hindcast_rmse_mm/zarr.json": "4d9748a6f0306e96be1bdd7b02962123abe9ea0a2d4150156c6825ac1112d79a",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/hindcast_year/c/0": "e60a9782ff92defad7905a0f0773a10ec09feaa12a07fceaae36e80036a54093",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/hindcast_year/zarr.json": "370e75844f4215fb55ff05c1dfd73bdd0f3d620419201292eed70da18d4dd1cd",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/original_hindcast_mm/c/0/0": "2d4f0ae64e58b0720895a31269f49f77479f17fd717811b4c4fa70ab087e76fd",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/original_hindcast_mm/zarr.json": "6465e6521e6c3ed0eab75446c96281d8f0d5cf6a1e4ff50eea05a21909a616a1",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/original_rmse_mm/c": "4e22a753ee900a0c7c2c04516ee05b42b044c70a74b64c0e89122de08c15a6bf",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/original_rmse_mm/zarr.json": "4d9748a6f0306e96be1bdd7b02962123abe9ea0a2d4150156c6825ac1112d79a",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/target/c/0": "bc7063337fdd61a20a11ef4e340f970303e8bd619b70f310d7a9d9d788c59b23",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/target/zarr.json": "af6d58e38514214a9af3deba55137b5432a57a1af1e876e4989503dc5052ac52",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/results.zarr/zarr.json": "36615682d5be9646729635067a75185212eb0c48d708ef06ad34c1f58dd587d2",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/run.py": "cf7068376b9702dcaa1d1820a6c09d6c120f08939ac43dd467515df07b36f954",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/frozen/validate.py": "9ef39f503df7fcac985d1496e652eeb1c5212de736504dd542365270c4e19022",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/input-manifest.json": "5526fc9af6fb43e8074d86022bd14611d9a2e101155fd67385c8518e2f536bec",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/request.json": "69c4d5fd805e67661d77b65ced61237244e3bfae5c6c9bbdb0a5ea6daf5bc373",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/run.json": "7b76706b9adce722f0cf8425201ba212e46bd16b2daa80df8c0f4537a0d03d86",
+        "var/template-runs/20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4/task/brief.md": "79f7dc35940d96b5c6a2a3cef571a290f59b8821967c38f95b55e255d1b19f76"
+      }
+    }
+  ],
+  "v1_snapshot": {
+    "path": "var/review/seasonal-forecast-audit-v1-path-erratum",
+    "manifest_path": "var/review/seasonal-forecast-audit-v1-path-erratum/migration-context.json",
+    "manifest_sha256": "2dc4febac0a27892de0121bd3de6121ea09ba114e51f7cb3bc718882cc0cab48"
+  },
+  "archived_v1_certificate": {
+    "path": "var/review/seasonal-forecast-audit-v1-path-erratum/certification-v1-with-trials.json",
+    "sha256": "67653d07042a3f4def0d7b371976f868e101e3654e49ca0fe0bdf2decf7a51a1"
+  },
+  "certificate_revision": {
+    "path": "templates/seasonal-forecast-audit/certification.json",
+    "before_sha256": "67653d07042a3f4def0d7b371976f868e101e3654e49ca0fe0bdf2decf7a51a1",
+    "after_sha256_at_migration": "8f07dea42c199ac3df0171085f93a2586577005fe5e95672fe30d7c23c90dbd8",
+    "immutable_current_hash_assertion": false,
+    "note": "Certification metadata may subsequently refresh current-version trial evidence; it is excluded from deciding-file identity and unchanged-file assertions."
+  },
+  "carry_forward": {
+    "status": "carried_forward_unchanged_scientific_evidence",
+    "source_spec_version": 1,
+    "source_fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+    "source_certificate": {
+      "path": "var/review/seasonal-forecast-audit-v1-path-erratum/certification-v1-with-trials.json",
+      "sha256": "67653d07042a3f4def0d7b371976f868e101e3654e49ca0fe0bdf2decf7a51a1"
+    },
+    "source_certified_at": "20261008T122510",
+    "reason": "Only the objective-document location in the brief and integer spec version changed. All scientific template files, controls, deciding modules and staged inputs are byte-identical. Tests1\u20134 are reused, not freshly rerun."
+  },
+  "fresh_path_check": {
+    "assessment": "var/review/audit-v2-path-control/assessment.json",
+    "sha256": "9666befade752678efa3e8a41c596290d90dded9020e2a6c11f9a727e9079187",
+    "runtime_image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+    "computed_outcome": "pass",
+    "completion": "unresolved",
+    "judge": "not_run",
+    "purpose": "One fresh Docker known-correct numerical assessment after objective-path repair; prose review intentionally not rerun.",
+    "staging_checks": {
+      "path": "var/review/audit-v2-path-staging/checks.json",
+      "sha256": "2faca578d57a9e34f7e0dd09835e835fe7907739ee515f402e204125b3aa71a0",
+      "instances": 4,
+      "staged_inputs_byte_identical_to_v1": true
+    }
+  },
+  "staging_checks": [
+    {
+      "instance": "case-a",
+      "corrected_brief_sha256": "ff07b1c92d46f4f112f9eb8c1fa049f34d9496a11b3b550dbf71e9d2336c5da5",
+      "objective_resolves_in_supplied_input_directory": true,
+      "objective_sha256": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+      "staged_inputs_byte_identical_to_v1": true,
+      "staged_files": {
+        "source-manifest.json": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+        "candidate_science.py": "fa5d86355eaca6372ae6d8b298f3644d0c0a80e57533588485482255abe0104c",
+        "instance.json": "7d8e0c88e0612aa897c86921ec70963b558aa91273da85416f1f70d8890bf031",
+        "candidate-pipeline.py": "c1e6f1cfeeadd712f8273cf6de78dd47c82e668801fec4146ba9ec35ccb41315",
+        "predictors.nc": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+        "targets.nc": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+        "scientific-objective.md": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+        "candidate-config.json": "4936e32f9d8b1996afd9f31e3048bc2f8708b6ffa770cdcf34633fc4c434c02d",
+        "source-records.yaml": "cb8e14c84f28574ce03e3c40e04380d2ca9939a023f004eb4327a860c85161bb",
+        "candidate-report.md": "bdb1dc1b7b7077c96ac38ee1e5c1bc21ec44a33b4e70d30822f8cfcc83a2fa26"
+      }
+    },
+    {
+      "instance": "case-b",
+      "corrected_brief_sha256": "02a39fdc76a2db77511375befbfc7975d20a64572a45682e6c30620000b5274c",
+      "objective_resolves_in_supplied_input_directory": true,
+      "objective_sha256": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+      "staged_inputs_byte_identical_to_v1": true,
+      "staged_files": {
+        "source-manifest.json": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+        "candidate_science.py": "fa5d86355eaca6372ae6d8b298f3644d0c0a80e57533588485482255abe0104c",
+        "instance.json": "bcfc75ea534cc344e3067e9073de1247644478a85ee294f6c04bfd20e626ea14",
+        "candidate-pipeline.py": "c1e6f1cfeeadd712f8273cf6de78dd47c82e668801fec4146ba9ec35ccb41315",
+        "predictors.nc": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+        "targets.nc": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+        "scientific-objective.md": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+        "candidate-config.json": "f473c561bbd675d87c7d96e1060d5e3fcbc11838f361a2b1f24c8526c7dfc8d7",
+        "source-records.yaml": "cb8e14c84f28574ce03e3c40e04380d2ca9939a023f004eb4327a860c85161bb",
+        "candidate-report.md": "06be48ec863891140d6d437d6ae3b6d0c2730ff9aa5a4dc8106dfce30312e0be"
+      }
+    },
+    {
+      "instance": "case-c",
+      "corrected_brief_sha256": "fde95965cc92b17a64f0832067be098ec881c5338229a0adaf851bdca56ad191",
+      "objective_resolves_in_supplied_input_directory": true,
+      "objective_sha256": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+      "staged_inputs_byte_identical_to_v1": true,
+      "staged_files": {
+        "source-manifest.json": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+        "candidate_science.py": "fa5d86355eaca6372ae6d8b298f3644d0c0a80e57533588485482255abe0104c",
+        "instance.json": "247b0275d17b523dbbf840507c7eada3ab2740623068d66975c66c1b06a7ea53",
+        "candidate-pipeline.py": "c1e6f1cfeeadd712f8273cf6de78dd47c82e668801fec4146ba9ec35ccb41315",
+        "predictors.nc": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+        "targets.nc": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+        "scientific-objective.md": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+        "candidate-config.json": "9c20b1359c03bd8e4288bf5f1e1ff85c9f087d9bef0fc1051ca654eea24f8e27",
+        "source-records.yaml": "cb8e14c84f28574ce03e3c40e04380d2ca9939a023f004eb4327a860c85161bb",
+        "candidate-report.md": "229a8a154d3492b213d1d96dd794baf6888945902e498b780de47c364a71a927"
+      }
+    },
+    {
+      "instance": "case-d",
+      "corrected_brief_sha256": "50a0f095a5b3078606a3198f7388fb2642653eba30b275401f5fd66b82f977d9",
+      "objective_resolves_in_supplied_input_directory": true,
+      "objective_sha256": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+      "staged_inputs_byte_identical_to_v1": true,
+      "staged_files": {
+        "source-manifest.json": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+        "candidate_science.py": "fa5d86355eaca6372ae6d8b298f3644d0c0a80e57533588485482255abe0104c",
+        "instance.json": "e8ffb0a41c9ed76397559fb9b1b4af8e4b61547cc646d829bc880ad5ef18340e",
+        "candidate-pipeline.py": "c1e6f1cfeeadd712f8273cf6de78dd47c82e668801fec4146ba9ec35ccb41315",
+        "predictors.nc": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+        "targets.nc": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+        "scientific-objective.md": "0f436f96170dd694986f62339fea9a18528b235d2991550fd8e264896c47f28f",
+        "candidate-config.json": "4936e32f9d8b1996afd9f31e3048bc2f8708b6ffa770cdcf34633fc4c434c02d",
+        "source-records.yaml": "cb8e14c84f28574ce03e3c40e04380d2ca9939a023f004eb4327a860c85161bb",
+        "candidate-report.md": "0d36e74fef0e3a915638c7cbea937b0980bbc01f8cb5569b9b4e6e0d051ddf9c"
+      }
+    }
+  ],
+  "trial_policy": {
+    "current_v2_trials": "pending",
+    "current_v2_attempts": 0,
+    "historical_v1_attempts": 2,
+    "historical_v1_verdicts": "Both complete passes remain v1 evidence; no reclassification or reassessment.",
+    "historical_bridge": "Permit only these exact v1 fingerprints/versions and recorded original assessments under this path-only erratum, never relabel them v2."
+  },
+  "inference": {
+    "agent_calls": 0,
+    "judge_calls": 0,
+    "scientific_control_matrix_rerun": false,
+    "fresh_known_correct_docker_assessments": 1
+  }
+}

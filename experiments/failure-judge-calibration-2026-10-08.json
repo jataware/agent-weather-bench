@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "new_judge_requests": 6,
+  "request_cap": 8,
+  "retries": 0,
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "requested_effective_models": [
+    {
+      "sample": "sample-a",
+      "requested_model": "claude-opus-5-5",
+      "effective_model": "claude-opus-5-5"
+    },
+    {
+      "sample": "sample-b",
+      "requested_model": "claude-opus-5-5",
+      "effective_model": "claude-opus-5-5"
+    },
+    {
+      "sample": "sample-c",
+      "requested_model": "claude-opus-5-5",
+      "effective_model": "claude-opus-5-5"
+    },
+    {
+      "sample": "sample-d",
+      "requested_model": "claude-opus-5-5",
+      "effective_model": "claude-opus-5-5"
+    },
+    {
+      "sample": "sample-e",
+      "requested_model": "claude-opus-5-5",
+      "effective_model": "claude-opus-5-5"
+    },
+    {
+      "sample": "sample-f",
+      "requested_model": "claude-opus-5-5",
+      "effective_model": "claude-opus-5-5"
+    }
+  ],
+  "usage": {
+    "input_tokens": 70056,
+    "output_tokens": 14475,
+    "cli_list_price_usd": 0.8047848000000001,
+    "actual_billed_usd": null,
+    "auth": "Root-relayed readiness: Claude CLI logged in through claude.ai Max subscription.",
+    "cost_scope": "Reported CLI list price is not proof of a paid API charge; actual subscription attribution unknown."
+  },
+  "targeted": {
+    "rows": [
+      {
+        "sample": "sample-a",
+        "question": "production_method",
+        "expected": "fail",
+        "actual": "fail",
+        "matches": true
+      },
+      {
+        "sample": "sample-a",
+        "question": "validation_method",
+        "expected": "pass",
+        "actual": "pass",
+        "matches": true
+      },
+      {
+        "sample": "sample-b",
+        "question": "diagnostic_method",
+        "expected": "pass",
+        "actual": "pass",
+        "matches": true
+      },
+      {
+        "sample": "sample-b",
+        "question": "headline_method",
+        "expected": "pass",
+        "actual": "pass",
+        "matches": true
+      },
+      {
+        "sample": "sample-c",
+        "question": "diagnostic_method",
+        "expected": "fail",
+        "actual": "fail",
+        "matches": true
+      },
+      {
+        "sample": "sample-c",
+        "question": "headline_method",
+        "expected": "pass",
+        "actual": "pass",
+        "matches": true
+      },
+      {
+        "sample": "sample-d",
+        "question": "production_method",
+        "expected": "pass",
+        "actual": "pass",
+        "matches": true
+      },
+      {
+        "sample": "sample-d",
+        "question": "validation_method",
+        "expected": "pass",
+        "actual": "pass",
+        "matches": true
+      }
+    ],
+    "matching_verdicts": 8,
+    "total_verdicts": 8,
+    "faults_detected": 2,
+    "faults_tested": 2,
+    "method_passes_preserved": 6,
+    "method_passes_tested": 6,
+    "scope": "Targeted code-method questions; source-only repairs do not establish full runtime/numeric validity."
+  },
+  "general_without_diagnostics": {
+    "monthly": {
+      "sample": "sample-e",
+      "standing_consistency": "pass",
+      "generic_conformance": "fail",
+      "target_scientific_fault_identified": true,
+      "manual_rationale_review": "Explicitly identifies production betas[1] versus mean(raw_beta), and separately ds initialization."
+    },
+    "station": {
+      "sample": "sample-f",
+      "standing_consistency": "pass",
+      "generic_conformance": "pass",
+      "target_scientific_fault_identified": false,
+      "manual_rationale_review": "Incorrectly asserts diagnostic variants are implemented, without noticing v==2 excludes v==4."
+    },
+    "comparison": "Generic method conformance finds one of two known scientific faults. Standing consistency flags neither; consistency is a different obligation and can pass when artifacts agree on a wrong calculation."
+  },
+  "all_citations_valid": true,
+  "independent_numeric_localization": {
+    "schema_version": 1,
+    "source_audit_sha256": "46f8e7335ec71cdc138fdaeeeaf0c8ee9040984bf673d9dcfde1c057f18f576f",
+    "scope": "Fresh trusted-reference calculations and read-only original arrays; no submission code executed, no model requests.",
+    "references": {
+      "monthly": {
+        "path": "archive/evaluator-v1-2026-10/weatherbench/task_tools/monthly_cycle/reference.py",
+        "sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5"
+      },
+      "station": {
+        "path": "archive/evaluator-v1-2026-10/weatherbench/task_tools/station_verification/reference.py",
+        "sha256": "b9a88c32a2d67640e6c73b9ca5924dfd366fdde948f2f481b568c36cc75a8f7e"
+      }
+    },
+    "original_artifacts_reverified": 20,
+    "monthly_production_by_system": {
+      "climatology": {
+        "finite_pairs": 144,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 0.0,
+        "rmse_of_difference": 0.0,
+        "values_differing_by_more_than_1e_7": 0
+      },
+      "independent-month": {
+        "finite_pairs": 144,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 7.105427357601002e-15,
+        "rmse_of_difference": 1.0808451812457177e-15,
+        "values_differing_by_more_than_1e_7": 0
+      },
+      "constant-slope": {
+        "finite_pairs": 144,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 34.9690993608007,
+        "rmse_of_difference": 9.150282776646359,
+        "values_differing_by_more_than_1e_7": 144
+      },
+      "nested-cyclic": {
+        "finite_pairs": 144,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 2.842170943040401e-14,
+        "rmse_of_difference": 2.533860938643264e-15,
+        "values_differing_by_more_than_1e_7": 0
+      }
+    },
+    "station_diagnostic_by_variant": {
+      "correct": {
+        "finite_pairs": 8,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 6.217248937900877e-15,
+        "rmse_of_difference": 2.673771110915334e-15,
+        "values_differing_by_more_than_1e_7": 0
+      },
+      "init-time-truth": {
+        "finite_pairs": 8,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 6.217248937900877e-15,
+        "rmse_of_difference": 2.710399819191012e-15,
+        "values_differing_by_more_than_1e_7": 0
+      },
+      "celsius-as-kelvin": {
+        "finite_pairs": 8,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 0.0,
+        "rmse_of_difference": 0.0,
+        "values_differing_by_more_than_1e_7": 0
+      },
+      "own-support": {
+        "finite_pairs": 8,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 4.440892098500626e-15,
+        "rmse_of_difference": 2.1868857395626282e-15,
+        "values_differing_by_more_than_1e_7": 0
+      },
+      "all-three": {
+        "finite_pairs": 8,
+        "nonfinite_mask_agrees": true,
+        "max_absolute_error": 270.5651399379333,
+        "rmse_of_difference": 270.47906409175795,
+        "values_differing_by_more_than_1e_7": 8
+      }
+    },
+    "interpretation": "Differences localize the faults; passing other slices is preserved. This is not a repeated agent attempt or a persistent capability boundary."
+  },
+  "archival_judge": "Both original assessments recorded judge=none. This study is new calibration, not evidence of an original judge miss.",
+  "interpretation": "Narrow, task-owned method questions can expose these errors while preserving component successes. A broad consistency or conformance judge is not a substitute for deterministic numeric comparisons.",
+  "limits": [
+    "Two selected historical failures and one judgment per packet; no sensitivity/specificity estimate for a population.",
+    "Targeted and general modes differ in both question specificity and access to numeric diagnostics; their effects are confounded.",
+    "The constructed repaired controls change only one expression; remaining runtime/provenance defects are intentionally not repaired.",
+    "No submission code was executed for this calibration; original artifacts and assessments remain unchanged."
+  ],
+  "evidence": {
+    "experiments/failure_judge_calibration.py": "3555f8d8efb65b7c633fce4533384a91c33a508db794bfb682aa483e0e0ca41a",
+    "tests/test_failure_judge_calibration.py": "a1d180d07aeca05499fb15361f5b62b897937f43799ea9e67a23ec87164cdc47",
+    "var/review/failure-judge-calibration-20261008/manifest.json": "3ba4daa757ad4e78b7548dfa97032802e7735a01cb0f1616ef663f1fd778f5b6",
+    "var/review/failure-judge-calibration-20261008/requests.json": "a267512742bfb5abd1b597b25f6588041894d7921e66d2e0675df253a5724f73",
+    "var/private/calibration/failure-judge-calibration-20261008/expected.json": "391c86aa544eec234df861e76e1aaebd78f423bd6b741cf490ac0424ed6a416e",
+    "experiments/historical-science-slices-2026-10-08.json": "8bf7274b6dfd9868fd097d03e54d05fbb0287d1c67425ad54c5da8b4e18559bd",
+    "experiments/original-portfolio-failure-audit-2026-10-08.json": "46f8e7335ec71cdc138fdaeeeaf0c8ee9040984bf673d9dcfde1c057f18f576f",
+    "var/review/failure-judge-calibration-20261008/responses/sample-a.json": "dfa7ad749e85050764975eeaee9706eb2863c34daccf1a0be7bf67f0d18422fa",
+    "var/review/failure-judge-calibration-20261008/responses/sample-b.json": "2731d13f7d6a5f0ab98b8c35292fa15d0332cf6f77ed9fba0546a8ec5706496a",
+    "var/review/failure-judge-calibration-20261008/responses/sample-c.json": "46ffe362198d67e3f6f45366a3e8618b0a37782839bf233634917b926deec12e",
+    "var/review/failure-judge-calibration-20261008/responses/sample-d.json": "07528bcc5ec446ae311b971a18c4cac26cb9c09036beae9ed75f3329eb7e0774",
+    "var/review/failure-judge-calibration-20261008/responses/sample-e.json": "90c4f17eb4cab572d68d6f08de1e1d7ecadb4ae5d54c0bfc394e19604b84ae91",
+    "var/review/failure-judge-calibration-20261008/responses/sample-f.json": "42b9e4be82755df211a592dcaa81d693a74dcfc4b1669c9444fd7a173587bb84"
+  }
+}

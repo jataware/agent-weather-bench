@@ -1,0 +1,61 @@
+{
+  "scope": "Immutable six-call pre-ablation snapshot",
+  "files": {
+    "experiments/failure_judge_calibration.py": {
+      "sha256": "3555f8d8efb65b7c633fce4533384a91c33a508db794bfb682aa483e0e0ca41a",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/experiments/failure_judge_calibration.py"
+    },
+    "tests/test_failure_judge_calibration.py": {
+      "sha256": "a1d180d07aeca05499fb15361f5b62b897937f43799ea9e67a23ec87164cdc47",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/tests/test_failure_judge_calibration.py"
+    },
+    "var/review/failure-judge-calibration-20261008/manifest.json": {
+      "sha256": "3ba4daa757ad4e78b7548dfa97032802e7735a01cb0f1616ef663f1fd778f5b6",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/review/failure-judge-calibration-20261008/manifest.json"
+    },
+    "var/review/failure-judge-calibration-20261008/requests.json": {
+      "sha256": "a267512742bfb5abd1b597b25f6588041894d7921e66d2e0675df253a5724f73",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/review/failure-judge-calibration-20261008/requests.json"
+    },
+    "var/private/calibration/failure-judge-calibration-20261008/expected.json": {
+      "sha256": "391c86aa544eec234df861e76e1aaebd78f423bd6b741cf490ac0424ed6a416e",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/private/calibration/failure-judge-calibration-20261008/expected.json"
+    },
+    "experiments/historical-science-slices-2026-10-08.json": {
+      "sha256": "8bf7274b6dfd9868fd097d03e54d05fbb0287d1c67425ad54c5da8b4e18559bd",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/experiments/historical-science-slices-2026-10-08.json"
+    },
+    "experiments/original-portfolio-failure-audit-2026-10-08.json": {
+      "sha256": "46f8e7335ec71cdc138fdaeeeaf0c8ee9040984bf673d9dcfde1c057f18f576f",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/experiments/original-portfolio-failure-audit-2026-10-08.json"
+    },
+    "var/review/failure-judge-calibration-20261008/responses/sample-a.json": {
+      "sha256": "dfa7ad749e85050764975eeaee9706eb2863c34daccf1a0be7bf67f0d18422fa",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/review/failure-judge-calibration-20261008/responses/sample-a.json"
+    },
+    "var/review/failure-judge-calibration-20261008/responses/sample-b.json": {
+      "sha256": "2731d13f7d6a5f0ab98b8c35292fa15d0332cf6f77ed9fba0546a8ec5706496a",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/review/failure-judge-calibration-20261008/responses/sample-b.json"
+    },
+    "var/review/failure-judge-calibration-20261008/responses/sample-c.json": {
+      "sha256": "46ffe362198d67e3f6f45366a3e8618b0a37782839bf233634917b926deec12e",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/review/failure-judge-calibration-20261008/responses/sample-c.json"
+    },
+    "var/review/failure-judge-calibration-20261008/responses/sample-d.json": {
+      "sha256": "07528bcc5ec446ae311b971a18c4cac26cb9c09036beae9ed75f3329eb7e0774",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/review/failure-judge-calibration-20261008/responses/sample-d.json"
+    },
+    "var/review/failure-judge-calibration-20261008/responses/sample-e.json": {
+      "sha256": "90c4f17eb4cab572d68d6f08de1e1d7ecadb4ae5d54c0bfc394e19604b84ae91",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/review/failure-judge-calibration-20261008/responses/sample-e.json"
+    },
+    "var/review/failure-judge-calibration-20261008/responses/sample-f.json": {
+      "sha256": "42b9e4be82755df211a592dcaa81d693a74dcfc4b1669c9444fd7a173587bb84",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/var/review/failure-judge-calibration-20261008/responses/sample-f.json"
+    },
+    "experiments/failure-judge-calibration-2026-10-08.json": {
+      "sha256": "67e13ab7b9111938b98e637892f7aa6dd0e0f68cf8ea625c18640fda086b8b50",
+      "snapshot": "var/review/failure-judge-calibration-20261008/baseline-six/experiments/failure-judge-calibration-2026-10-08.json"
+    }
+  }
+}

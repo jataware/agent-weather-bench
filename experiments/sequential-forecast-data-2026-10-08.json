@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-08T16:13:26.280445+00:00",
+  "state": "pass",
+  "source": "var/private/templates/weeks34-rainfall/source-subset.nc",
+  "source_sha256": "8f5cb84e7927475d2a8c03e61cce6a065c4ff4c41aa943dd4883d1873d95429d",
+  "private_episodes": {
+    "development": {
+      "path": "var/private/experiments/sequential-forecast-20261008/development.json",
+      "sha256": "e23189d19b81bcaa3aa7587a7135233168b7299e79a0a776caf5078afe2e990c"
+    },
+    "final": {
+      "path": "var/private/experiments/sequential-forecast-20261008/final.json",
+      "sha256": "fb92b32c85286b3a7e6fe390a00822dec8db444299854fe49505c521acfc8707"
+    }
+  },
+  "public_training": "var/review/sequential-forecast-data-20261008/public/training.json",
+  "public_training_sha256": "c388a0b21a92f35f99be8553f08feb9e2d01eeeff70d4e1c640d5b1c4ddf31b5",
+  "public_metadata": "var/review/sequential-forecast-data-20261008/public/metadata.json",
+  "public_metadata_sha256": "058647280fd2a11b310103e69419ccb9745392ad130f805c72c963db34cb4d22",
+  "training_cases": 674,
+  "streams": {
+    "development": {
+      "first_issue": "2012-01-01",
+      "last_issue": "2014-12-28",
+      "cases": 157,
+      "initial_available_observations": 674,
+      "initial_pending_observations": 4
+    },
+    "final": {
+      "first_issue": "2015-01-04",
+      "last_issue": "2021-12-26",
+      "cases": 359,
+      "initial_available_observations": 831,
+      "initial_pending_observations": 4
+    }
+  },
+  "native_workers": 1,
+  "development_truth_in_public_training": false,
+  "final_truth_in_public_training": false,
+  "future_final_predictors_in_public_training": false,
+  "actor_code_executed": false,
+  "model_calls": 0,
+  "publication_dates_simulated": true,
+  "script_sha256": "6edc09504293e4b0fdd9408301a30a459ce67b17f4c7a9130d23a45114a0be60",
+  "caveats": [
+    "Retrospective source snapshot; release dates are an explicit simulation, not historical real-time vintages.",
+    "Final observations are public history but private to the frozen program during the stream.",
+    "Weekly14-day targets overlap; nine nearby cells and annual errors are dependent.",
+    "All development labels stay controller-private; five aggregate development evaluations may guide program selection."
+  ]
+}

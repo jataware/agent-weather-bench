@@ -1,0 +1,375 @@
+{
+ "schema_version": 1,
+ "template": "native-rainfall-reconciliation",
+ "spec_version": 1,
+ "fingerprint": "3d29f5d5c44fe0fd3acadcbc54dcdd6057f5a0248aa1be9fb3b43c4a7b6b069f",
+ "certified_at": "20261008T121936",
+ "executor": "local-trusted",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 3,
+   "combinations": 8,
+   "comparisons": 24,
+   "largest_difference": 3.3236966316962935e-06,
+   "problems": [],
+   "regression_checks": [],
+   "tolerances": {
+    "latitude": {
+     "tolerance": 3.996802888650564e-14,
+     "declared": {
+      "precision": "float64",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 6.0,
+     "within_declared_magnitude": true
+    },
+    "longitude": {
+     "tolerance": 3.996802888650564e-14,
+     "declared": {
+      "precision": "float64",
+      "operations": 1,
+      "magnitude": 180
+     },
+     "largest_reference_value": 42.0,
+     "within_declared_magnitude": true
+    },
+    "current_mean_mm": {
+     "tolerance": 0.0024080421455059467,
+     "declared": {
+      "precision": "float32",
+      "operations": 101,
+      "magnitude": 200
+     },
+     "largest_reference_value": 79.7168960571289,
+     "within_declared_magnitude": true
+    },
+    "previous_mean_mm": {
+     "tolerance": 0.0024080421455059467,
+     "declared": {
+      "precision": "float32",
+      "operations": 101,
+      "magnitude": 200
+     },
+     "largest_reference_value": 66.69361076732673,
+     "within_declared_magnitude": true
+    },
+    "change_mm": {
+     "tolerance": 0.004839955717981502,
+     "declared": {
+      "precision": "float32",
+      "operations": 203,
+      "magnitude": 200
+     },
+     "largest_reference_value": 23.293161939866472,
+     "within_declared_magnitude": true
+    },
+    "regional_change_mm": {
+     "tolerance": 0.008845524888618807,
+     "declared": {
+      "precision": "float32",
+      "operations": 371,
+      "magnitude": 200
+     },
+     "largest_reference_value": 8.330555712629282,
+     "within_declared_magnitude": true
+    }
+   }
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "clip_quantization",
+     "kind": "accepted_alternative",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "clip_quantization",
+     "kind": "accepted_alternative",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "float32",
+     "kind": "accepted_alternative",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "float32",
+     "kind": "accepted_alternative",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "independent",
+     "kind": "known_correct",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "independent",
+     "kind": "known_correct",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "reordered",
+     "kind": "accepted_alternative",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "reordered",
+     "kind": "accepted_alternative",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    }
+   ]
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "sum_rates",
+     "kind": "pitfall",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "sum_rates",
+     "kind": "pitfall",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "same_lead",
+     "kind": "pitfall",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "same_lead",
+     "kind": "pitfall",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "false_claim",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "false_claim",
+     "kind": "incorrect",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "bulletin",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "bulletin",
+     "kind": "incorrect",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "service-area--weeks-1-2",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "coast--weeks-2-3",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    }
+   ],
+   "not_applicable": {
+    "held_out_observations": "This computes forecast revisions; no verification observations or skill ranking."
+   }
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [
+    {
+     "pair": "signed_net vs clip_quantization",
+     "convention": "negative_increments",
+     "kind": "accepted_vs_accepted",
+     "separated_on": 0,
+     "instances": 3,
+     "smallest_separation_in_tolerances": null,
+     "largest_coincidence_in_tolerances": 0.867,
+     "separated_on_changed_data": 0,
+     "separated_by_neither": 3,
+     "status": "not separable: a known ambiguity",
+     "not_separated_on": [
+      "service-area--weeks-1-2",
+      "coast--weeks-2-3",
+      "north-west--weeks-1-2"
+     ]
+    },
+    {
+     "pair": "sum_rates",
+     "convention": "integration",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 3,
+     "instances": 3,
+     "smallest_separation_in_tolerances": 12238.0,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    },
+    {
+     "pair": "same_lead",
+     "convention": "alignment",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 3,
+     "instances": 3,
+     "smallest_separation_in_tolerances": 11702.0,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    }
+   ],
+   "known_ambiguities": []
+  },
+  "5_model_attempts": {
+   "passed": null,
+   "status": "not_run",
+   "attempts": 0,
+   "systems": [],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 3,
+   "rulings_awaiting_confirmation": 0,
+   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+   "runs": []
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "pending",
+  "scientific_approval": "pending"
+ }
+}

@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "study": "mam-guided-tooling-efficiency-precision-clarification",
+  "declared_at": "2026-10-08T14:31:43.598819+00:00",
+  "template": "mam-multimodel-outlook",
+  "instance": "kenya-interior--mam-2016",
+  "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+  "model": "gpt-6-luna",
+  "reasoning_effort": "high",
+  "systems": {
+    "efficiency-luna-python-precision": {
+      "arm": "python",
+      "replication": 1,
+      "phase": "precision_clarification",
+      "files": {
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "3a6ab27c3dd8e12f4d7c98f81bf04a604dcc18416819ac6743c8ac051a045546"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508"
+    },
+    "efficiency-luna-accord-guided-precision": {
+      "arm": "guided_accord",
+      "replication": 1,
+      "phase": "precision_clarification",
+      "files": {
+        "WEATHER_TOOLS.md": "be28c1a3ca02975419e4c48ce9a2f589d56b36efaa48a603f79a23753f7d8bf2",
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "25c05fea06fbcb7b408692df5b165853a6ed696a2f866d847c4f6b3de8323438",
+        "weather_tools_examples.py": "cd292ac3e587a7765c1327a5cc168e027511de40676502edfc4e96ce5454f6be"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49"
+    }
+  },
+  "max_model_attempts": 2,
+  "launch": "One fresh parallel matched pair only, after v2 automatic control and Docker proof validation and shared scientific slots released. No further pair or automatic retry.",
+  "replication_gate": null,
+  "metrics": [
+    "scientific completion",
+    "assigned tool compliance",
+    "fresh-input-plus-output",
+    "cached input",
+    "output",
+    "reasoning subset of output",
+    "cumulative tokens",
+    "agent-phase seconds",
+    "command seconds",
+    "model-adapter-overhead proxy seconds",
+    "total CLI assessment wall seconds",
+    "source request bytes",
+    "substantive package calls"
+  ],
+  "accounting": {
+    "all_attempts_included": true,
+    "success_adjusted": "Aggregate resource consumption including failures divided by valid completions; undefined when zero.",
+    "direct_paid_api_usd": 0,
+    "subscription_invoice_usd": null,
+    "no_dollar_savings_claim": true,
+    "fresh_plus_output": "Resource proxy, not dollar-weighted cost."
+  },
+  "intervention": "Weather packages plus short tested public-API guide and synthetic runnable examples; not library-only causality.",
+  "evidence": {
+    "guided_validation": "experiments/mam-guided-discovery-validation-2026-10-08.json",
+    "source_study": "docs/mam-acquisition-study-2026-10-08.md"
+  },
+  "status": "declared_ready",
+  "required_spec_version": 2,
+  "max_efficiency_attempts_across_both_phases": 4,
+  "common_instruction": "Promote forecast rates AND CHIRPS monthly values to float64 before any summation/interpolation.",
+  "phase_reason": "The original pair accumulates nativefloat32 CHIRPS beforefloat64 storage; the v1 heldout intervention changes unaffected training-year precision. Preserve v1 verdicts and measure new valid-completion efficiency after common explicit precision clarification and narrow v2 probe repair.",
+  "historical_phase": {
+    "plan": "experiments/efficiency_plan_2026-10-08.json",
+    "original_fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+    "archive": "experiments/efficiency_initial_evidence_2026-10-08",
+    "manifest_sha256": "cd33e4518d70fcf931efb0f82d9b985f6e17ad6eaa55fe4b2c02322b36cd4e7b"
+  },
+  "precision_diagnostic": {
+    "path": "var/review/efficiency-precision-review-20261008/diagnostic.json",
+    "sha256": "958d38255ae18521300f12dfd451fb9a305d64845eab01f168e6d8da79c6d734",
+    "finding": "Both original submissions match the intended recipe on roundedfloat32seasonal observations within probability1.34e-15; float64referenceprecision mismatch remains; dtypepreserving heldoutintervention haszeroeffect."
+  },
+  "docker_proof": "var/review/mam-v2-docker-correct-20261008/assessment.json",
+  "validated_gates": {
+    "certificate_sha256_at_declaration": "b30ee43c0492ff5c53f9ff026e55faef05a70039dbb5c188cb716f32d3e2db9e",
+    "docker_proof_sha256": "c34745f44aed281ae3fcac795704de509c96489833511502aaac91ff2496c887",
+    "v2_validation_summary": "var/review/mam-v2-probe-dtype-20261008/validation-summary.json"
+  }
+}

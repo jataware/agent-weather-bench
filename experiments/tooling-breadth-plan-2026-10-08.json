@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "study": "Luna tooling breadth and MAM repeat",
+  "status": "ready",
+  "created_at": "2026-10-08T14:57:00.874531+00:00",
+  "max_new_agent_attempts": 6,
+  "automatic_retries": 0,
+  "model": "gpt-6-luna",
+  "reasoning_effort": "high",
+  "pairs": {
+    "revision": {
+      "template": "kenya-forecast-revision",
+      "instance": "service-area--weeks-1-2",
+      "systems": [
+        "breadth-luna-python-revision",
+        "breadth-luna-rhiza-revision"
+      ],
+      "purpose": "New task: native cumulative rainfall preparation with Rhiza; valid-date comparison and product remain agent work.",
+      "fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851",
+      "run_required_judge": false,
+      "preflight_evidence": [
+        {
+          "path": "experiments/breadth-rhiza-preflight-2026-10-08.json",
+          "sha256": "ead1f7336d0932dff8679e60805b606ea318a1009aa549858b21369e0989776b"
+        }
+      ]
+    },
+    "consolidation": {
+      "template": "seasonal-objective-consolidation",
+      "instance": "aso-2026--full-source-grid",
+      "systems": [
+        "breadth-luna-python-consolidation",
+        "breadth-luna-accord-consolidation"
+      ],
+      "purpose": "New task: native complete-vector forecast combination with AfricaS2S; acquisition, support/disagreement and envelope remain agent work.",
+      "fingerprint": "615fea8bc4e687dc17a0105b97abb353cc387bd210a885a42ef23079729f57ff",
+      "run_required_judge": false,
+      "preflight_evidence": [
+        {
+          "path": "experiments/breadth-consolidation-preflight-2026-10-08.json",
+          "sha256": "0f2886b52fcba89006882fa47d28fe2c73eb484220dbe9efb907595cda2475fa"
+        },
+        {
+          "path": "var/review/breadth-consolidation-preflight/assessment.json",
+          "sha256": "fca05f9c25b5d7b02511b82d4f82b5dd300cb3dcc243fde361ffc7ec24fed91e"
+        }
+      ]
+    },
+    "mam_replication": {
+      "template": "mam-multimodel-outlook",
+      "instance": "kenya-interior--mam-2016",
+      "systems": [
+        "breadth-luna-python-mam-repeat",
+        "breadth-luna-accord-mam-repeat"
+      ],
+      "purpose": "Exact prior precision-pair settings repeated with fresh state, not a new dataset or task.",
+      "fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+      "run_required_judge": false,
+      "preflight_evidence": [
+        {
+          "path": "var/review/mam-v2-docker-correct-20261008/assessment.json",
+          "sha256": "c34745f44aed281ae3fcac795704de509c96489833511502aaac91ff2496c887"
+        },
+        {
+          "path": "var/review/mam-v2-probe-dtype-20261008/validation-summary.json",
+          "sha256": "1153202d019edb793499a74275af055777fc4186e3a29634bfafd5b6b3018d9e"
+        },
+        {
+          "path": "experiments/mam-guided-discovery-validation-2026-10-08.json",
+          "sha256": "233876532c7f044b96ab3776578f778b7b84a4e20017033368170d926fe762d5"
+        }
+      ]
+    }
+  },
+  "systems": {
+    "breadth-luna-python-revision": {
+      "pair": "revision",
+      "arm": "python",
+      "files": {
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "e59c3497cbe49afb5aacd3e4a6a98caf41a5220bdad25ece18648f829e57db0f"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508"
+    },
+    "breadth-luna-rhiza-revision": {
+      "pair": "revision",
+      "arm": "guided_rhiza",
+      "files": {
+        "API.md": "faf0cf7792d8418ed2424df366d2ce50db44a404b3d1462ff2df77f9c5584203",
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "synthetic_deaccumulation.py": "206b469195f5a7e6b44c189e35144e2fa918d53b62ced43882a733655c340ec8",
+        "system.yaml": "14c17719170a8948dea2623464124b5c1ab4a0c554aab28d7e7ed10bc2b6691c"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:e00aa260554859887759253ca180db576a9c2e1cfa0d5e014333baa9e57774ec"
+    },
+    "breadth-luna-python-consolidation": {
+      "pair": "consolidation",
+      "arm": "python",
+      "files": {
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "c95eaf7b35b14bb148eb6c820564a587e37c6050ff2e8574a40316a2e5a9f2ec"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508"
+    },
+    "breadth-luna-accord-consolidation": {
+      "pair": "consolidation",
+      "arm": "guided_accord",
+      "files": {
+        "API.md": "a67e5e4a7d17f85f31258a23ec4daf5b26edbd4a7e2e063a591edc743ac2fe80",
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "synthetic_combination.py": "4188ad6199b85f709eb030be72af2b6e091c702a3f500aa406619225c3d155b2",
+        "system.yaml": "ca839b8aba1f492041cad71f32dca6ed3478179c976c221497193f23dfaa2dfd"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49"
+    },
+    "breadth-luna-python-mam-repeat": {
+      "pair": "mam_replication",
+      "arm": "python",
+      "files": {
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "aa1f32860a5870fb4ee24b639636af34e3734a1e3b069126e4ad75c9fb0a1ae9"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508"
+    },
+    "breadth-luna-accord-mam-repeat": {
+      "pair": "mam_replication",
+      "arm": "guided_accord",
+      "files": {
+        "WEATHER_TOOLS.md": "be28c1a3ca02975419e4c48ce9a2f589d56b36efaa48a603f79a23753f7d8bf2",
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "b795e9f703b7283d10f65952d2af475e0dc8620844ce36fdff235f29d6b8939a",
+        "weather_tools_examples.py": "cd292ac3e587a7765c1327a5cc168e027511de40676502edfc4e96ce5454f6be"
+      },
+      "budget": {
+        "max_seconds": 900,
+        "max_tool_calls": 20,
+        "command_seconds": 120,
+        "max_total_tokens": 350000,
+        "max_uncached_and_output_tokens": 100000,
+        "max_output_tokens": 20000
+      },
+      "image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49"
+    }
+  },
+  "pair_order": [
+    "revision",
+    "consolidation",
+    "mam_replication"
+  ],
+  "max_concurrent_scientific_workers": 2,
+  "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+  "codex_version": "codex-cli 0.160.0",
+  "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+  "selection": "Two new canonical jobs with different proven native operations; exact original MAM repetition checks stochastic repeatability. CCA and downscaling defaults differ from prescribed recipes; seasonal calibration deferred to avoid required-judge timing confound.",
+  "intervention": "Pinned weather package/skill plus concise generic public API guide and runnable synthetic example. Full bundle comparison, not isolated library causality.",
+  "gates": [
+    "Current automatic checks pass and contract unchanged",
+    "Helper parity on genuine inputs and changed-source control before inference",
+    "Both arms have matched backbone, adapter, general dependencies, compute and caps",
+    "Stop expansion for a runtime/grader defect; preserve submissions and all assigned failures"
+  ],
+  "analysis": {
+    "primary": [
+      "computed_completion",
+      "fresh_input_plus_output_tokens",
+      "agent_seconds",
+      "substantive_helper_dataflow"
+    ],
+    "secondary": [
+      "completion",
+      "status",
+      "cached_input_tokens",
+      "output_tokens",
+      "total_tokens",
+      "command_seconds",
+      "cli_seconds",
+      "tool_calls"
+    ],
+    "resource_ratios": "Report per-pair; percentage efficiency claims require valid completions and substantive helper use. Valid vs incomplete is an exploratory completion difference under budget.",
+    "success_adjusted": "Include failures in resources; undefined when zero valid completions.",
+    "datasets": "Kenya revision and consolidation are different source jobs; MAM repetition is the same instance. No independent-dataset or stable-ranking claim.",
+    "monetary": "No dollar-saving claim from subscription accounting. Report fresh, cached and output separately."
+  },
+  "accounting": {
+    "direct_paid_api_usd": 0,
+    "subscription_invoice_usd": null,
+    "session_paid_api_cap_usd": 100,
+    "new_paid_api_calls_planned": 0
+  },
+  "preservation": "No existing system, source, task, submission or original assessment is overwritten.",
+  "declared_at": "2026-10-08T14:59:02.238503+00:00",
+  "launcher_sha256": "5886f102fb43215007ceebfa41ff45aee9ba6256d198967ddca7941a5cf2d5d5"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-08T17:30:01.933547+00:00",
+  "scope": "Local CLI help/version and sanitized authentication status only; no model or judge inference.",
+  "model_calls": 0,
+  "judge_calls": 0,
+  "direct_paid_api_usd": 0,
+  "claude_binary": "/Users/ezekielbarnett/.local/bin/claude",
+  "claude_binary_sha256": "def0d15e64dd7d89621f88d28214f885b1c38b0ddd69762fb8593e34915d6d53",
+  "cli_version": "2.1.294 (Claude Code)",
+  "auth_status_exit_code": 0,
+  "authentication": {
+    "loggedIn": true,
+    "authMethod": "claude.ai",
+    "apiProvider": "firstParty",
+    "subscriptionType": "max"
+  },
+  "credential_or_billing_environment_variable_names": [
+    "CLAUDE_CODE_SSE_PORT"
+  ],
+  "existing_backend": {
+    "file": "assessment/judge.py",
+    "sha256": "9d5a30f79978832d1385ffac0eb5349b8c1e7ff26f93a6a5f1c9cdd7cbeb5108",
+    "requested_model": "claude-opus-5-5",
+    "requested_effort": "high",
+    "per_request_max_budget_usd": 2,
+    "maximum_apply_requests": 2,
+    "maximum_requested_apply_api_budget_usd": 4,
+    "tools": [],
+    "safe_mode": true,
+    "session_persistence": false,
+    "actual_response_model_equality_enforced": false,
+    "cost_record_kind": "total_cost_usd stored as list_price_usd, not proof of invoice charge"
+  },
+  "availability": {
+    "cli": true,
+    "authenticated": true,
+    "requested_model_verified": false,
+    "subscription_extra_usage_policy_verified": false,
+    "study_aggregate_cap_enforced_by_backend": false
+  },
+  "limitations": [
+    "CLI help states --max-budget-usd caps API calls in --print mode; authentication status alone does not prove extra-usage billing policy.",
+    "No ANTHROPIC environment-variable values or credential material was read or printed.",
+    "No inference was used to test requested model availability; no fallback claim is inferred from successful authentication.",
+    "Root must choose a bounded judge backend and preserve effective model/billing evidence before actual calibration calls."
+  ]
+}

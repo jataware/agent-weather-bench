@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+  "new_model_calls": 0,
+  "scope": "Two fresh serial Docker executions on unchanged historical inputs; constructed repair changes one scientific expression only.",
+  "source_run": "20261005T181603-station-verification-codex-luna-ff16df",
+  "change": {
+    "before": "if v==2: truth=truth-273.15",
+    "after": "if v in (2,4): truth=truth-273.15",
+    "count": 1
+  },
+  "trusted_reference": {
+    "path": "archive/evaluator-v1-2026-10/weatherbench/task_tools/station_verification/reference.py",
+    "sha256": "b9a88c32a2d67640e6c73b9ca5924dfd366fdde948f2f481b568c36cc75a8f7e"
+  },
+  "input_inventory": {
+    "CSV_HELP.pdf": {
+      "sha256": "3d3cbf05c29cbb59dfc359f57e28d5a48707f5d6e18ed09e4dfe4ab26e1bcc31",
+      "bytes": 37770
+    },
+    "availability.nc": {
+      "sha256": "8a2bc6c482f2c95d53adc81316997879b624cde22efe2680fc8d5b4b856ceb66",
+      "bytes": 10009
+    },
+    "broken-comparison.py": {
+      "sha256": "3cfda349114de0627a1f8416a6f85b97f9b6b063f067e3b483acc16ff6f70593",
+      "bytes": 1769
+    },
+    "hres-LICENSE.txt": {
+      "sha256": "12f706522a9d279015c1cccfd3c326b274ac044a73373024713282dd665c8410",
+      "bytes": 5283
+    },
+    "hres.nc": {
+      "sha256": "688fdf617a019b1dddedffdcf5a79b5fbb28b0d21a197cf63375eea2fb74d722",
+      "bytes": 666291
+    },
+    "isd-format-document.pdf": {
+      "sha256": "1be604b08b5f7c2429e6aef178ff8893019c234bc7bc51bfb7ec1e16a6682f04",
+      "bytes": 1187390
+    },
+    "observations.csv": {
+      "sha256": "aa9989bbc4239da3fb338e46ef7c2fe38034404fa39be4f30c1976a61c6e916f",
+      "bytes": 519795
+    },
+    "source-manifest.json": {
+      "sha256": "c1c3e04095cd4d63f55e412221974d94491a7483609a47af5f35ad100642a87c",
+      "bytes": 16149
+    },
+    "stations.json": {
+      "sha256": "c5b88d5702b3a86538e5213e6c3b2cf4560521b13711d762c45664c487a8aaa9",
+      "bytes": 1639
+    },
+    "upstream-LICENSE": {
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "bytes": 11357
+    },
+    "weatherreal-LICENSE": {
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    "weatherreal-README.md": {
+      "sha256": "0e29f65afe0142298052bab06cab3375ccf2cc1c783886ad74eb0d06705d8604",
+      "bytes": 13985
+    },
+    "weatherreal-obs_reformat_catalog.py": {
+      "sha256": "673515de11bd22ebc41fa3613034a110dd055c6c678c10e5e1a4fc98d51a7188",
+      "bytes": 5726
+    }
+  },
+  "rows": {
+    "original": {
+      "exit_code": 0,
+      "executor": "docker-offline",
+      "source_sha256": "531e0a2a7fb7149303b14c456a7505aa6e1f8fb91bf945fcc49cb3e2c379d3ca",
+      "fields": {
+        "forecast_temperature": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 1.1368683772161603e-13,
+          "agrees_at_1e_7": true
+        },
+        "observed_temperature": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 0.0,
+          "agrees_at_1e_7": true
+        },
+        "common_support": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 0.0,
+          "agrees_at_1e_7": true
+        },
+        "support_count": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 0.0,
+          "agrees_at_1e_7": true
+        },
+        "station_count": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 0.0,
+          "agrees_at_1e_7": true
+        },
+        "rmse": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 6.217248937900877e-15,
+          "agrees_at_1e_7": true
+        },
+        "station_rmse": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 2.042810365310288e-14,
+          "agrees_at_1e_7": true
+        },
+        "equal_station_rmse": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 7.105427357601002e-15,
+          "agrees_at_1e_7": true
+        },
+        "diagnostic_rmse": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 270.5651399379333,
+          "agrees_at_1e_7": false
+        }
+      },
+      "output_inventory": {
+        "answer.json": {
+          "sha256": "242014274c5511fe81d4ae8453e02de703bdf6000c5e51048eb6b89529cf3b93",
+          "bytes": 2684
+        },
+        "scores.nc": {
+          "sha256": "0da1060ef98d4b6f6d7fa8a1a8432c25d3792623a4091dbc9fc253c32feb81b2",
+          "bytes": 33301
+        }
+      }
+    },
+    "single_expression_repair": {
+      "exit_code": 0,
+      "executor": "docker-offline",
+      "source_sha256": "c9d6e3fc263fe5f0e1d821e26b32681fb33c5f2379bacee01b1895a16ed13450",
+      "fields": {
+        "forecast_temperature": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 1.1368683772161603e-13,
+          "agrees_at_1e_7": true
+        },
+        "observed_temperature": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 0.0,
+          "agrees_at_1e_7": true
+        },
+        "common_support": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 0.0,
+          "agrees_at_1e_7": true
+        },
+        "support_count": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 0.0,
+          "agrees_at_1e_7": true
+        },
+        "station_count": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 0.0,
+          "agrees_at_1e_7": true
+        },
+        "rmse": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 6.217248937900877e-15,
+          "agrees_at_1e_7": true
+        },
+        "station_rmse": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 2.042810365310288e-14,
+          "agrees_at_1e_7": true
+        },
+        "equal_station_rmse": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 7.105427357601002e-15,
+          "agrees_at_1e_7": true
+        },
+        "diagnostic_rmse": {
+          "nonfinite_mask_agrees": true,
+          "max_absolute_error": 6.217248937900877e-15,
+          "agrees_at_1e_7": true
+        }
+      },
+      "output_inventory": {
+        "answer.json": {
+          "sha256": "242014274c5511fe81d4ae8453e02de703bdf6000c5e51048eb6b89529cf3b93",
+          "bytes": 2684
+        },
+        "scores.nc": {
+          "sha256": "9b5c3919103fdce43cdf1b1cf1fc9a39133471f0394200b30aa5a6cfa00aa2fe",
+          "bytes": 33301
+        }
+      }
+    }
+  },
+  "unaffected_fields_bitwise_equal": true,
+  "originals_preserved": true,
+  "limitation": "This repair experiment establishes a localized implementation error, not the result of another agent attempt or a complete packaging assessment."
+}

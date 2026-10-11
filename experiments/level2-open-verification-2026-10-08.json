@@ -1,0 +1,43 @@
+{
+  "state": "pass",
+  "plan_sha256": "e0c30a1041d88e4ec1199752dfb89b201012c19361df8999e0ee6e0f7421e84e",
+  "attempts": 2,
+  "agent_retries": 0,
+  "identical_inputs_and_briefs": true,
+  "contract_and_original_artifacts_unchanged": true,
+  "independent_numeric_verification": "pass",
+  "static_causality_and_report_reviews": {
+    "luna": "pass",
+    "astra": "pass"
+  },
+  "successful_development_queries": 10,
+  "usage": {
+    "input_tokens": 703651,
+    "cached_input_tokens": 623104,
+    "output_tokens": 23877,
+    "total_tokens": 727528
+  },
+  "fresh_input_plus_output_tokens": 104424,
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "offline_checks": "30 passed",
+  "evidence": {
+    "experiments/level2-open-plan-2026-10-08.json": "e0c30a1041d88e4ec1199752dfb89b201012c19361df8999e0ee6e0f7421e84e",
+    "experiments/level2-open-contract-manifest-2026-10-08.json": "abb5ca21fe172d3a3f07aa342a5fb0fc8c6bd4bfdc6fc6a728e7e19d379b5d2c",
+    "experiments/level2-preflight-2026-10-08.json": "c4633df6eadbf5ec2b5c99910d04ff96b5e1c57c87140b5ea6bfb4bfaf9235b5",
+    "experiments/level2-open-results-2026-10-08.json": "81a8179e4289f8797c27d52261b0c9bcc985a875265091498f36eb2369ef6e4d",
+    "experiments/level2-open-numeric-verification-2026-10-08.json": "a449d345785467b04a68e3b43ec1e90df15c8e586dc8f0baa4aeb5978d0dcb8e",
+    "experiments/level2-luna-code-review-2026-10-08.json": "f89cf018e1a965c6ae726bdfd282ea964bd463c9f1470c0ee4d22da7d0fb44cf",
+    "experiments/level2-astra-code-review-2026-10-08.json": "231f4b94cf2f9ae3861c80f325bf46a1e2f274dc147a0e585453005b810ff55a",
+    "experiments/level2_open_pilot.py": "76d99070de10671980d66bdabc3737a998081a0dc87372a1c329c030c76824e5",
+    "experiments/verify_level2_open.py": "8f35e8900acf694aad36fef35fab2c9cedde692f57d2e813cc1327c7236ebf14",
+    "docs/level2-open-study-2026-10-08.md": "02b2e2df6ebad3636afd518904d768a9983ce0328ef3467fbbb659b003ff8d7d",
+    "docs/level2-pilot-audit-2026-10-08.md": "90c3d24c6342e81bce848d23391952303ef8eb92981c7040ca30f8a0671e3775"
+  },
+  "limitations": [
+    "One attempt per backbone; previously inspected public historical holdout.",
+    "Ordinary library availability only; neither used native weather helpers.",
+    "Supplementary prose judge not run; independent static reviews performed.",
+    "Existing finite probes do not prove universal causality."
+  ]
+}

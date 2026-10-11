@@ -1,0 +1,36 @@
+schema_version: 1
+id: investigation-astra-rhiza
+kind: agent
+description: 'Parallel investigation: Astra high; matched general dependencies; rhiza tooling condition.
+  Separate from historical studies.'
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:e00aa260554859887759253ca180db576a9c2e1cfa0d5e014333baa9e57774ec
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 20
+  command_seconds: 120
+  max_total_tokens: 150000
+substrate:
+  paths:
+  - adapter.py
+  instructions: 'Read the task, input metadata and any supplied candidate workflow. Deliver complete reproducible
+    results, code and claims before optional exploration; reserve time to rerun and validate. Keep command
+    output concise: inspect shapes, units and selected metadata rather than dumping arrays or entire large
+    files. Remaining cumulative token and tool-call budgets are visible in tool results. Rhiza weather
+    skills are under /catalog/skills/weather-skills and CHC skills under /catalog/skills/chc-skills. Discover
+    actual SKILL.md files with find /catalog/skills -name SKILL.md. Run the installed scripts with python,
+    not uv run: dependencies are preinstalled and the runtime is offline. Read the relevant skill and
+    its --help before use. Generic Python is also allowed.'
+  libraries:
+  - weather_skills_core
+  image_paths:
+  - /catalog/skills

@@ -1,0 +1,37 @@
+schema_version: 1
+id: efficiency-luna-python-1
+kind: agent
+description: Predeclared matched Luna tooling-efficiency study, replication 1, assigned
+  arm python.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 20
+  command_seconds: 120
+  max_total_tokens: 350000
+  max_uncached_and_output_tokens: 100000
+  max_output_tokens: 20000
+substrate:
+  paths:
+  - adapter.py
+  instructions: 'Read the task and source metadata, then deliver reproducible arrays,
+    code and claims before optional exploration. Keep command output concise; inspect
+    shapes, units and selected metadata. The request declares cumulative, uncached-plus-output
+    and output token caps; tool results display cumulative tokens and remaining time/calls.
+    The task has a private frozen HTTP source service: retrieve raw files using acquisition.json,
+    not live provider credentials. Retrieve the current snapshot during every replay;
+    do not let old file caches override it. General scientific Python is installed;
+    implement the supplied recipe using these general libraries. Use serial scientific
+    file I/O; do not read NetCDF/HDF5 files from Python threads.'
+  libraries: []
+  image_paths: []

@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "plan_sha256": "df0e0f47e7edd9e1e1fdcd7b727cdea1dbb025f1a20ce1e8ff2e9a90302819ca",
+  "rows": [
+    {
+      "system": "monthly-fragility-luna-accord",
+      "run": "20261008T174638-monthly-cycle-calibration-original-regional-monthly-1993-2023-L1-monthly-fragility-luna-accord-3aeafa",
+      "status": "submitted",
+      "computed_outcome": "pass",
+      "completion": "pass",
+      "checks": {
+        "claim.dynamical_hindcasts_used": {
+          "state": "pass",
+          "detail": "The stated claim follows from the submission's own numbers."
+        },
+        "claim.full_paper_reproduction": {
+          "state": "pass",
+          "detail": "The stated claim follows from the submission's own numbers."
+        },
+        "claim.physical_coefficient_units": {
+          "state": "pass",
+          "detail": "The stated claim follows from the submission's own numbers."
+        },
+        "claim.rainfall_units": {
+          "state": "pass",
+          "detail": "The stated claim follows from the submission's own numbers."
+        },
+        "coverage": {
+          "state": "pass",
+          "detail": "The results cover exactly the required cases, each labelled with its own coordinates."
+        },
+        "envelope": {
+          "state": "pass",
+          "detail": "The results store holds the named results, and answer.json declares a run command."
+        },
+        "interpretation.consistency_across_artifacts": {
+          "state": "unresolved",
+          "detail": "No judge was run. The report, answer, code and computed arrays agree about fitted/validation/production procedures, the constant standardized-slope comparator, selection, units and actual MSSS."
+        },
+        "interpretation.generalization": {
+          "state": "unresolved",
+          "detail": "No judge was run. Describe this as specified cyclic standardized-slope method adaptation using final-vintage prior-month observed SST and regional CHIRPS. Do not claim original CanSIPS paper replication, operational availability at historical issue time, or unseen2020\u20132023 outcome gains. Negative deterministic predictions are permitted by the method."
+        },
+        "interpretation.statistical_support": {
+          "state": "unresolved",
+          "detail": "No judge was run. Any uncertainty or significance claim treats paired whole years as blocks; the36month-region cases within a year are not independent replications. Silence about inferential claims passes."
+        },
+        "invariant.fitted": {
+          "state": "pass",
+          "detail": "{\"hindcast_coefficient\": {\"agrees\": true, \"largest_difference\": 1.4210854715202004e-14}, \"hindcast_standardized_coefficient\": {\"agrees\": true, \"largest_difference\": 1.1102230246251565e-16}, \"xmean\": {\"agrees\": true, \"largest_difference\": 0.0}, \"xstd\": {\"agrees\": true, \"largest_difference\": 0.0}, \"ymean\": {\"agrees\": true, \"largest_difference\": 0.0}, \"ystd\": {\"agrees\": true, \"largest_difference\": 0.0}}"
+        },
+        "invariant.nested": {
+          "state": "pass",
+          "detail": "{\"final_candidate\": {\"agrees\": true, \"largest_difference\": 0.0}, \"final_inner_loss\": {\"agrees\": true, \"largest_difference\": 4.440892098500626e-16}, \"inner_loss\": {\"agrees\": true, \"largest_difference\": 4.440892098500626e-16}, \"selected_candidate\": {\"agrees\": true, \"largest_difference\": 0.0}}"
+        },
+        "invariant.production": {
+          "state": "pass",
+          "detail": "{\"forecast_coefficient\": {\"agrees\": true, \"largest_difference\": 0.0}, \"forecast_mm\": {\"agrees\": true, \"largest_difference\": 1.4210854715202004e-14}, \"forecast_standardized_coefficient\": {\"agrees\": true, \"largest_difference\": 0.0}}"
+        },
+        "invariant.verification": {
+          "state": "pass",
+          "detail": "{\"hindcast_mm\": {\"agrees\": true, \"largest_difference\": 2.842170943040401e-14}, \"monthly_msss\": {\"agrees\": true, \"largest_difference\": 4.440892098500626e-16}, \"msss\": {\"agrees\": true, \"largest_difference\": 1.1102230246251565e-16}, \"squared_error\": {\"agrees\": true, \"largest_difference\": 3.183231456205249e-12}}"
+        },
+        "probe.changed_data": {
+          "state": "pass",
+          "detail": "On changed data, the rerun agrees with a reading consistent with the submitted answer."
+        },
+        "probe.forecast_batch_isolation": {
+          "state": "pass",
+          "detail": "Production2020\u20132021 forecasts ignore changed2022\u20132023 predictors."
+        },
+        "probe.replay": {
+          "state": "pass",
+          "detail": "The run command regenerates the submitted results."
+        },
+        "probe.saved_state_prediction": {
+          "state": "pass",
+          "detail": "The declared predict command uses retained fitted state without targets or original result stores; independent FFT production values match changed SST and fit/selection remain fixed. Implemented by saved_state.py executor wrapper plus this projection."
+        },
+        "probe.whole_year_isolation": {
+          "state": "pass",
+          "detail": "All fit/prediction/selection diagnostics through2011 ignore targets from2011 onward and predictors from2012 onward."
+        },
+        "variant": {
+          "state": "pass",
+          "detail": "The results are consistent only with accepted readings."
+        }
+      },
+      "skill": null,
+      "usage": {
+        "input_tokens": 149095,
+        "cached_input_tokens": 115456,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8800,
+        "reasoning_output_tokens": 2835,
+        "total_tokens": 157895
+      },
+      "fresh_input_plus_output_tokens": 42439,
+      "agent_seconds": 113.72987358295359,
+      "cli_seconds": 125.13412020797841,
+      "tool_calls": 9,
+      "assessment_sha256": "0f60673abf40714607bf4849be10dcac43a122cfafb08a5f61da51050f3709c3",
+      "events_sha256": "dee3f88a97a7227a2eaed27e81c61efcceb518d2956d85283129a050891348c1"
+    },
+    {
+      "system": "monthly-fragility-astra-accord",
+      "run": "20261008T174638-monthly-cycle-calibration-original-regional-monthly-1993-2023-L1-monthly-fragility-astra-accord-f05698",
+      "status": "submitted",
+      "computed_outcome": "pass",
+      "completion": "pass",
+      "checks": {
+        "claim.dynamical_hindcasts_used": {
+          "state": "pass",
+          "detail": "The stated claim follows from the submission's own numbers."
+        },
+        "claim.full_paper_reproduction": {
+          "state": "pass",
+          "detail": "The stated claim follows from the submission's own numbers."
+        },
+        "claim.physical_coefficient_units": {
+          "state": "pass",
+          "detail": "The stated claim follows from the submission's own numbers."
+        },
+        "claim.rainfall_units": {
+          "state": "pass",
+          "detail": "The stated claim follows from the submission's own numbers."
+        },
+        "coverage": {
+          "state": "pass",
+          "detail": "The results cover exactly the required cases, each labelled with its own coordinates."
+        },
+        "envelope": {
+          "state": "pass",
+          "detail": "The results store holds the named results, and answer.json declares a run command."
+        },
+        "interpretation.consistency_across_artifacts": {
+          "state": "unresolved",
+          "detail": "No judge was run. The report, answer, code and computed arrays agree about fitted/validation/production procedures, the constant standardized-slope comparator, selection, units and actual MSSS."
+        },
+        "interpretation.generalization": {
+          "state": "unresolved",
+          "detail": "No judge was run. Describe this as specified cyclic standardized-slope method adaptation using final-vintage prior-month observed SST and regional CHIRPS. Do not claim original CanSIPS paper replication, operational availability at historical issue time, or unseen2020\u20132023 outcome gains. Negative deterministic predictions are permitted by the method."
+        },
+        "interpretation.statistical_support": {
+          "state": "unresolved",
+          "detail": "No judge was run. Any uncertainty or significance claim treats paired whole years as blocks; the36month-region cases within a year are not independent replications. Silence about inferential claims passes."
+        },
+        "invariant.fitted": {
+          "state": "pass",
+          "detail": "{\"hindcast_coefficient\": {\"agrees\": true, \"largest_difference\": 2.842170943040401e-14}, \"hindcast_standardized_coefficient\": {\"agrees\": true, \"largest_difference\": 2.220446049250313e-16}, \"xmean\": {\"agrees\": true, \"largest_difference\": 0.0}, \"xstd\": {\"agrees\": true, \"largest_difference\": 0.0}, \"ymean\": {\"agrees\": true, \"largest_difference\": 0.0}, \"ystd\": {\"agrees\": true, \"largest_difference\": 0.0}}"
+        },
+        "invariant.nested": {
+          "state": "pass",
+          "detail": "{\"final_candidate\": {\"agrees\": true, \"largest_difference\": 0.0}, \"final_inner_loss\": {\"agrees\": true, \"largest_difference\": 4.440892098500626e-16}, \"inner_loss\": {\"agrees\": true, \"largest_difference\": 4.440892098500626e-16}, \"selected_candidate\": {\"agrees\": true, \"largest_difference\": 0.0}}"
+        },
+        "invariant.production": {
+          "state": "pass",
+          "detail": "{\"forecast_coefficient\": {\"agrees\": true, \"largest_difference\": 7.105427357601002e-15}, \"forecast_mm\": {\"agrees\": true, \"largest_difference\": 2.842170943040401e-14}, \"forecast_standardized_coefficient\": {\"agrees\": true, \"largest_difference\": 1.1102230246251565e-16}}"
+        },
+        "invariant.verification": {
+          "state": "pass",
+          "detail": "{\"hindcast_mm\": {\"agrees\": true, \"largest_difference\": 5.684341886080802e-14}, \"monthly_msss\": {\"agrees\": true, \"largest_difference\": 3.3306690738754696e-16}, \"msss\": {\"agrees\": true, \"largest_difference\": 1.1102230246251565e-16}, \"squared_error\": {\"agrees\": true, \"largest_difference\": 3.183231456205249e-12}}"
+        },
+        "probe.changed_data": {
+          "state": "pass",
+          "detail": "On changed data, the rerun agrees with a reading consistent with the submitted answer."
+        },
+        "probe.forecast_batch_isolation": {
+          "state": "pass",
+          "detail": "Production2020\u20132021 forecasts ignore changed2022\u20132023 predictors."
+        },
+        "probe.replay": {
+          "state": "pass",
+          "detail": "The run command regenerates the submitted results."
+        },
+        "probe.saved_state_prediction": {
+          "state": "pass",
+          "detail": "The declared predict command uses retained fitted state without targets or original result stores; independent FFT production values match changed SST and fit/selection remain fixed. Implemented by saved_state.py executor wrapper plus this projection."
+        },
+        "probe.whole_year_isolation": {
+          "state": "pass",
+          "detail": "All fit/prediction/selection diagnostics through2011 ignore targets from2011 onward and predictors from2012 onward."
+        },
+        "variant": {
+          "state": "pass",
+          "detail": "The results are consistent only with accepted readings."
+        }
+      },
+      "skill": null,
+      "usage": {
+        "input_tokens": 90178,
+        "cached_input_tokens": 54400,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10150,
+        "reasoning_output_tokens": 1056,
+        "total_tokens": 100328
+      },
+      "fresh_input_plus_output_tokens": 45928,
+      "agent_seconds": 330.07118974998593,
+      "cli_seconds": 343.9358248329954,
+      "tool_calls": 5,
+      "assessment_sha256": "abd1c29fd037cccae1f8e9fd5a0d17e246bceb5d549e527d49423f6036c68a25",
+      "events_sha256": "87b93295e0da9b21ab15ade8903fc6a90bb67387327bf0e421ba69c7f82d92c4"
+    }
+  ],
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "scope": "Two descriptive fresh attempts on genuine historical data; no repeatability or persistent capability-boundary claim."
+}

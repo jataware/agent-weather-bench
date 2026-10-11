@@ -1,0 +1,1638 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-08T15:42:12.729878+00:00",
+  "state": "fail",
+  "plan_sha256": "e0c30a1041d88e4ec1199752dfb89b201012c19361df8999e0ee6e0f7421e84e",
+  "script_sha256": "18ef827a73e05c4fb783b49957b646f6a9a2463f56a112a242ead2e18b6047e3",
+  "template": "weeks34-rainfall",
+  "fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+  "instance": {
+    "id": "final-2018-2021--all-cells",
+    "training_boundary": "2015-01-01",
+    "development_boundary": "2018-01-01",
+    "final_boundary": "2022-01-01",
+    "longitude_limit": null
+  },
+  "private_source_sha256": "8f5cb84e7927475d2a8c03e61cce6a065c4ff4c41aa943dd4883d1873d95429d",
+  "runs": [
+    {
+      "run": "20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-luna-open-accord-7e5e23",
+      "system": "level2-luna-open-accord",
+      "status": "submitted",
+      "original_computed_outcome": "pass",
+      "original_outcome": "pass",
+      "original_verdict_preserved": true,
+      "assessment_sha256": "18710b47093320cd8a20fc4962bb7574d36bbf9ddf7a6b054b1839a40240baba",
+      "frozen_inventory_sha256": "0d2963d0ae31ebe8fe120bc3c1522d9f16d29c9a57a897f63953c88458f63307",
+      "final_artifacts_usable": true,
+      "independent_scores": {
+        "development": {
+          "agrees": true,
+          "metrics": {
+            "split": {
+              "independent": "development",
+              "recorded": "development",
+              "agrees": true
+            },
+            "rmse_mm": {
+              "independent": 11.82400714872518,
+              "recorded": 11.824007148725183,
+              "agrees": true,
+              "absolute_gap": 3.552713678800501e-15
+            },
+            "raw_model_rmse_mm": {
+              "independent": 14.889753146548955,
+              "recorded": 14.889753146548957,
+              "agrees": true,
+              "absolute_gap": 1.7763568394002505e-15
+            },
+            "climatology_rmse_mm": {
+              "independent": 12.051599332178206,
+              "recorded": 12.051599332178203,
+              "agrees": true,
+              "absolute_gap": 3.552713678800501e-15
+            },
+            "skill_vs_raw_model": {
+              "independent": 0.2058963615883943,
+              "recorded": 0.2058963615883942,
+              "agrees": true,
+              "absolute_gap": 1.1102230246251565e-16
+            },
+            "skill_vs_climatology": {
+              "independent": 0.01888481164863709,
+              "recorded": 0.018884811648636535,
+              "agrees": true,
+              "absolute_gap": 5.551115123125783e-16
+            },
+            "issues": {
+              "independent": 147,
+              "recorded": 147,
+              "agrees": true,
+              "absolute_gap": 0
+            },
+            "cells": {
+              "independent": 9,
+              "recorded": 9,
+              "agrees": true,
+              "absolute_gap": 0
+            },
+            "observations_are_public_history": {
+              "independent": true,
+              "recorded": true,
+              "agrees": true
+            }
+          }
+        },
+        "final": {
+          "agrees": true,
+          "metrics": {
+            "split": {
+              "independent": "final",
+              "recorded": "final",
+              "agrees": true
+            },
+            "rmse_mm": {
+              "independent": 13.944505926715198,
+              "recorded": 13.944505926715205,
+              "agrees": true,
+              "absolute_gap": 7.105427357601002e-15
+            },
+            "raw_model_rmse_mm": {
+              "independent": 14.890051309463683,
+              "recorded": 14.890051309463692,
+              "agrees": true,
+              "absolute_gap": 8.881784197001252e-15
+            },
+            "climatology_rmse_mm": {
+              "independent": 14.281531566506086,
+              "recorded": 14.281531566506088,
+              "agrees": true,
+              "absolute_gap": 1.7763568394002505e-15
+            },
+            "skill_vs_raw_model": {
+              "independent": 0.0635018216591049,
+              "recorded": 0.063501821659105,
+              "agrees": true,
+              "absolute_gap": 1.1102230246251565e-16
+            },
+            "skill_vs_climatology": {
+              "independent": 0.02359870425811339,
+              "recorded": 0.023598704258112946,
+              "agrees": true,
+              "absolute_gap": 4.440892098500626e-16
+            },
+            "issues": {
+              "independent": 208,
+              "recorded": 208,
+              "agrees": true,
+              "absolute_gap": 0
+            },
+            "cells": {
+              "independent": 9,
+              "recorded": 9,
+              "agrees": true,
+              "absolute_gap": 0
+            },
+            "observations_are_public_history": {
+              "independent": true,
+              "recorded": true,
+              "agrees": true
+            }
+          }
+        }
+      },
+      "development_feedback": {
+        "ledger_sha256": "375008a016e3e8bf2ac1afeb8b96d6851902504182bd87bbfdf325a6711a5dd2",
+        "public_summary_sha256": "8751b3915d8c3cbadd15dc6ffff8595d8e2a32b88b8fa6bafa3556b051e5e872",
+        "requests": [
+          {
+            "query": 1,
+            "status": "scored",
+            "prediction_file": "results.zarr",
+            "snapshot": "prediction-001.zarr",
+            "sha256": "1a1a1767a54db18d5a06ffebcfacb3227a22d9b1569bdcbdb68f7253e2b43842",
+            "bytes": 6671,
+            "files": 7,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "cb289ddf8c0fc042310624933f0fdc08aed29b1a1b4492d37a8e3598939b0557",
+                "bytes": 1003
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "0b88cf6b7c1649301ff18f8ceb1b3e9a488cdeed91a05e0fc55dd86582430248",
+                "bytes": 3212
+              }
+            },
+            "inventory_sha256": "8c4b91d550a51ff12ea1e39f3332ee9f83ec90eb48f054c5097af47b6933683d",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 12.165158114157494,
+                  "recorded": 12.165158114157496,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.18298456700895338,
+                  "recorded": 0.18298456700895327,
+                  "agrees": true,
+                  "absolute_gap": 1.1102230246251565e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": -0.009422714682862265,
+                  "recorded": -0.00942271468286271,
+                  "agrees": true,
+                  "absolute_gap": 4.440892098500626e-16
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": false,
+              "maximum_absolute_gap_mm": 18.719665669842254,
+              "within_rerun_tolerance": false,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          },
+          {
+            "query": 2,
+            "status": "scored",
+            "prediction_file": "results.zarr",
+            "snapshot": "prediction-002.zarr",
+            "sha256": "57da90fa1df86cd3e3331dfde0cc33426f1adcdffc407ce4a04a835f04ac40a7",
+            "bytes": 15626,
+            "files": 7,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "0bb208148e6dbe7889b9133abc23b0c8e0ae7fa4ef794ba81cd36a5bebc87afa",
+                "bytes": 9958
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "0b88cf6b7c1649301ff18f8ceb1b3e9a488cdeed91a05e0fc55dd86582430248",
+                "bytes": 3212
+              }
+            },
+            "inventory_sha256": "bb1aa8206ad1afd7e5f8a8be2d34b7520f9c31403a1f80d7cade301b038a9b4f",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 12.622147013117376,
+                  "recorded": 12.62214701311737,
+                  "agrees": true,
+                  "absolute_gap": 5.329070518200751e-15
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.15229306430490752,
+                  "recorded": 0.15229306430490797,
+                  "agrees": true,
+                  "absolute_gap": 4.440892098500626e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": -0.047342071804178376,
+                  "recorded": -0.047342071804178376,
+                  "agrees": true,
+                  "absolute_gap": 0.0
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": false,
+              "maximum_absolute_gap_mm": 20.524482046355587,
+              "within_rerun_tolerance": false,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          },
+          {
+            "query": 3,
+            "status": "scored",
+            "prediction_file": "results.zarr",
+            "snapshot": "prediction-003.zarr",
+            "sha256": "0a49eacd16a54a4d1fcfac7ebd8f69e50c72f31c591e124f8859532682c8925f",
+            "bytes": 6199,
+            "files": 7,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "a8930fad3b7c2881128dd9db0849b97a1095474ada52fabcbfa468c369aefc54",
+                "bytes": 531
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "0b88cf6b7c1649301ff18f8ceb1b3e9a488cdeed91a05e0fc55dd86582430248",
+                "bytes": 3212
+              }
+            },
+            "inventory_sha256": "33e8c9a3509dabc8eab9c20cee5860e7051715a552f9c198ef756098a917261f",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 12.180204688533493,
+                  "recorded": 12.180204688533497,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.18197403485117292,
+                  "recorded": 0.1819740348511728,
+                  "agrees": true,
+                  "absolute_gap": 1.1102230246251565e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": -0.010671227345893097,
+                  "recorded": -0.010671227345893763,
+                  "agrees": true,
+                  "absolute_gap": 6.661338147750939e-16
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": false,
+              "maximum_absolute_gap_mm": 25.26711713359506,
+              "within_rerun_tolerance": false,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          },
+          {
+            "query": 4,
+            "status": "scored",
+            "prediction_file": "results.zarr",
+            "snapshot": "prediction-004.zarr",
+            "sha256": "b23a614155d0aa1614b9e9626a1b6bd2181d0812926457c2a4f86ff7baf9b2a9",
+            "bytes": 6655,
+            "files": 7,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "a18a475d1d8781a5f674c43fa441f67720b0b73ba5db2a93fc0192e4c079d122",
+                "bytes": 987
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "0b88cf6b7c1649301ff18f8ceb1b3e9a488cdeed91a05e0fc55dd86582430248",
+                "bytes": 3212
+              }
+            },
+            "inventory_sha256": "5ad40ad36fdd75e74f35d43b5f115cc4c474441421113dedd2f56c183451409d",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 11.972708657321334,
+                  "recorded": 11.97270865732134,
+                  "agrees": true,
+                  "absolute_gap": 5.329070518200751e-15
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.19590952653931093,
+                  "recorded": 0.1959095265393107,
+                  "agrees": true,
+                  "absolute_gap": 2.220446049250313e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": 0.006546075145912877,
+                  "recorded": 0.0065460751459121,
+                  "agrees": true,
+                  "absolute_gap": 7.771561172376096e-16
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": false,
+              "maximum_absolute_gap_mm": 4.581323134563338,
+              "within_rerun_tolerance": false,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          },
+          {
+            "query": 5,
+            "status": "scored",
+            "prediction_file": "results.zarr",
+            "snapshot": "prediction-005.zarr",
+            "sha256": "df3508727644cb9d7bee9ba9926fd113a335c077b33454bbe85bc9f955eedf29",
+            "bytes": 14300,
+            "files": 7,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "b65c8a2bc28793af3405b60a23dee29e2661de9f4c7d17556b29263e5c6f4b05",
+                "bytes": 8632
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "0b88cf6b7c1649301ff18f8ceb1b3e9a488cdeed91a05e0fc55dd86582430248",
+                "bytes": 3212
+              }
+            },
+            "inventory_sha256": "d7c96b3d693c30f08f47a4c86726edecd79bfd2be7a3ed8809df18b03f3a74fa",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 11.82400714872518,
+                  "recorded": 11.824007148725183,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.2058963615883943,
+                  "recorded": 0.2058963615883942,
+                  "agrees": true,
+                  "absolute_gap": 1.1102230246251565e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": 0.01888481164863709,
+                  "recorded": 0.018884811648636535,
+                  "agrees": true,
+                  "absolute_gap": 5.551115123125783e-16
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": true,
+              "maximum_absolute_gap_mm": 0.0,
+              "within_rerun_tolerance": true,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          }
+        ],
+        "max_submissions": 5,
+        "limit_denials": 0,
+        "exact_matching_final_development_queries": [
+          5
+        ],
+        "selection_evidence": "Final submitted development values match these frozen queries; this does not infer selection intent.",
+        "no_intermediate_final_scores_computed": true
+      },
+      "final_yearwise": {
+        "pooled_rmse_mm": 13.944505926715205,
+        "years": {
+          "2018": {
+            "rmse_mm": 11.952924289714336,
+            "mse_mm_squared": 142.87239907564296,
+            "issues": 52,
+            "cells": 9
+          },
+          "2019": {
+            "rmse_mm": 17.61515507628121,
+            "mse_mm_squared": 310.2936883614356,
+            "issues": 52,
+            "cells": 9
+          },
+          "2020": {
+            "rmse_mm": 13.392070212539522,
+            "mse_mm_squared": 179.34754457758837,
+            "issues": 52,
+            "cells": 9
+          },
+          "2021": {
+            "rmse_mm": 12.053354310983938,
+            "mse_mm_squared": 145.28335014611508,
+            "issues": 52,
+            "cells": 9
+          }
+        }
+      },
+      "original_artifacts_unchanged": true
+    },
+    {
+      "run": "20261008T152911-weeks34-rainfall-final-2018-2021--all-cells-L2-level2-astra-open-accord-ca5c91",
+      "system": "level2-astra-open-accord",
+      "status": "submitted",
+      "original_computed_outcome": "pass",
+      "original_outcome": "pass",
+      "original_verdict_preserved": true,
+      "assessment_sha256": "92cd935dadbab93718717b58f07aeee41f2089b9e831b7343926721de88291bf",
+      "frozen_inventory_sha256": "1074f8a757028da1a624d75ab813e8e6786263dbabdd9b744bb25733eee62cb4",
+      "final_artifacts_usable": true,
+      "independent_scores": {
+        "development": {
+          "agrees": true,
+          "metrics": {
+            "split": {
+              "independent": "development",
+              "recorded": "development",
+              "agrees": true
+            },
+            "rmse_mm": {
+              "independent": 11.78388798041698,
+              "recorded": 11.78388798041698,
+              "agrees": true,
+              "absolute_gap": 0.0
+            },
+            "raw_model_rmse_mm": {
+              "independent": 14.889753146548955,
+              "recorded": 14.889753146548957,
+              "agrees": true,
+              "absolute_gap": 1.7763568394002505e-15
+            },
+            "climatology_rmse_mm": {
+              "independent": 12.051599332178206,
+              "recorded": 12.051599332178203,
+              "agrees": true,
+              "absolute_gap": 3.552713678800501e-15
+            },
+            "skill_vs_raw_model": {
+              "independent": 0.20859077619106337,
+              "recorded": 0.20859077619106348,
+              "agrees": true,
+              "absolute_gap": 1.1102230246251565e-16
+            },
+            "skill_vs_climatology": {
+              "independent": 0.022213761375755925,
+              "recorded": 0.022213761375755703,
+              "agrees": true,
+              "absolute_gap": 2.220446049250313e-16
+            },
+            "issues": {
+              "independent": 147,
+              "recorded": 147,
+              "agrees": true,
+              "absolute_gap": 0
+            },
+            "cells": {
+              "independent": 9,
+              "recorded": 9,
+              "agrees": true,
+              "absolute_gap": 0
+            },
+            "observations_are_public_history": {
+              "independent": true,
+              "recorded": true,
+              "agrees": true
+            }
+          }
+        },
+        "final": {
+          "agrees": true,
+          "metrics": {
+            "split": {
+              "independent": "final",
+              "recorded": "final",
+              "agrees": true
+            },
+            "rmse_mm": {
+              "independent": 14.143402700376411,
+              "recorded": 14.143402700376402,
+              "agrees": true,
+              "absolute_gap": 8.881784197001252e-15
+            },
+            "raw_model_rmse_mm": {
+              "independent": 14.890051309463683,
+              "recorded": 14.890051309463692,
+              "agrees": true,
+              "absolute_gap": 8.881784197001252e-15
+            },
+            "climatology_rmse_mm": {
+              "independent": 14.281531566506086,
+              "recorded": 14.281531566506088,
+              "agrees": true,
+              "absolute_gap": 1.7763568394002505e-15
+            },
+            "skill_vs_raw_model": {
+              "independent": 0.0501441260053096,
+              "recorded": 0.05014412600531071,
+              "agrees": true,
+              "absolute_gap": 1.1102230246251565e-15
+            },
+            "skill_vs_climatology": {
+              "independent": 0.009671852454089969,
+              "recorded": 0.009671852454090635,
+              "agrees": true,
+              "absolute_gap": 6.661338147750939e-16
+            },
+            "issues": {
+              "independent": 208,
+              "recorded": 208,
+              "agrees": true,
+              "absolute_gap": 0
+            },
+            "cells": {
+              "independent": 9,
+              "recorded": 9,
+              "agrees": true,
+              "absolute_gap": 0
+            },
+            "observations_are_public_history": {
+              "independent": true,
+              "recorded": true,
+              "agrees": true
+            }
+          }
+        }
+      },
+      "development_feedback": {
+        "ledger_sha256": "d19d8b4690d510ec2601a5867329eebc2e846033a0ac8332a649da6e753dde3c",
+        "public_summary_sha256": "a42eee54b998489005042887f13cd884766d6bd1e324e3aa965a162af8e2f172",
+        "requests": [
+          {
+            "query": 1,
+            "status": "scored",
+            "prediction_file": "ridge.zarr",
+            "snapshot": "prediction-001.zarr",
+            "sha256": "52cb2af60b1814f8b1b6ab3bf66e75e5febbee462c834c0806835615d4b24c98",
+            "bytes": 33736,
+            "files": 11,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "63cea3e5fed110de38bece2cd55fc999bdb5c82e7fb0a644c61cf98cd3d59d23",
+                "bytes": 10025
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "final_issue/c/0": {
+                "sha256": "b83622758e7b316f7870b8922763c500ba4a2b2b7c3193e18ad84b7ad2b006e4",
+                "bytes": 328
+              },
+              "final_issue/zarr.json": {
+                "sha256": "27faf69acbd485ccdf0ffb4bf3ef98933f3e8ba5018c2a3cd22f279b511bf486",
+                "bytes": 751
+              },
+              "final_mm/c/0/0": {
+                "sha256": "2bc42e1d14ff16726e0170d2edb4389c56864f5645c581377656168fe163c6e4",
+                "bytes": 14140
+              },
+              "final_mm/zarr.json": {
+                "sha256": "9a3e70a62650e05071976db2c957cccc2011db557273c8e360578ce00ee828e4",
+                "bytes": 739
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "5bf1dbaa39fbfba73ff5239d24934924904014076fc3b2f9b6092cb488bf754b",
+                "bytes": 5297
+              }
+            },
+            "inventory_sha256": "f6d8989157daf3150cf804a8fdf1e6131efb7d00cc1cc045ee8e9111a94823ff",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 11.992727975395896,
+                  "recorded": 11.992727975395894,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.19456502351917848,
+                  "recorded": 0.1945650235191787,
+                  "agrees": true,
+                  "absolute_gap": 2.220446049250313e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": 0.00488494142226592,
+                  "recorded": 0.004884941422265809,
+                  "agrees": true,
+                  "absolute_gap": 1.1102230246251565e-16
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": false,
+              "maximum_absolute_gap_mm": 10.680124142311477,
+              "within_rerun_tolerance": false,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          },
+          {
+            "query": 2,
+            "status": "scored",
+            "prediction_file": "tree.zarr",
+            "snapshot": "prediction-002.zarr",
+            "sha256": "5148c83428a428ea0a94d85f2e4c4910aedf69faea03e773691cac2e878a20e1",
+            "bytes": 33819,
+            "files": 11,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "8ae0338009b0be9b460397c1ab769f971351a010e9f1ade739897533c0780104",
+                "bytes": 10041
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "final_issue/c/0": {
+                "sha256": "b83622758e7b316f7870b8922763c500ba4a2b2b7c3193e18ad84b7ad2b006e4",
+                "bytes": 328
+              },
+              "final_issue/zarr.json": {
+                "sha256": "27faf69acbd485ccdf0ffb4bf3ef98933f3e8ba5018c2a3cd22f279b511bf486",
+                "bytes": 751
+              },
+              "final_mm/c/0/0": {
+                "sha256": "aeed825434199e4f528ba7cdb4edcaaf9d435c92ff6e977670a17a5eefb7cdb2",
+                "bytes": 14207
+              },
+              "final_mm/zarr.json": {
+                "sha256": "9a3e70a62650e05071976db2c957cccc2011db557273c8e360578ce00ee828e4",
+                "bytes": 739
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "5bf1dbaa39fbfba73ff5239d24934924904014076fc3b2f9b6092cb488bf754b",
+                "bytes": 5297
+              }
+            },
+            "inventory_sha256": "4720420dbb57f0b1972e1eef3e88db10e8607510e1aed7ea34c5b68dee218f3e",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 12.34651554894894,
+                  "recorded": 12.346515548948936,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.17080455079199686,
+                  "recorded": 0.1708045507919972,
+                  "agrees": true,
+                  "absolute_gap": 3.3306690738754696e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": -0.024471126913694796,
+                  "recorded": -0.024471126913694796,
+                  "agrees": true,
+                  "absolute_gap": 0.0
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": false,
+              "maximum_absolute_gap_mm": 22.709497502756662,
+              "within_rerun_tolerance": false,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          },
+          {
+            "query": 3,
+            "status": "scored",
+            "prediction_file": "clim.zarr",
+            "snapshot": "prediction-003.zarr",
+            "sha256": "e41c13f5c926bddc09730a1ff92b7d920da1f6278c370780fabb4a82f271f73a",
+            "bytes": 33807,
+            "files": 11,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "4a64d8ed88585510f2ca119190a5bd6002beca219d6234c31ef99eff77801e44",
+                "bytes": 10046
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "final_issue/c/0": {
+                "sha256": "b83622758e7b316f7870b8922763c500ba4a2b2b7c3193e18ad84b7ad2b006e4",
+                "bytes": 328
+              },
+              "final_issue/zarr.json": {
+                "sha256": "27faf69acbd485ccdf0ffb4bf3ef98933f3e8ba5018c2a3cd22f279b511bf486",
+                "bytes": 751
+              },
+              "final_mm/c/0/0": {
+                "sha256": "e130703d8bb6365fa58866431bf06d416b1a35f4a9cf90f1f42828ad7cef1a8e",
+                "bytes": 14190
+              },
+              "final_mm/zarr.json": {
+                "sha256": "9a3e70a62650e05071976db2c957cccc2011db557273c8e360578ce00ee828e4",
+                "bytes": 739
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "5bf1dbaa39fbfba73ff5239d24934924904014076fc3b2f9b6092cb488bf754b",
+                "bytes": 5297
+              }
+            },
+            "inventory_sha256": "cc7944a18c7b8214bd0316659a2aa605a3efd5639ff294c974a9d21854a3ffe1",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 11.985997045717458,
+                  "recorded": 11.985997045717447,
+                  "agrees": true,
+                  "absolute_gap": 1.0658141036401503e-14
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.19501707464535833,
+                  "recorded": 0.19501707464535922,
+                  "agrees": true,
+                  "absolute_gap": 8.881784197001252e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": 0.005443450670118755,
+                  "recorded": 0.005443450670119421,
+                  "agrees": true,
+                  "absolute_gap": 6.661338147750939e-16
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": false,
+              "maximum_absolute_gap_mm": 11.190649337416083,
+              "within_rerun_tolerance": false,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          },
+          {
+            "query": 4,
+            "status": "scored",
+            "prediction_file": "adapt.zarr",
+            "snapshot": "prediction-004.zarr",
+            "sha256": "5faad5e35879e235b456607ccfa2fc687c19d96ea5e882cc901fb5e0e143155c",
+            "bytes": 33535,
+            "files": 11,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "b3967375420131257829a967962409bc12b9da4d18566e157fc8c412aa9eedb2",
+                "bytes": 9951
+              },
+              "development_mm/zarr.json": {
+                "sha256": "0635bc910e1d0e393e30138ad8bf46a81c1b388fdaffe2567ef037c51db5a030",
+                "bytes": 745
+              },
+              "final_issue/c/0": {
+                "sha256": "b83622758e7b316f7870b8922763c500ba4a2b2b7c3193e18ad84b7ad2b006e4",
+                "bytes": 328
+              },
+              "final_issue/zarr.json": {
+                "sha256": "27faf69acbd485ccdf0ffb4bf3ef98933f3e8ba5018c2a3cd22f279b511bf486",
+                "bytes": 751
+              },
+              "final_mm/c/0/0": {
+                "sha256": "956bec27db815ddb8892ba0985953801bfb4e789583d06aa4a333302dd800c9a",
+                "bytes": 14013
+              },
+              "final_mm/zarr.json": {
+                "sha256": "9a3e70a62650e05071976db2c957cccc2011db557273c8e360578ce00ee828e4",
+                "bytes": 739
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "5bf1dbaa39fbfba73ff5239d24934924904014076fc3b2f9b6092cb488bf754b",
+                "bytes": 5297
+              }
+            },
+            "inventory_sha256": "d11e3a86dbb4ad18cefa080ea85ceae4fdfa4d5c256947ef5efa7eceb7ae4b7e",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 11.952730060348518,
+                  "recorded": 11.952730060348522,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.19725129471882208,
+                  "recorded": 0.19725129471882197,
+                  "agrees": true,
+                  "absolute_gap": 1.1102230246251565e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": 0.00820382997347946,
+                  "recorded": 0.008203829973478793,
+                  "agrees": true,
+                  "absolute_gap": 6.661338147750939e-16
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": false,
+              "maximum_absolute_gap_mm": 8.813212358966979,
+              "within_rerun_tolerance": false,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          },
+          {
+            "query": 5,
+            "status": "scored",
+            "prediction_file": "results.zarr",
+            "snapshot": "prediction-005.zarr",
+            "sha256": "3dce7d497b02479ad7b21b4322c1287c35ec492e5227ac4063227ead891862fc",
+            "bytes": 28754,
+            "files": 11,
+            "inventory": {
+              "development_issue/c/0": {
+                "sha256": "8bb37a6434d83e3bb8cd7298fb9a1c87c87dc2fcf2a5de5b886b68fefdc9a3f0",
+                "bytes": 258
+              },
+              "development_issue/zarr.json": {
+                "sha256": "fb28147529d8b11089a526a2b45b6ed1c46735b0b8e65316be9ffc110d5857db",
+                "bytes": 757
+              },
+              "development_mm/c/0/0": {
+                "sha256": "d4de687d5651d24afcb26310131d2747622cd4eadd576e8fd44082e6be89e34f",
+                "bytes": 10048
+              },
+              "development_mm/zarr.json": {
+                "sha256": "54513c4499db4f82528bf8077add8fc5ef6032dd61f383afec71318349c61724",
+                "bytes": 834
+              },
+              "final_issue/c/0": {
+                "sha256": "b83622758e7b316f7870b8922763c500ba4a2b2b7c3193e18ad84b7ad2b006e4",
+                "bytes": 328
+              },
+              "final_issue/zarr.json": {
+                "sha256": "27faf69acbd485ccdf0ffb4bf3ef98933f3e8ba5018c2a3cd22f279b511bf486",
+                "bytes": 751
+              },
+              "final_mm/c/0/0": {
+                "sha256": "4ea4d4a66d4292f5c02a8d05160d6d5051ff593a4736c8535f2cd3f21949f892",
+                "bytes": 14188
+              },
+              "final_mm/zarr.json": {
+                "sha256": "bc272d0aba2b9e17a07f1395e1466902cc57264755e0892c5f0020b2d97d9fb6",
+                "bytes": 828
+              },
+              "location/c/0": {
+                "sha256": "77a51943f7b753e8f296ad32acf0b89f5e6e55ef2887ef05c1a961ae37db9c0d",
+                "bytes": 40
+              },
+              "location/zarr.json": {
+                "sha256": "9da205b8eabb137e4b2ad97f7aee6d439a8df29c4c18300aec31f6290c94ba5d",
+                "bytes": 656
+              },
+              "zarr.json": {
+                "sha256": "36615682d5be9646729635067a75185212eb0c48d708ef06ad34c1f58dd587d2",
+                "bytes": 66
+              }
+            },
+            "inventory_sha256": "d3847a3b603df6a80b13d13e088dc6bd208be5faf93b008e67d2ef363ba03a3b",
+            "independent_development_score": {
+              "agrees": false,
+              "metrics": {
+                "split": {
+                  "independent": "development",
+                  "recorded": "development",
+                  "agrees": true
+                },
+                "rmse_mm": {
+                  "independent": 11.78388798041698,
+                  "recorded": 11.78388798041698,
+                  "agrees": true,
+                  "absolute_gap": 0.0
+                },
+                "raw_model_rmse_mm": {
+                  "independent": 14.889753146548955,
+                  "recorded": 14.889753146548957,
+                  "agrees": true,
+                  "absolute_gap": 1.7763568394002505e-15
+                },
+                "climatology_rmse_mm": {
+                  "independent": 12.051599332178206,
+                  "recorded": 12.051599332178203,
+                  "agrees": true,
+                  "absolute_gap": 3.552713678800501e-15
+                },
+                "skill_vs_raw_model": {
+                  "independent": 0.20859077619106337,
+                  "recorded": 0.20859077619106348,
+                  "agrees": true,
+                  "absolute_gap": 1.1102230246251565e-16
+                },
+                "skill_vs_climatology": {
+                  "independent": 0.022213761375755925,
+                  "recorded": 0.022213761375755703,
+                  "agrees": true,
+                  "absolute_gap": 2.220446049250313e-16
+                },
+                "issues": {
+                  "independent": 147,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                },
+                "cells": {
+                  "independent": 9,
+                  "recorded": null,
+                  "agrees": false,
+                  "absolute_gap": null
+                }
+              }
+            },
+            "final_submitted_development_match": {
+              "exact": true,
+              "maximum_absolute_gap_mm": 0.0,
+              "within_rerun_tolerance": true,
+              "tolerance_mm": 0.00011920929665620903
+            }
+          }
+        ],
+        "max_submissions": 5,
+        "limit_denials": 0,
+        "exact_matching_final_development_queries": [
+          5
+        ],
+        "selection_evidence": "Final submitted development values match these frozen queries; this does not infer selection intent.",
+        "no_intermediate_final_scores_computed": true
+      },
+      "final_yearwise": {
+        "pooled_rmse_mm": 14.143402700376402,
+        "years": {
+          "2018": {
+            "rmse_mm": 12.644483329355722,
+            "mse_mm_squared": 159.88295866635477,
+            "issues": 52,
+            "cells": 9
+          },
+          "2019": {
+            "rmse_mm": 17.82424298293839,
+            "mse_mm_squared": 317.70363791482845,
+            "issues": 52,
+            "cells": 9
+          },
+          "2020": {
+            "rmse_mm": 13.00595677764811,
+            "mse_mm_squared": 169.15491170205084,
+            "issues": 52,
+            "cells": 9
+          },
+          "2021": {
+            "rmse_mm": 12.385550108768847,
+            "mse_mm_squared": 153.401851496824,
+            "issues": 52,
+            "cells": 9
+          }
+        }
+      },
+      "original_artifacts_unchanged": true
+    }
+  ],
+  "fixed_comparators": {
+    "raw_model": {
+      "pooled_rmse_mm": 14.890051309463692,
+      "years": {
+        "2018": {
+          "rmse_mm": 15.811896387372645,
+          "mse_mm_squared": 250.01606736500813,
+          "issues": 52,
+          "cells": 9
+        },
+        "2019": {
+          "rmse_mm": 16.586191646414093,
+          "mse_mm_squared": 275.1017533315767,
+          "issues": 52,
+          "cells": 9
+        },
+        "2020": {
+          "rmse_mm": 11.629168598111214,
+          "mse_mm_squared": 135.23756228329592,
+          "issues": 52,
+          "cells": 9
+        },
+        "2021": {
+          "rmse_mm": 15.049888006691772,
+          "mse_mm_squared": 226.49912901396485,
+          "issues": 52,
+          "cells": 9
+        }
+      }
+    },
+    "seasonal_climatology": {
+      "pooled_rmse_mm": 14.281531566506088,
+      "years": {
+        "2018": {
+          "rmse_mm": 12.131854367934938,
+          "mse_mm_squared": 147.18189040478202,
+          "issues": 52,
+          "cells": 9
+        },
+        "2019": {
+          "rmse_mm": 18.012473770366455,
+          "mse_mm_squared": 324.4492113281396,
+          "issues": 52,
+          "cells": 9
+        },
+        "2020": {
+          "rmse_mm": 13.33910752095916,
+          "mse_mm_squared": 177.93178945570924,
+          "issues": 52,
+          "cells": 9
+        },
+        "2021": {
+          "rmse_mm": 12.895180663790974,
+          "mse_mm_squared": 166.2856843518086,
+          "issues": 52,
+          "cells": 9
+        }
+      }
+    },
+    "trusted_correct_control": {
+      "pooled_rmse_mm": 14.015441824941522,
+      "years": {
+        "2018": {
+          "rmse_mm": 12.232740703368837,
+          "mse_mm_squared": 149.6399451158567,
+          "issues": 52,
+          "cells": 9
+        },
+        "2019": {
+          "rmse_mm": 17.748173857396594,
+          "mse_mm_squared": 314.9976752723759,
+          "issues": 52,
+          "cells": 9
+        },
+        "2020": {
+          "rmse_mm": 12.766933903375078,
+          "mse_mm_squared": 162.994601293148,
+          "issues": 52,
+          "cells": 9
+        },
+        "2021": {
+          "rmse_mm": 12.573711326092226,
+          "mse_mm_squared": 158.09821651189995,
+          "issues": 52,
+          "cells": 9
+        }
+      }
+    }
+  },
+  "trusted_control_independent_scores": {
+    "development": {
+      "agrees": true,
+      "metrics": {
+        "split": {
+          "independent": "development",
+          "recorded": "development",
+          "agrees": true
+        },
+        "rmse_mm": {
+          "independent": 11.92910352587061,
+          "recorded": 11.929103525870605,
+          "agrees": true,
+          "absolute_gap": 5.329070518200751e-15
+        },
+        "raw_model_rmse_mm": {
+          "independent": 14.889753146548955,
+          "recorded": 14.889753146548957,
+          "agrees": true,
+          "absolute_gap": 1.7763568394002505e-15
+        },
+        "climatology_rmse_mm": {
+          "independent": 12.051599332178206,
+          "recorded": 12.051599332178203,
+          "agrees": true,
+          "absolute_gap": 3.552713678800501e-15
+        },
+        "skill_vs_raw_model": {
+          "independent": 0.1988380594049367,
+          "recorded": 0.19883805940493715,
+          "agrees": true,
+          "absolute_gap": 4.440892098500626e-16
+        },
+        "skill_vs_climatology": {
+          "independent": 0.010164278029101692,
+          "recorded": 0.010164278029101803,
+          "agrees": true,
+          "absolute_gap": 1.1102230246251565e-16
+        },
+        "issues": {
+          "independent": 147,
+          "recorded": 147,
+          "agrees": true,
+          "absolute_gap": 0
+        },
+        "cells": {
+          "independent": 9,
+          "recorded": 9,
+          "agrees": true,
+          "absolute_gap": 0
+        },
+        "observations_are_public_history": {
+          "independent": true,
+          "recorded": true,
+          "agrees": true
+        }
+      }
+    },
+    "final": {
+      "agrees": true,
+      "metrics": {
+        "split": {
+          "independent": "final",
+          "recorded": "final",
+          "agrees": true
+        },
+        "rmse_mm": {
+          "independent": 14.015441824941522,
+          "recorded": 14.015441824941522,
+          "agrees": true,
+          "absolute_gap": 0.0
+        },
+        "raw_model_rmse_mm": {
+          "independent": 14.890051309463683,
+          "recorded": 14.890051309463692,
+          "agrees": true,
+          "absolute_gap": 8.881784197001252e-15
+        },
+        "climatology_rmse_mm": {
+          "independent": 14.281531566506086,
+          "recorded": 14.281531566506088,
+          "agrees": true,
+          "absolute_gap": 1.7763568394002505e-15
+        },
+        "skill_vs_raw_model": {
+          "independent": 0.05873784222397438,
+          "recorded": 0.058737842223974934,
+          "agrees": true,
+          "absolute_gap": 5.551115123125783e-16
+        },
+        "skill_vs_climatology": {
+          "independent": 0.018631737102245638,
+          "recorded": 0.01863173710224575,
+          "agrees": true,
+          "absolute_gap": 1.1102230246251565e-16
+        },
+        "issues": {
+          "independent": 208,
+          "recorded": 208,
+          "agrees": true,
+          "absolute_gap": 0
+        },
+        "cells": {
+          "independent": 9,
+          "recorded": 9,
+          "agrees": true,
+          "absolute_gap": 0
+        },
+        "observations_are_public_history": {
+          "independent": true,
+          "recorded": true,
+          "agrees": true
+        }
+      }
+    }
+  },
+  "fixed_control_assessment_sha256": "7030012a89eb71e2902b959a503d18541ff579280a35f5761b0906aab29c7d55",
+  "scientific_workers": 1,
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "model_calls": 0,
+  "actor_code_executed": false,
+  "intermediate_final_candidates_scored": false,
+  "comparators_retuned": false,
+  "original_assessments_modified": false,
+  "interpretation": "Independent arithmetic and frozen-query consistency verification, not a new grading verdict. Annual errors are descriptive: overlapping periods and neighbouring cells are dependent; this is an already-inspected public historical split."
+}

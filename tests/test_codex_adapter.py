@@ -178,6 +178,7 @@ assert request['tools'][0]['name']=='score_development'
 print(json.dumps({'type':'score_development','id':'q','prediction_file':'development.nc'}),flush=True)
 reply=json.loads(sys.stdin.readline())
 assert reply['feedback_query']==1 and reply['feedback_scope']=='development_only'
+assert reply['remaining_tool_calls']==0 and reply['remaining_tokens'] is None
 print(json.dumps({'type':'final'}),flush=True)
 ''')
     class Box:
@@ -188,7 +189,7 @@ print(json.dumps({'type':'final'}),flush=True)
             return {'exit_code':0, 'stdout':'{"rmse_mm":12.3}', 'stderr':'',
                     'feedback_scope':'development_only', 'feedback_query':1, 'feedback_remaining':4}
     result = command_driver({'driver':{'argv':[sys.executable,str(script)]},
-                             'budget':{'max_seconds':3,'max_tool_calls':1,'command_seconds':1}},
+                             'budget':{'max_seconds':3,'max_tool_calls':1,'command_seconds':1,'max_total_tokens':100}},
                             tmp_path,{'type':'start','tools':[SCORE_TOOL]},Box(),tmp_path/'events.jsonl',tmp_path/'stderr')
     assert result['status'] == 'submitted' and result['tool_calls'] == 1
     rows = [json.loads(line) for line in (tmp_path/'events.jsonl').read_text().splitlines()]

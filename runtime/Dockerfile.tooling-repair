@@ -1,0 +1,14 @@
+# Preserve the original tooling arm and its complete package set.
+# Freeze the resulting image by content ID before using it in a comparison.
+ARG BASE=accord-pilot-scratch:v1
+FROM ${BASE}
+# In these frozen wheels, importing cfgrib before pyproj aborts at shutdown.
+# xarray discovers cfgrib before rioxarray (which imports pyproj). Initializing
+# pyproj first is a tested import-order workaround, not an upstream binary fix.
+# Do not remove netCDF4: it is a declared acmadDL dependency and not the cause.
+RUN python - <<'PY'
+from pathlib import Path
+path = Path('/opt/pilot/runtime/sitecustomize.py')
+original = path.read_text()
+path.write_text('# Frozen pilot native-library import-order workaround.\nimport pyproj\n' + original)
+PY

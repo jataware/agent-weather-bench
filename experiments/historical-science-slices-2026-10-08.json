@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "source_audit_sha256": "46f8e7335ec71cdc138fdaeeeaf0c8ee9040984bf673d9dcfde1c057f18f576f",
+  "scope": "Fresh trusted-reference calculations and read-only original arrays; no submission code executed, no model requests.",
+  "references": {
+    "monthly": {
+      "path": "archive/evaluator-v1-2026-10/weatherbench/task_tools/monthly_cycle/reference.py",
+      "sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5"
+    },
+    "station": {
+      "path": "archive/evaluator-v1-2026-10/weatherbench/task_tools/station_verification/reference.py",
+      "sha256": "b9a88c32a2d67640e6c73b9ca5924dfd366fdde948f2f481b568c36cc75a8f7e"
+    }
+  },
+  "original_artifacts_reverified": 20,
+  "monthly_production_by_system": {
+    "climatology": {
+      "finite_pairs": 144,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 0.0,
+      "rmse_of_difference": 0.0,
+      "values_differing_by_more_than_1e_7": 0
+    },
+    "independent-month": {
+      "finite_pairs": 144,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 7.105427357601002e-15,
+      "rmse_of_difference": 1.0808451812457177e-15,
+      "values_differing_by_more_than_1e_7": 0
+    },
+    "constant-slope": {
+      "finite_pairs": 144,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 34.9690993608007,
+      "rmse_of_difference": 9.150282776646359,
+      "values_differing_by_more_than_1e_7": 144
+    },
+    "nested-cyclic": {
+      "finite_pairs": 144,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 2.842170943040401e-14,
+      "rmse_of_difference": 2.533860938643264e-15,
+      "values_differing_by_more_than_1e_7": 0
+    }
+  },
+  "station_diagnostic_by_variant": {
+    "correct": {
+      "finite_pairs": 8,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 6.217248937900877e-15,
+      "rmse_of_difference": 2.673771110915334e-15,
+      "values_differing_by_more_than_1e_7": 0
+    },
+    "init-time-truth": {
+      "finite_pairs": 8,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 6.217248937900877e-15,
+      "rmse_of_difference": 2.710399819191012e-15,
+      "values_differing_by_more_than_1e_7": 0
+    },
+    "celsius-as-kelvin": {
+      "finite_pairs": 8,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 0.0,
+      "rmse_of_difference": 0.0,
+      "values_differing_by_more_than_1e_7": 0
+    },
+    "own-support": {
+      "finite_pairs": 8,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 4.440892098500626e-15,
+      "rmse_of_difference": 2.1868857395626282e-15,
+      "values_differing_by_more_than_1e_7": 0
+    },
+    "all-three": {
+      "finite_pairs": 8,
+      "nonfinite_mask_agrees": true,
+      "max_absolute_error": 270.5651399379333,
+      "rmse_of_difference": 270.47906409175795,
+      "values_differing_by_more_than_1e_7": 8
+    }
+  },
+  "interpretation": "Differences localize the faults; passing other slices is preserved. This is not a repeated agent attempt or a persistent capability boundary."
+}

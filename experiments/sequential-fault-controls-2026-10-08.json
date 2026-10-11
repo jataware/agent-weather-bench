@@ -1,0 +1,304 @@
+{
+  "status": "pass",
+  "image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+  "scientific_io": false,
+  "model_calls": 0,
+  "checks": {
+    "raw_pass": true,
+    "replay_identical": true,
+    "unreleased_future_truth_irrelevant": true,
+    "raw_predictions": true,
+    "release_cutoff": true,
+    "late_revision_fail_preserves_first": true,
+    "negative_fail_no_commit": true,
+    "missing_fail_no_commit": true,
+    "online_timeout_preserves_first": true,
+    "host_files_not_mounted": true,
+    "no_submission_write": true,
+    "persistent_state": true
+  },
+  "results": {
+    "raw": {
+      "state": "pass",
+      "predictions": [
+        [
+          5.0,
+          6.0
+        ],
+        [
+          7.0,
+          8.0
+        ],
+        [
+          9.0,
+          10.0
+        ]
+      ],
+      "events": [
+        {
+          "type": "initialized",
+          "training_cases": 1
+        },
+        {
+          "type": "forecast",
+          "case_id": "first",
+          "issue_time": "2020-01-05",
+          "released_cases": [],
+          "prediction_mm": [
+            5.0,
+            6.0
+          ]
+        },
+        {
+          "type": "forecast",
+          "case_id": "second",
+          "issue_time": "2020-01-12",
+          "released_cases": [
+            "pending"
+          ],
+          "prediction_mm": [
+            7.0,
+            8.0
+          ]
+        },
+        {
+          "type": "forecast",
+          "case_id": "third",
+          "issue_time": "2020-02-09",
+          "released_cases": [
+            "first"
+          ],
+          "prediction_mm": [
+            9.0,
+            10.0
+          ]
+        }
+      ],
+      "reason": null,
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "private_truth_mounted": false,
+      "stderr": "{\"isolation_checks\": {\"host_private_absent\": true, \"inputs_absent\": true, \"provider_absent\": true, \"private_targets_absent\": true, \"submission_readonly\": true}}\n{\"issue\": \"first\", \"persistent_count\": 1, \"released\": []}\n{\"issue\": \"second\", \"persistent_count\": 2, \"released\": [\"pending\"]}\n{\"issue\": \"third\", \"persistent_count\": 3, \"released\": [\"first\"]}\n",
+      "seconds": 0.9473016250412911
+    },
+    "replay": {
+      "state": "pass",
+      "predictions": [
+        [
+          5.0,
+          6.0
+        ],
+        [
+          7.0,
+          8.0
+        ],
+        [
+          9.0,
+          10.0
+        ]
+      ],
+      "events": [
+        {
+          "type": "initialized",
+          "training_cases": 1
+        },
+        {
+          "type": "forecast",
+          "case_id": "first",
+          "issue_time": "2020-01-05",
+          "released_cases": [],
+          "prediction_mm": [
+            5.0,
+            6.0
+          ]
+        },
+        {
+          "type": "forecast",
+          "case_id": "second",
+          "issue_time": "2020-01-12",
+          "released_cases": [
+            "pending"
+          ],
+          "prediction_mm": [
+            7.0,
+            8.0
+          ]
+        },
+        {
+          "type": "forecast",
+          "case_id": "third",
+          "issue_time": "2020-02-09",
+          "released_cases": [
+            "first"
+          ],
+          "prediction_mm": [
+            9.0,
+            10.0
+          ]
+        }
+      ],
+      "reason": null,
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "private_truth_mounted": false,
+      "stderr": "{\"isolation_checks\": {\"host_private_absent\": true, \"inputs_absent\": true, \"provider_absent\": true, \"private_targets_absent\": true, \"submission_readonly\": true}}\n{\"issue\": \"first\", \"persistent_count\": 1, \"released\": []}\n{\"issue\": \"second\", \"persistent_count\": 2, \"released\": [\"pending\"]}\n{\"issue\": \"third\", \"persistent_count\": 3, \"released\": [\"first\"]}\n",
+      "seconds": 0.6411353340372443
+    },
+    "changed_future_truth": {
+      "state": "pass",
+      "predictions": [
+        [
+          5.0,
+          6.0
+        ],
+        [
+          7.0,
+          8.0
+        ],
+        [
+          9.0,
+          10.0
+        ]
+      ],
+      "events": [
+        {
+          "type": "initialized",
+          "training_cases": 1
+        },
+        {
+          "type": "forecast",
+          "case_id": "first",
+          "issue_time": "2020-01-05",
+          "released_cases": [],
+          "prediction_mm": [
+            5.0,
+            6.0
+          ]
+        },
+        {
+          "type": "forecast",
+          "case_id": "second",
+          "issue_time": "2020-01-12",
+          "released_cases": [
+            "pending"
+          ],
+          "prediction_mm": [
+            7.0,
+            8.0
+          ]
+        },
+        {
+          "type": "forecast",
+          "case_id": "third",
+          "issue_time": "2020-02-09",
+          "released_cases": [
+            "first"
+          ],
+          "prediction_mm": [
+            9.0,
+            10.0
+          ]
+        }
+      ],
+      "reason": null,
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "private_truth_mounted": false,
+      "stderr": "{\"isolation_checks\": {\"host_private_absent\": true, \"inputs_absent\": true, \"provider_absent\": true, \"private_targets_absent\": true, \"submission_readonly\": true}}\n{\"issue\": \"first\", \"persistent_count\": 1, \"released\": []}\n{\"issue\": \"second\", \"persistent_count\": 2, \"released\": [\"pending\"]}\n{\"issue\": \"third\", \"persistent_count\": 3, \"released\": [\"first\"]}\n",
+      "seconds": 0.6334508750587702
+    },
+    "wrong_id": {
+      "state": "fail",
+      "predictions": [
+        [
+          5.0,
+          6.0
+        ]
+      ],
+      "events": [
+        {
+          "type": "initialized",
+          "training_cases": 1
+        },
+        {
+          "type": "forecast",
+          "case_id": "first",
+          "issue_time": "2020-01-05",
+          "released_cases": [],
+          "prediction_mm": [
+            5.0,
+            6.0
+          ]
+        }
+      ],
+      "reason": "ValueError: Prediction must name the current case_id",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "private_truth_mounted": false,
+      "stderr": "{\"isolation_checks\": {\"host_private_absent\": true, \"inputs_absent\": true, \"provider_absent\": true, \"private_targets_absent\": true, \"submission_readonly\": true}}\n{\"issue\": \"first\", \"persistent_count\": 1, \"released\": []}\n{\"issue\": \"second\", \"persistent_count\": 2, \"released\": [\"pending\"]}\n",
+      "seconds": 0.6562417920213193
+    },
+    "negative": {
+      "state": "fail",
+      "predictions": [],
+      "events": [
+        {
+          "type": "initialized",
+          "training_cases": 1
+        }
+      ],
+      "reason": "ValueError: Expected a finite nonnegative vector covering every location",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "private_truth_mounted": false,
+      "stderr": "{\"isolation_checks\": {\"host_private_absent\": true, \"inputs_absent\": true, \"provider_absent\": true, \"private_targets_absent\": true, \"submission_readonly\": true}}\n{\"issue\": \"first\", \"persistent_count\": 1, \"released\": []}\n",
+      "seconds": 0.6257454580627382
+    },
+    "missing": {
+      "state": "fail",
+      "predictions": [],
+      "events": [
+        {
+          "type": "initialized",
+          "training_cases": 1
+        }
+      ],
+      "reason": "ValueError: Program exited before returning a forecast",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "private_truth_mounted": false,
+      "stderr": "{\"isolation_checks\": {\"host_private_absent\": true, \"inputs_absent\": true, \"provider_absent\": true, \"private_targets_absent\": true, \"submission_readonly\": true}}\n{\"issue\": \"first\", \"persistent_count\": 1, \"released\": []}\n",
+      "seconds": 0.7765081669203937
+    },
+    "late_timeout": {
+      "state": "fail",
+      "predictions": [
+        [
+          5.0,
+          6.0
+        ]
+      ],
+      "events": [
+        {
+          "type": "initialized",
+          "training_cases": 1
+        },
+        {
+          "type": "forecast",
+          "case_id": "first",
+          "issue_time": "2020-01-05",
+          "released_cases": [],
+          "prediction_mm": [
+            5.0,
+            6.0
+          ]
+        }
+      ],
+      "reason": "TimeoutError: Program did not return its forecast before deadline",
+      "runtime_image": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+      "private_truth_mounted": false,
+      "stderr": "{\"isolation_checks\": {\"host_private_absent\": true, \"inputs_absent\": true, \"provider_absent\": true, \"private_targets_absent\": true, \"submission_readonly\": true}}\n{\"issue\": \"first\", \"persistent_count\": 1, \"released\": []}\n{\"issue\": \"second\", \"persistent_count\": 2, \"released\": [\"pending\"]}\n",
+      "seconds": 1.0879999580793083
+    }
+  },
+  "evidence_files": {
+    "var/review/sequential-fault-controls-20261008/run.py": "9fc9d8e53cb0c55028c8c1dc64b650c0544fc3c91c6347e44e34afbd051c52e4",
+    "var/review/sequential-fault-controls-20261008/submission/forecast.py": "38af95c77e2a4ba708c75f34c8cf3ed61796274653d00d76e75efbbd7d3d0d57",
+    "assessment/sequential.py": "1fb47b93eb5f326d76220ec096740300398f217e26ba23040f7ebc4fdc6b3504",
+    "tests/test_sequential_forecast.py": "ce44e51303bb5b15bd87cf59edade8dfb18f06090eb6824ce2e7d049aba39c6d"
+  }
+}

@@ -230,26 +230,98 @@ def cca_agreement(results, params, inputs=None):
     science = _module("science")
     reference = science.compute(Path(inputs) / "provider", params, {}, stages=("prepare", "cca"))
     support = _support(results) & (reference["prepare_support"].values > 0)
+    return _cca_gate(results, support, reference["cca_hindcast_probability"].values, reference["cca_forecast_probability"].values,
+                     reference["prepare_observed_category"].values.astype(int), "the controller's CCA")
+
+
+# ---- local verdicts: each stream recomputed from the submission's own prepare group ------------
+# The bounds repeat the declared error bounds of spec.yaml for the matched arrays (the WVG bound is the
+# measured solver spread); a change there is a change here.
+WVG_BOUND, EREG_PROBABILITY_BOUND, EREG_MEAN_BOUND = 2.2e-5, 2.2e-10, 2.2e-6
+
+
+def _own_prepare(results):
+    """(support cells, observed (year, cells), training-year count) from the submission's prepare arrays."""
+    support = _support(results)
+    cells = np.flatnonzero(support.ravel())
+    n = results["prepare_observed_mm"].shape[0]
+    observed = results["prepare_observed_mm"].reshape(n, -1)[:, cells]
+    return support, cells, observed, n
+
+
+def _gap(results, name, recomputed, cells, front):
+    """Largest difference between a submitted grid array and a recomputation on the supported cells."""
+    mine = np.asarray(results[name], dtype="float64").reshape(*front, -1)[..., cells]
+    return float(np.max(np.abs(mine - recomputed))) if mine.size else 0.0
+
+
+def wvg_from_own_prepare(results, params, inputs=None):
+    """WVG recomputed from the submission's own observed totals and SST index agrees with its WVG arrays."""
+    science = _module("science")
+    support, cells, observed, n = _own_prepare(results)
+    hp, fp = science.wvg_stream(results["prepare_sst_index"], observed, float(results["prepare_sst_index_forecast"]), "fold_only")
+    gap = max(_gap(results, "wvg_hindcast_probability", hp, cells, (n, 3)), _gap(results, "wvg_forecast_probability", fp, cells, (3,)))
+    return gap <= WVG_BOUND, f"Largest difference between the submitted WVG probabilities and those recomputed from the submission's own prepare arrays: {gap:.3g} (bound {WVG_BOUND:g})."
+
+
+def ereg_from_own_prepare(results, params, inputs=None):
+    """eReg recomputed from the submission's own observed totals and model means agrees with its eReg arrays under either accepted variance reading."""
+    science = _module("science")
+    support, cells, observed, n = _own_prepare(results)
+    m = results["prepare_model_hindcast_mean_mm"].shape[0]
+    train = results["prepare_model_hindcast_mean_mm"].reshape(m, n, -1)[:, :, cells]
+    new = results["prepare_model_forecast_mean_mm"].reshape(m, -1)[:, cells]
+    gaps = {}
+    for reading in ("prediction_error", "residual"):
+        mhp, hp, mfp, fp, fitted = science.ereg_stream(train, observed, new, reading, "fold_only")
+        probability = max(_gap(results, "ereg_model_hindcast_probability", mhp, cells, (m, n, 3)), _gap(results, "ereg_hindcast_probability", hp, cells, (n, 3)),
+                          _gap(results, "ereg_model_forecast_probability", mfp, cells, (m, 3)), _gap(results, "ereg_forecast_probability", fp, cells, (3,)))
+        mean = _gap(results, "ereg_fitted_mean_mm", fitted, cells, (n,))
+        gaps[reading] = (probability, mean)
+        if probability <= EREG_PROBABILITY_BOUND and mean <= EREG_MEAN_BOUND:
+            return True, f"The submitted eReg arrays agree with a recomputation from the submission's own prepare arrays under the {reading} variance reading (probability gap {probability:.3g}, fitted-mean gap {mean:.3g})."
+    nearest = min(gaps, key=lambda r: gaps[r][0])
+    return False, (f"The submitted eReg arrays agree with no recomputation from the submission's own prepare arrays; nearest reading {nearest} "
+                   f"(probability gap {gaps[nearest][0]:.3g} against {EREG_PROBABILITY_BOUND:g}, fitted-mean gap {gaps[nearest][1]:.3g} against {EREG_MEAN_BOUND:g}).")
+
+
+def _cca_gate(results, support, reference_hindcast, reference_forecast, reference_categories, against):
+    """The method-blind gate of the submission's CCA against a reference CCA on the same support."""
+    science = _module("science")
     correlations = []
-    for name in ("cca_hindcast_probability", "cca_forecast_probability"):
-        mine, theirs = results[name], reference[name].values
+    for mine, theirs in ((results["cca_hindcast_probability"], reference_hindcast), (results["cca_forecast_probability"], reference_forecast)):
         for k in range(3):
             a, b = np.moveaxis(mine, -3, 0)[k][..., support].ravel(), np.moveaxis(theirs, -3, 0)[k][..., support].ravel()
-            if a.std() < 1e-12 or b.std() < 1e-12:
-                correlations.append(0.0)
-            else:
-                correlations.append(float(np.corrcoef(a, b)[0, 1]))
+            correlations.append(0.0 if a.std() < 1e-12 or b.std() < 1e-12 else float(np.corrcoef(a, b)[0, 1]))
     categories = results["prepare_observed_category"].astype(int)
     baseline = science.rps(np.full_like(results["cca_hindcast_probability"], 1 / 3), categories).mean(0)[support].mean()
     mine = 1 - science.rps(results["cca_hindcast_probability"], categories).mean(0)[support].mean() / baseline
-    theirs = 1 - science.rps(reference["cca_hindcast_probability"].values, reference["prepare_observed_category"].values.astype(int)).mean(0)[support].mean() / baseline
+    theirs = 1 - science.rps(reference_hindcast, reference_categories).mean(0)[support].mean() / baseline
     ok = min(correlations) >= CCA_CORRELATION_FLOOR and mine >= theirs - CCA_RPSS_MARGIN
-    return ok, (f"Minimum per-category correlation with the controller's CCA {min(correlations):.3f} (floor {CCA_CORRELATION_FLOOR}); "
-                f"cross-validated RPSS {mine:.4f} against the controller's {theirs:.4f} (margin {CCA_RPSS_MARGIN}).")
+    return ok, (f"Minimum per-category correlation with {against} {min(correlations):.3f} (floor {CCA_CORRELATION_FLOOR}); "
+                f"cross-validated RPSS {mine:.4f} against {theirs:.4f} (margin {CCA_RPSS_MARGIN}).")
+
+
+def cca_from_own_prepare(results, params, inputs=None):
+    """The method-blind CCA gate against a CCA recomputed from the submission's own prepare arrays."""
+    science = _module("science")
+    support, cells, observed, n = _own_prepare(results)
+    m = results["prepare_model_predictor_mm"].shape[0]
+    predictors = results["prepare_model_predictor_mm"].reshape(m, n, -1)
+    predictors_new = results["prepare_model_predictor_forecast_mm"].reshape(m, -1)
+    xlat = np.repeat(np.asarray(results["plat"], dtype="float64"), len(results["plon"]))
+    ylat = np.repeat(np.asarray(results["lat"], dtype="float64"), len(results["lon"]))[cells]
+    hp, fp, _, _ = science.cca_stream(predictors, observed, predictors_new, xlat, ylat, "fold_only")
+    def spread(values, front):
+        out = np.zeros((*front, support.size)); out[..., cells] = values
+        return out.reshape(*front, *support.shape)
+    categories = results["prepare_observed_category"].astype(int)
+    return _cca_gate(results, support, spread(hp, (n, 3)), spread(fp, (3,)), categories, "a CCA recomputed from the submission's own prepare arrays")
 
 
 INVARIANTS = {"probabilities_valid": probabilities_valid, "support_consistent": support_consistent, "equal_stream_combination": equal_stream_combination,
-              "score_identity": score_identity, "issue_identity": issue_identity, "cca_agreement": cca_agreement}
+              "score_identity": score_identity, "issue_identity": issue_identity, "cca_agreement": cca_agreement,
+              "wvg_from_own_prepare": wvg_from_own_prepare, "ereg_from_own_prepare": ereg_from_own_prepare, "cca_from_own_prepare": cca_from_own_prepare}
 
 
 def _first_year_hindcasts(results, inputs, params):
@@ -258,10 +330,27 @@ def _first_year_hindcasts(results, inputs, params):
            {"ereg_model_hindcast_probability": results["ereg_model_hindcast_probability"][:, index:index + 1]}
 
 
+def _first_year_part(names):
+    def part(results, inputs, params):
+        index = int(np.flatnonzero(results["year"] == params["training_years"][0])[0])
+        return {name: (results[name][:, index:index + 1] if name == "ereg_model_hindcast_probability" else results[name][index:index + 1]) for name in names}
+    return part
+
+
 INVARIANCE_PROBES = {"held_out_year_isolation": {
     "perturb": "held_out", "unchanged": _first_year_hindcasts,
     "passes": "Changing a training year's observed rainfall leaves that year's own hindcast probabilities unchanged in every stream.",
-    "fails": "A year's own observation enters its hindcast in at least one stream."}}
+    "fails": "A year's own observation enters its hindcast in at least one stream.",
+    # the same rerun, judged per stream, so each stage answers for its own hindcasts
+    "parts": {"wvg": _first_year_part(("wvg_hindcast_probability",)),
+              "ereg": _first_year_part(("ereg_hindcast_probability", "ereg_model_hindcast_probability")),
+              "cca": _first_year_part(("cca_hindcast_probability",))},
+    "part_passes": {"wvg": "Changing a training year's observed rainfall leaves that year's WVG hindcast unchanged.",
+                    "ereg": "Changing a training year's observed rainfall leaves that year's eReg hindcasts unchanged.",
+                    "cca": "Changing a training year's observed rainfall leaves that year's CCA hindcast unchanged."},
+    "part_fails": {"wvg": "A year's own observation enters its WVG hindcast.",
+                   "ereg": "A year's own observation enters its eReg hindcast.",
+                   "cca": "A year's own observation enters its CCA hindcast."}}}
 
 
 def expected_claims(results, params):

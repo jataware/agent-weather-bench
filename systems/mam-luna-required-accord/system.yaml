@@ -1,0 +1,45 @@
+schema_version: 1
+id: mam-luna-required-accord
+kind: agent
+description: MAM retrieval-to-outlook debugging comparison; required native ACCORD
+  operations.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env:
+  - CODEX_BINARY
+runtime:
+  image: sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49
+  memory: 1536m
+  cpus: 2
+budget:
+  max_seconds: 900
+  max_tool_calls: 20
+  command_seconds: 120
+  max_total_tokens: 100000
+substrate:
+  paths:
+  - adapter.py
+  instructions: 'Read the task and source metadata, then deliver reproducible arrays,
+    code and claims before optional exploration. Keep command output concise; inspect
+    shapes, units and selected metadata. Remaining cumulative token and tool budgets
+    are visible. The task has a private frozen HTTP source service: retrieve raw files
+    using acquisition.json, not live provider credentials. Retrieve the current snapshot
+    during every replay; do not let old file caches override it. This experimental
+    condition REQUIRES substantive use of acmadDL.normalize to prepare native model
+    rates/coordinates and africas2s.calibrate with supported default-Wilks ereg to
+    generate the probabilities you submit. A package import alone does not meet this
+    condition. Read /opt/accord-current/docs/acmadDL/skills/acmaddl/SKILL.md and /opt/accord-current/docs/africas2s/skills/africas2s/SKILL.md
+    before using those APIs. Inspect installed APIs/source as needed. Promote native
+    rainfall to float64 before normalization. The source transport is frozen HTTP,
+    so acmadDL live fetch is not exercised. Document executable code pointers for
+    both operations in report.md, and explain any adaptation. Generic Python is allowed
+    for retrieval, observations, diagnostics and packaging. Use serial scientific
+    file I/O; do not read NetCDF/HDF5 files from Python threads.'
+  libraries:
+  - africas2s
+  - acmaddl
+  image_paths:
+  - /opt/accord-current/docs

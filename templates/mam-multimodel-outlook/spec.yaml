@@ -1,0 +1,61 @@
+schema_version: 1
+template: mam-multimodel-outlook
+spec_version: 2
+title: Retrieve and calibrate a four-centre MAM rainfall outlook
+mode: product
+question: compute_quantity
+reference_match: true
+status: development; source redistribution and scientific review pending
+params: [training_years, new_years, target_latitude, target_longitude, model_names]
+
+# Float64 is required for monthly integration and the fitted calibration.
+# The conservative rounding budgets include interpolation, regression, normal
+# CDF evaluation and averaging; certification checks both independent numerical
+# implementations and the assumed magnitudes on these actual source fields.
+results:
+  model: {kind: coordinate, tolerance: {exact: true}}
+  year: {kind: coordinate, tolerance: {exact: true}}
+  new_year: {kind: coordinate, tolerance: {exact: true}}
+  tercile: {kind: coordinate, tolerance: {exact: true}}
+  lat: {kind: coordinate, tolerance: {precision: float64, operations: 1, magnitude: 180}}
+  lon: {kind: coordinate, tolerance: {precision: float64, operations: 1, magnitude: 180}}
+  train_model_mean_mm: {dims: [model, year, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  train_observed_mm: {dims: [year, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  new_model_mean_mm: {dims: [model, new_year, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 10000}}
+  model_hindcast_probability: {dims: [model, year, tercile, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  model_forecast_probability: {dims: [model, new_year, tercile, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  hindcast_probability: {dims: [year, tercile, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  forecast_probability: {dims: [new_year, tercile, lat, lon], tolerance: {precision: float64, operations: 1000000, magnitude: 1}}
+  observed_category: {dims: [year, lat, lon], tolerance: {exact: true}}
+  cv_rps: {dims: [], tolerance: {precision: float64, operations: 1000000, magnitude: 2}}
+  cv_rps_climatology: {dims: [], tolerance: {precision: float64, operations: 1000000, magnitude: 2}}
+  cv_rpss: {dims: [], tolerance: {precision: float64, operations: 1000000, magnitude: 10}}
+
+conventions:
+  integration: {calendar: accepted, thirty_days: pitfall, missing_seconds: pitfall, missing_millimetres: pitfall}
+  thresholds: {fold_only: accepted, full_record_thresholds: pitfall}
+  weighting: {equal_models: accepted, member_weighted: pitfall}
+pitfalls:
+  thirty_days: Integrates each monthly mean rate over 30 days instead of its actual calendar month.
+  missing_seconds: Omits the 86400 seconds-per-day factor when converting native m/s to seasonal mm.
+  missing_millimetres: Omits the 1000 millimetres-per-metre factor when converting native m/s to seasonal mm.
+  full_record_thresholds: Includes the held-out year's observation in its verification and probability thresholds.
+  member_weighted: Weights calibrated centres by their different ensemble sizes instead of giving each centre equal weight.
+public_conventions: [integration, thresholds, weighting]
+invariants: [probabilities_valid, equal_model_combination, cv_score_identity]
+probes: [replay, changed_data, held_out_year_isolation]
+claims:
+  cv_skill: positive or nonpositive according to the submitted cross-validated RPSS against equal-thirds climatology.
+interpretation: [outlook_support]
+judge_questions:
+  outlook_support:
+    requirement: The report describes the actual calibrated outlook and cross-validated skill, explains uncertainty, distinguishes four forecast centres from their members, and does not claim nationwide coverage, live provider retrieval, or robust generalization from one small service window and one withheld season. Report, structured answer and code agree.
+    silence: fails
+assessment_policy:
+  completion: [envelope, coverage, variant, invariant.*, probe.*, claim.*]
+  ranking: [envelope, coverage, variant, invariant.*, probe.*, claim.*]
+skill:
+  ranking_enabled: false
+  ranking: withheld-season RPSS, higher is better
+  splits: [new_years]
+  caveat: One retrospective season on a small shared land window; descriptive only, not a model leaderboard.

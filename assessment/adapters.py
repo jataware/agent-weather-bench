@@ -54,7 +54,11 @@ def command_driver(config, substrate, request, box, log, stderr_path):
                 event = json.loads(line)
                 if not isinstance(event,dict): raise ValueError("Adapter events must be JSON objects")
                 events(log,{"type":"adapter", "event":event})
-                if event.get("type")=="final": status="submitted"; break
+                if event.get("type")=="final":
+                    status=event.get("status", "submitted")
+                    if status not in ("submitted", "token_limit"):
+                        raise ValueError("Invalid adapter final status")
+                    break
                 if event.get("type")=="usage":
                     usage = event.get("usage")
                     if not isinstance(usage,dict) or not all(type(v) in (int,float) and math.isfinite(v) and v>=0 for v in usage.values()):
@@ -80,6 +84,11 @@ def command_driver(config, substrate, request, box, log, stderr_path):
                     result = box.score_development(event['prediction_file'], timeout)
                 count += 1
                 response = {"type":"tool_result","id":event.get("id"),**result,"remaining_seconds":max(0,budget["max_seconds"]-(time.monotonic()-started))}
+                response["remaining_tool_calls"] = budget["max_tool_calls"] - count
+                if budget.get("max_total_tokens") is not None:
+                    response["remaining_tokens"] = (max(0, budget["max_total_tokens"] - usage["total_tokens"])
+                                                     if usage and "total_tokens" in usage else None)
+                    response["token_budget_note"] = "Cumulative provider usage; the next response can exceed the remaining budget."
                 events(log,response); send(response)
                 if result["exit_code"]==124: status="tool_timeout"; break
             else: status="event_limit"

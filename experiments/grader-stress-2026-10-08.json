@@ -1,0 +1,401 @@
+{
+  "kind": "controller_owned_grader_stress",
+  "model_calls": 0,
+  "notes": [
+    "Storage transformations exercise the declared representation equivalence, not a new scientific solution.",
+    "Scientific fault controls are pre-existing planted defects, reassessed independently of old agent assessments.",
+    "No prose judge is called: required prose checks remain unresolved; computed checks decide these diagnostics."
+  ],
+  "tasks": [
+    {
+      "template": "kenya-forecast-revision",
+      "instance": "service-area--weeks-1-2",
+      "spec_version": 3,
+      "fingerprint": "51b8673acc949e4322eb83ab01d194e08b2b3a55204f8d6aef9bc7d304bdc9ad",
+      "representations": [
+        {
+          "case": "zarr2-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        }
+      ],
+      "assessment_files": [
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/kenya-forecast-revision/representation-assessment.json",
+          "sha256": "4a0c56a2e0d46ffd1a929585e31beb50d809991e9805e92ac70bfe409e3366c0"
+        },
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/kenya-forecast-revision/scientific-assessment.json",
+          "sha256": "3483d361fae605fdcc6d071e6afa5c0dec461324963f1b124c0323f5f14e2c5e"
+        }
+      ],
+      "computed_correct_outcome": "pass",
+      "mislabelled_arrays_rejected_by_comparison": true,
+      "scientific_fault": {
+        "control": "pitfall_summed_cumulative",
+        "computed_outcome": "fail",
+        "failed_checks": [
+          "variant"
+        ]
+      },
+      "contract_unchanged": true
+    },
+    {
+      "template": "seasonal-rainfall-calibration",
+      "instance": "train-1993-2004--new-2005-2006--all-cells",
+      "spec_version": 4,
+      "fingerprint": "5e788998b0eebb967e2bfaf416628e618376b369438fd83bb6ac45cceeb4ac6f",
+      "representations": [
+        {
+          "case": "zarr2-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        }
+      ],
+      "assessment_files": [
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/seasonal-rainfall-calibration/representation-assessment.json",
+          "sha256": "3166e8d72f6251f93fec7ef3fb2260cac8986e119a971a75450c7777bdf2aa89"
+        },
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/seasonal-rainfall-calibration/scientific-assessment.json",
+          "sha256": "e1a0e71b7a03e5e5286970e73d775dfa8e4ddde1ecd273ac6c7d6a4378132bd5"
+        }
+      ],
+      "computed_correct_outcome": "pass",
+      "mislabelled_arrays_rejected_by_comparison": true,
+      "scientific_fault": {
+        "control": "skipped_cross_validation",
+        "computed_outcome": "fail",
+        "failed_checks": [
+          "probe.held_out_year_isolation",
+          "process.cross_validated"
+        ]
+      },
+      "contract_unchanged": true
+    },
+    {
+      "template": "weeks34-rainfall",
+      "instance": "final-2018-2021--all-cells",
+      "spec_version": 4,
+      "fingerprint": "a1d9574e2497cf06e5aa7f8ea5e3830b0125186fb341b859014eca583403bd22",
+      "representations": [
+        {
+          "case": "zarr2-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        }
+      ],
+      "assessment_files": [
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/weeks34-rainfall/representation-assessment.json",
+          "sha256": "5ead3f1184469c211d2819d736cbd40ef8983cb15071f78051c0841bae5e8b48"
+        },
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/weeks34-rainfall/scientific-assessment.json",
+          "sha256": "84d0332470718381210c4051bc8ca5e582f889ab45f21a5044cb62d164876f6b"
+        }
+      ],
+      "computed_correct_outcome": "pass",
+      "mislabelled_arrays_rejected_by_comparison": true,
+      "scientific_fault": {
+        "control": "uses_later_forecasts",
+        "computed_outcome": "fail",
+        "failed_checks": [
+          "probe.no_future_information"
+        ]
+      },
+      "contract_unchanged": true
+    },
+    {
+      "template": "seasonal-cca-reproduction",
+      "instance": "outer-2005-2019--all-cells",
+      "spec_version": 1,
+      "fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "representations": [
+        {
+          "case": "zarr2-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        }
+      ],
+      "assessment_files": [
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/seasonal-cca-reproduction/representation-assessment.json",
+          "sha256": "0a773b6ea3ebe3ffeb15d72dcb2b5eb9875675f4500c30b9e0a4fcbdc3614417"
+        },
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/seasonal-cca-reproduction/scientific-assessment.json",
+          "sha256": "17822db40d581f2d9f8af32a34cb440d24a44b55433248a70288bd28c8af3a97"
+        }
+      ],
+      "computed_correct_outcome": "pass",
+      "mislabelled_arrays_rejected_by_comparison": true,
+      "scientific_fault": {
+        "control": "full_training",
+        "computed_outcome": "fail",
+        "failed_checks": [
+          "probe.outer_year_isolation",
+          "variant"
+        ]
+      },
+      "contract_unchanged": true
+    },
+    {
+      "template": "rainfall-downscaling",
+      "instance": "train-to-2008--forecast-2009-2012",
+      "spec_version": 2,
+      "fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+      "representations": [
+        {
+          "case": "zarr2-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr2-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-unconsolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-original",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        },
+        {
+          "case": "zarr3-consolidated-reversed",
+          "equivalent": true,
+          "accepted_match": true,
+          "largest_numeric_difference": 0
+        }
+      ],
+      "assessment_files": [
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/rainfall-downscaling/representation-assessment.json",
+          "sha256": "b076b3c955437caf32802af2fc09dd6ed96cb44b86ccc2e54cb98eba59d5c86f"
+        },
+        {
+          "path": "var/review/grader-stress-2026-10-08-v3/rainfall-downscaling/scientific-assessment.json",
+          "sha256": "b899ef82451a0cef749a417cd852c074a8c76d07e843ae9ce43b23ab4a9b5e25"
+        }
+      ],
+      "computed_correct_outcome": "pass",
+      "mislabelled_arrays_rejected_by_comparison": true,
+      "scientific_fault": {
+        "control": "full_training",
+        "computed_outcome": "fail",
+        "failed_checks": [
+          "probe.held_out_year_isolation",
+          "variant"
+        ]
+      },
+      "contract_unchanged": true
+    }
+  ],
+  "completed": true,
+  "summary": {
+    "templates": 5,
+    "legal_representations": 40,
+    "complete_correct_assessments": 5,
+    "scientific_fault_assessments": 5
+  }
+}

@@ -1,0 +1,34 @@
+source_category: paper_inspired_method_adaptation
+sources:
+- id: kharin2017
+  title: A Postprocessing Method for Seasonal Forecasts Using Temporally and Spatially Smoothed Statistics
+  doi: https://doi.org/10.1175/MWR-D-16-0337.1
+  primary_source: https://journals.ametsoc.org/view/journals/mwre/145/9/mwr-d-16-0337.1.xml
+  locators: [Abstract, Introduction seasonal-cycle smoothing discussion]
+  inspection: Primary publisher search returned abstract/method context; original CanSIPS hindcast data not acquired.
+- id: africas2s-source
+  url: https://github.com/ACMAD-Niamey/africas2s
+  revision: 4f8526a32232f9c9af400a01e5a6f103a865c735
+  locators: [src/africas2s/methods/smoothed_regression.py lines1-92]
+- id: chirps3
+  url: https://chc.ucsb.edu/data/chirps3
+  product: CHIRPS v3 final monthly
+  processing: Existing independently audited cosine-weighted Somalia Kenya eastern-Horn region means, true monthly totals recovered from legacy adapter.
+- id: era5-sst
+  url: https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-monthly-means
+  product: Retrospective ERA5 monthly SST means
+  processing: Native retrieval-box cosine-weighted raw west-minus-east SST from previous calendar month only.
+- id: legacy-normalization
+  repository: v4zeek
+  revision: e364ce0ed6cb210b0872c4e35d76ddb329b6dfa5
+  locators: [src/fetch_fixtures.py, archive/legacy-libraries/rosetta/src/rosetta/normalize.py]
+  correction: Undo monthly CHIRPS division by30; no calendar-day multiplication.
+curator_choices:
+- Monthly observed-SST statistical forecasting, explicitly not dynamical hindcast calibration.
+- Three real regional targets with equal region weights; exact boxes inherited from source workflow.
+- Twelve standardized monthly slopes, cyclic quadratic penalty, six fixed lambdas; source Gaussian filtering and physical pooled coefficient are different.
+- Nested expanding WHOLE-year exclusions, production train1993-2019, controller-private2020-2023.
+- Preserve negative deterministic predictions as limitations rather than clipping against contract.
+full_paper_reproduction: false
+dynamical_hindcasts_used: false
+redistribution_status: Internal development only pending source/data-rights review.

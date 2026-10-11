@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "type": "Offline native capability and evaluator preflight; not model attempts",
+  "template": "kenya-forecast-revision",
+  "instance": "service-area--weeks-1-2",
+  "fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851",
+  "checked_at": "2026-10-08T14:58:25.444345+00:00",
+  "passed": true,
+  "images": {
+    "python": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+    "rhiza": "sha256:e00aa260554859887759253ca180db576a9c2e1cfa0d5e014333baa9e57774ec"
+  },
+  "image_selection": "Matched general-dependency Rhiza arm, superseding initial e234 reader-repaired image to avoid dependency confounding.",
+  "public_entrypoints": {
+    "CLI": "python /catalog/skills/weather-skills/deaccumulate/scripts/deaccumulate.py -i INPUT.zarr -o OUTPUT.zarr -v tp",
+    "function": "weather_skills_core.units.deaccumulate_along_step(ds, names=None)",
+    "skill_version": "0.0.2",
+    "core_package_version": "0.1.0",
+    "installed_help": "var/review/breadth-rhiza-preflight/deaccumulate-help.txt"
+  },
+  "scientific_cases": [
+    {
+      "case": "public_synthetic_toy",
+      "passed": true,
+      "stdout": "Synthetic rates (mm/day): [4.0, 6.0, 6.0]\nEnding steps: [datetime.timedelta(seconds=43200), datetime.timedelta(days=1, seconds=43200), datetime.timedelta(days=2, seconds=43200)]\nSynthetic negative-increment clipping: [4.0, 0.0, 4.0]\n"
+    },
+    {
+      "case": "CLI_irregular_intervals",
+      "input_units": "kg m**-2",
+      "maximum_rate_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": "CLI_irregular_intervals",
+      "input_units": "m",
+      "maximum_rate_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": "already_rate_guard",
+      "exit_code": 2,
+      "passed": true
+    },
+    {
+      "case": "genuine_native_input",
+      "variant": "original",
+      "issue": "2026-09-20",
+      "input_dims": {
+        "number": 101,
+        "step": 47,
+        "latitude": 8,
+        "longitude": 7
+      },
+      "input_units": "kg m**-2",
+      "output_units": "mm day-1",
+      "direct_maximum_rate_error": 7.105427357601002e-15,
+      "CLI_maximum_rate_error": 7.105427357601002e-15,
+      "negative_native_increments": 366,
+      "ending_step_labels_preserved": true,
+      "passed": true
+    },
+    {
+      "case": "genuine_native_input",
+      "variant": "original",
+      "issue": "2026-09-27",
+      "input_dims": {
+        "number": 101,
+        "step": 47,
+        "latitude": 8,
+        "longitude": 7
+      },
+      "input_units": "kg m**-2",
+      "output_units": "mm day-1",
+      "direct_maximum_rate_error": 7.105427357601002e-15,
+      "CLI_maximum_rate_error": 7.105427357601002e-15,
+      "negative_native_increments": 386,
+      "ending_step_labels_preserved": true,
+      "passed": true
+    },
+    {
+      "case": "genuine_native_input",
+      "variant": "changed",
+      "issue": "2026-09-20",
+      "input_dims": {
+        "number": 101,
+        "step": 47,
+        "latitude": 8,
+        "longitude": 7
+      },
+      "input_units": "kg m**-2",
+      "output_units": "mm day-1",
+      "direct_maximum_rate_error": 7.105427357601002e-15,
+      "CLI_maximum_rate_error": 7.105427357601002e-15,
+      "negative_native_increments": 139,
+      "ending_step_labels_preserved": true,
+      "passed": true
+    },
+    {
+      "case": "genuine_native_input",
+      "variant": "changed",
+      "issue": "2026-09-27",
+      "input_dims": {
+        "number": 101,
+        "step": 47,
+        "latitude": 8,
+        "longitude": 7
+      },
+      "input_units": "kg m**-2",
+      "output_units": "mm day-1",
+      "direct_maximum_rate_error": 1.4210854715202004e-14,
+      "CLI_maximum_rate_error": 1.4210854715202004e-14,
+      "negative_native_increments": 278,
+      "ending_step_labels_preserved": true,
+      "passed": true
+    }
+  ],
+  "source_scope": "Same frozen ECMWF issues used by Kenya revision and native reconciliation; not independent datasets.",
+  "general_packages_matched": [
+    "numpy",
+    "scipy",
+    "xarray",
+    "netCDF4",
+    "h5py",
+    "h5netcdf",
+    "zarr",
+    "pandas",
+    "scikit-learn",
+    "statsmodels",
+    "pyproj"
+  ],
+  "versions": {
+    "python": {
+      "python": "3.12.14 (main, Sep 19 2026, 01:11:14) [GCC 14.2.0]",
+      "packages": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "xarray": "2026.7.0",
+        "netCDF4": "1.7.4",
+        "h5py": "3.16.0",
+        "h5netcdf": "1.8.1",
+        "zarr": "3.4.0",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "statsmodels": "0.15.0",
+        "pyproj": "3.8.0",
+        "weather-skills-core": null
+      }
+    },
+    "rhiza": {
+      "python": "3.12.14 (main, Sep 19 2026, 01:11:14) [GCC 14.2.0]",
+      "packages": {
+        "numpy": "2.5.3",
+        "scipy": "1.18.1",
+        "xarray": "2026.7.0",
+        "netCDF4": "1.7.4",
+        "h5py": "3.16.0",
+        "h5netcdf": "1.8.1",
+        "zarr": "3.4.0",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "statsmodels": "0.15.0",
+        "pyproj": "3.8.0",
+        "weather-skills-core": "0.1.0"
+      }
+    }
+  },
+  "tool_code_hashes": {
+    "skill_sha256": "47f398926facf0897364c7d142319141314d941413b883da30d61f8274fb409f",
+    "script_sha256": "9bbdaef66b27ecd28964e62e5a51c09dc5b424b2f0fa9d43430068dcf6615431",
+    "core_function_source_sha256": "c1880e326f0452307b28500c341cb1bf35c678ebd35ef9d6ed00cff6b18fe9c9"
+  },
+  "public_guidance": {
+    "API.md": {
+      "sha256": "faf0cf7792d8418ed2424df366d2ce50db44a404b3d1462ff2df77f9c5584203",
+      "bytes": 2276
+    },
+    "synthetic_deaccumulation.py": {
+      "sha256": "206b469195f5a7e6b44c189e35144e2fa918d53b62ced43882a733655c340ec8",
+      "bytes": 1157
+    }
+  },
+  "guide_scope": "Generic public API semantics and synthetic invented-number toy only; no task parameters, regional computation, solver or private answers.",
+  "known_correct_docker_assessment": {
+    "image": "sha256:e00aa260554859887759253ca180db576a9c2e1cfa0d5e014333baa9e57774ec",
+    "outcome": "pass",
+    "computed_outcome": "pass",
+    "advisory_outcome": "unresolved",
+    "checks": {
+      "claim.direction": "pass",
+      "envelope": "pass",
+      "interpretation.consistency_across_artifacts": "unresolved",
+      "interpretation.generalization": "unresolved",
+      "interpretation.source_attribution": "unresolved",
+      "invariant.change_equals_current_minus_previous": "pass",
+      "invariant.regional_change_within_cell_range": "pass",
+      "invariant.weekly_totals_not_negative": "pass",
+      "probe.changed_data": "pass",
+      "probe.replay": "pass",
+      "variant": "pass"
+    },
+    "file": "var/review/breadth-rhiza-preflight/docker-correct.stdout",
+    "sha256": "afec0b32e95cc5c727fc4607f2cccac34074886857a6598b8085bad3e42478fc"
+  },
+  "model_calls": 0,
+  "direct_paid_api_usd": 0,
+  "template_files_modified": false,
+  "old_records_modified": false,
+  "task_dataset_independence": "Kenya revision and native rainfall reconciliation share the same genuine ECMWF inputs; these are different operations on one dataset, not independent data replications.",
+  "interpretation": "Deaccumulation replaces native cumulative-to-rate handling and input guards; region selection, valid-period alignment, ensemble/area aggregation and claims remain agent work. Functional parity does not establish an agent tooling benefit."
+}

@@ -1,0 +1,61 @@
+--- assess.py:before
++++ assess.py:after
+@@ -328,6 +328,13 @@
+         checks["probe.replay"] = problem
+     if "responds_to_inputs" in probes:
+         moved, records, broken = [], {}, None
++        groups = getattr(hooks, "RESPONSE_GROUPS", None)
++        if groups is not None and (not isinstance(groups, dict) or not groups
++                                   or any(not isinstance(name, str) or not name or not isinstance(members, list) or not members
++                                          or any(not isinstance(member, str) or member not in spec["results"] for member in members)
++                                          for name, members in groups.items())):
++            raise ValueError("RESPONSE_GROUPS must map nonempty group names to nonempty lists of declared results")
++        group_changes = {name: [] for name in groups} if groups is not None else None
+         for kind in hooks.RESPONSE_PERTURBATIONS:
+             folder = context.stage(f"changed-{kind}", prepare=lambda folder, kind=kind: hooks.perturb_inputs(folder, context.seed, kind))
+             produced, slim, problem = context.rerun(f"changed-{kind}", folder)
+@@ -335,12 +342,40 @@
+             if problem is not None:
+                 broken = problem
+                 break
+-            if not compare(spec["results"], produced, forecast)[0]:
++            projection = getattr(hooks, "response_results", None)
++            try:
++                before = projection(forecast, original, context.params) if callable(projection) else forecast
++                after = projection(produced, folder, context.params) if callable(projection) else produced
++            except KeyError as missing:
++                broken = blocked("envelope", f"Fails with the envelope: the input-response probe needs result {missing}, which is unusable.")
++                break
++            if callable(projection) and (not isinstance(before, dict) or not before or not isinstance(after, dict)
++                                         or set(before) != set(after) or set(before) - set(spec["results"])):
++                raise ValueError("response_results must return the same nonempty set of declared results before and after an input change")
++            if not compare(spec["results"], after, before)[0]:
+                 moved.append(kind)
++            if groups is not None:
++                for name, members in groups.items():
++                    try:
++                        first = {member: before[member] for member in members}
++                        changed = {member: after[member] for member in members}
++                    except KeyError as missing:
++                        broken = blocked("envelope", f"Fails with the envelope: response group {name} needs result {missing}, which is unusable.")
++                        break
++                    if not compare(spec["results"], changed, first)[0]:
++                        group_changes[name].append(kind)
++                if broken is not None:
++                    break
++        responds = all(group_changes.values()) if group_changes is not None else bool(moved)
++        detail = (("The forecast changes when these inputs change: " + ", ".join(moved) + ".") if moved else
++                  "The forecast does not change when any supplied input changes, so it does not come from the supplied data.")
++        if group_changes is not None:
++            unchanged = [name for name, kinds in group_changes.items() if not kinds]
++            detail = ("Every required forecast group responds to at least one relevant input change." if responds else
++                      "These required forecast groups do not respond to any relevant input change: " + ", ".join(unchanged) + ".")
+         checks["probe.responds_to_inputs"] = broken or outcome(
+-            PASS if moved else FAIL, ("The forecast changes when these inputs change: " + ", ".join(moved) + ".") if moved else
+-            "The forecast does not change when any supplied input changes, so it does not come from the supplied data.",
+-            responds_to=moved, runs=records)
++            PASS if responds else FAIL, detail, responds_to=moved, runs=records,
++            **({"responds_to_groups": group_changes} if group_changes is not None else {}))
+ 
+ 
+ # ---- checks shared by every mode ---------------------------------------------------

@@ -1,0 +1,64 @@
+{
+  "template": "seasonal-objective-consolidation",
+  "genuine_source_hashes_verified": true,
+  "identical_grids_verified": true,
+  "sources": [
+    {
+      "file": "observed-sst.nc",
+      "sha256": "29d46edeed09b857fa34be5c0166e6fbccf8a37d766d446801aca532d33be212",
+      "shape": [
+        3,
+        161,
+        161
+      ],
+      "finite_range_percent": [
+        26.596712112426758,
+        39.55451583862305
+      ],
+      "complete_distribution_cells": 8,
+      "partial_vector_cells": 0
+    },
+    {
+      "file": "forecast-sst.nc",
+      "sha256": "3683486b689f0c6a6523c481fb15f11f0991d215e0dc5d9204e176b9485cbaf6",
+      "shape": [
+        3,
+        161,
+        161
+      ],
+      "finite_range_percent": [
+        7.670919895172119,
+        73.40843963623047
+      ],
+      "complete_distribution_cells": 629,
+      "partial_vector_cells": 0
+    },
+    {
+      "file": "forecast-precip.nc",
+      "sha256": "17f3dd0ca263d667d73f8ba82ac94b10f3336915571a3c736c9e4899ac159ba7",
+      "shape": [
+        3,
+        161,
+        161
+      ],
+      "finite_range_percent": [
+        1.8664352893829346,
+        89.92508697509766
+      ],
+      "complete_distribution_cells": 3035,
+      "partial_vector_cells": 0
+    }
+  ],
+  "grid": {
+    "lat": 161,
+    "lon": 161
+  },
+  "support_histogram": {
+    "0": 22581,
+    "1": 3010,
+    "2": 328,
+    "3": 2
+  },
+  "source_is_local_centre_replication": true,
+  "observed_forecast_skill_not_measurable": true
+}

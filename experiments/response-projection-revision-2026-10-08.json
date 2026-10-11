@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "reason": "Forecast response checks must inspect the scientifically relevant forecast arrays, not audit diagnostics that change independently. Optional projection hook; legacy default comparison remains unchanged.",
+  "before_deciding_sha256": {
+    "assess.py": "8967b8aed5916442a990dbcb4ffdb26b22bcd67d465eafa1c414ab6b04538578",
+    "compare.py": "36d9d1e885b15145a23834717fd8a1f49167b9bf90e7e2823125c9e85963025d",
+    "execute.py": "540488feba7d06bf88b4c1b6c884317d03a71209af7b6a5c94e7dbeebb3b305c",
+    "feedback.py": "e139ed1ab03b74da3c899e8ebd17e64ebede7434100ff8c7c2d4484a4b603b4d",
+    "judge.py": "9d5a30f79978832d1385ffac0eb5349b8c1e7ff26f93a6a5f1c9cdd7cbeb5108",
+    "judge-prompt.md": "44f9427caaca60e990d65e3306886d88862f3b6e51406c6c78495f63107a7a83",
+    "outcomes.py": "4e286ae9bb7be85a5808a736f6c0d5b256a09be8028021901b8f83d212ee6828",
+    "spec.py": "309a4cc139ff9a8a5358144f3f266075037dc0e23ba65385fed6eeca8b71616f",
+    "variant.py": "79bf4cb4b648d432cc98f5a7fa3ef25745fada7d54795b590a30d24c434b0e6b",
+    "rubric.py": "ea9cc01ba96e910e9a33d7fdc702e37cfd4f2fcc6d157b3954a625c5e4b12650",
+    "sources.py": "b213e5a28bf6f4d7e53e02caf56c818678eb5f6c7e3099a147612bf95ff1a78b",
+    "envelope.md": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec"
+  },
+  "legacy_templates": {
+    "kenya-forecast-revision": {
+      "spec_version": 3,
+      "before_fingerprint": "51b8673acc949e4322eb83ab01d194e08b2b3a55204f8d6aef9bc7d304bdc9ad",
+      "after_fingerprint": "d9370205b1493832359caff5544c55fee54f2d6495a4a4c37487b018d47a9851",
+      "intermediate_fingerprints": [
+        "b627869cd1811544b99aaf6c3ea02a553a3c5cdd9f0615f2ffcc8c58928d5934"
+      ]
+    },
+    "seasonal-rainfall-calibration": {
+      "spec_version": 4,
+      "before_fingerprint": "5e788998b0eebb967e2bfaf416628e618376b369438fd83bb6ac45cceeb4ac6f",
+      "after_fingerprint": "93b76c9e582f7e42bc73183552e9e969b4442f153d4e0b72e0b73738dd21a6ee",
+      "intermediate_fingerprints": [
+        "539476dcdc82568bdf2c08c6262b12a1440df04ebc3fcdd93297c9f5fe4b3ab9"
+      ]
+    },
+    "weeks34-rainfall": {
+      "spec_version": 4,
+      "before_fingerprint": "a1d9574e2497cf06e5aa7f8ea5e3830b0125186fb341b859014eca583403bd22",
+      "after_fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+      "intermediate_fingerprints": [
+        "91c7cebe3a6fc632778be2a852645d4329357659e70ae68ee16d9beaee3421ab"
+      ]
+    },
+    "seasonal-cca-reproduction": {
+      "spec_version": 1,
+      "before_fingerprint": "9c4d8279780d17c07f3ed7bf8312c004cb6ff1e44384dca8eb5840c788e2d8b3",
+      "after_fingerprint": "ee679a3b68725486fc9fd7fa2826a33be156b17a485d4568d90f1abed05ae514",
+      "intermediate_fingerprints": [
+        "aaae6cd49b507bea87474c98a03ae990cebdee9187c9a476f6a8a0a53315628e"
+      ]
+    },
+    "rainfall-downscaling": {
+      "spec_version": 2,
+      "before_fingerprint": "beac52cc3192b3563fecf49cc4234602c0ee552d817f981443de79b6afe488c1",
+      "after_fingerprint": "26aa0881c11621c0d80e26ba9ba97833464e91724db4451f3e9f7cf7d40a2377",
+      "intermediate_fingerprints": [
+        "f0412578ce70c6246face1da88ab5114d148d7fe3fc98eaefb32ebca7c1d9e65"
+      ]
+    },
+    "native-rainfall-reconciliation": {
+      "spec_version": 1,
+      "before_fingerprint": "8fa15410fc77b64ae1b57ac5d6212c3f12559f697ac52dda7306f3744960d417",
+      "intermediate_fingerprints": [],
+      "after_fingerprint": "3d29f5d5c44fe0fd3acadcbc54dcdd6057f5a0248aa1be9fb3b43c4a7b6b069f"
+    }
+  },
+  "before_grader_stress": "experiments/grader-stress-2026-10-08.json",
+  "new_hook": "response_results(results, inputs, params)",
+  "after_deciding_sha256": {
+    "assess.py": "310292bb8583fcd12a83ef48b46761bd55f4bab7f4a1aec0b72555f53651d0e7",
+    "compare.py": "36d9d1e885b15145a23834717fd8a1f49167b9bf90e7e2823125c9e85963025d",
+    "execute.py": "540488feba7d06bf88b4c1b6c884317d03a71209af7b6a5c94e7dbeebb3b305c",
+    "feedback.py": "e139ed1ab03b74da3c899e8ebd17e64ebede7434100ff8c7c2d4484a4b603b4d",
+    "judge.py": "9d5a30f79978832d1385ffac0eb5349b8c1e7ff26f93a6a5f1c9cdd7cbeb5108",
+    "judge-prompt.md": "44f9427caaca60e990d65e3306886d88862f3b6e51406c6c78495f63107a7a83",
+    "outcomes.py": "4e286ae9bb7be85a5808a736f6c0d5b256a09be8028021901b8f83d212ee6828",
+    "spec.py": "309a4cc139ff9a8a5358144f3f266075037dc0e23ba65385fed6eeca8b71616f",
+    "variant.py": "79bf4cb4b648d432cc98f5a7fa3ef25745fada7d54795b590a30d24c434b0e6b",
+    "rubric.py": "ea9cc01ba96e910e9a33d7fdc702e37cfd4f2fcc6d157b3954a625c5e4b12650",
+    "sources.py": "b213e5a28bf6f4d7e53e02caf56c818678eb5f6c7e3099a147612bf95ff1a78b",
+    "envelope.md": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec"
+  },
+  "changed_modules": [
+    "assess.py"
+  ],
+  "legacy_default": "Every result is compared exactly as before when the optional hook is absent. Legacy attempts are not reassessed or relabelled as current.",
+  "regression_test": "tests/test_forecast_response_projection.py",
+  "new_controls": "experiments/response-projection-controls-2026-10-08.json",
+  "refinements": [
+    {
+      "reason": "Full audit controls proved cached hindcasts or cached production forecasts pass when the other deliverable responds. Require each declared response group to change for at least one allowed intervention.",
+      "before_deciding_sha256": {
+        "assess.py": "876b52270f41b8a18c520cda28b3d761c43b2779d2388f897f8d2ce462c5e637",
+        "compare.py": "36d9d1e885b15145a23834717fd8a1f49167b9bf90e7e2823125c9e85963025d",
+        "execute.py": "540488feba7d06bf88b4c1b6c884317d03a71209af7b6a5c94e7dbeebb3b305c",
+        "feedback.py": "e139ed1ab03b74da3c899e8ebd17e64ebede7434100ff8c7c2d4484a4b603b4d",
+        "judge.py": "9d5a30f79978832d1385ffac0eb5349b8c1e7ff26f93a6a5f1c9cdd7cbeb5108",
+        "judge-prompt.md": "44f9427caaca60e990d65e3306886d88862f3b6e51406c6c78495f63107a7a83",
+        "outcomes.py": "4e286ae9bb7be85a5808a736f6c0d5b256a09be8028021901b8f83d212ee6828",
+        "spec.py": "309a4cc139ff9a8a5358144f3f266075037dc0e23ba65385fed6eeca8b71616f",
+        "variant.py": "79bf4cb4b648d432cc98f5a7fa3ef25745fada7d54795b590a30d24c434b0e6b",
+        "rubric.py": "ea9cc01ba96e910e9a33d7fdc702e37cfd4f2fcc6d157b3954a625c5e4b12650",
+        "sources.py": "b213e5a28bf6f4d7e53e02caf56c818678eb5f6c7e3099a147612bf95ff1a78b",
+        "envelope.md": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec"
+      },
+      "partial_cache_evidence": "var/review/audit-partial-cache-before-groups.json",
+      "after_deciding_sha256": {
+        "assess.py": "310292bb8583fcd12a83ef48b46761bd55f4bab7f4a1aec0b72555f53651d0e7",
+        "compare.py": "36d9d1e885b15145a23834717fd8a1f49167b9bf90e7e2823125c9e85963025d",
+        "execute.py": "540488feba7d06bf88b4c1b6c884317d03a71209af7b6a5c94e7dbeebb3b305c",
+        "feedback.py": "e139ed1ab03b74da3c899e8ebd17e64ebede7434100ff8c7c2d4484a4b603b4d",
+        "judge.py": "9d5a30f79978832d1385ffac0eb5349b8c1e7ff26f93a6a5f1c9cdd7cbeb5108",
+        "judge-prompt.md": "44f9427caaca60e990d65e3306886d88862f3b6e51406c6c78495f63107a7a83",
+        "outcomes.py": "4e286ae9bb7be85a5808a736f6c0d5b256a09be8028021901b8f83d212ee6828",
+        "spec.py": "309a4cc139ff9a8a5358144f3f266075037dc0e23ba65385fed6eeca8b71616f",
+        "variant.py": "79bf4cb4b648d432cc98f5a7fa3ef25745fada7d54795b590a30d24c434b0e6b",
+        "rubric.py": "ea9cc01ba96e910e9a33d7fdc702e37cfd4f2fcc6d157b3954a625c5e4b12650",
+        "sources.py": "b213e5a28bf6f4d7e53e02caf56c818678eb5f6c7e3099a147612bf95ff1a78b",
+        "envelope.md": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec"
+      },
+      "groups": "RESPONSE_GROUPS maps deliverables to array-name lists. Every group must respond to at least one allowed perturbation."
+    }
+  ],
+  "before_groups_certifications": "var/review/certifications-before-response-groups"
+}

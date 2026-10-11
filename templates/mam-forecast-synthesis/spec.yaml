@@ -1,0 +1,38 @@
+schema_version: 1
+template: mam-forecast-synthesis
+spec_version: 1
+version_history:
+  - {version: 1, change: Fixed-training blind multiyear free-method seasonal outlook synthesis.}
+title: Blind multiyear MAM forecast synthesis
+mode: outcome
+reference_match: false
+status: development; not reviewed by a domain scientist
+params: [training_years, forecast_years, target_latitude, target_longitude]
+question: produce_forecast
+results:
+  forecast_year: {kind: coordinate, tolerance: {exact: true}}
+  tercile: {kind: coordinate, tolerance: {exact: true}}
+  lat: {kind: coordinate, tolerance: {exact: true}}
+  lon: {kind: coordinate, tolerance: {exact: true}}
+  forecast_probability:
+    dims: [forecast_year, tercile, lat, lon]
+    tolerance: {precision: float32, operations: 8, magnitude: 1}
+invariants: [probabilities_valid]
+probes: [replay, no_future_forecasts]
+claims: {}
+skill:
+  ranking: mean annual RPS on blind years; lower is better; validity separate from performance target
+  splits: [blind_years]
+  baselines: [expert, climatology, raw_models]
+  caveat: Retrospective final-vintage historical forecasts, fixed calibration, 12 dependent years; no real-time operational-vintage claim.
+interpretation: [statistical_support, consistency_across_artifacts]
+assessment_policy:
+  completion: &gate [envelope, coverage, invariant.probabilities_valid, probe.replay, probe.no_future_forecasts]
+  ranking: *gate
+judge_questions:
+  statistical_support:
+    requirement: Claims about skill, statistical significance or uncertainty must distinguish training diagnostics from blind verification and respect dependence among neighbouring cells and the small number of years. Silence passes.
+    silence: passes
+  consistency_across_artifacts:
+    requirement: The report, answer and code agree about the method, training years and data used. A contradiction is a violation; silence about unavailable verification passes.
+    silence: passes

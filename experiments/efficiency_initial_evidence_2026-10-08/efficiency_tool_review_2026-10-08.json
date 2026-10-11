@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "scope": "Assigned guidedtool compliance separatefromscientificvalidity; originalverdicts preserved.",
+  "runs": {
+    "20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1": {
+      "system": "efficiency-luna-accord-guided-1",
+      "assigned_arm": "guided_accord",
+      "assigned_condition_retained": true,
+      "review_status": "frozen_text_and_original_replays_reviewed",
+      "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+      "evidence": {
+        "run.json": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/run.json",
+          "sha256": "87a26cf011b04eeb2fba1d75365e0bfcc35f22be93f7882269836e7563e35c0a"
+        },
+        "assessment.json": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/assessment.json",
+          "sha256": "2382d38903602d6ab6f75a0ebaa0a331429b2b3b3a505737e6e72109646f946c"
+        },
+        "artifacts.json": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/artifacts.json",
+          "sha256": "96241f31ef7e6f21e923457560dc21214fb6343bcb3bbd8877c7b8a2b05a26d5"
+        },
+        "system.json": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/system.json",
+          "sha256": "e098eebe7cf1c5332c23f9b99b925cf75842a020d98aa4490084b07270ea363e"
+        },
+        "request.json": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/request.json",
+          "sha256": "539bdfb58e9228a141ef7581ae001fe5d47c4305e0f1820246b0093efae07ac4"
+        },
+        "logs/events.jsonl": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/logs/events.jsonl",
+          "sha256": "ebfa4a716bdabf539e2332fcb54a52faded272afc081b061aa8d2b3cc20e8208"
+        },
+        "frozen/run.py": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/run.py",
+          "sha256": "5debfd612883c5793f75e3b476015a85d830d80032812ec514268a77fa9e3d05"
+        },
+        "frozen/report.md": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/report.md",
+          "sha256": "461d5f3e8efe1060512c4828454d2d6e862ca85f8f0fbe43c4086fcf6641ea69"
+        },
+        "frozen/answer.json": {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/answer.json",
+          "sha256": "69be931f7353d8d3c8e3a4013db9fd6cba4ea2481dbcd7b8893fffc967ca622d"
+        }
+      },
+      "condition_compliance": {
+        "state": "pass",
+        "reason": "Actual native outputs feed all required model seasonal means and calibrated per-model/combined probabilities; no hand-calculated probability replacement."
+      },
+      "no_known_grader_runtime_issue": false,
+      "grader_caveat": "Held-out intervention promotes every monthly observation tofloat64; submissions accumulate originalnativefloat32 first, so unchangedtrainingyears change rounding. Original failcannotaloneestablish targetleakage. Independentreviewpending.",
+      "code_pointers": [
+        {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/frozen/run.py",
+          "lines": [
+            29,
+            36,
+            38,
+            44,
+            46,
+            47,
+            68,
+            69,
+            73,
+            77,
+            79,
+            80,
+            99,
+            109
+          ]
+        },
+        {
+          "path": "var/template-runs/20261008T141649-mam-multimodel-outlook-kenya-interior--mam-2016-L1-efficiency-luna-accord-guided-1-abf7a1/logs/events.jsonl",
+          "lines": [
+            19,
+            20,
+            22,
+            23,
+            25,
+            26,
+            28,
+            29,
+            37,
+            38
+          ]
+        }
+      ],
+      "callflow": [
+        "Retrieve catalogue and all hash-verified raw resources on every run (run.py12\u201324).",
+        "Each of4nativecentres promoted tofloat64, normalized using leads2,3,4/MAM and unitsm/s\u2192mm/day\u2192seasonalmm (29\u201338).",
+        "Returned seasonalmemberfields are aligned, splitintotraining/new pairs; their membermeans are submitted (39\u201348,100,102).",
+        "Native calibrate(pairs,observed,method=ereg,cv=loyo) and calibrate(...forecast_year=2016) retain unequalmembers/defaultWilks (68\u201369).",
+        "Native per_model and combined probabilities are transposed/labelled then submitted directly; native hindcast probabilities feed RPS/RPSS (71\u2013108)."
+      ],
+      "native_parameters": {
+        "normalize": {
+          "dtype_before_call": "float64",
+          "native_variable": "tprate",
+          "native_units": "m s-1",
+          "target_rate_units": "mm/day",
+          "leadtime_month": [
+            2,
+            3,
+            4
+          ],
+          "year_index": true
+        },
+        "calibrate": {
+          "method": "ereg",
+          "predictive_variance": "public default Wilks; no override",
+          "cv": "loyo",
+          "forecast_year": 2016,
+          "return_components": true,
+          "combination": "native equal model",
+          "members": [
+            25,
+            40,
+            28,
+            31
+          ]
+        }
+      },
+      "package_call_counts": {
+        "counting_method": "Deterministic codepath+originalexecutetrace counts, notinstrumented dynamiccounters; excludes internal regressionfits.",
+        "per_successful_own_command": {
+          "normalize": 4,
+          "calibrate": 2
+        },
+        "synthetic_smoke_agent_phase": {
+          "normalize": 1,
+          "calibrate": 2
+        },
+        "agent_phase_realdata": {
+          "normalize": 17,
+          "calibrate": 8,
+          "explanation": "Five run.py invocations: firstnormalizesonecentrethenerrorsonrename; following4normalizeseach4andcalibrate2, twoofthoseerrorlaterinRPS. Final2complete."
+        },
+        "controller_original_replays": {
+          "invocations": 3,
+          "normalize": 12,
+          "calibrate": 6,
+          "source": "All3originalreplays exit0 and runfrozencode; normalreplaypass."
+        }
+      },
+      "scientific_completion": {
+        "computed": "fail",
+        "overall": "fail",
+        "replay": "pass",
+        "failed_checks": [
+          "probe.held_out_year_isolation"
+        ],
+        "nearest_reading": {
+          "conventions": {
+            "integration": "calendar",
+            "thresholds": "fold_only",
+            "weighting": "equal_models"
+          },
+          "pitfalls": [],
+          "results_agreeing": [
+            "cv_rps_climatology",
+            "lat",
+            "lon",
+            "model",
+            "new_model_mean_mm",
+            "new_year",
+            "observed_category",
+            "tercile",
+            "train_model_mean_mm",
+            "year"
+          ],
+          "results_differing": {
+            "train_observed_mm": 2.2891265643920633e-05,
+            "model_hindcast_probability": 5.378225054197827e-08,
+            "model_forecast_probability": 3.346965760098186e-08,
+            "hindcast_probability": 4.707952439009233e-08,
+            "forecast_probability": 2.9733601025760947e-08,
+            "cv_rps": 1.1910380459667635e-09,
+            "cv_rpss": 2.622817851793968e-09
+          }
+        },
+        "precision_explanation": "CHIRPS montharrays summed beforeastypefloat64 (56\u201365), changing seasonalobservations by2.289e-5mm and probabilities by5.38e-8; numericalreference contractrequiresfloat64errorbounds."
+      },
+      "review_actions": {
+        "model_calls": 0,
+        "scientific_binary_io": false,
+        "attempt_modified": false,
+        "instrumented_reruns": 0
+      }
+    }
+  }
+}

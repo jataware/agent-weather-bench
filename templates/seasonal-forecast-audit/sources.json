@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "source_snapshot": "var/private/templates/seasonal-cca-reproduction",
+  "source_weather_is_synthetic": false,
+  "scientific_approval": "pending",
+  "redistribution_approval": "pending",
+  "files": [
+    {
+      "file": "agent-inputs/predictors.nc",
+      "sha256": "2ad54177fd756fa935dc0210c6f397ed17890480479984b0ed934b40ee4c8492",
+      "bytes": 16000,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/source-manifest.json",
+      "sha256": "797e5dfacfdbdb014dd499661c9eee4752d7954dd305c1fe67b78d41dab4664a",
+      "bytes": 125,
+      "visibility": "agent"
+    },
+    {
+      "file": "agent-inputs/targets.nc",
+      "sha256": "2998b516d54be49ba0cdeedab0f14ff3f94a09c75345d04b1a1d27f34069710a",
+      "bytes": 11384,
+      "visibility": "agent"
+    }
+  ]
+}

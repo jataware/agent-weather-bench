@@ -1,0 +1,627 @@
+{
+  "plan_sha256": "a988c3acd6fb89c99452d7a76c9c11186dbdf92b8f19a318d57d8b6b88c06400",
+  "rows": [
+    {
+      "method": "raw",
+      "split": "development",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/raw/development-evaluation.json",
+      "evaluation_sha256": "52f9849e6e37c99c0b82addb1829fb4728dec508abcfd88f0ebfbfda9a172662",
+      "metrics": {
+        "rmse_mm": 14.68091834738004,
+        "raw_model_rmse_mm": 14.68091834738004,
+        "climatology_rmse_mm": 11.931481472380153,
+        "skill_vs_raw_model": 0.0,
+        "skill_vs_climatology": -0.23043549800286578,
+        "issues": 157,
+        "cells": 9,
+        "yearwise": {
+          "2012": {
+            "rmse_mm": 13.056375444717757,
+            "raw_model_rmse_mm": 13.056375444717757,
+            "issues": 53
+          },
+          "2013": {
+            "rmse_mm": 15.813794414519444,
+            "raw_model_rmse_mm": 15.813794414519444,
+            "issues": 52
+          },
+          "2014": {
+            "rmse_mm": 15.063518966036684,
+            "raw_model_rmse_mm": 15.063518966036684,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "raw",
+      "split": "final",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/raw/final-evaluation.json",
+      "evaluation_sha256": "ff6bcc14af3d23616e8204fab173e562b9e0d280b74a6f2074237518cea87c99",
+      "metrics": {
+        "rmse_mm": 14.895607825286145,
+        "raw_model_rmse_mm": 14.895607825286145,
+        "climatology_rmse_mm": 13.179729230019335,
+        "skill_vs_raw_model": 0.0,
+        "skill_vs_climatology": -0.13019073194300312,
+        "issues": 359,
+        "cells": 9,
+        "yearwise": {
+          "2015": {
+            "rmse_mm": 13.842437913327922,
+            "raw_model_rmse_mm": 13.842437913327922,
+            "issues": 52
+          },
+          "2016": {
+            "rmse_mm": 16.22056455958999,
+            "raw_model_rmse_mm": 16.22056455958999,
+            "issues": 52
+          },
+          "2017": {
+            "rmse_mm": 14.508063959798942,
+            "raw_model_rmse_mm": 14.508063959798942,
+            "issues": 47
+          },
+          "2018": {
+            "rmse_mm": 15.811896387372647,
+            "raw_model_rmse_mm": 15.811896387372647,
+            "issues": 52
+          },
+          "2019": {
+            "rmse_mm": 16.586191646414097,
+            "raw_model_rmse_mm": 16.586191646414097,
+            "issues": 52
+          },
+          "2020": {
+            "rmse_mm": 11.629168598111214,
+            "raw_model_rmse_mm": 11.629168598111214,
+            "issues": 52
+          },
+          "2021": {
+            "rmse_mm": 15.049888006691774,
+            "raw_model_rmse_mm": 15.049888006691774,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "monthly_climatology",
+      "split": "development",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/monthly_climatology/development-evaluation.json",
+      "evaluation_sha256": "468f460731eb51289d68a961e31a60a1757617f3cdeed4018fa5c235b7478fd6",
+      "metrics": {
+        "rmse_mm": 11.931481472380153,
+        "raw_model_rmse_mm": 14.68091834738004,
+        "climatology_rmse_mm": 11.931481472380153,
+        "skill_vs_raw_model": 0.18727962447189495,
+        "skill_vs_climatology": 0.0,
+        "issues": 157,
+        "cells": 9,
+        "yearwise": {
+          "2012": {
+            "rmse_mm": 9.694969315080915,
+            "raw_model_rmse_mm": 13.056375444717757,
+            "issues": 53
+          },
+          "2013": {
+            "rmse_mm": 14.358684329003713,
+            "raw_model_rmse_mm": 15.813794414519444,
+            "issues": 52
+          },
+          "2014": {
+            "rmse_mm": 11.306929516166505,
+            "raw_model_rmse_mm": 15.063518966036684,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "monthly_climatology",
+      "split": "final",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/monthly_climatology/final-evaluation.json",
+      "evaluation_sha256": "0c49bf539c310a0f6072b94af016fcc0616b9b3a83ecd16086528ef36d4e04fc",
+      "metrics": {
+        "rmse_mm": 13.179729230019335,
+        "raw_model_rmse_mm": 14.895607825286145,
+        "climatology_rmse_mm": 13.179729230019335,
+        "skill_vs_raw_model": 0.11519359366819582,
+        "skill_vs_climatology": 0.0,
+        "issues": 359,
+        "cells": 9,
+        "yearwise": {
+          "2015": {
+            "rmse_mm": 12.672840048528807,
+            "raw_model_rmse_mm": 13.842437913327922,
+            "issues": 52
+          },
+          "2016": {
+            "rmse_mm": 11.909734857066292,
+            "raw_model_rmse_mm": 16.22056455958999,
+            "issues": 52
+          },
+          "2017": {
+            "rmse_mm": 10.984245857911676,
+            "raw_model_rmse_mm": 14.508063959798942,
+            "issues": 47
+          },
+          "2018": {
+            "rmse_mm": 11.969947200393335,
+            "raw_model_rmse_mm": 15.811896387372647,
+            "issues": 52
+          },
+          "2019": {
+            "rmse_mm": 17.675298698156475,
+            "raw_model_rmse_mm": 16.586191646414097,
+            "issues": 52
+          },
+          "2020": {
+            "rmse_mm": 13.573109666968836,
+            "raw_model_rmse_mm": 11.629168598111214,
+            "issues": 52
+          },
+          "2021": {
+            "rmse_mm": 12.157889607695717,
+            "raw_model_rmse_mm": 15.049888006691774,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "monthly_static",
+      "split": "development",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/monthly_static/development-evaluation.json",
+      "evaluation_sha256": "9323df14ffc23c302c260c67ac381c5bed12326d6e777374e9530dcc589447ef",
+      "metrics": {
+        "rmse_mm": 12.541997804120475,
+        "raw_model_rmse_mm": 14.68091834738004,
+        "climatology_rmse_mm": 11.931481472380153,
+        "skill_vs_raw_model": 0.14569392000203285,
+        "skill_vs_climatology": -0.051168526989174845,
+        "issues": 157,
+        "cells": 9,
+        "yearwise": {
+          "2012": {
+            "rmse_mm": 10.131983391948658,
+            "raw_model_rmse_mm": 13.056375444717757,
+            "issues": 53
+          },
+          "2013": {
+            "rmse_mm": 14.489886762617992,
+            "raw_model_rmse_mm": 15.813794414519444,
+            "issues": 52
+          },
+          "2014": {
+            "rmse_mm": 12.662625281218213,
+            "raw_model_rmse_mm": 15.063518966036684,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "monthly_static",
+      "split": "final",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/monthly_static/final-evaluation.json",
+      "evaluation_sha256": "ce3c2e8b21d5e5a3322300bef497caff61b7fb591e2b720dd8ec83379000f594",
+      "metrics": {
+        "rmse_mm": 13.889345946880727,
+        "raw_model_rmse_mm": 14.895607825286145,
+        "climatology_rmse_mm": 13.179729230019335,
+        "skill_vs_raw_model": 0.0675542676880383,
+        "skill_vs_climatology": -0.05384152469878556,
+        "issues": 359,
+        "cells": 9,
+        "yearwise": {
+          "2015": {
+            "rmse_mm": 13.320119007113963,
+            "raw_model_rmse_mm": 13.842437913327922,
+            "issues": 52
+          },
+          "2016": {
+            "rmse_mm": 14.52915445818804,
+            "raw_model_rmse_mm": 16.22056455958999,
+            "issues": 52
+          },
+          "2017": {
+            "rmse_mm": 11.894573402176542,
+            "raw_model_rmse_mm": 14.508063959798942,
+            "issues": 47
+          },
+          "2018": {
+            "rmse_mm": 13.420556607490601,
+            "raw_model_rmse_mm": 15.811896387372647,
+            "issues": 52
+          },
+          "2019": {
+            "rmse_mm": 18.12770118924149,
+            "raw_model_rmse_mm": 16.586191646414097,
+            "issues": 52
+          },
+          "2020": {
+            "rmse_mm": 12.627763664616943,
+            "raw_model_rmse_mm": 11.629168598111214,
+            "issues": 52
+          },
+          "2021": {
+            "rmse_mm": 12.13523582546705,
+            "raw_model_rmse_mm": 15.049888006691774,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "expanding_shrinkage",
+      "split": "development",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/expanding_shrinkage/development-evaluation.json",
+      "evaluation_sha256": "b5a1e5a8e917750d26d6b298a72636ebc2ffc8008c3b6163f868e786bb1b5ab5",
+      "metrics": {
+        "rmse_mm": 12.605532361352946,
+        "raw_model_rmse_mm": 14.68091834738004,
+        "climatology_rmse_mm": 11.931481472380153,
+        "skill_vs_raw_model": 0.1413662236189378,
+        "skill_vs_climatology": -0.056493478243513584,
+        "issues": 157,
+        "cells": 9,
+        "yearwise": {
+          "2012": {
+            "rmse_mm": 10.366818565408444,
+            "raw_model_rmse_mm": 13.056375444717757,
+            "issues": 53
+          },
+          "2013": {
+            "rmse_mm": 14.48609284841782,
+            "raw_model_rmse_mm": 15.813794414519444,
+            "issues": 52
+          },
+          "2014": {
+            "rmse_mm": 12.66370937513894,
+            "raw_model_rmse_mm": 15.063518966036684,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "expanding_shrinkage",
+      "split": "final",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/expanding_shrinkage/final-evaluation.json",
+      "evaluation_sha256": "4757af239fd109638fa42ea54c93a9e7afe02b9df58772ad6033d5e57d918993",
+      "metrics": {
+        "rmse_mm": 13.825021090642606,
+        "raw_model_rmse_mm": 14.895607825286145,
+        "climatology_rmse_mm": 13.179729230019335,
+        "skill_vs_raw_model": 0.071872645091136,
+        "skill_vs_climatology": -0.04896093458077244,
+        "issues": 359,
+        "cells": 9,
+        "yearwise": {
+          "2015": {
+            "rmse_mm": 13.148548711770689,
+            "raw_model_rmse_mm": 13.842437913327922,
+            "issues": 52
+          },
+          "2016": {
+            "rmse_mm": 14.580405597426987,
+            "raw_model_rmse_mm": 16.22056455958999,
+            "issues": 52
+          },
+          "2017": {
+            "rmse_mm": 12.187573442711766,
+            "raw_model_rmse_mm": 14.508063959798942,
+            "issues": 47
+          },
+          "2018": {
+            "rmse_mm": 13.407893374121924,
+            "raw_model_rmse_mm": 15.811896387372647,
+            "issues": 52
+          },
+          "2019": {
+            "rmse_mm": 17.88783560727993,
+            "raw_model_rmse_mm": 16.586191646414097,
+            "issues": 52
+          },
+          "2020": {
+            "rmse_mm": 12.10196203827266,
+            "raw_model_rmse_mm": 11.629168598111214,
+            "issues": 52
+          },
+          "2021": {
+            "rmse_mm": 12.3939338127004,
+            "raw_model_rmse_mm": 15.049888006691774,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "rolling_seasonal_bias",
+      "split": "development",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/rolling_seasonal_bias/development-evaluation.json",
+      "evaluation_sha256": "9e252a349ba639d41d0c7590b11d920731a99c969e00efe478ce20b6dc90c53e",
+      "metrics": {
+        "rmse_mm": 12.953094380545753,
+        "raw_model_rmse_mm": 14.68091834738004,
+        "climatology_rmse_mm": 11.931481472380153,
+        "skill_vs_raw_model": 0.11769181776987636,
+        "skill_vs_climatology": -0.08562330759432535,
+        "issues": 157,
+        "cells": 9,
+        "yearwise": {
+          "2012": {
+            "rmse_mm": 11.645118569789721,
+            "raw_model_rmse_mm": 13.056375444717757,
+            "issues": 53
+          },
+          "2013": {
+            "rmse_mm": 14.405530030378753,
+            "raw_model_rmse_mm": 15.813794414519444,
+            "issues": 52
+          },
+          "2014": {
+            "rmse_mm": 12.68221622410858,
+            "raw_model_rmse_mm": 15.063518966036684,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "rolling_seasonal_bias",
+      "split": "final",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/rolling_seasonal_bias/final-evaluation.json",
+      "evaluation_sha256": "d88069c2b474447332bbdca05690e097daef6dc04c675f7205ac567f1dfc4d68",
+      "metrics": {
+        "rmse_mm": 14.233150914903382,
+        "raw_model_rmse_mm": 14.895607825286145,
+        "climatology_rmse_mm": 13.179729230019335,
+        "skill_vs_raw_model": 0.0444733050274192,
+        "skill_vs_climatology": -0.07992741478213983,
+        "issues": 359,
+        "cells": 9,
+        "yearwise": {
+          "2015": {
+            "rmse_mm": 12.956903206429656,
+            "raw_model_rmse_mm": 13.842437913327922,
+            "issues": 52
+          },
+          "2016": {
+            "rmse_mm": 14.918709941358575,
+            "raw_model_rmse_mm": 16.22056455958999,
+            "issues": 52
+          },
+          "2017": {
+            "rmse_mm": 13.621415852656284,
+            "raw_model_rmse_mm": 14.508063959798942,
+            "issues": 47
+          },
+          "2018": {
+            "rmse_mm": 13.896903248322264,
+            "raw_model_rmse_mm": 15.811896387372647,
+            "issues": 52
+          },
+          "2019": {
+            "rmse_mm": 17.543777121107535,
+            "raw_model_rmse_mm": 16.586191646414097,
+            "issues": 52
+          },
+          "2020": {
+            "rmse_mm": 11.106403013615774,
+            "raw_model_rmse_mm": 11.629168598111214,
+            "issues": 52
+          },
+          "2021": {
+            "rmse_mm": 14.703306768115093,
+            "raw_model_rmse_mm": 15.049888006691774,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "adaptive_ridge",
+      "split": "development",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/adaptive_ridge/development-evaluation.json",
+      "evaluation_sha256": "b33dc88adcf0b87b5bbac37fc3ff998dc928cb91650550e32709d82e42c19993",
+      "metrics": {
+        "rmse_mm": 12.299072132415704,
+        "raw_model_rmse_mm": 14.68091834738004,
+        "climatology_rmse_mm": 11.931481472380153,
+        "skill_vs_raw_model": 0.1622409551368018,
+        "skill_vs_climatology": -0.03080846757265454,
+        "issues": 157,
+        "cells": 9,
+        "yearwise": {
+          "2012": {
+            "rmse_mm": 10.718179666306908,
+            "raw_model_rmse_mm": 13.056375444717757,
+            "issues": 53
+          },
+          "2013": {
+            "rmse_mm": 14.204409939934784,
+            "raw_model_rmse_mm": 15.813794414519444,
+            "issues": 52
+          },
+          "2014": {
+            "rmse_mm": 11.741237338456719,
+            "raw_model_rmse_mm": 15.063518966036684,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "adaptive_ridge",
+      "split": "final",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/adaptive_ridge/final-evaluation.json",
+      "evaluation_sha256": "cc5ece1c50a68699cca35879203e05e9bc45dfe97fd5688ef2ded3da3aa93786",
+      "metrics": {
+        "rmse_mm": 13.592272300920747,
+        "raw_model_rmse_mm": 14.895607825286145,
+        "climatology_rmse_mm": 13.179729230019335,
+        "skill_vs_raw_model": 0.08749797521876956,
+        "skill_vs_climatology": -0.03130133128697121,
+        "issues": 359,
+        "cells": 9,
+        "yearwise": {
+          "2015": {
+            "rmse_mm": 11.530245327087027,
+            "raw_model_rmse_mm": 13.842437913327922,
+            "issues": 52
+          },
+          "2016": {
+            "rmse_mm": 13.494166820835547,
+            "raw_model_rmse_mm": 16.22056455958999,
+            "issues": 52
+          },
+          "2017": {
+            "rmse_mm": 13.309408536610361,
+            "raw_model_rmse_mm": 14.508063959798942,
+            "issues": 47
+          },
+          "2018": {
+            "rmse_mm": 12.75974562412384,
+            "raw_model_rmse_mm": 15.811896387372647,
+            "issues": 52
+          },
+          "2019": {
+            "rmse_mm": 17.52960276070564,
+            "raw_model_rmse_mm": 16.586191646414097,
+            "issues": 52
+          },
+          "2020": {
+            "rmse_mm": 11.929497299132132,
+            "raw_model_rmse_mm": 11.629168598111214,
+            "issues": 52
+          },
+          "2021": {
+            "rmse_mm": 13.70864479656853,
+            "raw_model_rmse_mm": 15.049888006691774,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "adaptive_ensemble",
+      "split": "development",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/adaptive_ensemble/development-evaluation.json",
+      "evaluation_sha256": "69555f0f6fae4c21c01810cff30a01254f88bdc13939ff1abcdac0885a2f0504",
+      "metrics": {
+        "rmse_mm": 12.361653011442765,
+        "raw_model_rmse_mm": 14.68091834738004,
+        "climatology_rmse_mm": 11.931481472380153,
+        "skill_vs_raw_model": 0.15797821914534182,
+        "skill_vs_climatology": -0.036053489255161164,
+        "issues": 157,
+        "cells": 9,
+        "yearwise": {
+          "2012": {
+            "rmse_mm": 10.534935963357556,
+            "raw_model_rmse_mm": 13.056375444717757,
+            "issues": 53
+          },
+          "2013": {
+            "rmse_mm": 14.197670787913324,
+            "raw_model_rmse_mm": 15.813794414519444,
+            "issues": 52
+          },
+          "2014": {
+            "rmse_mm": 12.111028124402317,
+            "raw_model_rmse_mm": 15.063518966036684,
+            "issues": 52
+          }
+        }
+      }
+    },
+    {
+      "method": "adaptive_ensemble",
+      "split": "final",
+      "state": "pass",
+      "reason": null,
+      "evaluation_path": "var/review/sequential-controls-20261008/adaptive_ensemble/final-evaluation.json",
+      "evaluation_sha256": "09276593ba07fea9ceefdb7e68fef9fa300f6f947cc094d3ec23d40c64921ab3",
+      "metrics": {
+        "rmse_mm": 13.628552927683119,
+        "raw_model_rmse_mm": 14.895607825286145,
+        "climatology_rmse_mm": 13.179729230019335,
+        "skill_vs_raw_model": 0.08506231584938273,
+        "skill_vs_climatology": -0.03405409093242229,
+        "issues": 359,
+        "cells": 9,
+        "yearwise": {
+          "2015": {
+            "rmse_mm": 12.261086184089176,
+            "raw_model_rmse_mm": 13.842437913327922,
+            "issues": 52
+          },
+          "2016": {
+            "rmse_mm": 13.932781052572171,
+            "raw_model_rmse_mm": 16.22056455958999,
+            "issues": 52
+          },
+          "2017": {
+            "rmse_mm": 12.80276946689218,
+            "raw_model_rmse_mm": 14.508063959798942,
+            "issues": 47
+          },
+          "2018": {
+            "rmse_mm": 12.891561466445598,
+            "raw_model_rmse_mm": 15.811896387372647,
+            "issues": 52
+          },
+          "2019": {
+            "rmse_mm": 17.534930443863733,
+            "raw_model_rmse_mm": 16.586191646414097,
+            "issues": 52
+          },
+          "2020": {
+            "rmse_mm": 11.752337399181208,
+            "raw_model_rmse_mm": 11.629168598111214,
+            "issues": 52
+          },
+          "2021": {
+            "rmse_mm": 13.33837967453606,
+            "raw_model_rmse_mm": 15.049888006691774,
+            "issues": 52
+          }
+        }
+      }
+    }
+  ],
+  "complete": true,
+  "model_calls": 0,
+  "source_unchanged": true,
+  "comparators_retuned_on_final": false,
+  "actor_execution": "Docker only",
+  "scientific_workers": 1
+}

@@ -1,0 +1,46 @@
+schema_version: 1
+purpose: Find substantive tooling benefit and candidate hard capability boundaries.
+historical_checkpoint: experiments/checkpoint-results-2026-10-08.json
+runtime_manifest: experiments/runtime-manifest-2026-10-08.json
+staged_systems: [focused-astra-python, focused-astra-rhiza, focused-astra-accord, focused-luna-python, focused-luna-accord]
+first_pair:
+  template: seasonal-cca-reproduction
+  instance: outer-2005-2019--all-cells
+  systems: [focused-astra-python, focused-astra-accord]
+conditional_next_pair:
+  template: rainfall-downscaling
+  instance: train-to-2008--forecast-2009-2012
+  systems: [focused-astra-python, focused-astra-accord]
+conditional_difficulty_pair:
+  condition: Both Astra pairs pass after any evaluator defect has been diagnosed, versioned and verified on controls and both frozen submissions.
+  template: seasonal-cca-reproduction
+  instance: outer-2005-2019--all-cells
+  systems: [focused-luna-python, focused-luna-accord]
+  purpose: Test a matched backbone gradient on the harder prescribed experiment, without a 25-cell sweep.
+review_decisions:
+  - Downscaling exposed an area-roundoff grading defect; model calls stopped.
+  - Spec 2 corrects the bound. Both frozen submissions pass, their jobs and input bytes are identical, and the edge-formula control and full 125-test suite pass.
+  - Resume only the matched Luna CCA pair to test a second backbone; review the scientific question before adding further cells.
+concurrency: 2
+agent_retries: 0
+stop_on: [infrastructure_failure, evaluator_defect, unclassified_answer]
+review_before_expansion: true
+judge: After computed results and artifacts are inspected.
+paid_api_cap_usd: 100
+selection: >-
+  GPT-6 Astra high already passed the simpler prescribed tasks, so start with
+  the two new real-data reproductions. Current local AfricaS2S/acmadDL commits
+  provide matching documentation and inspectable scientific APIs. General
+  Python is the matched baseline. Rhiza remains a staged skills condition;
+  GPT-6 Luna is a second available backbone using the same pinned CLI and
+  high reasoning setting. Additional cells are launched only to resolve an
+  observed scientific or tooling question, not to fill a matrix automatically.
+changes_from_checkpoint:
+  - Verified native import-order workaround in every arm; no NetCDF package removal.
+  - Same delivery-first workflow guidance and budget across focused arms.
+  - Explicit documentation locations and offline script invocation.
+  - Remaining tool calls and cumulative tokens visible after each command.
+  - Larger but bounded 180000 cumulative-token budget, 24 calls, 900 seconds.
+success_evidence:
+  tooling_benefit: Paired correctness, delivery or efficiency improvement with relevant observed tool use; repeat before causal claims.
+  hard_capability_boundary: Repeated scientific error independently diagnosed under a functioning grader; runtime and budget failures excluded.

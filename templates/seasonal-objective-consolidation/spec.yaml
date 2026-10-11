@@ -1,0 +1,38 @@
+schema_version: 1
+template: seasonal-objective-consolidation
+spec_version: 1
+title: Consolidate an objective seasonal outlook
+mode: product
+question: compute_quantity
+reference_match: true
+status: development; scientific and redistribution approval pending
+params: [season, nominal_weights]
+results:
+  tercile: {kind: coordinate, tolerance: {exact: true}}
+  lat: {kind: coordinate, tolerance: {exact: true}}
+  lon: {kind: coordinate, tolerance: {exact: true}}
+  probability: {dims: [tercile, lat, lon], tolerance: {precision: float32, operations: 24, magnitude: 1}}
+  nominal_weighted_probability: {dims: [tercile, lat, lon], tolerance: {precision: float32, operations: 36, magnitude: 1}}
+  available_components: {dims: [lat, lon], tolerance: {exact: true}}
+  disagreement_pp: {dims: [tercile, lat, lon], tolerance: {precision: float32, operations: 8, magnitude: 100}}
+conventions:
+  missing_support: {available_only: accepted, climatology_fill: pitfall}
+  weighting: {equal: accepted, nominal: pitfall}
+pitfalls:
+  climatology_fill: Replaces unavailable component distributions with uniform climatology, changing the objective rather than documenting sparse support.
+  nominal: Uses nominal upstream contributor counts as the headline component weights instead of only as a sensitivity case.
+public_conventions: []
+invariants: [simplex_and_support]
+probes: [replay, changed_data]
+claims: {}
+interpretation: [outlook_scope, consistency_across_artifacts]
+assessment_policy:
+  completion: &gate [envelope, coverage, variant, invariant.simplex_and_support, probe.replay, probe.changed_data]
+  ranking: *gate
+judge_questions:
+  outlook_scope:
+    requirement: The report distinguishes objective consolidation from observed-skill verification, and nominal-count sensitivity from a true member-pooled forecast. It does not label local centre-replication products as an independently validated operational consensus. Silence about unavailable skill passes.
+    silence: passes
+  consistency_across_artifacts:
+    requirement: The report, code and answer agree about available-component support, probability units and combination method.
+    silence: passes

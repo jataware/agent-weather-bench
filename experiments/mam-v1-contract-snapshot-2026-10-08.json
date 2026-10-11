@@ -1,0 +1,237 @@
+{
+  "template": "mam-multimodel-outlook",
+  "fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+  "snapshot_root": "var/review/mam-probe-dtype-v1-20261008",
+  "fingerprint_inputs": [
+    {
+      "path": "templates/mam-multimodel-outlook/README.md",
+      "sha256": "9e7e1b0008a17baca14c8592fbba7e1b84f500fc6548cb9471c1023b4e945006"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/acquisition.py",
+      "sha256": "bd44197e9a198f50d830e030afa9d5e75644c113043db232de98e8240782332b"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/brief.md",
+      "sha256": "587c1c46752212d574cbf3e52fda6ff1d2db5bb393163859e0c1043edb9d7dd0"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/freeze_source.py",
+      "sha256": "f217902f1229d1809d25e6df671566f70efc857866012c7b080ddc26412a679f"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/instances.yaml",
+      "sha256": "0033378e1ce53c12a4bc53dd0f4b00b3be1081b3c663e7c63eb5eec2c688ef33"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/reference.py",
+      "sha256": "1ce432b2bf3903ec6a68ade111d861d314d6baa9421a0e475d749e2bd17a7f90"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/reference_independent.py",
+      "sha256": "9781a4dd38156ee650c76e310b10b5b5ae62b13a8d3c69301b25f739880b9c13"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/science.py",
+      "sha256": "d6431323a35dae8948e5a56e6385838628eb8d3ba298caee00300712bcc6833c"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/source-records.yaml",
+      "sha256": "3c35353ea3c8efe2805e6865ec5d08158cb79db750aea545a23a1b0c7a54d867"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/sources.json",
+      "sha256": "04e394c97525cb812ee1197d84f5bbcefda55bcae5483770d7cfb66ff171b1a6"
+    },
+    {
+      "path": "templates/mam-multimodel-outlook/spec.yaml",
+      "sha256": "91571a47808424de7eb9ddd106a11563b7926af5d910c1ff703c4c963aa7f5d1"
+    },
+    {
+      "path": "assessment/assess.py",
+      "sha256": "310292bb8583fcd12a83ef48b46761bd55f4bab7f4a1aec0b72555f53651d0e7"
+    },
+    {
+      "path": "assessment/compare.py",
+      "sha256": "36d9d1e885b15145a23834717fd8a1f49167b9bf90e7e2823125c9e85963025d"
+    },
+    {
+      "path": "assessment/execute.py",
+      "sha256": "540488feba7d06bf88b4c1b6c884317d03a71209af7b6a5c94e7dbeebb3b305c"
+    },
+    {
+      "path": "assessment/feedback.py",
+      "sha256": "e139ed1ab03b74da3c899e8ebd17e64ebede7434100ff8c7c2d4484a4b603b4d"
+    },
+    {
+      "path": "assessment/judge.py",
+      "sha256": "9d5a30f79978832d1385ffac0eb5349b8c1e7ff26f93a6a5f1c9cdd7cbeb5108"
+    },
+    {
+      "path": "assessment/judge-prompt.md",
+      "sha256": "44f9427caaca60e990d65e3306886d88862f3b6e51406c6c78495f63107a7a83"
+    },
+    {
+      "path": "assessment/outcomes.py",
+      "sha256": "4e286ae9bb7be85a5808a736f6c0d5b256a09be8028021901b8f83d212ee6828"
+    },
+    {
+      "path": "assessment/spec.py",
+      "sha256": "309a4cc139ff9a8a5358144f3f266075037dc0e23ba65385fed6eeca8b71616f"
+    },
+    {
+      "path": "assessment/variant.py",
+      "sha256": "79bf4cb4b648d432cc98f5a7fa3ef25745fada7d54795b590a30d24c434b0e6b"
+    },
+    {
+      "path": "assessment/rubric.py",
+      "sha256": "ea9cc01ba96e910e9a33d7fdc702e37cfd4f2fcc6d157b3954a625c5e4b12650"
+    },
+    {
+      "path": "assessment/sources.py",
+      "sha256": "b213e5a28bf6f4d7e53e02caf56c818678eb5f6c7e3099a147612bf95ff1a78b"
+    },
+    {
+      "path": "assessment/envelope.md",
+      "sha256": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec"
+    }
+  ],
+  "tree": {
+    "assessment/assess.py": {
+      "sha256": "310292bb8583fcd12a83ef48b46761bd55f4bab7f4a1aec0b72555f53651d0e7",
+      "bytes": 35145
+    },
+    "assessment/compare.py": {
+      "sha256": "36d9d1e885b15145a23834717fd8a1f49167b9bf90e7e2823125c9e85963025d",
+      "bytes": 10786
+    },
+    "assessment/envelope.md": {
+      "sha256": "136de5e0c1787d1f5a8b6ba9b439911cb1b09024726b5bc830aa29c8b98eb1ec",
+      "bytes": 1972
+    },
+    "assessment/execute.py": {
+      "sha256": "540488feba7d06bf88b4c1b6c884317d03a71209af7b6a5c94e7dbeebb3b305c",
+      "bytes": 3851
+    },
+    "assessment/feedback.py": {
+      "sha256": "e139ed1ab03b74da3c899e8ebd17e64ebede7434100ff8c7c2d4484a4b603b4d",
+      "bytes": 6322
+    },
+    "assessment/judge-prompt.md": {
+      "sha256": "44f9427caaca60e990d65e3306886d88862f3b6e51406c6c78495f63107a7a83",
+      "bytes": 2250
+    },
+    "assessment/judge.py": {
+      "sha256": "9d5a30f79978832d1385ffac0eb5349b8c1e7ff26f93a6a5f1c9cdd7cbeb5108",
+      "bytes": 15683
+    },
+    "assessment/outcomes.py": {
+      "sha256": "4e286ae9bb7be85a5808a736f6c0d5b256a09be8028021901b8f83d212ee6828",
+      "bytes": 3227
+    },
+    "assessment/rubric.py": {
+      "sha256": "ea9cc01ba96e910e9a33d7fdc702e37cfd4f2fcc6d157b3954a625c5e4b12650",
+      "bytes": 7325
+    },
+    "assessment/sources.py": {
+      "sha256": "b213e5a28bf6f4d7e53e02caf56c818678eb5f6c7e3099a147612bf95ff1a78b",
+      "bytes": 1253
+    },
+    "assessment/spec.py": {
+      "sha256": "309a4cc139ff9a8a5358144f3f266075037dc0e23ba65385fed6eeca8b71616f",
+      "bytes": 9534
+    },
+    "assessment/variant.py": {
+      "sha256": "79bf4cb4b648d432cc98f5a7fa3ef25745fada7d54795b590a30d24c434b0e6b",
+      "bytes": 6828
+    },
+    "templates/mam-multimodel-outlook/README.md": {
+      "sha256": "9e7e1b0008a17baca14c8592fbba7e1b84f500fc6548cb9471c1023b4e945006",
+      "bytes": 4218
+    },
+    "templates/mam-multimodel-outlook/__pycache__/acquisition.cpython-313.pyc": {
+      "sha256": "934e1942ed1a1553c8f58916a9a371b1a8b1b146c091ae0e5213f7c80a637747",
+      "bytes": 41653
+    },
+    "templates/mam-multimodel-outlook/__pycache__/reference.cpython-313.pyc": {
+      "sha256": "17bdd678ea9d91c95cf0c442b4ea556054390bce571c972b5fda3fd8f1b8cd25",
+      "bytes": 19825
+    },
+    "templates/mam-multimodel-outlook/__pycache__/reference_independent.cpython-313.pyc": {
+      "sha256": "14e1a3825cf8423f29a426e5f43f10d2bf9db06e768f84e42c1f6dc7c4a78697",
+      "bytes": 15987
+    },
+    "templates/mam-multimodel-outlook/__pycache__/science.cpython-313.pyc": {
+      "sha256": "86fd41f856cd0ffb433b7c8b12c9d867045a43aa1beb69582107a9e341d71129",
+      "bytes": 18201
+    },
+    "templates/mam-multimodel-outlook/acquisition.py": {
+      "sha256": "bd44197e9a198f50d830e030afa9d5e75644c113043db232de98e8240782332b",
+      "bytes": 25317
+    },
+    "templates/mam-multimodel-outlook/brief.md": {
+      "sha256": "587c1c46752212d574cbf3e52fda6ff1d2db5bb393163859e0c1043edb9d7dd0",
+      "bytes": 4454
+    },
+    "templates/mam-multimodel-outlook/certification.json": {
+      "sha256": "10d4316581f0479fdc8a73ebd9cebd761853d1bab85667a66779e539c14825d7",
+      "bytes": 13751
+    },
+    "templates/mam-multimodel-outlook/controls/__pycache__/build.cpython-313.pyc": {
+      "sha256": "25f2be00b8b296924302cb531d0f7d05ed5d22e54e13102e0081cb997f482829",
+      "bytes": 3678
+    },
+    "templates/mam-multimodel-outlook/controls/__pycache__/native_parity.cpython-313.pyc": {
+      "sha256": "cfef4c7a013ace46ecb91d7492592ecc0f4645fe6c298767d6b12483852e00e9",
+      "bytes": 7326
+    },
+    "templates/mam-multimodel-outlook/controls/__pycache__/solve.cpython-313.pyc": {
+      "sha256": "b1183830c9877b97e470dc319b947322c60c13d87effdcef53c3b07640a73430",
+      "bytes": 9114
+    },
+    "templates/mam-multimodel-outlook/controls/build.py": {
+      "sha256": "a1d9fc099a0025f50a45d725048af631e9dd9a6403019bb6fe727deaa772b75e",
+      "bytes": 2660
+    },
+    "templates/mam-multimodel-outlook/controls/native_parity.py": {
+      "sha256": "3856db97ead28223f604b400aa6b0e1636d4b1cd369852fc23dddf2841046279",
+      "bytes": 3517
+    },
+    "templates/mam-multimodel-outlook/controls/solve.py": {
+      "sha256": "b6175880df3c5f01bf5527afbbe72d1eb186bdd4fe200ab759d9d865108ff359",
+      "bytes": 5785
+    },
+    "templates/mam-multimodel-outlook/freeze_source.py": {
+      "sha256": "f217902f1229d1809d25e6df671566f70efc857866012c7b080ddc26412a679f",
+      "bytes": 21703
+    },
+    "templates/mam-multimodel-outlook/instances.yaml": {
+      "sha256": "0033378e1ce53c12a4bc53dd0f4b00b3be1081b3c663e7c63eb5eec2c688ef33",
+      "bytes": 42
+    },
+    "templates/mam-multimodel-outlook/reference.py": {
+      "sha256": "1ce432b2bf3903ec6a68ade111d861d314d6baa9421a0e475d749e2bd17a7f90",
+      "bytes": 11919
+    },
+    "templates/mam-multimodel-outlook/reference_independent.py": {
+      "sha256": "9781a4dd38156ee650c76e310b10b5b5ae62b13a8d3c69301b25f739880b9c13",
+      "bytes": 8118
+    },
+    "templates/mam-multimodel-outlook/science.py": {
+      "sha256": "d6431323a35dae8948e5a56e6385838628eb8d3ba298caee00300712bcc6833c",
+      "bytes": 10869
+    },
+    "templates/mam-multimodel-outlook/source-records.yaml": {
+      "sha256": "3c35353ea3c8efe2805e6865ec5d08158cb79db750aea545a23a1b0c7a54d867",
+      "bytes": 5704
+    },
+    "templates/mam-multimodel-outlook/sources.json": {
+      "sha256": "04e394c97525cb812ee1197d84f5bbcefda55bcae5483770d7cfb66ff171b1a6",
+      "bytes": 3810
+    },
+    "templates/mam-multimodel-outlook/spec.yaml": {
+      "sha256": "91571a47808424de7eb9ddd106a11563b7926af5d910c1ff703c4c963aa7f5d1",
+      "bytes": 4301
+    }
+  }
+}

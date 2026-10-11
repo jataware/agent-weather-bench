@@ -1,0 +1,127 @@
+schema_version: 1
+template: seasonal-forecast-audit
+spec_version: 2
+title: Audit and repair a seasonal forecast experiment
+mode: outcome
+question: produce_forecast
+reference_match: false
+status: development; scientific approval pending
+params:
+- case
+results:
+  hindcast_year:
+    kind: coordinate
+    tolerance:
+      exact: true
+  forecast_year:
+    kind: coordinate
+    tolerance:
+      exact: true
+  target:
+    kind: coordinate
+    tolerance:
+      exact: true
+  original_hindcast_mm:
+    dims:
+    - hindcast_year
+    - target
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 10000
+  hindcast_mm:
+    dims:
+    - hindcast_year
+    - target
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 10000
+  forecast_mm:
+    dims:
+    - forecast_year
+    - target
+    tolerance:
+      precision: float64
+      operations: 1000000
+      magnitude: 10000
+  original_rmse_mm:
+    dims: []
+    tolerance:
+      precision: float32
+      operations: 1
+      magnitude: 10000
+  hindcast_rmse_mm:
+    dims: []
+    tolerance:
+      precision: float32
+      operations: 1
+      magnitude: 10000
+  climatology_rmse_mm:
+    dims: []
+    tolerance:
+      precision: float32
+      operations: 1
+      magnitude: 10000
+invariants:
+- nonnegative_rainfall
+- original_evaluation
+- metric_identity
+probes:
+- replay
+- responds_to_inputs
+- first_year_isolation
+- middle_year_isolation
+- last_year_isolation
+- forecast_batch_isolation
+- year_2006_isolation
+- year_2007_isolation
+- year_2008_isolation
+- year_2009_isolation
+- year_2010_isolation
+- year_2011_isolation
+- year_2013_isolation
+- year_2014_isolation
+- year_2015_isolation
+- year_2016_isolation
+- year_2017_isolation
+- year_2018_isolation
+- production_2021_isolation
+- production_2023_isolation
+claims:
+  original_hindcast_is_past_only: Does the supplied executable candidate access only
+    strictly earlier rainfall targets in preprocessing, screening and fitting? Independence
+    of the reported architecture choice is assessed separately.
+  original_report_supported: Does the supplied report correctly characterize its validation
+    evidence?
+  repaired_beats_climatology: Does the submitted repaired hindcast have lower pooled
+    RMSE than expanding climatology?
+skill:
+  ranking_enabled: false
+  ranking: rmse_mm on retrospective hindcasts; diagnostic only
+  splits:
+  - hindcast
+  baselines:
+  - climatology
+  caveat: Public final-vintage retrospective records; 15 years do not establish operational
+    deployment skill.
+process:
+- id: audit_evidence
+  source: scientific-objective.md
+  requirement: Explain the supplied candidate's information boundaries and identify
+    concrete code or report evidence, including a clean finding if appropriate. Describe
+    the repaired evaluation and scope of its score.
+  judge: Does the report identify the actual candidate issue or correctly find it
+    clean, cite concrete code/configuration/report evidence, and distinguish retrospective
+    hindcasts from independent operational deployment evidence without asserting unsupported
+    confidence?
+interpretation: []
+assessment_policy:
+  completion: &id001
+  - envelope
+  - coverage
+  - invariant.*
+  - probe.*
+  - claim.*
+  - process.*
+  ranking: *id001

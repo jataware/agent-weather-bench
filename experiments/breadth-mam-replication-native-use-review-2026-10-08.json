@@ -1,0 +1,172 @@
+{
+  "reviewed_at": "2026-10-08T15:10:32.336481+00:00",
+  "run": "20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905",
+  "system": "breadth-luna-accord-mam-repeat",
+  "status": "pass",
+  "review_mode": "Independent text/JSON metadata review only; no scientific array decoding, Docker execution or model calls.",
+  "helpers": [
+    "acmaddl.normalize.normalize",
+    "africas2s.calibrate"
+  ],
+  "dataflow_evidence": [
+    {
+      "file": "frozen/run.py",
+      "lines": [
+        31,
+        39,
+        43,
+        45,
+        60,
+        64,
+        69,
+        70,
+        73,
+        90,
+        91,
+        111,
+        113
+      ],
+      "finding": "Float64 model rates go through public normalize. Returned seasonal mm arrays are spatially aligned, split into native member-resolved centre pairs, and supply delivered training/new model means."
+    },
+    {
+      "file": "frozen/run.py",
+      "lines": [
+        77,
+        81,
+        87,
+        88,
+        92,
+        93,
+        94,
+        95,
+        103,
+        105,
+        108,
+        114,
+        115,
+        116,
+        117,
+        119,
+        125
+      ],
+      "finding": "CHIRPS promoted before seasonal summation. Public calibrate receives separate centre pairs and observations. Per-centre and combined native returns directly supply all required probability fields; combined hindcasts supply RPS/RPSS and skill claim."
+    },
+    {
+      "file": "frozen/run.py",
+      "lines": [
+        13,
+        15,
+        18,
+        19,
+        21,
+        23,
+        56,
+        57
+      ],
+      "finding": "Every command fetches current catalogue and resources, checks byte counts/SHA256, and uses a fresh temporary directory; exploratory state-source cache does not feed frozen main."
+    },
+    {
+      "file": "logs/events.jsonl",
+      "lines": [
+        13,
+        14,
+        16,
+        17,
+        19,
+        20,
+        22,
+        23
+      ],
+      "finding": "Three script executions: first runs one normalization before coordinate-name error; exploratory call normalizes one ECMWF file; second script completes four normalizations and two calibrations before forecast-dimension error; third script completes successfully."
+    },
+    {
+      "file": "frozen/report.md",
+      "finding": "Report names normalize and calibrate call sites and explains their outputs; distinguishes cross-validated training skill from unavailable target observation verification."
+    },
+    {
+      "file": "assessment.json",
+      "finding": "All ten computed instruments pass, including changed-source, held-out-year isolation and original command replay. All three replay records exit0; retained acquisition evidence records all three."
+    }
+  ],
+  "calls": {
+    "agent_real_data": {
+      "normalize": 10,
+      "calibrate": 4
+    },
+    "agent_real_data_script_invocations": 3,
+    "agent_real_data_scripts_only": {
+      "normalize": 9,
+      "calibrate": 4
+    },
+    "agent_exploratory_real_data": {
+      "normalize": 1,
+      "calibrate": 0
+    },
+    "per_complete_script": {
+      "normalize": 4,
+      "calibrate": 2
+    },
+    "synthetic_demo": {
+      "normalize": 1,
+      "calibrate": 2
+    },
+    "controller_replay": {
+      "normalize": 12,
+      "calibrate": 6
+    },
+    "controller_replay_commands": 3,
+    "imports_and_help_not_counted": true,
+    "count_method": "Inferred from recorded commands, native call order, exception positions and successful replay exit records; not dynamically instrumented counters."
+  },
+  "actual_execution": true,
+  "import_or_toy_only": false,
+  "adapter_finish": {
+    "run_status": "submitted",
+    "final_event": "Codex completed its turn; harness evaluates filesystem deliverables.",
+    "budget_stopped": false
+  },
+  "failure_flags": {
+    "final_scientific_failure": false,
+    "final_infrastructure_failure": false,
+    "recovered_agent_error": true,
+    "recovered_errors": [
+      "Unconditional latitude/longitude rename after normalize already returned lat/lon; failed after first centre normalization.",
+      "Forecast calibration returns no year axis for a single forecast year; fixed transpose and restored requested singleton new_year axis before delivery."
+    ],
+    "initial_shell_exit_masks_exception": false,
+    "source_or_task_answer_leakage_observed": false
+  },
+  "redundant_work": {
+    "guided_real_script_runs": 3,
+    "guided_tool_calls": 12,
+    "details": [
+      "Synthetic demo, metadata discovery and one exploratory normalization are additional measured work.",
+      "Two schema-repair script reruns are retained as agent resource costs.",
+      "After successful execution, three output inspection commands summarize scores/probabilities/finite simplex checks; report generation is separate."
+    ],
+    "limits": "Do not attribute total elapsed or token differences solely to native-kernel runtime."
+  },
+  "computed_outcome": "pass",
+  "outcome": "pass",
+  "usage": {
+    "input_tokens": 215298,
+    "cached_input_tokens": 164864,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 7293,
+    "reasoning_output_tokens": 2485,
+    "total_tokens": 222591
+  },
+  "agent_seconds": 117.4434766669292,
+  "interpretation": "Substantive guided-tool completion in an exact same-instance v2 repetition. Compare only against matched Python repeat and prior precision-phase pair; do not pool original v1 failures or call this independent-dataset replication.",
+  "reviewfileshashes": {
+    "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/run.json": "610ec1b538e475949b8b663757c340f16689b364c803b0c0c0dab2b9d0a2ce40",
+    "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/assessment.json": "6e714176a44a5bff04ff7bda202cc6518c1116147df68e98debec506dbb79b79",
+    "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/frozen/run.py": "cf6b930806841ecf4198ef788828378cf2eb35c2656dca97ec18781c5083e01c",
+    "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/frozen/report.md": "3eadc061b7fcc461c74598bdec38f09b10a9cd8af894b40f2d71141140bebdd5",
+    "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/frozen/answer.json": "4ba4c5cb02aa7cef8a23352a7d10e8d121c1b77284accc168c98d0daa61b737d",
+    "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/logs/events.jsonl": "40042b194a7267f17b3dd9727bd34cc58758f6770fc75703cff2116828e3ef98",
+    "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/controller/provenance.json": "c71094f3e3cb8a7a9465c34319de0024887402a43269471d2f3888d4f504ac7d",
+    "var/template-runs/20261008T150611-mam-multimodel-outlook-kenya-interior--mam-2016-L1-breadth-luna-accord-mam-repeat-349905/controller/adapter-result.json": "b4f5feb1f2c9947720c62cdfd335f8f9237472e9a3311e74eb0c0866527ad489",
+    "var/review/tooling-breadth-20261008/breadth-luna-accord-mam-repeat/invocation.json": "f3925e3486e3ac07ce7ba13121192da34779eb71391b27c00ba836b40517ddb4"
+  }
+}

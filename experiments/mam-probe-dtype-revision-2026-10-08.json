@@ -1,0 +1,25 @@
+{
+  "template": "mam-multimodel-outlook",
+  "before_spec_version": 1,
+  "after_spec_version": 2,
+  "before_fingerprint": "23bc21956e106c0bad293f64d63fa771d27aabb49b426da3f4e933692995f727",
+  "after_fingerprint": "c34cdbc57355aec79d4f6c211c6a7a03a96f74af04abbe93bd0635cbd06fd056",
+  "contract_snapshot": "experiments/mam-v1-contract-snapshot-2026-10-08.json",
+  "contract_snapshot_sha256": "e38d308c4a6af4368da1d0ab197bcbb3a8decedf6bfc727e1aab5ed0beab03e9",
+  "original_assessments_preserved": true,
+  "reason": "Held-out probe changed dtype for the whole observation field, confounding leakage with accumulation precision.",
+  "changed_files": {
+    "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/templates/mam-multimodel-outlook/spec.yaml": "752fc7a7b41c00cc7e8b7a02a030eb0072dbfbba8bc417cf92238a00c64c137c",
+    "/Users/ezekielbarnett/Developer/ACCORD/agent-weather-bench/templates/mam-multimodel-outlook/reference.py": "e1f2c16b2727d482373cf7065336ae9e07cadf98661ccfc57f90c7fa6bd36d41"
+  },
+  "scope": "Probe representation repair only. Acceptance bounds and deciding scientific recipe unchanged. Initial precision failures remain failures; held-out failure attribution is confounded in v1.",
+  "v2_validation": {
+    "path": "var/review/mam-v2-probe-dtype-20261008/validation-summary.json",
+    "sha256": "1153202d019edb793499a74275af055777fc4186e3a29634bfafd5b6b3018d9e"
+  },
+  "science_implementation_unchanged": true,
+  "v2_pretrial_certificate": {
+    "path": "var/review/mam-v2-pretrial-certificate-20261008.json",
+    "sha256": "b30ee43c0492ff5c53f9ff026e55faef05a70039dbb5c188cb716f32d3e2db9e"
+  }
+}

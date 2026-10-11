@@ -1,0 +1,126 @@
+# Rainfall error bounds cover <=400 pixels per coarse cell, 16 fit years and interpolation; 12000 rounded operations on values below 5000 mm.
+# Area: R^2 is an exactly representable integer; R^2 * angular span is below 4e10.
+# Use this intermediate magnitude, not the <5e7 final area, for 32 rounded operations.
+# See geometry-error-bound.md. Integer axes and membership remain exact.
+schema_version: 1
+template: rainfall-downscaling
+spec_version: 2
+version_history:
+- version: 1
+  assessment: Initial real-data pilot; edge-subtracted longitudes exposed an undersized area error bound.
+- version: 2
+  assessment: Correct the area intermediate-magnitude bound; job, inputs and reference rainfall calculations unchanged.
+title: Conservative rainfall downscaling
+task_set_row: 16
+mode: product
+question: compute_quantity
+reference_match: true
+status: automatic and trial review recorded in certification.json; scientific approval pending
+params:
+- training_end
+- forecast_years
+results:
+  train_year:
+    kind: coordinate
+    tolerance:
+      exact: true
+  forecast_year:
+    kind: coordinate
+    tolerance:
+      exact: true
+  latitude:
+    kind: coordinate
+    tolerance:
+      exact: true
+  longitude:
+    kind: coordinate
+    tolerance:
+      exact: true
+  coarse_cell:
+    kind: coordinate
+    tolerance:
+      exact: true
+  hindcast_mm:
+    dims:
+    - train_year
+    - latitude
+    - longitude
+    tolerance:
+      precision: float64
+      operations: 12000
+      magnitude: 5000
+  hindcast_coarse_mm:
+    dims:
+    - train_year
+    - coarse_cell
+    tolerance:
+      precision: float64
+      operations: 12000
+      magnitude: 5000
+  forecast_mm:
+    dims:
+    - forecast_year
+    - latitude
+    - longitude
+    tolerance:
+      precision: float64
+      operations: 12000
+      magnitude: 5000
+  forecast_coarse_mm:
+    dims:
+    - forecast_year
+    - coarse_cell
+    tolerance:
+      precision: float64
+      operations: 12000
+      magnitude: 5000
+  area_m2:
+    dims:
+    - latitude
+    - longitude
+    tolerance:
+      precision: float64
+      operations: 32
+      magnitude: 40000000000
+  coarse_cell_id:
+    dims:
+    - latitude
+    - longitude
+    tolerance:
+      exact: true
+conventions:
+  validation:
+    leave_one_out: accepted
+    full_training: pitfall
+pitfalls:
+  full_training: Used the held-out year in distribution mapping and spatial climatology.
+public_conventions: []
+invariants:
+- conservation
+- nonnegative
+probes:
+- replay
+- changed_data
+- held_out_year_isolation
+- raw_scale_invariance
+claims:
+  raw_unit_status: State the unresolved physical scale of the original raw predictors.
+  conservation_definition: Name conservation of the mapped coarse area mean.
+process:
+- id: source_units
+  source: algorithm.md and source-notes.txt
+  requirement: The report acknowledges unresolved raw predictor units and explains
+    their use as monotonic calibration predictors.
+  judge: Does the report avoid claiming that the raw data have verified daily-rate
+    or seasonal-total units?
+interpretation: []
+assessment_policy:
+  completion: &id001
+  - envelope
+  - coverage
+  - variant
+  - invariant.*
+  - probe.*
+  - claim.*
+  - process.*
+  ranking: *id001

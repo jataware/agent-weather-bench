@@ -1,0 +1,65 @@
+{
+  "run": "20261008T091951-weeks34-rainfall-final-2018-2021--all-cells-L1-checkpoint-astra-rhiza-d6653d",
+  "issues": 208,
+  "cells": 9,
+  "draws": 4000,
+  "seed": 20261008,
+  "method": "Paired non-circular moving-block bootstrap; spatial cells retained together.",
+  "limits": "Exploratory sampling sensitivity, not a model-ranking confidence interval. One submission, four historical years, public data; seasonal stationarity is not established.",
+  "rows": [
+    {
+      "block_weeks": 4,
+      "baseline": "raw_model",
+      "skill": 0.048451705458326666,
+      "percentile_95_interval": [
+        -0.05540594437280433,
+        0.14141098410623962
+      ]
+    },
+    {
+      "block_weeks": 4,
+      "baseline": "climatology",
+      "skill": 0.007907321406761092,
+      "percentile_95_interval": [
+        -0.03514873863728647,
+        0.042360837247848525
+      ]
+    },
+    {
+      "block_weeks": 8,
+      "baseline": "raw_model",
+      "skill": 0.048451705458326666,
+      "percentile_95_interval": [
+        -0.0720598486306648,
+        0.1406971440707144
+      ]
+    },
+    {
+      "block_weeks": 8,
+      "baseline": "climatology",
+      "skill": 0.007907321406761092,
+      "percentile_95_interval": [
+        -0.040379583685438654,
+        0.043353010025220275
+      ]
+    },
+    {
+      "block_weeks": 13,
+      "baseline": "raw_model",
+      "skill": 0.048451705458326666,
+      "percentile_95_interval": [
+        -0.07409065322575004,
+        0.12059820241546479
+      ]
+    },
+    {
+      "block_weeks": 13,
+      "baseline": "climatology",
+      "skill": 0.007907321406761092,
+      "percentile_95_interval": [
+        -0.038546978311435595,
+        0.04624067540858938
+      ]
+    }
+  ]
+}

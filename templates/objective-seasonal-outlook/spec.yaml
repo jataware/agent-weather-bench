@@ -1,6 +1,6 @@
 schema_version: 1
 template: objective-seasonal-outlook
-spec_version: 1
+spec_version: 2
 title: Issue the objective seasonal rainfall outlook
 mode: product
 question: compute_quantity
@@ -70,7 +70,8 @@ pitfalls:
   full_record: Includes the year being forecast in the tercile boundaries and labels of its own hindcast.
 public_conventions: [obs_regridding, ereg_variance]
 
-invariants: [probabilities_valid, support_consistent, equal_stream_combination, score_identity, issue_identity, cca_agreement]
+invariants: [probabilities_valid, support_consistent, equal_stream_combination, score_identity, issue_identity, cca_agreement,
+             wvg_from_own_prepare, ereg_from_own_prepare, cca_from_own_prepare]
 probes: [replay, changed_data, held_out_year_isolation]
 claims:
   hindcast_skill: four entries, the sign of the cross-validated RPSS of CCA, eReg, WVG and the objective.
@@ -82,9 +83,66 @@ judge_questions:
   bulletin_uncertainty:
     requirement: The bulletin states the outlook's uncertainty in language a non-specialist could act on.
     silence: fails
+# The eight stages of the job. Each owns a group of results and receives an absolute verdict (right, judged from the
+# controller's inputs) and a local verdict (right, given the submission's own upstream arrays). The stage rows carry
+# completion; the whole-submission match, probes and claims stay visible as evidence. Two invariants that span
+# every stage (valid probabilities, consistent support) gate completion directly.
+stages:
+  - id: acquire
+    requirement: The listed model deliveries, the observations and the SST field are retrieved from the source service by the submitted command.
+    source: practice.md, data
+    absolute: {checks: [probe.replay]}
+  - id: prepare
+    requirement: Seasonal totals in mm, the support mask, tercile boundaries, observed categories and the SST index are prepared on the target grid.
+    source: practice.md, inputs and categories
+    results: [prepare_observed_mm, prepare_support, prepare_model_hindcast_mean_mm, prepare_model_forecast_mean_mm, prepare_model_predictor_mm,
+              prepare_model_predictor_forecast_mm, prepare_tercile_lower_mm, prepare_tercile_upper_mm, prepare_observed_category, prepare_sst_index, prepare_sst_index_forecast]
+    absolute: {results: [prepare_observed_mm, prepare_support, prepare_model_hindcast_mean_mm, prepare_model_forecast_mean_mm, prepare_model_predictor_mm,
+                         prepare_model_predictor_forecast_mm, prepare_tercile_lower_mm, prepare_tercile_upper_mm, prepare_observed_category, prepare_sst_index, prepare_sst_index_forecast]}
+    upstream: [acquire]
+  - id: wvg
+    requirement: The WVG stream is a leave-one-year-out logistic regression of below-normal occurrence on the SST index with the centre's tercile rule.
+    source: practice.md, WVG
+    results: [wvg_hindcast_probability, wvg_forecast_probability]
+    absolute: {results: [wvg_hindcast_probability, wvg_forecast_probability]}
+    local: {checks: [invariant.wvg_from_own_prepare, probe.held_out_year_isolation.wvg]}
+    upstream: [prepare]
+  - id: ereg
+    requirement: The eReg stream is a leave-one-year-out linear regression per model with Gaussian tercile probabilities, averaged across models.
+    source: practice.md, eReg
+    results: [ereg_model_hindcast_probability, ereg_model_forecast_probability, ereg_hindcast_probability, ereg_forecast_probability, ereg_fitted_mean_mm]
+    absolute: {results: [ereg_model_hindcast_probability, ereg_model_forecast_probability, ereg_hindcast_probability, ereg_forecast_probability, ereg_fitted_mean_mm]}
+    local: {checks: [invariant.ereg_from_own_prepare, probe.held_out_year_isolation.ereg]}
+    upstream: [prepare]
+  - id: cca
+    requirement: The CCA stream relates each model's rainfall field to the observed field with cross-validated mode selection and passes the method-blind gate.
+    source: practice.md, CCA
+    results: [cca_hindcast_probability, cca_forecast_probability, cca_hindcast_mean_mm, cca_modes_selected]
+    absolute: {checks: [invariant.cca_agreement]}
+    local: {checks: [invariant.cca_from_own_prepare, probe.held_out_year_isolation.cca]}
+    upstream: [prepare]
+  - id: combine
+    requirement: The objective forecast is the equal-weight average of the three streams on every supported cell.
+    source: practice.md, combination
+    results: [combine_hindcast_probability, combine_forecast_probability, combine_available_streams]
+    local: {checks: [invariant.equal_stream_combination]}
+    upstream: [wvg, ereg, cca]
+  - id: verify
+    requirement: The verification scores are the ranked probability scores of the submission's own hindcasts against its own categories, and the stated skill signs follow from them.
+    source: practice.md, verification
+    results: [verify_stream_rps, verify_stream_rpss, verify_objective_rps, verify_climatology_rps, verify_objective_rpss]
+    local: {checks: [invariant.score_identity, claim.hindcast_skill]}
+    upstream: [prepare, wvg, ereg, cca, combine]
+  - id: issue
+    requirement: The issued probabilities are the objective forecast and the dominant category follows from them; the bulletin is reviewed separately.
+    source: practice.md, issue
+    results: [issue_forecast_probability, issue_dominant_category]
+    local: {checks: [invariant.issue_identity]}
+    upstream: [combine]
+    review: [interpretation.bulletin_support, interpretation.bulletin_uncertainty]
 assessment_policy:
-  completion: [envelope, coverage, variant, invariant.*, probe.*, claim.*]
-  ranking: [envelope, coverage, variant, invariant.*, probe.*, claim.*]
+  completion: [envelope, coverage, invariant.probabilities_valid, invariant.support_consistent, stage.*]
+  ranking: [envelope, coverage, invariant.probabilities_valid, invariant.support_consistent, stage.*]
 skill:
   ranking_enabled: false
   ranking: withheld-season RPSS of the issued outlook, higher is better

@@ -7,12 +7,15 @@ from pathlib import Path
 from .spec import ROOT, Template, templates
 
 
-def _executor(args):
+def _executor(args, template=None):
     from .execute import Docker, Local
     if getattr(args, "local_trusted", False):
-        return Local()
-    from .systems import DEFAULT_IMAGE
-    return Docker(args.image or DEFAULT_IMAGE)
+        executor = Local()
+    else:
+        from .systems import DEFAULT_IMAGE
+        executor = Docker(args.image or DEFAULT_IMAGE)
+    factory = getattr(template.hooks, "executor_factory", lambda value: value) if template else lambda value: value
+    return factory(executor)
 
 
 def main():
@@ -22,8 +25,15 @@ def main():
     prepare = sub.add_parser("prepare"); prepare.add_argument("template"); prepare.add_argument("--source", help="Directory holding the frozen source archives")
     sub.add_parser("instances").add_argument("template")
     brief = sub.add_parser("brief"); brief.add_argument("template"); brief.add_argument("instance"); brief.add_argument("--level", type=int, choices=[1, 2], default=1)
+    rubric = sub.add_parser("rubric", help="Show every instrument, its question, implementation and result policy")
+    rubric.add_argument("template"); rubric.add_argument("--level", type=int, choices=[1, 2], default=1)
+    rubric.add_argument("--format", choices=["json", "markdown"], default="markdown")
     certify = sub.add_parser("certify"); certify.add_argument("template"); certify.add_argument("--full", action="store_true", help="Compare the reference implementations on every instance")
-    assess = sub.add_parser("assess"); assess.add_argument("template"); assess.add_argument("instance"); assess.add_argument("submission")
+    assess = sub.add_parser("assess"); assess.add_argument("template"); assess.add_argument("instance"); assess.add_argument("submission", nargs="?")
+    assess.add_argument("--control", help="Build and assess a named trusted control; start with correct")
+    assess.add_argument("--format", choices=["json", "markdown"], default="markdown")
+    assess.add_argument("--output", help="Keep assessment.json and review.md in this new directory")
+    assess.add_argument("--judge", action="store_true", help="Run the pinned, capped judge on the declared prose questions")
     run = sub.add_parser("run"); run.add_argument("template"); run.add_argument("instance"); run.add_argument("--system", required=True)
     run.add_argument("--parent", help="An earlier run of the same system. Its submission is placed under /work/prior.")
     run.add_argument("--level", type=int, choices=[1, 2], default=1)
@@ -40,7 +50,8 @@ def main():
         command.add_argument("--image")
     args = parser.parse_args()
     try:
-        print(json.dumps(dispatch(args), indent=2, default=str))
+        result = dispatch(args)
+        print(result if isinstance(result, str) else json.dumps(result, indent=2, default=str))
     except (ValueError, RuntimeError, OSError, KeyError) as error:
         parser.exit(1, f"{type(error).__name__}: {error}\n")
 
@@ -61,6 +72,10 @@ def dispatch(args):
         from .calibration import calibrate
         return calibrate()
     template = Template(args.template)
+    if args.command == "rubric":
+        from .rubric import contract, markdown
+        value = contract(template, args.level)
+        return markdown(value) if args.format == "markdown" else value
     if args.command == "attempts":
         from .certify import record_attempts
         return record_attempts(template)
@@ -74,14 +89,44 @@ def dispatch(args):
         return {"brief": text, "words": len(text.split())}
     if args.command == "certify":
         from .certify import certify
-        report = certify(template, _executor(args), full=args.full)
+        report = certify(template, _executor(args, template), full=args.full)
         return {"automatic_tests_passed": report["automatic_tests_passed"], "certified": report["certified"],
                 "tests": {name: test["passed"] for name, test in report["tests"].items()},
                 "record": str((template.folder / "certification.json").relative_to(ROOT))}
     if args.command == "assess":
         from .assess import assess
+        from .rubric import markdown
+        if bool(args.submission) == bool(args.control):
+            raise ValueError("Name a submission directory or --control NAME")
+        if args.local_trusted and not args.control:
+            raise ValueError("--local-trusted is restricted to --control submissions")
+        params = template.instance(args.instance)
         with tempfile.TemporaryDirectory(prefix="assessment-") as scratch:
-            return assess(template, template.instance(args.instance), Path(args.submission), _executor(args), Path(scratch) / "work")
+            root = Path(scratch)
+            submission = Path(args.submission) if args.submission else root / "control"
+            if args.control:
+                from .certify import _controls
+                controls = _controls(template)
+                if args.control not in controls.CONTROLS:
+                    raise ValueError(f"Unknown control {args.control!r}; choose from {list(controls.CONTROLS)}")
+                template.hooks.stage_inputs(template.private, params, root / "inputs")
+                controls.build(args.control, root / "inputs", params, submission)
+            value = assess(template, params, submission, _executor(args, template), root / "work")
+            output = Path(args.output) if args.output else None
+            if output is not None:
+                output.mkdir(parents=True, exist_ok=False)
+            evidence = getattr(template.hooks, "acquisition_evidence", None)
+            if evidence is not None:
+                value["acquisition"] = evidence(root / "work", output / "acquisition-evidence" if output else None)
+            if args.judge:
+                from . import judge as judging
+                from .assess import judge_files
+                judging.apply(value, judge_files(template, params, submission), judging.claude_cli, template.spec)
+            review = markdown(value["rubric"], value)
+            if output is not None:
+                (output / "assessment.json").write_text(json.dumps(value, indent=2, default=str) + "\n")
+                (output / "review.md").write_text(review)
+            return review if args.format == "markdown" else value
     if args.command == "run":
         from .runner import run
         return run(template, template.instance(args.instance), args.system, parent=args.parent, level=args.level,

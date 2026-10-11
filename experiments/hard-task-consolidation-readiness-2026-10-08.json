@@ -1,0 +1,65 @@
+{
+  "template": "seasonal-objective-consolidation",
+  "fingerprint": "8a8dc134b892acb12ecd0e3620542664bd8e8135f97741a45b074a58c2b4dc57",
+  "ready_at": "2026-10-08T14:40:12.274834+00:00",
+  "automatic_controls_passed": true,
+  "same_image_docker_proof_passed": true,
+  "independent_review_passed": true,
+  "independent_review": {
+    "agent": "/root/grader_stress",
+    "scope": [
+      "scientific attainability and no forced difficulty",
+      "independent scalar arithmetic",
+      "source grid identity",
+      "explicit zero storage fills+support mask",
+      "partial-vector diagnostic and categorywise fault"
+    ],
+    "findings": "Read-only review passed; actual certification confirms declared faults caught."
+  },
+  "inference_authorized": true,
+  "authorization": "Parent delegated one validated bounded Luna pilot after controls/proof, without additional approval.",
+  "model_attempt_limit": 1,
+  "direct_paid_api_usd_cap_for_this_track": 0,
+  "system_files": {
+    "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+    "system.yaml": "cbaf8d8032670f93fa055daecf1457a7a8eee38dba8dd947d80cfabdf2dece88"
+  },
+  "scientific_controls": {
+    "correct": {
+      "as_expected": true,
+      "computed_outcome": "pass"
+    },
+    "independent": {
+      "as_expected": true,
+      "computed_outcome": "pass"
+    },
+    "reordered": {
+      "as_expected": true,
+      "computed_outcome": "pass"
+    },
+    "climatology_fill": {
+      "as_expected": true,
+      "computed_outcome": "fail"
+    },
+    "nominal": {
+      "as_expected": true,
+      "computed_outcome": "fail"
+    },
+    "percent": {
+      "as_expected": true,
+      "computed_outcome": "fail"
+    },
+    "categorywise": {
+      "as_expected": true,
+      "computed_outcome": "fail"
+    },
+    "cached": {
+      "as_expected": true,
+      "computed_outcome": "fail"
+    }
+  },
+  "source_validation": "experiments/hard-task-consolidation-source-validation-2026-10-08.json",
+  "first_authoring_failure_retained": "var/review/hard-task-consolidation/certification-first.json",
+  "no_shared_grader_changes": true,
+  "expected_interpretation": "A scientific pass saturates this bounded consolidation step; stop the round without manufacturing difficulty."
+}

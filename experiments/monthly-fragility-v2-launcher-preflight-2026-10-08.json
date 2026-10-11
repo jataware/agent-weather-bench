@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-08T17:44:01.633361+00:00",
+  "state": "pass",
+  "scope": "Stdlib launchguards and matchedconfiguration only, not source/template readiness or inferencepermission.",
+  "tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_monthly_fragility.py",
+    "result": "5 passed in0.03s"
+  },
+  "files": {
+    "experiments/monthly_fragility.py": "2b53d3e6ff060359114ec6bb367fad6330fe95aaee19df106618aa5ce340b5fb",
+    "tests/test_monthly_fragility.py": "80e48e964309c88c7497bc244741320cda63bd9e88673f4489cdfccb4d74909e",
+    "systems/monthly-fragility-luna-accord/system.yaml": "2645c3b842b1504d5b6c465c2fe87fc528131b98e3382beef13b117317846d6b",
+    "systems/monthly-fragility-luna-accord/adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+    "systems/monthly-fragility-astra-accord/system.yaml": "a314661ba36366bf47280964d11cd2127243a108a5fee2154becd1a2e2c4d408",
+    "systems/monthly-fragility-astra-accord/adapter.py": "706963c311d676bbd70780cdc3bc8914fd99fa7ae9fd79adac427eabb21fecb5"
+  },
+  "native_scientific_executions": 0,
+  "model_calls": 0,
+  "agent_calls": 0,
+  "launch_status": "not launched; v2authorvalidation and rootgo pending",
+  "same_environment_budget": true,
+  "model_is_only_adapter_difference": true,
+  "task_specific_function_guides": false,
+  "development_score_tool_at_level1": false,
+  "existing_assessment_core_modified": false,
+  "public_stage_guard": {
+    "disallowed_filename": "africas2s-smoothed-method.py.txt",
+    "before_inference": "freeze copies/stats exactpublicstage without scientific decoding; rejects filename",
+    "after_inference": "summarize requires no filename and exact match to frozenpublicinputmanifest"
+  }
+}

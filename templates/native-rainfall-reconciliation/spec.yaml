@@ -1,0 +1,38 @@
+schema_version: 1
+template: native-rainfall-reconciliation
+spec_version: 1
+title: Reconcile cumulative and interval-rate rainfall deliveries
+mode: product
+question: compute_quantity
+reference_match: true
+status: development; scientific and redistribution review pending
+params: [rectangle, period_start]
+claims_by: period
+results:
+  period: {kind: coordinate, dtype: date}
+  latitude: {kind: coordinate, tolerance: {precision: float64, operations: 1, magnitude: 180}}
+  longitude: {kind: coordinate, tolerance: {precision: float64, operations: 1, magnitude: 180}}
+  current_mean_mm: {dims: [period, latitude, longitude], tolerance: {precision: float32, operations: 101, magnitude: 200}}
+  previous_mean_mm: {dims: [period, latitude, longitude], tolerance: {precision: float32, operations: 101, magnitude: 200}}
+  change_mm: {dims: [period, latitude, longitude], tolerance: {precision: float32, operations: 203, magnitude: 200}}
+  regional_change_mm: {dims: [period], tolerance: {precision: float32, operations: 371, magnitude: 200}}
+conventions:
+  negative_increments: {signed_net: accepted, clip_quantization: accepted}
+  integration: {duration_weighted: accepted, sum_rates: pitfall}
+  alignment: {valid_time: accepted, same_lead: pitfall}
+pitfalls:
+  sum_rates: Adds interval means as if every interval lasted one day.
+  same_lead: Compares identical lead windows rather than the same valid calendar period.
+public_conventions: []
+invariants: [difference_identity, regional_range]
+probes: [replay, changed_data, bulletin_independence]
+claims:
+  direction: Wetter or drier according to the sign of the submitted regional change, for each period.
+interpretation: [delivery_lineage]
+assessment_policy:
+  completion: [envelope, variant, invariant.*, probe.*, claim.*]
+  ranking: [envelope, variant, invariant.*, probe.*, claim.*]
+judge_questions:
+  delivery_lineage:
+    requirement: The report accurately distinguishes the provider-native cumulative delivery from the curator-derived interval-rate delivery, explains their units and duration integration, and does not claim independent forecast models or observation-verified skill.
+    silence: fails

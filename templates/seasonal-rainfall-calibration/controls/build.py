@@ -51,7 +51,11 @@ def build(name, inputs, params, destination):
         (destination / "variant.json").write_text(json.dumps(control["variant"]) + "\n")
     subprocess.run([sys.executable, "solve.py", "--inputs", str(inputs), "--output", str(destination)], cwd=destination, check=True,
                    capture_output=True, text=True)
-    (destination / "report.md").write_text(f"Control submission `{name}` built by the controller for certification. Not an agent attempt.\n")
+    (destination / "report.md").write_text(f"Control submission `{name}` built by the controller for certification. Not an agent attempt.\n"
+        "The forecasts give chances of below-, near- and above-normal rainfall. No category is certain: plan for the other possibilities too. "
+        "This small retrospective sample does not establish reliable future skill across other regions or years. "
+        "Monthly forecast rates are converted using calendar month lengths; CHIRPS observations supply seasonal totals. "
+        "The calibration and cross-validation methods are documented in answer.json with pointers to solve.py.\n")
     answer_path, store = destination / "answer.json", destination / "results.zarr"
     if control.get("post") == "delete":
         answer_path.unlink()

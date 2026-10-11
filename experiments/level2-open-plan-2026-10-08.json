@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "ready",
+  "template": "weeks34-rainfall",
+  "instance": "final-2018-2021--all-cells",
+  "level": 2,
+  "fingerprint": "453f237dafbfe0d3389eb0009d8cd485ccea6bbbcc672e18b87872ce907ce163",
+  "max_new_agent_attempts": 2,
+  "agent_retries": 0,
+  "design": "Two backbones, same ordinary ACCORD library availability; no task-specific API hints, demos, recipes or prescribed method. Descriptive feasibility pilot, not tool-benefit experiment.",
+  "selection": "Luna has passed prior reproduction tasks; Astra supplies a stronger-backbone comparator. Both available through authorized subscription, pinned Docker library stack.",
+  "budget_note": "900 seconds, 32 total execute/score calls, 5 development queries, 100k uncached-input+output and20k output. Cumulative/cache counters retained, no cumulative-token ceiling; checkpoint overshoot retained.",
+  "no_judge": true,
+  "holdout_caveat": "Public historical final period already inspected in prior experiments; not a fresh frontier-capability holdout. Final labels never mounted and final scores never shown during attempt.",
+  "decision_rules": [
+    "Separate valid reproducible completion from final RMSE skill.",
+    "Compare final forecasts to fixed raw-model, seasonal-climatology and trusted correct-control scores.",
+    "Describe actual feedback trajectory and final candidate selection, including invalid requests.",
+    "No frontier-boundary claim from packaging/feedback failure or two descriptive attempts.",
+    "If feedback preflight fails, launch no inference; if pilot uncovers harness defect, stop additional model attempts.",
+    "No extra attempts automatically, no tuning controller comparator on final outcomes."
+  ],
+  "direct_paid_api_usd": 0,
+  "subscription_invoice_usd": null,
+  "codex_binary": "/Users/ezekielbarnett/.codex/packages/standalone/releases/0.160.0-aarch64-apple-darwin/bin/codex",
+  "codex_version": "codex-cli 0.160.0",
+  "contract_manifest": "experiments/level2-open-contract-manifest-2026-10-08.json",
+  "contract_manifest_sha256": "abb5ca21fe172d3a3f07aa342a5fb0fc8c6bd4bfdc6fc6a728e7e19d379b5d2c",
+  "frozen_contract_directory": "var/review/level2-open-contract-20261008",
+  "preflight_evidence": [
+    {
+      "path": "experiments/level2-preflight-2026-10-08.json",
+      "sha256": "c4633df6eadbf5ec2b5c99910d04ff96b5e1c57c87140b5ea6bfb4bfaf9235b5"
+    }
+  ],
+  "systems": {
+    "level2-luna-open-accord": {
+      "model": "gpt-6-luna",
+      "reasoning_effort": "high",
+      "readiness_check": "passed, no inference started, ChatGPT-only auth, no model fallback",
+      "files": {
+        "adapter.py": "176894a87cf196af548e33eddc73e0a12010bd9bb3e1d8475f21e16cda75fd53",
+        "system.yaml": "c2d99fe1ec0d3e1bdddde18d9438a0ae4d97cd5395520d1ff2d232fcfe48152d"
+      }
+    },
+    "level2-astra-open-accord": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "high",
+      "readiness_check": "passed, no inference started, ChatGPT-only auth, no model fallback",
+      "files": {
+        "adapter.py": "706963c311d676bbd70780cdc3bc8914fd99fa7ae9fd79adac427eabb21fecb5",
+        "system.yaml": "9bc8cda88a41e0d3c888049999c006dd8b12ba42a76dd1191501ecf792ff4670"
+      }
+    }
+  },
+  "codex_binary_sha256": "112fae7a5a1223e673c8a1791d32338f37df8b527ff1159bb8adac6c4dbf1b4b",
+  "offline_adapter_tests": {
+    "tests": "tests/test_codex_adapter.py tests/test_mam_token_budget.py",
+    "result": "30 passed in2.11s"
+  }
+}

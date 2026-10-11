@@ -1,0 +1,26 @@
+{
+  "run": "20261008T120152-native-rainfall-reconciliation-service-area--weeks-1-2-L1-investigation-astra-python-3c1235",
+  "frozen_unchanged": true,
+  "omitted_state_links": [
+    {
+      "path": "perturbed_inputs/ECMWF_s2s_precip_2026-09-27.zarr",
+      "reason": "symlink",
+      "target": "/work/inputs/ECMWF_s2s_precip_2026-09-27.zarr"
+    }
+  ],
+  "outcome": "pass",
+  "computed": "pass",
+  "original_runner_failure": "Optional retained scratch-state symlink caused inventory() rejection after complete submission freeze.",
+  "runner_fix": "Optional state links/special files are omitted and recorded without following them; scientific submissions retain strict plain-file collection. Persist adapter results before collection.",
+  "original_submission_artifacts_sha256": "1eeed0f8ac0891852fb0fed8cf2858df0a3b2fa5a27cc5ce95b98170a7fd01d4",
+  "collection_recovery": {
+    "reason": "Original runner aborted retaining an optional scratch-state symlink after freezing complete ordinary submission files.",
+    "agent_rerun": false,
+    "submission_changed": false,
+    "seconds": "Exact adapter duration lost before metadata persistence; excluded from timing comparisons.",
+    "recovered_at": "2026-10-08T12:07:43.763518+00:00"
+  },
+  "regression": "tests/test_optional_retention.py",
+  "paid_model_retry": false,
+  "sandbox_attestation": "Original startup was enforced before tools ran; lost end-inspection payload remains explicitly unresolved. Numerical/prose assessments are separate and pass. No inferred successful end attestation."
+}

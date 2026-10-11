@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "original_contract_preserved": true,
+  "rows": [
+    {
+      "run": "20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-accord-fdf6a8",
+      "fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+      "spec_version": 1,
+      "computed": "pass",
+      "completion": "pass",
+      "metrics_mm": {
+        "original_rmse_mm": 150.84848514915623,
+        "hindcast_rmse_mm": 166.1334589560595,
+        "climatology_rmse_mm": 165.8271154115503
+      },
+      "claims": {
+        "original_hindcast_is_past_only": [
+          "no"
+        ],
+        "original_report_supported": [
+          "no"
+        ],
+        "repaired_beats_climatology": [
+          "no"
+        ]
+      },
+      "code_sha256": "86744d47086018fb502053539f7a1f272956bc8460894c369ac6314d118f2e36",
+      "report_sha256": "8a5591b724d7732d1daec92c8857baed9e0b3e8efdabbaf412c52e03ba2574e7",
+      "review": "Concrete correct supervised-selection diagnosis; move selection inside each expanding training fold; no outcome-based tuning; honest negative skill and final-vintage scope. Independent root and author read-only review found no missed scientific fault."
+    },
+    {
+      "run": "20261008T122918-seasonal-forecast-audit-case-c-L1-investigation-astra-python-570da4",
+      "fingerprint": "8db818cc7f6a9154f5b40880dacba6ecb0d7066f6f827207e76181486f544379",
+      "spec_version": 1,
+      "computed": "pass",
+      "completion": "pass",
+      "metrics_mm": {
+        "original_rmse_mm": 150.84848514915623,
+        "hindcast_rmse_mm": 166.1334589560595,
+        "climatology_rmse_mm": 165.8271154115503
+      },
+      "claims": {
+        "original_hindcast_is_past_only": [
+          "no"
+        ],
+        "original_report_supported": [
+          "no"
+        ],
+        "repaired_beats_climatology": [
+          "no"
+        ]
+      },
+      "code_sha256": "cf7068376b9702dcaa1d1820a6c09d6c120f08939ac43dd467515df07b36f954",
+      "report_sha256": "8b99cb658b3a7d87a6534ddd06e81b89d624b167f23168d889b861f70c88b15b",
+      "review": "Concrete correct supervised-selection diagnosis; move selection inside each expanding training fold; no outcome-based tuning; honest negative skill and final-vintage scope. Independent root and author read-only review found no missed scientific fault."
+    }
+  ],
+  "between_systems_bitwise_equal": {
+    "original_hindcast_mm": true,
+    "hindcast_mm": true,
+    "forecast_mm": true
+  },
+  "interpretation": "Both retained the candidate architecture and repaired selection; neither used the accepted climatology fallback. One signposted faulted instance does not test clean-case specificity or establish a hard capability boundary."
+}

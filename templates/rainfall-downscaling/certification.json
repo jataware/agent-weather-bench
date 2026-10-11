@@ -1,0 +1,321 @@
+{
+ "schema_version": 1,
+ "template": "rainfall-downscaling",
+ "spec_version": 2,
+ "fingerprint": "175d7cf64aacbdb949d6e969c0ee18d7329c6cdabe67ed0ad21bb278b7a08074",
+ "certified_at": "20261009T133907",
+ "executor": "local-trusted",
+ "tests": {
+  "1_reference_implementations_agree": {
+   "passed": true,
+   "instances": 2,
+   "combinations": 2,
+   "comparisons": 4,
+   "largest_difference": 1.5916157281026244e-12,
+   "problems": [],
+   "regression_checks": [],
+   "tolerances": {
+    "train_year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2008.0,
+     "within_declared_magnitude": true
+    },
+    "forecast_year": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2016.0,
+     "within_declared_magnitude": true
+    },
+    "latitude": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 2.475,
+     "within_declared_magnitude": true
+    },
+    "longitude": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 38.475,
+     "within_declared_magnitude": true
+    },
+    "coarse_cell": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 3.0,
+     "within_declared_magnitude": true
+    },
+    "hindcast_mm": {
+     "tolerance": 1.3322676295519628e-08,
+     "declared": {
+      "precision": "float64",
+      "operations": 12000,
+      "magnitude": 5000
+     },
+     "largest_reference_value": 1023.54062125428,
+     "within_declared_magnitude": true
+    },
+    "hindcast_coarse_mm": {
+     "tolerance": 1.3322676295519628e-08,
+     "declared": {
+      "precision": "float64",
+      "operations": 12000,
+      "magnitude": 5000
+     },
+     "largest_reference_value": 471.5573844781639,
+     "within_declared_magnitude": true
+    },
+    "forecast_mm": {
+     "tolerance": 1.3322676295519628e-08,
+     "declared": {
+      "precision": "float64",
+      "operations": 12000,
+      "magnitude": 5000
+     },
+     "largest_reference_value": 1027.623853826414,
+     "within_declared_magnitude": true
+    },
+    "forecast_coarse_mm": {
+     "tolerance": 1.3322676295519628e-08,
+     "declared": {
+      "precision": "float64",
+      "operations": 12000,
+      "magnitude": 5000
+     },
+     "largest_reference_value": 471.5573844781639,
+     "within_declared_magnitude": true
+    },
+    "area_m2": {
+     "tolerance": 0.0002842170943040411,
+     "declared": {
+      "precision": "float64",
+      "operations": 32,
+      "magnitude": 40000000000
+     },
+     "largest_reference_value": 30909480.669773676,
+     "within_declared_magnitude": true
+    },
+    "coarse_cell_id": {
+     "tolerance": 0.0,
+     "declared": {
+      "exact": true
+     },
+     "largest_reference_value": 3.0,
+     "within_declared_magnitude": true
+    }
+   }
+  },
+  "2_known_correct_solutions_pass": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "train-to-2008--forecast-2009-2012",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "correct",
+     "kind": "known_correct",
+     "instance": "train-to-2006--forecast-2013-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "edge_geometry",
+     "kind": "known_correct",
+     "instance": "train-to-2008--forecast-2009-2012",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    },
+    {
+     "control": "edge_geometry",
+     "kind": "known_correct",
+     "instance": "train-to-2006--forecast-2013-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "pass",
+     "skill": null
+    }
+   ]
+  },
+  "3_incorrect_solutions_are_caught": {
+   "passed": true,
+   "controls": [
+    {
+     "control": "full_training",
+     "kind": "pitfall",
+     "instance": "train-to-2008--forecast-2009-2012",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "full_training",
+     "kind": "pitfall",
+     "instance": "train-to-2006--forecast-2013-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "break_conservation",
+     "kind": "incorrect",
+     "instance": "train-to-2008--forecast-2009-2012",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "break_conservation",
+     "kind": "incorrect",
+     "instance": "train-to-2006--forecast-2013-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "negative",
+     "kind": "incorrect",
+     "instance": "train-to-2008--forecast-2009-2012",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "negative",
+     "kind": "incorrect",
+     "instance": "train-to-2006--forecast-2013-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "false_claim",
+     "kind": "incorrect",
+     "instance": "train-to-2008--forecast-2009-2012",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "false_claim",
+     "kind": "incorrect",
+     "instance": "train-to-2006--forecast-2013-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "train-to-2008--forecast-2009-2012",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    },
+    {
+     "control": "cached",
+     "kind": "incorrect",
+     "instance": "train-to-2006--forecast-2013-2016",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": null
+    }
+   ],
+   "not_applicable": {
+    "optimized_forecast": "This task prescribes a specific mapping; skill optimization is a separate task."
+   }
+  },
+  "4_separability": {
+   "passed": true,
+   "pairs": [
+    {
+     "pair": "full_training",
+     "convention": "validation",
+     "kind": "accepted_vs_pitfall",
+     "separated_on": 4,
+     "instances": 4,
+     "smallest_separation_in_tolerances": 8367913870.4,
+     "largest_coincidence_in_tolerances": 0.0,
+     "status": "separated by the numbers on every instance"
+    }
+   ],
+   "known_ambiguities": []
+  },
+  "5_model_attempts": {
+   "passed": null,
+   "status": "not_run",
+   "attempts": 0,
+   "systems": [],
+   "attempts_with_an_unruled_unknown_answer": 0,
+   "attempts_assessed_under_another_fingerprint": 2,
+   "excluded_before_model_launch": [],
+   "rulings_awaiting_confirmation": 0,
+   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
+   "runs": []
+  }
+ },
+ "automatic_tests_passed": true,
+ "certified": false,
+ "review_status": {
+  "automatic_checks": "passed",
+  "trial_attempts": "pending",
+  "scientific_approval": "pending"
+ }
+}

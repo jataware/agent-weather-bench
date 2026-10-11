@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "template": "monthly-cycle-calibration",
+  "fingerprint": "45b7ffbdf625119333a5a2510ae51221437ce1d3d61b4f0922d66179a44b592d",
+  "state": "pass",
+  "basis": "Fresh full certification recomputed archived-output parity and independent-reference agreement on the revised staged input set.",
+  "fresh_reference_agreement": {
+    "passed": true,
+    "instances": 1,
+    "combinations": 1,
+    "comparisons": 1,
+    "largest_difference": 3.637978807091713e-12,
+    "problems": [],
+    "regression_checks": [
+      {
+        "name": "archived_output_parity.outer_year",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 0.0
+      },
+      {
+        "name": "archived_output_parity.forecast_year",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 0.0
+      },
+      {
+        "name": "archived_output_parity.month",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 0.0
+      },
+      {
+        "name": "archived_output_parity.system",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 0.0
+      },
+      {
+        "name": "archived_output_parity.target",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 0.0
+      },
+      {
+        "name": "archived_output_parity.candidate",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 0.0
+      },
+      {
+        "name": "archived_output_parity.hindcast_mm",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-07
+      },
+      {
+        "name": "archived_output_parity.hindcast_coefficient",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-07
+      },
+      {
+        "name": "archived_output_parity.hindcast_standardized_coefficient",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-09
+      },
+      {
+        "name": "archived_output_parity.selected_candidate",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 0.0
+      },
+      {
+        "name": "archived_output_parity.inner_loss",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-09
+      },
+      {
+        "name": "archived_output_parity.xmean",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-07
+      },
+      {
+        "name": "archived_output_parity.xstd",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-07
+      },
+      {
+        "name": "archived_output_parity.ymean",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-07
+      },
+      {
+        "name": "archived_output_parity.ystd",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-07
+      },
+      {
+        "name": "archived_output_parity.squared_error",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-05
+      },
+      {
+        "name": "archived_output_parity.monthly_msss",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-09
+      },
+      {
+        "name": "archived_output_parity.msss",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-09
+      },
+      {
+        "name": "archived_output_parity.forecast_mm",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-07
+      },
+      {
+        "name": "archived_output_parity.forecast_coefficient",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-07
+      },
+      {
+        "name": "archived_output_parity.forecast_standardized_coefficient",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-09
+      },
+      {
+        "name": "archived_output_parity.final_candidate",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 0.0
+      },
+      {
+        "name": "archived_output_parity.final_inner_loss",
+        "passed": true,
+        "largest_difference": 0.0,
+        "atol": 2.220446049274965e-09
+      },
+      {
+        "name": "archived_science_byte_identity",
+        "passed": true,
+        "archived_sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5",
+        "current_sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5"
+      },
+      {
+        "name": "original_source_inputs_unchanged",
+        "passed": true,
+        "manifest_sha256": "c88561d619ccc6767b835dc9a2b1ba6e3d26b07486aaf4e9a64546e88d66d028"
+      }
+    ],
+    "tolerances": {
+      "outer_year": {
+        "tolerance": 0.0,
+        "declared": {
+          "exact": true
+        },
+        "largest_reference_value": 2019.0,
+        "within_declared_magnitude": true
+      },
+      "forecast_year": {
+        "tolerance": 0.0,
+        "declared": {
+          "exact": true
+        },
+        "largest_reference_value": 2023.0,
+        "within_declared_magnitude": true
+      },
+      "month": {
+        "tolerance": 0.0,
+        "declared": {
+          "exact": true
+        },
+        "largest_reference_value": 12.0,
+        "within_declared_magnitude": true
+      },
+      "system": {
+        "tolerance": 0.0,
+        "declared": {
+          "exact": true
+        },
+        "largest_reference_value": 3.0,
+        "within_declared_magnitude": true
+      },
+      "target": {
+        "tolerance": 0.0,
+        "declared": {
+          "exact": true
+        },
+        "largest_reference_value": 2.0,
+        "within_declared_magnitude": true
+      },
+      "candidate": {
+        "tolerance": 0.0,
+        "declared": {
+          "exact": true
+        },
+        "largest_reference_value": 5.0,
+        "within_declared_magnitude": true
+      },
+      "hindcast_mm": {
+        "tolerance": 2.220446049274965e-07,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 10000
+        },
+        "largest_reference_value": 205.8908818692342,
+        "within_declared_magnitude": true
+      },
+      "hindcast_coefficient": {
+        "tolerance": 2.220446049274965e-07,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 10000
+        },
+        "largest_reference_value": 68.41494948349386,
+        "within_declared_magnitude": true
+      },
+      "hindcast_standardized_coefficient": {
+        "tolerance": 2.220446049274965e-09,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 100
+        },
+        "largest_reference_value": 0.8825723202721044,
+        "within_declared_magnitude": true
+      },
+      "selected_candidate": {
+        "tolerance": 0.0,
+        "declared": {
+          "exact": true
+        },
+        "largest_reference_value": 4.0,
+        "within_declared_magnitude": true
+      },
+      "inner_loss": {
+        "tolerance": 2.220446049274965e-09,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 100
+        },
+        "largest_reference_value": 1.4660480803301605,
+        "within_declared_magnitude": true
+      },
+      "xmean": {
+        "tolerance": 2.220446049274965e-07,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 10000
+        },
+        "largest_reference_value": 1.3435314221695305,
+        "within_declared_magnitude": true
+      },
+      "xstd": {
+        "tolerance": 2.220446049274965e-07,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 10000
+        },
+        "largest_reference_value": 0.9503259898225888,
+        "within_declared_magnitude": true
+      },
+      "ymean": {
+        "tolerance": 2.220446049274965e-07,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 10000
+        },
+        "largest_reference_value": 127.46974786223495,
+        "within_declared_magnitude": true
+      },
+      "ystd": {
+        "tolerance": 2.220446049274965e-07,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 10000
+        },
+        "largest_reference_value": 68.50104041415875,
+        "within_declared_magnitude": true
+      },
+      "squared_error": {
+        "tolerance": 2.220446049274965e-05,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 1000000.0
+        },
+        "largest_reference_value": 24357.88584676419,
+        "within_declared_magnitude": true
+      },
+      "monthly_msss": {
+        "tolerance": 2.220446049274965e-09,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 100
+        },
+        "largest_reference_value": 0.5454688623456475,
+        "within_declared_magnitude": true
+      },
+      "msss": {
+        "tolerance": 2.220446049274965e-09,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 100
+        },
+        "largest_reference_value": 0.2454358437910138,
+        "within_declared_magnitude": true
+      },
+      "forecast_mm": {
+        "tolerance": 2.220446049274965e-07,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 10000
+        },
+        "largest_reference_value": 185.76849113026867,
+        "within_declared_magnitude": true
+      },
+      "forecast_coefficient": {
+        "tolerance": 2.220446049274965e-07,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 10000
+        },
+        "largest_reference_value": 68.89893145368062,
+        "within_declared_magnitude": true
+      },
+      "forecast_standardized_coefficient": {
+        "tolerance": 2.220446049274965e-09,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 100
+        },
+        "largest_reference_value": 0.8232174417733772,
+        "within_declared_magnitude": true
+      },
+      "final_candidate": {
+        "tolerance": 0.0,
+        "declared": {
+          "exact": true
+        },
+        "largest_reference_value": 3.0,
+        "within_declared_magnitude": true
+      },
+      "final_inner_loss": {
+        "tolerance": 2.220446049274965e-09,
+        "declared": {
+          "precision": "float64",
+          "operations": 100000,
+          "magnitude": 100
+        },
+        "largest_reference_value": 1.191824941007517,
+        "within_declared_magnitude": true
+      }
+    }
+  },
+  "certificate_sha256": "48ce2fcfaba7e1efd23c82c6ebfad598a9500fea66fc2c2c3d9664f8c77e9fef",
+  "previous_full_per_array_proof": {
+    "path": "experiments/monthly-cycle-preserved-science-2026-10-08.json",
+    "sha256": "4f65f304abfc5d91cc37986e2777bc6afa0d71f9cc78e1231c0f5d1ef42208a6"
+  },
+  "science_sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5",
+  "archived_science_sha256": "c7a39577b3dfeb0979becda461192459cdc852a0d828a793a118f4513cc7a0e5",
+  "scientific_procedure_changed": false,
+  "source_values_changed": false,
+  "model_calls": 0
+}
