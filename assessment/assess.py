@@ -11,7 +11,7 @@ import re
 import shutil
 from pathlib import Path
 
-from .compare import STORE, EnvelopeError, align, compare, read_results, summary
+from .compare import STORE, EnvelopeError, align_partial, compare, read_results, summary
 from .execute import valid_argv
 from .judge import pending, report_question, statement_question, views
 from .outcomes import FAIL, JUDGE, PASS, UNRESOLVED, blocked, combine, headline, outcome
@@ -81,6 +81,7 @@ class _Context:
         self.params, self.submission, self.executor, self.scratch, self.seed = params, submission, executor, scratch, seed
         self.argv, self.usable, self.reference_rows, self.probe_rows = None, set(), None, None
         self.results, self.changed_rerun, self.changed_partial, self.changed_problem = None, None, None, None
+        self.gaps = {}                                                        # results the coverage check took down, with why
         self.framed = callable(getattr(self.hooks, "expected_coordinates", None))
 
     def stage(self, label, prepare=None):
@@ -91,10 +92,19 @@ class _Context:
         return folder
 
     def frame(self, raw, inputs):
-        """Results reordered to the required cases, where the template names them. Raises EnvelopeError on a gap."""
+        """(results reordered to the required cases, {name: why a result is not covered}), where the template names
+        the cases. A coordinate gap takes down the results laid out on it; an EnvelopeError when none survives."""
         if not self.framed:
-            return raw
-        return align(self.spec["results"], raw, self.hooks.expected_coordinates(inputs, self.params))
+            return raw, {}
+        return align_partial(self.spec["results"], raw, self.hooks.expected_coordinates(inputs, self.params))
+
+    def missing(self, name, needs="it needs the result {name}"):
+        """The outcome of a check that needs a result the submission did not deliver usably: it fails, naming the cause."""
+        name = name.args[0] if isinstance(name, KeyError) else name
+        what = needs.format(name=name)
+        if name in self.gaps:
+            return blocked("coverage", f"Fails with the coverage: {what}, which does not cover the required cases ({self.gaps[name]}).")
+        return blocked("envelope", f"Fails with the envelope: {what}, which is unusable.")
 
     def rerun(self, label, inputs):
         """Run the declared command on `inputs`: (framed results, slim run record, problem outcome or None)."""
@@ -108,7 +118,10 @@ class _Context:
             raw, problems = read_results(self.spec["results"], record["output"], record.get("answer"))
             if not raw:
                 raise EnvelopeError("; ".join(problems.values()))
-            framed = self.frame(raw, inputs)
+            framed, gaps = self.frame(raw, inputs)
+            lost = [name for name in gaps if name in self.usable]       # a result the submission delivered, which its command did not
+            if lost:
+                raise EnvelopeError(gaps[lost[0]])
         except EnvelopeError as error:
             slim["stderr"] = record.get("stderr", "")[-600:]
             if record.get("crashed_by_signal") and not (Path(record["output"]) / STORE).is_dir():
@@ -142,9 +155,9 @@ def assess(template, params, submission, executor, scratch, level=1, feedback=No
     def finish(answer):
         _process_steps(context, answer, checks, result)
         if spec.get("stages"):
-            failed = checks.get("coverage", {}).get("state") == FAIL
+            nothing = checks.get("coverage", {}).get("state") == FAIL and not context.usable
             result["stages"], result["stage_score"] = stages.evaluate(spec, checks, context.usable, lambda names: _stage_absolute(context, names),
-                                                                       checks["coverage"]["detail"] if failed else None)
+                                                                       checks["coverage"]["detail"] if nothing else None)
         for name in spec.get("interpretation", []):
             checks[f"interpretation.{name}"] = pending(name, interpretation(spec, name))
         for folder in scratch.glob("probe-*/stage"):
@@ -170,19 +183,27 @@ def assess(template, params, submission, executor, scratch, level=1, feedback=No
     original = context.stage("original")
     context.usable = set(raw)
     try:
-        results = context.frame(raw, original)
-        context.results = results
-        if context.framed:
-            checks["coverage"] = outcome(PASS, "The results cover exactly the required cases, each labelled with its own coordinates.")
+        results, gaps = context.frame(raw, original)
     except EnvelopeError as error:
+        context.usable = set()
         return stop("coverage", "The results do not cover exactly the required cases: " + str(error), answer)
+    context.results, context.gaps = results, gaps
+    if context.framed and not gaps:
+        checks["coverage"] = outcome(PASS, "The results cover exactly the required cases, each labelled with its own coordinates.")
+    elif gaps:
+        # One coordinate gap takes down the results laid out on it. Everything that does not need them is still assessed on its merits.
+        context.usable -= set(gaps)
+        coordinates = [gaps[name] for name in gaps if spec["results"].get(name, {}).get("kind") == "coordinate"]
+        taken = sorted(name for name in gaps if spec["results"].get(name, {}).get("kind") != "coordinate")
+        checks["coverage"] = outcome(FAIL, "The results do not cover exactly the required cases: " + "; ".join(coordinates)
+                                     + (". Unusable with it: " + ", ".join(taken) + "." if taken else "."), unusable_results=taken)
 
     for name in spec.get("invariants", []):
         try:
             ok, detail = template.hooks.INVARIANTS[name](results, params, original)
             checks[f"invariant.{name}"] = outcome(PASS if ok else FAIL, detail)
         except KeyError as missing:
-            checks[f"invariant.{name}"] = blocked("envelope", f"Fails with the envelope: it needs the result {missing}, which is unusable.")
+            checks[f"invariant.{name}"] = context.missing(missing)
     if not template.uses_reference:
         _forecast_probes(context, results, original, checks)
     else:
@@ -302,7 +323,9 @@ def _reference_checks(context, results, original, answer, checks, result):
         final = outcome(FAIL, "The results match no listed reading, and review ruled them incorrect: " + ruling["reason"],
                         ruling={key: ruling[key] for key in ("status", "ruled_by", "ruled_on", "evidence") if key in ruling}, nearest=final.get("nearest"))
     if unusable and final["state"] == PASS:
-        final = {**blocked("envelope", "Fails with the envelope: " + ", ".join(unusable) + " is unusable. The results that can be read are consistent only with accepted readings."),
+        cause = "coverage" if all(name in context.gaps for name in unusable) else "envelope"
+        final = {**blocked(cause, f"Fails with the {cause}: " + ", ".join(unusable) + (" does not cover the required cases" if cause == "coverage" else " is unusable")
+                           + ". The results that can be read are consistent only with accepted readings."),
                  "consistent_with": final["consistent_with"], "unusable_results": unusable}
     checks["variant"] = final
     result["matched_conventions"] = summarise(template, rows, narrowed) if narrowed else None
@@ -359,7 +382,7 @@ def _forecast_probes(context, forecast, original, checks):
                 before = projection(forecast, original, context.params) if callable(projection) else forecast
                 after = projection(produced, folder, context.params) if callable(projection) else produced
             except KeyError as missing:
-                broken = blocked("envelope", f"Fails with the envelope: the input-response probe needs result {missing}, which is unusable.")
+                broken = context.missing(missing, "the input-response probe needs the result {name}")
                 break
             if callable(projection) and (not isinstance(before, dict) or not before or not isinstance(after, dict)
                                          or set(before) != set(after) or set(before) - set(spec["results"])):
@@ -372,7 +395,7 @@ def _forecast_probes(context, forecast, original, checks):
                         first = {member: before[member] for member in members}
                         changed = {member: after[member] for member in members}
                     except KeyError as missing:
-                        broken = blocked("envelope", f"Fails with the envelope: response group {name} needs result {missing}, which is unusable.")
+                        broken = context.missing(missing, f"response group {name} needs the result {{name}}")
                         break
                     if not compare(spec["results"], changed, first)[0]:
                         group_changes[name].append(kind)
@@ -411,13 +434,13 @@ def _invariance_probes(context, results, checks):
                 same = compare(context.spec["results"], probe["unchanged"](produced, folder, context.params), probe["unchanged"](results, folder, context.params))[0]
                 problem = outcome(PASS if same else FAIL, probe["passes"] if same else probe["fails"], run=slim)
             except KeyError as missing:
-                problem = {**blocked("envelope", f"Fails with the envelope: it needs the result {missing}, which is unusable."), "run": slim}
+                problem = {**context.missing(missing), "run": slim}
             for part, projection in probe.get("parts", {}).items():      # the same rerun, judged on one part of the results
                 try:
                     same = compare(context.spec["results"], projection(produced, folder, context.params), projection(results, folder, context.params))[0]
                     parts[part] = outcome(PASS if same else FAIL, probe.get("part_passes", {}).get(part, probe["passes"]) if same else probe.get("part_fails", {}).get(part, probe["fails"]), run=slim)
                 except KeyError as missing:
-                    parts[part] = {**blocked("envelope", f"Fails with the envelope: it needs the result {missing}, which is unusable."), "run": slim}
+                    parts[part] = {**context.missing(missing), "run": slim}
         checks[f"probe.{name}"] = problem
         for part, row in parts.items():
             checks[f"probe.{name}.{part}"] = row
@@ -430,9 +453,9 @@ def _claims(context, results, answer, claims, checks, result):
     labels = [str(label) for label in results[dimension]] if dimension and dimension in results else []
     try:
         expected = context.hooks.expected_claims(results, context.params) if callable(getattr(context.hooks, "expected_claims", None)) else {}
-    except KeyError:
+    except KeyError as missing:
         for name in claims:
-            checks[f"claim.{name}"] = blocked("envelope", "Fails with the envelope: the results this claim rests on are unusable.")
+            checks[f"claim.{name}"] = context.missing(missing, "the claim rests on the result {name}")
         return
     for name, row in claims.items():
         got = stated.get(name) if name in stated else ...
@@ -531,7 +554,7 @@ def _stage_follows_inputs(context, names):
             return {**context.changed_problem}
         return outcome(UNRESOLVED, "No changed-data rerun is available.", "infrastructure")
     if any(name not in context.usable for name in names):
-        return blocked("envelope", "Fails with the envelope: " + ", ".join(n for n in names if n not in context.usable) + " is unusable.")
+        return context.missing(next(n for n in names if n not in context.usable), "the verdict rests on the result {name}")
     subset = {name: context.template.matched()[name] for name in names}
     if compare(subset, context.changed_rerun, context.results)[0]:
         return outcome(FAIL, "The stage's results did not change when the data changed.")

@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "objective-seasonal-outlook",
  "spec_version": 2,
- "fingerprint": "bdfa1378d8bc23791b5d2f05126f935ee577e0bbd431dc2ce5448e7c6fc1bf9b",
- "certified_at": "20261011T100200",
+ "fingerprint": "02ec6731db9eeaf3079e099c01d9a7725a92a4b9613e7dd04d53a4783e618977",
+ "certified_at": "20261011T130838",
  "executor": "local-trusted-snapshot",
  "tests": {
   "1_reference_implementations_agree": {
@@ -804,6 +804,44 @@
       "cells": 2627,
       "ranking_enabled": false
      }
+    },
+    {
+     "control": "predictor_on_target_grid",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "predictor_on_target_grid",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "fail",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
     }
    ],
    "not_applicable": {}
@@ -880,7 +918,7 @@
    "attempts": 0,
    "systems": [],
    "attempts_with_an_unruled_unknown_answer": 0,
-   "attempts_assessed_under_another_fingerprint": 0,
+   "attempts_assessed_under_another_fingerprint": 1,
    "excluded_before_model_launch": [],
    "rulings_awaiting_confirmation": 0,
    "detail": "Needs at least two agent attempts assessed under this fingerprint.",

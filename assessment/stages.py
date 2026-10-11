@@ -102,8 +102,9 @@ def evaluate(spec, checks, usable, agreement, coverage_failed=None):
 
     `usable` names the results that could be read. `agreement(names)` returns the
     outcome of a reference match on the named results, including the changed-data
-    test where the probe ran. `coverage_failed` is the detail of a failed coverage
-    check, which leaves every result unusable for stage purposes.
+    test where the probe ran. `coverage_failed` is the detail of a coverage check that
+    left no result usable; a coverage gap that takes down some results shows in
+    `usable` alone, so only the stages that own those results fail their schema.
     """
     schema_failures, profile = {}, []
     for stage in spec.get("stages", []):
@@ -139,7 +140,8 @@ def evaluate(spec, checks, usable, agreement, coverage_failed=None):
                 row["local"] = None
             state = combine(parts)
             reason = next((p["reason"] for p in parts if p["state"] == UNRESOLVED), None) if state == UNRESOLVED else None
-            words = "; ".join(f"{verdict} {row[verdict]['state']}" for verdict in ("absolute", "local") if row[verdict] is not None)
+            words = "; ".join(f"{verdict} {row[verdict]['state']}" + ("" if row[verdict]["state"] == PASS else f" ({row[verdict]['detail']})")
+                              for verdict in ("absolute", "local") if row[verdict] is not None)
             verdict = outcome(state, f"Verdicts: {words}.", reason)
         checks[f"stage.{identifier}"] = {**verdict, **row}
         profile.append({"id": identifier, "state": verdict["state"], "schema": schema["state"],

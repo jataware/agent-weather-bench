@@ -65,6 +65,12 @@ def plant(ds, defect, params, provider):
     elif defect == "issue_mismatch":
         p = ds["issue_forecast_probability"].values
         ds["issue_forecast_probability"].values[:] = np.stack([p[2], p[1], p[0]])
+    elif defect == "predictor_on_target_grid":
+        # the interpolated model means delivered as the predictor fields, with the target grid under the model-grid coordinates
+        ds = ds.drop_vars(["prepare_model_predictor_mm", "prepare_model_predictor_forecast_mm", "plat", "plon"])
+        ds["prepare_model_predictor_mm"] = ds["prepare_model_hindcast_mean_mm"].rename({"lat": "plat", "lon": "plon"})
+        ds["prepare_model_predictor_forecast_mm"] = ds["prepare_model_forecast_mean_mm"].rename({"lat": "plat", "lon": "plon"})
+        ds = ds.assign_coords(plat=ds["lat"].values, plon=ds["lon"].values)
     return ds
 
 

@@ -68,6 +68,12 @@ remain visible without blocking it. Plain `assess` does not invoke a judge;
 | `interpretation`, `judge_questions` | Prose review | Exact quoted evidence under the template's question |
 | `skill` | Forecast quality | Withheld observations and declared baselines |
 
+A coverage gap is scoped: a coordinate that is missing or does not list exactly
+the required values takes down the results laid out on it, and every check that
+needs one of them fails "with the coverage", naming the result and the gap.
+Everything else is assessed on its merits. Only when no array survives does the
+whole assessment stop at the coverage check.
+
 A rerun is a counterfactual test on the same instance. It does not require a
 program to generalize to a new task instance. A later attempt may explicitly
 retain earlier work through `--parent`; call this a retained-work attempt rather
@@ -289,7 +295,9 @@ by part rather than as one match.
 
 - *Schema.* The stage's own results must be readable, finite and of the
   declared shape. A stage whose results are unusable fails, with the first
-  problem quoted; its verdicts are not attempted.
+  problem quoted; its verdicts are not attempted. A coordinate that does not
+  list the required cases takes down only the results laid out on it, so a
+  stage that owns none of them keeps its verdicts.
 - *Absolute verdict.* Is the product right, judged from the controller's own
   inputs? It rests either on a reference match of the stage's results, which
   looks only at the conventions that can change them and, where the

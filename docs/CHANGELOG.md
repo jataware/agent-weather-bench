@@ -11,6 +11,28 @@ is an axis on which a method may be read two ways, a *reading* is a value on
 it and a *pitfall* is a wrong reading; *tooling* is the skills, libraries,
 conventions sheet or earlier work supplied to the agent.
 
+## 2026-10-11: the pilot run scoped the coverage check and made stage rows say why
+
+- A coordinate that does not list the required cases now takes down only the
+  results laid out on it (`assessment/compare.py:align_partial`,
+  `assessment/assess.py`). Before, one wrong coordinate blocked every check
+  with "the submission has no usable answer to check" and failed the schema of
+  every stage; the pilot agent's mislabelled predictor grid blanked the five
+  stages that never use it. Checks that need a taken-down result fail "with
+  the coverage" and name the result and the gap; the whole assessment stops at
+  coverage only when no array survives. The weeks 3–4 `missing_cases` control
+  now expects its covered development forecast to regenerate and respond.
+- Stage rows quote the detail of any verdict that did not pass
+  (`assessment/stages.py`), so `stage.acquire` reads "absolute fail (A check
+  this verdict rests on failed: probe.replay.)" rather than "absolute fail".
+- The envelope states that during the controller's rerun everything except
+  `{output_dir}` is read-only (`assessment/envelope.md`); the pilot's script
+  cached under `/work/state` and every rerun crashed.
+- The outlook's `issue_identity` and `score_identity` name the array, count
+  the differing cells and say how many are unsupported. A new control,
+  `predictor_on_target_grid`, plants the pilot's mistake. Record:
+  `docs/objective-outlook-pilot-2026-10-11.md`.
+
 ## 2026-10-11: the outlook review pinned its open conventions and gave the judge the bulletin's figures
 
 - The recorded review of the objective seasonal outlook before any model call

@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "seasonal-cca-reproduction",
  "spec_version": 1,
- "fingerprint": "d3c88c8939ab8e6c5691cdb5c19579015e0cff38e53ed388f8f5c02148230a95",
- "certified_at": "20261011T100658",
+ "fingerprint": "9ffc9c883cb1951b1a74d013d6ca12fe9ef046210076a256568997404dfe97c6",
+ "certified_at": "20261011T115949",
  "executor": "local-trusted",
  "tests": {
   "1_reference_implementations_agree": {

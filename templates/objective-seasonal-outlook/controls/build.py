@@ -35,6 +35,12 @@ CONTROLS = {
         # (measured: zero differing cell-years on both instances), so the pitfall shows only in the streams' fold labels
         "stage.wvg": "fail", "stage.ereg": "fail", "stage.cca": "fail"}},
     "cached": {"kind": "incorrect", "expect": {"probe.changed_data": "fail", "stage.prepare": "fail", "stage.wvg": "fail", "stage.ereg": "fail"}},
+    # The pilot agent's mistake (11 October 2026): the predictor arrays on the target grid under the model-grid coordinates.
+    # The coverage gap takes down only the results laid out on plat/plon; the streams are judged on their own results, and
+    # their local verdicts are unresolved because their upstream (prepare) failed its schema.
+    "predictor_on_target_grid": {"kind": "incorrect", "expect": {
+        "coverage": "fail", "variant": "fail", "invariant.cca_from_own_prepare": "fail",
+        "stage.prepare": "fail", "stage.wvg": "unresolved", "stage.ereg": "unresolved", "stage.cca": "unresolved", "stage.verify": "unresolved"}},
 }
 NOT_APPLICABLE = {}
 

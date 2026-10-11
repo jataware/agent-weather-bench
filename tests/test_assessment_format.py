@@ -354,6 +354,19 @@ FORECAST = {"issue": {"kind": "coordinate", "dtype": "date"}, "cell": {"kind": "
             "rain_mm": {"dims": ["issue", "cell"], "tolerance": {"atol": 1e-4, "rtol": 0}}}
 
 
+def test_a_coordinate_gap_takes_down_only_the_results_laid_out_on_it():
+    from assessment.compare import EnvelopeError, align_partial
+    spec = {"issue": {"kind": "coordinate"}, "location": {"kind": "coordinate"},
+            "rain_mm": {"dims": ["issue", "location"]}, "mean_mm": {"dims": ["location"]}}
+    frame = {"issue": np.array(["a", "b"]), "location": np.array(["x", "y"])}
+    submitted = {"issue": np.array(["a"]), "location": np.array(["y", "x"]), "rain_mm": np.array([[1.0, 2.0]]), "mean_mm": np.array([5.0, 6.0])}
+    out, gaps = align_partial(spec, submitted, frame)
+    assert set(out) == {"location", "mean_mm"} and out["mean_mm"].tolist() == [6.0, 5.0]
+    assert set(gaps) == {"issue", "rain_mm"} and gaps["rain_mm"].startswith("rain_mm is laid out on issue, and issue does not list exactly the 2")
+    with pytest.raises(EnvelopeError):
+        align_partial(spec, {"issue": np.array(["a"]), "rain_mm": np.array([[1.0, 2.0]])}, frame)   # nothing survives
+
+
 def test_forecast_is_aligned_to_the_required_cases_by_label():
     from assessment.compare import align
     frame = {"issue": np.array(["2020-01-05", "2020-01-12"]), "cell": np.array([0.0, 1.0])}
@@ -475,7 +488,9 @@ def test_unit_error_and_missing_cases_are_caught_without_a_reference(weeks, week
     scaled = _assess_weeks(weeks, weeks_controls, "multiplied_by_14", tmp_path / "a")
     assert scaled["checks"]["invariant.magnitude_of_a_14_day_total"]["state"] == FAIL
     short = _assess_weeks(weeks, weeks_controls, "missing_cases", tmp_path / "b")
-    assert short["checks"]["coverage"]["state"] == FAIL and short["checks"]["probe.replay"]["blocked_by"] == "coverage"
+    assert short["checks"]["coverage"]["state"] == FAIL and short["checks"]["coverage"]["unusable_results"] == ["final_mm"]
+    assert short["checks"]["invariant.totals_not_negative"]["blocked_by"] == "coverage"       # it needs the final forecast
+    assert short["checks"]["probe.replay"]["state"] == PASS, "the development forecast, which is covered, still regenerates"
     assert short["checks"]["envelope"]["state"] == PASS and "skill" not in short
 
 

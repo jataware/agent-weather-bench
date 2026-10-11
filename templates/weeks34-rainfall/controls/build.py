@@ -28,8 +28,12 @@ CONTROLS = {
     # unseeded noise also moves the forecasts before the cut date, so the causality probe cannot pass either
     "not_reproducible": {"kind": "incorrect", "variant": {"not_reproducible": True},
                          "expect": {"probe.replay": "fail", "probe.no_future_information": "fail"}},
-    # a forecast that does not cover the required cases fails there, and every check that rests on it fails with it
-    "missing_cases": {"kind": "incorrect", "variant": {"missing_cases": True}, "expect": {"coverage": "fail", "envelope": "pass"}, "otherwise": "fail"},
+    # A forecast that does not cover the required cases fails there, and every check that rests on the missing result fails
+    # with it. The coordinate gap takes down only the results laid out on it (since 11 October 2026): the final forecast is
+    # short, so the development forecast still regenerates and still follows its inputs.
+    "missing_cases": {"kind": "incorrect", "variant": {"missing_cases": True},
+                      "expect": {"coverage": "fail", "envelope": "pass", "probe.replay": "pass", "probe.responds_to_inputs": "pass"}, "otherwise": "fail"},
+    # both issue coordinates are mislabelled, so no result survives and every check fails with the coverage
     "mislabelled_dates": {"kind": "incorrect", "variant": {"mislabelled_dates": True}, "expect": {"coverage": "fail", "envelope": "pass"}, "otherwise": "fail"},
     "no_answer": {"kind": "incorrect", "variant": {}, "post": "delete", "expect": {"envelope": "fail"}, "otherwise": "fail"},
     "level2_true_score": {"kind": "known_correct", "variant": {}, "post": "claim_true", "level": 2, "feedback_requests": 2, "expect": {}},

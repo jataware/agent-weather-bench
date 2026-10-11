@@ -48,6 +48,19 @@ def test_a_broken_upstream_group_fails_its_own_stage_and_leaves_the_local_verdic
     assert score["weighted_fraction"] == pytest.approx(1 / 5) and score["failed"] == ["first"] and score["unresolved"] == ["second"]
 
 
+def test_a_coverage_gap_fails_only_the_stage_that_owns_the_results_it_took_down():
+    checks = _checks(**{"invariant.gate": PASS, "invariant.from_own_a": "blocked", "invariant.d_identity": PASS})
+    profile, score = stages.evaluate(_spec(), checks, {"b", "c", "d"}, lambda names: outcome(PASS, "agree"))   # a was taken down by its coordinate
+    assert [row["state"] for row in profile] == [FAIL, UNRESOLVED, PASS] and profile[0]["schema"] == FAIL
+    assert "invalid_upstream_contract" in checks["stage.second"]["detail"] or checks["stage.second"]["reason"] == stages.INVALID_UPSTREAM
+
+
+def test_a_stage_row_names_the_reason_of_a_verdict_that_did_not_pass():
+    checks = _checks(**{"invariant.gate": FAIL, "invariant.from_own_a": PASS, "invariant.d_identity": PASS})
+    stages.evaluate(_spec(), checks, {"a", "b", "c", "d"}, lambda names: outcome(PASS, "agree"))
+    assert "invariant.gate" in checks["stage.second"]["detail"], checks["stage.second"]["detail"]
+
+
 def test_a_failed_coverage_check_leaves_every_result_unusable():
     checks = _checks(**{"invariant.gate": PASS, "invariant.from_own_a": PASS, "invariant.d_identity": PASS})
     profile, score = stages.evaluate(_spec(), checks, {"a", "b", "c", "d"}, lambda names: outcome(PASS), coverage_failed="lat is wrong")

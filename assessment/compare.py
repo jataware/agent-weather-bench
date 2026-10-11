@@ -203,26 +203,45 @@ def compare(results_spec, submitted, reference):
 
 
 def align(results_spec, submitted, frame):
-    """The submitted arrays reordered to the expected coordinates, or an EnvelopeError naming the gap.
+    """The submitted arrays reordered to the expected coordinates, or an EnvelopeError naming the first gap."""
+    out, gaps = align_partial(results_spec, submitted, frame)
+    if gaps:
+        raise EnvelopeError(next(iter(gaps.values())))
+    return out
+
+
+def align_partial(results_spec, submitted, frame):
+    """(submitted arrays reordered to the expected coordinates, {name: why a result is not covered}).
 
     `frame` holds the exact coordinate values a submission must cover. Used where
-    there is no reference answer, only a required set of cases.
+    there is no reference answer, only a required set of cases. A coordinate that is
+    missing or does not list exactly the expected values takes down the results laid
+    out on it; every other result is framed. An EnvelopeError when no array survives.
     """
-    orders = {}
+    orders, gaps = {}, {}
     for name, expected in frame.items():
         if name not in submitted:
-            raise EnvelopeError(f"{name} is missing or unusable")
+            gaps[name] = f"{name} is missing or unusable"
+            continue
         order = _order(submitted[name], expected, results_spec[name].get("tolerance", {}).get("atol", 0))
         if order is None:
-            raise EnvelopeError(f"{name} does not list exactly the {len(expected)} expected values (it has {len(submitted[name])})")
+            gaps[name] = (f"{name} lists {len(expected)} values, but not the expected ones" if len(submitted[name]) == len(expected)
+                          else f"{name} does not list exactly the {len(expected)} expected values (it has {len(submitted[name])})")
+            continue
         orders[name] = order
-    out = {name: frame[name] for name in frame}
+    out = {name: frame[name] for name in frame if name not in gaps}
     for name, row in results_spec.items():
         if name in frame or name not in submitted:
+            continue
+        broken = [dim for dim in row.get("dims", []) if dim in gaps]
+        if broken:
+            gaps[name] = f"{name} is laid out on {broken[0]}, and {gaps[broken[0]]}"
             continue
         value = submitted[name]
         for axis, dim in enumerate(row.get("dims", [])):
             if dim in orders:
                 value = np.take(value, orders[dim], axis=axis)
         out[name] = value
-    return out
+    if not any(name not in frame for name in out):
+        raise EnvelopeError(next(iter(gaps.values())))
+    return out, gaps

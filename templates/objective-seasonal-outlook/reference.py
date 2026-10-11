@@ -210,16 +210,28 @@ def score_identity(results, params, inputs=None):
     expected = {"verify_stream_rps": stream_rps * support, "verify_objective_rps": objective_rps * support, "verify_climatology_rps": baseline * support,
                 "verify_stream_rpss": 1 - stream_rps[:, support].mean(1) / baseline[support].mean(),
                 "verify_objective_rpss": 1 - objective_rps[support].mean() / baseline[support].mean()}
-    gap = max(float(np.max(np.abs(np.asarray(results[name], dtype="float64") - value))) for name, value in expected.items())
-    return gap <= 1e-7, f"Maximum discrepancy between stated and recomputed verification scores: {gap:g}."
+    gaps = {name: np.abs(np.asarray(results[name], dtype="float64") - value) for name, value in expected.items()}
+    worst = max(gaps, key=lambda name: float(np.max(gaps[name])))
+    gap = float(np.max(gaps[worst]))
+    if gap <= 1e-7:
+        return True, f"Maximum discrepancy between stated and recomputed verification scores: {gap:g}."
+    where = ""
+    if gaps[worst].ndim >= 2:                                        # a cell array: say how many cells differ, and whether they are supported
+        off = gaps[worst] > 1e-7
+        cells = off.reshape(-1, *off.shape[-2:]).any(0)
+        where = f"; {int(cells.sum())} cells differ, {int((cells & ~support).sum())} of them unsupported"
+    return False, f"Maximum discrepancy between stated and recomputed verification scores: {gap:g}, in {worst}{where}."
 
 
 def issue_identity(results, params, inputs=None):
     science = _module("science")
     gap = float(np.max(np.abs(results["issue_forecast_probability"] - results["combine_forecast_probability"])))
-    dominant = science.dominant(results["combine_forecast_probability"]) * _support(results)
-    same = np.array_equal(results["issue_dominant_category"].astype(int), dominant)
-    return gap <= 1e-9 and same, f"Issued probabilities differ from the objective by at most {gap:g}; dominant categories {'agree' if same else 'disagree'}."
+    support = _support(results)
+    dominant = science.dominant(results["combine_forecast_probability"]) * support
+    differ = results["issue_dominant_category"].astype(int) != dominant
+    same = not differ.any()
+    where = "" if same else f" on {int(differ.sum())} cells, {int((differ & ~support).sum())} of them unsupported (where the category must be zero)"
+    return gap <= 1e-9 and same, f"Issued probabilities differ from the objective by at most {gap:g}; dominant categories {'agree' if same else 'disagree'}{where}."
 
 
 def cca_agreement(results, params, inputs=None):

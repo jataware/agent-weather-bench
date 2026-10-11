@@ -81,11 +81,13 @@ composition reuses that template's instruments as its stage rubric.
 5. Run one cheap system on one instance, once. Its purpose is to expose
    contract and controller defects and to give the first full trace, not to
    produce a result. Defects are diagnosed on controls and fixed as versioned
-   changes; the agent is not retried. Prepared 11 October 2026: the pilot
-   system is `systems/outlook-pilot-codex-luna` (the codex-luna adapter,
-   subscription-backed, under the outlook's budget tier; validated by the
-   system tests). The run waits on Docker, which has not answered since
-   9 October 2026.
+   changes; the agent is not retried. Done 11 October 2026 with
+   `systems/outlook-pilot-codex-luna` on MAM 2015
+   (`docs/objective-outlook-pilot-2026-10-11.md`): four controller and
+   contract defects found and fixed (a coverage gap no longer blanks every
+   stage; stage rows quote their reasons; the envelope states the read-only
+   rerun; two identity checks say where), one new control, and the first
+   full trace. The agent stopped after 4 minutes with CCA undone.
 6. Launch the matrix: several systems on every instance, one attempt each,
    two concurrent, with the trace of each read stage by stage before the next
    pair. The systems vary both the backbone and the harness, with the tooling

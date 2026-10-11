@@ -394,6 +394,14 @@ departure from the design above, with its reason.
   the WVG-leak control fails exactly `stage.wvg` (absolute unresolved, local fail), 7 of 8.
   Review questions a stage lists are informational: the judge rows keep their own place
   in the policy, so a control without a judge run is not unresolved on a stage.
+- **Step 5 ran and paid for itself: the pilot exposed a cascade the controls could not show.**
+  Every control delivers every coordinate, so no control had ever put a wrong coordinate in
+  front of the stage layer. The pilot agent did, and one wrong `plat` blanked all eight
+  stages. The rule is now scoped (a coordinate gap takes down the results laid out on it),
+  a control plants that mistake, stage rows quote their reasons, the envelope states the
+  read-only rerun, and two identity checks say where. The agent itself stopped after four
+  minutes with CCA copied from eReg; the stage rows ranked that as 1 of 8 with reasons
+  (`docs/objective-outlook-pilot-2026-10-11.md`).
 - **The thresholds pitfall is invisible in the prepare stage.** Classifying a year with
   boundaries from all training years gives the same category as boundaries that exclude
   that year: measured zero differing cell-years on both instances (confirmed), and the
