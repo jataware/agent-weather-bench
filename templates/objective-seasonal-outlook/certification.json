@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "objective-seasonal-outlook",
  "spec_version": 2,
- "fingerprint": "649bb83fd9b2128cd1887eb45ae9f0a5da6d80761155645ef2707ba069cb57a3",
- "certified_at": "20261009T145455",
+ "fingerprint": "bdfa1378d8bc23791b5d2f05126f935ee577e0bbd431dc2ce5448e7c6fc1bf9b",
+ "certified_at": "20261011T100200",
  "executor": "local-trusted-snapshot",
  "tests": {
   "1_reference_implementations_agree": {

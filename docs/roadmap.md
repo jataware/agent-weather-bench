@@ -74,11 +74,18 @@ composition reuses that template's instruments as its stage rubric.
 4. Review the task before any model call: the brief as the agent sees it,
    every rubric row, the controls, the budget and the cost estimate. The
    review is recorded. A domain scientist's reading is sought here if one is
-   available, and is not a precondition.
+   available, and is not a precondition. Done 11 October 2026:
+   `docs/objective-outlook-review-2026-10-11.md` (own pass plus a cold read by
+   a context-free agent; fourteen open conventions pinned; judge given the
+   bulletin's figures; budget tier set; re-certified).
 5. Run one cheap system on one instance, once. Its purpose is to expose
    contract and controller defects and to give the first full trace, not to
    produce a result. Defects are diagnosed on controls and fixed as versioned
-   changes; the agent is not retried.
+   changes; the agent is not retried. Prepared 11 October 2026: the pilot
+   system is `systems/outlook-pilot-codex-luna` (the codex-luna adapter,
+   subscription-backed, under the outlook's budget tier; validated by the
+   system tests). The run waits on Docker, which has not answered since
+   9 October 2026.
 6. Launch the matrix: several systems on every instance, one attempt each,
    two concurrent, with the trace of each read stage by stage before the next
    pair. The systems vary both the backbone and the harness, with the tooling

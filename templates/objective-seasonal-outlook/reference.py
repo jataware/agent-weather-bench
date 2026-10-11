@@ -353,6 +353,27 @@ INVARIANCE_PROBES = {"held_out_year_isolation": {
                    "cca": "A year's own observation enters its CCA hindcast."}}}
 
 
+def judge_summary(results, params):
+    """Figures a bulletin states and a reviewer can check: area shares by dominant category, mean issued
+    probabilities over the supported window, and the hindcast skill scores."""
+    support = _support(results)
+    cells = int(support.sum())
+    if cells == 0:
+        return "\nIssued outlook: no supported cells.\n"
+    names = ("below normal", "near normal", "above normal")
+    dominant = np.asarray(results["issue_dominant_category"]).astype(int)[support]
+    probabilities = np.asarray(results["issue_forecast_probability"], dtype="float64")[:, support]
+    lines = ["", f"Issued outlook over the {cells} supported cells (written by the controller from the submitted arrays):"]
+    for k, name in enumerate(names):
+        share = float((dominant == k).mean()) * 100
+        lines.append(f"- {name}: dominant on {share:.1f}% of supported cells; issued probability mean {probabilities[k].mean():.3f}, "
+                     f"min {probabilities[k].min():.3f}, max {probabilities[k].max():.3f}")
+    rpss = np.asarray(results["verify_stream_rpss"], dtype="float64")
+    lines.append("- cross-validated RPSS: CCA {:.4f}, eReg {:.4f}, WVG {:.4f}, objective {:.4f}".format(*rpss, float(results["verify_objective_rpss"])))
+    lines.append("- unsupported cells: {} of {}".format(int((~support).sum()), support.size))
+    return "\n".join(lines) + "\n"
+
+
 def expected_claims(results, params):
     rpss = list(np.asarray(results["verify_stream_rpss"], dtype="float64")) + [float(results["verify_objective_rpss"])]
     return {"hindcast_skill": [{"positive"} if v > 1e-9 else {"nonpositive"} if v < -1e-9 else {"positive", "nonpositive"} for v in rpss]}

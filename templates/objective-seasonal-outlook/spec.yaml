@@ -143,6 +143,16 @@ stages:
 assessment_policy:
   completion: [envelope, coverage, invariant.probabilities_valid, invariant.support_consistent, stage.*]
   ranking: [envelope, coverage, invariant.probabilities_valid, invariant.support_consistent, stage.*]
+# The budget tier for an attempt, copied into the budget of every system that runs this task (the runner reads the
+# system's budget). Set after the control run: the reference computes the eight stages in about twenty seconds, the
+# CHIRPS file alone is 230 MB, and the cold-read review estimated six to ten hours of agent work dominated by CCA.
+budget:
+  max_seconds: 14400          # four hours of wall time
+  max_tool_calls: 600
+  command_seconds: 1800       # one run of the submitted command
+  max_total_tokens: 4000000
+  memory: 6g                  # CHIRPS at full resolution is 410 MB in float32 and twice that in float64
+  cpus: 2
 skill:
   ranking_enabled: false
   ranking: withheld-season RPSS of the issued outlook, higher is better

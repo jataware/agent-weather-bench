@@ -46,7 +46,9 @@ own all wording they use.
 
 Every template also stages inputs (`stage_inputs`), restores data (`prepare`),
 enumerates supported instances (`candidate_instances`) and fills the brief
-(`brief_fields`). Keep science helpers within the template folder so their code
+(`brief_fields`). A template whose prose is judged against figures may define
+`judge_summary(results, params)`, whose text is appended to the controller's
+array summary shown to the judge. Keep science helpers within the template folder so their code
 is fingerprinted. A Python implementation is part of the rubric's contract even
 when it lives in another file.
 

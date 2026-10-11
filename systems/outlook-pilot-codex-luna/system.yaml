@@ -1,0 +1,26 @@
+schema_version: 1
+id: outlook-pilot-codex-luna
+kind: agent
+description: Roadmap step 5 pilot for the objective seasonal outlook. The codex-luna system (gpt-6-luna,
+  ChatGPT login, Docker-only tools, Codex binary named explicitly) under the outlook's budget tier from
+  templates/objective-seasonal-outlook/spec.yaml. The adapter is byte-identical to codex-luna's. Subscription-backed,
+  so its usage is recorded separately from API charges. One instance, one attempt, no retry.
+driver:
+  kind: command
+  argv:
+  - '{python}'
+  - '{driver}/adapter.py'
+  env: [CODEX_BINARY]
+runtime:
+  image: sha256:14ded77c764dccdcaeef07f91c549709b4ff3549d0c30f5dc780e4376347917a
+  memory: 6g
+  cpus: 2
+budget:
+  max_seconds: 14400
+  max_tool_calls: 600
+  command_seconds: 1800
+  max_total_tokens: 4000000
+substrate:
+  paths:
+  - adapter.py
+  instructions: ''

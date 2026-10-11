@@ -11,6 +11,39 @@ is an axis on which a method may be read two ways, a *reading* is a value on
 it and a *pitfall* is a wrong reading; *tooling* is the skills, libraries,
 conventions sheet or earlier work supplied to the agent.
 
+## 2026-10-11: the outlook review pinned its open conventions and gave the judge the bulletin's figures
+
+- The recorded review of the objective seasonal outlook before any model call
+  (`docs/objective-outlook-review-2026-10-11.md`) found fourteen places where
+  the brief or practice sheet left a number open that the reference pins to
+  parts in a million: box-edge inclusivity on the SST grids, the standard
+  deviation's divisor, per-fold versus once-only standardization, the month
+  weighting of a seasonal SST mean, the weights of the conservative mean, the
+  model-to-target regridding method (undefined), float32 accumulation, the
+  eReg residual divisor and inflation formula, the fold labelling rule, the
+  one-class logistic case (which occurs on the data), the nested CCA selection,
+  the Student-t degrees of freedom, the fill of categories, counts and scores
+  on unsupported cells, and two deliverables listed without a definition. The
+  practice sheet and brief now state each; the grader did not change.
+- Added an optional template hook `judge_summary(results, params)` whose text
+  is appended to the controller's array summary shown to the judge
+  (`assessment/assess.py:judge_files`, a deciding module, so every template's
+  fingerprint changed and the five locked templates were re-certified). The
+  outlook uses it to give the reviewer the area shares by dominant category,
+  the issued probabilities' mean and range per category, and the skill scores.
+- Templates may declare a `budget` tier (the outlook: four hours, 600 tool
+  calls, 30 minutes per command run, 4 million tokens, 6 GB, two CPUs). The
+  runner still reads the budget of the system; the tier is the value a system
+  copies to attempt the task.
+
+- Added the step-5 pilot system `systems/outlook-pilot-codex-luna`: the
+  codex-luna adapter unchanged, the Codex binary named explicitly, and the
+  outlook's budget tier (four hours, 600 tool calls, 30 minutes per command,
+  4 million tokens, 6 GB). The outlook re-certified under the pinned brief
+  (tests 1 to 4 pass; 8 known-correct and 20 incorrect controls as expected;
+  6 convention pairs separated), and the five locked templates re-certified
+  under the new fingerprint.
+
 ## 2026-10-09: per-stage verdicts for a long-horizon composition
 
 - Added `stages` to the contract (`assessment/stages.py`, a deciding module):

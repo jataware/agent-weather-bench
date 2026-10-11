@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "rainfall-downscaling",
  "spec_version": 2,
- "fingerprint": "175d7cf64aacbdb949d6e969c0ee18d7329c6cdabe67ed0ad21bb278b7a08074",
- "certified_at": "20261009T133907",
+ "fingerprint": "f3b565c6da38cf4c0ad0e8ecdc40a1b7980138c7e08d399b380867533cb30056",
+ "certified_at": "20261011T100610",
  "executor": "local-trusted",
  "tests": {
   "1_reference_implementations_agree": {

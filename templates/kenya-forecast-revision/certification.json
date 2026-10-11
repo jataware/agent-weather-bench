@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "kenya-forecast-revision",
  "spec_version": 3,
- "fingerprint": "3847d889fd6ebf362de01d9a663d98c6b505c93edfc6828e5d9d98f60cdf61cc",
- "certified_at": "20261009T133405",
+ "fingerprint": "f2ec9f7d38b2377878f57a7f4dcb4d5b6f090360654219069dec10731f8b56a9",
+ "certified_at": "20261011T100200",
  "executor": "local-trusted",
  "tests": {
   "1_reference_implementations_agree": {

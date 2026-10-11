@@ -257,11 +257,20 @@ C3S route is not used: its forecast issuance currently returns only ECMWF.
 
 ## Budget
 
-A tier above the existing templates, declared in the spec: hours of wall
-time, hundreds of tool calls, a token allowance to match, with cost recorded
-per attempt. The exact values are set after the control run shows the
-control's own runtime at full scale. Scientific native I/O stays serial per
-process with at most two shared workers.
+A tier above the existing templates, declared in the spec and copied into
+the budget of every system that attempts the task (the runner reads the
+system's budget): four hours of wall time, 600 tool calls, 30 minutes per
+run of the submitted command, 4 million tokens, 6 GB of memory and two CPUs.
+Set 11 October 2026 after the control run (the reference computes the eight
+stages in about twenty seconds; the CHIRPS file is 230 MB on disk and 410 MB
+in memory in float32) and the cold-read review (six to ten hours of agent
+work estimated, dominated by CCA). Cost per attempt at these limits: an
+Opus-class backbone at about 4 million mostly-cached input tokens is of the
+order of 20 to 40 dollars (guess); a Sonnet-class backbone a third of that.
+Cost is recorded per attempt. The step-5 pilot system
+`systems/outlook-pilot-codex-luna` carries the tier (the first system to do
+so). Scientific native I/O stays serial per process
+with at most two shared workers.
 
 ## What the control run fixes
 

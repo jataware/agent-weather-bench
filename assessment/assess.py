@@ -64,7 +64,10 @@ def judge_files(template, params, submission, level=1, supplied=()):
     """What the judge is shown for one submission: the brief, the submission's text and a summary of its arrays."""
     try:
         results, _ = read_results(template.spec["results"], submission, None)
-        extra = {"controller/results-summary.txt": "Summary of the arrays in results.zarr, written by the controller.\n" + summary(template.spec["results"], results)}
+        text = summary(template.spec["results"], results)
+        if callable(getattr(template.hooks, "judge_summary", None)):            # a template may add the figures its bulletin is judged against
+            text += template.hooks.judge_summary(results, params)
+        extra = {"controller/results-summary.txt": "Summary of the arrays in results.zarr, written by the controller.\n" + text}
     except EnvelopeError:
         extra = {}
     return views(submission, template.brief(params, level, supplied), extra)

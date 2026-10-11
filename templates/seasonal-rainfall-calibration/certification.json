@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "seasonal-rainfall-calibration",
  "spec_version": 4,
- "fingerprint": "d3beaf70b0f6bafbe900408729c0cebdc06fbada3e301873c76409d0d67b2eb4",
- "certified_at": "20261009T133647",
+ "fingerprint": "e5bd81c3ff88c2eca2ea3bb02e345cf95478f20243e6af2a80ee77c311d3b1a2",
+ "certified_at": "20261011T100419",
  "executor": "local-trusted",
  "tests": {
   "1_reference_implementations_agree": {

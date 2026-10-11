@@ -193,7 +193,13 @@ request covers all the questions of one run.
 
 **The judge sees text, never raw arrays.** It is shown the brief, the report,
 `answer.json`, the submitted code, and a controller-written summary of each
-array: its dimensions, shape, minimum, mean and maximum. It is not shown the
+array: its dimensions, shape, minimum, mean and maximum. A template may add
+lines to that summary through an optional `judge_summary(results, params)`
+hook, for the figures its prose is judged against: the objective outlook adds
+the area share of each dominant category, the mean, minimum and maximum issued
+probability per category over the supported window, and the hindcast skill
+scores, so "every number the bulletin states appears in the arrays or follows
+from them" is decidable from what the judge sees. It is not shown the
 controller's findings, so a failed numerical check cannot be counted twice.
 
 **The judge has its own control cases.** Twelve small submissions, each with one
