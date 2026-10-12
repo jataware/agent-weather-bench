@@ -359,6 +359,7 @@ departure from the design above, with its reason.
   pass the gate, so the correlation floor is 0.6 and the RPSS margin 0.08
   (`var/validation/objective-seasonal-outlook/cca-engine-spread-mam.json`). This supersedes
   the 0.85 decided before the measurement; it is the measurement the record called for.
+  Confirmed by the project owner on 12 October 2026.
 - **CCA mode selection is nested after all.** With selection on all years the correct control
   failed the held-out-year probe, because a year's observation enters its own hindcast through
   the selection and the pooled residual variance. The reference now selects modes and takes
@@ -402,6 +403,13 @@ departure from the design above, with its reason.
   read-only rerun, and two identity checks say where. The agent itself stopped after four
   minutes with CCA copied from eReg; the stage rows ranked that as 1 of 8 with reasons
   (`docs/objective-outlook-pilot-2026-10-11.md`).
+- **Step 6 is a tooling ablation, not a harness matrix.** Four arms on Claude Sonnet 5.5
+  through the benchmark's own controller (plain Python; africas2s and acmadDL without
+  their guides; the Rhiza catalog and the ACCORD guides without the libraries; the full
+  stack), one instance, one attempt each, arms sequential. Each record carries which
+  library functions the delivered command called in a traced replay, so "used" means
+  called and not imported (`docs/objective-outlook-ablation-2026-10-12.md`). The CCA
+  gate stays at 0.6 and 0.08, confirmed by the project owner on 12 October 2026.
 - **The thresholds pitfall is invisible in the prepare stage.** Classifying a year with
   boundaries from all training years gives the same category as boundaries that exclude
   that year: measured zero differing cell-years on both instances (confirmed), and the

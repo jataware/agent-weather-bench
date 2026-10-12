@@ -1,0 +1,45 @@
+schema_version: 1
+id: ablation-sonnet-skills
+kind: agent
+description: 'Ablation arm 3, skills only: the same backbone, controller, budget and base image as arm 1, with the
+  Rhiza weather-skills catalog (and its weather_skills_core runner) and the two ACCORD skill guides in the image,
+  and neither ACCORD library installed.'
+driver:
+  kind: anthropic
+  model: claude-sonnet-5-5
+  api_key_env: ANTHROPIC_API_KEY
+  effort: high
+  max_usd: 40
+  input_usd_per_million: 2
+  output_usd_per_million: 10
+  cache: true
+  cache_write_usd_per_million: 2.5
+  cache_read_usd_per_million: 0.1
+  max_total_tokens: 80000000
+  max_output_tokens: 16000
+  max_turns: 900
+  max_context_tokens: 900000
+  compact_above_tokens: 300000
+  max_retries: 5
+  response_timeout_seconds: 900
+runtime:
+  image: sha256:1ffd3d08a51cb171c8d289c588847683a683fd4bda13450b63642b7bab5dcd51
+  memory: 6g
+  cpus: 2
+budget:
+  max_seconds: 14400
+  max_tool_calls: 600
+  command_seconds: 1800
+  max_total_tokens: 80000000
+substrate:
+  paths: []
+  instructions: 'Weather skills are under /catalog/skills (the Rhiza weather-skills and CHC skills catalogs; discover
+    them with find /catalog/skills -name SKILL.md). The ACCORD skill guides for africas2s and acmaddl are under
+    /opt/accord-current/docs; those two libraries are not installed here, so the guides serve as written procedure
+    only. Run skill scripts with python, not uv run: dependencies are preinstalled and the runtime is offline. Generic
+    Python is also allowed.'
+  libraries:
+  - weather_skills_core
+  image_paths:
+  - /catalog/skills
+  - /opt/accord-current/docs

@@ -11,6 +11,7 @@
 - [Parallel investigations](parallel-investigations-2026-10-08.md): grader stress, delivery reconciliation and forecast audit.
 - [Objective outlook review](objective-outlook-review-2026-10-11.md): the recorded review before any model call: open conventions pinned, judgeability of the bulletin review, budget tier and cost estimate.
 - [Objective outlook pilot](objective-outlook-pilot-2026-10-11.md) — the step-5 pilot run: what the agent did, the four controller defects it exposed and their fixes, the stage verdicts
+- [Objective outlook ablation](objective-outlook-ablation-2026-10-12.md) — step 6: four tooling arms on Claude Sonnet 5.5, with substantive-use tracing; plan, cost and results.
 - [MAM acquisition study](mam-acquisition-study-2026-10-08.md): a complete retrieval-to-outlook task, native-tool parity and bounded budget/discovery findings.
 - [Efficiency and forecasting difficulty](two-track-investigation-2026-10-08.md): concurrent bounded investigations of tool efficiency and a harder forecasting objective.
 - [Guided weather-tool efficiency](mam-efficiency-study-2026-10-08.md): matched Luna attempts, native helper use and complete resource accounting.

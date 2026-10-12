@@ -102,19 +102,50 @@ def command_driver(config, substrate, request, box, log, stderr_path):
     return {"status":status,"tool_calls":count,"usage":usage,"usage_source":"adapter_reported" if usage else "unknown","seconds":time.monotonic()-started}
 
 
+ELISION_NOTE = "The controller removed this older tool output to fit the context window; rerun the command if you need it again."
+
+
+def compact(messages, keep_recent=8, minimum_chars=400):
+    """Elide the oldest half of the long tool results, keeping the last `keep_recent` turns whole. Returns how many."""
+    slots = []
+    for index, message in enumerate(messages[:-1] if len(messages) > 1 else []):
+        if message["role"] != "user" or not isinstance(message["content"], list): continue
+        for block in message["content"]:
+            if block.get("type") == "tool_result" and isinstance(block.get("content"), str) and len(block["content"]) > minimum_chars:
+                slots.append((index, block))
+    recent = {index for index, _ in slots[-keep_recent:]} if slots else set()
+    eligible = [(index, block) for index, block in slots if index not in recent]
+    chosen = eligible[:max(1, len(eligible)//2)] if eligible else []
+    for _, block in chosen:
+        try: exit_code = json.loads(block["content"]).get("exit_code")
+        except (ValueError, AttributeError): exit_code = None
+        block["content"] = json.dumps({"elided": True, "exit_code": exit_code, "note": ELISION_NOTE})
+    return len(chosen)
+
+
 def anthropic_driver(config, request, box, log, stderr_path=None):
     from .model import Model, BudgetExceeded
     cfg = {**config["driver"],"max_seconds":config["budget"]["max_seconds"]}
     model = Model(cfg)
-    system = "You are carrying out a weather research task. Use execute for scientific commands in the isolated /work runtime. Read the task and contracts. Write deliverables under /work/submission and retained material under /work/state. No other host tools are available."
+    system = ("You are carrying out a weather research task. Use execute for scientific commands in the isolated /work runtime. "
+              "Read the task and contracts. Write deliverables under /work/submission and retained material under /work/state. "
+              "No other host tools are available. When the conversation grows long, the controller may replace older tool "
+              "outputs with a short elision note; keep what you need in files.")
     tools = [{"name":"execute","description":"Run a command in the isolated scientific runtime.","input_schema":{"type":"object","properties":{"command":{"type":"string"}},"required":["command"]}}]
     for tool in request.get("tools", []):
         if tool["name"] == 'score_development':
             tools.append({"name":tool['name'],"description":tool["description"],"input_schema":tool["inputSchema"]})
     messages = [{"role":"user","content":json.dumps(request)}]
     status,count,started = "turn_limit",0,time.monotonic()
+    threshold = cfg.get("compact_above_tokens")
     try:
         for _ in range(cfg["max_turns"]):
+            if threshold:
+                # Keep the prompt under the compaction threshold by eliding old tool outputs, oldest first.
+                while (before := model.count(system, messages, tools)) > threshold:
+                    elided = compact(messages)
+                    if not elided: break
+                    events(log,{"type":"compaction","elided_tool_results":elided,"input_tokens_before":before})
             response = model.call(system,messages,tools)
             events(log,{"type":"model","response":response})
             messages.append({"role":"assistant","content":response["content"]})

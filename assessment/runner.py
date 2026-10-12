@@ -24,7 +24,7 @@ from .execute import Docker
 from .feedback import SCORE_TOOL, DevelopmentFeedback
 from .outcomes import headline
 from .spec import ROOT
-from .substrate import image_path_use, substrate_record
+from .substrate import image_path_use, library_calls, substrate_record
 
 RUNS = ROOT / "var/template-runs"
 
@@ -253,10 +253,30 @@ def _assess_run(template, folder, judge=True):
     assessment["sandbox"] = read(folder / "controller/provenance.json")["sandbox"]["state"]
     assessment["assessed_at"] = datetime.now(timezone.utc).isoformat()
     shutil.rmtree(work, ignore_errors=True)
+    _trace_library_calls(template, folder, meta, config, executor)
     if judge:
         _judge(template, folder, assessment)
     _keep(folder, assessment)
     return assessment
+
+
+def _trace_library_calls(template, folder, meta, config, executor):
+    """Measure, after the assessment, which functions of the system's declared libraries the frozen command calls."""
+    libraries = (config.get("substrate") or {}).get("libraries") or []
+    if not libraries:
+        return
+    work = folder / "controller/library-calls-work"
+    shutil.rmtree(work, ignore_errors=True)
+    try:
+        record = library_calls(template, meta["instance"], folder / "frozen", executor, work, libraries,
+                               seconds=config["budget"].get("command_seconds", 120))
+    except Exception as error:                                    # a measurement must never break the record
+        record = {"libraries": libraries, "error": f"{type(error).__name__}: {str(error)[:800]}", "static": {}, "calls": {}, "replay": None}
+    shutil.rmtree(work, ignore_errors=True)
+    write(folder / "controller/library-calls.json", record)
+    provenance = read(folder / "controller/provenance.json")
+    provenance["substrate_use"] = substrate_record(folder, config)
+    write(folder / "controller/provenance.json", provenance)
 
 
 def judge_run(run_id):

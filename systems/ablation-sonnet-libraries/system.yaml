@@ -1,0 +1,43 @@
+schema_version: 1
+id: ablation-sonnet-libraries
+kind: agent
+description: 'Ablation arm 2, libraries only: the same backbone, controller, budget and base image as arm 1, with
+  the ACCORD libraries africas2s and acmadDL installed and their skill guides removed from the image.'
+driver:
+  kind: anthropic
+  model: claude-sonnet-5-5
+  api_key_env: ANTHROPIC_API_KEY
+  effort: high
+  max_usd: 40
+  input_usd_per_million: 2
+  output_usd_per_million: 10
+  cache: true
+  cache_write_usd_per_million: 2.5
+  cache_read_usd_per_million: 0.1
+  max_total_tokens: 80000000
+  max_output_tokens: 16000
+  max_turns: 900
+  max_context_tokens: 900000
+  compact_above_tokens: 300000
+  max_retries: 5
+  response_timeout_seconds: 900
+runtime:
+  image: sha256:690b3893e6ee9225cb52db4800c781a99dcf4e534701f4bae59744b6db0ff273
+  memory: 6g
+  cpus: 2
+budget:
+  max_seconds: 14400
+  max_tool_calls: 600
+  command_seconds: 1800
+  max_total_tokens: 80000000
+substrate:
+  paths: []
+  instructions: 'The ACCORD libraries africas2s (seasonal downscaling, calibration, tercile forecasts, cross-validation,
+    verification) and acmaddl (climate data acquisition and normalization) are installed and importable. No guide
+    to them is supplied: the installed source and docstrings are their documentation. The runtime reaches only the
+    task''s frozen source service, so acquisition APIs cannot download from live providers. Generic Python is also
+    allowed.'
+  libraries:
+  - africas2s
+  - acmaddl
+  image_paths: []

@@ -1,0 +1,41 @@
+schema_version: 1
+id: ablation-sonnet-python
+kind: agent
+description: 'Ablation arm 1, baseline: Claude Sonnet 5.5 (claude-sonnet-5-5, high effort, paid API with prompt
+  caching) through the benchmark''s Anthropic controller and Docker-only tools, on the investigation `python` image:
+  general scientific Python, no weather library and no skill catalog. Outlook budget tier; one instance, one attempt,
+  no retry.'
+driver:
+  kind: anthropic
+  model: claude-sonnet-5-5
+  api_key_env: ANTHROPIC_API_KEY
+  effort: high
+  max_usd: 40
+  input_usd_per_million: 2
+  output_usd_per_million: 10
+  cache: true
+  cache_write_usd_per_million: 2.5
+  cache_read_usd_per_million: 0.1
+  max_total_tokens: 80000000
+  max_output_tokens: 16000
+  max_turns: 900
+  max_context_tokens: 900000
+  compact_above_tokens: 300000
+  max_retries: 5
+  response_timeout_seconds: 900
+runtime:
+  image: sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508
+  memory: 6g
+  cpus: 2
+budget:
+  max_seconds: 14400
+  max_tool_calls: 600
+  command_seconds: 1800
+  max_total_tokens: 80000000
+substrate:
+  paths: []
+  instructions: General scientific Python is installed (NumPy, SciPy, xarray, pandas, scikit-learn, statsmodels,
+    zarr, netCDF4, h5netcdf). No weather-specific library or skill catalog is supplied. The runtime reaches only
+    the task's frozen source service.
+  libraries: []
+  image_paths: []

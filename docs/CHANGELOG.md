@@ -11,6 +11,28 @@ is an axis on which a method may be read two ways, a *reading* is a value on
 it and a *pitfall* is a wrong reading; *tooling* is the skills, libraries,
 conventions sheet or earlier work supplied to the agent.
 
+## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
+
+- Roadmap step 6 is a four-arm tooling ablation on one backbone, Claude Sonnet
+  5.5, through the benchmark's own Anthropic controller; harness comparisons
+  are dropped. Plan: `experiments/ablation-plan-2026-10-12.yaml`; record:
+  `docs/objective-outlook-ablation-2026-10-12.md`; systems
+  `systems/ablation-sonnet-{python,libraries,skills,full}`; images from
+  `runtime/Dockerfile.ablation-arms` (`experiments/ablation-runtime-2026-10-12.json`).
+- The controller now reports which library functions a submission actually
+  calls. After the assessment, `assessment.substrate.library_calls` replays
+  the frozen command once more under `assessment.tracer`, a `sitecustomize`
+  that counts calls from the submission's code into each declared library,
+  and reads the static callees from the submitted files. `substrate_use`
+  gains `static_calls`, `replay_calls` and `substantive` per library; the
+  import-based record of pull request #1 is unchanged beside it.
+- The Anthropic driver (`assessment/model.py`, `assessment/adapters.py`)
+  supports prompt caching with the provider's cache counters priced
+  separately, bounded retries of refused requests, a context-window guard,
+  and elision of old tool outputs above a declared size; `total_tokens` is
+  the provider's full count, cached reads included, as for Codex.
+- The CCA gate (correlation floor 0.6, RPSS margin 0.08) is confirmed.
+
 ## 2026-10-11: the pilot run scoped the coverage check and made stage rows say why
 
 - A coordinate that does not list the required cases now takes down only the

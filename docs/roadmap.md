@@ -1,6 +1,6 @@
 # Next experiments
 
-Updated 9 October 2026. The [README](../README.md) explains the benchmark and
+Updated 12 October 2026. The [README](../README.md) explains the benchmark and
 why the direction changed; [authoring](../templates/README.md) explains how to
 build a task; the [assessment contract](assessment-format.md) defines judgement.
 
@@ -88,18 +88,30 @@ composition reuses that template's instruments as its stage rubric.
    stage; stage rows quote their reasons; the envelope states the read-only
    rerun; two identity checks say where), one new control, and the first
    full trace. The agent stopped after 4 minutes with CCA undone.
-6. Launch the matrix: several systems on every instance, one attempt each,
-   two concurrent, with the trace of each read stage by stage before the next
-   pair. The systems vary both the backbone and the harness, with the tooling
-   condition held fixed, so a difference between two attempts on the same
-   backbone is a harness difference.
+6. Run the tooling ablation: four arms on one backbone and one harness, so
+   that the only difference between arms is the weather tooling. Decided
+   12 October 2026 (`experiments/ablation-plan-2026-10-12.yaml`,
+   `docs/objective-outlook-ablation-2026-10-12.md`): the backbone is Claude
+   Sonnet 5.5 through the benchmark's own Anthropic controller, because a
+   workhorse model shows whether tooling gives real uplift where a frontier
+   model would hand-roll the mathematics; harness comparisons are dropped as
+   developer minutiae. The arms on MAM 2015 are plain Python, the ACCORD
+   libraries without their guides, the skills (Rhiza catalog and the ACCORD
+   guides) without the libraries, and the full stack. Every arm's record
+   carries, beside the stage profile, which library functions the delivered
+   command actually called in a traced replay, so adoption is reported and
+   not inferred from imports. Arms run one at a time, each trace read before
+   the next. Waits on the budget go-ahead.
 7. Decide the next task from what the traces show, and only then.
 
 ## Budgets and cost
 
 Paid API calls, judging and retries keep the user-authorized $100 cap for
-steps 1 to 5. The cap is revisited with a per-attempt cost estimate from the
-cheap pilot before step 6, not after it. Subscription-backed usage is recorded
+steps 1 to 5. The pilot ran on a subscription, so the per-attempt estimate for
+step 6 comes from the pilot's trace and Sonnet 5.5's published prices with
+prompt caching: about $10 per arm in the typical case and $40 at each arm's
+cap, $160 for the four arms at most. Step 6 waits on authorization of that
+cap. Subscription-backed usage is recorded
 separately from actual API charges. Scientific native I/O stays serial per
 process with at most two shared workers; the composition's budget does not
 change that rule.

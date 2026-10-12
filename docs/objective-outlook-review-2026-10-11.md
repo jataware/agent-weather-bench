@@ -92,8 +92,9 @@ Three findings of the cold reader were checked and found not to apply:
 - What no control exercises: a solution that passes every fixed array and
   fails only the bulletin review; a CCA that is sound but outside the gate.
   The first is the judge's calibration cases' territory; the second is what
-  the gate's margin is for, and the first agent attempts will show whether
-  0.6 and 0.08 are right.
+  the gate's margin is for. The floor of 0.6 and the margin of 0.08 were
+  confirmed by the project owner on 12 October 2026 after the pilot; the
+  matrix attempts will show how a sound alternative engine sits against them.
 
 ## Budget and cost
 

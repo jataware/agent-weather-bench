@@ -45,6 +45,15 @@ def validate(path):
         for key in ("model", "api_key_env", "max_usd", "input_usd_per_million", "output_usd_per_million", "max_total_tokens", "max_output_tokens", "max_turns"):
             if driver.get(key) is None:
                 raise ValueError(f"Configure driver {key}")
+        if driver.get("cache"):
+            for key in ("cache_write_usd_per_million", "cache_read_usd_per_million"):
+                if driver.get(key) is None:
+                    raise ValueError(f"Configure driver {key} when prompt caching is on")
+        for key in ("max_context_tokens", "compact_above_tokens", "max_retries", "response_timeout_seconds"):
+            if key in driver and (type(driver[key]) is not int or driver[key] <= 0):
+                raise ValueError(f"Driver {key} must be a positive integer")
+        if driver.get("compact_above_tokens") and driver.get("max_context_tokens") and driver["compact_above_tokens"] >= driver["max_context_tokens"]:
+            raise ValueError("Driver compact_above_tokens must be below max_context_tokens")
     else:
         raise ValueError("Supported controller drivers: command or anthropic")
     return value

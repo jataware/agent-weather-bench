@@ -1,0 +1,82 @@
+schema_version: 1
+purpose: >-
+  Roadmap step 6. Separate the value of raw domain libraries from the value of procedural skills for an
+  agent that must complete an operational meteorological pipeline, on one workhorse backbone where tooling
+  leverage matters, holding the harness fixed. Harness comparisons are dropped.
+question: >-
+  Do domain libraries (africas2s, acmadDL) and weather skills (the Rhiza catalog and the ACCORD skill
+  guides) enable a sub-frontier agent to complete the ICPAC objective seasonal outlook where generic
+  Python fails, and does the agent actually use them when they are there?
+task:
+  template: objective-seasonal-outlook
+  instance: gha--mam-2015
+  level: 1
+  spec_version: 2
+backbone:
+  model: claude-sonnet-5-5
+  effort: high
+  harness: assessment.adapters.anthropic_driver (the benchmark's own controller; Docker-only tools; prompt caching on)
+  why: >-
+    A frontier backbone tends to hand-roll the mathematics and masks tooling effects; a Sonnet-class model shows
+    whether libraries and skills give real uplift or fail to.
+arms:
+  - id: ablation-sonnet-python
+    name: baseline
+    treatment: general scientific Python only
+    image: sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508
+  - id: ablation-sonnet-libraries
+    name: libraries only
+    treatment: africas2s and acmadDL installed; their skill guides removed; no catalog
+    image: sha256:690b3893e6ee9225cb52db4800c781a99dcf4e534701f4bae59744b6db0ff273
+  - id: ablation-sonnet-skills
+    name: skills only
+    treatment: Rhiza weather-skills catalog (with weather_skills_core) and the two ACCORD skill guides; neither ACCORD library installed
+    image: sha256:1ffd3d08a51cb171c8d289c588847683a683fd4bda13450b63642b7bab5dcd51
+  - id: ablation-sonnet-full
+    name: full ACCORD stack
+    treatment: africas2s, acmadDL, their skill guides and the Rhiza catalog
+    image: sha256:fe804d16d3e78dfc619073ce1368a31fb22e585bc6c47ae446617f117f2d3389
+images: >-
+  All four derive from the matched investigation images of 8 October (runtime/Dockerfile.ablation-arms), so every
+  general package version is identical and only the declared weather tooling differs. Record:
+  experiments/ablation-runtime-2026-10-12.json.
+budget_per_arm:
+  max_seconds: 14400
+  max_tool_calls: 600
+  command_seconds: 1800
+  max_usd: 40
+  prices_usd_per_million: {input: 2, output: 10, cache_write: 2.5, cache_read: 0.1}
+  token_accounting: >-
+    total_tokens counts cached reads, as the Codex adapters do; with caching on, a long conversation's total is
+    dominated by reads, so the arms declare 80,000,000 rather than the tier's 4,000,000. The dollar cap is the
+    binding bound.
+cost_estimate:
+  typical_per_arm_usd: 10
+  worst_case_per_arm_usd: 40
+  four_arms_typical_usd: 40
+  four_arms_cap_usd: 160
+  basis: >-
+    250 turns at a mean cached context of 150,000 tokens are 37.5 M cache reads ($3.75), the final context
+    written once ($0.75), and 250 replies of about 1,500 output tokens ($3.75); judging adds about $0.15 per
+    arm. The cap is each arm's max_usd.
+concurrency: 1
+why_sequential: Docker Desktop allows 8 GB; each arm's sandbox is 6 GB and the assessment replay needs another.
+instrumentation:
+  stage_profile: assessment.stages (eight stage rows, absolute and local verdicts, stage_score)
+  substantive_use: >-
+    assessment.tracer and assessment.substrate.library_calls: after the assessment the controller replays the
+    frozen command once more with a call tracer and records, per declared library, every function the
+    submission's own code called (replay_calls) beside the static callees in the submitted files (static_calls)
+    and the import-based lower bound of pull request #1. A library is substantively used only when the delivered
+    command called it.
+  judge: pinned judge on the bulletin questions, about $0.15 per arm
+reading: Each arm's trace is read stage by stage before the next arm starts.
+agent_retries: 0
+stop_on: [infrastructure_failure, controller_defect, provider_outage_longer_than_the_wall_budget]
+interpretation:
+  uplift: >-
+    A difference in stage profile between arms counts only with substantive use recorded in the arm that did
+    better, and only after replication on the OND instance.
+  no_use: >-
+    An arm that passes without calling its libraries is evidence that availability is not use, not evidence
+    for the libraries.

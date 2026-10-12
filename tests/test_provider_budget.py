@@ -43,3 +43,81 @@ def test_timeout_reservation_prevents_another_call_exceeding_cap(monkeypatch):
         assert model.usage['unresolved_reserved_usd']==pytest.approx(.061)
         with pytest.raises(BudgetExceeded): model.call('system',[])
     finally: model.close()
+
+
+def cached_client(monkeypatch, statuses=(200,), usage=None, max_context_tokens=None):
+    import json
+    monkeypatch.setenv('TEST_WEATHERBENCH_KEY','dummy-never-sent')
+    cfg={'model':'test-model','api_key_env':'TEST_WEATHERBENCH_KEY','input_usd_per_million':2,'output_usd_per_million':10,
+         'cache':True,'cache_write_usd_per_million':2.5,'cache_read_usd_per_million':.1,'max_usd':5,'max_seconds':600,
+         'max_total_tokens':10_000_000,'max_output_tokens':1000,'max_retries':3}
+    if max_context_tokens: cfg['max_context_tokens']=max_context_tokens
+    model=Model(cfg)
+    remaining=list(statuses)
+    seen=[]
+    def respond(request):
+        body=json.loads(request.content)
+        if request.url.path.endswith('count_tokens'):
+            return httpx.Response(200,json={'input_tokens':1000})
+        seen.append(body)
+        status=remaining.pop(0)
+        if status!=200: return httpx.Response(status,json={'error':{'type':'overloaded_error'}})
+        return httpx.Response(200,json={'usage':usage or {'input_tokens':100,'output_tokens':10,'cache_creation_input_tokens':1000,'cache_read_input_tokens':5000},'content':[]})
+    model.client.close()
+    model.client=httpx.Client(base_url='https://invalid.test',transport=httpx.MockTransport(respond))
+    return model, seen
+
+
+def test_cached_calls_are_priced_by_the_provider_counters_and_ask_for_automatic_caching(monkeypatch):
+    model,seen=cached_client(monkeypatch)
+    try:
+        model.call('system',[{'role':'user','content':'x'}])
+        assert seen[0]['cache_control']=={'type':'ephemeral'}
+        assert model.usage['usd']==pytest.approx((100*2+10*10+1000*2.5+5000*.1)/1e6)
+        assert (model.usage['input_tokens'],model.usage['cache_write_input_tokens'],model.usage['cached_input_tokens'],model.usage['output_tokens'])==(100,1000,5000,10)
+        assert model.usage['total_tokens']==6110 and model.usage['unresolved_reserved_usd']==0
+    finally: model.close()
+
+
+def test_a_refused_request_is_retried_after_a_pause_and_not_billed(monkeypatch):
+    import assessment.model as module
+    pauses=[]
+    monkeypatch.setattr(module.time,'sleep',lambda s: pauses.append(s))
+    model,seen=cached_client(monkeypatch,statuses=(529,429,200))
+    try:
+        model.call('system',[{'role':'user','content':'x'}])
+        assert len(seen)==3 and pauses==[5,15]
+        assert model.usage['calls']==1 and model.usage['retries']==2 and model.usage['unresolved_reserved_usd']==0
+    finally: model.close()
+
+
+def test_retries_are_bounded_and_the_final_refusal_is_an_error(monkeypatch):
+    import assessment.model as module
+    monkeypatch.setattr(module.time,'sleep',lambda s: None)
+    model,seen=cached_client(monkeypatch,statuses=(529,529,529,529))
+    try:
+        with pytest.raises(RuntimeError,match='HTTP 529'): model.call('system',[])
+        assert len(seen)==4 and model.usage['retries']==3
+    finally: model.close()
+
+
+def test_a_prompt_that_no_longer_fits_the_context_stops_the_run(monkeypatch):
+    model,seen=cached_client(monkeypatch,max_context_tokens=1500)
+    try:
+        with pytest.raises(BudgetExceeded,match='Context window'): model.call('system',[])
+        assert seen==[]
+    finally: model.close()
+
+
+def test_compaction_elides_the_oldest_long_tool_results_and_keeps_recent_ones():
+    import json
+    from assessment.adapters import compact
+    def turn(i): return {"role":"user","content":[{"type":"tool_result","tool_use_id":f"t{i}","content":json.dumps({"exit_code":i%2,"stdout":"x"*1000})}]}
+    messages=[{"role":"user","content":"request"}]+[m for i in range(12) for m in ({"role":"assistant","content":[]},turn(i))]
+    # 12 long results; the newest message and the 8 before it stay whole, so 3 are eligible and half of them (at least one) go.
+    assert compact(messages)==1
+    elided=[json.loads(m["content"][0]["content"]) for m in messages if m["role"]=="user" and isinstance(m["content"],list)]
+    assert elided[0]["elided"] and elided[0]["exit_code"]==0
+    assert all("stdout" in row for row in elided[1:])
+    assert compact(messages)==1 and compact(messages)==1 and compact(messages)==0   # one at a time until only recent ones remain
+    assert json.loads(messages[-1]["content"][0]["content"])["stdout"]

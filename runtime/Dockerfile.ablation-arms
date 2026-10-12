@@ -1,0 +1,30 @@
+# The four tooling arms of the objective-outlook ablation (roadmap step 6), built from the
+# three matched investigation images of 8 October so that every general package version is
+# identical across arms and only the declared weather tooling differs:
+#
+#   python     the investigation `python` image, unchanged: general scientific Python only
+#   libraries  africas2s and acmadDL installed, their skill guides removed
+#   skills     the Rhiza weather-skills catalog and the two ACCORD skill guides, no ACCORD library
+#   full       africas2s, acmadDL, their skill guides and the Rhiza catalog
+#
+# Build each target with --target and pin the resulting image ID in its system definition:
+#   docker build -f runtime/Dockerfile.ablation-arms --target libraries -t agent-weather-bench-ablation:libraries runtime
+ARG ACCORD_SOURCE=agent-weather-bench-investigation:accord
+ARG RHIZA_SOURCE=agent-weather-bench-investigation:rhiza
+ARG PYTHON_SOURCE=agent-weather-bench-investigation:python
+FROM ${ACCORD_SOURCE} AS accord-source
+FROM ${RHIZA_SOURCE} AS rhiza-source
+
+FROM accord-source AS libraries
+RUN rm -rf /opt/accord-current/docs
+
+FROM ${PYTHON_SOURCE} AS skills
+COPY --from=rhiza-source /usr/local/lib/python3.12/site-packages/weather_skills_core/ /usr/local/lib/python3.12/site-packages/weather_skills_core/
+COPY --from=rhiza-source /usr/local/lib/python3.12/site-packages/weather_skills_core-0.1.0.dist-info/ /usr/local/lib/python3.12/site-packages/weather_skills_core-0.1.0.dist-info/
+COPY --from=rhiza-source /catalog/ /catalog/
+COPY --from=accord-source /opt/accord-current/docs/ /opt/accord-current/docs/
+
+FROM accord-source AS full
+COPY --from=rhiza-source /usr/local/lib/python3.12/site-packages/weather_skills_core/ /usr/local/lib/python3.12/site-packages/weather_skills_core/
+COPY --from=rhiza-source /usr/local/lib/python3.12/site-packages/weather_skills_core-0.1.0.dist-info/ /usr/local/lib/python3.12/site-packages/weather_skills_core-0.1.0.dist-info/
+COPY --from=rhiza-source /catalog/ /catalog/

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "study": "experiments/ablation-plan-2026-10-12.yaml",
+  "dockerfile": "runtime/Dockerfile.ablation-arms",
+  "built_at": "2026-10-12",
+  "source_images": {
+    "python": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+    "accord": "sha256:08dbb4fce25955523a4c3caa3e2efdfb75b960dae3d2b8f3b92746e7f19f7c49",
+    "rhiza": "sha256:e00aa260554859887759253ca180db576a9c2e1cfa0d5e014333baa9e57774ec",
+    "record": "experiments/investigation-runtime-2026-10-08.json"
+  },
+  "images": {
+    "python": "sha256:75bd0583aa30b8c85b77c6f24417bd30c81871a434cbdbc04f65f7b179af1508",
+    "libraries": "sha256:690b3893e6ee9225cb52db4800c781a99dcf4e534701f4bae59744b6db0ff273",
+    "skills": "sha256:1ffd3d08a51cb171c8d289c588847683a683fd4bda13450b63642b7bab5dcd51",
+    "full": "sha256:fe804d16d3e78dfc619073ce1368a31fb22e585bc6c47ae446617f117f2d3389"
+  },
+  "contents": {
+    "python": "the investigation python image unchanged: 242 general distributions, no weather package, no catalog, no guides",
+    "libraries": "python plus africas2s 0.2.0, acmadDL 0.2.0, accord-rosetta 0.2.0 and sheerwater 0.2.5; /opt/accord-current/docs removed",
+    "skills": "python plus weather-skills-core 0.1.0, /catalog/skills (Rhiza weather-skills and CHC skills) and /opt/accord-current/docs (the africas2s and acmaddl skill guides); no ACCORD library",
+    "full": "libraries plus weather-skills-core 0.1.0 and /catalog/skills, with /opt/accord-current/docs kept"
+  },
+  "python": "3.12.14",
+  "runtime_sitecustomize": "/opt/pilot/runtime/sitecustomize.py (PYTHONPATH) in every arm: pyproj preload, aiohttp proxy, h5netcdf engine order; the call tracer chains to it"
+}
