@@ -546,8 +546,11 @@ def compute(provider, params, conventions=None, stages=("prepare", "wvg", "ereg"
     data = {
         "prepare_observed_mm": (("year", "lat", "lon"), spread(observed, (n,))),
         "prepare_support": (("lat", "lon"), support.astype("int16")),
-        "prepare_model_hindcast_mean_mm": (("model", "year", "lat", "lon"), prepared["model_train"]),
-        "prepare_model_forecast_mean_mm": (("model", "lat", "lon"), prepared["model_new"]),
+        # Zero off support, as practice.md requires of every (lat, lon) array. Until 13 October 2026 these two arrays
+        # kept the interpolated model values on unsupported cells, so a submission that followed the practice could
+        # match no reading (the pilot and the first two ablation arms).
+        "prepare_model_hindcast_mean_mm": (("model", "year", "lat", "lon"), prepared["model_train"] * support),
+        "prepare_model_forecast_mean_mm": (("model", "lat", "lon"), prepared["model_new"] * support),
         "prepare_model_predictor_mm": (("model", "year", "plat", "plon"), prepared["predictor_train"]),
         "prepare_model_predictor_forecast_mm": (("model", "plat", "plon"), prepared["predictor_new"]),
         "prepare_tercile_lower_mm": (("lat", "lon"), spread(full[0])),

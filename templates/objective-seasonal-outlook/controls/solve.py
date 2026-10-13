@@ -65,6 +65,13 @@ def plant(ds, defect, params, provider):
     elif defect == "issue_mismatch":
         p = ds["issue_forecast_probability"].values
         ds["issue_forecast_probability"].values[:] = np.stack([p[2], p[1], p[0]])
+    elif defect == "unmasked_model_means":
+        # the interpolated model means kept on unsupported cells, against the practice that every (lat, lon) array is zero there
+        off = ds["prepare_support"].values <= 0
+        for name in ("prepare_model_hindcast_mean_mm", "prepare_model_forecast_mean_mm"):
+            values = ds[name].values
+            fill = values[..., ~off].mean()
+            values[..., off] = fill
     elif defect == "predictor_on_target_grid":
         # the interpolated model means delivered as the predictor fields, with the target grid under the model-grid coordinates
         ds = ds.drop_vars(["prepare_model_predictor_mm", "prepare_model_predictor_forecast_mm", "plat", "plon"])

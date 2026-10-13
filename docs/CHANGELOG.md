@@ -11,6 +11,31 @@ is an axis on which a method may be read two ways, a *reading* is a value on
 it and a *pitfall* is a wrong reading; *tooling* is the skills, libraries,
 conventions sheet or earlier work supplied to the agent.
 
+## 2026-10-13: ablation arms 1 and 2 ran; the reference's model means are zeroed off support
+
+- Arms 1 (plain Python) and 2 (libraries only) of the step-6 ablation ran in
+  parallel on `gha--mam-2015` at the owner's request (the plan predeclared
+  one at a time; `experiments/ablation-plan-2026-10-12.yaml` records the
+  change and its reason). Both submitted in about seven minutes of agent
+  time for under $1 each, and both passed seven of eight stages, with
+  `prepare` unresolved for the same reason. Record:
+  `docs/objective-outlook-ablation-2026-10-12.md`.
+- The unresolved stage was the reference's defect, not the agents'.
+  `practice.md` says every array with latitude and longitude holds zero on
+  unsupported cells, and both agents did that; the reference
+  (`science.py`, `reference_independent.py`) kept the interpolated model
+  values on the 969 unsupported cells in `prepare_model_hindcast_mean_mm`
+  and `prepare_model_forecast_mean_mm`, so a submission that followed the
+  practice matched no reading. The pilot's trace shows the same gap
+  (1303 mm on that array). Both references now zero those cells; nothing
+  downstream reads them (eReg takes the supported cells only). The template
+  fingerprint changed, so the template is re-certified and the three
+  frozen submissions (pilot, arm 1, arm 2) are re-assessed; each earlier
+  assessment is kept under `controller/assessments/<fingerprint>.json`.
+- A new control, `unmasked_model_means`, keeps values off support and must
+  match no reading (`variant`, `probe.changed_data` and `stage.prepare`
+  unresolved), so the practice rule is now locked by certification.
+
 ## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
 
 - Roadmap step 6 is a four-arm tooling ablation on one backbone, Claude Sonnet

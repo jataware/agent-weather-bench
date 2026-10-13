@@ -1,6 +1,6 @@
 # Next experiments
 
-Updated 12 October 2026. The [README](../README.md) explains the benchmark and
+Updated 13 October 2026. The [README](../README.md) explains the benchmark and
 why the direction changed; [authoring](../templates/README.md) explains how to
 build a task; the [assessment contract](assessment-format.md) defines judgement.
 
@@ -100,8 +100,12 @@ composition reuses that template's instruments as its stage rubric.
    guides) without the libraries, and the full stack. Every arm's record
    carries, beside the stage profile, which library functions the delivered
    command actually called in a traced replay, so adoption is reported and
-   not inferred from imports. Arms run one at a time, each trace read before
-   the next. Waits on the budget go-ahead.
+   not inferred from imports. Authorized 13 October 2026 ($160, $40 per
+   arm); the owner asked for the arms to run in parallel. Arms 1 and 2 ran
+   that day: both submitted a full pipeline in about seven minutes for
+   under $1 each and passed seven of eight stages; the eighth exposed a
+   reference defect (model means not zeroed off support), fixed and
+   re-certified the same day. Arms 3 and 4 are next.
 7. Decide the next task from what the traces show, and only then.
 
 ## Budgets and cost
@@ -110,8 +114,9 @@ Paid API calls, judging and retries keep the user-authorized $100 cap for
 steps 1 to 5. The pilot ran on a subscription, so the per-attempt estimate for
 step 6 comes from the pilot's trace and Sonnet 5.5's published prices with
 prompt caching: about $10 per arm in the typical case and $40 at each arm's
-cap, $160 for the four arms at most. Step 6 waits on authorization of that
-cap. Subscription-backed usage is recorded
+cap, $160 for the four arms at most. The owner authorized that cap on 13
+October 2026; the first two arms cost $0.63 and $0.71 of agent time plus
+the judge. Subscription-backed usage is recorded
 separately from actual API charges. Scientific native I/O stays serial per
 process with at most two shared workers; the composition's budget does not
 change that rule.

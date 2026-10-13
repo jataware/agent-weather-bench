@@ -59,8 +59,11 @@ cost_estimate:
     250 turns at a mean cached context of 150,000 tokens are 37.5 M cache reads ($3.75), the final context
     written once ($0.75), and 250 replies of about 1,500 output tokens ($3.75); judging adds about $0.15 per
     arm. The cap is each arm's max_usd.
-concurrency: 1
-why_sequential: Docker Desktop allows 8 GB; each arm's sandbox is 6 GB and the assessment replay needs another.
+concurrency: 2
+concurrency_note: >-
+  Predeclared as 1 (Docker Desktop allows 8 GB; each arm's sandbox is capped at 6 GB). Changed to 2 on
+  13 October 2026 at the owner's request: the caps are limits, not reservations, so two arms share the 8 GB
+  and a sandbox killed for memory would show as an infrastructure failure, which stops the study.
 instrumentation:
   stage_profile: assessment.stages (eight stage rows, absolute and local verdicts, stage_score)
   substantive_use: >-

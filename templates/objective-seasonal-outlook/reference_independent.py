@@ -303,8 +303,8 @@ def compute(provider, params, conventions=None, stages=("prepare", "wvg", "ereg"
     data = {
         "prepare_observed_mm": (("year", "lat", "lon"), spread(observed, (n,))),
         "prepare_support": (("lat", "lon"), support.astype("int16")),
-        "prepare_model_hindcast_mean_mm": (("model", "year", "lat", "lon"), on_target[:, is_train]),
-        "prepare_model_forecast_mean_mm": (("model", "lat", "lon"), on_target[:, ~is_train][:, 0]),
+        "prepare_model_hindcast_mean_mm": (("model", "year", "lat", "lon"), on_target[:, is_train] * support),   # zero off support (practice.md)
+        "prepare_model_forecast_mean_mm": (("model", "lat", "lon"), on_target[:, ~is_train][:, 0] * support),
         "prepare_model_predictor_mm": (("model", "year", "plat", "plon"), native[:, is_train]),
         "prepare_model_predictor_forecast_mm": (("model", "plat", "plon"), native[:, ~is_train][:, 0]),
         "prepare_tercile_lower_mm": (("lat", "lon"), spread(full[0])),

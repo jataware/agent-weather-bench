@@ -35,6 +35,10 @@ CONTROLS = {
         # (measured: zero differing cell-years on both instances), so the pitfall shows only in the streams' fold labels
         "stage.wvg": "fail", "stage.ereg": "fail", "stage.cca": "fail"}},
     "cached": {"kind": "incorrect", "expect": {"probe.changed_data": "fail", "stage.prepare": "fail", "stage.wvg": "fail", "stage.ereg": "fail"}},
+    # The reference's own defect until 13 October 2026: the model means kept values off support, so a submission that zeroed
+    # them as practice.md requires (the pilot, ablation arms 1 and 2) matched no reading. The control keeps values off
+    # support and must now be the one that matches no reading; nothing downstream depends on those cells.
+    "unmasked_model_means": {"kind": "incorrect", "expect": {"variant": "unresolved", "probe.changed_data": "unresolved", "stage.prepare": "unresolved"}},
     # The pilot agent's mistake (11 October 2026): the predictor arrays on the target grid under the model-grid coordinates.
     # The coverage gap takes down only the results laid out on plat/plon; the streams are judged on their own results, and
     # their local verdicts are unresolved because their upstream (prepare) failed its schema.

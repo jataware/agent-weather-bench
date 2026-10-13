@@ -136,3 +136,15 @@ under the new fingerprint (`--local-trusted`, 11 October 2026).
   both instances with the corrected expectation; all 22 control rows are as
   expected. Test 5 still needs two agent attempts under this fingerprint; the
   pilot run was assessed under the previous one, so it does not count.
+
+## Re-assessment of 13 October 2026
+
+The first two ablation arms ([record](objective-outlook-ablation-2026-10-12.md))
+exposed a reference defect: the two model-mean arrays of `prepare` kept
+values on unsupported cells while `practice.md` requires zero there. The
+pilot's trace carried the same 1303 mm gap on `prepare_model_hindcast_mean_mm`.
+Under the corrected reference (fingerprint `a4f67496…`) the pilot's profile
+is unchanged, 1 of 8 stages: its predictor arrays are still on the wrong
+grid, its eReg is still fitted on all years, and the rerun still crashes.
+The gap it keeps on `prepare_model_forecast_mean_mm` (1198 mm) is its own.
+The earlier assessment stays under `controller/assessments/02ec6731….json`.
