@@ -268,6 +268,11 @@ combination kept) and rung 3 `brief-only` (no practice sheet at all). Runs
 | 3 brief-only, third | full stack | 5 of 8 | unresolved | fail | unresolved | pass (0.662) | none | 34 | $1.39 | none | guides 4 commands |
 | 1 full, OND | plain Python | 8 of 8 | pass | pass | pass | pass (0.993) | yes | 11 | $0.64 | — | — |
 | 1 full, OND | full stack | 8 of 8 | pass | pass | pass | pass (0.993) | yes | 15 | $0.77 | none | guides 3 commands |
+| 2 no-streams, OND | plain Python | 6 of 8 | unresolved | fail | pass | pass (0.790) | none | 14 | $0.53 | — | — |
+| 2 no-streams, OND (first try) | full stack | no submission | — | — | — | — | — | 23 | $0.91 | — | guides 4 commands |
+| 2 no-streams, OND (rerun) | full stack | 5 of 8 | unresolved (3-box index) | fail | fail (gap 1e-4) | pass (0.886) | none | 28 | $1.21 | africas2s `CCAMethod.fit/predict/leverage` 2,212 each, `select_modes_north` 96 | guides 4 commands |
+| 3 brief-only, OND | plain Python | 5 of 8 | unresolved | fail | fail | pass (0.855) | none | 16 | $0.72 | — | — |
+| 3 brief-only, OND | full stack | 5 of 8 | unresolved (unweighted aggregation, 3-box index) | fail | unresolved (gap 3e-4) | pass (0.821) | none | 38 | $1.81 | africas2s `Index.named` 1, `Index.reduce` 26 | guides 4 commands |
 
 In every ladder run `combine`, `verify` and `issue` pass, because they are
 judged against the submission's own streams. "Unresolved" means the arrays
@@ -323,9 +328,25 @@ attempt and WVG failing in all six. The arms' own variance is one stage;
 the rung-2 difference exceeds it in every pairing, the rung-3 difference
 does not exist.
 
-**The OND instance replicates the full rung.** Both arms pass 8 of 8 on
-`gha--ond-2015` with full directions, at a CCA gate of 0.993, for $0.64
-and $0.77. The OND runs at rungs 2 and 3 follow one at a time.
+**The OND instance replicates the full rung and not the rung-2 difference.**
+Both arms pass 8 of 8 on `gha--ond-2015` with full directions at a CCA
+gate of 0.993. At rung 2 on OND plain Python reached 6 stages (CCA 0.790,
+eReg matched) and the full stack 5 (CCA 0.886 through africas2s's CCA,
+called 2,212 times per method; eReg off by 1e-4 under a leverage variant;
+WVG on the three-box index): the opposite order from MAM, within the
+one-stage variance. At rung 3 on OND both arms reached 5; the full stack
+built its WVG index through `africas2s.indices.Index.named("wvg")`, the
+library's three-box form, its first substantive use at that rung, and the
+index therefore differs from the practice sheet's. The OND CCA gate was
+passed by every arm at every rung (0.79 to 0.99), so OND's CCA is the
+easier of the two.
+
+**The full-stack arm at rung 2 on OND lost its first attempt to the
+provider connection.** The same SSL bad-record-MAC alert as arm 3's cut it
+off after 23 commands and $0.91, before it had delivered; the run stands
+as an infrastructure failure (no submission, 0 stages) and the cell was run
+again with the driver that now retries a broken connection. The rerun is
+the row above.
 
 **Rung 3 did not separate the arms, and plain Python scored higher there
 than at rung 2.** Both arms passed the CCA gate with hand-rolled CCA (0.758
@@ -359,6 +380,20 @@ the old deadline and are kept under the same fingerprint's history in
   which it did at rung 2 and not at rung 3. Availability still is not use.
 - The stack does not supply the centre's WVG as the benchmark states it,
   and the library's own definition disagrees with the practice sheet.
-- Six ladder runs cost $6.6 of agent time. Rung 4 (`minimal`) is built and
-  not run; the plan runs it only if rung 3 separates the arms, which it did
-  not. Repeats of rungs 2 and 3 and the OND replication are the next spend.
+- Over the whole ladder (MAM three attempts per cell, OND one): rung 2
+  separates the arms on MAM in every pairing (full 5, 6, 6 against plain
+  4, 5, 4) and reverses on OND (plain 6, full 5); rung 3 never separates
+  them (MAM 5, 5, 5 against 5, 4, 5; OND 5 against 5). With the agent's
+  own variance at one stage, the ladder shows no tooling uplift that
+  survives replication. What it does show is which pieces of the centre's
+  practice the stack carries: the eReg variance reading and a CCA that
+  clears the gate, when the agent reaches for the library, which it did in
+  three of ten tooling attempts below the full rung; and which it does not:
+  the centre's WVG, where the library's own definition disagrees with the
+  practice sheet, and the observation aggregation.
+- Twenty-one ladder runs cost $21.6 of agent time; the day's paid use is
+  about $33 of the $160. Rung 4 (`minimal`) is built and not run.
+- Open for the owner: the WVG box form, the unweighted-mean reading, and
+  the pilot's ruling. A ruling on the first two would turn most of the
+  ladder's `prepare` and some of its WVG verdicts from unresolved into pass
+  or fail, and the table would be re-read.

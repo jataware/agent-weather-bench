@@ -113,7 +113,14 @@ composition reuses that template's instruments as its stage rubric.
    sections and the full stack recovers CCA and eReg by calling africas2s,
    the first substantive use and uplift recorded, from one attempt. WVG
    fails everywhere without its section, and the library's WVG definition
-   disagrees with the practice sheet. Record: the ablation page.
+   disagrees with the practice sheet. Repeats (three per cell on MAM) and
+   the OND replication followed: the rung-2 difference holds on MAM and
+   reverses on OND, rung 3 never separates the arms, so no tooling uplift
+   survives replication; the stack carries the eReg reading and a gate-
+   clearing CCA when the agent reaches for the library, not the centre's
+   WVG. Record: the ablation page. Step 6 is complete pending three
+   rulings by the owner (WVG box form, unweighted-mean aggregation, the
+   pilot's answer).
 7. Decide the next task from what the traces show, and only then.
 
 ## Budgets and cost
