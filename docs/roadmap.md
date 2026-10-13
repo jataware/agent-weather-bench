@@ -105,7 +105,15 @@ composition reuses that template's instruments as its stage rubric.
    that day: both submitted a full pipeline in about seven minutes for
    under $1 each and passed seven of eight stages; the eighth exposed a
    reference defect (model means not zeroed off support), fixed and
-   re-certified the same day. Arms 3 and 4 are next.
+   re-certified the same day. Arms 3 and 4 ran that afternoon: all four
+   arms pass 8 of 8, arms 2 to 4 delivered one pipeline, and no arm called
+   a library. The owner then had the directions withheld instead
+   (`assessment.directions`, rungs `no-streams` and `brief-only` on the
+   plain and full arms): plain Python drops to 4 of 8 without the stream
+   sections and the full stack recovers CCA and eReg by calling africas2s,
+   the first substantive use and uplift recorded, from one attempt. WVG
+   fails everywhere without its section, and the library's WVG definition
+   disagrees with the practice sheet. Record: the ablation page.
 7. Decide the next task from what the traces show, and only then.
 
 ## Budgets and cost

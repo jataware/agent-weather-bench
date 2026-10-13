@@ -234,3 +234,104 @@ confirmation.
 - The cost estimate was high by an order of magnitude for this backbone's
   behaviour: it assumed 250 turns, the arms took 12 to 24. Four arms cost
   $2.53 of agent time plus the judge.
+
+## The directions ladder: withholding what the agent is told (13 October 2026, afternoon)
+
+The four arms delivered one pipeline because the practice sheet fixes the
+method down to its conventions. On the owner's decision the study then
+varied the directions instead of the tooling, with the task, the grader and
+the reference fixed (plan `experiments/directions-ladder-2026-10-13.yaml`;
+mechanism `assessment.directions`, a runner-side ladder that cuts sections of
+the practice sheet or sentences of the brief, records the rung in the run
+record and keeps such runs out of certification's test 5). Rungs run so far,
+each on the plain-Python arm and the full-stack arm, two at a time: rung 2
+`no-streams` (the three stream sections withheld; inputs, categories and
+combination kept) and rung 3 `brief-only` (no practice sheet at all). Runs
+`20261013T115724-…` and `20261013T122225-…`; every number is under fingerprint
+`2db513ed…` with the controller's reruns given the command budget (below).
+
+| Rung | Arm | Stages passed | Prepare | WVG | eReg | CCA gate (corr., floor 0.60) | Reading matched | Tool calls | Agent cost | Library calls in the delivered command | Guides read |
+| --- | --- | ---: | --- | --- | --- | --- | --- | ---: | ---: | --- | --- |
+| 1 full | plain Python | 8 of 8 | pass | pass | pass | pass (0.679) | yes | 11 | $0.63 | — | — |
+| 1 full | full stack | 8 of 8 | pass | pass | pass | pass (0.997) | yes | 14 | $0.66 | none | both `SKILL.md` |
+| 2 no-streams | plain Python | 4 of 8 | unresolved (own SST index) | fail | fail (Student-t, gap 0.012) | fail (0.599) | none | 14 | $0.69 | — | — |
+| 2 no-streams | full stack | 5 of 8 | unresolved (3-box index) | fail | arrays match the reference to 0 | pass (0.660) | none | 27 | $1.07 | africas2s `CCAMethod.fit/predict/leverage` 2,212 each, `select_modes_north` 96 | guides 3 commands, catalog none |
+| 3 brief-only | plain Python | 5 of 8 | unresolved (unweighted aggregation, own index) | fail | gap 0.0003 | pass (0.758) | none | 21 | $1.17 | — | — |
+| 3 brief-only | full stack | 5 of 8 | unresolved (unweighted aggregation, 3-box index) | fail | gap 0.0003 | pass (0.662) | none | 48 | $1.84 | none (an "africas2s-equivalent" CCA was reimplemented) | guides 9 commands, catalog 2 |
+
+In every ladder run `combine`, `verify` and `issue` pass, because they are
+judged against the submission's own streams. "Unresolved" means the arrays
+match no listed reading, so correctness is not established; each such
+answer needs a ruling before it can be called wrong.
+
+**What withholding the stream sections did.** Plain Python lost three
+stages at rung 2: it invented its own WVG index boxes, fitted a penalized
+multinomial regression instead of the centre's unpenalized below-normal
+logit with near normal fixed at a third, used a Student-t with n−2 degrees
+of freedom in eReg where the practice is Gaussian with the prediction-error
+variance, and chose a fixed five modes in CCA, which put it at 0.599 against
+the gate's floor of 0.60. The full stack recovered two of the three: its
+delivered command calls africas2s's CCA per model (the first substantive use
+recorded in this study) and passes the gate at 0.660, and its eReg, built
+from the library's ensemble-regression source, matches the reference's
+prediction-error reading exactly. That is uplift on CCA and eReg at this
+rung, with calls recorded, from one attempt per arm; it counts under the
+plan only after the OND replication.
+
+**WVG fails at every rung without its section, in both arms.** The
+centre's particulars, the two-box index (Niño 3.4 minus the mean of the
+standardized West North Pacific and West Equatorial Pacific boxes) and the
+below-normal-only logit with near normal fixed at one third, are in neither
+the libraries nor the guides as the practice sheet states them. africas2s
+defines its primary `wvg` index with three boxes (West South Pacific added)
+and labels it "ICPAC primary definition", with the two-box form as a
+variant; the full-stack arm followed the library at both rungs, and its SST
+index differs from the reference's by 0.59 (rung 2) and 1.76 (rung 3). The
+benchmark's practice sheet and the library disagree on which form is the
+centre's. That is a question for the owner and the library's authors; the
+template can accept both box readings on a new convention axis once it is
+settled.
+
+**Without the practice sheet both arms aggregated observations with an
+unweighted block mean.** The accepted readings are the cosine-weighted
+conservative mean and bilinear interpolation; the unweighted mean differs by
+0.08 mm, far above the tolerance, so both rung-3 answers are unresolved on
+`prepare` for that alone. Whether an unweighted block mean of a hundred
+0.05-degree cells is a third accepted reading is the owner's call; it would
+resolve both rung-3 `prepare` stages.
+
+**Rung 3 did not separate the arms, and plain Python scored higher there
+than at rung 2.** Both arms passed the CCA gate with hand-rolled CCA (0.758
+and 0.662) and matched eReg to 0.0003. The plain arm's rung-2 CCA failure
+at 0.599 and its rung-3 pass at 0.758 are two draws of the same agent's
+choices (five fixed modes against eight EOFs with selection), not an effect
+of the directions. One attempt per cell cannot separate the agent's
+variance from the treatment; the ladder needs repeats before any rung-to-rung
+difference is read.
+
+**Two controller defects surfaced and were fixed as versioned changes.**
+The controller's reruns and probes used the executors' built-in 120-second
+deadline, a limit the envelope never states, while the agent worked under a
+1,800-second command budget; the rung-2 full-stack command takes 151 seconds
+(africas2s's CCA per model) and the rung-3 plain command longer, and both
+failed every replay probe on that limit alone. `assessment.runner.ReplayBudget`
+now gives reruns the system's command budget, recorded as
+`replay_budget_seconds`; the two runs were re-assessed (3 of 8 became 5 of 8
+in both). The runner also applied a rung's brief edit twice, which made the
+`brief-only` rung refuse to launch; fixed with a regression test. The rung-3
+runs were launched before the first fix, so their first assessments carry
+the old deadline and are kept under the same fingerprint's history in
+`controller/assessments/`.
+
+**Reading, under the predeclared rules.**
+
+- The directions, not the tooling, carried the full-rung result: with the
+  stream sections withheld, plain Python drops from 8 to 4 stages.
+- The ACCORD stack supplies part of what the practice sheet withheld (CCA
+  and the eReg variance reading) when the agent reaches for the library,
+  which it did at rung 2 and not at rung 3. Availability still is not use.
+- The stack does not supply the centre's WVG as the benchmark states it,
+  and the library's own definition disagrees with the practice sheet.
+- Six ladder runs cost $6.6 of agent time. Rung 4 (`minimal`) is built and
+  not run; the plan runs it only if rung 3 separates the arms, which it did
+  not. Repeats of rungs 2 and 3 and the OND replication are the next spend.
