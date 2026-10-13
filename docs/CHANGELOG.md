@@ -105,6 +105,18 @@ conventions sheet or earlier work supplied to the agent.
   read-only, and the cache manifest is verified before every reuse),
   instead of the 267 MB copy per run. The run record gains
   `inputs_staging`.
+- Two more sources of duplicate snapshot data were found and removed
+  outside the controller. The agents' commands re-download the snapshot
+  into their output folders (`_data`), so a run's retained state held up to
+  three further hash-identical copies of the 267 MB provider; a launcher
+  step now deletes, after assessment, every retained file whose sha256
+  equals a provider snapshot file's, and the same was done to the day's
+  runs (124 files, 4.6 GB). The day's runs' private input copies were
+  replaced by hardlinks to the shared cache, file by file where the
+  recorded hash equals the cache's, and every run's inputs were re-verified
+  against its recorded manifest. One defect of the cache surfaced and was
+  fixed the same hour: a rung's edit of the practice sheet wrote through
+  the hardlink into the cache; the runner now replaces the file.
 
 ## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
 
