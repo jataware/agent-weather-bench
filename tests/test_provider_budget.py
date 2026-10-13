@@ -153,3 +153,38 @@ def test_a_transport_error_ends_the_run_but_keeps_the_usage_record(monkeypatch, 
     assert result['usage']['calls'] == 2 and result['usage']['usd'] == pytest.approx(.01)
     rows = [json.loads(line) for line in log.read_text().splitlines() if line.strip()]
     assert rows[-1]['type'] == 'stop' and 'ReadError' in rows[-1]['reason']
+
+
+def test_a_broken_connection_is_retried_with_the_interrupted_calls_cost_kept_reserved(monkeypatch):
+    """A TLS read error mid-response (13 October 2026, twice) is retried after a pause; the first call's reservation stays."""
+    import json
+    monkeypatch.setenv('TEST_WEATHERBENCH_KEY','dummy-never-sent')
+    cfg={'model':'test-model','api_key_env':'TEST_WEATHERBENCH_KEY','input_usd_per_million':2,'output_usd_per_million':10,
+         'max_usd':5,'max_seconds':600,'max_total_tokens':10_000_000,'max_output_tokens':1000,'max_retries':3}
+    model=Model(cfg)
+    attempts=[]
+    def respond(request):
+        if request.url.path.endswith('count_tokens'):
+            return httpx.Response(200,json={'input_tokens':1000})
+        attempts.append(1)
+        if len(attempts)==1: raise httpx.ReadError('[SSL: SSLV3_ALERT_BAD_RECORD_MAC] ssl/tls alert bad record mac',request=request)
+        return httpx.Response(200,json={'usage':{'input_tokens':1000,'output_tokens':100},'content':[]})
+    model.client.close()
+    model.client=httpx.Client(base_url='https://invalid.test',transport=httpx.MockTransport(respond))
+    pauses=[]
+    monkeypatch.setattr('assessment.model.time.sleep', lambda s: pauses.append(s))
+    try:
+        model.call('system',[])
+        assert len(attempts)==2 and pauses==[5]
+        assert model.usage['retries']==1 and model.usage['calls']==1
+        assert model.usage['usd']==pytest.approx(.003)                      # the completed call
+        assert model.usage['unresolved_reserved_usd']>0                     # the interrupted one stays reserved
+    finally: model.close()
+
+
+def test_timeouts_still_end_the_run(monkeypatch):
+    model=client(monkeypatch,timeout=True)
+    try:
+        with pytest.raises(RuntimeError,match='no automatic retry'):
+            model.call('system',[])
+    finally: model.close()

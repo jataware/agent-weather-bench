@@ -117,6 +117,14 @@ conventions sheet or earlier work supplied to the agent.
   against its recorded manifest. One defect of the cache surfaced and was
   fixed the same hour: a rung's edit of the practice sheet wrote through
   the hardlink into the cache; the runner now replaces the file.
+- The Anthropic driver now retries a connection that breaks mid-exchange
+  (`httpx.ReadError`, `RemoteProtocolError`) after the same pauses as a
+  refused request, bounded by `max_retries`, keeping the interrupted call's
+  cost reserved and reserving the retry's own; timeouts stay fatal. The
+  SSL bad-record-MAC alert struck twice on 13 October: arm 3 after it had
+  delivered, and the OND rung-2 full-stack run before it had, which lost
+  that cell ($0.91, 23 tool calls, no submission). That run is recorded as
+  an infrastructure failure and the cell is run again.
 
 ## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
 

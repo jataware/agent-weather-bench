@@ -85,6 +85,21 @@ class Model:
             if remaining <= 0: raise BudgetExceeded('Wall-time budget exhausted')
             try:
                 response = self.client.post('/v1/messages', json={**body, 'max_tokens':max_output}, timeout=min(remaining, cfg.get('response_timeout_seconds',120)))
+            except (httpx.ReadError, httpx.RemoteProtocolError) as error:
+                # The connection broke mid-exchange (seen twice on 13 October 2026 as an SSL bad-record-MAC alert). The
+                # interrupted call may have been billed, so its reservation stays; the retry reserves its own cost.
+                if attempt >= cfg.get('max_retries', 5):
+                    raise RuntimeError(f'Provider transport failed {attempt+1} times; reserved cost remains unresolved') from error
+                pause = BACKOFF_SECONDS[min(attempt, len(BACKOFF_SECONDS)-1)]
+                if self.remaining() <= pause:
+                    raise BudgetExceeded('Wall-time budget exhausted while the provider connection kept breaking') from error
+                if self.usage['usd']+self.usage['unresolved_reserved_usd']+reservation > cfg['max_usd']:
+                    raise BudgetExceeded('Retrying the broken call would exceed the configured budget') from error
+                self.usage['unresolved_reserved_usd'] += reservation
+                self.usage['retries'] += 1
+                attempt += 1
+                time.sleep(pause)
+                continue
             except httpx.HTTPError as error:
                 raise RuntimeError('Provider transport failed; reserved cost remains unresolved; no automatic retry') from error
             if response.status_code in RETRIED_STATUSES and attempt < cfg.get('max_retries', 5):
