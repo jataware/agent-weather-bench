@@ -73,23 +73,30 @@ def staged_inputs(template, params, destination):
     The sandbox mounts inputs read-only, so the links are safe from the agent; the cache's own manifest is checked
     before every reuse and the tree is re-staged if any file differs. Each run still records the manifest of its own
     inputs directory. Saves the per-run copy (267 MB for the outlook) that filled the disk on 13 October 2026."""
+    import fcntl
     key = digest_text(json.dumps({"params": params, "private": inventory(template.private)}, sort_keys=True))
     cache = INPUTS_CACHE / template.name / params["id"] / key[:16]
     manifest = cache.parent / f"{key[:16]}.manifest.json"
-    fresh = cache.is_dir() and manifest.is_file() and inventory(cache) == read(manifest)
-    if not fresh:
-        shutil.rmtree(cache, ignore_errors=True)
-        staging = cache.parent / f"{key[:16]}.staging"
-        shutil.rmtree(staging, ignore_errors=True)
-        template.hooks.stage_inputs(template.private, params, staging)
-        staging.rename(cache)
-        write(manifest, inventory(cache))
-    try:
-        shutil.copytree(cache, destination, copy_function=os.link)
-    except OSError:                                               # another filesystem: fall back to a copy
-        shutil.rmtree(destination, ignore_errors=True)
-        shutil.copytree(cache, destination)
-    return {"cache": str(cache.relative_to(ROOT)) if cache.is_relative_to(ROOT) else str(cache), "reused": fresh}
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    with open(cache.parent / f"{key[:16]}.lock", "w") as lock:       # two runs starting together must not stage over each other
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        fresh = cache.is_dir() and manifest.is_file() and inventory(cache) == read(manifest)
+        if not fresh:
+            shutil.rmtree(cache, ignore_errors=True)
+            staging = cache.parent / f"{key[:16]}.staging"
+            shutil.rmtree(staging, ignore_errors=True)
+            template.hooks.stage_inputs(template.private, params, staging)
+            staging.rename(cache)
+            write(manifest, inventory(cache))
+        linked = True
+        try:
+            shutil.copytree(cache, destination, copy_function=os.link)
+        except OSError:                                           # another filesystem: fall back to a copy
+            linked = False
+            shutil.rmtree(destination, ignore_errors=True)
+            shutil.copytree(cache, destination)
+        fcntl.flock(lock, fcntl.LOCK_UN)
+    return {"cache": str(cache.relative_to(ROOT)) if cache.is_relative_to(ROOT) else str(cache), "reused": fresh, "hardlinked": linked}
 
 
 def digest_text(text):
