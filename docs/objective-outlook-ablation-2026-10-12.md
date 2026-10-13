@@ -258,8 +258,16 @@ combination kept) and rung 3 `brief-only` (no practice sheet at all). Runs
 | 2 no-streams | full stack | 5 of 8 | unresolved (3-box index) | fail | arrays match the reference to 0 | pass (0.660) | none | 27 | $1.07 | africas2s `CCAMethod.fit/predict/leverage` 2,212 each, `select_modes_north` 96 | guides 3 commands, catalog none |
 | 2 no-streams, repeat | plain Python | 5 of 8 | unresolved | fail | fail | pass (0.676) | none | 15 | $0.68 | — | — |
 | 2 no-streams, repeat | full stack | 6 of 8 | unresolved | fail | pass | pass (0.662) | none | 33 | $1.06 | none (reimplemented this time) | guides 3 commands |
+| 2 no-streams, third | plain Python | 4 of 8 | unresolved | fail | fail | fail (0.535) | none | 14 | $0.67 | — | — |
+| 2 no-streams, third | full stack | 6 of 8 | unresolved | fail | pass | pass (0.660) | none | 31 | $1.09 | none | guides 3 commands |
 | 3 brief-only | plain Python | 5 of 8 | unresolved (unweighted aggregation, own index) | fail | gap 0.0003 | pass (0.758) | none | 21 | $1.17 | — | — |
 | 3 brief-only | full stack | 5 of 8 | unresolved (unweighted aggregation, 3-box index) | fail | gap 0.0003 | pass (0.662) | none | 48 | $1.84 | none (an "africas2s-equivalent" CCA was reimplemented) | guides 9 commands, catalog 2 |
+| 3 brief-only, repeat | plain Python | 4 of 8 | unresolved | fail | fail | fail (0.599) | none | 15 | $0.68 | — | — |
+| 3 brief-only, repeat | full stack | 5 of 8 | unresolved | fail | unresolved | pass (0.662) | none | 38 | $1.74 | none | guides 4 commands |
+| 3 brief-only, third | plain Python | 5 of 8 | unresolved | fail | unresolved | pass (0.779) | none | 15 | $0.80 | — | — |
+| 3 brief-only, third | full stack | 5 of 8 | unresolved | fail | unresolved | pass (0.662) | none | 34 | $1.39 | none | guides 4 commands |
+| 1 full, OND | plain Python | 8 of 8 | pass | pass | pass | pass (0.993) | yes | 11 | $0.64 | — | — |
+| 1 full, OND | full stack | 8 of 8 | pass | pass | pass | pass (0.993) | yes | 15 | $0.77 | none | guides 3 commands |
 
 In every ladder run `combine`, `verify` and `issue` pass, because they are
 judged against the submission's own streams. "Unresolved" means the arrays
@@ -302,14 +310,22 @@ conservative mean and bilinear interpolation; the unweighted mean differs by
 0.05-degree cells is a third accepted reading is the owner's call; it would
 resolve both rung-3 `prepare` stages.
 
-**The rung-2 repeats (runs `20261013T140952` and `…140957`) show the
-agent's own variance.** Plain Python passed the CCA gate this time (0.676
-against 0.599) and reached 5 stages; the full stack reached 6, with eReg
-passing outright, but its delivered command called no library this time:
-the same arm that called africas2s's CCA 2,212 times in its first attempt
-reimplemented CCA in its second. Two attempts per cell are not enough to
-put a number on that variance; they are enough to say that a one-stage
-difference between arms is within it.
+**Three attempts per cell on MAM (runs `20261013T1157…`, `…1409…`,
+`…1531…` for rung 2 and `…1222…`, `…1458…`, `…1609…` for rung 3).** At
+rung 2 plain Python scored 4, 5, 4 stages and the full stack 5, 6, 6: the
+stack is ahead in every pairing, through CCA (the plain arm missed the
+gate twice, at 0.599 and 0.535) and eReg (the stack matched the
+prediction-error reading in all three attempts, the plain arm in none).
+The stack called africas2s's CCA in one attempt of three and reimplemented
+it, after reading the source, in the other two. At rung 3 plain Python
+scored 5, 4, 5 and the full stack 5, 5, 5, with no library call in any
+attempt and WVG failing in all six. The arms' own variance is one stage;
+the rung-2 difference exceeds it in every pairing, the rung-3 difference
+does not exist.
+
+**The OND instance replicates the full rung.** Both arms pass 8 of 8 on
+`gha--ond-2015` with full directions, at a CCA gate of 0.993, for $0.64
+and $0.77. The OND runs at rungs 2 and 3 follow one at a time.
 
 **Rung 3 did not separate the arms, and plain Python scored higher there
 than at rung 2.** Both arms passed the CCA gate with hand-rolled CCA (0.758
