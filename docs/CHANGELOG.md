@@ -57,6 +57,22 @@ conventions sheet or earlier work supplied to the agent.
   submissions re-assessed under it; the ruling awaits confirmation by a
   person, and the format sentence needs the owner's reading.
 
+## 2026-10-13 (later): the directions ladder withholds what the agent is told
+
+- The four tooling arms delivered one pipeline because the practice sheet
+  fixes the method down to its conventions. On the owner's decision the
+  study now varies the directions instead: `assessment.directions` defines,
+  per template and in the controller, rungs that cut sections of the
+  practice sheet or sentences of the brief while the task, the grader and
+  the reference stay fixed. The outlook's rungs are `full`, `no-streams`
+  (the three stream sections withheld), `brief-only` (no practice sheet)
+  and `minimal` (no stream list, no leave-one-year-out rule). `run
+  --directions <rung>` records the rung in `run.json`, stores the texts the
+  agent saw, and certification's test 5 leaves such runs out as studies.
+  No template file changes, so the fingerprint is unchanged. Plan:
+  `experiments/directions-ladder-2026-10-13.yaml`; results in the ablation
+  record.
+
 ## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
 
 - Roadmap step 6 is a four-arm tooling ablation on one backbone, Claude Sonnet

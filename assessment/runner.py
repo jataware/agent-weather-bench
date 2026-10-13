@@ -83,7 +83,7 @@ def development_scorer(template, params, inputs):
     return score
 
 
-def run(template, params, system, parent=None, level=1, supplied=(), judge=True):
+def run(template, params, system, parent=None, level=1, supplied=(), judge=True, directions="full"):
     config_path = resolve_system(system)
     config = validate(config_path)
     if config["driver"]["kind"] == "command":
@@ -100,6 +100,8 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True)
         brief = template.brief(params, level, supplied)
     except (IndexError, KeyError, ValueError) as error:
         raise ValueError(f"Task brief could not be rendered: {error}") from error
+    from .directions import apply as apply_directions
+    brief, _ = apply_directions(template.name, directions, brief, None)   # fails early on an unknown rung
     preflight(config["runtime"]["image"])
     if parent:
         parent = resolve_run(parent)
@@ -113,7 +115,8 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True)
     metadata = {"schema_version": 1, "id": name, "template": template.name, "spec_version": template.spec["spec_version"],
                 "fingerprint": template.fingerprint(), "mode": template.spec["mode"], "level": level, "instance": params, "system": config["id"],
                 "kind": config["kind"], "system_sha256": digest(config_path), "runtime_image": config["runtime"]["image"],
-                "parent": parent.name if parent else None, "supplied": supplied, "status": "created", "created_at": datetime.now(timezone.utc).isoformat()}
+                "parent": parent.name if parent else None, "supplied": supplied, "directions": directions, "status": "created",
+                "created_at": datetime.now(timezone.utc).isoformat()}
     write(folder / "run.json", metadata)
     config, bundle = snapshot(config_path, folder / "system")
     write(folder / "system.json", config)
@@ -128,6 +131,14 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True)
     for supplement in supplied:                                   # an experimental condition: recorded, and part of what the agent saw
         shutil.copyfile(template.folder / template.spec["supplements"][supplement], task / template.spec["supplements"][supplement])
     template.hooks.stage_inputs(template.private, params, inputs)
+    if directions != "full":                                      # a directions rung: the practice sheet the agent sees is cut or withheld
+        practice_path = inputs / "public/practice.md"
+        practice = practice_path.read_text() if practice_path.is_file() else None
+        _, practice = apply_directions(template.name, directions, brief, practice)
+        if practice is None:
+            practice_path.unlink(missing_ok=True)
+        else:
+            practice_path.write_text(practice)
     # the agent sees one description of the instance, the one the template stages; internal parameters stay with the controller
     shutil.copyfile(inputs / "instance.json", task / "instance.json")
     write(folder / "input-manifest.json", inventory(inputs))
@@ -322,6 +333,7 @@ def list_runs():
         checks = assessment.get("checks", {})
         variant = checks.get("variant", {})
         rows.append({"id": meta["id"], "template": meta["template"], "instance": meta["instance"]["id"], "level": meta.get("level", 1),
+                     "directions": meta.get("directions", "full"),
                      "system": meta["system"], "kind": meta["kind"], "skill": next(iter((assessment.get("skill") or {}).values()), None),
                      "skill_valid_for_ranking": assessment.get("skill_valid_for_ranking"),
                      "status": meta.get("status"), "outcome": assessment.get("outcome"), "computed_outcome": assessment.get("computed_outcome"),

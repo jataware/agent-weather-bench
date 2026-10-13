@@ -1,0 +1,46 @@
+schema_version: 1
+purpose: >-
+  Step 6 follow-up, decided by the owner on 13 October 2026 after the four tooling arms delivered one pipeline. The
+  arms were handed a practice sheet that fixes the method down to its conventions, so the ablation measured
+  spec-following on clean inputs. This ladder withholds directions rung by rung, with the task, the grader and the
+  reference fixed, to measure how much direction the pipeline needs and whether the ACCORD stack supplies what is
+  withheld.
+question: >-
+  At which rung of withheld directions does the plain-Python arm stop matching the centre's practice, and does the
+  full ACCORD stack (libraries, guides, catalog) keep matching it where plain Python does not, with calls recorded?
+task:
+  template: objective-seasonal-outlook
+  instance: gha--mam-2015
+  level: 1
+  spec_version: 2
+  fingerprint_at_launch: 2db513ed23640f07 (corrected reference with the pilot's proposed ruling)
+mechanism: >-
+  assessment.directions, a runner-side ladder (no template file changes, so the fingerprint is unchanged). The run
+  record stores the rung and the brief and practice sheet the agent saw; certification's test 5 leaves such runs out.
+rungs:
+  - id: full
+    handed: brief and the whole practice sheet (the four arms of 12-13 October; not re-run)
+  - id: no-streams
+    handed: brief and the practice sheet without the three stream sections (inputs, categories, combination kept)
+    tests: whether the agent knows how WVG, eReg and the centre's CCA are built; the ACCORD guides describe exactly that
+  - id: brief-only
+    handed: the brief alone, without the pointer to the practice sheet
+    tests: whether the agent adopts the centre's conventions (aggregation, calendar, terciles, units) unprompted
+  - id: minimal
+    handed: the brief without the stream list and the leave-one-year-out rule; the deliverable schema only
+    tests: whether the agent knows the three-stream practice exists; run only if brief-only separates the arms
+arms_per_rung:
+  - ablation-sonnet-python
+  - ablation-sonnet-full
+first_batch: [no-streams, brief-only]
+budget_per_run:
+  max_usd: 40
+  observed_at_full: 0.53-0.71 USD, 11-25 tool calls, about seven minutes
+concurrency: 2 (one rung's two arms together, as the owner asked for parallel runs)
+instrumentation: stage profile, readings matched, unknown answers, substantive-use trace per library (as the arms)
+agent_retries: 0
+reading:
+  - A run that matches no listed reading is unresolved, not failed; each unknown answer gets a proposed ruling. The
+    sensitivity curve is stages passed, readings matched and unknown answers per rung and arm.
+  - Uplift is claimed only where the full stack passes a stage the plain arm fails at the same rung, with calls to a
+    library or reads of the guides recorded, and only after replication on gha--ond-2015.

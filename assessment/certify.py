@@ -210,6 +210,9 @@ def model_attempts(template):
         if assessment.get("fingerprint") != template.fingerprint():
             stale += 1
             continue
+        if meta.get("directions", "full") != "full":              # a directions-ladder run answered a cut-down contract; it is a study, not a trial
+            excluded.append({"run": meta["id"], "reason": f"directions rung {meta['directions']}", "phase": "directions_study"})
+            continue
         # command_driver validates required environment variables before Popen.
         # Such a launch is infrastructure evidence, not a model trial. Preserve
         # it explicitly; never exclude a record with adapter execution events.

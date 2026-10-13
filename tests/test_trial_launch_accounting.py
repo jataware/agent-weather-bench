@@ -67,3 +67,19 @@ def test_invalid_brief_is_rejected_before_runtime_or_run_creation(tmp_path, monk
     with pytest.raises(ValueError, match="Task brief could not be rendered"):
         runner.run(template, {}, "test")
     assert list(tmp_path.iterdir()) == []
+
+
+def test_directions_ladder_runs_are_studies_and_do_not_count_as_trials(tmp_path, monkeypatch):
+    import assessment.runner
+    monkeypatch.setattr(assessment.runner, "RUNS", tmp_path)
+    template = SimpleNamespace(name="task", fingerprint=lambda: "current")
+    for name, rung, variant in (("full-a", "full", {}), ("full-b", "full", {}), ("cut", "brief-only", {"reason": "unknown_answer"})):
+        folder = tmp_path / name
+        folder.mkdir()
+        (folder / "run.json").write_text(json.dumps({"id": name, "template": "task", "kind": "agent", "system": "s", "instance": {"id": "one"},
+                                                     "status": "submitted", "directions": rung}))
+        (folder / "assessment.json").write_text(json.dumps({"fingerprint": "current", "outcome": "pass", "computed_outcome": "pass",
+                                                            "checks": {"variant": variant}}))
+    result = model_attempts(template)
+    assert result["attempts"] == 2 and result["passed"] is True
+    assert result["excluded_before_model_launch"] == [{"run": "cut", "reason": "directions rung brief-only", "phase": "directions_study"}]

@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "objective-seasonal-outlook",
  "spec_version": 2,
- "fingerprint": "a4f67496d6c4e91986a70690544ca40d32b8cab9bfab967bc976f0ede2c4b610",
- "certified_at": "20261013T091151",
+ "fingerprint": "2db513ed23640f07e05872d7fe654ab2e8ec77637e620a4530b51b7d5ecbf846",
+ "certified_at": "20261013T104718",
  "executor": "local-trusted-snapshot",
  "tests": {
   "1_reference_implementations_agree": {
@@ -951,19 +951,27 @@
    "known_ambiguities": []
   },
   "5_model_attempts": {
-   "passed": false,
+   "passed": true,
    "status": "run",
-   "attempts": 3,
+   "attempts": 5,
    "systems": [
+    "ablation-sonnet-full",
     "ablation-sonnet-libraries",
     "ablation-sonnet-python",
+    "ablation-sonnet-skills",
     "outlook-pilot-codex-luna"
    ],
-   "attempts_with_an_unruled_unknown_answer": 1,
+   "attempts_with_an_unruled_unknown_answer": 0,
    "attempts_assessed_under_another_fingerprint": 0,
-   "excluded_before_model_launch": [],
-   "rulings_awaiting_confirmation": 0,
-   "detail": "Some answers match no listed reading and await a ruling.",
+   "excluded_before_model_launch": [
+    {
+     "run": "20261013T115724-objective-seasonal-outlook-gha--mam-2015-L1-ablation-sonnet-python-984d84",
+     "reason": "directions rung no-streams",
+     "phase": "directions_study"
+    }
+   ],
+   "rulings_awaiting_confirmation": 1,
+   "detail": "Every attempt's answer was classified.",
    "runs": [
     {
      "run": "20261011T113859-objective-seasonal-outlook-gha--mam-2015-L1-outlook-pilot-codex-luna-6e8f2e",
@@ -975,10 +983,8 @@
      "judged_outcome": "fail",
      "supplied": [],
      "parent": null,
-     "unknown_answer_checks": [
-      "variant"
-     ],
-     "ruling": null
+     "unknown_answer_checks": [],
+     "ruling": "proposed"
     },
     {
      "run": "20261013T072303-objective-seasonal-outlook-gha--mam-2015-L1-ablation-sonnet-libraries-f41c0f",
@@ -1005,6 +1011,32 @@
      "parent": null,
      "unknown_answer_checks": [],
      "ruling": null
+    },
+    {
+     "run": "20261013T103127-objective-seasonal-outlook-gha--mam-2015-L1-ablation-sonnet-full-b6149e",
+     "system": "ablation-sonnet-full",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "outcome": "pass",
+     "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261013T103127-objective-seasonal-outlook-gha--mam-2015-L1-ablation-sonnet-skills-58ab12",
+     "system": "ablation-sonnet-skills",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "outcome": "pass",
+     "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
     }
    ]
   }
@@ -1013,7 +1045,7 @@
  "certified": false,
  "review_status": {
   "automatic_checks": "passed",
-  "trial_attempts": "pending",
+  "trial_attempts": "reviewed",
   "scientific_approval": "pending"
  }
 }

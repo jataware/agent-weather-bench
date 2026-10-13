@@ -38,6 +38,7 @@ def main():
     run.add_argument("--parent", help="An earlier run of the same system. Its submission is placed under /work/prior.")
     run.add_argument("--level", type=int, choices=[1, 2], default=1)
     run.add_argument("--supply", action="append", default=[], help="Hand the agent one of the template's supplements, such as `conventions`.")
+    run.add_argument("--directions", default="full", help="A rung of the template's directions ladder (assessment.directions): what the agent is told; `full` is the task as published.")
     sub.add_parser("runs")
     reassess = sub.add_parser("reassess"); reassess.add_argument("run")
     sub.add_parser("judge", help="Judge a run's recorded assessment without recomputing it").add_argument("run")
@@ -130,7 +131,7 @@ def dispatch(args):
     if args.command == "run":
         from .runner import run
         return run(template, template.instance(args.instance), args.system, parent=args.parent, level=args.level,
-                   supplied=args.supply, judge=not args.no_judge)
+                   supplied=args.supply, judge=not args.no_judge, directions=args.directions)
 
 
 if __name__ == "__main__":
