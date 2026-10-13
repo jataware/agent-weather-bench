@@ -2,8 +2,8 @@
  "schema_version": 1,
  "template": "objective-seasonal-outlook",
  "spec_version": 2,
- "fingerprint": "02ec6731db9eeaf3079e099c01d9a7725a92a4b9613e7dd04d53a4783e618977",
- "certified_at": "20261011T130838",
+ "fingerprint": "a4f67496d6c4e91986a70690544ca40d32b8cab9bfab967bc976f0ede2c4b610",
+ "certified_at": "20261013T091151",
  "executor": "local-trusted-snapshot",
  "tests": {
   "1_reference_implementations_agree": {
@@ -806,6 +806,44 @@
      }
     },
     {
+     "control": "unmasked_model_means",
+     "kind": "incorrect",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "unresolved",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.4104163712033118,
+      "climatology_rps": 0.42917565452776735,
+      "rpss": 0.0437100360343059,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
+     "control": "unmasked_model_means",
+     "kind": "incorrect",
+     "instance": "gha--ond-2015",
+     "level": 1,
+     "as_expected": true,
+     "problems": [],
+     "note": null,
+     "computed_outcome": "unresolved",
+     "skill": {
+      "split": "forecast_year",
+      "rps": 0.38041169413945636,
+      "climatology_rps": 0.4553144693989764,
+      "rpss": 0.16450778592297566,
+      "year": 2015,
+      "cells": 2627,
+      "ranking_enabled": false
+     }
+    },
+    {
      "control": "predictor_on_target_grid",
      "kind": "incorrect",
      "instance": "gha--mam-2015",
@@ -913,16 +951,62 @@
    "known_ambiguities": []
   },
   "5_model_attempts": {
-   "passed": null,
-   "status": "not_run",
-   "attempts": 0,
-   "systems": [],
-   "attempts_with_an_unruled_unknown_answer": 0,
-   "attempts_assessed_under_another_fingerprint": 1,
+   "passed": false,
+   "status": "run",
+   "attempts": 3,
+   "systems": [
+    "ablation-sonnet-libraries",
+    "ablation-sonnet-python",
+    "outlook-pilot-codex-luna"
+   ],
+   "attempts_with_an_unruled_unknown_answer": 1,
+   "attempts_assessed_under_another_fingerprint": 0,
    "excluded_before_model_launch": [],
    "rulings_awaiting_confirmation": 0,
-   "detail": "Needs at least two agent attempts assessed under this fingerprint.",
-   "runs": []
+   "detail": "Some answers match no listed reading and await a ruling.",
+   "runs": [
+    {
+     "run": "20261011T113859-objective-seasonal-outlook-gha--mam-2015-L1-outlook-pilot-codex-luna-6e8f2e",
+     "system": "outlook-pilot-codex-luna",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "outcome": "fail",
+     "computed_outcome": "fail",
+     "judged_outcome": "fail",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [
+      "variant"
+     ],
+     "ruling": null
+    },
+    {
+     "run": "20261013T072303-objective-seasonal-outlook-gha--mam-2015-L1-ablation-sonnet-libraries-f41c0f",
+     "system": "ablation-sonnet-libraries",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "outcome": "pass",
+     "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
+    },
+    {
+     "run": "20261013T072303-objective-seasonal-outlook-gha--mam-2015-L1-ablation-sonnet-python-291492",
+     "system": "ablation-sonnet-python",
+     "instance": "gha--mam-2015",
+     "level": 1,
+     "outcome": "pass",
+     "computed_outcome": "pass",
+     "judged_outcome": "pass",
+     "supplied": [],
+     "parent": null,
+     "unknown_answer_checks": [],
+     "ruling": null
+    }
+   ]
   }
  },
  "automatic_tests_passed": true,
