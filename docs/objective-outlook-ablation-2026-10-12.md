@@ -256,6 +256,8 @@ combination kept) and rung 3 `brief-only` (no practice sheet at all). Runs
 | 1 full | full stack | 8 of 8 | pass | pass | pass | pass (0.997) | yes | 14 | $0.66 | none | both `SKILL.md` |
 | 2 no-streams | plain Python | 4 of 8 | unresolved (own SST index) | fail | fail (Student-t, gap 0.012) | fail (0.599) | none | 14 | $0.69 | — | — |
 | 2 no-streams | full stack | 5 of 8 | unresolved (3-box index) | fail | arrays match the reference to 0 | pass (0.660) | none | 27 | $1.07 | africas2s `CCAMethod.fit/predict/leverage` 2,212 each, `select_modes_north` 96 | guides 3 commands, catalog none |
+| 2 no-streams, repeat | plain Python | 5 of 8 | unresolved | fail | fail | pass (0.676) | none | 15 | $0.68 | — | — |
+| 2 no-streams, repeat | full stack | 6 of 8 | unresolved | fail | pass | pass (0.662) | none | 33 | $1.06 | none (reimplemented this time) | guides 3 commands |
 | 3 brief-only | plain Python | 5 of 8 | unresolved (unweighted aggregation, own index) | fail | gap 0.0003 | pass (0.758) | none | 21 | $1.17 | — | — |
 | 3 brief-only | full stack | 5 of 8 | unresolved (unweighted aggregation, 3-box index) | fail | gap 0.0003 | pass (0.662) | none | 48 | $1.84 | none (an "africas2s-equivalent" CCA was reimplemented) | guides 9 commands, catalog 2 |
 
@@ -299,6 +301,15 @@ conservative mean and bilinear interpolation; the unweighted mean differs by
 `prepare` for that alone. Whether an unweighted block mean of a hundred
 0.05-degree cells is a third accepted reading is the owner's call; it would
 resolve both rung-3 `prepare` stages.
+
+**The rung-2 repeats (runs `20261013T140952` and `…140957`) show the
+agent's own variance.** Plain Python passed the CCA gate this time (0.676
+against 0.599) and reached 5 stages; the full stack reached 6, with eReg
+passing outright, but its delivered command called no library this time:
+the same arm that called africas2s's CCA 2,212 times in its first attempt
+reimplemented CCA in its second. Two attempts per cell are not enough to
+put a number on that variance; they are enough to say that a one-stage
+difference between arms is within it.
 
 **Rung 3 did not separate the arms, and plain Python scored higher there
 than at rung 2.** Both arms passed the CCA gate with hand-rolled CCA (0.758

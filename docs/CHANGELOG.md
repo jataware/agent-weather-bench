@@ -92,6 +92,19 @@ conventions sheet or earlier work supplied to the agent.
   re-assessment still works; a run so trimmed cannot serve as a `--parent`
   (its retained manifest no longer matches). The retention policy itself
   is unchanged and is the owner's to decide.
+- Disk is now a hard budget in the controller, on the owner's instruction
+  that evening: `assessment.runner.require_disk` refuses to start or to
+  assess a run under 12 GB free on the data volume (`AWB_MIN_FREE_GB`);
+  `assessment_lock` runs one assessment at a time while agents still run
+  side by side, because the controller's staged inputs, perturbed copies
+  and replay outputs are the spike that filled the disk; the assessment
+  scratch, the tracer scratch and the agent workspace are removed in
+  `finally` blocks so a crash cannot starve the next run; and an
+  instance's inputs are staged once per private snapshot under
+  `var/inputs-cache` and hardlinked into each run (the sandbox mounts them
+  read-only, and the cache manifest is verified before every reuse),
+  instead of the 267 MB copy per run. The run record gains
+  `inputs_staging`.
 
 ## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
 
