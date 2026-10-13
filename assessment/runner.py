@@ -29,6 +29,72 @@ from .substrate import image_path_use, library_calls, substrate_record
 RUNS = ROOT / "var/template-runs"
 
 
+MIN_FREE_GB = float(os.environ.get("AWB_MIN_FREE_GB", "12"))
+DATA_VOLUME = Path("/System/Volumes/Data") if Path("/System/Volumes/Data").is_dir() else ROOT
+INPUTS_CACHE = ROOT / "var/inputs-cache"
+ASSESSMENT_LOCK = ROOT / "var/.assessment.lock"
+
+
+def free_gb(path=None):
+    return shutil.disk_usage(path or DATA_VOLUME).free / 1e9
+
+
+def require_disk(action):
+    """Disk is a hard budget: refuse `action` when the data volume is under the floor (AWB_MIN_FREE_GB, default 12)."""
+    free = free_gb()
+    if free < MIN_FREE_GB:
+        raise RuntimeError(f"Refusing to {action}: {free:.1f} GB free on {DATA_VOLUME}, under the {MIN_FREE_GB:g} GB floor")
+    return free
+
+
+class assessment_lock:
+    """Agents may run side by side; the controller's replays, probes and tracer run one assessment at a time.
+
+    Their scratch (staged inputs, perturbed copies, replay outputs) is the spike that fills the disk."""
+
+    def __enter__(self):
+        import fcntl
+        ASSESSMENT_LOCK.parent.mkdir(parents=True, exist_ok=True)
+        self.handle = open(ASSESSMENT_LOCK, "w")
+        fcntl.flock(self.handle, fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, *_):
+        import fcntl
+        fcntl.flock(self.handle, fcntl.LOCK_UN)
+        self.handle.close()
+
+
+def staged_inputs(template, params, destination):
+    """Stage the instance's inputs once per (template, instance, private snapshot) and hardlink them into `destination`.
+
+    The sandbox mounts inputs read-only, so the links are safe from the agent; the cache's own manifest is checked
+    before every reuse and the tree is re-staged if any file differs. Each run still records the manifest of its own
+    inputs directory. Saves the per-run copy (267 MB for the outlook) that filled the disk on 13 October 2026."""
+    key = digest_text(json.dumps({"params": params, "private": inventory(template.private)}, sort_keys=True))
+    cache = INPUTS_CACHE / template.name / params["id"] / key[:16]
+    manifest = cache.parent / f"{key[:16]}.manifest.json"
+    fresh = cache.is_dir() and manifest.is_file() and inventory(cache) == read(manifest)
+    if not fresh:
+        shutil.rmtree(cache, ignore_errors=True)
+        staging = cache.parent / f"{key[:16]}.staging"
+        shutil.rmtree(staging, ignore_errors=True)
+        template.hooks.stage_inputs(template.private, params, staging)
+        staging.rename(cache)
+        write(manifest, inventory(cache))
+    try:
+        shutil.copytree(cache, destination, copy_function=os.link)
+    except OSError:                                               # another filesystem: fall back to a copy
+        shutil.rmtree(destination, ignore_errors=True)
+        shutil.copytree(cache, destination)
+    return {"cache": str(cache.relative_to(ROOT)) if cache.is_relative_to(ROOT) else str(cache), "reused": fresh}
+
+
+def digest_text(text):
+    import hashlib
+    return hashlib.sha256(text.encode()).hexdigest()
+
+
 def retain_bundle(source, destination):
     """Retain ordinary optional state; record links/special files without following them.
 
@@ -103,6 +169,7 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True,
     from .directions import apply as apply_directions
     published_brief = brief
     brief, _ = apply_directions(template.name, directions, published_brief, None)   # fails early on an unknown rung
+    require_disk("start a run")
     preflight(config["runtime"]["image"])
     if parent:
         parent = resolve_run(parent)
@@ -131,7 +198,7 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True,
     (task / "envelope.md").write_text(envelope)
     for supplement in supplied:                                   # an experimental condition: recorded, and part of what the agent saw
         shutil.copyfile(template.folder / template.spec["supplements"][supplement], task / template.spec["supplements"][supplement])
-    template.hooks.stage_inputs(template.private, params, inputs)
+    metadata["inputs_staging"] = staged_inputs(template, params, inputs)
     if directions != "full":                                      # a directions rung: the practice sheet the agent sees is cut or withheld
         practice_path = inputs / "public/practice.md"
         practice = practice_path.read_text() if practice_path.is_file() else None
@@ -218,7 +285,10 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True,
                     "prior_work_use": image_path_use(folder, ["/work/prior"])["/work/prior"] if parent else None}})
     write(folder / "run.json", metadata)
 
-    assessment = _assess_run(template, folder, judge)
+    try:
+        assessment = _assess_run(template, folder, judge)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)                   # frozen/ and retained/ hold everything the controller reads
     return {"run": name, "level": level, "status": metadata["status"], "outcome": assessment["outcome"],
             "computed_outcome": assessment["computed_outcome"], "judged_outcome": assessment["judged_outcome"], "skill": next(iter((assessment.get("skill") or {}).values()), None), "directory": str(folder.relative_to(ROOT))}
 
@@ -274,17 +344,21 @@ def _assess_run(template, folder, judge=True):
     executor = getattr(template.hooks, "executor_factory", lambda value: value)(executor)
     executor = ReplayBudget(executor, (config.get("budget") or {}).get("command_seconds", 120))
     work = folder / "controller/assessment-work"
-    shutil.rmtree(work, ignore_errors=True)
-    assessment = assess(template, meta["instance"], folder / "frozen", executor, work, level=meta.get("level", 1),
-                        feedback=read(feedback) if feedback.is_file() else None)
-    evidence = getattr(template.hooks, "acquisition_evidence", None)
-    if evidence is not None:
-        assessment["acquisition"] = evidence(work, folder / "controller/acquisition-evidence" / uuid.uuid4().hex)
-    assessment["sandbox"] = read(folder / "controller/provenance.json")["sandbox"]["state"]
-    assessment["replay_budget_seconds"] = executor.seconds
-    assessment["assessed_at"] = datetime.now(timezone.utc).isoformat()
-    shutil.rmtree(work, ignore_errors=True)
-    _trace_library_calls(template, folder, meta, config, executor)
+    with assessment_lock():
+        require_disk("assess a run")
+        shutil.rmtree(work, ignore_errors=True)
+        try:
+            assessment = assess(template, meta["instance"], folder / "frozen", executor, work, level=meta.get("level", 1),
+                                feedback=read(feedback) if feedback.is_file() else None)
+            evidence = getattr(template.hooks, "acquisition_evidence", None)
+            if evidence is not None:
+                assessment["acquisition"] = evidence(work, folder / "controller/acquisition-evidence" / uuid.uuid4().hex)
+        finally:
+            shutil.rmtree(work, ignore_errors=True)               # also when the assessment dies, so the next run is not starved
+        assessment["sandbox"] = read(folder / "controller/provenance.json")["sandbox"]["state"]
+        assessment["replay_budget_seconds"] = executor.seconds
+        assessment["assessed_at"] = datetime.now(timezone.utc).isoformat()
+        _trace_library_calls(template, folder, meta, config, executor)
     if judge:
         _judge(template, folder, assessment)
     _keep(folder, assessment)
@@ -303,7 +377,8 @@ def _trace_library_calls(template, folder, meta, config, executor):
                                seconds=(config.get("budget") or {}).get("command_seconds", 120))
     except Exception as error:                                    # a measurement must never break the record
         record = {"libraries": libraries, "error": f"{type(error).__name__}: {str(error)[:800]}", "static": {}, "calls": {}, "replay": None}
-    shutil.rmtree(work, ignore_errors=True)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
     write(folder / "controller/library-calls.json", record)
     provenance = read(folder / "controller/provenance.json")
     provenance["substrate_use"] = substrate_record(folder, config)
