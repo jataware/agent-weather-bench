@@ -35,6 +35,27 @@ conventions sheet or earlier work supplied to the agent.
 - A new control, `unmasked_model_means`, keeps values off support and must
   match no reading (`variant`, `probe.changed_data` and `stage.prepare`
   unresolved), so the practice rule is now locked by certification.
+- Arms 3 (skills only) and 4 (full stack) ran the same afternoon, in
+  parallel. All four arms pass 8 of 8 stages; arms 2, 3 and 4 delivered
+  numerically identical pipelines (3×10⁻¹⁴) and no arm called a library or
+  named the catalog. Arm 3's agent was cut off by a TLS read error on the
+  request after it had delivered; the workspace was assessed as it stood.
+- The Anthropic driver (`assessment/adapters.py`, non-deciding) now records
+  the usage accumulated before a fatal transport error and returns
+  `execution_error` with the reason, instead of letting the exception reach
+  the runner, which recorded `usage: null`. Arm 3's cost in the record is
+  summed from its trace.
+- The pilot's unknown answer has a proposed ruling of incorrect
+  (`templates/objective-seasonal-outlook/rulings.yaml`: eReg fitted on all
+  years, CCA arrays copied from eReg, model means kept off support). The
+  spec version stays 2: the format says a ruling creates a new spec
+  version, but the controller refuses to regrade a run across spec
+  versions ("its agent answered a different contract"), and this ruling
+  changes no contract the agent saw, only the classification of one
+  answer. A raise to 3 was tried and reverted. The ruling enters the
+  deciding fingerprint, so the template is re-certified and the five frozen
+  submissions re-assessed under it; the ruling awaits confirmation by a
+  person, and the format sentence needs the owner's reading.
 
 ## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
 

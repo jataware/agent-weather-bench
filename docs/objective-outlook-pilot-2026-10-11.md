@@ -148,3 +148,7 @@ is unchanged, 1 of 8 stages: its predictor arrays are still on the wrong
 grid, its eReg is still fitted on all years, and the rerun still crashes.
 The gap it keeps on `prepare_model_forecast_mean_mm` (1198 mm) is its own.
 The earlier assessment stays under `controller/assessments/02ec6731….json`.
+Later the same day its unknown answer received a proposed ruling of
+incorrect (`rulings.yaml`, fingerprint `2db513ed…`), so `variant` now fails
+with the ruling's reason instead of standing unresolved; the stage profile
+is still 1 of 8.

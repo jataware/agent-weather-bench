@@ -179,5 +179,9 @@ def anthropic_driver(config, request, box, log, stderr_path=None):
             messages.append({"role":"user","content":answers})
     except (BudgetExceeded,RuntimeError) as error:
         status="stopped"; events(log,{"type":"stop","reason":str(error)})
+    except Exception as error:                                    # a transport failure: fatal, but the usage so far is kept
+        status="execution_error"; reason=f"{type(error).__name__}: {str(error)[:1500]}"; events(log,{"type":"stop","reason":reason})
     finally: model.close()
-    return {"status":status,"tool_calls":count,"usage":model.usage,"usage_source":"controller_provider_usage_with_pinned_accounting","seconds":time.monotonic()-started}
+    result={"status":status,"tool_calls":count,"usage":model.usage,"usage_source":"controller_provider_usage_with_pinned_accounting","seconds":time.monotonic()-started}
+    if status=="execution_error": result["reason"]=reason
+    return result

@@ -119,62 +119,88 @@ sixteen hours, and an arm that quits early, as the pilot did, is minutes.
 - `ANTHROPIC_API_KEY` lives in the repository's git-ignored `.env`; the
   launcher sources it and the controller never writes it.
 
-## Results: arms 1 and 2 (13 October 2026)
+## Results: all four arms (13 October 2026)
 
-Both arms launched at 07:23 UTC on `gha--mam-2015` and submitted within
-eleven minutes. Runs `20261013T072303-…-ablation-sonnet-python-291492` and
-`…-ablation-sonnet-libraries-f41c0f`.
+Arms 1 and 2 launched at 07:23 UTC and arms 3 and 4 at 10:31 UTC, each pair
+in parallel, on `gha--mam-2015`. Runs `20261013T072303-…-ablation-sonnet-python-291492`,
+`…-libraries-f41c0f`, `20261013T103127-…-ablation-sonnet-skills-58ab12` and
+`…-full-b6149e`. Every number below is under the corrected reference with
+the pilot's proposed ruling recorded (fingerprint `2db513ed…`, spec version
+2); the assessments under `a4f67496…` (corrected reference, no ruling) and,
+for arms 1 and 2, under `02ec6731…` (the defective reference) are kept
+beside them in `controller/assessments/`. The arms' verdicts are identical
+under the two corrected fingerprints.
 
-| | Arm 1 plain Python | Arm 2 libraries only |
-| --- | ---: | ---: |
-| agent time | 414 s | 426 s |
-| tool calls | 11 | 25 |
-| model calls | 12 | 24 |
-| output tokens | 46,240 | 39,126 |
-| cache reads / writes (tokens) | 285,110 / 56,444 | 1,090,112 / 83,455 |
-| agent cost | $0.63 | $0.71 |
-| retries, compactions | 0, 0 | 0, 0 |
-| stages passed, first assessment (`02ec6731…`) | 7 of 8 | 7 of 8 |
-| stages passed, corrected reference (`a4f67496…`) | 8 of 8 | 8 of 8 |
-| outcome (computed, judged) | pass, pass | pass, pass |
-| reading matched | conservative, actual days, prediction error, fold-only | the same |
-| CCA gate: correlation with the controller's CCA (floor 0.60) | 0.679 | 0.997 |
-| CCA gate: cross-validated RPSS against the controller's (margin 0.08) | +0.003 vs −0.009 | −0.011 vs −0.009 |
-| cross-validated RPSS of the objective (own numbers) | 0.023 | 0.021 |
-| 2015 RPSS of the issued outlook (not for ranking) | 0.034 | 0.050 |
-| africas2s: imported in chat / in delivered code / called in replay | — | step 4 / no / none |
-| acmadDL: imported in chat / in delivered code / called in replay | — | no / no / none |
+| | Arm 1 plain Python | Arm 2 libraries only | Arm 3 skills only | Arm 4 full stack |
+| --- | ---: | ---: | ---: | ---: |
+| agent time | 414 s | 426 s | 403 s | 428 s |
+| tool calls | 11 | 25 | 16 | 14 |
+| model calls | 12 | 24 | 15 | 15 |
+| output tokens | 46,240 | 39,126 | 33,091 | 41,567 |
+| cache reads / writes (tokens) | 285,110 / 56,444 | 1,090,112 / 83,455 | 504,665 / 61,161 | 577,504 / 76,219 |
+| agent cost | $0.63 | $0.71 | $0.53 (from the trace) | $0.66 |
+| retries, compactions | 0, 0 | 0, 0 | 0, 0 | 0, 0 |
+| adapter status | submitted | submitted | execution error (see below) | submitted |
+| stages passed | 8 of 8 | 8 of 8 | 8 of 8 | 8 of 8 |
+| outcome (computed, judged) | pass, pass | pass, pass | pass, pass | pass, pass |
+| reading matched | conservative, actual days, prediction error, fold-only | the same | the same | the same |
+| CCA gate: correlation with the controller's CCA (floor 0.60) | 0.679 | 0.997 | 0.997 | 0.997 |
+| CCA gate: cross-validated RPSS against the controller's −0.009 (margin 0.08) | +0.003 | −0.011 | −0.011 | −0.011 |
+| cross-validated RPSS of the objective (own numbers) | 0.023 | 0.021 | 0.021 | 0.021 |
+| 2015 RPSS of the issued outlook (not for ranking) | 0.034 | 0.050 | 0.050 | 0.050 |
+| ACCORD guides read (`/opt/accord-current/docs`) | not present | removed | 3 commands (listing, listing, acmadDL data conventions) | 1 command (both `SKILL.md` files) |
+| Rhiza catalog named (`/catalog/skills`) | not present | not present | never | never |
+| africas2s: imported in chat / in delivered code / called in replay | — | step 4 / no / none | — | no / no / none |
+| acmadDL: imported in chat / in delivered code / called in replay | — | no / no / none | — | no / no / none |
+| weather_skills_core: imported / called | — | — | no / none | no / none |
 
-**Substantive use.** Arm 2 imported africas2s once, in its fourth command,
-to find where the package lived, then read `methods/cca.py` from the
-installed source in two commands. Its delivered code (`prep.py`,
-`streams.py`, `run.py`) imports neither library; the static scan found no
-callee and the traced replay (one process, exit 0) counted no call. The
-record therefore reads `used: true, substantive: false` for africas2s and
-`used: false` for acmadDL. Under the predeclared rule, arm 2 is evidence
-that availability is not use, not evidence for the libraries. Whether
-reading the library's CCA source is what put arm 2's CCA at 0.997
-correlation with the controller's, against arm 1's 0.679, is a question
-for the OND replication; one attempt cannot answer it.
+**Arms 2, 3 and 4 delivered the same numbers.** Their issued probabilities,
+CCA, eReg and WVG hindcasts agree pairwise to 3×10⁻¹⁴. Arm 1 agrees with
+them on eReg (2×10⁻¹⁴) and WVG (2×10⁻⁹) and differs on CCA (largest
+probability gap 0.36, from its one-mode selection against their three) and
+hence on the issued outlook (0.06). Three tooling treatments therefore
+produced one pipeline, and the fourth differs only where the brief leaves
+the CCA mode search to the solver.
 
-**What the agents did.** Arm 1 listed the workspace, read the catalog and
-the provenance page, downloaded and hash-checked every resource, inspected
-the five files, and at its ninth command wrote one 604-line `run.py` that
-covers all eight stages; two more commands ran it and wrote the bulletin.
-Arm 2 explored the same way, read the library source, then built three
-modules with unit checks in between (fold bounds, a statsmodels comparison
-for the logistic fit, a timing of CCA mode selection) and edited its
-bulletin twice. Both declared the same readings in `answer.json`
-(area-conservative observation aggregation weighted by the cosine of
-latitude, 92-day MAM totals from mm/day rates, prediction-error variance,
-fold-only tercile boundaries, bilinear interpolation of model means to
-target cell centres, ties to near normal), and their `prepare` arrays agree
-with the reference and with each other to 10⁻¹³ mm.
+**Substantive use is zero in every arm.** No delivered command called
+africas2s, acmadDL or weather_skills_core; the traced replay of each
+submission (one process, exit 0) counted no call, and the static scan found
+no callee. Arm 2 imported africas2s once to find it and read its CCA
+source; arm 4 read the two `SKILL.md` guides in its third command and never
+imported either package; arm 3 listed the guides twice and read acmadDL's
+data-conventions page; no arm named the Rhiza catalog. Under the
+predeclared rule, every arm with tooling is evidence that availability is
+not use.
 
-**The one unresolved stage was the reference's defect.** On the first
-assessment both arms matched no reading because the reference kept the
-interpolated model means on the 969 unsupported cells of
-`prepare_model_hindcast_mean_mm` and `prepare_model_forecast_mean_mm`,
+**Arm 3 ended in a transport error after it had delivered.** Its sixteenth
+command copied the results store and the answer into `/work/submission` and
+wrote the bulletin; the next request to the provider failed with
+`ReadError: [SSL: SSLV3_ALERT_BAD_RECORD_MAC]`, which the driver treats as
+fatal because a request that fails in transport may or may not have been
+billed. The controller recorded `execution_error` and assessed the workspace
+as it stood: a complete submission that passes every stage. Two
+consequences: the adapter lost its usage record on that path (the cost
+above is summed from the trace's fifteen model replies), fixed the same day
+in `assessment/adapters.py`, a non-deciding module; and the plan lists an
+infrastructure failure among its stop conditions, so whether arm 3 counts
+as it stands or is run again is the owner's call. Its agent did nothing
+after delivering that a re-run would change, and a re-run costs about $0.6.
+
+**What the agents did.** All four read the inputs, the practice sheet, the
+catalog and the provenance page, downloaded and hash-checked every
+resource, inspected the files, then wrote their pipeline: arm 1 one
+604-line script, arm 2 three modules with unit checks between them, arm 3
+a script with a streams module, arm 4 a script with a report generator.
+All declared the same readings in `answer.json` (area-conservative
+observation aggregation weighted by the cosine of latitude, 92-day MAM
+totals from mm/day rates, prediction-error variance, fold-only tercile
+boundaries, bilinear interpolation of model means to target cell centres,
+ties to near normal).
+
+**The one stage that first came up unresolved was the reference's defect.**
+On the first assessment arms 1 and 2 matched no reading because the
+reference kept the interpolated model means on the 969 unsupported cells
+of `prepare_model_hindcast_mean_mm` and `prepare_model_forecast_mean_mm`,
 while `practice.md` tells the solver that every array with latitude and
 longitude holds zero there. Both agents followed the practice; on the
 2,627 supported cells they agreed with the reference to 3×10⁻¹³ mm, and
@@ -183,9 +209,12 @@ diagnosed on the controls and fixed as a versioned change, not by retrying
 the agent: `science.py` and `reference_independent.py` now zero those
 cells (no downstream result reads them), a control `unmasked_model_means`
 keeps values off support and must match no reading, the template was
-re-certified, and the three frozen submissions were re-assessed with the
-earlier assessment kept beside the new one. The pilot's profile did not
-change (its faults are its own).
+re-certified (tests 1 to 4 pass, 24 control rows as expected), and the
+frozen submissions were re-assessed with the earlier assessment kept
+beside the new one. The pilot's profile did not change (its faults are its
+own); its unknown answer now carries a proposed ruling of incorrect
+(`rulings.yaml`), which test 5 needs and which awaits the owner's
+confirmation.
 
 **Reading, under the predeclared rules.**
 
@@ -193,12 +222,15 @@ change (its faults are its own).
   with this backbone: the plain-Python arm completed the operational
   pipeline, passed every stage, the method-blind CCA gate and both bulletin
   questions, in eleven commands for $0.63.
-- No uplift can be claimed for the libraries: the arm that had them did not
-  call them, and its stage profile equals the baseline's.
-- One attempt per arm on one instance decides nothing; the plan requires
-  replication on the OND instance before any difference counts.
+- No uplift can be claimed for the libraries or the skills: no arm called
+  them, and arms 2, 3 and 4 delivered one and the same pipeline.
+- The only difference between arms, arm 1's CCA, is a solver's choice
+  within the brief, not a tooling effect; one attempt per arm on one
+  instance decides nothing, and the plan requires replication on the OND
+  instance before any difference counts.
+- The task did not separate the arms. Whether it can separate anything on
+  this backbone is now the question for step 7: a harder instance, a
+  second episode, or a task whose domain step has no plain-Python route.
 - The cost estimate was high by an order of magnitude for this backbone's
-  behaviour: it assumed 250 turns, the arms took 12 and 24. The $40 cap
-  per arm stands for arms 3 and 4.
-
-Arms 3 (skills only) and 4 (full stack) are next, in parallel.
+  behaviour: it assumed 250 turns, the arms took 12 to 24. Four arms cost
+  $2.53 of agent time plus the judge.

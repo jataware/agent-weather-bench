@@ -121,3 +121,35 @@ def test_compaction_elides_the_oldest_long_tool_results_and_keeps_recent_ones():
     assert all("stdout" in row for row in elided[1:])
     assert compact(messages)==1 and compact(messages)==1 and compact(messages)==0   # one at a time until only recent ones remain
     assert json.loads(messages[-1]["content"][0]["content"])["stdout"]
+
+
+def test_a_transport_error_ends_the_run_but_keeps_the_usage_record(monkeypatch, tmp_path):
+    """Arm 3 of the 13 October ablation died on an SSL read error after delivering; the usage must survive that path."""
+    import json
+    from assessment import adapters
+
+    class FakeModel:
+        def __init__(self, cfg):
+            self.usage = {'input_tokens': 0, 'output_tokens': 0, 'usd': 0.0, 'calls': 0}
+            self.closed = False
+        def call(self, system, messages, tools):
+            self.usage['calls'] += 1
+            if self.usage['calls'] == 1:
+                self.usage['output_tokens'] += 50; self.usage['usd'] += .01
+                return {'content': [{'type': 'tool_use', 'id': 't1', 'name': 'execute', 'input': {'command': 'echo hi'}}], 'stop_reason': 'tool_use'}
+            raise httpx.ReadError('[SSL: SSLV3_ALERT_BAD_RECORD_MAC] ssl/tls alert bad record mac')
+        def close(self): self.closed = True
+
+    class FakeBox:
+        def execute(self, command, timeout): return {'exit_code': 0, 'stdout': 'hi', 'stderr': ''}
+
+    monkeypatch.setattr('assessment.model.Model', FakeModel)
+    config = {'driver': {'kind': 'anthropic', 'max_turns': 5}, 'budget': {'max_seconds': 60, 'max_tool_calls': 10, 'command_seconds': 10}}
+    log = tmp_path / 'events.jsonl'
+    result = adapters.anthropic_driver(config, {'tools': []}, FakeBox(), log)
+    assert result['status'] == 'execution_error'
+    assert result['reason'].startswith('ReadError: [SSL: SSLV3_ALERT_BAD_RECORD_MAC]')
+    assert result['tool_calls'] == 1
+    assert result['usage']['calls'] == 2 and result['usage']['usd'] == pytest.approx(.01)
+    rows = [json.loads(line) for line in log.read_text().splitlines() if line.strip()]
+    assert rows[-1]['type'] == 'stop' and 'ReadError' in rows[-1]['reason']

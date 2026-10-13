@@ -1,0 +1,21 @@
+schema_version: 1
+note: Rulings on answers that match no listed reading, keyed by the hash of the submitted answer (answer.json with
+  every file of results.zarr). A ruling of incorrect turns the unknown answer into a failure for that answer only.
+  Proposed rulings were made by the coding agent from the submitted code and the assessment and await confirmation
+  by a person.
+rulings:
+- answer_sha256: bf94667a136c73b950d82294343341845ff4ebd818a25691b405828614efad02
+  run: 20261011T113859-objective-seasonal-outlook-gha--mam-2015-L1-outlook-pilot-codex-luna-6e8f2e
+  ruling: incorrect
+  status: proposed
+  ruled_by: coding agent, from the submitted code and the assessment
+  ruled_on: '2026-10-13'
+  reason: The eReg regression is fitted on all years including the forecast year, so its fitted means and
+    probabilities match no accepted reading (the nearest reading's fitted-mean gap is 89.1 mm); the CCA arrays are
+    copies of the eReg arrays, not a canonical correlation analysis; and the model forecast means keep values on
+    the 969 unsupported cells. None of these is a convention the brief leaves open.
+  evidence: 'assessment under fingerprint a4f67496: invariant.ereg_from_own_prepare fail (fitted-mean gap 89.1 against
+    2.2e-06); invariant.cca_agreement fail (correlation 0.497, floor 0.6); variant nearest reading differs on
+    ereg_fitted_mean_mm (89.1) and prepare_model_forecast_mean_mm (1198.2). The pilot record
+    (docs/objective-outlook-pilot-2026-10-11.md) quotes the run.py lines: the regression uses every year, and the
+    CCA arrays are assigned from the eReg arrays.'
