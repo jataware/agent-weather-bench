@@ -44,3 +44,13 @@ reading:
     sensitivity curve is stages passed, readings matched and unknown answers per rung and arm.
   - Uplift is claimed only where the full stack passes a stage the plain arm fails at the same rung, with calls to a
     library or reads of the guides recorded, and only after replication on gha--ond-2015.
+second_batch:
+  decided: 13 October 2026, after rungs 2 and 3 ("keep going")
+  runs:
+    - two more attempts per cell at rungs no-streams and brief-only on gha--mam-2015, both arms (8 runs), to measure the
+      agent's own variance before any rung-to-rung difference is read
+    - the full rung and rungs no-streams and brief-only on gha--ond-2015, both arms (6 runs), the replication the plan
+      requires before uplift is claimed
+  order: pairs (one rung's two arms together), one pair after another
+  estimate: about 14 runs at $0.6-1.8 each, about $15; about two hours
+

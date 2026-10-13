@@ -80,6 +80,18 @@ conventions sheet or earlier work supplied to the agent.
   seconds (it calls africas2s's CCA per model) and failed its replay
   probes on that limit alone, while the tracer replay, which already had
   the command budget, ran it to completion. The run is re-assessed.
+- Disk. A run of this template keeps the agent's workspace under `work/`
+  (its 1.1 GB download of the whole snapshot), a second copy of that under
+  `retained/state`, and a 267 MB copy of the inputs, about 2.4 GB a run;
+  nine runs filled the machine twice on 13 October and killed two
+  certifications and two assessments. For the ladder's second batch the
+  launcher now drops `work/` and `retained/state/data` once a run is
+  assessed (the cache duplicates the provider snapshot byte for byte, as
+  the agents' own hash checks show), and the same was done to the day's
+  assessed runs. `frozen/`, `retained/` outputs and `inputs/` are kept, so
+  re-assessment still works; a run so trimmed cannot serve as a `--parent`
+  (its retained manifest no longer matches). The retention policy itself
+  is unchanged and is the owner's to decide.
 
 ## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
 
