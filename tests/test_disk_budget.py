@@ -15,6 +15,11 @@ def test_the_gate_refuses_under_the_floor_and_reports_the_volume(monkeypatch):
         runner.require_disk("start a run")
     monkeypatch.setattr(runner.shutil, "disk_usage", lambda path: SimpleNamespace(free=40e9))
     assert runner.require_disk("start a run") == pytest.approx(40)
+    monkeypatch.setattr(runner.shutil, "disk_usage", lambda path: SimpleNamespace(free=8e9))
+    assert runner.require_disk("assess a run", runner.MIN_FREE_GB_ASSESS) == pytest.approx(8)   # an assessment needs about 2 GB
+    with pytest.raises(RuntimeError, match="under the 4 GB floor"):
+        monkeypatch.setattr(runner.shutil, "disk_usage", lambda path: SimpleNamespace(free=3e9))
+        runner.require_disk("assess a run", runner.MIN_FREE_GB_ASSESS)
 
 
 def test_a_run_is_refused_before_any_folder_is_created(monkeypatch, tmp_path):

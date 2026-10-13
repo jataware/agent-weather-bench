@@ -29,7 +29,8 @@ from .substrate import image_path_use, library_calls, substrate_record
 RUNS = ROOT / "var/template-runs"
 
 
-MIN_FREE_GB = float(os.environ.get("AWB_MIN_FREE_GB", "12"))
+MIN_FREE_GB = float(os.environ.get("AWB_MIN_FREE_GB", "12"))                    # before a run starts
+MIN_FREE_GB_ASSESS = float(os.environ.get("AWB_MIN_FREE_GB_ASSESS", "4"))       # before an assessment: its scratch spike is about 2 GB
 DATA_VOLUME = Path("/System/Volumes/Data") if Path("/System/Volumes/Data").is_dir() else ROOT
 INPUTS_CACHE = ROOT / "var/inputs-cache"
 ASSESSMENT_LOCK = ROOT / "var/.assessment.lock"
@@ -39,11 +40,12 @@ def free_gb(path=None):
     return shutil.disk_usage(path or DATA_VOLUME).free / 1e9
 
 
-def require_disk(action):
+def require_disk(action, floor=None):
     """Disk is a hard budget: refuse `action` when the data volume is under the floor (AWB_MIN_FREE_GB, default 12)."""
+    floor = MIN_FREE_GB if floor is None else floor
     free = free_gb()
-    if free < MIN_FREE_GB:
-        raise RuntimeError(f"Refusing to {action}: {free:.1f} GB free on {DATA_VOLUME}, under the {MIN_FREE_GB:g} GB floor")
+    if free < floor:
+        raise RuntimeError(f"Refusing to {action}: {free:.1f} GB free on {DATA_VOLUME}, under the {floor:g} GB floor")
     return free
 
 
@@ -345,7 +347,7 @@ def _assess_run(template, folder, judge=True):
     executor = ReplayBudget(executor, (config.get("budget") or {}).get("command_seconds", 120))
     work = folder / "controller/assessment-work"
     with assessment_lock():
-        require_disk("assess a run")
+        require_disk("assess a run", MIN_FREE_GB_ASSESS)
         shutil.rmtree(work, ignore_errors=True)
         try:
             assessment = assess(template, meta["instance"], folder / "frozen", executor, work, level=meta.get("level", 1),
