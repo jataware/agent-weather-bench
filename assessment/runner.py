@@ -101,7 +101,8 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True,
     except (IndexError, KeyError, ValueError) as error:
         raise ValueError(f"Task brief could not be rendered: {error}") from error
     from .directions import apply as apply_directions
-    brief, _ = apply_directions(template.name, directions, brief, None)   # fails early on an unknown rung
+    published_brief = brief
+    brief, _ = apply_directions(template.name, directions, published_brief, None)   # fails early on an unknown rung
     preflight(config["runtime"]["image"])
     if parent:
         parent = resolve_run(parent)
@@ -134,7 +135,7 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True,
     if directions != "full":                                      # a directions rung: the practice sheet the agent sees is cut or withheld
         practice_path = inputs / "public/practice.md"
         practice = practice_path.read_text() if practice_path.is_file() else None
-        _, practice = apply_directions(template.name, directions, brief, practice)
+        _, practice = apply_directions(template.name, directions, published_brief, practice)   # the edits start from the published brief
         if practice is None:
             practice_path.unlink(missing_ok=True)
         else:
@@ -246,6 +247,23 @@ def _keep(folder, assessment):
         write(folder / "controller/rubric.json", assessment["rubric"])
 
 
+class ReplayBudget:
+    """An executor whose reruns get the system's per-command budget, the same limit the agent worked under.
+
+    Until 13 October 2026 every controller rerun used the executors' built-in 120 seconds, a limit the agent was never
+    told; a correct submission that took 151 seconds (the full-stack arm at the `no-streams` rung) failed its replay
+    probes on that limit alone."""
+
+    def __init__(self, inner, seconds):
+        self.inner, self.seconds = inner, seconds
+
+    def run(self, submission, inputs, argv, scratch, seconds=None):
+        return self.inner.run(submission, inputs, argv, scratch, seconds=self.seconds if seconds is None else seconds)
+
+    def __getattr__(self, name):
+        return getattr(self.inner, name)
+
+
 def _assess_run(template, folder, judge=True):
     """Assess a run's frozen submission and keep the record under the fingerprint that produced it."""
     meta, config = read(folder / "run.json"), read(folder / "system.json")
@@ -254,6 +272,7 @@ def _assess_run(template, folder, judge=True):
     feedback = folder / "controller/feedback-public.json"
     executor = Docker(config["runtime"]["image"], config["runtime"]["memory"], config["runtime"]["cpus"])
     executor = getattr(template.hooks, "executor_factory", lambda value: value)(executor)
+    executor = ReplayBudget(executor, config["budget"].get("command_seconds", 120))
     work = folder / "controller/assessment-work"
     shutil.rmtree(work, ignore_errors=True)
     assessment = assess(template, meta["instance"], folder / "frozen", executor, work, level=meta.get("level", 1),
@@ -262,6 +281,7 @@ def _assess_run(template, folder, judge=True):
     if evidence is not None:
         assessment["acquisition"] = evidence(work, folder / "controller/acquisition-evidence" / uuid.uuid4().hex)
     assessment["sandbox"] = read(folder / "controller/provenance.json")["sandbox"]["state"]
+    assessment["replay_budget_seconds"] = executor.seconds
     assessment["assessed_at"] = datetime.now(timezone.utc).isoformat()
     shutil.rmtree(work, ignore_errors=True)
     _trace_library_calls(template, folder, meta, config, executor)

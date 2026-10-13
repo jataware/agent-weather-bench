@@ -72,6 +72,14 @@ conventions sheet or earlier work supplied to the agent.
   No template file changes, so the fingerprint is unchanged. Plan:
   `experiments/directions-ladder-2026-10-13.yaml`; results in the ablation
   record.
+- Controller reruns now get the system's per-command budget
+  (`assessment.runner.ReplayBudget`, recorded as `replay_budget_seconds` in
+  the assessment). Until now every replay and probe used the executors'
+  built-in 120 seconds, a limit the envelope never states; the full-stack
+  arm at the `no-streams` rung delivered a correct command that takes 151
+  seconds (it calls africas2s's CCA per model) and failed its replay
+  probes on that limit alone, while the tracer replay, which already had
+  the command budget, ran it to completion. The run is re-assessed.
 
 ## 2026-10-12: the tooling ablation is built, with a call tracer for substantive use
 

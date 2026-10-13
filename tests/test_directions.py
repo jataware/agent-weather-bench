@@ -57,3 +57,13 @@ def test_unknown_rungs_and_stale_edits_fail_loudly():
     with pytest.raises(ValueError, match="no section titled"):
         drop_sections("## A\nx\n## B\ny\n", ["C"])
     assert drop_sections("intro\n## A\nx\n## B\ny\n", ["A"]) == "intro\n## B\ny\n"
+
+
+def test_applying_a_rung_twice_from_the_published_texts_is_what_the_runner_does():
+    """The runner edits the brief before the inputs exist and the practice sheet after; both start from the published brief."""
+    brief, practice = _texts()
+    cut_brief, _ = apply(TEMPLATE, "brief-only", brief, None)
+    _, cut_practice = apply(TEMPLATE, "brief-only", brief, practice)
+    assert cut_practice is None and "practice.md" not in cut_brief
+    with pytest.raises(ValueError, match="no longer contains"):      # the edited brief must not be fed back in
+        apply(TEMPLATE, "brief-only", cut_brief, practice)
