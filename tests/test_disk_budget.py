@@ -74,3 +74,17 @@ def test_inputs_are_staged_once_and_hardlinked_then_restaged_when_the_cache_chan
     (private / "provider.bin").write_bytes(b"new snapshot")               # a new private snapshot is a new cache key
     runner.staged_inputs(template, {"id": "one"}, tmp_path / "run4/inputs")
     assert len(staged) == 3
+
+
+def test_a_rung_edit_never_writes_through_a_hardlinked_practice_sheet(tmp_path):
+    """The cut practice sheet replaces the run's link; the cache file keeps the published text."""
+    cache = tmp_path / "cache/public"; cache.mkdir(parents=True)
+    (cache / "practice.md").write_text("## Inputs\nx\n## Stream 1: WVG\ny\n")
+    run_inputs = tmp_path / "run/inputs/public"; run_inputs.mkdir(parents=True)
+    os.link(cache / "practice.md", run_inputs / "practice.md")
+    from assessment.directions import drop_sections
+    practice_path = run_inputs / "practice.md"
+    practice = drop_sections(practice_path.read_text(), ["Stream 1: WVG"])
+    practice_path.unlink(); practice_path.write_text(practice)          # what the runner does
+    assert (cache / "practice.md").read_text() == "## Inputs\nx\n## Stream 1: WVG\ny\n"
+    assert practice_path.read_text() == "## Inputs\nx\n"

@@ -212,9 +212,8 @@ def run(template, params, system, parent=None, level=1, supplied=(), judge=True,
         practice_path = inputs / "public/practice.md"
         practice = practice_path.read_text() if practice_path.is_file() else None
         _, practice = apply_directions(template.name, directions, published_brief, practice)   # the edits start from the published brief
-        if practice is None:
-            practice_path.unlink(missing_ok=True)
-        else:
+        practice_path.unlink(missing_ok=True)                     # the file may be a hardlink into the shared cache: never write through it
+        if practice is not None:
             practice_path.write_text(practice)
     # the agent sees one description of the instance, the one the template stages; internal parameters stay with the controller
     shutil.copyfile(inputs / "instance.json", task / "instance.json")
