@@ -272,7 +272,7 @@ def _assess_run(template, folder, judge=True):
     feedback = folder / "controller/feedback-public.json"
     executor = Docker(config["runtime"]["image"], config["runtime"]["memory"], config["runtime"]["cpus"])
     executor = getattr(template.hooks, "executor_factory", lambda value: value)(executor)
-    executor = ReplayBudget(executor, config["budget"].get("command_seconds", 120))
+    executor = ReplayBudget(executor, (config.get("budget") or {}).get("command_seconds", 120))
     work = folder / "controller/assessment-work"
     shutil.rmtree(work, ignore_errors=True)
     assessment = assess(template, meta["instance"], folder / "frozen", executor, work, level=meta.get("level", 1),
@@ -300,7 +300,7 @@ def _trace_library_calls(template, folder, meta, config, executor):
     shutil.rmtree(work, ignore_errors=True)
     try:
         record = library_calls(template, meta["instance"], folder / "frozen", executor, work, libraries,
-                               seconds=config["budget"].get("command_seconds", 120))
+                               seconds=(config.get("budget") or {}).get("command_seconds", 120))
     except Exception as error:                                    # a measurement must never break the record
         record = {"libraries": libraries, "error": f"{type(error).__name__}: {str(error)[:800]}", "static": {}, "calls": {}, "replay": None}
     shutil.rmtree(work, ignore_errors=True)

@@ -61,7 +61,8 @@ def test_runner_keeps_evidence_before_work_cleanup_and_preserves_scientific_resu
     template = SimpleNamespace(hooks=SimpleNamespace(executor_factory=lambda base: executor,
                               acquisition_evidence=acquisition.acquisition_evidence))
     def fake_assess(template, params, submission, routed_executor, scratch, **kwargs):
-        assert routed_executor is executor
+        assert routed_executor.inner is executor                      # the template's executor, under the replay budget
+        assert routed_executor.seconds == 120                          # no budget block in this system record
         write_log(scratch)
         return {"fingerprint": "a" * 64, "computed_outcome": "pass"}
     monkeypatch.setattr(runner, "assess", fake_assess)
